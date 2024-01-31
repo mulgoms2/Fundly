@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="INFO">
+    <Properties>
+        <Property name="consoleLayout">%style{%d{HH:mm:ss}} %highlight{%-5level} %style{%C{1.}}{bright,yellow}: %msg%n%throwable</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console_Appender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${consoleLayout}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug" additivity="false">
+            <AppenderRef ref="Console_Appender"/>
+        </Root>
+
+        <Logger name="org.springframework" level="debug" additivity="false">
+            <AppenderRef ref="Console_Appender"/>
+        </Logger>
+
+        <logger name="log4jdbc.log4j2" level="info" additivity="false">
+            <MarkerFilter marker="LOG4JDBC_OTHER" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <appender-ref ref="Console_Appender"/>
+        </logger>
+    </Loggers>
+</Configuration>
