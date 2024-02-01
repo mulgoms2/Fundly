@@ -80,12 +80,7 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.22.1</version>
         </dependency>
-        <!--    validation   -->
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
-        </dependency>
+
         <!--    tiles    -->
         <dependency>
             <groupId>org.apache.tiles</groupId>

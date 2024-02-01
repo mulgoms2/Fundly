@@ -26,7 +26,7 @@ public class RootContext {
     ApplicationContext applicationContext;
 
     @Autowired
-    Environment env;
+    Environment env; //스프링 내장객체. 외부파일을 읽어주는 기능(properties)
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
