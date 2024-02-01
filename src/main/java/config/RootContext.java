@@ -1,4 +1,4 @@
-package com.my.config;
+package config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -26,7 +26,7 @@ public class RootContext {
     ApplicationContext applicationContext;
 
     @Autowired
-    Environment env;
+    Environment env; //스프링 내장객체. 외부파일을 읽어주는 기능(properties)
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -42,7 +42,7 @@ public class RootContext {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
-        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mapper/*Mapper.xml"));
+        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:com/**/model/*Mapper.xml"));
 
         return sqlSessionFactoryBean.getObject();
     }
