@@ -1,4 +1,4 @@
 package com.my.user.service;
 
-public class JoinService {
+public class joinService {
 }

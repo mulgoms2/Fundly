@@ -1,4 +1,4 @@
 package com.my.user.dto;
 
-public class UserDto {
+public class userDto {
 }

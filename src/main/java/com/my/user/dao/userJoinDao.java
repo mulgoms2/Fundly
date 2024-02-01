@@ -1,4 +1,4 @@
 package com.my.user.dao;
 
-public class UserJoinDao {
+public class userJoinDao {
 }
