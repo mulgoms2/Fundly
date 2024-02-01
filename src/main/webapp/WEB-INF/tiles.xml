@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
@@ -6,5 +6,10 @@
     <definition name="tiles.*" template="/WEB-INF/views/tiles/defaultLayout.jsp">
         <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
         <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
+    </definition>
+    <definition name="project.*" template="/WEB-INF/views/project-editor/tiles/layout.jsp">
+        <put-attribute name="title" value="펀들리 - 모두 함께 즐거운 크라우드펀딩" />
+        <put-attribute name="header" value="/WEB-INF/views/project-editor/tiles/header.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/project-editor/{1}.jsp" />
     </definition>
 </tiles-definitions>

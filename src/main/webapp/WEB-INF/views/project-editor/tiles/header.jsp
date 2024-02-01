@@ -16,7 +16,13 @@
 <body>
 <div class="topContents">
     <div class="header">
-        <p>header</p>
+        <p>This is Header</p>
+    </div>
+    <div class="topContentsWrapper">
+        <p>This is topContentsWrapper</p>
+    </div>
+    <div class="fixedContentWrapper">
+        <p>This is fixedContentWrapper</p>
     </div>
 </div>
 
