@@ -12,13 +12,13 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.my" ,"com.fundly"})
+@ComponentScan(basePackages = {"com.*"})
 public class ServletContext implements WebMvcConfigurer {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         WebMvcConfigurer.super.configureViewResolvers(registry);
         registry.tiles().viewClass(TilesView.class);
-        registry.jsp("/WEB-INF/views/", ".jsp");
+        registry.jsp("/WEB-INF/views/product/", ".jsp");
     }
     @Bean
     public TilesConfigurer tilesConfigurer() {
@@ -29,6 +29,6 @@ public class ServletContext implements WebMvcConfigurer {
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+        registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
     }
 }
