@@ -12,13 +12,10 @@
     <title>index</title>
 </head>
 <body>
-<<<<<<<< HEAD:src/main/webapp/WEB-INF/views/common/defaultLayout.jsp
 <!--header-->
 <tiles:insertAttribute name="header"/>
 <!--body-->
-========
 <%--<tiles:insertAttribute name="header"/>--%>
->>>>>>>> upstream/dev:src/main/webapp/WEB-INF/views/tiles/defaultLayout.jsp
 <tiles:insertAttribute name="body"/>
 
 </body>
