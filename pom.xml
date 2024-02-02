@@ -36,6 +36,12 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
         <!--       jsp       -->
         <dependency>
             <groupId>jakarta.servlet.jsp</groupId>
@@ -48,6 +54,12 @@
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
             <version>1.2.7</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
         <!--                         DB                           -->
         <!--        my batis       -->
         <dependency>

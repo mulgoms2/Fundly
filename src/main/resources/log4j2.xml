@@ -7,12 +7,12 @@
 
     <Appenders>
         <Console name="Console_Appender" target="SYSTEM_OUT">
-            <PatternLayout pattern="${consoleLayout}"/>
+            <PatternLayout pattern="${consoleLayout}" disableAnsi = "false"/>
         </Console>
     </Appenders>
 
     <Loggers>
-        <Root level="debug" additivity="false">
+        <Root level="trace" additivity="false">
             <AppenderRef ref="Console_Appender"/>
         </Root>
 
