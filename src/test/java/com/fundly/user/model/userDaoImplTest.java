@@ -13,11 +13,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Slf4j
 @SpringJUnitWebConfig(classes = {RootContext.class, ServletContext.class})
 class userDaoImplTest {
+
     @Autowired
-    userDao userDao;
+    UserDao userDao;
 
     @Test
+    @SneakyThrows
     void count() {
+        userDao.count();
         assertTrue(true);
     }
 

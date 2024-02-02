@@ -130,6 +130,7 @@
             <version>5.10.1</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
     <build>
         <finalName>Fundly</finalName>
