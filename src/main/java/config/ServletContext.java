@@ -18,7 +18,7 @@ public class ServletContext implements WebMvcConfigurer {
     public void configureViewResolvers(ViewResolverRegistry registry) {
         WebMvcConfigurer.super.configureViewResolvers(registry);
         registry.tiles().viewClass(TilesView.class);
-        registry.jsp("/WEB-INF/views/product/", ".jsp");
+        registry.jsp("/WEB-INF/views/", ".jsp");
     }
     @Bean
     public TilesConfigurer tilesConfigurer() {
