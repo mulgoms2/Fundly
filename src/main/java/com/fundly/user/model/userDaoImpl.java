@@ -10,7 +10,7 @@ public class userDaoImpl implements userDao {
 
     @Autowired
     private SqlSession session;
-    private static String namespace = "com.fundly.user.model.userDao.";
+    private static String namespace = "com.fundly.user.model.UserDao.";
 
 //    @Override
     @Override
