@@ -115,6 +115,13 @@
             <artifactId>tiles-jsp</artifactId>
             <version>3.0.8</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-websocket -->
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-websocket -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+            <version>9.0.85</version>
+        </dependency>
         <!--      JACKSON      -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
