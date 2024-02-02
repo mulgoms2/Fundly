@@ -1,11 +1,13 @@
 package com.fundly.user.model;
 
-import com.persistence.dto.userDto;
+import com.persistence.dto.UserDto;
 
 public interface userDao {
     //    @Override
-    int count() throws Exception;
+    int emailCheck(String email) throws Exception;
+
+    int useridCheck() throws Exception;
 
     //    @Override
-    int insert(userDto dto) throws Exception;
+    int insert(UserDto dto) throws Exception;
 }
