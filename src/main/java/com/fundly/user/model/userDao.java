@@ -1,8 +1,10 @@
 package com.fundly.user.model;
 
 import com.persistence.dto.userDto;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface userDao {
+@Mapper
+public interface UserDao {
     //    @Override
     int count() throws Exception;
 
