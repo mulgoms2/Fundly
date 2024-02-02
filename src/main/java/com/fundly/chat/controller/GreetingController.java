@@ -15,7 +15,7 @@ public class GreetingController {
 
     @GetMapping("/chat")
     public String chat() {
-        return "chat.html";
+        return "chat/chat";
     }
 
     //    채팅 메시지를 불러온다
