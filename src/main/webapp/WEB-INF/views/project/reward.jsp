@@ -14,25 +14,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<%--    <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>--%>
 </head>
 <body>
-<h1>TinyMCE Quick Start Guide</h1>
-<form id="txtForm">
-<textarea name="pjPurpose">
-    text editor
-</textarea>
-<textarea name="pjBudget">
-    text editor
-</textarea>
-<textarea name="pjSched">
-    text editor
-</textarea>
-<textarea name="pjIntro">
-    text editor
-</textarea>
-    <input type="submit">
-</form>
+${pjTxt}
+<%--<h1>TinyMCE Quick Start Guide</h1>--%>
+<%--<form id="txtForm">--%>
+<%--<textarea name="pjPurpose">--%>
+<%--    text editor--%>
+<%--</textarea>--%>
+<%--<textarea name="pjBudget">--%>
+<%--    text editor--%>
+<%--</textarea>--%>
+<%--<textarea name="pjSched">--%>
+<%--    text editor--%>
+<%--</textarea>--%>
+<%--<textarea name="pjIntro">--%>
+<%--    text editor--%>
+<%--</textarea>--%>
+<%--    <input type="submit">--%>
+<%--</form>--%>
 
 <script>
     // var tinyEditor = tinymce.init({
@@ -83,22 +84,22 @@
     //         help: { title: 'Help', items: 'help' }
     //     }
     // });
-    tinymce.init({
-        selector: 'textarea',
-        plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-        tinycomments_mode: 'embedded',
-        tinycomments_author: 'Author name',
-        mergetags_list: [
-            { value: 'First.Name', title: 'First Name' },
-            { value: 'Email', title: 'Email' },
-        ],
-        images_file_types: 'jpg,jpeg,png',
-        file_picker_types: 'file image media',
-        // ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
-
-
-    });
+    // tinymce.init({
+    //     selector: 'textarea',
+    //     plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+    //     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    //     tinycomments_mode: 'embedded',
+    //     tinycomments_author: 'Author name',
+    //     mergetags_list: [
+    //         { value: 'First.Name', title: 'First Name' },
+    //         { value: 'Email', title: 'Email' },
+    //     ],
+    //     images_file_types: 'jpg,jpeg,png',
+    //     file_picker_types: 'file image media',
+    //     // ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant"))
+    //
+    //
+    // });
     //
     // tinymce.init({
     //     selector: 'textarea',  // change this value according to your HTML
@@ -139,16 +140,16 @@
     //     }
     // });
 
-    let txtForm = document.querySelector("#txtForm");
-    txtForm.addEventListener("submit",function(e){
-        e.preventDefault();
-        if(txtForm.value = ""){
-            return false;
-        }
-        txtForm.action = '<c:url value="/txt/post"/>';
-        txtForm.method = 'POST';
-        txtForm.submit();
-    })
+    <%--let txtForm = document.querySelector("#txtForm");--%>
+    <%--txtForm.addEventListener("submit",function(e){--%>
+    <%--    e.preventDefault();--%>
+    <%--    if(txtForm.value = ""){--%>
+    <%--        return false;--%>
+    <%--    }--%>
+    <%--    txtForm.action = '<c:url value="/txt/post"/>';--%>
+    <%--    txtForm.method = 'POST';--%>
+    <%--    txtForm.submit();--%>
+    <%--})--%>
 </script>
 </body>
 </html>

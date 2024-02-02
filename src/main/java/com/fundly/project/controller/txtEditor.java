@@ -14,19 +14,21 @@ import java.util.Enumeration;
 public class txtEditor {
     @GetMapping("/editor")
     public String txtEdit(){
-        return "project/reward";
+        return "project/story";
     }
 
     @PostMapping("/post")
-    public String txtPost(HttpServletRequest request, Model m){
-        Enumeration<String> paramNames = request.getParameterNames();
-        System.out.println("paramNames = " + paramNames);
-        while(paramNames.hasMoreElements()){
-            String paramName = paramNames.nextElement();
-            System.out.println("paramName = " + paramName);
-            String param = request.getParameter(paramName);
-            System.out.println("param = " + param);
-        }
+    public String txtPost(String pjTxt, Model m){
+//        Enumeration<String> paramNames = request.getParameterNames();
+//        System.out.println("paramNames = " + paramNames);
+//        while(paramNames.hasMoreElements()){
+//            String paramName = paramNames.nextElement();
+//            System.out.println("paramName = " + paramName);
+//            String param = request.getParameter(paramName);
+//            System.out.println("param = " + param);
+//        }
+        System.out.println("pjTxt = " + pjTxt);
+        m.addAttribute("pjTxt",pjTxt);
         return "project/reward";
 
     }
