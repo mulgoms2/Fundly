@@ -15,7 +15,7 @@ class userDaoImplTest {
 
     @Test
     void count() {
-        assertTrue(true);
+//        assertTrue(true);
     }
 
     @Test

@@ -14,7 +14,7 @@ import java.util.Enumeration;
 public class txtEditor {
     @GetMapping("/editor")
     public String txtEdit(){
-        return "project/reward";
+        return "project/story";
     }
 
     @PostMapping("/post")
@@ -27,7 +27,7 @@ public class txtEditor {
             String param = request.getParameter(paramName);
             System.out.println("param = " + param);
         }
-        return "project/reward";
+        return "project/story";
 
     }
 }
