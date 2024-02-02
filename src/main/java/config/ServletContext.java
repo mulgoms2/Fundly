@@ -1,18 +1,17 @@
 package config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.my"})
+@ComponentScan(basePackages = {"com.*"})
+//@MapperScan(basePackages = "com.my")
 public class ServletContext implements WebMvcConfigurer {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -20,6 +19,7 @@ public class ServletContext implements WebMvcConfigurer {
         registry.tiles().viewClass(TilesView.class);
         registry.jsp("/WEB-INF/views/", ".jsp");
     }
+
     @Bean
     public TilesConfigurer tilesConfigurer() {
         final TilesConfigurer configurer = new TilesConfigurer();

@@ -7,7 +7,7 @@
 
     <Appenders>
         <Console name="Console_Appender" target="SYSTEM_OUT">
-            <PatternLayout pattern="${consoleLayout}"/>
+            <PatternLayout pattern="${consoleLayout}" disableAnsi = "false"/>
         </Console>
     </Appenders>
 
