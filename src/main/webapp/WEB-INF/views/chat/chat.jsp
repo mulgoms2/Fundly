@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-    <script src="<c:url value="/static/chat/app.js"/>"></script>
-    <script src="/static/chat/test.js"/>
+
+
+
+<%--    <script src="/static/chat/app.js"></script>--%>
+
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
@@ -50,5 +53,66 @@
         </div>
     </div>
 </div>
+<script>
+    const stompClient = new StompJs.Client({
+        brokerURL: 'ws://localhost:8080/endPoint'
+    });
+
+    stompClient.onConnect = (frame) => {
+        setConnected(true);
+
+        stompClient.subscribe('/topic/greetings', (response) => {
+            showGreeting(JSON.parse(response.body).message);
+        });
+    };
+
+    stompClient.onWebSocketError = (error) => {
+        console.error('Error with websocket', error);
+    };
+
+    stompClient.onStompError = (frame) => {
+        console.error('Broker reported error: ' + frame.headers['message']);
+        console.error('Additional details: ' + frame.body);
+    };
+
+    function setConnected(connected) {
+        $("#connect").prop("disabled", connected);
+        $("#disconnect").prop("disabled", !connected);
+        if (connected) {
+            $("#conversation").show();
+        } else {
+            $("#conversation").hide();
+        }
+        $("#greetings").html("");
+    }
+
+    function connect() {
+        stompClient.activate();
+    }
+
+    function disconnect() {
+        stompClient.deactivate();
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    function sendName() {
+        stompClient.publish({
+            destination: "/app/hello",
+            body: JSON.stringify({'message': $("#name").val()})
+        });
+    }
+
+    function showGreeting(message) {
+        $("#greetings").append("<tr><td>" + message + "</td></tr>");
+    }
+
+    $(()=> {
+        $("form").on('submit', (e) => e.preventDefault());
+        $("#connect").click(() => connect());
+        $("#disconnect").click(() => disconnect());
+        $("#send").click(() => sendName());
+    });
+</script>
 </body>
 </html>
