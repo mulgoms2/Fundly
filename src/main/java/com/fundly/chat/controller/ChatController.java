@@ -22,6 +22,10 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Greeting greeting(HelloMessage message) {
+<<<<<<<<< Temporary merge branch 1
+
+=========
+>>>>>>>>> Temporary merge branch 2
         return new Greeting("hello, " + HtmlUtils.htmlEscape(message.getName()));
     }
 }
