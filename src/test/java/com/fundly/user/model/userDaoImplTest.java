@@ -1,3 +1,4 @@
+
 package com.fundly.user.model;
 
 import config.RootContext;

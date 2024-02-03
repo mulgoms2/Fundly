@@ -1,3 +1,4 @@
+
 package com.fundly.user.model;
 
 import com.persistence.dto.userDto;
