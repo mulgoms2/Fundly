@@ -1,33 +1,43 @@
 package com.fundly.chat.controller;
 
-import com.fundly.chat.pojo.Greeting;
-import com.fundly.chat.pojo.HelloMessage;
+import com.fundly.chat.service.ChatServiceImpl;
+import com.persistence.dto.ChatRoomDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.util.HtmlUtils;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @Slf4j
 public class ChatController {
 
-    @GetMapping("/chat")
-    public String chat() {
+    @Autowired
+    ChatServiceImpl chatService;
+
+    @PostMapping("/chat")
+    public String joinChatRoom(String user_id, String pj_id, Model model) {
+
+
+//        user_id 와 pj_id 로 채팅방 번호를 알아온다.
+
+        ChatRoomDto chatRoomDto = chatService.getChatRoom(user_id, pj_id);
+
+        model.addAttribute("roomNum", chatRoomDto.getRoom_num());
+
+//        채팅방에 입장하면서 자동으로 채팅방에 대한 구독이 시작된다.
         return "chat/chat";
     }
 
-//    //    채팅 메시지를 불러온다
-//    @MessageMapping("/hello")
-//    @SendTo("/topic/greetings")
-//    public Greeting greeting(HelloMessage message) {
-//        return new Greeting("hello, " + HtmlUtils.htmlEscape(message.getName()));
-//    }
+    @MessageMapping("/chat/{roomNum}")
+    @SendTo("/chatSub/{roomNum}")
+    public String enterRoom(@DestinationVariable("roomNum") int roomNum ,String message) {
 
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public String greeting(String message) {
         return message;
     }
+
+//    public String
 }
