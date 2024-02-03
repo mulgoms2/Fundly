@@ -4,7 +4,7 @@ import com.persistence.dto.userDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserDao {
+public interface userDao {
     //    @Override
     int count() throws Exception;
 
