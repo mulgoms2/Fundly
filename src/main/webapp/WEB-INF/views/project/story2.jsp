@@ -52,15 +52,15 @@
                 <div>
                     <form name="purpose">
                             <textarea class="pjStr">
-                            <p>막연하다면 아래의 질문에 대한 답이 내용에 포함되도록 작성해보세요.</p>
+<%--                            <p>막연하다면 아래의 질문에 대한 답이 내용에 포함되도록 작성해보세요.</p>--%>
 
-                            Q. 무엇을 만들기 위한 프로젝트인가요?
+<%--                            Q. 무엇을 만들기 위한 프로젝트인가요?--%>
 
-                            Q. 프로젝트를 간단히 소개한다면?
+<%--                            Q. 프로젝트를 간단히 소개한다면?--%>
 
-                            Q. 이 프로젝트가 왜 의미있나요?
+<%--                            Q. 이 프로젝트가 왜 의미있나요?--%>
 
-                            Q. 이 프로젝트를 시작하게 된 배경이 무엇인가요?
+<%--                            Q. 이 프로젝트를 시작하게 된 배경이 무엇인가요?--%>
 
                             </textarea>
                     </form>
@@ -74,22 +74,22 @@
                 <div>
                     <form name="budget">
                             <textarea class="pjStr">
-                            설정하신 목표 금액을 어디에 사용 예정이신지 구체적인 지출 항목으로 적어 주세요.
+<%--                            설정하신 목표 금액을 어디에 사용 예정이신지 구체적인 지출 항목으로 적어 주세요.--%>
 
-                            예산은 ‘제작비’가 아닌 구체적인 ‘항목’으로 적어 주세요.
-                            이번 프로젝트의 실행에 필요한 비용으로만 작성해 주세요.
-                            기부, 다음 프로젝트에 사용하기 등은 이번 프로젝트의 예산으로 볼 수 없어요.
-                            만일 전체 제작 비용 중 일부만 모금하시는 경우라면, 나머지 제작 비용은 어떻게 마련 예정인지 추가로 작성해 주세요.
+<%--                            예산은 ‘제작비’가 아닌 구체적인 ‘항목’으로 적어 주세요.--%>
+<%--                            이번 프로젝트의 실행에 필요한 비용으로만 작성해 주세요.--%>
+<%--                            기부, 다음 프로젝트에 사용하기 등은 이번 프로젝트의 예산으로 볼 수 없어요.--%>
+<%--                            만일 전체 제작 비용 중 일부만 모금하시는 경우라면, 나머지 제작 비용은 어떻게 마련 예정인지 추가로 작성해 주세요.--%>
 
-                            (예시)
+<%--                            (예시)--%>
 
-                            목표 금액은 아래의 지출 항목으로 사용할 예정입니다.
+<%--                            목표 금액은 아래의 지출 항목으로 사용할 예정입니다.--%>
 
-                            인건비
-                            배송비
-                            발주비
-                            디자인 의뢰비
-                            수수료
+<%--                            인건비--%>
+<%--                            배송비--%>
+<%--                            발주비--%>
+<%--                            디자인 의뢰비--%>
+<%--                            수수료--%>
                             </textarea>
                     </form>
                 </div>
@@ -102,19 +102,19 @@
                 <div>
                     <form name="sched">
                             <textarea class="pjStr">
-                            아래의 양식을 참고하여 작성해보세요.
+<%--                            아래의 양식을 참고하여 작성해보세요.--%>
 
-                            ( 예시 )
+<%--                            ( 예시 )--%>
 
-                            0월 0일: 현재 제품 시안 및 1차 샘플 제작
-                            0월 0일: 펀딩 시작일
-                            0월 0일: 샘플 작업 보완
-                            0월 0일: 펀딩 종료일
-                            0월 0일: 2차 샘플 제작
-                            0월 0일: 제품 디테일 보완
-                            0월 0일: 제품 발주 시작
-                            0월 0일: 후가공 처리 및 포장 작업
-                            0월 0일: 선물 예상 전달일
+<%--                            0월 0일: 현재 제품 시안 및 1차 샘플 제작--%>
+<%--                            0월 0일: 펀딩 시작일--%>
+<%--                            0월 0일: 샘플 작업 보완--%>
+<%--                            0월 0일: 펀딩 종료일--%>
+<%--                            0월 0일: 2차 샘플 제작--%>
+<%--                            0월 0일: 제품 디테일 보완--%>
+<%--                            0월 0일: 제품 발주 시작--%>
+<%--                            0월 0일: 후가공 처리 및 포장 작업--%>
+<%--                            0월 0일: 선물 예상 전달일--%>
                             </textarea>
                     </form>
                 </div>
@@ -210,39 +210,57 @@ once you do not need it anymore.
 </script>
 <script>
     $("#sendBtn").click(function(){
-        // let forms = $("form")
-        // console.dir(forms);
-        let purpose = $("form[name=purpose]").children('textarea').val();
+
+        let purpose = $("form[name=purpose]").children('textarea').val(); //동적인 값을 가져올 수는 없을까? 하드코딩 된 값만 가져옴.ㅠㅠ
         let budget = $("form[name=budget]").children('textarea').val();
         let sched = $("form[name=sched]").children('textarea').val();
         let intro = $("form[name=intro]").children('textarea').val();
         let reward = $("form[name=reward]").children('textarea').val();
-        let strArr = [purpose, budget, sched, intro, reward];
+        // let purpose = $('.pjStr:eq(0)').val();
 
-        console.dir(purpose);
-        console.log(typeof purpose);
-        console.dir(budget);
+
+        alert(purpose);
+
+        let stryObj = {
+            purpose : purpose,
+            budget : budget,
+            sched : sched,
+            intro : intro,
+            reward : reward
+        }
+
 
         $.ajax({
             type:'POST',
             url:'/txt/post',
             headers: {"content-type": "application/json"},
-            data: JSON.stringify({strArr:strArr}),
+            data: JSON.stringify({stryObj:stryObj}),
             success: function(result){
                 alert("성공적으로 저장되었습니다.")
-                console.log(result);
+                showStory(result);
             },
             error: function(){alert("error has occured")}
         });
     });
 
-    <%--let showStory = function(${dto}){--%>
-    <%--    $.ajax({--%>
-    <%--        type: 'GET',--%>
-    <%--        url: '/project/'--%>
-    <%--    })--%>
+    let showStory = function(${stryObj}){
+        let purpose = $("form[name=purpose]").children('textarea');
+        let budget = $("form[name=budget]").children('textarea');
+        let sched = $("form[name=sched]").children('textarea');
+        purpose.attr("readonly",true);
 
-    <%--}--%>
+        budget.readOnly = true;
+        sched.readOnly = true;
+        purpose.html(${stryObj.purpose});
+        budget.html(${stryObj.budget});
+        sched.html(${stryObj.sched});
+
+
+
+        <%--intro = ${stryObj.intro}--%>
+        <%--reward = ${stryObj.reward}--%>
+
+    }
 
     </script>
 

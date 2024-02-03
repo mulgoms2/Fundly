@@ -1,15 +1,11 @@
 package com.fundly.project.controller;
 
-import com.fundly.project.model.ProjectStoryDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 @Slf4j
 @Controller
@@ -22,7 +18,7 @@ public class txtEditor {
 
     @PostMapping("/post")
     @ResponseBody
-    public ResponseEntity<String[]> txtPost(@RequestBody String[] strArr){
+    public ResponseEntity<Object> txtPost(@RequestBody Object stryObj, Model m){
 //        Enumeration<String> paramNames = request.getParameterNames();
 //        System.out.println("paramNames = " + paramNames);
 //        while(paramNames.hasMoreElements()){
@@ -34,10 +30,12 @@ public class txtEditor {
 //        System.out.println("pjTxt = " + pjTxt);
 //        m.addAttribute("pjTxt",pjTxt);
 //        return "project/reward2";
-        System.out.println("received");
+//        System.out.println("received");
+        System.out.println("strArr = " + stryObj);
+        return new ResponseEntity<>(stryObj, HttpStatus.OK);
 
 //        System.out.println("purpose = " + purpose);
-        System.out.println("strArr.toString() = " + strArr.toString());
+//        System.out.println("strArr.toString() = " + strArr.toString());
 //        System.out.println("sched = " + sched);
 //        System.out.println("intro = " + intro);
 //        System.out.println("reward = " + reward);
@@ -49,7 +47,7 @@ public class txtEditor {
         //DB에 저장하는 작업을 수행~
         //그리고 다시 뷰로 뿌려주기
 
-        return new ResponseEntity<>(strArr, HttpStatus.OK);
+//        return new ResponseEntity<>(strArr, HttpStatus.OK);
 
 
     }
