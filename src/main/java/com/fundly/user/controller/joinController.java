@@ -1,6 +1,6 @@
 package com.fundly.user.controller;
 
-import com.fundly.user.model.userDao;
+import com.fundly.user.model.UserDao;
 import com.persistence.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class joinController {
 
     @Autowired
-    userDao userDao;
+    UserDao userDao;
 
     @GetMapping("/add")
     public String join(){ return "user/joinForm";}
@@ -25,9 +25,9 @@ public class joinController {
         System.out.println("userDto = " + userDto);
 
 
-        int rowCnt = userDao.insert(userDto);
+//        int rowCnt = userDao.insert(userDto);
 
-        System.out.println("rowCnt = " + rowCnt);
+//        System.out.println("rowCnt = " + rowCnt);
 
 
         return "joinForm";

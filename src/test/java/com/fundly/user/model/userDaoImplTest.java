@@ -15,12 +15,15 @@ import java.util.UUID;
 @Transactional
 class userDaoImplTest {
 
-//    @Autowired
-//    private userDao userDao;
+    @Autowired
+     UserDao userDao;
 
 
     @Test
     public void emailCheck() throws Exception {
+
+        System.out.println("userDao.count() = " + userDao.count());
+//        System.out.println("\n\n\n\n\nuserDao = " + userDao);
 //        int cnt = userDao.emailCheck("asdf@asdf.com");
 //        System.out.println("cnt = " + cnt);
 
