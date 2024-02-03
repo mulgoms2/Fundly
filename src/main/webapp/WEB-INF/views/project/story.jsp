@@ -17,7 +17,11 @@
     <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
-<textarea id="file-picker"></textarea>
+<form id="txtForm">
+    <textarea name="pjTxt" id="file-picker"></textarea>
+    <input type="submit">
+</form>
+
 <script>
     tinymce.init({
         selector: 'textarea#file-picker',
@@ -76,16 +80,16 @@ once you do not need it anymore.
             'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
     });
 
-    <%--let txtForm = document.querySelector("#txtForm");--%>
-    <%--txtForm.addEventListener("submit", function (e) {--%>
-    <%--    e.preventDefault();--%>
-    <%--    if (txtForm.value = "") {--%>
-    <%--        return false;--%>
-    <%--    }--%>
-    <%--    txtForm.action = '<c:url value="/txt/post"/>';--%>
-    <%--    txtForm.method = 'POST';--%>
-    <%--    txtForm.submit();--%>
-    <%--});--%>
+    let txtForm = document.querySelector("#txtForm");
+    txtForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (txtForm.value = "") {
+            return false;
+        }
+        txtForm.action = '<c:url value="/txt/post"/>';
+        txtForm.method = 'POST';
+        txtForm.submit();
+    });
 
 </script>
 </body>
