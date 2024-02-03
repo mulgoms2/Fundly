@@ -12,6 +12,4 @@
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM user_info
     </select>
-
-
 </mapper>
