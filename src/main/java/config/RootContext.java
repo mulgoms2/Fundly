@@ -42,7 +42,7 @@ public class RootContext {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
-        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:/com/fundly/**/model/*Mapper.xml"));
+        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:com/**/model/*Mapper.xml"));
 
         return sqlSessionFactoryBean.getObject();
     }
