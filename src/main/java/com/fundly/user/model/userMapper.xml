@@ -4,10 +4,10 @@
 
 <mapper namespace="com.fundly.user.model.UserDao">
 
-    <insert id="insert" parameterType="userDto">
-        INSERT INTO user_info (`user_id`, `user_name`, `user_pwd`, `user_email`,`dba_reg_dtm`,`dba_reg_dtm`)
-        VALUES(#{user_id}, #{user_name}, #{user_pwd}, #{user_email}, #{dba_reg_dtm}, #{dba_reg_id});
-    </insert>
+<!--    <insert id="insert" parameterType="userDto">-->
+<!--        INSERT INTO user_info (`user_id`, `user_name`, `user_pwd`, `user_email`,`dba_reg_dtm`,`dba_reg_dtm`)-->
+<!--        VALUES(#{user_id}, #{user_name}, #{user_pwd}, #{user_email}, #{dba_reg_dtm}, #{dba_reg_id});-->
+<!--    </insert>-->
 
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM user_info
