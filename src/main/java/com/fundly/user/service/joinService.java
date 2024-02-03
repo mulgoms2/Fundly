@@ -1,8 +1,8 @@
-package com.fundly.user.service;
-
-import org.springframework.stereotype.Service;
-
-@Service
-public class joinService {
-
-}
+//package com.fundly.user.service;
+//
+//import org.springframework.stereotype.Service;
+//
+//@Service
+//public class joinService {
+//
+//}

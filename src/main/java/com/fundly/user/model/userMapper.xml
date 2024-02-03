@@ -9,7 +9,8 @@
 <!--        VALUES(#{user_id}, #{user_name}, #{user_pwd}, #{user_email}, #{dba_reg_dtm}, #{dba_reg_id});-->
 <!--    </insert>-->
 
-    <select id="count" resultType="int">
-        SELECT COUNT(*) FROM user_info
-    </select>
+<!--    <select id="count" resultType="int">-->
+<!--        SELECT COUNT(*) FROM user_info-->
+<!--    </select>-->
+<!--    -->
 </mapper>
