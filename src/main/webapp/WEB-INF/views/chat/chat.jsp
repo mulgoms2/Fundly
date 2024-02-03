@@ -4,10 +4,11 @@
 <html>
 <head>
     <title>Hello WebSocket</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-<%--    <script src="/static/chat/app.js"></script>--%>
+    <%--    <script src="/static/chat/app.js"></script>--%>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
@@ -18,21 +19,11 @@
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                    <input type="text" id="chat" class="form-control">
                 </div>
                 <button id="send" class="btn btn-default" type="submit">Send</button>
             </form>
+            <button id="exit">EXIT</button>
         </div>
     </div>
     <div class="row">
@@ -40,10 +31,10 @@
             <table id="conversation" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Greetings</th>
+                    <th>chat</th>
                 </tr>
                 </thead>
-                <tbody id="greetings">
+                <tbody id="chatBox">
                 </tbody>
             </table>
         </div>
@@ -57,8 +48,9 @@
     stompClient.onConnect = (frame) => {
         setConnected(true);
 
-        stompClient.subscribe('/topic/greetings', (response) => {
-            showGreeting(JSON.parse(response.body).message);
+        console.log("connected");
+        stompClient.subscribe('/chatSub/${roomNum}', (response) => {
+            displayMessage(JSON.parse(response.body).message);
         });
     };
 
@@ -79,7 +71,7 @@
         } else {
             $("#conversation").hide();
         }
-        $("#greetings").html("");
+        $("#chatBox").html("");
     }
 
     function connect() {
@@ -92,23 +84,36 @@
         console.log("Disconnected");
     }
 
-    function sendName() {
+    function sendMessage() {
         stompClient.publish({
-            destination: "/app/hello",
-            body: JSON.stringify({'message': $("#name").val()})
+            destination: "/chatPub/chat/${roomNum}",
+            body: JSON.stringify({'message': $("#chat").val()})
         });
+
+        $("#chat").val("");
     }
 
-    function showGreeting(message) {
-        $("#greetings").append("<tr><td>" + message + "</td></tr>");
+    function displayMessage(message) {
+        const date = new Date();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+
+        $("#chatBox").append("<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>");
     }
 
-    $(()=> {
+    $(() => {
         $("form").on('submit', (e) => e.preventDefault());
-        $("#connect").click(() => connect());
-        $("#disconnect").click(() => disconnect());
-        $("#send").click(() => sendName());
+        $("#exit").click(() => {
+            disconnect();
+        //     창닫기 해결해야한다.
+        })
+        $("#send").click(() => sendMessage());
     });
+
+    window.onload = () => {
+        connect();
+    };
+
 </script>
 </body>
 </html>
