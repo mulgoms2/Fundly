@@ -12,7 +12,11 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
+<<<<<<< HEAD
 @ComponentScan(basePackages = {"com.my", "com.fundly"})
+=======
+@ComponentScan(basePackages = {"com.fundly","com.my"})
+>>>>>>> feature/userjoin
 public class ServletContext implements WebMvcConfigurer {
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
