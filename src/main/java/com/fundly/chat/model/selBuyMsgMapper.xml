@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fundly.chat.model.ChatRoomDao">
+
+    <insert id="insertMsg" parameterType="SelBuyMsgDetails">
+        <selectKey keyProperty="msgId" resultType="String" order="BEFORE">
+            select concat("MSG_", now(), " ", ifnull(Max(seq), 0) +1) as seq from SEL_BUY_MSG_DETAILS
+        </selectKey>
+        insert into SEL_BUY_MSG_DETAILS (msg_id,buy_id, pj_id, msg_cont)
+        values ( #{msgId} , #{buyId}, #{pjId}, #{msgCont})
+    </insert>
+
+</mapper>
