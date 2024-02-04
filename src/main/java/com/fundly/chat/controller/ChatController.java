@@ -1,6 +1,7 @@
 package com.fundly.chat.controller;
 
 import com.fundly.chat.service.ChatServiceImpl;
+import com.persistence.dto.SelBuyMsgDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -39,7 +40,9 @@ public class ChatController {
 
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
-    public String enterRoom(@DestinationVariable("roomName") String roomName ,String message) {
+    public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName , SelBuyMsgDetails message) {
+
+        chatService.saveMessage(message);
 
         return message;
     }

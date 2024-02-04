@@ -1,12 +1,12 @@
 package com.fundly.chat.service;
 
 import com.persistence.dto.ChatRoomDto;
-import org.springframework.stereotype.Service;
+import com.persistence.dto.SelBuyMsgDetails;
 
-@Service
 public interface ChatService {
     ChatRoomDto findRoom(String user_id, String pj_id) throws Exception;
 
+    boolean saveMessage(SelBuyMsgDetails message);
     void enterRoom();
 
 

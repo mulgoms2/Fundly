@@ -50,7 +50,7 @@
 
         console.log("connected");
         stompClient.subscribe('/chatSub/${roomName}', (response) => {
-            displayMessage(JSON.parse(response.body).message);
+            displayMessage(JSON.parse(response.body).msgCont);
         });
     };
 
@@ -85,9 +85,15 @@
     }
 
     function sendMessage() {
+        const message = {
+            msgCont : $("#chat").val() ,
+            buyId : "user_id!",
+            pjId : "pj_id!",
+            sendUserId : "user_id!"
+        };
         stompClient.publish({
             destination: "/chatPub/chat/${roomName}",
-            body: JSON.stringify({'message': $("#chat").val()})
+            body: JSON.stringify(message)
         });
 
         $("#chat").val("");

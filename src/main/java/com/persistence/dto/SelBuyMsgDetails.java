@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class SelBuyMsgDetails {
 
-//    private String msgId;
+    private String msgId;
     private String buyId;
     private String pjId;
     private Integer seq;

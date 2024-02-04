@@ -2,6 +2,7 @@ package com.fundly.chat.service;
 
 import com.fundly.chat.model.ChatRoomDao;
 import com.persistence.dto.ChatRoomDto;
+import com.persistence.dto.SelBuyMsgDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,19 @@ public class ChatServiceImpl implements ChatService {
         String roomName = chatRoomDto.getUser_id() + chatRoomDto.getPj_id();
 
         return roomName;
+    }
+
+    @Override
+    public boolean saveMessage(SelBuyMsgDetails message) {
+
+        try {
+            chatRoomDao.insertMsg(message);
+        } catch (Exception e) {
+            log.error("error with save Message");
+            throw new RuntimeException(e);
+        }
+
+        return true;
     }
 
     public void loadMessages() {
