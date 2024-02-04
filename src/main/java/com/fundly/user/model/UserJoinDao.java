@@ -11,6 +11,5 @@ public interface UserJoinDao {
 
 //    int useridCheck() throws Exception;
 
-    //    @Override
     int insert(UserDto dto) throws Exception;
 }

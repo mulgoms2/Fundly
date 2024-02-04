@@ -11,7 +11,7 @@
 
 <head>
     <title>회원가입</title>
-    <link rel="stylesheet" href="<c:url value='/static/user/userJoin.css'/>">
+    <link rel="stylesheet" href="<c:url value='/static/user/userjoin.css'/>">
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 

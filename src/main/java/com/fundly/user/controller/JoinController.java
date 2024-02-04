@@ -40,6 +40,8 @@ public class JoinController {
             if(userJoinDao.insert(userDto) != 1){
                 throw new RuntimeException("등록 실패");
             }
+
+            // 이부분은 원래 서비스 로직으로 가야하는곳..
         } catch (RuntimeException e) {
             e.printStackTrace();
 //            throw new RuntimeException(e);
