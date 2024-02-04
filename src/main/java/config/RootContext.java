@@ -46,7 +46,8 @@ public class RootContext {
 //        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:/com/fudly/**/model/*Mapper.xml"));
 
         sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
-        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:/com/fudly/**/model/*Mapper.xml"));
+        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:/com/fundly/**/model/*Mapper.xml"));
+//        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:/*Mapper.xml"));
 
 
         return sqlSessionFactoryBean.getObject();
