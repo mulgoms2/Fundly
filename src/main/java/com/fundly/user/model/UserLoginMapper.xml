@@ -12,9 +12,8 @@
         SELECT COUNT(*) FROM user_info WHERE user_email = #{user_email}
     </select>
 
-    <insert id="insert" >
-        INSERT INTO user_info (`user_id`, `user_name`, `user_pwd`, `user_email`,`user_status`,`dba_reg_id`)
-        VALUES(#{user_id}, #{user_name}, #{user_pwd}, #{user_email}, #{user_status}, #{dba_reg_id});
-    </insert>
+    <select id="idCheck" resultType="int" parameterType="String">
+        SELECT COUNT(*) FROM user_info WHERE user_id = #{user_id}
+    </select>
 
 </mapper>

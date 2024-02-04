@@ -1,6 +1,7 @@
 package com.fundly.user.controller;
 
 import com.fundly.user.model.UserJoinDao;
+import com.fundly.user.model.UserLoginDao;
 import com.persistence.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/user")
 public class LoginController {
 
-//    @Autowired
-//    UserJoinDao userJoinDao;
+    @Autowired
+    UserLoginDao userLoginDao;
 
 //    @Autowired
 //    JoinService joinService;
 
     @GetMapping("/login")
-    public String join(){ return "login";}
+    public String login(){ return "user/login";}
 
 //    @PostMapping("/add")
 //    public String joinsave(UserDto userDto) throws Exception{

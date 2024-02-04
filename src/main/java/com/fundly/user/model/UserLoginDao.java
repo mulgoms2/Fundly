@@ -10,5 +10,6 @@ public interface UserLoginDao {
 
     int emailCheck(String email) throws Exception;
 
-    int insert(UserDto dto) throws Exception;
+    int idCheck(String email) throws Exception;
+//    int insert(UserDto dto) throws Exception;
 }
