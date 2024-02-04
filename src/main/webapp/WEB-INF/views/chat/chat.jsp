@@ -49,7 +49,7 @@
         setConnected(true);
 
         console.log("connected");
-        stompClient.subscribe('/chatSub/${roomNum}', (response) => {
+        stompClient.subscribe('/chatSub/${roomName}', (response) => {
             displayMessage(JSON.parse(response.body).message);
         });
     };
@@ -86,7 +86,7 @@
 
     function sendMessage() {
         stompClient.publish({
-            destination: "/chatPub/chat/${roomNum}",
+            destination: "/chatPub/chat/${roomName}",
             body: JSON.stringify({'message': $("#chat").val()})
         });
 
