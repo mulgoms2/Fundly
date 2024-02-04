@@ -19,19 +19,18 @@ public class ChatController {
 
     @PostMapping("/chat")
     public String joinChatRoom(String user_id, String pj_id, Model model) {
-//        user_id 와 pj_id 로 채팅방 번호를 알아온다.
 
-        Integer chatRoomNum = chatService.getChatRoom(user_id, pj_id);
+        String chatRoomName = chatService.getChatRoom(user_id, pj_id);
 
-        model.addAttribute("roomNum", chatRoomNum);
+        model.addAttribute("roomName", chatRoomName);
 
 //        채팅방에 입장하면서 자동으로 채팅방에 대한 구독이 시작된다.
         return "chat/chat";
     }
 
-    @MessageMapping("/chat/{roomNum}")
-    @SendTo("/chatSub/{roomNum}")
-    public String enterRoom(@DestinationVariable("roomNum") int roomNum ,String message) {
+    @MessageMapping("/chat/{roomName}")
+    @SendTo("/chatSub/{roomName}")
+    public String enterRoom(@DestinationVariable("roomName") String roomName ,String message) {
 
         return message;
     }

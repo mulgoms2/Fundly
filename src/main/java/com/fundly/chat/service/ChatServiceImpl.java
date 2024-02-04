@@ -12,28 +12,27 @@ public class ChatServiceImpl implements ChatService {
 
     @Autowired
     ChatRoomDao chatRoomDao;
-    public Integer getChatRoom(String user_id, String pj_id) {
+    public String getChatRoom(String user_id, String pj_id) {
 //        유저 id와 프로젝트 id를 받아 채팅방(topic)을 만든다.
 
-        Integer roomNum = findRoom(user_id, pj_id);
-//        방이 존재하지 않으면 새로운 채팅방을 생성한다.
-        if (roomNum == null) {
-            Integer chatRoom = chatRoomDao.makeChatRoom(user_id, pj_id);
-            log.error("chatroom ? "  + chatRoom);
+        ChatRoomDto chatRoomDto = findRoom(user_id, pj_id);
+
+        if (chatRoomDto == null) {
+            System.out.println("chatRoomDto = " + chatRoomDto);
         }
 
-//        방이 존재하면 기존의 채팅방을 return 한다.
-        return roomNum;
+        String roomName = chatRoomDto.getUser_id() + chatRoomDto.getPj_id();
+
+        return roomName;
     }
 
     public void loadMessages() {
 
     }
 
-    public Integer findRoom(String user_id, String pj_id) {
+    public ChatRoomDto findRoom(String user_id, String pj_id) {
         try {
-            ChatRoomDto chatRoomDto = chatRoomDao.selectChatRoom(user_id, pj_id);
-            return chatRoomDto.getRoom_num();
+            return chatRoomDao.selectChatRoom(user_id, pj_id);
         } catch (Exception e) {
             log.trace("can not find chat room");
             throw new RuntimeException(e);
