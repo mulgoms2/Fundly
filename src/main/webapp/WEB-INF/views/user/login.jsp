@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
 <%--    <link rel="stylesheet" href="/static/user/userLogin.css">--%>
-    <link rel="stylesheet" href="<c:url value='/static/user/userlogin.css'/>">
+    <link rel="stylesheet" href="<c:url value='/static/user/userLogin.css'/>">
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
@@ -35,15 +35,15 @@
 
     <button c`lass="emailBtn" value="sumbit">이메일로 로그인</button>
 
-    <div class="socLogin">
-        <div class="styLine">
-            <span>다른 방법으로 로그인</span>
-            <button class="kakaBtn" value="sumbit">카카오로 로그인</button>
-            <button class="googleBtn" value="sumbit">구글 로그인</button>
-        </div>
-    </div>
+<%--    <div class="socLogin">--%>
+<%--        <div class="styLine">--%>
+<%--            <span>다른 방법으로 로그인</span>--%>
+<%--            <button class="kakaBtn" value="sumbit">카카오로 로그인</button>--%>
+<%--            <button class="googleBtn" value="sumbit">구글 로그인</button>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
-    <span>아직 펀들리 계정이 없으신가요?  </span><a href="" class="join">회원가입</a>
+    <span>아직 펀들리 계정이 없으신가요?  </span><a href="/join/add" class="join">회원가입</a>
 </div>
 </body>
 

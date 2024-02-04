@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserJoinDao {
 
     int count() throws Exception;
+
     int emailCheck(String email) throws Exception;
 
-//    int useridCheck() throws Exception;
+    int idCheck() throws Exception;
 
     int insert(UserDto dto) throws Exception;
 }

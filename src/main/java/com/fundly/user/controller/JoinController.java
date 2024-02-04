@@ -1,7 +1,10 @@
 package com.fundly.user.controller;
 
 import com.fundly.user.model.UserJoinDao;
+import com.fundly.user.service.JoinService;
+import com.fundly.user.service.JoinServiceImpl;
 import com.persistence.dto.UserDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,15 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
+@Slf4j
 @Controller
 @RequestMapping("/join")
 public class JoinController {
 
-    @Autowired
-    UserJoinDao userJoinDao;
-
 //    @Autowired
-//    JoinService joinService;
+//    @Autowired
+//    UserJoinDao userJoinDao;
+
+    @Autowired
+    JoinServiceImpl joinService;
 
     @GetMapping("/add")
     public String join(){ return "user/join";}
@@ -27,26 +32,18 @@ public class JoinController {
     public String joinsave(UserDto userDto) throws Exception{
 
         try {
-            String uuid_user_id = UUID.randomUUID().toString();
-            String user_status = "A"; // 활동중
-
-            userDto.setUser_id(uuid_user_id);
-            userDto.getUser_pwd();
-            userDto.getUser_name();
-            userDto.getUser_email();
-            userDto.setUser_status(user_status);
-            userDto.setDba_reg_id(uuid_user_id);
-
-            if(userJoinDao.insert(userDto) != 1){
-                throw new RuntimeException("등록 실패");
+            if(joinService.userJoin(userDto) != 1){
+                log.error("여기서 에러 난거니? ");
+                throw new RuntimeException("회원가입 실패");
             }
 
-            // 이부분은 원래 서비스 로직으로 가야하는곳..
         } catch (RuntimeException e) {
             e.printStackTrace();
-//            throw new RuntimeException(e);
+            log.error("여기서 에러 난거니??????????????????ㅇㄹㄴㅇㄹㄴㅇㄹ ");
+            throw new RuntimeException(e);
         }
 
+//        회원가입 후 로그인 화면으로 갈것인가 ? 메인으로 갈것인가 ?
         return "index";
     }
 }
