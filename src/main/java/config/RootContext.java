@@ -20,8 +20,7 @@ import javax.sql.DataSource;
 @Configuration
 @PropertySource(value = "/WEB-INF/config/db.properties")
 @EnableTransactionManagement
-@MapperScan(basePackages = "com.fundly")
-
+@MapperScan(basePackages = "com.fundly.**.model")
 public class RootContext {
     @Autowired
     ApplicationContext applicationContext;

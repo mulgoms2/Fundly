@@ -13,8 +13,8 @@
 <body>
 <form action="/chat" method="post">
 <%--    <input type="hidden" name="user_id" value="${sessionScope.id}">--%>
-    <input type="hidden" name="user_id" value="test">
-    <input type="hidden" name="pj_id" value="testPj">
+    <input type="text" name="user_id" >
+    <input type="text" name="pj_id" >
     <button type="submit">chat</button>
 </form>
 </body>

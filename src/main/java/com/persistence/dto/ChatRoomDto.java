@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Data
 public class ChatRoomDto {
-    private Integer room_num;
+//    private Integer room_num;
     private String user_id;
     private String pj_id;
     private Date dba_reg_dtm;

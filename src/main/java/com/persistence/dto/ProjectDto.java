@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class projectDto {
+public class ProjectDto {
     private String pj_id;
     private Integer seq;
     private String pj_sel_id; //로그인 세션에서 가져오기.
@@ -83,7 +83,7 @@ public class projectDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        projectDto that = (projectDto) o;
+        ProjectDto that = (ProjectDto) o;
         return Objects.equals(pj_id, that.pj_id) && Objects.equals(seq, that.seq) && Objects.equals(pj_sel_id, that.pj_sel_id) && Objects.equals(pj_status, that.pj_status);
     }
 

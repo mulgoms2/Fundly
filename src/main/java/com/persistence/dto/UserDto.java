@@ -1,3 +1,4 @@
+
 package com.persistence.dto;
 
 import lombok.AllArgsConstructor;
@@ -40,3 +41,4 @@ public class UserDto {
     private Date dba_mod_dtm;
     private String dba_mod_id;
 }
+
