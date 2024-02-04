@@ -1,7 +1,6 @@
 package com.fundly.user.controller;
 
 import com.fundly.user.model.UserJoinDao;
-import com.fundly.user.service.JoinService;
 import com.persistence.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

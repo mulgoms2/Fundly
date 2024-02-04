@@ -20,7 +20,7 @@ public class JoinServiceImpl implements JoinService {
 //    @Transactional
     public int userJoin(UserDto userDto) {
 
-         System.out.println("\"\\n\\n\\n\\n\\n\\n\\n테스트넘어옴\" = " + "\n\n\n\n\n\n\n테스트넘어옴");
+         System.out.println(" 테스트 넘어옴 = " + "\n\n\n\n\n\n\n테스트넘어옴");
 
          return 0;
 //        System.out.println("userJoinDao = " + userJoinDao);
@@ -47,6 +47,12 @@ public class JoinServiceImpl implements JoinService {
     public int emailCheck(String user_email) throws Exception {
         return userJoinDao.emailCheck(user_email);
     }
+
+    @Override
+    public int count() throws Exception {
+        return userJoinDao.count();
+    }
+
 
 
 }

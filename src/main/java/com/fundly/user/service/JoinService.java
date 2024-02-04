@@ -10,4 +10,6 @@ public interface JoinService {
     int userJoin(UserDto userDto);
 
     int emailCheck(String user_email) throws Exception;
+
+    int count() throws Exception;
 }
