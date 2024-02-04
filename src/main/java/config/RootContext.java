@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 @PropertySource(value = "/WEB-INF/config/db.properties")
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.fundly.**.model")
-
 public class RootContext {
     @Autowired
     ApplicationContext applicationContext;

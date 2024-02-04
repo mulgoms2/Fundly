@@ -8,5 +8,7 @@
     </settings>
     <typeAliases>
         <typeAlias alias="ItemDto" type="com.persistence.dto.ItemDto"/>
+        <typeAlias type="com.persistence.dto.ChatRoomDto" alias="ChatRoomDto"/>
+        <typeAlias alias="userDto" type="com.persistence.dto.UserDto"/>
     </typeAliases>
 </configuration>
