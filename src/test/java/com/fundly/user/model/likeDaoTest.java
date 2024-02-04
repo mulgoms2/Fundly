@@ -11,17 +11,17 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 @Slf4j
-@SpringJUnitWebConfig(classes = {RootContext.class, ServletContext.class})
-class likeMappertest {
+class likeDaoTest {
     @Autowired
-    likeMapper likeMapper;
+    likeDao likeDao;
 
     @Test
     @SneakyThrows
-    @DisplayName("매퍼읽어오는테스트")
-    void test() {
-        likeMapper.test();
+    @DisplayName("테스트코드")
+    void test1() {
+        likeDao.test();
         assertTrue(true);
     }
 }

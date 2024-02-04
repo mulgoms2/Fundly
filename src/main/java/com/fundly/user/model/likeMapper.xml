@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fundly.user.model.likeMapper">
+<mapper namespace="com.fundly.user.model.likeDao">
 <!--    테스트sql-->
-    <select id="test">
+    <select id="test" resultType="integer">
         select count(*) from LIKE_PJ
     </select>
 
@@ -21,6 +21,6 @@
     </select>
 <!--    좋아요 삭제-->
     <delete id="deleteLike">
---         delete from LIKE_PJ
+        delete from LIKE_PJ
     </delete>
 </mapper>
