@@ -1,0 +1,208 @@
+/*공통*/
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+a {
+    display: block;
+}
+i {
+    font-style: normal;
+}
+.ell{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: inherit;
+}
+.ell.line2{
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    word-wrap: break-word !important;
+}
+
+/* 영역 보이게  만들기 */
+.space {
+    width: 100%;
+    height: 200px;
+}
+
+/* 배너 묶음 */
+.coNt {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 48px 0px;
+    display: flex;
+    position: relative;
+}
+.coNt::before,
+.coNt::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background-color: #f2f4f6;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+.coNt::after {
+    content: '';
+    top: unset;
+    bottom: 0;
+}
+
+/* 왼쪽 큰 배너 */
+.coNt .lFt {
+    margin-right: 60px;
+}
+.coNt .bigBan {
+    width: 300px;
+    height: 300px;
+}
+.coNt .bigBan img {
+    width: 300px;
+    height: 300px;
+}
+.coNt .txtInfo .txTb {
+    padding-bottom: 12px;
+    color: #0D0D0D;
+    font-size: 20px;
+    font-weight: 700;
+}
+.coNt .txtInfo .deSc {
+    margin-bottom: 24px;
+    color: #333;
+    font-size: 14px;
+}
+.coNt .linkView {
+    padding: 12px 20px;
+    color: #0D0D0D;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 60px;
+    border: 1px solid #BDBDBD;
+    cursor: pointer;
+}
+.coNt .linkView:hover {
+    color: #343a40;
+    background-color: #f2f4f6;
+    border-color: #adb5bd;
+}
+.coNt .linkView img {
+    width: 12px;
+    height: 12px;
+    margin-left: 5px;
+    font-size: 0px;
+}
+
+/* 오른쪽 배너 묶음 */
+.coNt .rGt .gRd {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px 26px;
+}
+.coNt .mnBan {
+    position: relative;
+}
+.coNt .mnBan .banImg {
+    width: 180px;
+    height: 140px;
+}
+.coNt .mnBan .banImg a {
+    width: 100%;
+    height: 100%;
+    color: #333;
+    background-size: cover;
+    transition: 0.3s ease;
+}
+.coNt .mnBan .banImg a:hover {
+    box-shadow: 5px 5px 10px #ddd;
+    transform: scale(1.1);
+}
+.coNt .mnBan .banImg img {
+    width: 180px;
+    height: 140px;
+}
+/*하트처리 미완성*/
+.coNt .faLike {
+    position: relative;
+}
+.coNt .likeBtn {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    border: 0;
+    overflow: hidden;
+}
+.coNt .likeBtn::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url(../img/whht.png) 0px 0px / cover no-repeat;
+}
+/*작은 배너 css*/
+.coNt .banTxt {
+    padding-top: 15px;
+}
+.coNt .banTxt .txtGr {
+    width: 100%;
+    font-size: 11px;
+}
+.coNt .banTxt .subTxt {
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+.coNt .banTxt .subTxt a {
+    color: #6D6D5B;
+    display: inline;
+}
+.coNt .banTxt .subTxt a:hover {
+    text-decoration: underline;
+}
+.coNt .banTxt .subTxt .bar {
+    position: relative;
+    padding-left: 10px;
+}
+.coNt .banTxt .subTxt .bar::before {
+    content: '';
+    width: 1px;
+    height: 10px;
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    background-color: #D0D0D0;
+}
+.coNt .banTxt .subTit {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+}
+.coNt .banTxt .subTit a {
+    color: #333;
+}
+.coNt .banTxt .pstTag span {
+    color: #FF5757;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 28px;
+}
