@@ -14,23 +14,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .pjBox {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .pjBox .pjForm {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            outline : none;
+        }
+    </style>
 </head>
 <body>
 <div class="pjSubTb">
-    <button class="isActive" type="button">
-        <div>
-            선물
-        </div>
+    <button class="isActive" type="button" id="gftBtn">
+        선물
     </button>
-    <button type="button">
-        <div>
-            아이템
-        </div>
+    <button type="button" id="itmBtn">
+        아이템
     </button>
 </div>
+
 <div class="pjWrap">
     <div class="pjCont">
-        <div class="pjBox gift">
+
+        <!-- reward.jsp 요청시, 등록된 아이템이 하나도 없다면 보여주는 화면 -->
+        <%--        <c:if test="#{empty itemList}">--%>
+        <div class="pjBox str">
+            <div id="pjItmGft">
+                <div>
+                    <div>
+                        선물 만들기
+                    </div>
+                </div>
+                <div>
+                    <button type="button" id="strBtn">아이템을 만들어주세요</button>
+                    <div>
+                        <h2>후원 가치를 높이는 선물</h2>
+                        <br>
+                        <p>아직 등록된 아이템이 없습니다.</p>
+                        <br>
+                        <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
+                        <p>아이템을 등록 후 다양한 금액대로 여러 개의 선물을 만들어주세요. </p>
+                        <p>펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--        </c:if>--%>
+
+        <!-- 선물 만들기 페이지 -->
+        <%--        <c:if test="#{not empty itemList}">--%>
+        <div class="pjBox gift" id="gift">
             <div class="pjInfo">
                 <div>
                     <div>내가 만든 선물 count</div>
@@ -43,7 +82,8 @@
                 <div>
                     <div>
                         <p>선물 만들기</p>
-                        <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. 다양한 금액대로 여러 개의 선물을 만들어주세요. 펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                        <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
+                        <p>다양한 금액대로 여러 개의 선물을 만들어주세요. 펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
                     </div>
                     <section>
                         <div>
@@ -85,11 +125,11 @@
                         <div>
                             <div>
                                 <label for="lim">있음</label>
-                                <input name="lim" type="radio">
+                                <input name="lim" id="lim" type="radio">
                                 <input type="text"><p>개</p>
                             </div>
                             <label for="unlim">없음</label>
-                            <input name="unlim" type="radio">
+                            <input name="unlim" id="unlim" type="radio">
                         </div>
                     </section>
                     <section>
@@ -100,11 +140,11 @@
                         <div>
                             <div>
                                 <label for="maxLim">있음</label>
-                                <input name="maxLim" type="radio">
+                                <input name="maxLim" id="maxLim" type="radio">
                                 <input type="text"><p>개</p>
                             </div>
                             <label for="maxUnlim">없음</label>
-                            <input name="maxUnlim" type="radio">
+                            <input name="maxUnlim" id="maxUnlim" type="radio">
                         </div>
                     </section>
                     <section>
@@ -138,9 +178,11 @@
                     </div>
                 </div>
             </div>
-        </div> <!--gift--> <!--로그인이 안되어 있으면 로그인 페이지로 유도하는 것처럼, 아이템이 없으면 먼저 아이템 페이지로 redirect-->
+        </div> <!--gift-->
+        <%--</c:if>--%>
 
-        <div class="pjBox item">
+        <!--아이템 만들기 페이지-->
+        <div class="pjBox item" id="item">
             <div class="pjInfo">
                 <div>
                     <div>내가 만든 아이템 count</div>
@@ -158,10 +200,10 @@
                     <section>
                         <p>아이템 이름</p>
                         <div>
-                            <input type="text" inputmode="text" placeholder="아이템 이름을 입력해주세요.">
+                            <input id="itmName" type="text" inputmode="text" placeholder="아이템 이름을 입력해주세요.">
                         </div>
                         <div>
-                            <span>0/50</span>
+                            <span>`${'${itmName.value.length}'}/50`</span>
                         </div>
                     </section>
                     <section>
@@ -210,6 +252,77 @@
         </div> <!--Item-->
     </div>
 </div>
+<script>
+    window.onload = function(){
+        const itemPage = document.querySelector("#item");
+        const giftPage = document.querySelector("#gift");
+        const pjItmGft = document.querySelector("#pjItmGft");
+        const strBtn = document.querySelector("#strBtn");
+        const gftBtn = document.querySelector("#gftBtn");
+        const itmBtn = document.querySelector("#itmBtn");
+        const itmName = document.querySelector("#itmName");
+
+
+        // console.dir(itemPage);
+        // console.dir(giftPage);
+        mkHidden([giftPage, itemPage]);
+
+        strBtn.addEventListener("click",function(){
+            // giftPage.style.display = "none";
+            location.href = "#item";
+            mkHidden([giftPage, pjItmGft]);
+            mkVisible(itemPage);
+        })
+        gftBtn.addEventListener("click",function(){
+            location.href = "#gift";
+            // pjItmGft.style.display = "none";
+            // giftPage.style.display = "block";
+            mkHidden([itemPage, pjItmGft]);
+            mkVisible(giftPage);
+        })
+        itmBtn.addEventListener("click",function(){
+            location.href = "#item";
+            mkHidden([giftPage, pjItmGft]);
+            mkVisible(itemPage);
+        })
+
+        itmName.addEventListener("input",function(){
+            console.dir(this);
+            lengthCheck(this,50);
+        })
+
+
+    }// window.onload
+
+    const tglHidden = function(elements){
+        elements.forEach(element => {
+            element.classList.toggle("hidden");
+        })
+    }
+    const mkHidden = function(elements){
+        elements.forEach(element => {
+            element.style.display = "none";
+        })
+    }
+    const mkVisible = function(element){
+        element.style.display = "flex";
+    }
+
+    const lengthCheck = function(elem, maxLength){
+        if(elem.value.length===0){
+            alert("아이템 이름을 입력하세요.")
+            elem.style.border = "1.5px solid red";
+            elem.focus();
+
+        }
+        if(elem.value.length > maxLength){
+            alert("아이템 이름의 길이는 50글자 이하여야 합니다.")
+            elem.style.border = "1.5px solid red";
+            elem.focus();
+
+        }
+    }
+</script>
 </body>
 </html>
 
