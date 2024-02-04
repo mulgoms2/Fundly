@@ -7,5 +7,6 @@
         <setting name="logImpl" value="LOG4J2"/>
     </settings>
     <typeAliases>
+        <typeAlias alias="ItemDto" type="com.persistence.dto.ItemDto"/>
     </typeAliases>
 </configuration>
