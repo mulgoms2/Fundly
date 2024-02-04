@@ -10,8 +10,8 @@
     </select>
 
 <!--    존재하지 않는 pj_id 가 삽입될 경우 참조 무결성 제약조건을 위배한다.  -->
-<!--    <insert id="makeRoom" parameterType="ChatRoomDto">-->
-<!--        insert into SEL_BUY_MSG(user_id, pj_id, dba_reg_id)-->
-<!--            values (#{user_id} , #{pj_id}, #{dba_reg_id})-->
-<!--    </insert>-->
+    <insert id="makeChatRoom" parameterType="ChatRoomDto">
+        insert into SEL_BUY_MSG(user_id, pj_id, dba_reg_id)
+            values (#{user_id} , #{pj_id}, #{user_id})
+    </insert>
 </mapper>

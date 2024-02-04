@@ -17,10 +17,18 @@ public class ChatServiceImpl implements ChatService {
 
         ChatRoomDto chatRoomDto = findRoom(user_id, pj_id);
 
+//        채팅방이 없으면 새로운 채팅방을 생성
         if (chatRoomDto == null) {
-            System.out.println("chatRoomDto = " + chatRoomDto);
+            try {
+                chatRoomDao.makeChatRoom(user_id, pj_id);
+                chatRoomDto = findRoom(user_id, pj_id);
+            } catch (Exception e) {
+                log.error("error with make chat room");
+                throw new RuntimeException(e);
+            }
         }
 
+//        채팅방 이름을 반환
         String roomName = chatRoomDto.getUser_id() + chatRoomDto.getPj_id();
 
         return roomName;
