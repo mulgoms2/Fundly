@@ -9,6 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatRoomDao {
     ChatRoomDto selectChatRoom(@Param("user_id") String user_id, @Param("pj_id") String pj_id) throws Exception;
-
-
 }
