@@ -1,4 +1,4 @@
-package com.fundly.admin.model;
+package com.persistence.dto;
 
 
 import lombok.EqualsAndHashCode;
@@ -17,13 +17,13 @@ public class NewsDto {
     private int news_sort;
     private String news_title;
     private String news_cont;
-    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private int news_view_cnt;
-    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private String hid_yn;
-    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Date reg_dtm;
     private String reg_id;
-    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private int file_cnt;
 }

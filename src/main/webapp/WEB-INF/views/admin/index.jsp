@@ -1,16 +1,17 @@
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="q" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tumblbug Admin</title>
-    <link rel="stylesheet" href="<c:url value='/static/css/webfont.css'/>">
-    <link rel="stylesheet" href="<c:url value='/static/css/common.css'/>">
-    <link href="<c:url value='/static/css/style.css'/>"  rel="stylesheet"/>
-<%--    <script type="text/javascript" src="/static/js/vendor/jquery-2.2.4.min.js"></script>--%>
+    <link rel="stylesheet" href="<q:url value='/static/css/webfont.css'/>">
+    <link rel="stylesheet" href="<q:url value='/static/css/common.css'/>">
+    <link href="<q:url value='/static/css/style.css'/>"  rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/vendor/jquery-2.2.4.min.js"></script>
 <%--    <script type="text/javascript" src="/static/js/vendor/jquery-ui.js"></script>--%>
 <%--    <script type="text/javascript" src="/static/js/vendor/jquery.bpopup.min.js"></script>--%>
 <%--    <script type="text/javascript" src="/static/js/vendor/moment.min.js"></script>--%>
@@ -29,107 +30,93 @@
             <i class="arrow"></i>
         </button>
     </div>
-<%--    <div class="lftMenu">--%>
-<%--        <nav class="lftWrap">--%>
-<%--            <ul class="lnb">--%>
-<%--                <li>--%>
-<%--                    <a href="#" class="">회원관리</a>--%>
-<%--                    <ul class="sub">--%>
-<%--                        <li>--%>
-<%--                            <a href="#">회원정보</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴2</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴3</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </li>--%>
-<%--                <li>--%>
-<%--                    <a href="#" class="">가맹점관리</a>--%>
-<%--                    <ul class="sub">--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴1</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴2</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴3</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </li>--%>
-<%--                <li>--%>
-<%--                    <a href="#" class="">상품관리</a>--%>
-<%--                    <ul class="sub">--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴1</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴2</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴3</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </li>--%>
-<%--                <li>--%>
-<%--                    <a href="#" class="">주문관리</a>--%>
-<%--                    <ul class="sub">--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴1</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴2</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴3</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </li>--%>
-<%--                <li>--%>
-<%--                    <a href="#" class="">통계분석</a>--%>
-<%--                    <ul class="sub">--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴1</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴2</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴3</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </li>--%>
-<%--                <li>--%>
-<%--                    <a href="#" class="">고객지원</a>--%>
-<%--                    <ul class="sub">--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴1</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴2</a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <a href="#">서브메뉴3</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </li>--%>
-<%--            </ul>--%>
-<%--        </nav>--%>
-<%--    </div>--%>
-<%--</div>--%>
+    <div class="lftMenu">
+        <nav class="lftWrap">
+            <ul class="lnb">
+                <li>
+                    <a href="#" class="">회원관리</a>
+                    <ul class="sub">
+                        <li>
+                            <a href="#">회원정보</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴2</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="">프로젝트관리</a>
+                    <ul class="sub">
+                        <li>
+                            <a href="#">서브메뉴1</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴2</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="">주문관리</a>
+                    <ul class="sub">
+                        <li>
+                            <a href="#">서브메뉴1</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴2</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="">통계분석</a>
+                    <ul class="sub">
+                        <li>
+                            <a href="#">서브메뉴1</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴2</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="">고객지원</a>
+                    <ul class="sub">
+                        <li>
+                            <a href="#">서브메뉴1</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴2</a>
+                        </li>
+                        <li>
+                            <a href="#">서브메뉴3</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 <div class="conWrap">
     <div class="title">
         <p class="tit">게시판 관리</p>
     </div>
     <div class="sttBox">
-        <div class="lftBox">
-            <span class="sttBlue">선물 전달 중</span>
-            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>
-            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>
-        </div>
+<%--        <div class="lftBox">--%>
+<%--            <span class="sttBlue">선물 전달 중</span>--%>
+<%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
+<%--            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>--%>
+<%--        </div>--%>
         <div class="rgtLink">
             <a href="#">자세히 보기</a>
         </div>
@@ -138,15 +125,15 @@
         <div class="lftBtngrp">
             <a href="#">
                 <i class="fa-regular fa-comments"></i>
-                <span>뉴스</span>
+                <span>보도 자료</span>
             </a>
             <a href="#">
                 <i class="fa-solid fa-location-dot fa-lg"></i>
-                <span>배송지 확정</span>
+                <span>공지사항</span>
             </a>
             <a href="#">
                 <i class="fa-solid fa-gift fa-lg"></i>
-                <span>선물 전달 완료</span>
+                <span>이벤트</span>
             </a>
         </div>
         <div class="rgtBtngrp">
@@ -160,7 +147,7 @@
     <div class="tbCont">
         <div class="tbWrap">
             <table>
-                <tr>news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm, mod_dtm,hid_yn
+                <tr>
                     <th>게시물번호</th>
                     <th>제목</th>
                     <th>등록자</th>
@@ -170,9 +157,9 @@
                     <th>숨김여부</th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
-                <td colspan="9">
-                    <p class="noData">데이터가 없습니다</p>
-                </td>
+<%--                <td colspan="9">--%>
+<%--                    <p class="noData">데이터가 없습니다</p>--%>
+<%--                </td>--%>
 
                 <c:forEach var="NewsDto" items="${NewsList}">
                     <tr>

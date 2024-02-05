@@ -1,5 +1,6 @@
 package com.fundly.admin.model;
 
+import com.persistence.dto.AdminDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

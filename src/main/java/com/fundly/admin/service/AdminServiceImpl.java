@@ -1,8 +1,7 @@
 package com.fundly.admin.service;
 
 import com.fundly.admin.model.AdminDao;
-import com.fundly.admin.model.AdminDto;
-import com.fundly.admin.service.AdminService;
+import com.persistence.dto.AdminDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

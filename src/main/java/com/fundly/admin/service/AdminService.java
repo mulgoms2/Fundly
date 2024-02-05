@@ -1,6 +1,6 @@
 package com.fundly.admin.service;
 
-import com.fundly.admin.model.AdminDto;
+import com.persistence.dto.AdminDto;
 import org.springframework.stereotype.Service;
 
 @Service

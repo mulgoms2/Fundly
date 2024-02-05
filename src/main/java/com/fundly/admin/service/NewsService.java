@@ -1,6 +1,6 @@
 package com.fundly.admin.service;
 
-import com.fundly.admin.model.NewsDto;
+import com.persistence.dto.NewsDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +21,6 @@ public interface NewsService {
 
     public int updateNews(NewsDto dto) throws Exception;
 
-    public int increaseView();
+    public int increaseView(Integer news_seq) throws Exception;
 
 }
