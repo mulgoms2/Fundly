@@ -18,7 +18,7 @@ public class ChatController {
     @Autowired
     ChatServiceImpl chatService;
 
-    @GetMapping("/")
+//    @GetMapping("/chat")
     public String chatRoom() {
         return "chat/chatIndex";
     }

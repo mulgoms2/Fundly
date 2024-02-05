@@ -28,15 +28,16 @@
 /*}*/
 
 body{
-    border: 1px solid red;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /*border: 1px solid red;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
 }
 .mainWrap{
     border: 1px solid #BDBDBD;
     display: flex;
+    margin : auto;
     flex-direction: column;
     align-items: center;
     width: 23rem;
@@ -46,29 +47,128 @@ body{
     margin-top: 5%;
 }
 
-input {
-
-    /*border-radius: 10px;*/
-    border: 1px solid purple;
-    width: 15rem;
-    margin: 10px 0 10px 0;
-
+.kakaBtn{
+    position: relative;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    padding: 0px 18px;
+    background-color: rgb(254, 229, 0);
+    border: none;
+    outline: none;
+    border-radius: 1px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(25, 25, 25);
+    margin-top: 10px;
 }
+
+.joinBtn {
+    position: relative;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    padding: 0px 18px;
+    background-color: cadetblue;
+    border: none;
+    outline: none;
+    border-radius: 1px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(25, 25, 25);
+    margin-top: 10px;
+}
+/* Input Styles */
+input[type=text] ,input[type=email] ,input[type=password] {
+    display: block;
+    width: 100%;
+    height: 40px; /* 입력 필드의 높이를 조절하세요 */
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid #ddd; /* 입력 필드 주위의 보더를 부드러운 회색으로 변경하세요 */
+    border-radius: 5px; /* 입력 필드의 라운드 처리를 추가하여 부드러운 느낌을 줄 수 있습니다 */
+    font-size: 14px;
+    transition: border-color 0.3s; /* 포커스 시 보더 색상 변화를 부드럽게 만듭니다 */
+}
+/*input {*/
+
+/*    !*border-radius: 10px;*!*/
+/*    border: 1px solid purple;*/
+/*    !*width: 15rem;*!*/
+/*    margin: 10px 0 10px 0;*/
+
+/*}*/
 
 button {
     border: 1px solid purple;
     cursor: pointer;
 }
 
+input:focus {
+    border-color: #aaa; /* 포커스 시 보더 색상을 변경하세요 */
+}
+
 .msg{
     color: red;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 h2{
-    margin: 2px 0 40px 0;
+    /*margin: 2px 0 40px 0;*/
+
+    margin: 10px 0 20px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 h3{
-    margin: 10px 0 10px 0;
+    /*margin: 10px 0 10px 0;*/
+
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+ input[type=checkbox]{
+    margin : 10px 0 10px 0 ;
+}
+
+
+.kakaBtn:hover, .joinBtn:hover {
+    background-color: #fdd835; /* 호버 시 배경색을 변경하세요 */
+    color: #222; /* 호버 시 텍스트 색상을 변경하세요 */
+}
+
+ /*.centerDiv{*/
+ /*    display: inline;*/
+ /*    align-items: center;*/
+ /*}*/
+
+/* CenterDiv Styles */
+.centerDiv {
+    text-align: center;
+    margin-top: 20px; /* 원하는 여백 값으로 변경하세요 */
+}
+
+.centerDiv p {
+    font-size: 14px;
+    color: #666; /* 텍스트 컬러를 변경하세요 */
+    margin-bottom: 10px;
+}
+
+.centerDiv .loginLink {
+    color: #007bff; /* 링크의 색상을 변경하세요 */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.centerDiv .loginLink:hover {
+    text-decoration: underline; /* 호버 시 밑줄을 추가하세요 */
 }
