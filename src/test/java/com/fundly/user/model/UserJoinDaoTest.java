@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.UUID;
 
-@SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 @Slf4j
+@SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class UserJoinDaoTest {
 
     @Autowired
