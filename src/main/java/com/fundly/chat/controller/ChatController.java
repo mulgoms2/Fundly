@@ -10,7 +10,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class ChatController {
         return "chat/chatIndex";
     }
 
-    @PostMapping("/chat")
+    @GetMapping("/chatPop")
     public String joinChatRoom(String user_id, String pj_id, Model model) {
 
 //        유저id, 프로젝트 id로 채팅방을 얻어온다.
@@ -47,6 +46,13 @@ public class ChatController {
         return "chat/chat";
     }
 
+    @GetMapping("/chat")
+    public String pop(String user_id, String pj_id, Model model) {
+        model.addAttribute("user_id", user_id);
+        model.addAttribute("pj_id", pj_id);
+        return "chat/blank";
+    }
+
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
     public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName, SelBuyMsgDetails message) {
@@ -55,6 +61,4 @@ public class ChatController {
 
         return message;
     }
-
-//    public String
 }

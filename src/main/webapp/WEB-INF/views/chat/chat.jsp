@@ -46,6 +46,8 @@
     </div>
 </div>
 <script>
+
+
     const stompClient = new StompJs.Client({
         brokerURL: 'ws://localhost:8080/endPoint'
     });
@@ -125,7 +127,6 @@
 
     window.onload = () => {
         connect();
-        <c:forEach items="${}"></c:forEach>
     };
 
 </script>

@@ -14,5 +14,4 @@
         insert into SEL_BUY_MSG(user_id, pj_id, dba_reg_id)
             values (#{user_id} , #{pj_id}, #{user_id})
     </insert>
-
 </mapper>
