@@ -54,10 +54,16 @@
             <version>3.1.1</version>
             <scope>provided</scope>
         </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>jakarta.servlet.jsp.jstl</groupId>-->
+<!--            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>-->
+<!--            <version>1.2.7</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
         <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>1.2.7</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
         <!--                         DB                           -->
         <!--        my batis       -->
