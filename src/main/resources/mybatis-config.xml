@@ -11,5 +11,6 @@
         <typeAlias type="com.persistence.dto.ChatRoomDto" alias="ChatRoomDto"/>
         <typeAlias type="com.persistence.dto.SelBuyMsgDetails" alias="SelBuyMsgDetails"/>
         <typeAlias alias="userDto" type="com.persistence.dto.UserDto"/>
+        <typeAlias alias="PayMeansDto" type="com.persistence.dto.PayMeansDto"/>
     </typeAliases>
 </configuration>
