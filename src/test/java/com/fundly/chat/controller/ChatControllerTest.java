@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
+import java.util.ArrayList;
+
 @Slf4j
 @SpringJUnitWebConfig(classes = {RootContext.class, ServletContext.class})
 //@Transactional
@@ -41,7 +43,6 @@ class ChatControllerTest {
     @Test
     @DisplayName("메시지저장")
     void makeMessage() {
-
         SelBuyMsgDetails selBuyMsgDetails = new SelBuyMsgDetails();
         selBuyMsgDetails.setPj_id("testPj");
         selBuyMsgDetails.setMsg_cont("안녕ㅇ하세요 ^^ ");
@@ -56,11 +57,8 @@ class ChatControllerTest {
     @DisplayName("메시지불러오기")
     @SneakyThrows
     void loadMsg() {
-        SelBuyMsgDetails[] selBuyMsgDetails = chatRoomDao.loadAllMessages("test", "testPj");
+        ArrayList<SelBuyMsgDetails> selBuyMsgDetails = chatRoomDao.loadAllMessages("test", "testPj");
 
-        for (int i = 0; i < selBuyMsgDetails.length; i++) {
-            System.out.println("selBuyMsgDetails[i].getMsgCont() = " + selBuyMsgDetails[i].getMsg_cont());
-        }
-
+        System.out.println("selBuyMsgDetails = " + selBuyMsgDetails);
     }
 }

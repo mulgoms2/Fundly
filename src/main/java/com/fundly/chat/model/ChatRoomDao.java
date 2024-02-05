@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 @Mapper
 @Repository
 public interface ChatRoomDao {
@@ -15,6 +17,6 @@ public interface ChatRoomDao {
 
     int insertMsg(SelBuyMsgDetails selBuyMsgDetails) throws Exception;
 
-    SelBuyMsgDetails[] loadAllMessages(@Param("buy_id") String buy_id,@Param("pj_id") String pj_id) throws Exception;
+   ArrayList<SelBuyMsgDetails> loadAllMessages(@Param("buy_id") String buy_id, @Param("pj_id") String pj_id) throws Exception;
 
 }

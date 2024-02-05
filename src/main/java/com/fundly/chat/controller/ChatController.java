@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+
 @Controller
 @Slf4j
 public class ChatController {
@@ -33,6 +35,13 @@ public class ChatController {
         model.addAttribute("roomName", chatRoomName);
 
 //        지난 채팅메시지를 가져온다.
+        ArrayList<SelBuyMsgDetails> messageList = chatService.loadMessages(user_id, pj_id);
+
+        model.addAttribute("messageList", messageList);
+
+//        model에 아이디랑 pj_id를 임시로 담았다
+        model.addAttribute("user_id", user_id);
+        model.addAttribute("pj_id", pj_id);
 
 //        채팅방에 입장하면서 자동으로 채팅방에 대한 구독이 시작된다.
         return "chat/chat";
@@ -40,7 +49,7 @@ public class ChatController {
 
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
-    public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName , SelBuyMsgDetails message) {
+    public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName, SelBuyMsgDetails message) {
 
         chatService.saveMessage(message);
 

@@ -7,12 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
     @Autowired
     ChatRoomDao chatRoomDao;
+
     public String getChatRoom(String user_id, String pj_id) {
 //        유저 id와 프로젝트 id를 받아 채팅방(topic)을 만든다.
 
@@ -48,8 +51,15 @@ public class ChatServiceImpl implements ChatService {
         return true;
     }
 
-    public void loadMessages() {
-
+    @Override
+    public ArrayList<SelBuyMsgDetails> loadMessages(String user_id, String pj_id) {
+        try {
+            return chatRoomDao.loadAllMessages(user_id, pj_id);
+        } catch (Exception e) {
+//            메시지를 로드하는데 실패하면 어떤 예외처리를 해야할까
+//            에러메시지를 전달한다.
+            throw new RuntimeException("error when message loading", e);
+        }
     }
 
     public ChatRoomDto findRoom(String user_id, String pj_id) {
