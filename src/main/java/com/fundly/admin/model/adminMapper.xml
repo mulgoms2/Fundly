@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.admin.model.AdminDao">
+    <insert id="insert" parameterType="AdminDto">
+        INSERT INTO admin_info
+            (admin_id, admin_name, admin_pwd,admin_phone_no,admin_email,reg_id)
+        VALUES
+            (#{admin_id}, #{admin_name}, #{admin_pwd}, #{admin_phone_no}, #{admin_email}, #{admin_id})
+    </insert>
+
+    <update id="update" parameterType="AdminDto">
+        UPDATE admin_info
+        SET   admin_name = #{admin_name}
+              ,admin_pwd = #{admin_pwd}
+          , admin_phone_no = #{admin_phone_no}
+          , admin_email = #{admin_email}
+          , mod_dtm = now()
+        WHERE admin_id = #{admin_id}
+    </update>
+</mapper>

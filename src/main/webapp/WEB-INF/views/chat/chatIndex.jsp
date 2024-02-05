@@ -11,11 +11,13 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/chat" method="post">
+<form id="join" action="/chat" method="get">
 <%--    <input type="hidden" name="user_id" value="${sessionScope.id}">--%>
     <input type="text" name="user_id" >
     <input type="text" name="pj_id" >
     <button type="submit">chat</button>
 </form>
+<script>
+</script>
 </body>
 </html>
