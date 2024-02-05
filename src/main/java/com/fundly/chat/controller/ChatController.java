@@ -45,14 +45,6 @@ public class ChatController {
 //        채팅방에 입장하면서 자동으로 채팅방에 대한 구독이 시작된다.
         return "chat/chat";
     }
-
-    @GetMapping("/chat")
-    public String pop(String user_id, String pj_id, Model model) {
-        model.addAttribute("user_id", user_id);
-        model.addAttribute("pj_id", pj_id);
-        return "chat/blank";
-    }
-
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
     public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName, SelBuyMsgDetails message) {

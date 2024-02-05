@@ -112,8 +112,6 @@
         const minute = date.getMinutes();
 
         $("#chatBox").append("<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>");
-
-        // document.querySelector("#chatBox").innerHTML += "<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>";
     }
 
     $(() => {
