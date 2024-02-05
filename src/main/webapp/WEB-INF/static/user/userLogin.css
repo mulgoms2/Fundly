@@ -28,11 +28,11 @@
 /*}*/
 
 body{
-    border: 1px solid red;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /*border: 1px solid red;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
 }
 .mainWrap{
     border: 1px solid #BDBDBD;

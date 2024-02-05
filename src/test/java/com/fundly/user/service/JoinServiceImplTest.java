@@ -21,8 +21,17 @@ class JoinServiceImplTest {
     UserJoinDao userJoinDao;
 
     @Autowired
-    JoinService joinService;
+//    JoinService joinService;
+    JoinServiceImpl joinService;
     private String uuid_user_id;
+
+
+    @Test
+    void count() throws Exception {
+
+        log.error("count() = " + joinService.count());
+
+    }
 
     @Test
     void insert()   {
@@ -38,7 +47,7 @@ class JoinServiceImplTest {
         userDto.setDba_reg_id(uuid_user_id);
 
         try{
-//            joinService.insert(userDto);
+            joinService.userJoin(userDto);
 
         }catch (Exception e){
             throw new RuntimeException(e);
