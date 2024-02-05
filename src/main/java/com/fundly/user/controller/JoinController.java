@@ -23,7 +23,7 @@ public class JoinController {
 //    UserJoinDao userJoinDao;
 
     @Autowired
-    JoinServiceImpl joinService;
+    JoinService joinService;
 
     @GetMapping("/add")
     public String join(){ return "user/join";}
