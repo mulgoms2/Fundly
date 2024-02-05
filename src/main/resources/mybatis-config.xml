@@ -7,6 +7,8 @@
         <setting name="logImpl" value="LOG4J2"/>
     </settings>
     <typeAliases>
+        <typeAlias alias="AdminDto" type="com.fundly.admin.model.AdminDto"/>
+        <typeAlias alias="NewsDto" type="com.fundly.admin.model.NewsDto"/>
         <typeAlias alias="ItemDto" type="com.persistence.dto.ItemDto"/>
         <typeAlias type="com.persistence.dto.ChatRoomDto" alias="ChatRoomDto"/>
         <typeAlias alias="userDto" type="com.persistence.dto.UserDto"/>
