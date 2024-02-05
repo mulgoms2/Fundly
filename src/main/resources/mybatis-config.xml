@@ -7,6 +7,14 @@
         <setting name="logImpl" value="LOG4J2"/>
     </settings>
     <typeAliases>
+        <typeAlias alias="AdminDto" type="com.persistence.dto.AdminDto"/>
+        <typeAlias alias="NewsDto" type="com.persistence.dto.NewsDto"/>
+        <typeAlias alias="CtgGuideDto" type="com.persistence.dto.CtgGuideDto"/>
+        <typeAlias alias="EventDto" type="com.persistence.dto.EventDto"/>
+        <typeAlias alias="FundGuideDto" type="com.persistence.dto.FundGuideDto"/>
+        <typeAlias alias="FundInSiteDto" type="com.persistence.dto.FundInSiteDto"/>
+        <typeAlias alias="InformDto" type="com.persistence.dto.InformDto"/>
+        <typeAlias alias="TermDto" type="com.persistence.dto.TermDto"/>
         <typeAlias alias="ItemDto" type="com.persistence.dto.ItemDto"/>
         <typeAlias type="com.persistence.dto.ChatRoomDto" alias="ChatRoomDto"/>
         <typeAlias type="com.persistence.dto.SelBuyMsgDetails" alias="SelBuyMsgDetails"/>
