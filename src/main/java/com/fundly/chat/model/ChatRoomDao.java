@@ -15,5 +15,6 @@ public interface ChatRoomDao {
 
     int insertMsg(SelBuyMsgDetails selBuyMsgDetails) throws Exception;
 
-    SelBuyMsgDetails[] loadAllMessages(@Param("buyId") String buyId,@Param("pjId") String pjId) throws Exception;
+    SelBuyMsgDetails[] loadAllMessages(@Param("buy_id") String buy_id,@Param("pj_id") String pj_id) throws Exception;
+
 }

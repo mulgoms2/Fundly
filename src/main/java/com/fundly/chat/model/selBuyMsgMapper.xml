@@ -7,11 +7,11 @@
             select concat("MSG_", now(), " ", ifnull(Max(seq), 0) +1 ) from SEL_BUY_MSG_DETAILS
         </selectKey>
         insert into SEL_BUY_MSG_DETAILS (msg_id,buy_id, pj_id, msg_cont)
-        values ( #{msgId} , #{buyId}, #{pjId}, #{msgCont})
+        values ( #{msg_id} , #{buy_id}, #{pj_id}, #{msg_cont})
     </insert>
 
     <select id="loadAllMessages" resultType="SelBuyMsgDetails">
-        select * from SEL_BUY_MSG_DETAILS where user_id = #{buyId} and pj_id = #{pjId}
+        select * from SEL_BUY_MSG_DETAILS where buy_id = #{buy_id} and pj_id = #{pj_id}
     </select>
 
 </mapper>

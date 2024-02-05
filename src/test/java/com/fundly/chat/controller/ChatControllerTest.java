@@ -39,14 +39,15 @@ class ChatControllerTest {
     }
 
     @Test
+    @DisplayName("메시지저장")
     void makeMessage() {
 
         SelBuyMsgDetails selBuyMsgDetails = new SelBuyMsgDetails();
-        selBuyMsgDetails.setPjId("testPj");
-        selBuyMsgDetails.setMsgCont("안녕ㅇ하세요 ^^ ");
+        selBuyMsgDetails.setPj_id("testPj");
+        selBuyMsgDetails.setMsg_cont("안녕ㅇ하세요 ^^ ");
 
+        selBuyMsgDetails.setBuy_id("test");
         for (int i = 0; i < 20; i++) {
-        selBuyMsgDetails.setBuyId("test" + i);
            chatService.saveMessage(selBuyMsgDetails);
         }
     }
@@ -56,6 +57,10 @@ class ChatControllerTest {
     @SneakyThrows
     void loadMsg() {
         SelBuyMsgDetails[] selBuyMsgDetails = chatRoomDao.loadAllMessages("test", "testPj");
+
+        for (int i = 0; i < selBuyMsgDetails.length; i++) {
+            System.out.println("selBuyMsgDetails[i].getMsgCont() = " + selBuyMsgDetails[i].getMsg_cont());
+        }
 
     }
 }

@@ -7,17 +7,17 @@ import java.util.Date;
 @Data
 public class SelBuyMsgDetails {
 
-    private String msgId;
-    private String buyId;
-    private String pjId;
+    private String msg_id;
+    private String buy_id;
+    private String pj_id;
     private Integer seq;
-    private String sendUserId;
-    private Date svrIntime;
-    private String msgReadYn;
-    private String msgCont;
-    private Date dbaRegDtm;
-    private String dbaRegId;
-    private Date dbaModDtm;
-    private String dbaModId;
-    private Integer fileCnt;
+    private String send_user_id;
+    private Date svr_intime;
+    private String msg_read_yn;
+    private String msg_cont;
+    private Date dba_reg_dtm;
+    private String dba_reg_id;
+    private Date dba_mod_dtm;
+    private String dba_mod_id;
+    private Integer file_cnt;
 }
