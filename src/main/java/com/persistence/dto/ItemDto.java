@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class itemDto {
+public class ItemDto {
     private String item_id;
     private Integer seq;
     private String pj_id;
@@ -21,11 +21,10 @@ public class itemDto {
     private Timestamp dba_mod_dtm;
     private String dba_mod_id;
 
-    public itemDto(String pj_id, String item_name, String item_option, Timestamp item_reg_dtm){
+    public ItemDto(String pj_id, String item_name, String item_option){
         this.pj_id = pj_id;
         this.item_name = item_name;
         this.item_option = item_option;
-        this.item_reg_dtm = item_reg_dtm;
     }
 
     @Override
@@ -43,7 +42,7 @@ public class itemDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        itemDto itemDto = (itemDto) o;
+        ItemDto itemDto = (ItemDto) o;
         return Objects.equals(item_id, itemDto.item_id) && Objects.equals(seq, itemDto.seq) && Objects.equals(pj_id, itemDto.pj_id) && Objects.equals(item_name, itemDto.item_name) && Objects.equals(item_option, itemDto.item_option);
     }
 

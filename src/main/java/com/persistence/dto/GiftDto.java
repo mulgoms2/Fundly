@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class giftDto {
+public class GiftDto {
     private Integer gift_id;
     private String pj_id;
     private Integer item_id;
@@ -51,14 +51,14 @@ public class giftDto {
                 '}';
     }
 
-    public giftDto(String gift_name){
+    public GiftDto(String gift_name){
         this.gift_name = gift_name;
     }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        giftDto giftDto = (giftDto) o;
+        GiftDto giftDto = (GiftDto) o;
         return Objects.equals(gift_id, giftDto.gift_id) && Objects.equals(pj_id, giftDto.pj_id) && Objects.equals(item_id, giftDto.item_id) && Objects.equals(seq, giftDto.seq) && Objects.equals(gift_name, giftDto.gift_name);
     }
 
