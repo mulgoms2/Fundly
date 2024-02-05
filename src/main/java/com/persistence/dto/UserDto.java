@@ -1,19 +1,20 @@
 
 package com.persistence.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class UserDto {
+    @NonNull
     private String user_id;
+    @NonNull
     private String user_name;
+    @NonNull
     private String user_pwd;
     private String user_prev_pwd;
     private String user_home_no;
