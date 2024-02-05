@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,12 +35,19 @@
                 </tr>
                 </thead>
                 <tbody id="chatBox">
+                <c:forEach items="${messageList}" var="msg">
+                    <tr>
+                        <td>${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 <script>
+
+
     const stompClient = new StompJs.Client({
         brokerURL: 'ws://localhost:8080/endPoint'
     });
@@ -50,7 +57,7 @@
 
         console.log("connected");
         stompClient.subscribe('/chatSub/${roomName}', (response) => {
-            displayMessage(JSON.parse(response.body).message);
+            displayMessage(JSON.parse(response.body).msg_cont);
         });
     };
 
@@ -71,7 +78,7 @@
         } else {
             $("#conversation").hide();
         }
-        $("#chatBox").html("");
+        // $("#chatBox").html("");
     }
 
     function connect() {
@@ -85,9 +92,15 @@
     }
 
     function sendMessage() {
+        const message = {
+            msg_cont: $("#chat").val(),
+            buy_id: "${user_id}",
+            pj_id: "${pj_id}",
+            send_user_id: "${user_id}"
+        };
         stompClient.publish({
             destination: "/chatPub/chat/${roomName}",
-            body: JSON.stringify({'message': $("#chat").val()})
+            body: JSON.stringify(message)
         });
 
         $("#chat").val("");
@@ -99,13 +112,15 @@
         const minute = date.getMinutes();
 
         $("#chatBox").append("<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>");
+
+        // document.querySelector("#chatBox").innerHTML += "<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>";
     }
 
     $(() => {
         $("form").on('submit', (e) => e.preventDefault());
         $("#exit").click(() => {
             disconnect();
-        //     창닫기 해결해야한다.
+            //     창닫기 해결해야한다.
         })
         $("#send").click(() => sendMessage());
     });

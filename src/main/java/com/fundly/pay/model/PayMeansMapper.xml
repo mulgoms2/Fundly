@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.fundly.pay.model.PayMeansDao">
+
+    <select id="count" resultType="int">
+        select count(*) from pay_means_reg
+    </select>
+
+    <insert id="insert" parameterType="PayMeansDto">
+        <selectKey keyProperty="pay_means_id" resultType="String" order="BEFORE">
+            select concat("PAY_", user_id, "_", (ifnull(Max(seq), 0) + 1)) from pay_means_reg
+        </selectKey>
+        insert into pay_means_reg(pay_means_id, user_id, own_type, default_pay_means_yn, card_co_type, dba_reg_id)
+        values (#{pay_means_id}, #{user_id}, #{own_type}, #{default_pay_means_yn}, #{card_co_type}, #{dba_reg_id})
+    </insert>
+
+<!--    새로운 기본 결제수단이 지정되면, 기존 기본 결제수단은 해제-->
+    <update id="updateDefaultMeansToNo" parameterType="PayMeansDto">
+        update pay_means_reg
+        set default_pay_means_yn = 'N',
+            dba_mod_dtm = now(),
+            dba_mod_id = #{dba_mod_id}
+        where default_pay_means_yn = 'Y'
+    </update>
+
+    <update id="updateDefaultMeansToYes" parameterType="PayMeansDto">
+        update pay_means_reg
+        set default_pay_means_yn = 'Y',
+            dba_mod_dtm = now(),
+            dba_mod_id = #{dba_mod_id}
+        where pay_means_id = #{pay_means_id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete from pay_means_reg
+        where pay_means_id = #{pay_means_id}
+    </delete>
+
+    <delete id="deleteAll">
+        delete from pay_means_reg
+    </delete>
+
+    <select id="select" parameterType="String" resultType="PayMeansDto">
+        select * from pay_means_reg
+        where pay_means_id = #{pay_means_id}
+    </select>
+
+<!--    해당 유저가 등록한 모든 결제수단 조회-->
+    <select id="selectAllForUser" parameterType="String" resultType="PayMeansDto">
+        select * from pay_means_reg
+        where user_id = #{user_id}
+    </select>
+
+    <select id="selectAll" resultType="PayMeansDto">
+        select * from pay_means_reg
+    </select>
+
+<!--    기본 결제수단 조회-->
+    <select id="selectDefaultMeans" resultType="PayMeansDto">
+        select * from pay_means_reg
+        where default_pay_means_yn = 'Y'
+    </select>
+
+</mapper>

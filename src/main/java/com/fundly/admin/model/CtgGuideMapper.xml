@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.admin.model.CtgGuideDao">
+    <insert id="insert" parameterType="CtgGuideDto">
+        INSERT INTO ctg_guide
+            (ctg_guide_title, ctg_guide_cont, reg_id)
+        VALUES
+            (#{ctg_guide_title}, #{ctg_guide_cont}, #{reg_id})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="CtgGuideDto">
+        SELECT ctg_guide_seq, ctg_guide_title, ctg_guide_cont, reg_id, ctg_guide_view_cnt, reg_dtm, mod_dtm,hid_yn
+        FROM ctg_guide WHERE ctg_guide_seq=#{ctg_guide_seq}
+    </select>
+
+    <select id="selectAll" resultType="CtgGuideDto">
+        SELECT ctg_guide_seq, ctg_guide_title, ctg_guide_cont, reg_id, ctg_guide_view_cnt, reg_dtm,hid_yn
+        FROM ctg_guide
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM ctg_guide where ctg_guide_seq=#{ctg_guide_seq} and reg_id=#{reg_id}
+    </delete>
+
+    <delete id="deleteAll" >
+        DELETE FROM ctg_guide
+    </delete>
+
+    <update id="update" parameterType="CtgGuideDto">
+        UPDATE ctg_guide
+        SET   ctg_guide_title = #{ctg_guide_title}
+          , ctg_guide_cont = #{ctg_guide_cont}
+          , mod_dtm = now()
+          ,  mod_id = #{mod_id}
+        WHERE ctg_guide_seq = #{ctg_guide_seq} and reg_id = #{reg_id}
+    </update>
+
+    <select id="count" resultType="int">
+        select count(*) from ctg_guide
+    </select>
+
+    <update id="increaseView" parameterType="int">
+        UPDATE ctg_guide
+        SET ctg_guide_view_cnt = ctg_guide_view_cnt + 1
+        WHERE ctg_guide_seq = #{ctg_guide_seq}
+    </update>
+</mapper>
