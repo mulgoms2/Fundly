@@ -1,6 +1,7 @@
 package com.fundly.admin.model;
 
 
+import com.persistence.dto.NewsDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,11 @@ public class NewsDaoImpl implements NewsDao {
     @Override
     public List<NewsDto> selectAll() throws Exception {
         return session.selectList(namespace+"selectAll");
+    }
+
+    @Override
+    public int delete(Map map) throws Exception {
+        return 0;
     }
 
     @Override
