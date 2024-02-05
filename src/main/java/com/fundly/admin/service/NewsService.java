@@ -1,9 +1,11 @@
 package com.fundly.admin.service;
 
 import com.fundly.admin.model.NewsDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface NewsService {
     public int insertNews(NewsDto dto) throws Exception;
 

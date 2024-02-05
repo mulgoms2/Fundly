@@ -7,16 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tumblbug Admin</title>
-    <link rel="stylesheet" href="/static/css/webfont.css"> "<c:url value='/static/css/style.css'/>"
-    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="<c:url value='/static/css/webfont.css'/>">
+    <link rel="stylesheet" href="<c:url value='/static/css/common.css'/>">
     <link href="<c:url value='/static/css/style.css'/>"  rel="stylesheet"/>
-    <script type="text/javascript" src="/static/js/vendor/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="/static/js/vendor/jquery-ui.js"></script>
-    <script type="text/javascript" src="/static/js/vendor/jquery.bpopup.min.js"></script>
-    <script type="text/javascript" src="/static/js/vendor/moment.min.js"></script>
-    <script type="text/javascript" src="/static/js/vendor/daterangepicker.js"></script>
-    <script type="text/javascript" src="/staticjs/common.js"></script>
-    <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
+<%--    <script type="text/javascript" src="/static/js/vendor/jquery-2.2.4.min.js"></script>--%>
+<%--    <script type="text/javascript" src="/static/js/vendor/jquery-ui.js"></script>--%>
+<%--    <script type="text/javascript" src="/static/js/vendor/jquery.bpopup.min.js"></script>--%>
+<%--    <script type="text/javascript" src="/static/js/vendor/moment.min.js"></script>--%>
+<%--    <script type="text/javascript" src="/static/js/vendor/daterangepicker.js"></script>--%>
+<%--    <script type="text/javascript" src="/staticjs/common.js"></script>--%>
+<%--    <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>--%>
 </head>
 <body>
 <button class="mnBtnbl">
@@ -29,100 +29,100 @@
             <i class="arrow"></i>
         </button>
     </div>
-    <div class="lftMenu">
-        <nav class="lftWrap">
-            <ul class="lnb">
-                <li>
-                    <a href="#" class="">회원관리</a>
-                    <ul class="sub">
-                        <li>
-                            <a href="#">회원정보</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴2</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="">가맹점관리</a>
-                    <ul class="sub">
-                        <li>
-                            <a href="#">서브메뉴1</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴2</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="">상품관리</a>
-                    <ul class="sub">
-                        <li>
-                            <a href="#">서브메뉴1</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴2</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="">주문관리</a>
-                    <ul class="sub">
-                        <li>
-                            <a href="#">서브메뉴1</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴2</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="">통계분석</a>
-                    <ul class="sub">
-                        <li>
-                            <a href="#">서브메뉴1</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴2</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="">고객지원</a>
-                    <ul class="sub">
-                        <li>
-                            <a href="#">서브메뉴1</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴2</a>
-                        </li>
-                        <li>
-                            <a href="#">서브메뉴3</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
+<%--    <div class="lftMenu">--%>
+<%--        <nav class="lftWrap">--%>
+<%--            <ul class="lnb">--%>
+<%--                <li>--%>
+<%--                    <a href="#" class="">회원관리</a>--%>
+<%--                    <ul class="sub">--%>
+<%--                        <li>--%>
+<%--                            <a href="#">회원정보</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴2</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴3</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="#" class="">가맹점관리</a>--%>
+<%--                    <ul class="sub">--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴1</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴2</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴3</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="#" class="">상품관리</a>--%>
+<%--                    <ul class="sub">--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴1</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴2</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴3</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="#" class="">주문관리</a>--%>
+<%--                    <ul class="sub">--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴1</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴2</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴3</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="#" class="">통계분석</a>--%>
+<%--                    <ul class="sub">--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴1</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴2</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴3</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="#" class="">고객지원</a>--%>
+<%--                    <ul class="sub">--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴1</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴2</a>--%>
+<%--                        </li>--%>
+<%--                        <li>--%>
+<%--                            <a href="#">서브메뉴3</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
+<%--                </li>--%>
+<%--            </ul>--%>
+<%--        </nav>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <div class="conWrap">
     <div class="title">
-        <p class="tit">후원자 관리</p>
+        <p class="tit">게시판 관리</p>
     </div>
     <div class="sttBox">
         <div class="lftBox">
@@ -138,7 +138,7 @@
         <div class="lftBtngrp">
             <a href="#">
                 <i class="fa-regular fa-comments"></i>
-                <span>메시지 발송</span>
+                <span>뉴스</span>
             </a>
             <a href="#">
                 <i class="fa-solid fa-location-dot fa-lg"></i>
@@ -160,33 +160,30 @@
     <div class="tbCont">
         <div class="tbWrap">
             <table>
-                <tr>
-                    <th>후원번호</th>
-                    <th>이름</th>
-                    <th>선물</th>
-                    <th>추가 후원금</th>
-                    <th>총 후원 금액</th>
-                    <th>후원 일시</th>
-                    <th>알림 신청</th>
-                    <th>결제 상태</th>
-                    <th>선물 전달</th>
+                <tr>news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm, mod_dtm,hid_yn
+                    <th>게시물번호</th>
+                    <th>제목</th>
+                    <th>등록자</th>
+                    <th>조회수</th>
+                    <th>등록일시</th>
+                    <th>수정일시</th>
+                    <th>숨김여부</th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
                 <td colspan="9">
                     <p class="noData">데이터가 없습니다</p>
                 </td>
-                <!-- 데이터 영역 -->
-                <!-- <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> -->
+
+                <c:forEach var="NewsDto" items="${NewsList}">
+                    <tr>
+                        <td>${NewsDto.news_seq}</td>
+                        <td>${NewsDto.news_title}</td>
+                        <td>${NewsDto.reg_id}</td>
+                        <td>${NewsDto.news_view_cnt}</td>
+                        <td>${NewsDto.reg_dtm}</td>
+                        <td>${NewsDto.hid_yn}</td>
+                    </tr>
+                </c:forEach>
             </table>
         </div>
     </div>
