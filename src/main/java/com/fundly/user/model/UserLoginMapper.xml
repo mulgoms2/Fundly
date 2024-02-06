@@ -4,14 +4,17 @@
 
 <mapper namespace="com.fundly.user.model.UserLoginDao">
 
+    <!-- sql test -->
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM user_info
     </select>
 
+    <!-- email 중복 -->
     <select id="emailCheck" resultType="int" parameterType="String">
         SELECT COUNT(*) FROM user_info WHERE user_email = #{user_email}
     </select>
 
+    <!-- id 중복 -->
     <select id="idCheck" resultType="int" parameterType="String">
         SELECT COUNT(*) FROM user_info WHERE user_id = #{user_id}
     </select>

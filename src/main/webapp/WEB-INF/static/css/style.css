@@ -1,0 +1,135 @@
+
+
+/* 관리자 css */
+
+body {
+    min-width: 1200px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.conWrap {
+    width: calc(100% - 240px);
+    height: calc(100% - 40px);
+    overflow: auto;
+    padding: 50px 35px 100px 35px;
+}
+.title {
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tit {
+    display: inline-block;
+    color: #333;
+    font-size: 30px;
+    font-weight: 600;
+}
+.sttBox {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e6efff;
+}
+.sttBox .lftBox {
+    display: flex;
+    align-items: center;
+}
+.lftBox .bxTit {
+    margin-left: 15px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.lftBox .bxStit {
+    margin-left: 20px;
+    color: #777;
+    font-size: 16px;
+    font-weight: 400;
+}
+.rgtLink > a {
+    color: #3288F7;
+    font-weight: 500;
+    text-decoration: underline;
+}
+.rgtLink > a:hover {
+    color: #19457f;
+}
+
+/* 버튼 그룹 */
+.btnWrap {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.lftBtngrp {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.lftBtngrp > a {
+    margin-right: 20px;
+    color: #777;
+}
+.lftBtngrp > a > .fa-regular.fa-comments,
+.lftBtngrp > a > .fa-solid.fa-location-dot,
+.lftBtngrp > a > .fa-solid.fa-gift {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+}
+.lftBtngrp > a > .fa-solid.fa-location-dot {
+    text-align: center;
+}
+
+.lftBtngrp > a:hover {
+    color: #F86453;
+}
+.lftBtngrp > a:last-child {
+    margin-right: 0px;
+}
+
+.rgtBtngrp {
+    display: flex;
+    align-items: center;
+}
+.rgtBtngrp button {
+    width: 100%;
+    min-width: 120px;
+    min-height: 40px;
+    margin-right: 20px;
+    padding: 0 10px;
+}
+.rgtBtngrp button:last-child {
+    margin-right: 0px;
+}
+.rgtBtngrp > a > .fa-solid.fa-location-arrow {
+    margin-right: 5px;
+    line-height: 20px;
+    background: #777;
+}
+.rgtBtngrp button.carrot {
+    min-width: 140px;
+}
+
+/* 버튼 배경 색상 */
+button.gray {
+    background: #fafafa;
+    border: 1px solid #d3d3d3;
+}
+button.carrot {
+    color: #fff;
+    background: #F86453;
+}
+
+/* 상태 span 태그 */
+.sttBlue {
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #3288F7;
+    border-radius: 5px;
+}
+

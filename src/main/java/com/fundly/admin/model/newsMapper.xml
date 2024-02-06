@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.admin.model.NewsDao">
+    <insert id="insert" parameterType="NewsDto">
+        INSERT INTO news
+            (news_title, news_cont, reg_id)
+        VALUES
+            (#{news_title}, #{news_cont}, #{reg_id})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="NewsDto">
+        SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm, mod_dtm,hid_yn
+        FROM news WHERE news_seq=#{news_seq}
+    </select>
+
+    <select id="selectAll" resultType="NewsDto">
+        SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm,hid_yn
+        FROM news
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM news where news_seq=#{news_seq} and reg_id=#{reg_id}
+    </delete>
+
+    <delete id="deleteAll" >
+        DELETE FROM news
+    </delete>
+
+    <update id="update" parameterType="NewsDto">
+        UPDATE news
+        SET   news_title = #{news_title}
+          , news_cont = #{news_cont}
+          , mod_dtm = now()
+          ,  mod_id = #{mod_id}
+        WHERE news_seq = #{news_seq} and reg_id = #{reg_id}
+    </update>
+
+    <select id="count" resultType="int">
+        select count(*) from news
+    </select>
+
+    <update id="increaseView" parameterType="int">
+        UPDATE news
+        SET news_view_cnt = news_view_cnt + 1
+        WHERE news_seq = #{news_seq}
+    </update>
+</mapper>
