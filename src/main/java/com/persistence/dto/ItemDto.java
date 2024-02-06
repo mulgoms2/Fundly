@@ -1,7 +1,9 @@
 package com.persistence.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
@@ -9,31 +11,37 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor //기본생성자 꼭 필요(맵핑)
 public class ItemDto {
     private String item_id;
     private Integer seq;
     private String pj_id;
     private String item_name;
     private String item_option;
+    private String item_option_type; //추가해야할 column
     private Timestamp item_reg_dtm;
     private Timestamp dba_reg_dtm;
     private String dba_reg_id;
     private Timestamp dba_mod_dtm;
     private String dba_mod_id;
 
-    public ItemDto(String pj_id, String item_name, String item_option){
+    public ItemDto(String pj_id, String item_name, String item_option_type, String item_option){
         this.pj_id = pj_id;
         this.item_name = item_name;
+        this.item_option_type = item_option_type;
         this.item_option = item_option;
     }
 
     @Override
     public String toString() {
-        return "itemDto{" +
+        return "ItemDto{" +
                 "item_id='" + item_id + '\'' +
+                ", seq=" + seq +
                 ", pj_id='" + pj_id + '\'' +
                 ", item_name='" + item_name + '\'' +
                 ", item_option='" + item_option + '\'' +
+                ", item_option_type='" + item_option_type + '\'' +
                 ", item_reg_dtm=" + item_reg_dtm +
                 '}';
     }

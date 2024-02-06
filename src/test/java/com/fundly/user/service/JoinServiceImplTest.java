@@ -21,8 +21,8 @@ class JoinServiceImplTest {
     UserJoinDao userJoinDao;
 
     @Autowired
-//    JoinService joinService;
-    JoinServiceImpl joinService;
+    JoinService joinService;
+//    JoinServiceImpl joinService;
     private String uuid_user_id;
 
 
