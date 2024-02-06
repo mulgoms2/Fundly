@@ -11,10 +11,10 @@
     </select>
 
     <!--    좋아요 처음 저장-->
-    <insert id="insertLike" parameterType="hashmap">
-        insert into LIKE_PJ (user_id,pj_id,like_status)
-        values(#{user_id},#{pj_id},1)
-    </insert>
+<!--    <insert id="insertLike" parameterType="hasmap">-->
+<!--        insert into LIKE_PJ (user_id,pj_id,like_status)-->
+<!--        values(#{user_id},#{pj_id},1)-->
+<!--    </insert>-->
 
     <!--    좋아요 취소-->
     <update id="cancelLike">
