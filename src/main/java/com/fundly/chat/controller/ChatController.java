@@ -10,6 +10,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -53,5 +56,10 @@ public class ChatController {
         chatService.saveMessage(message);
 
         return message;
+    }
+
+    @PostMapping("/chat/file")
+    public void file(@RequestParam("file") MultipartFile file) {
+
     }
 }
