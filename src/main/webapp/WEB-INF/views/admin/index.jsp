@@ -8,10 +8,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tumblbug Admin</title>
-    <link rel="stylesheet" href="<q:url value='/static/css/webfont.css'/>">
-    <link rel="stylesheet" href="<q:url value='/static/css/common.css'/>">
-    <link href="<q:url value='/static/css/style.css'/>"  rel="stylesheet"/>
-    <script type="text/javascript" src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" href="<q:url value='/static/admin/css/webfont.css'/>">
+    <link rel="stylesheet" href="<q:url value='/static/admin/css/common.css'/>">
+    <link href="<q:url value='/static/admin/css/style.css'/>"  rel="stylesheet"/>
+    <script type="text/javascript" src="/static/admin/js/vendor/jquery-2.2.4.min.js"></script>
 <%--    <script type="text/javascript" src="/static/js/vendor/jquery-ui.js"></script>--%>
 <%--    <script type="text/javascript" src="/static/js/vendor/jquery.bpopup.min.js"></script>--%>
 <%--    <script type="text/javascript" src="/static/js/vendor/moment.min.js"></script>--%>
@@ -155,6 +155,8 @@
                     <th>등록일시</th>
                     <th>수정일시</th>
                     <th>숨김여부</th>
+                    <th>조회수</th>
+                    <th><button id="write" onclick="location.href=' <c:url value='/admin/write'/>'">글쓰기</button> </th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
 <%--                <td colspan="9">--%>
@@ -163,12 +165,13 @@
 
                 <c:forEach var="NewsDto" items="${NewsList}">
                     <tr>
-                        <td>${NewsDto.news_seq}</td>
-                        <td>${NewsDto.news_title}</td>
-                        <td>${NewsDto.reg_id}</td>
-                        <td>${NewsDto.news_view_cnt}</td>
-                        <td>${NewsDto.reg_dtm}</td>
-                        <td>${NewsDto.hid_yn}</td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_seq}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_title}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_id}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_view_cnt}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_view_cnt}</a></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -178,5 +181,6 @@
 <footer>
     <p>@Copyright 2024. 텀블벅 관리자 사이트 All Rights Reserved.</p>
 </footer>
+
 </body>
 </html>

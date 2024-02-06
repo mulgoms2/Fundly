@@ -22,6 +22,7 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public NewsDto selectNews(Integer news_seq) throws Exception {
+        newsDao.increaseView(news_seq);
         return newsDao.select(news_seq);
     }
 
@@ -53,8 +54,5 @@ public class NewsServiceImpl implements NewsService{
         return newsDao.update(dto);
     }
 
-    @Override
-    public int increaseView(Integer news_seq) throws Exception{
-        return newsDao.increaseView(news_seq);
-    }
+
 }

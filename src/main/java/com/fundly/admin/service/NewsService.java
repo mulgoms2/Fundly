@@ -21,6 +21,6 @@ public interface NewsService {
 
     public int updateNews(NewsDto dto) throws Exception;
 
-    public int increaseView(Integer news_seq) throws Exception;
+
 
 }
