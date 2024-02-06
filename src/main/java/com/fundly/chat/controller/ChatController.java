@@ -20,7 +20,7 @@ public class ChatController {
     @Autowired
     ChatServiceImpl chatService;
 
-//    @GetMapping("/chat")
+    @GetMapping("/chat")
     public String chatRoom() {
         return "chat/chatIndex";
     }
@@ -49,6 +49,7 @@ public class ChatController {
     @SendTo("/chatSub/{roomName}")
     public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName, SelBuyMsgDetails message) {
 
+//        파일이 첨부되어 오는지 확인해보자.
         chatService.saveMessage(message);
 
         return message;
