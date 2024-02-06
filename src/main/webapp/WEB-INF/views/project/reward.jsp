@@ -578,13 +578,7 @@
                 console.dir(result);
             },
             error: function(result){alert('아이템 등록에 실패했습니다.')}
-
-
         });
-    });
-
-    })
-
     }
     const remove = function(arr,elem){ //옵션이 담기거나, 아이템이 담긴 배열
         if(!confirm('옵션을 삭제하시겠습니까?')) return;
