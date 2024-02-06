@@ -10,6 +10,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -20,7 +23,7 @@ public class ChatController {
     @Autowired
     ChatServiceImpl chatService;
 
-    @GetMapping("/")
+    @GetMapping("/chat")
     public String chatRoom() {
         return "chat/chatIndex";
     }
@@ -45,20 +48,18 @@ public class ChatController {
 //        채팅방에 입장하면서 자동으로 채팅방에 대한 구독이 시작된다.
         return "chat/chat";
     }
-
-    @GetMapping("/chat")
-    public String pop(String user_id, String pj_id, Model model) {
-        model.addAttribute("user_id", user_id);
-        model.addAttribute("pj_id", pj_id);
-        return "chat/blank";
-    }
-
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
     public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName, SelBuyMsgDetails message) {
 
+//        파일이 첨부되어 오는지 확인해보자.
         chatService.saveMessage(message);
 
         return message;
+    }
+
+    @PostMapping("/chat/file")
+    public void file(@RequestParam("file") MultipartFile file) {
+
     }
 }

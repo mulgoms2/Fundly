@@ -23,7 +23,9 @@
                 </div>
                 <button id="send" class="btn btn-default" type="submit">Send</button>
             </form>
-            <button id="exit">EXIT</button>
+            <form enctype="multipart/form-data">
+                <input id="img_file" type="file" accept="image/*">
+            </form>
         </div>
     </div>
     <div class="row">
@@ -37,7 +39,7 @@
                 <tbody id="chatBox">
                 <c:forEach items="${messageList}" var="msg">
                     <tr>
-                        <td>${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
+                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -57,7 +59,7 @@
 
         console.log("connected");
         stompClient.subscribe('/chatSub/${roomName}', (response) => {
-            displayMessage(JSON.parse(response.body).msg_cont);
+            displayMessage(JSON.parse(response.body));
         });
     };
 
@@ -91,12 +93,18 @@
         console.log("Disconnected");
     }
 
+    const img = document.querySelector("#img_file");
+    console.dir(img);
+
+
     function sendMessage() {
         const message = {
             msg_cont: $("#chat").val(),
             buy_id: "${user_id}",
             pj_id: "${pj_id}",
-            send_user_id: "${user_id}"
+            send_user_id: "${user_id}",
+            // 이미지 파일이 널러블하다(?)
+            // img_file :
         };
         stompClient.publish({
             destination: "/chatPub/chat/${roomName}",
@@ -110,10 +118,9 @@
         const date = new Date();
         const hour = date.getHours();
         const minute = date.getMinutes();
+        // if(message.file) 만약에
 
-        $("#chatBox").append("<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>");
-
-        // document.querySelector("#chatBox").innerHTML += "<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>";
+        $("#chatBox").append("<tr><td>"+ message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>");
     }
 
     $(() => {
