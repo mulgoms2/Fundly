@@ -6,13 +6,13 @@
     <title>Hello WebSocket</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="https://kit.fontawesome.com/99823c8069.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/chat/css/chatCss.css"/>
 </head>
 <body id="chatBody">
 <div class="chatMainContainer">
-
-    <div class="chatTable">
-        <table id="conversation" class="table table-striped">
+    <div class="chatTableBox">
+        <table id="conversation" class="chatTable">
             <thead>
             <tr>
                 <th>chat</th>
@@ -30,8 +30,8 @@
     <div class="chatFormContainer">
         <form id="chatForm">
             <div class="chatIptBox">
-                <input type="text" id="chat" class="form-control">
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <input type="text" id="chat" class="chatIpt" required>
+                <button id="send" class="sendBtn" type="submit">Send</button>
             </div>
         </form>
     </div>
@@ -83,8 +83,14 @@
     }
 
     function sendMessage() {
-        const message = {
-            msg_cont: $("#chat").val(),
+        const message = document.querySelector("#chat").value;
+
+        if (message === ""){
+            return ;
+        }
+
+        const messageDto = {
+            msg_cont: message,
             buy_id: "${user_id}",
             pj_id: "${pj_id}",
             send_user_id: "${user_id}",
@@ -94,7 +100,7 @@
 
         stompClient.publish({
             destination: "/chatPub/chat/${roomName}",
-            body: JSON.stringify(message)
+            body: JSON.stringify(messageDto)
         });
 
         document.querySelector("#chat").value = "";
