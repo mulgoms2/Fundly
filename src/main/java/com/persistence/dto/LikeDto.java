@@ -14,7 +14,7 @@ public class LikeDto {
     @NonNull
     private String pj_id;
     @NonNull
-    private String like_status;
+    private int like_status;
     private Timestamp dba_reg_dtm;
     private String dba_reg_id;
     private Timestamp dba_mod_dtm;
