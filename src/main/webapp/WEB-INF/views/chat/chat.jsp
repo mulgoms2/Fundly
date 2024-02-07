@@ -7,35 +7,32 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
 </head>
-<body>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form id="chatForm">
-                <div class="form-group">
-                    <input type="text" id="chat" class="form-control">
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
+<body id="chatBody">
+<div class="chatMainContainer">
+
+    <div class="chatTable">
+        <table id="conversation" class="table table-striped">
+            <thead>
+            <tr>
+                <th>chat</th>
+            </tr>
+            </thead>
+            <tbody id="chatBox">
+            <c:forEach items="${messageList}" var="msg">
                 <tr>
-                    <th>chat</th>
+                    <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
                 </tr>
-                </thead>
-                <tbody id="chatBox">
-                <c:forEach items="${messageList}" var="msg">
-                    <tr>
-                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    <div class="chatFormContainer">
+        <form id="chatForm">
+            <div class="chatIptBox">
+                <input type="text" id="chat" class="form-control">
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </div>
+        </form>
     </div>
 </div>
 <script>
@@ -50,6 +47,8 @@
         stompClient.subscribe('/chatSub/${roomName}', (response) => {
             displayMessage(JSON.parse(response.body));
         });
+
+        scrollToButtom();
     };
 
     stompClient.onWebSocketError = (error) => {
@@ -82,10 +81,6 @@
         console.log("Disconnected");
     }
 
-    const img = document.querySelector("#img_file");
-    console.dir(img);
-
-
     function sendMessage() {
         const message = {
             msg_cont: $("#chat").val(),
@@ -95,12 +90,12 @@
             // 이미지 파일이 널러블하다(?)
             // img_file :
         };
+
         stompClient.publish({
             destination: "/chatPub/chat/${roomName}",
             body: JSON.stringify(message)
         });
 
-        // $("#chat").val("");
         document.querySelector("#chat").value = "";
     }
 
@@ -110,18 +105,21 @@
         const minute = date.getMinutes();
         // if(message.file) 만약에
 
-        document.querySelector("#chatBox").innerHTML = "<tr><td>" + message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>";
+        document.querySelector("#chatBox").innerHTML += "<tr><td>" + message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>";
+
+        scrollToButtom();
     }
 
-    $(() => {
-        document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
-        document.querySelector("#send").addEventListener('click',sendMessage)
-    });
-
     window.onload = () => {
+        document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
+        document.querySelector("#send").addEventListener('click', sendMessage)
         connect();
     };
 
+    function scrollToButtom(){
+        const scrollHeight = document.querySelector("#chatBody").scrollHeight;
+        window.scrollTo({top: scrollHeight});
+    }
 </script>
 </body>
 </html>
