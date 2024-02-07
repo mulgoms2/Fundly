@@ -6,6 +6,7 @@
     <title>Hello WebSocket</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <link rel="stylesheet" href="/static/chat/css/chatCss.css"/>
 </head>
 <body id="chatBody">
 <div class="chatMainContainer">
