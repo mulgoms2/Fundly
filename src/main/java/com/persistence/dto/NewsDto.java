@@ -26,4 +26,6 @@ public class NewsDto {
     private String reg_id;
     @ToString.Exclude
     private int file_cnt;
+    private Date mod_dtm;
+    private String mod_id;
 }

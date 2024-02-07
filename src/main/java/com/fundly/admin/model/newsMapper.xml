@@ -11,12 +11,12 @@
     </insert>
 
     <select id="select" parameterType="int" resultType="NewsDto">
-        SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm, mod_dtm,hid_yn
+        SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm, mod_dtm,hid_yn,mod_id
         FROM news WHERE news_seq=#{news_seq}
     </select>
 
     <select id="selectAll" resultType="NewsDto">
-        SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm,hid_yn
+        SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm,hid_yn,mod_dtm,mod_id
         FROM news
     </select>
 
@@ -33,7 +33,7 @@
         SET   news_title = #{news_title}
           , news_cont = #{news_cont}
           , mod_dtm = now()
-          ,  mod_id = #{mod_id}
+          ,  mod_id = #{reg_id}
         WHERE news_seq = #{news_seq} and reg_id = #{reg_id}
     </update>
 

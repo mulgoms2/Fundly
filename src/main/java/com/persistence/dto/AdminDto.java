@@ -15,4 +15,6 @@ public class AdminDto {
     private String admin_phone_no;
     private Date reg_dtm;
     private String reg_id;
+    private Date mod_dtm;
+    private String mod_id;
 }
