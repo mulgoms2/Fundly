@@ -1,8 +1,6 @@
 package com.fundly.user.controller;
 
-import com.fundly.user.model.UserJoinDao;
 import com.fundly.user.service.JoinService;
-import com.fundly.user.service.JoinServiceImpl;
 import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.UUID;
 
 @Slf4j
 @Controller

@@ -45,7 +45,7 @@
 </head>
 <body>
 <div class="pjSubTb">
-    <button class="isActive" type="button" id="gftBtn">
+    <button type="button" id="gftBtn">
         선물
     </button>
     <button type="button" id="itmBtn">
@@ -55,34 +55,34 @@
 
 <div class="pjWrap">
     <div class="pjCont">
-
         <!-- reward.jsp 요청시, 등록된 아이템이 하나도 없다면 보여주는 화면 -->
-        <%--        <c:if test="#{empty itemList}">--%>
-        <div class="pjBox str">
-            <div id="pjItmGft">
+        <%--        <c:set var="itemList" value="${itemList}"/>--%>
+        <c:if test="${empty itemList}"> <!--JS로 처리하고 싶었지만 안된다 -->
+            <div class="pjBox str" id="str">
                 <div>
                     <div>
-                        선물 만들기
+                        <div>
+                            선물 만들기
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <button type="button" id="strBtn">아이템을 만들어주세요</button>
                     <div>
-                        <h2>후원 가치를 높이는 선물</h2>
-                        <br>
-                        <p>아직 등록된 아이템이 없습니다.</p>
-                        <br>
-                        <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
-                        <p>아이템을 등록 후 다양한 금액대로 여러 개의 선물을 만들어주세요. </p>
-                        <p>펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                        <button type="button" id="strBtn">아이템을 먼저 만들어주세요</button>
+                        <div>
+                            <h2>후원 가치를 높이는 선물</h2>
+                            <br>
+                            <p>아직 등록된 아이템이 없습니다.</p>
+                            <br>
+                            <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
+                            <p>아이템을 등록 후 다양한 금액대로 여러 개의 선물을 만들어주세요. </p>
+                            <p>펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <%--        </c:if>--%>
+        </c:if>
 
         <!-- 선물 만들기 페이지 -->
-        <%--        <c:if test="#{not empty itemList}">--%>
+        <!--역시 JS로 하고 싶었지만 -->
         <div class="pjBox gift" id="gift">
             <div class="pjInfo">
                 <div>
@@ -193,14 +193,32 @@
                 </div>
             </div>
         </div> <!--gift-->
-        <%--</c:if>--%>
+
+
+
+
 
         <!--아이템 만들기 페이지-->
         <div class="pjBox item" id="item">
             <div class="pjInfo">
                 <div>
                     <div>내가 만든 아이템 count</div>
-                    <div id="itemList"></div>
+                    <div id="itemList">
+                        <c:forEach var="itemDto" items="${itemList}">
+                            <div style="cursor:pointer" onclick=removeItm(itemArr,this)>
+                                <input type="hidden" value="${itemDto.item_id}"/>
+                                <p style="font-weight: 600">${itemDto.item_name}</p>
+                                <p>${itemDto.item_option_type}</p>
+                                <c:if test="${not empty itemDto.item_option}">
+                                    <ul>
+                                        <c:forEach var="item_option" items="${itemDto.item_option}">
+                                            <li>${item_option}</li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
             <div class="pjForm">
@@ -272,10 +290,12 @@
 <script>
     let optArr = []; //window.onload 안에 있으면 함수에서 못 갖다 쓴다.
     let itemArr = [];
+
     window.onload = function(){
+
         const itemPage = document.querySelector("#item"); //아이템 페이지 div단락
         const giftPage = document.querySelector("#gift"); //선물 페이지 div단락
-        const pjItmGft = document.querySelector("#pjItmGft"); //선물 만들기 첫 페이지
+        const strPage = document.querySelector("#str"); //선물 만들기 첫 페이지
         const strBtn = document.querySelector("#strBtn"); //아이템 만들기 버튼(아이템 페이지로 이동)
         const gftBtn = document.querySelector("#gftBtn"); //상단 선물페이지 이동 버튼
         const itmBtn = document.querySelector("#itmBtn"); //상단 아이템페이지 이동 버튼
@@ -284,25 +304,81 @@
         const initBtn = document.querySelector("button.init");//초기화버튼
         const saveBtn = document.querySelector("button.save");//저장버튼
 
+        //window.onload시 #itemList에 있는 item수를 세고
+        const cnt = document.querySelectorAll("#itemList div");
+        console.dir(cnt);
+        mkHidden([itemPage]);//이건 cnt와 상관없이
+        if(cnt.length===0){
+            mkHidden([giftPage]); //아이템이 하나도 없으면 선물시작페이지(strPage)가 뜨도록 giftPage는 숨김처리
+        }
 
-        mkHidden([giftPage, itemPage]);
+        <%--console.dir(${itemList.});--%>
+        //동작 안함. 이유를 생각하기!!!
 
-        strBtn.addEventListener("click",function(){
-            // giftPage.style.display = "none";
-            location.href = "#item";
-            mkHidden([giftPage, pjItmGft]);
-            mkVisible(itemPage);
-        })
+        if(strBtn!==null){
+            strBtn.addEventListener("click",function(){
+                // giftPage.style.display = "none";
+                location.href = "#item";
+                mkHidden([giftPage, strPage]);
+                mkVisible(itemPage);
+            })
+        }
+        // mkHidden([itemPage]);
+        // mkVisible(itemPage);
+
+
+
+        // if(itemList==null){ //만든 아이템이 하나도 없으면 아이템 만들기 유도 페이지를 로드
+        //    mkHidden([giftPage, itemPage]);
+        //     strBtn.addEventListener("click",function(){
+        //         // giftPage.style.display = "none";
+        //         location.href = "#item";
+        //         mkHidden([giftPage, strPage]);
+        //         mkVisible(itemPage);
+        //     })
+        // } else { //만든 아이템이 있다면 바로 선물 페이지로 이동
+        //     mkVisible(giftPage);
+        //     mkHidden([itemPage,strPage]);
+        // }
+
+
         gftBtn.addEventListener("click",function(){
-            location.href = "#gift";
-            // pjItmGft.style.display = "none";
-            // giftPage.style.display = "block";
-            mkHidden([itemPage, pjItmGft]);
-            mkVisible(giftPage);
+            const cnt = document.querySelectorAll("#itemList div");
+            console.dir(cnt); //
+            //alert(cnt.length);
+            <%--// 원래는 ${itemList.size()}로 비교하려했는데 실시간 반영이 안되더라.
+            비동기라서 화면 전환이 되는ㄱㅔ 아니다보니--%>
+            if(cnt.length===0){ //등록된 아이템이 없으면 선물 페이지를 보여주지 않는다.
+                mkHidden([itemPage, giftPage])
+                location.href = "#str"
+                mkVisible(strPage);
+            } else {
+                mkHidden([itemPage, strPage])
+                location.href = "#gift"
+                mkVisible(giftPage);
+            }
+
+
+            // const pjBox = document.querySelector(".pjBox");
+            // console.dir(pjBox);
+            // //location.href = "#gift";
+            // location.href = "#"+pjBox.id;
+            // alert(pjBox.id);
+            // // strPage.style.display = "none";
+            // // giftPage.style.display = "block";
+            // mkHidden([itemPage]);
+            // //mkVisible(giftPage);
+            // mkVisible(pjBox);
         })
         itmBtn.addEventListener("click",function(){
+            const cnt = document.querySelectorAll("#itemList div");
+            console.dir(cnt); //
             location.href = "#item";
-            mkHidden([giftPage, pjItmGft]);
+            if(cnt.length===0){ //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
+                mkHidden([strPage])
+            } else {
+                mkHidden([giftPage])
+            }
             mkVisible(itemPage);
         })
 
@@ -352,10 +428,10 @@
             // } else if (item_option_type.val() === '주관식') {
             //     item_option = $('.'+item_option_type.id+" textarea").val();
             // }
-            console.dir('---save---')
-            console.dir(item_option_type.val());
-            console.dir(item_option);
-            console.dir(itmName.value);
+            // console.dir('---save---')
+            // console.dir(item_option_type.val());
+            // console.dir(item_option);
+            // console.dir(itmName.value);
             $.ajax({
                 type:'POST',
                 url:'/project/item',
@@ -364,7 +440,8 @@
                 success: function(result){
                     alert('아이템이 성공적으로 등록되었습니다.');
                     init(); //기존 입력창을 초기화한다.
-                    itemArr.push(result);
+                    // itemArr.push(result);
+                    itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
                     console.dir(itemArr);
                     // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
                     const itemList = document.querySelector('#itemList');
@@ -375,8 +452,6 @@
                     console.dir(result);
                 },
                 error: function(result){alert('아이템 등록에 실패했습니다.')}
-
-
             });
         });
 
@@ -439,12 +514,6 @@
             }
         }
 
-
-
-
-
-
-
     }// window.onload
 
     const tglHidden = function(elements){
@@ -454,11 +523,13 @@
     }
     const mkHidden = function(elements){
         elements.forEach(element => {
-            element.style.display = "none";
+            if(element!=null)
+                element.style.display = "none";
         })
     }
     const mkVisible = function(element){
-        element.style.display = "flex";
+        if(element!=null)
+            element.style.display = "flex";
     }
 
     const lengthCheck = function(elem, maxLength, string){
@@ -526,7 +597,8 @@
     const mkItmList = function(itmArr){
         let list = ''
         for(itm of itmArr){
-            list += '<div style="cursor:pointer" onclick=remove(itemArr,this)>'
+            list += '<div style="cursor:pointer" onclick=removeItm(itemArr,this)>'
+            list += '<input type="hidden" value='+itm.item_id+'>' //item_id를 hidden으로 가져온다.
             list += '<p style="font-weight: 600" >'
             list += itm.item_name + '</p>'
             list += '<p>'+ itm.item_option_type + '</p>'
@@ -556,30 +628,34 @@
         elem.innerHTML = list
         // console.dir(optArr);
     }
-    const removeItm = function(arr,elem){
+    const removeItm = function(itemArr,elem){
         if(!confirm("이 아이템을 삭제하시겠습니까? 삭제하면 해당 아이템이 포함된 *개의 선물에서도 삭제됩니다.")) return;
-        //Dto객체를 담은 배열에서 객체를 삭제, ajax로 컨트롤러를 통해 db에서 아이템 삭제해야함.
+        //ajax로 컨트롤러를 통해 db에서 아이템 삭제해야 후 리스트를 다시 불러와서 보여줘야함.
+        const item_id = elem.querySelector("input[type=hidden]").value;
+        // alert(item_id);
         $.ajax({
-            type:'POST',
-            url:'/project/item',
+            type:'DELETE',
+            url:'/project/item?item_id='+item_id,
             headers: {"content-type":"application/json"},
-            data: JSON.stringify({'item_name':itmName.value, 'item_option_type':item_option_type.val(), 'item_option':item_option}),
+            // data: JSON.stringify({'item_id':item_id}),
             success: function(result){
-                alert('아이템이 성공적으로 등록되었습니다.');
-                init(); //기존 입력창을 초기화한다.
-                itemArr.push(result);
+                alert('아이템이 성공적으로 삭제되었습니다.');
+                elem.remove(); //아이템 목록에서 삭제
+                console.log("removeItm");
+                console.dir(result);
+                itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
                 console.dir(itemArr);
                 // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
                 const itemList = document.querySelector('#itemList');
-                console.dir(itemList)
                 const list = mkItmList(itemArr);
-                console.dir(list);
                 showList(list,itemList);
-                console.dir(result);
             },
-            error: function(result){alert('아이템 등록에 실패했습니다.')}
+            error: function(result){alert('아이템 삭제에 실패했습니다.')}
         });
     }
+
+
+
     const remove = function(arr,elem){ //옵션이 담기거나, 아이템이 담긴 배열
         if(!confirm('옵션을 삭제하시겠습니까?')) return;
         //배열에서 삭제

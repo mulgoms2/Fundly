@@ -1,16 +1,14 @@
 package com.persistence.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor //기본생성자 꼭 필요(맵핑)
 public class ItemDto {
@@ -34,19 +32,6 @@ public class ItemDto {
     }
 
     @Override
-    public String toString() {
-        return "ItemDto{" +
-                "item_id='" + item_id + '\'' +
-                ", seq=" + seq +
-                ", pj_id='" + pj_id + '\'' +
-                ", item_name='" + item_name + '\'' +
-                ", item_option='" + item_option + '\'' +
-                ", item_option_type='" + item_option_type + '\'' +
-                ", item_reg_dtm=" + item_reg_dtm +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -58,4 +43,5 @@ public class ItemDto {
     public int hashCode() {
         return Objects.hash(item_id, seq, pj_id, item_name, item_option);
     }
+
 }
