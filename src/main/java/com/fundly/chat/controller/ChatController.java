@@ -1,5 +1,6 @@
 package com.fundly.chat.controller;
 
+import com.fundly.chat.pojo.TestDto;
 import com.fundly.chat.service.ChatServiceImpl;
 import com.persistence.dto.SelBuyMsgDetails;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -41,16 +40,17 @@ public class ChatController {
 
         model.addAttribute("messageList", messageList);
 
-//        model에 아이디랑 pj_id를 임시로 담았다
+//        model에 아이디랑 pj_id를 임시로 담았다 왜담았지?
         model.addAttribute("user_id", user_id);
         model.addAttribute("pj_id", pj_id);
 
 //        채팅방에 입장하면서 자동으로 채팅방에 대한 구독이 시작된다.
         return "chat/chat";
     }
+
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
-    public SelBuyMsgDetails enterRoom(@DestinationVariable("roomName") String roomName, SelBuyMsgDetails message) {
+    public SelBuyMsgDetails enterRoom(@DestinationVariable String roomName, SelBuyMsgDetails message) {
 
 //        파일이 첨부되어 오는지 확인해보자.
         chatService.saveMessage(message);
@@ -59,7 +59,28 @@ public class ChatController {
     }
 
     @PostMapping("/chat/file")
-    public void file(@RequestParam("file") MultipartFile file) {
+    public void file(String file) {
 
+
+          System.out.println("hell~~");
+    }
+
+    //
+//    @GetMapping("/chatT")
+//    public String chatttt(@ModelAttribute TestDto testDto) {
+//
+//        return "chat/blank";
+//    }
+    @PostMapping("/chat")
+    public String putChat(TestDto testDto) {
+
+        System.out.println("put method : " + testDto.getHi());
+
+        return "chat/blank";
+    }
+
+    @GetMapping("/chatTest")
+    public String chch() {
+        return "chat/blank";
     }
 }

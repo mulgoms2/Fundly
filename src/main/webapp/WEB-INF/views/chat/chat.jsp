@@ -23,9 +23,10 @@
                 </div>
                 <button id="send" class="btn btn-default" type="submit">Send</button>
             </form>
-            <form enctype="multipart/form-data">
-                <input id="img_file" type="file" accept="image/*">
-            </form>
+<%--            <form enctype="multipart/form-data">--%>
+<%--                <input id="img_file" type="file" accept="image/*">--%>
+<%--            </form>--%>
+
         </div>
     </div>
     <div class="row">
