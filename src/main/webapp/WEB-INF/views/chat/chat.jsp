@@ -31,7 +31,7 @@
         <form id="chatForm">
             <div class="chatIptBox">
                 <input type="text" id="chat" class="chatIpt" required>
-                <button id="send" class="sendBtn" type="submit">Send</button>
+                <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
             </div>
         </form>
     </div>

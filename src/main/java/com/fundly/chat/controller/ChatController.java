@@ -1,6 +1,5 @@
 package com.fundly.chat.controller;
 
-import com.fundly.chat.pojo.TestDto;
 import com.fundly.chat.service.ChatServiceImpl;
 import com.persistence.dto.SelBuyMsgDetails;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -51,36 +52,20 @@ public class ChatController {
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
     public SelBuyMsgDetails enterRoom(@DestinationVariable String roomName, SelBuyMsgDetails message) {
+        log.error("chat roomname{} message {} message.cont{}  message.send_user {} " , roomName, message, message.getMsg_cont(), message.getSend_user_id());
 
 //        파일이 첨부되어 오는지 확인해보자.
         chatService.saveMessage(message);
+
+//        여기에서 메시지 발송자 아이디를 결정해야 할 것 같다. 유저의 아이디를 토대로?
 
         return message;
     }
 
     @PostMapping("/chat/file")
-    public void file(String file) {
+    public void file(@RequestParam("asdf") MultipartFile file) {
 
-
-          System.out.println("hell~~");
+        log.error("file = {}", file);
     }
 
-    //
-//    @GetMapping("/chatT")
-//    public String chatttt(@ModelAttribute TestDto testDto) {
-//
-//        return "chat/blank";
-//    }
-    @PostMapping("/chat")
-    public String putChat(TestDto testDto) {
-
-        System.out.println("put method : " + testDto.getHi());
-
-        return "chat/blank";
-    }
-
-    @GetMapping("/chatTest")
-    public String chch() {
-        return "chat/blank";
-    }
 }

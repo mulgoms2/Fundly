@@ -1,11 +1,13 @@
-.chatIptBox{
+.chatIptBox {
     position: relative;
 }
 
 .chatIpt {
+    box-sizing: border-box;
+    padding: 19px;
     width: 100%;
-    height: 46px;
-    border-radius: 10px;
+    height: 40px;
+    border-radius: 30px;
     border: 0.1px solid gray;
 }
 
@@ -14,12 +16,21 @@
 }
 
 .sendBtn {
-    padding: 20px 10px;
-    border-radius: 10px;
+    padding: 10px 13px;
+    border-radius: 50%;
     border: 0;
-
     position: absolute;
-    top: 2px;
-    right: 10px;
+    top: 4px;
+    right: 0;
+    transition: 0.3s;
+}
 
+.sendBtn:hover {
+    transition: 0.3s;
+    background-color: lightgrey;
+}
+
+.sendBtn:active {
+    transition: 0.3s;
+    background-color: #c2c2c2;
 }
