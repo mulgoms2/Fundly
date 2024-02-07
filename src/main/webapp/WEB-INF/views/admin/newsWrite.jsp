@@ -7,55 +7,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Summernote with Bootstrap 4</title>
-<%--    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>--%>
-<%--    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>--%>
-
-<%--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">--%>
-<%--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>--%>
-
-<%--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">--%>
-<%--    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>--%>
     <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
-<form id="emdfhr" action="<c:url value="/admin/write"/>" method="post">
-    <input type="text" name="news_title" value="" placeholder="제목">
-    <input type="text" name="reg_id" value="" placeholder="작성자">
+<form id="push" action="" method="">
+    <input type="text" name="news_seq" value="${newsModifyInfo.news_seq}" style="display: none">
+    <input type="text" name="news_title" value="${newsModifyInfo.news_title}" placeholder="제목">
+    <input type="text" name="reg_id" value="${newsModifyInfo.reg_id}" placeholder="작성자">
     <textarea class="pjStr" name="news_cont">
-
+        ${newsModifyInfo.news_cont}
                             </textarea>
-    <button type="submit">등록</button>
+    <button onclick="goToWrite()" style=${newsModifyInfo!=null ? "display:none" : ""}>등록</button>
+    <button onclick="goToModify()" style=${newsModifyInfo!=null ? "" : "display:none"} >수정완료</button>
+    <button onclick="location.href='<c:url value="/admin/list"/>'"  style=${newsModifyInfo!=null ? "" : "display:none"}>취소</button>
+    <button onclick="goToDelete()">삭제</button>
 </form>
 <script>
-    // $(document).ready(function() {
-    //     $('#summernote').summernote({
-    //         height: 500,
-    //         width: 1200,
-    //         lang: 'ko-KR',
-    //         toolbar: [
-    //             ['fontsize', ['fontsize']],
-    //             ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
-    //             ['color', ['color']],
-    //             ['table', ['table']],
-    //             ['para', ['ul', 'ol', 'paragraph']],
-    //             ['height', ['height']],
-    //             ['insert', ['picture']]
-    //         ],
-    //         fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋음체', '바탕체'],
-    //         fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72', '96'],
-    //         focus: true,
-    //         callbacks: {
-    //             onImageUpload: function(files, editor, welEditable) {
-    //                 for (var i = 0; i < files.length; i++) {
-    //                     imageUploader(files[i], this)   ;
-    //                 }
-    //             },
-    //             onChange: function(contents, $editable) {
-    //                 $('#summernoteContent').val(contents); // summernote 내용을 숨은 입력 필드에 설정
-    //             }
-    //         }
-    //     });
-    // });
+    function goToWrite(){
+        let form = document.getElementById("push");
+        form.setAttribute("action","<c:url value="/admin/write"/>");
+        form.setAttribute("method","post");
+        form.submit();
+    }
+    function goToModify(){
+        let form = document.getElementById("push");
+        form.setAttribute("action","<c:url value="/admin/modify"/>");
+        form.setAttribute("method","post");
+        form.submit();
+    }
+    function goToDelete(){
+        let form = document.getElementById("push");
+        form.setAttribute("action","<c:url value="/admin/delete"/>");
+        form.setAttribute("method","post");
+        form.submit();
+    }
+
     tinymce.init({
         selector: 'textarea.pjStr',
         plugins: 'image code',

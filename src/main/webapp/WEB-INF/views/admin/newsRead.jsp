@@ -14,11 +14,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<q:url value='/static/css/news.css'/>">
+    <link rel="stylesheet" href="<q:url value='/static/admin/css/news.css'/>">
 </head>
 <body>
 <div class="class">공지사항</div>
 
+<form id="gogo">
 <div class="content">
     <header class="contenthead">
         <span class="group">이벤트</span>
@@ -30,6 +31,12 @@
 
     <div class="contentcontent">${News.news_cont}</div>
 </div>
-<button type="submit"><a href="<c:url value="/admin/modify"/>">수정</a></button><button><a href="<c:url value="/admin/list"/>" >수정</a>목록</button>
+</form>
+<%--버튼이 폼태그안에있으면 /modify 엔드포인트에서
+ /admin/newsWrite 페이지로의 포워딩이 발생.
+  /admin/newsWrite 페이지로의 포워딩 직후에 다시
+ /admin/newsRead 페이지로의 포워딩이 발생. --%>
+<button onclick="location.href='<c:url value="/admin/modify?news_seq="/>${News.news_seq}'">수정하기</button>
+<button onclick="location.href='<c:url value="/admin/list"/>'">목록</button>
 </body>
 </html>
