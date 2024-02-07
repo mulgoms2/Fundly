@@ -28,8 +28,8 @@ class ItemServiceImplTest {
     public void getItemList(){
         for(int i=1; i<=20; i++){
 //            ItemDto itemDto = new ItemDto("abc"+((i%4)+1),getRandomItem(),getRandomColor());
-            ItemDto itemDto = new ItemDto("abc"+i,"손수건","민트");
-            itemService.registerItem(itemDto);
+//            ItemDto itemDto = new ItemDto("abc"+i,"손수건","민트");
+//            itemService.registerItem(itemDto);
         }
 //        List<ItemDto> itemDto = itemService.getItemList();
 //        List<ItemDto> itemDto2 = itemService.getItemList("abc3");
