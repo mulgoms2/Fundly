@@ -32,4 +32,20 @@ public class ItemServiceImpl implements ItemService{
         return itemMapper.insert(itemDto);
     }
 
+    @Override
+    public int removeAll() throws Exception {
+        return itemMapper.deleteAll();
+    }
+
+    //    @Override
+//    public int remove(String item_id, String dba_reg_id) throws Exception {
+//        Map map = new HashMap();
+//        map.put("item_id",item_id);
+//        map.put("dba_reg_id",dba_reg_id);
+//        return itemMapper.delete(map);
+//    }
+    @Override
+    public int remove(String item_id, String dba_reg_id) throws Exception {
+        return itemMapper.delete(item_id, dba_reg_id);
+    }
 }

@@ -1,6 +1,5 @@
 package com.fundly.user.model;
 
-import com.persistence.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
