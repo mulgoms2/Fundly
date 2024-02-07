@@ -1,13 +1,12 @@
 package com.fundly.user.controller;
 
 import com.fundly.user.model.LikeDao;
-import com.persistence.dto.UserDto;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Map;
 
 @Controller
 public class LikeController {
@@ -23,15 +22,16 @@ public class LikeController {
     //찜상태 확인하기
 
 
-    //상세페이지 찜하기
-    @PostMapping("like")
-    @SneakyThrows
-    public void selectLike(UserDto userdto) {
-        //로그인 유무 확인
-        //안했으면 로그인창
-//        return "user/login";
-        //했으면 likeController
-    }
+//    //상세페이지 찜하기
+//    @PostMapping("/like")
+//    public String selectLike() {
+//
+//        //로그인 유무 확인
+//        //안했으면 로그인창
+////        return "user/login";
+//        return "product/detail";
+//
+//    }
 
     //전체페이지 찜하기
 }

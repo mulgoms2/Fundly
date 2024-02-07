@@ -1,5 +1,6 @@
 package com.fundly.user.model;
 
+import com.persistence.dto.LikeDto;
 import com.persistence.dto.UserDto;
 import config.RootContext;
 import config.ServletContext;
@@ -24,14 +25,15 @@ class LikeDaoTest {
     @Autowired
     LikeDao likedao;
     UserDto userdto;
-    String user_id = "bada";
-    String pj_id = "P001";
+
+    LikeDto likedto;
 
 
     @Test
     @BeforeEach
     @SneakyThrows
     void start() {
+        likedto = new LikeDto("bada","P001",0);
     }
     @AfterEach
     @SneakyThrows
