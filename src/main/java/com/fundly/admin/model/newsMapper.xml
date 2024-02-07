@@ -33,7 +33,7 @@
         SET   news_title = #{news_title}
           , news_cont = #{news_cont}
           , mod_dtm = now()
-          ,  mod_id = #{mod_id}
+          ,  mod_id = #{reg_id}
         WHERE news_seq = #{news_seq} and reg_id = #{reg_id}
     </update>
 
