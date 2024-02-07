@@ -120,7 +120,7 @@
             </div>
         </div>
 
-        <button class="kakaBtn"> 카카오로 가입하기 </button>
+<%--        <button class="kakaBtn"> 카카오로 가입하기 </button>--%>
 
         <p> @2024 Fundly Inc.</p>
     </main>
