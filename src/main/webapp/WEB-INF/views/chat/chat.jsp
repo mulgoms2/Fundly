@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <%--    <script src="/static/chat/app.js"></script>--%>
 </head>
-<body>
+<body id="chatBody">
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
@@ -122,6 +122,8 @@
         // if(message.file) 만약에
 
         $("#chatBox").append("<tr><td>"+ message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>");
+        const body = document.querySelector("#chatBody");
+        body.scrollTop = body.scrollHeight;
     }
 
     $(() => {
