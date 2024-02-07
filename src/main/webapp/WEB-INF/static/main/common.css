@@ -192,3 +192,9 @@
     align-items: center;
     justify-content: center;
 }
+
+/* 로그인/ 회원가입 btn을 위한 임시 공간 */
+.fontsize{
+    display: flex;
+    width: 100px;
+}
