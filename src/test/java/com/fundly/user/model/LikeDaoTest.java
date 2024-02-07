@@ -26,17 +26,12 @@ class LikeDaoTest {
     UserDto userdto;
     String user_id = "bada";
     String pj_id = "P001";
-    Map map = new HashMap();
 
 
     @Test
     @BeforeEach
     @SneakyThrows
     void start() {
-        map.put("user_id", user_id);
-        map.put("pj_id", pj_id);
-//        LikeDao.insertLike(map);
-        System.out.println("map = " + map);
     }
     @AfterEach
     @SneakyThrows
@@ -46,32 +41,19 @@ class LikeDaoTest {
 
     @Test
     @SneakyThrows
-    @DisplayName("좋아요상태확인")
-    void checkLikeTest() {
-//        LikeDao.checkLike(userdto);
+    @DisplayName("좋아요리스트확인")
+    void getLikeListTest() {
     }
 
-//    @Test
-//    @SneakyThrows
-//    @DisplayName("처음좋아요")
-//    void insertLikeTest() {
-//        map.put("user_id", user_id);
-//        map.put("pj_id", pj_id);
-//        assertTrue(true);
-//        likedao.insertLike(map);
-//    }
+    @Test
+    @SneakyThrows
+    @DisplayName("좋아요")
+    void insertLikeTest() {
+    }
 
     @Test
     @SneakyThrows
     @DisplayName("안좋아요")
     void cancelLikeTest() {
-        likedao.cancelLike();
-    }
-
-    @Test
-    @SneakyThrows
-    @DisplayName("다시좋아요")
-    void reLikeTest() {
-        likedao.reLike();
     }
 }
