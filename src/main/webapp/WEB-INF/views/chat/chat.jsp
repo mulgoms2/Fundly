@@ -4,29 +4,19 @@
 <html>
 <head>
     <title>Hello WebSocket</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-    <%--    <script src="/static/chat/app.js"></script>--%>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
     <div class="row">
         <div class="col-md-6">
-            <form class="form-inline">
+            <form id="chatForm">
                 <div class="form-group">
                     <input type="text" id="chat" class="form-control">
-                </div>
                 <button id="send" class="btn btn-default" type="submit">Send</button>
+                </div>
             </form>
-<%--            <form enctype="multipart/form-data">--%>
-<%--                <input id="img_file" type="file" accept="image/*">--%>
-<%--            </form>--%>
-
         </div>
     </div>
     <div class="row">
@@ -49,8 +39,6 @@
     </div>
 </div>
 <script>
-
-
     const stompClient = new StompJs.Client({
         brokerURL: 'ws://localhost:8080/endPoint'
     });
@@ -112,7 +100,8 @@
             body: JSON.stringify(message)
         });
 
-        $("#chat").val("");
+        // $("#chat").val("");
+        document.querySelector("#chat").value = "";
     }
 
     function displayMessage(message) {
@@ -121,16 +110,12 @@
         const minute = date.getMinutes();
         // if(message.file) 만약에
 
-        $("#chatBox").append("<tr><td>"+ message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>");
+        document.querySelector("#chatBox").innerHTML = "<tr><td>" + message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>";
     }
 
     $(() => {
-        $("form").on('submit', (e) => e.preventDefault());
-        $("#exit").click(() => {
-            disconnect();
-            //     창닫기 해결해야한다.
-        })
-        $("#send").click(() => sendMessage());
+        document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
+        document.querySelector("#send").addEventListener('click',sendMessage)
     });
 
     window.onload = () => {
