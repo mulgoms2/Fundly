@@ -4,40 +4,40 @@
 
 <mapper namespace="com.fundly.user.model.LikeDao">
 
-    <select id="getLikeList" resultType="LikeDto">
-        select * from LIKE_PJ
-        where user_id = #{user_id}
-        and pj_id = #{pj_id}
-    </select>
+<!--    <select id="getLikeList" resultMap="LikeDto">-->
+<!--        select * from LIKE_PJ-->
+<!--        where user_id = #{user_id}-->
+<!--        and pj_id = #{pj_id}-->
+<!--    </select>-->
 
-    <insert id="insertLike">
+    <insert id="insertLike" parameterType="LikeDto">
         insert into LIKE_PJ (user_id,pj_id,like_status)
         values(#{user_id},#{pj_id},1)
     </insert>
 
-    <update id="cancelLike">
-        update from LIKE_PJ
-        set like_status = 0
-        where user_id = #{user_id}
-        and pj_id = #{pj_id}
-    </update>
+<!--    <update id="cancelLike">-->
+<!--        update from LIKE_PJ-->
+<!--        set like_status = 0-->
+<!--        where user_id = #{user_id}-->
+<!--        and pj_id = #{pj_id}-->
+<!--    </update>-->
 
-    <update id="reLike">
-        update from LIKE_PJ
-        set like_status = 1
-        where user_id = #{user_id}
-        and pj_id = #{pj_id}
-    </update>
+<!--    <update id="reLike">-->
+<!--        update from LIKE_PJ-->
+<!--        set like_status = 1-->
+<!--        where user_id = #{user_id}-->
+<!--        and pj_id = #{pj_id}-->
+<!--    </update>-->
 
-    <delete id="deleteAllLike">
-        delete from LIKE_PJ
-        where user_id = #{user_id}
-        and pj_id = #{pj_id}
-    </delete>
+<!--    <delete id="deleteAllLike">-->
+<!--        delete from LIKE_PJ-->
+<!--        where user_id = #{user_id}-->
+<!--        and pj_id = #{pj_id}-->
+<!--    </delete>-->
 
-    <select id="checkLike" resultType="LikeDto">
-        select * from LIKE_PJ
-        where user_id = #{likedto.user_id}
-        and pj_id = #{likedto.pj_id}
-    </select>
+<!--    <select id="checkLike" resultType="LikeDto">-->
+<!--        select * from LIKE_PJ-->
+<!--        where user_id = #{likedto.user_id}-->
+<!--        and pj_id = #{likedto.pj_id}-->
+<!--    </select>-->
 </mapper>

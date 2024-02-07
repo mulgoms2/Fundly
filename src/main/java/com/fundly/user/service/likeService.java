@@ -8,15 +8,15 @@ import java.util.Map;
 
 public interface likeService {
     //찜하기
-    void register(LikeDto likedto);
+//    int insertLike();
 
     //찜목록 가져오기
-    List<LikeDto> getLikeList(LikeDto likedto);
-
-    //찜 취소하기
-    boolean remove(String user_id, String pj_id);
-
-    //찜 상태 확인
-    LikeDto checkLike(LikeDto likedto);
+//    List<LikeDto> getLikeList(LikeDto likedto);
+//
+//    //찜 취소하기
+//    int remove(String user_id, String pj_id);
+//
+//    //찜 상태 확인
+//    LikeDto checkLike(LikeDto likedto);
 
 }
