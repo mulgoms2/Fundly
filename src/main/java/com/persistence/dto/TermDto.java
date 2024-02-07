@@ -18,5 +18,7 @@ public class TermDto {
     private int term_view_cnt;
     private Date reg_dtm;
     private String reg_id;
+    private Date mod_dtm;
+    private String mod_id;
     private int file_cnt;
 }

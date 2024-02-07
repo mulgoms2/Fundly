@@ -11,13 +11,7 @@
     <link rel="stylesheet" href="<q:url value='/static/admin/css/webfont.css'/>">
     <link rel="stylesheet" href="<q:url value='/static/admin/css/common.css'/>">
     <link href="<q:url value='/static/admin/css/style.css'/>"  rel="stylesheet"/>
-    <script type="text/javascript" src="/static/admin/js/vendor/jquery-2.2.4.min.js"></script>
-<%--    <script type="text/javascript" src="/static/js/vendor/jquery-ui.js"></script>--%>
-<%--    <script type="text/javascript" src="/static/js/vendor/jquery.bpopup.min.js"></script>--%>
-<%--    <script type="text/javascript" src="/static/js/vendor/moment.min.js"></script>--%>
-<%--    <script type="text/javascript" src="/static/js/vendor/daterangepicker.js"></script>--%>
-<%--    <script type="text/javascript" src="/staticjs/common.js"></script>--%>
-<%--    <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>--%>
+
 </head>
 <body>
 <button class="mnBtnbl">
@@ -155,7 +149,6 @@
                     <th>등록일시</th>
                     <th>수정일시</th>
                     <th>숨김여부</th>
-                    <th>조회수</th>
                     <th><button id="write" onclick="location.href=' <c:url value='/admin/write'/>'">글쓰기</button> </th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
@@ -170,8 +163,8 @@
                         <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_id}</a></td>
                         <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_view_cnt}</a></td>
                         <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_view_cnt}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.mod_dtm!=null? NewsDto.mod_dtm :NewsDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.hid_yn}</a></td>
                     </tr>
                 </c:forEach>
             </table>

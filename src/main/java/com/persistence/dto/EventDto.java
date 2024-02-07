@@ -19,6 +19,8 @@ public class EventDto {
     private String hid_yn;
     private Date reg_dtm;
     private String reg_id;
+    private Date mod_dtm;
+    private String mod_id;
 
     private int file_cnt;
 }
