@@ -11,8 +11,6 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 @Slf4j
 class JoinServiceImplTest {
