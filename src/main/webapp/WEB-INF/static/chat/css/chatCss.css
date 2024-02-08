@@ -34,3 +34,7 @@
     transition: 0.3s;
     background-color: #c2c2c2;
 }
+
+.chatAttImg{
+    display: block;
+}

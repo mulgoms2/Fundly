@@ -18,6 +18,6 @@ public class SelBuyMsgDetailsDto {
     private String dba_reg_id;
     private Date dba_mod_dtm;
     private String dba_mod_id;
-    private Integer file_cnt;
+    private int file_cnt;
     private String file_url;
 }

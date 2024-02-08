@@ -61,12 +61,8 @@ public class ChatController {
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
     public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomName, SelBuyMsgDetailsDto message) {
-        log.error("chat roomname{} message {} message.cont{}  message.send_user {} ", roomName, message, message.getMsg_cont(), message.getSend_user_id());
 
-//        파일이 첨부되어 오는지 확인해보자.
         chatService.saveMessage(message);
-
-//        여기에서 메시지 발송자 아이디를 결정해야 할 것 같다. 유저의 아이디를 토대로?
 
         return message;
     }
@@ -74,10 +70,7 @@ public class ChatController {
     @PostMapping("/chat/file")
     @ResponseBody
     public ArrayList file(@RequestParam("img_file") MultipartFile file) {
-
-        log.error("file = {}", file);
 //        파일 저장 처리후에 파일 저장 경로를 리턴한다.
-
         List<String> list = new ArrayList<>();
 
 //        파일을 저장하고 저장경로를 받는다.
@@ -87,21 +80,18 @@ public class ChatController {
 //        테스트 중.
         list.add(savedUrl);
 
-//
-
         return (ArrayList) list;
     }
 
     @GetMapping(
-            value = "**/WEB-INF/static/chat/file/{fileName}",
+            value = "**/file/{fileName}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     @ResponseBody
     public byte[] loadImageFile(@PathVariable("fileName") String fileName) throws FileNotFoundException {
-//        InputStream is = getClass().getResourceAsStream("/"+fileName);
 
 //        InputStream is = new FileInputStream("/Users/dobigulbi/IdeaProjects/Fundly/target/Fundly/WEB-INF/static/chat/file/" + fileName);
-        InputStream is = new FileInputStream("**/Fundly/WEB-INF/static/chat/file/" + fileName);
+        InputStream is = new FileInputStream("/Users/dobigulbi/chat/file/" + fileName);
 
         try {
             return IOUtils.toByteArray(is);

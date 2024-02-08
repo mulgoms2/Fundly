@@ -20,9 +20,18 @@
             </thead>
             <tbody id="chatBox">
             <c:forEach items="${messageList}" var="msg">
-                <tr>
-                    <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
-                </tr>
+                <c:if test="${msg.file_cnt ne 0}">
+                    <tr>
+                        <td>
+                            <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt="" />
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${msg.file_cnt eq 0}">
+                    <tr>
+                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
+                    </tr>
+                </c:if>
             </c:forEach>
             </tbody>
         </table>
@@ -34,7 +43,7 @@
                 <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
             </div>
         </form>
-        <input id="img" name="file_img" type="file" formenctype="multipart/form-data" />
+        <input id="img" name="file_img" type="file" formenctype="multipart/form-data"/>
         <button id="imgSendBtn">보내기</button>
     </div>
 </div>
@@ -97,6 +106,10 @@
     }
 
     const sendImg = async () => {
+
+        if (document.querySelector("#img").value === "") {
+            return;
+        }
         const img_file = document.querySelector("#img").files[0];
 
         const formData = new FormData();
@@ -120,8 +133,8 @@
             buy_id: "${user_id}",
             pj_id: "${pj_id}",
             send_user_id: "${user_id}",
-            file_cnt : resultObject.length,
-            file_url : savedImgUrl
+            file_cnt: resultObject.length,
+            file_url: savedImgUrl
         };
 
         // 토픽 발행 완료. 발행과 동시에 displayMessage 콜백 호출일 일어난다.
@@ -129,8 +142,6 @@
             destination: "/chatPub/chat/${roomName}",
             body: JSON.stringify(messageDto)
         });
-
-    //     아직 확신이 없는 부분은 서버가 파일을 저장하는데 걸리는 시간 이후에 토픽의 변화를 발행받아야 하는 부분이다.
     }
 
     const scrollToButtom = () => {
@@ -148,7 +159,8 @@
         console.log(message);
 
         if (message.file_cnt !== 0) {
-            document.querySelector("#chatBox").innerHTML += '<img src=\"' + message.file_url + '\" style="width: 200px" />';
+            document.querySelector("#chatBox").innerHTML += '<img class=\"chatAttImg\" src=\"' + message.file_url + '\" style="width: 200px" />';
+
             return;
         }
 
@@ -163,8 +175,6 @@
         document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
     };
-
-
 </script>
 </body>
 </html>

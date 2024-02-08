@@ -13,7 +13,4 @@ public interface ChatService {
     ArrayList<SelBuyMsgDetailsDto> loadMessages(String user_id, String pj_id);
 
     String getChatRoomName(String user_id, String pj_id);
-    void enterRoom();
-
-
 }
