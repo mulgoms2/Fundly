@@ -34,7 +34,8 @@ public class ServletContext implements WebMvcConfigurer {
     }
 
     @Bean
-    public CommonsMultipartResolver commonsMultipartResolver() {
+    public CommonsMultipartResolver multipartResolver() {
         return new CommonsMultipartResolver();
+
     }
 }

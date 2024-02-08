@@ -13,5 +13,4 @@ public class HelloMessage {
     public String getName() {
         return name;
     }
-
 }

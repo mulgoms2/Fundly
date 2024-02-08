@@ -1,12 +1,11 @@
 package com.persistence.dto;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
 @Data
-public class SelBuyMsgDetails {
+public class SelBuyMsgDetailsDto {
     private String msg_id;
     private String buy_id;
     private String pj_id;
@@ -19,6 +18,6 @@ public class SelBuyMsgDetails {
     private String dba_reg_id;
     private Date dba_mod_dtm;
     private String dba_mod_id;
-    private Integer file_cnt;
-    private MultipartFile img_file;
+    private int file_cnt;
+    private String file_url;
 }
