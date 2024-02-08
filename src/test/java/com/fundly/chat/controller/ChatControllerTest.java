@@ -4,7 +4,7 @@ package com.fundly.chat.controller;
 import com.fundly.chat.model.ChatRoomDao;
 import com.fundly.chat.service.ChatService;
 import com.persistence.dto.ChatRoomDto;
-import com.persistence.dto.SelBuyMsgDetails;
+import com.persistence.dto.SelBuyMsgDetailsDto;
 import config.RootContext;
 import config.ServletContext;
 import lombok.SneakyThrows;
@@ -43,13 +43,13 @@ class ChatControllerTest {
   @Test
   @DisplayName("메시지저장")
   void makeMessage() {
-    SelBuyMsgDetails selBuyMsgDetails = new SelBuyMsgDetails();
-    selBuyMsgDetails.setPj_id("testPj");
-    selBuyMsgDetails.setMsg_cont("안녕ㅇ하세요 ^^ ");
+    SelBuyMsgDetailsDto selBuyMsgDetailsDto = new SelBuyMsgDetailsDto();
+    selBuyMsgDetailsDto.setPj_id("testPj");
+    selBuyMsgDetailsDto.setMsg_cont("안녕ㅇ하세요 ^^ ");
 
-    selBuyMsgDetails.setBuy_id("test");
+    selBuyMsgDetailsDto.setBuy_id("test");
     for (int i = 0; i < 20; i++) {
-      chatService.saveMessage(selBuyMsgDetails);
+      chatService.saveMessage(selBuyMsgDetailsDto);
     }
   }
 
@@ -57,8 +57,8 @@ class ChatControllerTest {
   @DisplayName("메시지불러오기")
   @SneakyThrows
   void loadMsg() {
-    ArrayList<SelBuyMsgDetails> selBuyMsgDetails = chatRoomDao.loadAllMessages("test", "testPj");
+    ArrayList<SelBuyMsgDetailsDto> selBuyMsgDetailDtos = chatRoomDao.loadAllMessages("test", "testPj");
 
-    System.out.println("selBuyMsgDetails = " + selBuyMsgDetails);
+    System.out.println("selBuyMsgDetails = " + selBuyMsgDetailDtos);
   }
 }
