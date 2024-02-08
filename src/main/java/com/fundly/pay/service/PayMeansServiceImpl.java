@@ -19,6 +19,11 @@ public class PayMeansServiceImpl implements PayMeansService {
     }
 
     @Override
+    public String getPayMeansId(String userId) throws Exception {
+        return payMeansDao.selectPayMeansId(userId);
+    }
+
+    @Override
     public int registerPayMeans(PayMeansDto payMeansDto) throws Exception {
         return payMeansDao.insert(payMeansDto);
     }
