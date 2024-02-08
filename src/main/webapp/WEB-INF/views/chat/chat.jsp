@@ -34,6 +34,8 @@
                 <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
             </div>
         </form>
+        <input id="img" name="file_img" type="file" formenctype="multipart/form-data" />
+        <button id="imgSendBtn">보내기</button>
     </div>
 </div>
 <script>
@@ -41,61 +43,49 @@
         brokerURL: 'ws://localhost:8080/endPoint'
     });
 
-    stompClient.onConnect = (frame) => {
-        setConnected(true);
 
-        console.log("connected");
-        stompClient.subscribe('/chatSub/${roomName}', (response) => {
-            displayMessage(JSON.parse(response.body));
-        });
-
-        scrollToButtom();
-    };
-
-    stompClient.onWebSocketError = (error) => {
-        console.error('Error with websocket', error);
-    };
-
-    stompClient.onStompError = (frame) => {
-        console.error('Broker reported error: ' + frame.headers['message']);
-        console.error('Additional details: ' + frame.body);
-    };
-
-    function setConnected(connected) {
-        $("#connect").prop("disabled", connected);
-        $("#disconnect").prop("disabled", !connected);
-        if (connected) {
-            $("#conversation").show();
-        } else {
-            $("#conversation").hide();
-        }
-        // $("#chatBox").html("");
-    }
-
-    function connect() {
+    const connect = () => {
+        // 화면이 로딩되면 스톰프 연결 및 콜백 메서드 초기화를 진행한다.
         stompClient.activate();
+
+        stompClient.onConnect = (frame) => {
+            console.log("connected");
+            stompClient.subscribe('/chatSub/${roomName}', (response) => {
+                displayMessage(JSON.parse(response.body));
+            });
+
+            scrollToButtom();
+        };
+
+        stompClient.onWebSocketError = (error) => {
+            console.error('Error with websocket', error);
+        };
+
+        stompClient.onStompError = (frame) => {
+            console.error('Broker reported error: ' + frame.headers['message']);
+            console.error('Additional details: ' + frame.body);
+        };
     }
 
-    function disconnect() {
+    // 나가기 버튼에 매핑해서 호출하자.
+    const disconnect = () => {
         stompClient.deactivate();
         setConnected(false);
         console.log("Disconnected");
     }
 
-    function sendMessage() {
+    const sendMessage = () => {
         const message = document.querySelector("#chat").value;
 
-        if (message === ""){
-            return ;
+        if (message === "") {
+            return;
         }
 
         const messageDto = {
             msg_cont: message,
             buy_id: "${user_id}",
             pj_id: "${pj_id}",
-            send_user_id: "${user_id}",
-            // 이미지 파일이 널러블하다(?)
-            // img_file :
+            send_user_id: "${user_id}"
         };
 
         stompClient.publish({
@@ -106,11 +96,61 @@
         document.querySelector("#chat").value = "";
     }
 
-    function displayMessage(message) {
+    const sendImg = async () => {
+        const img_file = document.querySelector("#img").files[0];
+
+        const formData = new FormData();
+        formData.append("img_file", img_file);
+
+        document.querySelector("#img").value = "";
+
+        // await 은 fetch의 then 결과를 가져온다.
+        const result = await fetch("/chat/file", {
+            method: "POST",
+            headers: {},
+            body: formData
+        });
+
+        const resultObject = await result.json();
+
+        const savedImgUrl = resultObject[0];
+
+        // 스톰프 서버에서는 메시지 발행이  이미지가 들어있는
+        const messageDto = {
+            buy_id: "${user_id}",
+            pj_id: "${pj_id}",
+            send_user_id: "${user_id}",
+            file_cnt : resultObject.length,
+            file_url : savedImgUrl
+        };
+
+        // 토픽 발행 완료. 발행과 동시에 displayMessage 콜백 호출일 일어난다.
+        stompClient.publish({
+            destination: "/chatPub/chat/${roomName}",
+            body: JSON.stringify(messageDto)
+        });
+
+    //     아직 확신이 없는 부분은 서버가 파일을 저장하는데 걸리는 시간 이후에 토픽의 변화를 발행받아야 하는 부분이다.
+    }
+
+    const scrollToButtom = () => {
+        const scrollHeight = document.querySelector("#chatBody").scrollHeight;
+        window.scrollTo({top: scrollHeight});
+    }
+
+    // 구독중인 토픽에 변화가 생길때 실행되는 콜백
+    const displayMessage = (message) => {
         const date = new Date();
         const hour = date.getHours();
         const minute = date.getMinutes();
-        // if(message.file) 만약에
+
+        // if(message.file) 만약에 토픽에서 발행된 메시지에 이미지(src경로)가 존재하면 파일 html 을 인서트
+        console.log(message);
+
+        if (message.file_cnt !== 0) {
+            document.querySelector("#chatBox").innerHTML += '<img src=\"' + message.file_url + '\" style="width: 200px" />';
+            return;
+        }
 
         document.querySelector("#chatBox").innerHTML += "<tr><td>" + message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>";
 
@@ -120,13 +160,11 @@
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
         document.querySelector("#send").addEventListener('click', sendMessage)
+        document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
     };
 
-    function scrollToButtom(){
-        const scrollHeight = document.querySelector("#chatBody").scrollHeight;
-        window.scrollTo({top: scrollHeight});
-    }
+
 </script>
 </body>
 </html>

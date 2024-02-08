@@ -2,7 +2,7 @@ package com.fundly.chat.service;
 
 import com.fundly.chat.model.ChatRoomDao;
 import com.persistence.dto.ChatRoomDto;
-import com.persistence.dto.SelBuyMsgDetails;
+import com.persistence.dto.SelBuyMsgDetailsDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,8 @@ public class ChatServiceImpl implements ChatService {
     @Autowired
     ChatRoomDao chatRoomDao;
 
-    public String getChatRoom(String user_id, String pj_id) {
+    @Override
+    public String getChatRoomName(String user_id, String pj_id) {
 //        유저 id와 프로젝트 id를 받아 채팅방(topic)을 만든다.
 
         ChatRoomDto chatRoomDto = findRoom(user_id, pj_id);
@@ -39,7 +40,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public boolean saveMessage(SelBuyMsgDetails message) {
+    public boolean saveMessage(SelBuyMsgDetailsDto message) {
 
         try {
             chatRoomDao.insertMsg(message);
@@ -52,7 +53,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ArrayList<SelBuyMsgDetails> loadMessages(String user_id, String pj_id) {
+    public ArrayList<SelBuyMsgDetailsDto> loadMessages(String user_id, String pj_id) {
         try {
             return chatRoomDao.loadAllMessages(user_id, pj_id);
         } catch (Exception e) {
