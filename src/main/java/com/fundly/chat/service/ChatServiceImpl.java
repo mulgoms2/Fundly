@@ -43,7 +43,10 @@ public class ChatServiceImpl implements ChatService {
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
 
         try {
-            chatRoomDao.insertMsg(message);
+            if (message.getFile_cnt() != 0) {
+//                파일을 저장한다.
+            }
+                chatRoomDao.insertMsg(message);
         } catch (Exception e) {
             log.error("error with save Message");
             throw new RuntimeException(e);

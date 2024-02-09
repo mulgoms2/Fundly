@@ -23,13 +23,14 @@
                 <c:if test="${msg.file_cnt ne 0}">
                     <tr>
                         <td>
-                            <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt="" />
+                            <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
                         </td>
                     </tr>
                 </c:if>
                 <c:if test="${msg.file_cnt eq 0}">
                     <tr>
-                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
+                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours}
+                            : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
                     </tr>
                 </c:if>
             </c:forEach>
@@ -111,8 +112,8 @@
             return;
         }
         const img_file = document.querySelector("#img").files[0];
-
         const formData = new FormData();
+
         formData.append("img_file", img_file);
 
         document.querySelector("#img").value = "";
@@ -128,7 +129,9 @@
 
         const savedImgUrl = resultObject[0];
 
-        // 스톰프 서버에서는 메시지 발행이  이미지가 들어있는
+        // 만약 서비스계층에서 파일테이블에 img url을 별도로 저장한다면 해당 메시지에는 file_url을 실을 필요가 없게된다.
+        // 다만 문제는 파일 자체를 가져오는 것에 있는데, 저장된 메시지들을 불러오는 과정에서 이미지 전송 메시지였던 친구들을
+        // 어떻게 토픽으로 발행할 것인가 하는 문제가 따른다.
         const messageDto = {
             buy_id: "${user_id}",
             pj_id: "${pj_id}",
@@ -150,21 +153,23 @@
     }
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
+    // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
     const displayMessage = (message) => {
         const date = new Date();
         const hour = date.getHours();
         const minute = date.getMinutes();
 
-        // if(message.file) 만약에 토픽에서 발행된 메시지에 이미지(src경로)가 존재하면 파일 html 을 인서트
-        console.log(message);
-
         if (message.file_cnt !== 0) {
-            document.querySelector("#chatBox").innerHTML += '<img class=\"chatAttImg\" src=\"' + message.file_url + '\" style="width: 200px" />';
-
+            // 메시지 객체가 파일 url을 담고있지 않다면 어떻게 해야될까?
+            // 유저가 메시지를 전달받는 두가지 경우가 있다.
+            // 하나는 채팅방에 입장해서 db에 저장된 메세지를 불러올때
+            // 두번째는 유저가 파일을 전송하고 json으로 저장된 경로를 리턴받고 url이 실린 메시지를 발행했을때.
+            document.querySelector("#chatBox").innerHTML += `<img class="chatAttImg" src="${"${message.file_url}"}" />`;
             return;
         }
 
-        document.querySelector("#chatBox").innerHTML += "<tr><td>" + message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>";
+
+        document.querySelector("#chatBox").innerHTML += `<tr><td> ${'${message.send_user_id}'} ${'${hour}'} : ${'${minute}'} ${'${message.msg_cont}'} </td></tr>`;
 
         scrollToButtom();
     }

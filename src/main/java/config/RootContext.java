@@ -10,12 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.core.convert.Property;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -23,9 +18,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 @Slf4j
@@ -78,10 +70,10 @@ public class RootContext {
 
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
-        javaMailSender.setHost("smtp.gmail.com");
-        javaMailSender.setPort(587);
-        javaMailSender.setUsername(env.getProperty("mail.id"));
-        javaMailSender.setPassword(env.getProperty("mail.pwd"));
+//        javaMailSender.setHost("smtp.gmail.com");
+//        javaMailSender.setPort(587);
+//        javaMailSender.setUsername(env.getProperty("mail.id"));
+//        javaMailSender.setPassword(env.getProperty("mail.pwd"));
 
 //        Properties properties = new Properties();
 //        properties.setProperty("mail.transport.protocol", "smtp");
@@ -94,13 +86,13 @@ public class RootContext {
 
 
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("src/main/webapp/WEB-INF/config/mailPro.properties")) {
-            properties.load(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try (FileInputStream fis = new FileInputStream("src/main/webapp/WEB-INF/config/mailPro.properties")) {
+//            properties.load(fis);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        javaMailSender.setJavaMailProperties(properties);
+//        javaMailSender.setJavaMailProperties(properties);
 
         return javaMailSender;
     }
