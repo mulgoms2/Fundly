@@ -28,6 +28,12 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    public ItemDto getItem(String item_id) throws Exception {
+        return itemMapper.select(item_id);
+    }
+
+
+    @Override
     public int registerItem(ItemDto itemDto) throws Exception {
         return itemMapper.insert(itemDto);
     }
