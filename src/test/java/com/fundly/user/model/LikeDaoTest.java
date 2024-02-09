@@ -86,7 +86,6 @@ class LikeDaoTest {
         //likedao.cancelLike()
     }
 
-
     @Test
     @SneakyThrows
     @DisplayName("다시좋아요")
