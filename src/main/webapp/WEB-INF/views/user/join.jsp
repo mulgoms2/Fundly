@@ -11,7 +11,7 @@
 
 <head>
     <title>회원가입</title>
-    <link rel="stylesheet" href="<c:url value='/static/user/userJoin.css'/>">
+    <link rel="stylesheet" href="<c:url value='/static/user/userJoin.css?after'/>">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
@@ -33,10 +33,7 @@
             <div class="joinCont">
                 <h2>이메일 간편가입</h2>
 
-    <%--            <form action="<c:url value='/join/add'/>" method="post" onsubmit="return test();">--%>
                 <form id = "joinForm">
-                 <%--formcheck(this)">--%>
-
 
                     <h3>이메일</h3>
                     <div class="usEmail">
@@ -70,44 +67,46 @@
                             <label for="allchk" id="all"> 전체동의</label>
 
                          <div class="agrLine">
-
                              <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "14age">
-                                    <label for="14age" class="single">만 14세 이상입니다.(필수)</label>
+                                 <input type="checkbox" class="singleChk" id = "age_agree_yn">
+                                    <label for="age_agree_yn" class="single">만 14세 이상입니다.(필수)</label>
                                  </input>
                              </div>
 
                              <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "agreeA">
-                                     <label for="agreeA" class="single">텀블벅 이용 약관동의(필수)</label>
+                                 <input type="checkbox" class="singleChk" id = "site_term_agree_yn">
+                                     <label for="site_term_agree_yn" class="single">텀블벅 이용 약관동의(필수)</label>
                                      <a href="" >내용보기</a>
                              </input>
                              </div>
 
                              <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "agreeB">
-                                    <label for="agreeB" class="single">개인정보 수집 및 이용 동의(필수)</label>
+                                 <input type="checkbox" class="singleChk" id = "p_Info_agree_yn">
+                                    <label for="p_Info_agree_yn" class="single">개인정보 수집 및 이용 동의(필수)</label>
                                     <a href="" >내용보기</a>
                                  </input>
                              </div>
 
-                             <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id= "agreeC">
-                                     <label for="agreeC" class="single">개인정보 제 3자 제공 동의(선택)</label>
+                             <div class="selectChk">
+                                 <input type="checkbox" class="selectChk" id= "p_info_oth_agree_yn">
+                                     <label for="p_info_oth_agree_yn" class="single">개인정보 제 3자 제공 동의(선택)</label>
                                      <a href="" >내용보기</a>
                                  </input>
                              </div>
 
-                             <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id= "agreeD">
-                                 <label for = "agreeD" class="single">마케팅 정보 수신 동의(선택)</label>
+                             <div class="selectChk">
+                                 <input type="checkbox" class="selectChk" id= "m_info_rcv_agree_yn">
+                                 <label for = "m_info_rcv_agree_yn" class="single">마케팅 정보 수신 동의(선택)</label>
                                  </input>
                              </div>
                          </div>
                      </div>
-                </div>
 
-                <button id="joinBtn" class="joinBtn">가입하기</button>
+                    <div id="agreeName" class="msg"></div>
+
+                    <div>
+                        <button id="joinBtn" class="joinBtn">가입하기</button>
+                    </div>
 
                      <div class="centerDiv">
                          <p>이미 펀들리 계정이 있으신가요?</p>
@@ -140,17 +139,18 @@
 
     /* checkbox */
     const checkAll = document.getElementById('allchk');
-    const singleCheckboxes = document.querySelectorAll('.singleChk')
-    let chkCount = document.querySelectorAll('.singleChk:checked');
+    let allboxes = document.querySelectorAll("input[type='checkbox']");
+    let allCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
+    let singleChk = document.querySelectorAll('.singleChk:checked');
+    let selectChk = document.querySelectorAll('.selectChk:checked');
 
+    /* form */
+    let joinForm = document.querySelector("#joinForm");
 
     /* 정규식 */
     // 이메일 정규식
     user_email.addEventListener("keyup", () => {
-        // if (user_email.value.length < 3 && user_email.value.length!=0) {
-        if(user_email.value.length!=0) {
-            setMessage('이메일정보를 입력해주세요.', "user_email", "msgEmail", "red");
-        }else if(!email.test(user_email.value)){
+        if(!email.test(user_email.value) && user_email.value.length!=0) {
             setMessage('유효하지 않은 이메일 형식입니다.', "user_email", "msgEmail", "red");
         } else{
             setMessage('', "user_email", "msgEmail","black");
@@ -207,80 +207,81 @@
     })
 
     /* joinBtn submit */
-    let joinForm = document.querySelector("#joinForm");
+    joinForm.addEventListener("submit",function(e) {
+        e.preventDefault();
 
-        // joinForm.addEventListener("submit",function(e) {
-        joinForm.addEventListener("submit",function(e) {
-            e.preventDefault();
-
-            if(!(email.test(user_email.value))) {
-                setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
-                return false;
-            }
-
-            if (user_name.value.length < 2 ) {
-                // && user_name.value.length==0) {
-                setMessage('최소 2자 이상 입력해주세요.', "user_name", "msgName", "red");
-                return false;
-            }
-
-            if (user_pwd.value.length < 8 && user_pwd.value.length > 20 ) {
-                setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "user_pwd", "msgPwd", "red");
-                return false;
-            }
-
-            if (user_pwdConfirm.value.length < 8 && user_pwdConfirm.value.length > 20 ) {
-                setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "user_pwdConfirm", "msgPwd", "red");
-                return false;
-            }
-
-            if(!user_pwd.value.equals(user_pwdConfirm.value)){
-                setMessage('비밀번호가 일치하지 않습니다.', "user_pwdConfirm", "msgPwdConfirm", "red");
-                alert('5');
-                return false;
-            }
-
-            singleCheckboxes.forEach(checkbox => {
-                if(checkbox.checked)
-                {
-
-                }
-            });
-
-            txtForm.action = '<c:url value="//join/add"/>';
-            joinForm.method = 'POST';
-            joinForm.submit();
-        })
-
-        /* 유효성(입력된 값에 따른 변화 style,value) */
-        function setMessage(msg, elementid, msgid, color){
-            document.getElementById(msgid).innerHTML = `${'${msg}'}`;
-            document.getElementById(elementid).style.border = "1px solid " + color;
-            elementid.focus();
+        if(!(email.test(user_email.value))) {
+            setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
+            return false;
         }
 
-        /* checkbox 정의 */
+        if (user_name.value.length < 2 ) {
+            // && user_name.value.length==0) {
+            setMessage('최소 2자 이상 입력해주세요.', "user_name", "msgName", "red");
+            return false;
+        }
 
-        // 전체 동의 체크박스 상태 변경 시 개별 동의 체크박스 상태 변경
-        checkAll.addEventListener('change', function() {
-            singleCheckboxes.forEach(checkbox => {
-                checkbox.checked = checkAll.checked;
-            });
+        if (user_pwd.value.length < 8 && user_pwd.value.length > 20 ) {
+            setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "user_pwd", "msgPwd", "red");
+            return false;
+        }
+
+        if (user_pwdConfirm.value.length < 8 && user_pwdConfirm.value.length > 20 ) {
+            setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "user_pwdConfirm", "msgPwd", "red");
+            return false;
+        }
+
+        if(!user_pwd.value===user_pwdConfirm.value){
+            setMessage('비밀번호가 일치하지 않습니다.', "user_pwdConfirm", "msgPwdConfirm", "red");
+            return false;
+        }
+
+        singleChk = document.querySelectorAll('.singleChk:checked');
+
+        if(singleChk.length <3 ){
+            setMessage('필수 동의 내용을 체크해주세요.', "", "agreeName", "red");
+            return false;
+        }
+
+        joinForm.action = '<c:url value="/join/add"/>';
+        joinForm.method = 'POST';
+        joinForm.submit();
+    })
+
+    /* 유효성(입력된 값에 따른 변화 style,value) */
+    function setMessage(msg, elementid, msgid, color){
+        document.getElementById(msgid).innerHTML = `${'${msg}'}`;
+        document.getElementById(elementid).style.border = "1px solid " + color;
+        elementid.focus();
+    }
+
+    /* checkbox 정의 */
+    // 전체 동의 체크박스 상태 변경 시 개별 동의 체크박스 상태 변경
+    checkAll.addEventListener('change', function() {
+        allboxes.forEach(checkbox => {
+            checkbox.checked = checkAll.checked;
         });
+    });
 
-        // 개별 동의 체크박스 중 하나라도 체크 해제 시 전체 동의 체크박스도 체크 해제
-        singleCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                chkCount = document.querySelectorAll('.singleChk:checked');
-                if (!this.checked) {
-                    checkAll.checked = false;
-                }
+    allboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
 
-                if(chkCount.length == singleCheckboxes.length) checkAll.checked = true;
-            });
+            singleChk = document.querySelectorAll('.singleChk:checked');
+            selectChk =  document.querySelectorAll('.selectChk:checked');
+
+            if (!this.checked) {
+                checkAll.checked = false;
+            }
+
+            if(singleChk.length != 0 && singleChk.length< 3 || selectChk.length!=0 && singleChk.length == 0){
+                setMessage('필수 동의 내용을 체크해주세요.', "", "agreeName", "red");
+            }
+            else{
+                setMessage('.', "", "agreeName", "black");
+            }
+            if(singleChk.length + selectChk.length  == 5) {checkAll.checked = true;}else{checkAll.checked = false;}
         });
-
+    })
 
     </script>
-
 </html>
