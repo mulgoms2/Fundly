@@ -9,11 +9,13 @@
 <html>
 <head>
     <title>Title</title>
-    <script>
-        <%--const door = window.open(`/chatPop?user_id=${user_id}&pj_id=${pj_id}`, "_blank", 'width=700px,height=800px,scrollbars=yes');--%>
-        // window.open('','_self').close();
-        // window.open('', "_self").close();
-    </script>
+    <form action="/chat" method="post" >
+<%--        <input type="hidden" name="_method" value="put">--%>
+        <input type="text" name="hi">
+        <button type="submit">post</button>
+    </form>
+
+    ${testDto.hi}
 </head>
 <body>
 </body>

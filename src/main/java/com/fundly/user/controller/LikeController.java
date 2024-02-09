@@ -104,6 +104,10 @@ public class LikeController {
         return result;
     }
 
+        // like객체 생성하여 값 세팅
+        LikeDto likedto = new LikeDto();
+        likedto.setUser_id(user_id);
+        likedto.setPj_id(pjdto.getPj_id());
     //    @GetMapping(value="like", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 //    @ResponseBody
 //    public String getList(String user_id) {
@@ -111,11 +115,29 @@ public class LikeController {
 //        return new ResponseEntity<>(likeService.getList(user_id), HttpStatus.OK);
 //    }
 
+        result = likeService.checkLike(likedto);
+
+        session.setAttribute("result",result);
+        return result;
     @GetMapping(value="like", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity getList(String user_id) throws Exception {
         log.info("In Controller UserId : " + user_id);
         return new ResponseEntity<>(likeservice.getList(likedto), HttpStatus.OK);
 //        return "/user/like";
     }
+
+    //    @GetMapping(value="like", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+//    @ResponseBody
+//    public String getList(String user_id) {
+//        Log.info("In Controller UserId : " + user_id);
+//        return new ResponseEntity<>(likeService.getList(user_id), HttpStatus.OK);
+//    }
+
+//    @GetMapping(value="like", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+//    public String getList() {
+//        Log.info("In Controller UserId : " + user_id);
+//        return new ResponseEntity<>(likeService.getList(user_id), HttpStatus.OK);
+//        return "/user/like";
+//    }
 
 }
