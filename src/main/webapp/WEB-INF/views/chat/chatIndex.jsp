@@ -18,6 +18,11 @@
     <input id="pj" type="text" name="pj_id">
     <button type="submit">chat</button>
 </form>
+<form method="post" action="/chat/file" enctype="multipart/form-data" >
+    <input type="file" name="asdf"/>
+    <button type="submit">post</button>
+</form>
+
 <script>
     $("#join").on("submit", (e) => {
         e.preventDefault();

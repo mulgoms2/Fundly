@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface PayMeansDao {
     int count() throws Exception;
+    String selectPayMeansId(String UserId) throws Exception;
     int insert(PayMeansDto payMeansDto) throws Exception;
     int updateDefaultMeansToNo(PayMeansDto payMeansDto) throws Exception;
     int updateDefaultMeansToYes(PayMeansDto payMeansDto) throws Exception;

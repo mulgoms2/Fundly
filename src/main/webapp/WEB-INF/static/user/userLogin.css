@@ -6,6 +6,13 @@
     text-decoration: none;
 }
 
+
+/*#header{*/
+/*    border: 1px solid black;*/
+/*    display: flex;*/
+/*    margin : auto;*/
+/*}*/
+
 /*a {*/
 /*    display: block;*/
 /*}*/
@@ -71,4 +78,11 @@ h2{
 
 h3{
     margin: 10px 0 10px 0;
+}
+
+.centerDiv >span{
+    position: relative;
+    padding: 16px;
+    color: rgb(158, 158, 158);
+    font-size: 12px;
 }
