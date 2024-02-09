@@ -45,6 +45,7 @@ public class ChatServiceImpl implements ChatService {
         try {
             if (message.getFile_cnt() != 0) {
 //                파일을 저장한다.
+
             }
                 chatRoomDao.insertMsg(message);
         } catch (Exception e) {
