@@ -17,15 +17,15 @@ import java.time.LocalDate;
 @RequestMapping("/join")
 public class JoinController {
 
+    @Autowired
+    private JoinService joinService;
+
 //    @Autowired
-//    UserJoinDao userJoinDao;
+//    private MailSendService mailSendService;
 
-    @Autowired
-    JoinService joinService;
-
-
-    @Autowired
-    MailSendService mailSendService;
+    JoinController(JoinService joinService){
+        this.joinService = joinService;
+    }
 
     @GetMapping("/add")
     public String join(){ return "user/join";}
@@ -46,15 +46,15 @@ public class JoinController {
         return "user/login";
     }
 
-    // 메일 인증
-    @PostMapping("/mailCheck")
-    public String mailCheck(String email) throws Exception {
-        try {
-            mailSendService.joinEmail(email);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return "/add/add";
-    }
+//    // 메일 인증
+//    @PostMapping("/mailCheck")
+//    public String mailCheck(String email) throws Exception {
+//        try {
+//            mailSendService.joinEmail(email);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        return "/add/add";
+//    }
 }
