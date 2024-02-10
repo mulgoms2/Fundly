@@ -40,7 +40,7 @@ public class ChatFileServiceImpl implements ChatFileService {
 //            식별자는 어디에서 알 수 있지?
 //            파일이 첨부된 이후에 메시지가 클라이언트로부터 발송되어올 때 생성된다.
 
-            img_file.setTable_key();
+//            img_file.setTable_key();
 
 //            파일 Dto에 해당 메시지의 식별자를 적어서 저장해야한다.
             fileDao.saveFile(img_file);
@@ -56,6 +56,7 @@ public class ChatFileServiceImpl implements ChatFileService {
 
     @Override
     public Resource loadImgFile(String fileName) throws Exception {
+
         try {
             return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
         } catch (MalformedURLException e) {

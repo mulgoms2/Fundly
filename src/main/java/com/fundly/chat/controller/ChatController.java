@@ -42,13 +42,8 @@ public class ChatController {
 //        지난 채팅메시지를 가져온다.
         ArrayList<SelBuyMsgDetailsDto> messageList = chatService.loadMessages(user_id, pj_id);
         model.addAttribute("messageList", messageList);
-//        첨부파일을 가져온다.
-//        내 생각엔 그냥 DTO가 테이블의 명세와는 별개로 파일을 담을 수 있는 배열을 갖는 편이 나을 것 같다.
-//        그렇게 해서 여러 DTO를 클라이언트로 넘겨주기 보다는 하나의 DTO로 데이터를 컨트롤러까지 전달하는 편이 뷰의 로직을 제거할 것 같다.
-//        ArrayList<FileDto> imgFleList = chatService.
 
 //        model에 아이디랑 pj_id를 임시로 담았다
-//        나중에는 프로젝트 상세 페이지 혹은 상담사와 문의하기를 눌렀을때 해당 값이 입력되어야 한다.ㅏ
         model.addAttribute("user_id", user_id);
         model.addAttribute("pj_id", pj_id);
 
