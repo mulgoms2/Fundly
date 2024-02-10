@@ -17,7 +17,7 @@ public interface ChatService {
 
     String getChatRoomName(String user_id, String pj_id);
     String IMG_SAVE_LOCATION = "/Users/dobigulbi/chat/file/";
-    SelBuyMsgDetailsDto saveImageFile(FileDto img_file) throws Exception;
+    void saveImageFile(FileDto img_file, SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
 
     Resource loadImgFile(String fileName) throws Exception;
 }

@@ -108,10 +108,9 @@
         const formData = new FormData();
         const file = document.querySelector("#img").files[0];
 
-        const roomName = "${user_id}" + "${pj_id}";
-
         formData.append("file", file);
-        formData.append("table_key", roomName)
+        formData.append("buy_id", "${user_id}");
+        formData.append("pj_id", "${pj_id}");
 
         document.querySelector("#img").value = "";
 

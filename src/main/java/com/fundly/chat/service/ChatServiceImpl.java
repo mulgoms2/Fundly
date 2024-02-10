@@ -18,6 +18,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static java.util.stream.Collectors.toCollection;
+
 @Service
 @Slf4j
 public class ChatServiceImpl implements ChatService {
@@ -70,15 +72,18 @@ public class ChatServiceImpl implements ChatService {
             ArrayList<SelBuyMsgDetailsDto> msgList = chatRoomDao.loadAllMessages(user_id, pj_id);
 
 //            파일테이블에서 첨부파일을 조회한 후 dto에 저장한다.
-            msgList.stream()
-                    .filter(this::isFileAttached)
-                    .forEach(this::loadFile);
 
-            return msgList;
+           ArrayList<SelBuyMsgDetailsDto> fileList = msgList.stream()
+                   .map(this::mappingImgUrl)
+                   .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
+
+            System.out.println("fileList = " + fileList);
+
+            return fileList;
         } catch (Exception e) {
 //            메시지를 로드하는데 실패하면 어떤 예외처리를 해야할까
 //            에러메시지를 전달한다.
-            throw new RuntimeException("error when message loading", e);
+            throw new RuntimeException("error with message loading", e);
         }
     }
 
@@ -91,34 +96,39 @@ public class ChatServiceImpl implements ChatService {
             throw new RuntimeException(e);
         }
     }
-    private void loadFile(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
+
+    private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
 //        채팅 메시지의 식별자인 auto increament 컬럼의 값을 파일 테이블에 저장했어야 한다.
+
+        if (!isFileAttached(selBuyMsgDetailsDto)) {
+            return selBuyMsgDetailsDto;
+        }
 
         String msgKey = selBuyMsgDetailsDto.getMsg_id();
 
         String savedFileUri = null;
         try {
-            savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS,msgKey);
+            savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS, msgKey);
         } catch (Exception e) {
             log.error("error with getSavedFileUri = {}", msgKey);
             throw new RuntimeException(e);
         }
 
         selBuyMsgDetailsDto.setFile_url(savedFileUri);
+
+        return selBuyMsgDetailsDto;
     }
 
     public boolean isFileAttached(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
         return selBuyMsgDetailsDto.getFile_cnt() != 0;
     }
+
     @Override
-    public SelBuyMsgDetailsDto saveImageFile(FileDto img_file) {
+    public void saveImageFile(FileDto img_file, SelBuyMsgDetailsDto message) {
         String originFileName = img_file.getFile().getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
         String savedImgUrl = IMG_SAVE_LOCATION + uuid + originFileName;
 
-        SelBuyMsgDetailsDto message = new SelBuyMsgDetailsDto();
-
-//        이때 DTO에 메시지 키가 담긴다.
         message.setFile_cnt(1);
         message.setFile_url(savedImgUrl);
 
@@ -143,8 +153,8 @@ public class ChatServiceImpl implements ChatService {
             log.error("error with saveImageFile on service = {}", e.getMessage());
             throw new RuntimeException(e);
         }
-        return message;
     }
+
     @Override
     public Resource loadImgFile(String fileName) throws Exception {
         try {
