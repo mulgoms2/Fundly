@@ -2,6 +2,7 @@ package com.fundly.chat.controller;
 
 import com.fundly.chat.service.ChatFileService;
 import com.fundly.chat.service.ChatService;
+import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 
@@ -43,6 +43,8 @@ public class ChatController {
         ArrayList<SelBuyMsgDetailsDto> messageList = chatService.loadMessages(user_id, pj_id);
         model.addAttribute("messageList", messageList);
 //        첨부파일을 가져온다.
+//        내 생각엔 그냥 DTO가 테이블의 명세와는 별개로 파일을 담을 수 있는 배열을 갖는 편이 나을 것 같다.
+//        그렇게 해서 여러 DTO를 클라이언트로 넘겨주기 보다는 하나의 DTO로 데이터를 컨트롤러까지 전달하는 편이 뷰의 로직을 제거할 것 같다.
 //        ArrayList<FileDto> imgFleList = chatService.
 
 //        model에 아이디랑 pj_id를 임시로 담았다
@@ -65,12 +67,17 @@ public class ChatController {
 
     @PostMapping("/chat/file")
     @ResponseBody
-    public ArrayList saveImgFile(@RequestParam("img_file") MultipartFile file) {
+    public ArrayList saveImgFile(FileDto file) {
 //        파일 저장 처리후에 파일 저장 경로를 리턴한다.
         ArrayList<String> urlList = new ArrayList<>();
-
 //        파일을 저장하고 저장경로를 받는다.
-        String savedUrl = chatFileService.saveImageFile(file);
+        String savedUrl = "";
+        try {
+            savedUrl = chatFileService.saveImageFile(file);
+        } catch (Exception e) {
+            log.error("error with saveImgFile = {}", file);
+            throw new RuntimeException(e);
+        }
 
 //        저장경로를 json으로 리턴한다.
         urlList.add(savedUrl);

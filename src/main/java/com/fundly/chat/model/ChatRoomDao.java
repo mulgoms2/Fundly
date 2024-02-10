@@ -19,6 +19,4 @@ public interface ChatRoomDao {
 
     ArrayList<SelBuyMsgDetailsDto> loadAllMessages(@Param("buy_id") String buy_id, @Param("pj_id") String pj_id) throws Exception;
 
-    int saveImageUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
-
 }
