@@ -28,7 +28,7 @@ public class PortOneServiceImpl implements PortOneService {
     private String PORTONE_API_SECRET;
 
     // 2. 결제사에 카드 등록: getBillKey() -> registerPayMeans()
-    public String getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception {
+    public BillKeyResponseDto getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("card_number", billKeyRequestDto.getCardNo());
         map.add("expiry", billKeyRequestDto.getExpiry());
@@ -46,8 +46,9 @@ public class PortOneServiceImpl implements PortOneService {
                 .body(BodyInserters.fromFormData(map))
                 .retrieve()
                 .bodyToMono(BillKeyResponseDto.class)
-                .map(BillKeyResponseDto::getBillKey)
-                .doOnSuccess(res -> log.info("getBillKey 성공"))
+//                .map(BillKeyResponseDto::getBillKey)
+                .doOnSuccess(res -> log.info("getBillKey 요청 성공"))
+                .doOnError(res -> log.info("getBillKey 요청 실패"))
                 .block();
     }
 
@@ -64,7 +65,8 @@ public class PortOneServiceImpl implements PortOneService {
                 .retrieve() // 요청 전송
                 .bodyToMono(TokenResponseDto.class) // response를 Mono로 변환
                 .map(TokenResponseDto::getAccess_token)
-                .doOnSuccess(res -> log.info("getToken 성공"))
+                .doOnSuccess(res -> log.info("getToken 요청 성공"))
+                .doOnError(res -> log.info("getToken 요청 실패"))
                 .block();
     }
 
