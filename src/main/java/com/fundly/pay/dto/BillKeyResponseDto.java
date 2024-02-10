@@ -13,8 +13,12 @@ public class BillKeyResponseDto {
     private Integer code;
     private String message;
     private BillKeyData response;
+
     public String getBillKey() {
         return response != null ? response.getCustomer_id() : null;
+    }
+    public String getCardCoType() {
+        return response != null ? response.getCard_publisher_name() : null;
     }
 }
 
