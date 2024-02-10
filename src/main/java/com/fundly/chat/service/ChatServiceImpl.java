@@ -6,6 +6,7 @@ import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.domain.FileDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     ChatRoomDao chatRoomDao;
     @Autowired
