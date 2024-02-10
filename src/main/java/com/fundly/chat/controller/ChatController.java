@@ -12,7 +12,10 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 
@@ -60,26 +63,46 @@ public class ChatController {
         return message;
     }
 
-    @PostMapping("/chat/file")
-    @ResponseBody
-    public ArrayList saveImgFile(FileDto file) {
+//    @PostMapping("/chat/file")
+//    @ResponseBody
+//    public ArrayList saveImgFile(FileDto file) {
+////        파일 저장 처리후에 파일 저장 경로를 리턴한다.
+//        ArrayList<String> urlList = new ArrayList<>();
+////        파일을 저장하고 저장경로를 받는다.
+//        String savedUrl = "";
+//        try {
+//            savedUrl = chatFileService.saveImageFile(file);
+//        } catch (Exception e) {
+//            log.error("error with saveImgFile = {}", file);
+//            throw new RuntimeException(e);
+//        }
+//
+////        저장경로를 json으로 리턴한다.
+//        urlList.add(savedUrl);
+//
+//
+//        return urlList;
+//    }
+@PostMapping("/chat/file")
+@ResponseBody
+public ArrayList saveImgFile(FileDto file) {
 //        파일 저장 처리후에 파일 저장 경로를 리턴한다.
-        ArrayList<String> urlList = new ArrayList<>();
+    ArrayList<String> urlList = new ArrayList<>();
 //        파일을 저장하고 저장경로를 받는다.
-        String savedUrl = "";
-        try {
-            savedUrl = chatFileService.saveImageFile(file);
-        } catch (Exception e) {
-            log.error("error with saveImgFile = {}", file);
-            throw new RuntimeException(e);
-        }
-
-//        저장경로를 json으로 리턴한다.
-        urlList.add(savedUrl);
-
-        return urlList;
+    String savedUrl = "";
+    try {
+        savedUrl = chatFileService.saveImageFile(file);
+    } catch (Exception e) {
+        log.error("error with saveImgFile = {}", file);
+        throw new RuntimeException(e);
     }
 
+//        저장경로를 json으로 리턴한다.
+    urlList.add(savedUrl);
+
+
+    return urlList;
+}
     @GetMapping(value = "**/file/{fileName}")
     @ResponseBody
     public Resource getImageResource(@PathVariable("fileName") String fileName) {

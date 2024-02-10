@@ -18,6 +18,4 @@
     <select id="loadAllMessages" resultType="SelBuyMsgDetailsDto">
         select * from SEL_BUY_MSG_DETAILS where buy_id = #{buy_id} and pj_id = #{pj_id}
     </select>
-
-
 </mapper>
