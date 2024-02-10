@@ -1,15 +1,16 @@
 package com.fundly.chat.controller;
 
-import com.fundly.chat.service.ChatFileService;
 import com.fundly.chat.service.ChatService;
 import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +25,9 @@ import java.util.ArrayList;
 public class ChatController {
 
     @Autowired
-    ChatService chatService;
-
+    SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
-    ChatFileService chatFileService;
-
+    ChatService chatService;
     @GetMapping("/chat")
     public String chatRoom() {
         return "chat/chatIndex";
@@ -63,7 +62,7 @@ public class ChatController {
         return message;
     }
 
-//    @PostMapping("/chat/file")
+    //    @PostMapping("/chat/file")
 //    @ResponseBody
 //    public ArrayList saveImgFile(FileDto file) {
 ////        파일 저장 처리후에 파일 저장 경로를 리턴한다.
@@ -83,31 +82,23 @@ public class ChatController {
 //
 //        return urlList;
 //    }
-@PostMapping("/chat/file")
-@ResponseBody
-public ArrayList saveImgFile(FileDto file) {
-//        파일 저장 처리후에 파일 저장 경로를 리턴한다.
-    ArrayList<String> urlList = new ArrayList<>();
-//        파일을 저장하고 저장경로를 받는다.
-    String savedUrl = "";
-    try {
-        savedUrl = chatFileService.saveImageFile(file);
-    } catch (Exception e) {
-        log.error("error with saveImgFile = {}", file);
-        throw new RuntimeException(e);
+    @SneakyThrows
+    @PostMapping("/chat/file")
+    @ResponseBody
+    public void uploadFile(FileDto file) {
+//        파일을 서버에 저장. 채팅방에 이미지가 담긴 메시지를 발행한다.
+        String roomName = file.getTable_key();
+
+        chatService.saveImageFile(file);
+
+        simpMessagingTemplate.convertAndSend("/chatPub/" + roomName);
     }
 
-//        저장경로를 json으로 리턴한다.
-    urlList.add(savedUrl);
-
-
-    return urlList;
-}
     @GetMapping(value = "**/file/{fileName}")
     @ResponseBody
     public Resource getImageResource(@PathVariable("fileName") String fileName) {
         try {
-            return chatFileService.loadImgFile(fileName);
+            return chatService.loadImgFile(fileName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
