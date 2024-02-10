@@ -2,7 +2,6 @@ package com.fundly.chat.service;
 
 import com.fundly.chat.model.ChatRoomDao;
 import com.persistence.dto.ChatRoomDto;
-import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.domain.FileDao;
 import lombok.extern.slf4j.Slf4j;
@@ -85,8 +84,17 @@ public class ChatServiceImpl implements ChatService {
     private void loadFile(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
 //        채팅 메시지의 식별자인 auto increament 컬럼의 값을 파일 테이블에 저장했어야 한다.
 
-        ArrayList<FileDto> imgFileList = fileDao.getFileList(,user_id + pj_id);
-//        selBuyMsgDetailsDto.
+        String msgKey = selBuyMsgDetailsDto.getMsg_id();
+
+        String savedFileUri = null;
+        try {
+            savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS,msgKey);
+        } catch (Exception e) {
+            log.error("error with getSavedFileUri = {}", msgKey);
+            throw new RuntimeException(e);
+        }
+
+        selBuyMsgDetailsDto.setFile_url(savedFileUri);
     }
 
     public boolean isFileAttached(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
