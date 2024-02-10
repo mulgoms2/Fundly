@@ -2,6 +2,7 @@ package com.persistence.dto.domain;
 
 import com.persistence.dto.FileDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 
@@ -9,5 +10,7 @@ import java.util.ArrayList;
 public interface FileDao {
     int saveFile(FileDto fileDto) throws Exception;
 
-    ArrayList<FileDto> getFile(String table_key) throws Exception;
+    ArrayList<FileDto> getFileList(@Param("table_name") String table_name, @Param("table_key") String table_key) throws Exception;
+    FileDto getFile(@Param("table_name") String table_name, @Param("table_key") String table_key) throws Exception;
+    String getSavedFileUri(@Param("table_name") String table_name, @Param("table_key") String table_key) throws Exception;
 }

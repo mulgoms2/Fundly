@@ -5,7 +5,25 @@
         insert into FILE (table_name, origin_uri, saved_uri, table_key)
         values (#{table_name}, #{origin_uri}, #{saved_uri}, #{table_key})
     </insert>
+
+    <select id="getFileList" resultType="FileDto">
+        select *
+        from FILE
+        where table_name = #{table_name}
+          and table_key = #{table_key}
+    </select>
+
     <select id="getFile" resultType="FileDto">
-        select * from FILE where table_key = #{table_key}
+        select *
+        from FILE
+        where table_name = #{table_name}
+          and table_key = #{table_key}
+    </select>
+
+    <select id="getSavedFileUri" resultType="String">
+        select saved_uri
+        from FILE
+        where table_name = #{table_name}
+          and table_key = #{table_key}
     </select>
 </mapper>

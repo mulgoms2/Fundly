@@ -85,7 +85,7 @@ public class ChatServiceImpl implements ChatService {
     private void loadFile(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
 //        채팅 메시지의 식별자인 auto increament 컬럼의 값을 파일 테이블에 저장했어야 한다.
 
-        ArrayList<FileDto> imgFileList = fileDao.getFile(user_id + pj_id);
+        ArrayList<FileDto> imgFileList = fileDao.getFileList(,user_id + pj_id);
 //        selBuyMsgDetailsDto.
     }
 
