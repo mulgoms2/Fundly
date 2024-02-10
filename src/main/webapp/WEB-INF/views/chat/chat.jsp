@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,11 +14,6 @@
 <div class="chatMainContainer">
     <div class="chatTableBox">
         <table id="conversation" class="chatTable">
-            <thead>
-            <tr>
-                <th>chat</th>
-            </tr>
-            </thead>
             <tbody id="chatBox">
             <c:forEach items="${messageList}" var="msg">
                 <c:if test="${msg.file_cnt ne 0}">
@@ -29,8 +25,7 @@
                 </c:if>
                 <c:if test="${msg.file_cnt eq 0}">
                     <tr>
-                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours}
-                            : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
+                        <td id="msgCont">${msg.msg_cont}</td>
                     </tr>
                 </c:if>
             </c:forEach>
@@ -44,8 +39,7 @@
                 <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
             </div>
         </form>
-        <input id="img" name="file_img" type="file" formenctype="multipart/form-data"/>
-        <button id="imgSendBtn">보내기</button>
+        <input id="img" class="imgIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>
@@ -111,10 +105,12 @@
         if (document.querySelector("#img").value === "") {
             return;
         }
-        const img_file = document.querySelector("#img").files[0];
         const formData = new FormData();
+        const file = document.querySelector("#img").files[0];
 
-        formData.append("img_file", img_file);
+        formData.append("file", file);
+        formData.append("buy_id", "${user_id}");
+        formData.append("pj_id", "${pj_id}");
 
         document.querySelector("#img").value = "";
 
@@ -125,26 +121,22 @@
             body: formData
         });
 
-        const resultObject = await result.json();
-
-        const savedImgUrl = resultObject[0];
-
         // 만약 서비스계층에서 파일테이블에 img url을 별도로 저장한다면 해당 메시지에는 file_url을 실을 필요가 없게된다.
         // 다만 문제는 파일 자체를 가져오는 것에 있는데, 저장된 메시지들을 불러오는 과정에서 이미지 전송 메시지였던 친구들을
         // 어떻게 토픽으로 발행할 것인가 하는 문제가 따른다.
-        const messageDto = {
-            buy_id: "${user_id}",
-            pj_id: "${pj_id}",
-            send_user_id: "${user_id}",
-            file_cnt: resultObject.length,
-            file_url: savedImgUrl
-        };
+        <%--const messageDto = {--%>
+        <%--    buy_id: "${user_id}",--%>
+        <%--    pj_id: "${pj_id}",--%>
+        <%--    send_user_id: "${user_id}",--%>
+        <%--    file_cnt: resultObject.length,--%>
+        <%--    file_url: savedImgUrl--%>
+        <%--};--%>
 
-        // 토픽 발행 완료. 발행과 동시에 displayMessage 콜백 호출일 일어난다.
-        stompClient.publish({
-            destination: "/chatPub/chat/${roomName}",
-            body: JSON.stringify(messageDto)
-        });
+        <%--// 토픽 발행 완료. 발행과 동시에 displayMessage 콜백 호출일 일어난다.--%>
+        <%--stompClient.publish({--%>
+        <%--    destination: "/chatPub/chat/${roomName}",--%>
+        <%--    body: JSON.stringify(messageDto)--%>
+        <%--});--%>
     }
 
     const scrollToButtom = () => {
@@ -176,8 +168,9 @@
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
-        document.querySelector("#send").addEventListener('click', sendMessage)
-        document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
+        document.querySelector("#send").addEventListener('click', sendMessage);
+        document.querySelector("#img").addEventListener('input', sendImg);
+        // document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
     };
 </script>

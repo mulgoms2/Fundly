@@ -1,7 +1,7 @@
 package com.fundly.chat.controller;
 
-import com.fundly.chat.service.ChatFileService;
 import com.fundly.chat.service.ChatService;
+import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,13 @@ import org.springframework.core.io.Resource;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 
@@ -21,11 +24,9 @@ import java.util.ArrayList;
 public class ChatController {
 
     @Autowired
-    ChatService chatService;
-
+    SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
-    ChatFileService chatFileService;
-
+    ChatService chatService;
     @GetMapping("/chat")
     public String chatRoom() {
         return "chat/chatIndex";
@@ -42,11 +43,8 @@ public class ChatController {
 //        지난 채팅메시지를 가져온다.
         ArrayList<SelBuyMsgDetailsDto> messageList = chatService.loadMessages(user_id, pj_id);
         model.addAttribute("messageList", messageList);
-//        첨부파일을 가져온다.
-//        ArrayList<FileDto> imgFleList = chatService.
 
 //        model에 아이디랑 pj_id를 임시로 담았다
-//        나중에는 프로젝트 상세 페이지 혹은 상담사와 문의하기를 눌렀을때 해당 값이 입력되어야 한다.ㅏ
         model.addAttribute("user_id", user_id);
         model.addAttribute("pj_id", pj_id);
 
@@ -54,6 +52,7 @@ public class ChatController {
         return "chat/chat";
     }
 
+//    MessageMapping을 통해 유저의 메시지 전송이 매핑되며. /chatPub/chat/{방번호} pathVariable 의 일종인 것 같다.
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
     public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomName, SelBuyMsgDetailsDto message) {
@@ -65,24 +64,26 @@ public class ChatController {
 
     @PostMapping("/chat/file")
     @ResponseBody
-    public ArrayList saveImgFile(@RequestParam("img_file") MultipartFile file) {
-//        파일 저장 처리후에 파일 저장 경로를 리턴한다.
-        ArrayList<String> urlList = new ArrayList<>();
+    public void uploadFile(FileDto file, SelBuyMsgDetailsDto message) {
+//        파일을 서버에 저장. 채팅방에 이미지가 담긴 메시지를 발행한다.
+        String roomName = chatService.getChatRoomName(message.getBuy_id(), message.getPj_id());
 
-//        파일을 저장하고 저장경로를 받는다.
-        String savedUrl = chatFileService.saveImageFile(file);
-
-//        저장경로를 json으로 리턴한다.
-        urlList.add(savedUrl);
-
-        return urlList;
+        try {
+//            이미지 파일을 서버에 저장한다.
+            chatService.saveImageFile(file, message);
+        } catch (Exception e) {
+            log.error("error with uploadFile = {}", file);
+            throw new RuntimeException(e);
+        }
+//        채팅방에 이미지 경로가 담긴 메시지를 전달한다.
+        simpMessagingTemplate.convertAndSend("/chatSub/" + roomName, message);
     }
 
     @GetMapping(value = "**/file/{fileName}")
     @ResponseBody
     public Resource getImageResource(@PathVariable("fileName") String fileName) {
         try {
-            return chatFileService.loadImgFile(fileName);
+            return chatService.loadImgFile(fileName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
