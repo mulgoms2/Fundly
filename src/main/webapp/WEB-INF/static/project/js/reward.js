@@ -10,13 +10,15 @@ window.onload = function () {
     const gftBtn = document.querySelector("#gftBtn"); //상단 선물페이지 이동 버튼
     const itmBtn = document.querySelector("#itmBtn"); //상단 아이템페이지 이동 버튼
     const itmName = document.querySelector("#itmName"); //아이템 이름 input
-    const radioElems = document.querySelectorAll("input[type=radio]"); //라디오버튼
+    const radioElems = document.querySelector('.pjBox.item').querySelectorAll("input[type=radio]"); //라디오버튼
     const initBtn = document.querySelector("button.init");//초기화버튼
     const saveBtn = document.querySelector("button.save");//저장버튼
 
     //선물 페이지의 요소들
     const dropdown = document.querySelector(".dropdown");
-
+    const giftName = document.querySelector('#giftName');
+    const radioBtns = document.querySelector('.pjBox.gift').querySelectorAll('input[type=radio]');
+    const maxInputs = document.querySelectorAll('.maxInput');
 
     //window.onload시 #itemList에 있는 item수를 세고
     const cnt = document.querySelectorAll("#itemList div");
@@ -182,6 +184,7 @@ window.onload = function () {
     //2. checekd된 라디오 input(딱 하나)에 대하여 매칭되는 div를 display block하고, 해당 textarea에 글자수 체크 이벤트 걸기
     for (elem of radioElems) {
         elem.addEventListener("change", function () { //라디오 선택이 달라지면 해당되는 이전 입력들이 초기화 된다.
+            console.dir(radioElems);
             const inputs = document.querySelectorAll(".radio"); //매칭된 div 요소들을 가져와서
             //const inputs = document.querySelectorAll("."+elem.id); // 이렇게 하면 안됨.
             inputs.forEach(input => { //div요소 각각에 대해
@@ -305,9 +308,35 @@ window.onload = function () {
             })
         }
     })
+    giftName.addEventListener("input",function(){
+        lengthCheck(this, 50, '선물 이름');
+    })
+    giftName.addEventListener("keyup", makeBlur);
+
+
+    for(radio of radioBtns){
+        radio.addEventListener('click',function(){
+            console.dir(this);
+            if(this.nextElementSibling){
+                console.dir(this.nextElementSibling);
+                this.nextElementSibling.style.visibility='visible'; //따옴표 안쓰면 안먹힘 ^^
+            } else {
+                // console.dir(this);
+                // console.dir(this.parentElement)
+                // console.dir(this.parentElement.querySelector('span'));
+                const span = this.parentElement.querySelector('span');
+                span.querySelector('input').value="";
+                span.style.visibility = 'hidden';
+                // console.dir(this.parentElement.querySelector('p.notice'));
+                this.parentElement.querySelector('p.notice').style.display='none';
+            }
+        })
+    }
+
 
 
 }// window.onload
+
 
 const tglHidden = function (elements) {
     elements.forEach(element => {
@@ -331,29 +360,29 @@ const lengthCheck = function (elem, maxLength, string) {
     const len = elem.parentElement.nextElementSibling
     // const len = elem.nextElementSibling;
     // alert(len);
-    elem.style.border = "1.5px solid red";
-    len.style.color = "red"
-    len.style.fontSize = 'small';
+    elem.parentElement.style.border = ".5px solid #ff5757";
+    len.style.color = '#ff5757';
+    len.style.fontSize = '12px';
     // alert(elem.value)
     if (elem.value.trim().length === 0) {
         elem.focus();
         len.innerHTML = '<p>' + string + '을 입력해주세요.<p>'
-        len.style.color = "red"
+        len.style.color = "#ff5757"
     } else if (elem.value.trim().length > maxLength) {
         elem.focus();
         len.innerHTML = '<p>' + string + '은 ' + maxLength + '자 이내여야 합니다.<p>'
 
     } else {
-        elem.style.border = "1.7px solid black";
+        elem.parentElement.style.border = ".5px solid black";
         len.innerHTML = '<p>' + elem.value.trim().length + '/' + maxLength + '</p>';
-        len.style.color = "black";
+        len.style.color = "#9e9e9e";
     }
 }
 const makeBlur = function () {
-    if (window.event.keyCode == 13) {
+    if (window.event.keyCode === 13) {
         // window.event.preventDefault();
         this.blur();
-        this.style.border = "1px solid black";
+        this.parentElement.style.border = ".5px solid #f1f1f1";
     }
 }
 
@@ -393,10 +422,13 @@ const mkItmList = function (itmArr) {
         list += '<div style="cursor:pointer" onclick=removeItm(itemArr,this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '>'
         //list += '<input type="hidden" value='+itm.item_id+'>' //item_id를 hidden으로 가져온다.
         //list += '<input type="hidden" value='+itm.pj_id+'>' //hidden으로 넣지 말고 data- attribute에 넣을까..? 굳이 input태그를 하나 더 쓰는게 맞을까?
+        list += '<div class="itmTit" style="border:none;">'
         list += '<p style="font-weight: 600" >'
         list += itm.item_name + '</p>'
-        list += '<p>' + itm.item_option_type + '</p>'
-        list += '<ul>'
+        list += '<div><i class="far fa-regular fa-trash-can"></i></div>'
+        list += '</div>'
+        list += '<p class="itmT">' + itm.item_option_type + '</p>'
+        list += '<ul class="itmL">'
         if (itm.item_option != null) { //옵션없음이 아닌 경우(객관식, 주관식 옵션)
             const opts = toArray(itm.item_option);
             for (opt of opts) {
@@ -449,44 +481,166 @@ const mkCheckedItm = function(arr) { //체크된 아이템들을 아래에 출�
         list += '<div class="right">'
         list += '<div style="display:inline-block">'
         list += '<button type="button" class="minus" onclick="minus(this)" disabled><i class="fas fa-regular fa-minus"></i></button>'
-        list += '<input class="itmNum" type="number" style="width:50px" oninput="checkOne(this)">'
+        list += '<input class="itmNum" type="number" style="width:50px" value="1" onkeyup="numCheck(this)">'
         list += '<button type="button" class="plus" onclick="plus(this)"><i class="fas fa-regular fa-plus"></i></button>'
         list += '</div>' //button close
-        list += '<button type="button" class="remove">삭제</button>'
+        list += '<button type="button" onclick="removeBtn(this)" data-item_id='+itm.item_id+'>삭제</button>'
         list += '</div>' //right close
         list += '</div>'
     }
     list += '</div>'
 
-
     return list;
 }
 
-const minus = function(elem){
+const minus = function(elem){ //클릭했을 때
     const itmNum = elem.nextElementSibling;
-    if(itmNum.value<=1) {
+    const value = parseInt(itmNum.value); //타입이 String이라서 int로 바꿔줌..
+    //console.log(typeof(itmNum.value)); //타입이 String이다;;;;;
+    //console.log(typeof(value));
+    if(value===2){ //값이 2이면
         elem.disabled = true;
-        return;
+        itmNum.value--;
+        //버튼 비활성화가 안된다.
     }
-    itmNum.value--;
-
+    else if(value<2) { //값이 1 이하라면 (혹시나 값을 input에 직접 입력하는 경우때문에 넣음)
+        elem.disabled = true; //값을 줄이지 못하도록 버튼을 비활성화
+    }
+    else { //3이상의 값이면
+        elem.disabled = false;
+        itmNum.value--;
+    }
 }
 const plus = function(elem){
-    const minus = document.querySelector('button.minus');
     const itmNum = elem.previousElementSibling;
-    if(itmNum.value>=1){
+    const minus = itmNum.previousElementSibling;
+    if(itmNum.value++>=1){ //+를 누르면 무조건 값이 증가하니까 -버튼의 비활성이 풀린다.
         minus.disabled = false;
     }
-    itmNum.value++;
+}
+
+const validNum = function(elem){
+    //key이벤트를 다루려면 input태그여도 oninput이 아닌 onkeyup과 같은 키보드 이벤트를 걸어야 한다.
+    const key = window.event.keyCode;
+    // alert(key);
+    // console.dir(typeof key)
+    if(key===13){
+        elem.blur();
+        return;
+    }
+    if(!((48<=key && key<=57) || key===8 || key ===37 || key === 39)) { //숫자키 또는 백스페이스 또는 오른 왼 방향키가 아닌 키를 누르면
+        //event.returnValue= false;
+        //type이 number라서 e는 눌린다..;;; 여기서 조건으로 차단을 하긴 하지만 아예 입력 자체가 안되게 하긴 어렵나보다.
+        alert('1이상의 정수로만 입력해주세요.');
+        // console.dir(elem);
+        elem.value=1;
+        return;
+    }
+}
+
+const validRNum = function(elem,max){
+    validNum(elem);
+    // console.log(elem);
+    const num = parseInt(uncomma(elem.value)); //금액때문에 uncomma를 한 값을 쓴다.
+    const limValue = document.querySelectorAll('input.maxInput')[0].value;
+    console.log('limValue')
+    console.log(limValue);
+    if(elem.parentElement.previousElementSibling){ //이렇게 조건을 안주면 이 요소가 없는 경우 에러가 나서 다음 코드가 안먹힘 ㅠㅠ
+        if(elem.parentElement.previousElementSibling.id==='maxLim'){
+            if(num>limValue) alert('선물 수량을 초과할 수 없습니다.')
+        }
+    } //선물이 한정수량일 경우(앞의 라디어 버튼) 선물 수량을 초과해서 입력할 수 없도록 경고.
+    // console.log(num);
+    if(num<1){
+        alert('1이상의 숫자를 입력하세요');
+        elem.value = 1;
+        elem.focus();
+    }
+    if(num>max){
+        elem.parentElement.parentElement.querySelector('p.notice').style.display='block';
+    } else {
+        elem.parentElement.parentElement.querySelector('p.notice').style.display='none';
+    }
+}
+const numCheck = function(elem){
+    // const key = window.event.keyCode;
+    // // alert(key);
+    // // console.dir(typeof key)
+    // if(key===13){
+    //     elem.blur();
+    //     return;
+    // }
+    // if(!(48<=key && key<=57 || key===8 || key ===37 || key === 39)) { //숫자키 또는 백스페이스 또는 오른 왼 방향키가 아닌 키를 누르면
+    //     alert('1이상의 정수로만 입력해주세요.');
+    //     elem.value=1;
+    //     return;
+    // }
+    validNum(elem);
+    const num = parseInt(elem.value);
+    const minus = elem.previousElementSibling;
+    //일단은 -버튼을 비활성화 시켜야 한다. input에 focus가 가면 비활성화가 풀리면서 버튼을 눌러서 마이너스값을 누를 수도 있음.
+    minus.disabled = true;
+    //alert(num);
+    console.dir(num);
+    if(num<=1){
+        minus.disabled = true;
+        if(num<1){
+            alert('1이상의 수량을 입력하세요.');
+            elem.value = 1;
+        }
+    }
+    if(num>=2) {
+        minus.disabled = false;
+    }
+}
+
+//정규식 꼼꼼히 체크하고 이해하기
+function inputNumberFormat(elem) {
+    elem.value = comma(uncomma(elem.value));
+}
+
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+
+function calcDate(elem){
+    const hidden = elem.parentElement.querySelector('input[type=hidden]')
+    const from = new Date(hidden.value);
+    const shipDate = document.querySelector('#shipDate');
+    if(elem.value > 1825){
+        shipDate.innerHTML = '<p>예상전달일이 유효하지 않습니다.</p>'
+        return;
+    }
+    const temp = from.getTime()+elem.value*24*60*60*1000;
+    const to = new Date(temp);
+    const dayNames = ['일','월','화','수','목','금','토']
+    // console.dir(from);
+    // console.dir(typeof to);
+    // console.dir(to);
+    // console.dir(new Date(to));
+    shipDate.innerHTML = '<p>'+to.toLocaleDateString()+' ('+ dayNames[to.getDay()]+')</p>'
+
 
 }
-const checkOne = function(elem){
-    alert(elem.value);
-    // if(elem.value===1) {
-    //     alert("here");
-    //     console.dir(elem.previousElementSibling)
-    //     elem.previousElementSibling.disabled = true;
-    // }
+
+const removeBtn = function(elem){
+    const target = elem.parentElement.parentElement;
+    console.dir(target);
+    //1. checked도 해제해주어야한다.
+    const checked = document.querySelectorAll('input[type=checkbox]:checked');
+    for(check of checked){
+        if(elem.getAttribute('data-item_id')===check.getAttribute('data-item_id')){
+            check.checked = false;
+        }
+    }
+    //2. 체크한 아이템을 리스트에서 삭제하는 메서드(DB에서 삭제하는게 아니라 그냥 태그의 삭제)
+    target.remove();
 }
 
 const changeFoot = function () { //체크박스의 체크 상태에 따라 footer에 찍히는 문자열을 바꾸는 메서드.
@@ -543,8 +697,6 @@ const selectItem = function (elem) {
     //console.log(itemIdArr);
     ////아이템 목록 중 체크한 아이템 목록이 해당 선물에 속한 아이템이 됨.
     //선택완료 버튼을 누르면 드롭다운에도 checked가 계속 반영됨.
-
-
 }
 
 
@@ -562,6 +714,8 @@ const showList = function (list, elem) {
     elem.innerHTML = list
     // console.dir(optArr);
 }
+
+//아이템 삭제 메서드
 const removeItm = function (itemArr, elem) {
     if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하면 해당 아이템이 포함된 *개의 선물에서도 삭제됩니다.")) return;
     //ajax로 컨트롤러를 통해 db에서 아이템 삭제해야 후 리스트를 다시 불러와서 보여줘야함.
@@ -592,7 +746,7 @@ const removeItm = function (itemArr, elem) {
     });
 }
 
-
+//아이템 - 옵션 삭제 메서드
 const remove = function (arr, elem) { //옵션이 담기거나, 아이템이 담긴 배열
     if (!confirm('옵션을 삭제하시겠습니까?')) return;
     //배열에서 삭제
@@ -633,7 +787,8 @@ const validCheck = function () {
 
 const init = function () {
     itmName.value = "";
-    itmName.parentElement.nextElementSibling.innerHTML = '<p>0/50</p>'
+    itmName.parentElement.nextElementSibling.innerHTML = ''
+    // itmName.parentElement.nextElementSibling.remove();
     const checked = document.querySelector("input[type=radio]:checked")
     checked.checked = false; //라디오버튼 체크 해제
 
