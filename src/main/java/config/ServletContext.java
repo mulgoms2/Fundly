@@ -42,7 +42,7 @@ public class ServletContext implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
-    }
+       }
 
     @Bean
     public CommonsMultipartResolver multipartResolver() {

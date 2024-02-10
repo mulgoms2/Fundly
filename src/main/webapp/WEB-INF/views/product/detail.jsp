@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>텀블벅</title>
-    <link rel="stylesheet" href="/static/main/css/style.css">
-    <link rel="stylesheet" href="/static/main/css/common.css">
+    <link rel="stylesheet" href="/static/main/style.css">
+    <link rel="stylesheet" href="/static/main/common.css">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery-ui.js"></script>

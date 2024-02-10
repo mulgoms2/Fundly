@@ -31,7 +31,7 @@
                         <span></span>
                     </div>
                     <div class="fontsize" >
-                        <a href="<c:url value='/user/login'/>">로그인</a>
+                        <a href="<c:url value='/login/login'/>">로그인</a>
                         <%--                    <div class="ifTxt">로그인/회원가입</div>--%>
                         <%--                    <div class="ifTxt">이한수</div>--%>
                     </div> <div class="fontsize" >
@@ -317,4 +317,8 @@
     </div>
 </div>
 </body>
+<script>
+
+
+</script>
 </html>

@@ -22,8 +22,8 @@ import java.util.Properties;
 
 @Slf4j
 @Configuration
-//@PropertySource(value = {"/WEB-INF/config/db.properties","/WEB-INF/config/mailPro.properties"})
-@PropertySource(value = "/WEB-INF/config/db.properties")
+@PropertySource(value = {"/WEB-INF/config/db.properties","/WEB-INF/config/mailPro.properties"})
+//@PropertySource(value = "/WEB-INF/config/db.properties")
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.fundly.**.model", "com.persistence.dto.domain"})
 public class RootContext {

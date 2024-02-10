@@ -34,6 +34,12 @@
         FROM pj_item_tmp
     </select>
 
+    <select id="select" resultType="ItemDto">
+        SELECT *
+        FROM pj_item_tmp
+        WHERE item_id = #{item_id}
+    </select>
+
     <!--4. 아이템 등록 -->
     <insert id="insert" parameterType="ItemDto">
         <selectKey keyProperty="item_id" resultType="String" order="BEFORE">
