@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>텀블벅</title>
 </head>
 <body>
 <%--<tiles:insertAttribute name="header"/>--%>
