@@ -65,9 +65,7 @@ public class ChatServiceImpl implements ChatService {
     public ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto) {
         try {
 //            메시지 전체 조회 후 첨부파일 경로를 매핑해서 전달.
-            return chatRoomDao.loadAllMessages(chatRoomDto).stream()
-                    .map(this::mappingImgUrl)
-                    .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
+            return chatRoomDao.loadAllMessages(chatRoomDto).stream().map(this::mappingImgUrl).collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
         } catch (Exception e) {
 //            에러메시지를 전달한다.
             throw new RuntimeException("error with message loading", e);
@@ -75,25 +73,21 @@ public class ChatServiceImpl implements ChatService {
     }
 
     private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-//        채팅 메시지의 식별자인 auto increament 컬럼의 값을 파일 테이블에 저장했어야 한다.
-
+//        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
         if (!isFileAttached(selBuyMsgDetailsDto)) {
             return selBuyMsgDetailsDto;
         }
 
-        String msgKey = selBuyMsgDetailsDto.getMsg_id();
-
-        String savedFileUri = null;
         try {
-            savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS, msgKey);
+//            파일 테이블에서 첨부파일 url을 가져와 dto에 세팅한다.
+            String msgKey = selBuyMsgDetailsDto.getMsg_id();
+            String savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS, msgKey);
+            selBuyMsgDetailsDto.setFile_url(savedFileUri);
+            return selBuyMsgDetailsDto;
         } catch (Exception e) {
-            log.error("error with getSavedFileUri = {}", msgKey);
+            log.error("error with getSavedFileUri");
             throw new RuntimeException(e);
         }
-
-        selBuyMsgDetailsDto.setFile_url(savedFileUri);
-
-        return selBuyMsgDetailsDto;
     }
 
     public boolean isFileAttached(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
@@ -106,28 +100,24 @@ public class ChatServiceImpl implements ChatService {
         String uuid = UUID.randomUUID().toString();
         String savedImgUrl = IMG_SAVE_LOCATION + uuid + originFileName;
 
-        message.setFile_cnt(1);
-        message.setFile_url(savedImgUrl);
-
-        saveMessage(message);
-
-        String msgKey = message.getMsg_id();
         try {
+//            메시지를 db에 저장
+            saveMessage(message);
+//            파일 저장과 동시에 채팅창에 보여지기 위해 이미지 url을 넣어준다.
+            message.setFile_url(savedImgUrl);
 //            파일을 서버에 저장했다.
             img_file.getFile().transferTo(new File(savedImgUrl));
 //            파일 테이블에 저장된 파일 경로를 담아야한다.
-            img_file.setTable_name("Sel_Buy_Msg_Details");
+            img_file.setTable_name(SEL_BUY_MSG_DETAILS);
             img_file.setSaved_uri(savedImgUrl);
             img_file.setOrigin_uri(IMG_SAVE_LOCATION + originFileName);
-            img_file.setTable_key(msgKey);
+            img_file.setTable_key(message.getMsg_id());
 
 //            파일 Dto에 해당 메시지의 식별자를 적어서 저장해야한다.
             fileDao.saveFile(img_file);
         } catch (IOException e) {
-            log.error("error with saveImageFile on service = {}", e.getCause());
-            throw new RuntimeException(e);
+            throw new RuntimeException("error with new File(savedImgUrl)",e);
         } catch (Exception e) {
-            log.error("error with saveImageFile on service = {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }

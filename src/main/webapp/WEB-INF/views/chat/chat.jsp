@@ -17,7 +17,7 @@
             <tbody id="chatBox">
             <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
                 <c:if test="${msg.file_cnt ne 0}">
-                    <tr>
+                    <tr class="chatRight">
                         <td>
                             <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
                         </td>
@@ -25,7 +25,7 @@
                 </c:if>
                 <c:if test="${msg.file_cnt eq 0}">
                     <tr>
-                        <td id="msgCont">${msg.msg_cont}</td>
+                        <td id="msgCont" class="chatRight">${msg.msg_cont}</td>
                     </tr>
                 </c:if>
             </c:forEach>
@@ -107,16 +107,19 @@
             return;
         }
         const formData = new FormData();
-        const file = document.querySelector("#img").files[0];
 
-        formData.append("file", file);
+        const files = document.querySelector("#img").files;
+
+
+        // 멀티파트 전송시에도 메시지를 함께 첨부할 수 있으며, 컨트롤러에서 하나 이상의 dto에 나누어 담을 수 있다.
+        formData.append("file", files[0]);
         formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
         formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
         formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
+        formData.append("file_cnt", files.length);
 
         document.querySelector("#img").value = "";
 
-        // await 은 fetch의 then 결과를 가져온다.
         const result = fetch("/chat/file", {
             method: "POST",
             headers: {},
@@ -124,6 +127,7 @@
         });
     }
 
+    // 메시지 생성시 하단 스크롤 유지
     const scrollToButtom = () => {
         const scrollHeight = document.querySelector("#chatBody").scrollHeight;
         window.scrollTo({top: scrollHeight});
@@ -135,18 +139,20 @@
         const date = new Date();
         const hour = date.getHours();
         const minute = date.getMinutes();
+        console.log(message);
 
         if (message.file_cnt !== 0) {
-            // 메시지 객체가 파일 url을 담고있지 않다면 어떻게 해야될까?
-            // 유저가 메시지를 전달받는 두가지 경우가 있다.
-            // 하나는 채팅방에 입장해서 db에 저장된 메세지를 불러올때
-            // 두번째는 유저가 파일을 전송하고 json으로 저장된 경로를 리턴받고 url이 실린 메시지를 발행했을때.
-            document.querySelector("#chatBox").innerHTML += `<img class="chatAttImg" src="${"${message.file_url}"}" />`;
+            // 이미지 출력
+            document.querySelector("#chatBox").innerHTML += `<tr><td><img class="chatAttImg" src="${"${message.file_url}"}" /></td></tr>`;
             return;
         }
 
+        // 일반 메시지 출력
 
-        document.querySelector("#chatBox").innerHTML += `<tr><td> ${'${message.msg_cont}'} </td></tr>`;
+      <%--if (message.send_user_id === "${sessionScope.loginId}")--%>
+      //   if (message.send_user_id === )
+
+        document.querySelector("#chatBox").innerHTML += `<tr class="chatRight"><td> ${'${message.msg_cont}'} </td></tr>`;
 
         scrollToButtom();
     }
