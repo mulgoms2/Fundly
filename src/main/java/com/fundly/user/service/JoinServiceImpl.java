@@ -13,7 +13,7 @@ import java.util.UUID;
 public class JoinServiceImpl implements JoinService {
 
     @Autowired
-    UserJoinDao userJoinDao;
+    private UserJoinDao userJoinDao;
 
     private String uuid_user_id;
 
@@ -21,10 +21,11 @@ public class JoinServiceImpl implements JoinService {
 //    @Transactional
     public int userJoin(UserDto userDto) {
 
-        uuid_user_id = UUID.randomUUID().toString();
+//        uuid_user_id = UUID.randomUUID().toString();
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)
 
-        userDto.setUser_id(uuid_user_id);
+//        userDto.setUser_id(uuid_user_id);
+        userDto.setUser_id(userDto.getUser_email());
         userDto.getUser_pwd();
 //        userDto.setUser_pwd("1111"); // 임시 하드코딩
         userDto.getUser_name();
@@ -35,8 +36,8 @@ public class JoinServiceImpl implements JoinService {
         userDto.getP_info_oth_agree_yn();
         userDto.getM_info_rcv_agree_yn();
         userDto.setUser_status(user_status);
-        userDto.setDba_reg_id(uuid_user_id);
-
+//        userDto.setDba_reg_id(uuid_user_id);
+        userDto.setDba_reg_id(userDto.getUser_email());
         try{
             return userJoinDao.insert(userDto);
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fundly.user.model.UserLoginDao">
+<mapper namespace="com.fundly.user.model.UserInfoDao">
 
     <!-- sql test -->
     <select id="count" resultType="int">
@@ -15,8 +15,8 @@
 <!--    </select>-->
 
     <!-- userInfo   -->
-    <select id="selectUser" parameterType="String">
-        SELECT  user_name, user_pwd, user_email, user_status FROM USER_INFO WHERE user_email = #{user_email} AND user_pwd = #{user_pwd};
+    <select id="userInfo" parameterType="String">
+        SELECT * FROM USER_INFO WHERE user_email = #{user_email}
     </select>
 
 </mapper>

@@ -34,19 +34,19 @@ public class LoginServiceImpl implements LoginService {
         * */
 
         try {
-            UserDto userInfo = userLoginDao.userInfo(user_email, user_pwd);
-
-            String user_status = userInfo.getUser_status();
+            UserDto userInfo = userLoginDao.selectUser(user_email, user_pwd);
 
             if(userInfo!=null){
 
-                String useremail = userInfo.getUser_email();
+                String user_status = userInfo.getUser_status();
+
+                log.error("user status " + user_status);
 
                 if(!user_status.equals("A")){
                     return userInfo;
                 }
 
-                session.setAttribute("user_email",useremail);
+                session.setAttribute("user_email",user_email);
                 // 세션의 유효시간 (30분)
                 session.setMaxInactiveInterval(1800);
 
