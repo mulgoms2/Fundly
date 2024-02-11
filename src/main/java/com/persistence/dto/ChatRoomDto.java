@@ -3,10 +3,12 @@ package com.persistence.dto;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 @Data
 public class ChatRoomDto {
-//    private Integer room_num;
+    private Integer room_num;
+    private ArrayList<SelBuyMsgDetailsDto> message_list;
     private String user_id;
     private String pj_id;
     private Date dba_reg_dtm;

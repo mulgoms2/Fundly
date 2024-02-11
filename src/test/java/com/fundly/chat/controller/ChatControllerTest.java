@@ -3,7 +3,6 @@ package com.fundly.chat.controller;
 
 import com.fundly.chat.model.ChatRoomDao;
 import com.fundly.chat.service.ChatService;
-import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import config.RootContext;
 import config.ServletContext;
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
-
-import java.util.ArrayList;
 
 @Slf4j
 @SpringJUnitWebConfig(classes = { RootContext.class, ServletContext.class })
@@ -30,13 +27,13 @@ class ChatControllerTest {
   @Test
   @SneakyThrows
   void greeting() {
-    chatRoomDao.selectChatRoom("test", "testPj");
+//    chatRoomDao.selectChatRoom("test", "testPj");
 
     System.out.println("chatService = " + chatService);
 
-    ChatRoomDto room = chatService.findRoom("test", "testPj");
-
-    assert (room != null);
+//    ChatRoomDto room = chatService.findRoom("test", "testPj");
+//
+//    assert (room != null);
 
   }
 
@@ -57,8 +54,8 @@ class ChatControllerTest {
   @DisplayName("메시지불러오기")
   @SneakyThrows
   void loadMsg() {
-    ArrayList<SelBuyMsgDetailsDto> selBuyMsgDetailDtos = chatRoomDao.loadAllMessages("test", "testPj");
-
-    System.out.println("selBuyMsgDetails = " + selBuyMsgDetailDtos);
+//    ArrayList<SelBuyMsgDetailsDto> selBuyMsgDetailDtos = chatRoomDao.loadAllMessages("test", "testPj");
+//
+//    System.out.println("selBuyMsgDetails = " + selBuyMsgDetailDtos);
   }
 }

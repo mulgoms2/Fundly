@@ -1,13 +1,13 @@
 package com.fundly.pay.controller;
 
 import com.fundly.pay.dto.BillKeyRequestDto;
+import com.fundly.pay.dto.BillKeyResponseDto;
 import com.fundly.pay.service.PayMeansService;
 import com.fundly.pay.service.PortOneService;
 import com.persistence.dto.PayMeansDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +45,7 @@ public class PayController {
     }
 
     @PostMapping("/register")
-    public String register(PayMeansDto payMeansDto, Model m, RedirectAttributes rattr) {
+    public String register(PayMeansDto payMeansDto, RedirectAttributes rattr) {
         String userId = "test"; // TODO: 유저아이디 가져오기 (String) session.getAttribute("id")
         payMeansDto.setUser_id(userId);
         payMeansDto.setDba_reg_id(userId);
@@ -59,13 +59,15 @@ public class PayController {
                     payMeansDto.getCard_pwd(), payMeansDto.getPay_means_id());
 
             String authToken = portOneService.getToken();
-//            log.info("authToken = " + authToken);
-            String billKey = portOneService.getBillKey(billKeyRequestDto, authToken);
-//            log.info("billKey = " + billKey);
-            payMeansDto.setBill_key(billKey);
-//            System.out.println("payMeansDto = " + payMeansDto);
 
-//            payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
+            BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
+            if (billKeyResponseDto.getCode() != 0) {
+                throw new Exception();
+            }
+            payMeansDto.setBill_key(billKeyResponseDto.getBillKey());
+            payMeansDto.setCard_co_type(billKeyResponseDto.getCardCoType());
+
+            payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
 
             rattr.addFlashAttribute(payMeansDto);
             rattr.addFlashAttribute("msg", "REG_SUCCESS");

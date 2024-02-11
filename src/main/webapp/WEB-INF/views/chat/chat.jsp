@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,23 +14,18 @@
 <div class="chatMainContainer">
     <div class="chatTableBox">
         <table id="conversation" class="chatTable">
-            <thead>
-            <tr>
-                <th>chat</th>
-            </tr>
-            </thead>
             <tbody id="chatBox">
-            <c:forEach items="${messageList}" var="msg">
+            <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
                 <c:if test="${msg.file_cnt ne 0}">
                     <tr>
                         <td>
-                            <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt="" />
+                            <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
                         </td>
                     </tr>
                 </c:if>
                 <c:if test="${msg.file_cnt eq 0}">
                     <tr>
-                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
+                        <td id="msgCont">${msg.msg_cont}</td>
                     </tr>
                 </c:if>
             </c:forEach>
@@ -43,8 +39,7 @@
                 <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
             </div>
         </form>
-        <input id="img" name="file_img" type="file" formenctype="multipart/form-data"/>
-        <button id="imgSendBtn">보내기</button>
+        <input id="img" class="imgIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>
@@ -59,7 +54,7 @@
 
         stompClient.onConnect = (frame) => {
             console.log("connected");
-            stompClient.subscribe('/chatSub/${roomName}', (response) => {
+            stompClient.subscribe('/chatSub/${chatRequest.chatRoomDto.room_num}', (response) => {
                 displayMessage(JSON.parse(response.body));
             });
 
@@ -91,56 +86,41 @@
         }
 
         const messageDto = {
+            room_num:${chatRequest.chatRoomDto.room_num},
             msg_cont: message,
-            buy_id: "${user_id}",
-            pj_id: "${pj_id}",
-            send_user_id: "${user_id}"
+            buy_id: "${chatRequest.chatRoomDto.user_id}",
+            pj_id: "${chatRequest.chatRoomDto.pj_id}",
+            send_user_id: "${chatRequest.chatRoomDto.user_id}"
         };
 
         stompClient.publish({
-            destination: "/chatPub/chat/${roomName}",
+            destination: "/chatPub/chat/${chatRequest.chatRoomDto.room_num}",
             body: JSON.stringify(messageDto)
         });
 
         document.querySelector("#chat").value = "";
     }
 
-    const sendImg = async () => {
+    const sendImg = () => {
 
         if (document.querySelector("#img").value === "") {
             return;
         }
-        const img_file = document.querySelector("#img").files[0];
-
         const formData = new FormData();
-        formData.append("img_file", img_file);
+        const file = document.querySelector("#img").files[0];
+
+        formData.append("file", file);
+        formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
+        formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
+        formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
 
         document.querySelector("#img").value = "";
 
         // await 은 fetch의 then 결과를 가져온다.
-        const result = await fetch("/chat/file", {
+        const result = fetch("/chat/file", {
             method: "POST",
             headers: {},
             body: formData
-        });
-
-        const resultObject = await result.json();
-
-        const savedImgUrl = resultObject[0];
-
-        // 스톰프 서버에서는 메시지 발행이  이미지가 들어있는
-        const messageDto = {
-            buy_id: "${user_id}",
-            pj_id: "${pj_id}",
-            send_user_id: "${user_id}",
-            file_cnt: resultObject.length,
-            file_url: savedImgUrl
-        };
-
-        // 토픽 발행 완료. 발행과 동시에 displayMessage 콜백 호출일 일어난다.
-        stompClient.publish({
-            destination: "/chatPub/chat/${roomName}",
-            body: JSON.stringify(messageDto)
         });
     }
 
@@ -150,29 +130,32 @@
     }
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
+    // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
     const displayMessage = (message) => {
         const date = new Date();
         const hour = date.getHours();
         const minute = date.getMinutes();
 
-        // if(message.file) 만약에 토픽에서 발행된 메시지에 이미지(src경로)가 존재하면 파일 html 을 인서트
-        console.log(message);
-
         if (message.file_cnt !== 0) {
-            document.querySelector("#chatBox").innerHTML += '<img class=\"chatAttImg\" src=\"' + message.file_url + '\" style="width: 200px" />';
-
+            // 메시지 객체가 파일 url을 담고있지 않다면 어떻게 해야될까?
+            // 유저가 메시지를 전달받는 두가지 경우가 있다.
+            // 하나는 채팅방에 입장해서 db에 저장된 메세지를 불러올때
+            // 두번째는 유저가 파일을 전송하고 json으로 저장된 경로를 리턴받고 url이 실린 메시지를 발행했을때.
+            document.querySelector("#chatBox").innerHTML += `<img class="chatAttImg" src="${"${message.file_url}"}" />`;
             return;
         }
 
-        document.querySelector("#chatBox").innerHTML += "<tr><td>" + message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>";
+
+        document.querySelector("#chatBox").innerHTML += `<tr><td> ${'${message.msg_cont}'} </td></tr>`;
 
         scrollToButtom();
     }
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
-        document.querySelector("#send").addEventListener('click', sendMessage)
-        document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
+        document.querySelector("#send").addEventListener('click', sendMessage);
+        document.querySelector("#img").addEventListener('input', sendImg);
+        // document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
     };
 </script>
