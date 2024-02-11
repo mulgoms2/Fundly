@@ -100,7 +100,7 @@
         document.querySelector("#chat").value = "";
     }
 
-    const sendImg = async () => {
+    const sendImg = () => {
 
         if (document.querySelector("#img").value === "") {
             return;
@@ -115,28 +115,11 @@
         document.querySelector("#img").value = "";
 
         // await 은 fetch의 then 결과를 가져온다.
-        const result = await fetch("/chat/file", {
+        const result = fetch("/chat/file", {
             method: "POST",
             headers: {},
             body: formData
         });
-
-        // 만약 서비스계층에서 파일테이블에 img url을 별도로 저장한다면 해당 메시지에는 file_url을 실을 필요가 없게된다.
-        // 다만 문제는 파일 자체를 가져오는 것에 있는데, 저장된 메시지들을 불러오는 과정에서 이미지 전송 메시지였던 친구들을
-        // 어떻게 토픽으로 발행할 것인가 하는 문제가 따른다.
-        <%--const messageDto = {--%>
-        <%--    buy_id: "${user_id}",--%>
-        <%--    pj_id: "${pj_id}",--%>
-        <%--    send_user_id: "${user_id}",--%>
-        <%--    file_cnt: resultObject.length,--%>
-        <%--    file_url: savedImgUrl--%>
-        <%--};--%>
-
-        <%--// 토픽 발행 완료. 발행과 동시에 displayMessage 콜백 호출일 일어난다.--%>
-        <%--stompClient.publish({--%>
-        <%--    destination: "/chatPub/chat/${roomName}",--%>
-        <%--    body: JSON.stringify(messageDto)--%>
-        <%--});--%>
     }
 
     const scrollToButtom = () => {

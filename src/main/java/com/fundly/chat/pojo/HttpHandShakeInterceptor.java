@@ -15,12 +15,14 @@ public class HttpHandShakeInterceptor implements HandshakeInterceptor {
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
         if (request instanceof ServletServerHttpRequest) {
-           ServletServerHttpRequest servletServerHttpRequest = (ServletServerHttpRequest) request;
+            ServletServerHttpRequest servletServerHttpRequest = (ServletServerHttpRequest) request;
             HttpSession session = servletServerHttpRequest.getServletRequest().getSession();
             attributes.put(SESSION, session);
+
         }
         return true;
     }
+
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
     }

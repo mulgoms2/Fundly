@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class ChatController {
 //    MessageMapping을 통해 유저의 메시지 전송이 매핑되며. /chatPub/chat/{방번호} pathVariable 의 일종인 것 같다.
     @MessageMapping("/chat/{roomName}")
     @SendTo("/chatSub/{roomName}")
-    public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomName, SelBuyMsgDetailsDto message) {
+    public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomName, SelBuyMsgDetailsDto message, SimpMessageHeaderAccessor accessor) {
 
         chatService.saveMessage(message);
 
@@ -85,7 +86,8 @@ public class ChatController {
         try {
             return chatService.loadImgFile(fileName);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.error("error with getImageResouce = {}" ,fileName);
+            throw new RuntimeException("유효하지 않은 파일명 입니다.",e);
         }
     }
 }
