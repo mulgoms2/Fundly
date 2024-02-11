@@ -1,10 +1,12 @@
 package com.fundly.chat.service;
 
 import com.fundly.chat.model.ChatRoomDao;
+import com.persistence.dto.ChatRequest;
 import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.domain.FileDao;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -31,69 +33,44 @@ public class ChatServiceImpl implements ChatService {
     @Autowired
     FileDao fileDao;
 
+    @SneakyThrows
     @Override
-    public String getChatRoomName(String user_id, String pj_id) {
-//        유저 id와 프로젝트 id를 받아 채팅방(topic)을 만든다.
-        ChatRoomDto chatRoomDto = findRoom(user_id, pj_id);
+    public void getChatRoom(ChatRequest chatRequest) {
+//        채팅룸이 존재하면 채팅방 리턴
+        ChatRoomDto chatRoomDto;
 
-//        채팅방이 없으면 새로운 채팅방을 생성
-        if (chatRoomDto == null) {
-            try {
-                chatRoomDao.makeChatRoom(user_id, pj_id);
-                chatRoomDto = findRoom(user_id, pj_id);
-            } catch (Exception e) {
-                log.error("error with make chat room");
-                throw new RuntimeException(e);
-            }
+        if ((chatRoomDto = chatRoomDao.selectChatRoom(chatRequest)) == null) {
+//            채팅방 생성과 동시에 chatRequest 에 세팅된다
+            chatRoomDao.makeChatRoom(chatRequest);
+        } else {
+//            채팅방이 존재하면 메시지 리스트를 가져온다.
+            chatRoomDto.setMessage_list(loadMessages(chatRoomDto));
+//            채팅방 요청 객체에 채팅방을 담는다.
+            chatRequest.setChatRoomDto(chatRoomDto);
         }
-//        채팅방 이름을 반환
-        String roomName = chatRoomDto.getUser_id() + chatRoomDto.getPj_id();
-
-        return roomName;
     }
 
     @Override
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
-
         try {
             chatRoomDao.insertMsg(message);
         } catch (Exception e) {
             log.error("error with save Message");
             throw new RuntimeException(e);
         }
-
         return true;
     }
 
     @Override
-    public ArrayList<SelBuyMsgDetailsDto> loadMessages(String user_id, String pj_id) {
+    public ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto) {
         try {
-//            특정 채팅방의 메시지를 전체 조회
-            ArrayList<SelBuyMsgDetailsDto> msgList = chatRoomDao.loadAllMessages(user_id, pj_id);
-
-//            파일테이블에서 첨부파일을 조회한 후 dto에 저장한다.
-
-           ArrayList<SelBuyMsgDetailsDto> fileList = msgList.stream()
-                   .map(this::mappingImgUrl)
-                   .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
-
-            System.out.println("fileList = " + fileList);
-
-            return fileList;
+//            메시지 전체 조회 후 첨부파일 경로를 매핑해서 전달.
+            return chatRoomDao.loadAllMessages(chatRoomDto).stream()
+                    .map(this::mappingImgUrl)
+                    .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
         } catch (Exception e) {
-//            메시지를 로드하는데 실패하면 어떤 예외처리를 해야할까
 //            에러메시지를 전달한다.
             throw new RuntimeException("error with message loading", e);
-        }
-    }
-
-
-    public ChatRoomDto findRoom(String user_id, String pj_id) {
-        try {
-            return chatRoomDao.selectChatRoom(user_id, pj_id);
-        } catch (Exception e) {
-            log.trace("can not find chat room");
-            throw new RuntimeException(e);
         }
     }
 

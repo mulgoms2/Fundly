@@ -1,5 +1,6 @@
 package com.fundly.chat.service;
 
+import com.persistence.dto.ChatRequest;
 import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
@@ -9,15 +10,16 @@ import java.util.ArrayList;
 
 public interface ChatService {
     String SEL_BUY_MSG_DETAILS = "SEL_BUY_MSG_DETAILS";
-    ChatRoomDto findRoom(String user_id, String pj_id) throws Exception;
+//    ChatRoomDto findRoom(ChatRoomDto chatRoomDto) throws Exception;
 
     boolean saveMessage(SelBuyMsgDetailsDto message);
 
-    ArrayList<SelBuyMsgDetailsDto> loadMessages(String user_id, String pj_id);
+    ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto);
 
-    String getChatRoomName(String user_id, String pj_id);
+    void getChatRoom(ChatRequest chatRoomDto);
     String IMG_SAVE_LOCATION = "/Users/dobigulbi/chat/file/";
     void saveImageFile(FileDto img_file, SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
 
     Resource loadImgFile(String fileName) throws Exception;
+
 }

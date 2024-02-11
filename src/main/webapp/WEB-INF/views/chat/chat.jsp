@@ -15,7 +15,7 @@
     <div class="chatTableBox">
         <table id="conversation" class="chatTable">
             <tbody id="chatBox">
-            <c:forEach items="${messageList}" var="msg">
+            <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
                 <c:if test="${msg.file_cnt ne 0}">
                     <tr>
                         <td>
@@ -54,7 +54,7 @@
 
         stompClient.onConnect = (frame) => {
             console.log("connected");
-            stompClient.subscribe('/chatSub/${roomName}', (response) => {
+            stompClient.subscribe('/chatSub/${chatRequest.chatRoomDto.room_num}', (response) => {
                 displayMessage(JSON.parse(response.body));
             });
 
@@ -86,14 +86,15 @@
         }
 
         const messageDto = {
+            room_num:${chatRequest.chatRoomDto.room_num},
             msg_cont: message,
-            buy_id: "${user_id}",
-            pj_id: "${pj_id}",
-            send_user_id: "${user_id}"
+            buy_id: "${chatRequest.chatRoomDto.user_id}",
+            pj_id: "${chatRequest.chatRoomDto.pj_id}",
+            send_user_id: "${chatRequest.chatRoomDto.user_id}"
         };
 
         stompClient.publish({
-            destination: "/chatPub/chat/${roomName}",
+            destination: "/chatPub/chat/${chatRequest.chatRoomDto.room_num}",
             body: JSON.stringify(messageDto)
         });
 
@@ -109,8 +110,9 @@
         const file = document.querySelector("#img").files[0];
 
         formData.append("file", file);
-        formData.append("buy_id", "${user_id}");
-        formData.append("pj_id", "${pj_id}");
+        formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
+        formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
+        formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
 
         document.querySelector("#img").value = "";
 
@@ -144,7 +146,7 @@
         }
 
 
-        document.querySelector("#chatBox").innerHTML += `<tr><td> ${'${message.send_user_id}'} ${'${hour}'} : ${'${minute}'} ${'${message.msg_cont}'} </td></tr>`;
+        document.querySelector("#chatBox").innerHTML += `<tr><td> ${'${message.msg_cont}'} </td></tr>`;
 
         scrollToButtom();
     }
