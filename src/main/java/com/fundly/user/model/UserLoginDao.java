@@ -11,6 +11,6 @@ public interface UserLoginDao {
 
 //    int userCheck(@Param ("user_email") String user_email, @Param("user_pwd") String user_pwd) throws Exception;
 
-    UserDto userInfo(@Param ("user_email") String user_email, @Param("user_pwd") String user_pwd) throws Exception;
+    UserDto selectUser(@Param ("user_email") String user_email, @Param("user_pwd") String user_pwd) throws Exception;
 
 }

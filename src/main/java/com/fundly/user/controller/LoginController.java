@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -46,7 +48,6 @@ public class LoginController {
 //        log.error("\n\n\n\n\n\n\n\n email , pwd = " + user_email + " , " + user_pwd );
 //        log.error("userInfo = " + userInfo);
 //        log.error("user_email = " + session.getAttribute("user_email"));
-
         try {
             // 2-1
             if(userInfo != null){
@@ -54,18 +55,29 @@ public class LoginController {
             } else {
                 // 2-2
                 rattr.addFlashAttribute("msg", "Fundly에 등록되지 않은 이메일주소 또는 비밀번호가 일치 하지 않습니다. ");
-                return "redirect:/user/login";
+                return "redirect:/login/login";
             }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return "tiles.index";
+        return "redirect:/";
     }
 
     @GetMapping("/forgetPwd")
     public String forgetPwd(){
         return "user/forgetpwd";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session, HttpServletResponse response) throws Exception {
+        log.error("\n\n " + "로그아웃하러왔다" +"\n\n");
+        session.invalidate();
+        Cookie user_profile_img_url_cookie = new Cookie("user_profile_img_url", null);
+        user_profile_img_url_cookie.setPath("/");
+        user_profile_img_url_cookie.setMaxAge(0);
+        response.addCookie(user_profile_img_url_cookie);
+        return "redirect:/";
     }
 }
