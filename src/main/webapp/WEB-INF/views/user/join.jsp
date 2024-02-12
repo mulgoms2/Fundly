@@ -134,7 +134,7 @@
     const user_pwdConfirm = document.getElementById("user_pwdConfirm");
 
     /* 이메일, 비밀번호에 대한 정규식 */
-    const pwd =  /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+    const pwd =/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=\-.])(?=.*[0-9]).{8,20}$/;
     const email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
     /* checkbox */
