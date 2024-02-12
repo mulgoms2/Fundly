@@ -16,8 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 @Slf4j
 public class ChatController {
@@ -46,9 +44,8 @@ public class ChatController {
     @SendTo("/chatSub/{roomNum}")
     public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomNum, SelBuyMsgDetailsDto message, SimpMessageHeaderAccessor accessor) {
 //        httpsession 객체에 담긴 데이터를 이용할 수 있다.
-        Object session = accessor.getSessionAttributes().get("session");
-
-        System.out.println(((HttpSession) session).getAttribute("user_email"));
+//        Object session = accessor.getSessionAttributes().get("session");
+//        System.out.println(((HttpSession) session).getAttribute("user_email"));
 
 //        채팅을 저장
         chatService.saveMessage(message);

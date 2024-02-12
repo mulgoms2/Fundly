@@ -56,6 +56,9 @@ public class ChatServiceImpl implements ChatService {
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
         try {
             chatRoomDao.insertMsg(message);
+
+            String svr_intime = new SimpleDateFormat("HH:mm").format(new Date());
+            message.setSvr_intime_string(svr_intime);
         } catch (Exception e) {
             log.error("error with save Message");
             throw new RuntimeException(e);
@@ -79,7 +82,7 @@ public class ChatServiceImpl implements ChatService {
 
     private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
         Date date = selBuyMsgDetailsDto.getSvr_intime();
-        String hourAndMinute = new SimpleDateFormat("hh:mm").format(date);
+        String hourAndMinute = new SimpleDateFormat("HH:mm").format(date);
         selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
 
         return selBuyMsgDetailsDto;
