@@ -30,8 +30,7 @@ import java.util.Properties;
 
 @Slf4j
 @Configuration
-//@PropertySource(value = {"/WEB-INF/config/db.properties","/WEB-INF/config/mailPro.properties"})
-@PropertySource(value = "/WEB-INF/config/db.properties")
+@PropertySource(value = {"/WEB-INF/config/db.properties","/WEB-INF/config/mailPro.properties"})
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.fundly.**.model")
 public class RootContext {
