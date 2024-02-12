@@ -42,9 +42,9 @@
                             <div id="msg" class="msg"></div>
                         </div>
 
-                        <div class="forgetPwd">
-                            <a href="<c:url value='/login/forgetPwd'/>" class="forget">로그인 정보를 잊으셨나요?</a>
-                        </div>
+<%--                        <div class="forgetPwd">--%>
+<%--                            <a href="<c:url value='/login/forgetPwd'/>" class="forget">로그인 정보를 잊으셨나요?</a>--%>
+<%--                        </div>--%>
 
                         <div class="btnLogin">
                             <button id="emailBtn" class="emailBtn">이메일로 로그인</button>

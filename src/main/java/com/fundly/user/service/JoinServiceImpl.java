@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,8 @@ public class JoinServiceImpl implements JoinService {
 //        userDto.setUser_pwd("1111"); // 임시 하드코딩
         userDto.getUser_name();
         userDto.getUser_email();
+
+        userDto.setUser_join_date(String.valueOf(LocalDate.now()));
         userDto.getSite_term_agree_yn();
         userDto.getP_Info_agree_yn();
         userDto.getAge_agree_yn();
