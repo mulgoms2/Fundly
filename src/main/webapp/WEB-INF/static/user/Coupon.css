@@ -1,0 +1,149 @@
+:root{
+    --main-bg-color: #5060D6;
+}
+
+/*공통*/
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.main{
+    margin-top: 2.5%;
+    height: 760px;
+}
+
+/* font */
+.font1 {
+    margin: 0px;
+    font-family: "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, NotoSansKR, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -0.32px;
+}
+
+.font2 {
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 24px !important;
+    line-height: 36px !important;
+    font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif ;
+}
+
+.font3{
+    margin-bottom: 12px;
+    font-weight: 500;
+    font-size: 14px !important;
+    line-height: 22px !important;
+    font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif ;
+}
+
+.font4{
+    margin-bottom: 12px;
+    font-family: "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, NotoSansKR, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 22px;
+    color: rgb(109, 109, 109);
+}
+
+.font5{
+    flex: 1 0 auto;
+    max-width: calc(100% - 33.5px);
+    margin-left: 7.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.font6{
+    margin: 0px;
+    font-weight: 500;
+    color: rgb(248, 100, 83);
+    /*color: var(--main-bg-color);*/
+    font-size: 14px ;
+    line-height: 22px ;
+    font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif ;
+}
+
+
+
+/* */
+.title{
+    font-size: 30px;
+    font-weight: bold;
+    padding: 48px 0 28px 0;
+}
+
+ul{
+    margin-top: 20px;
+}
+
+.couponItem{
+    display: flex;
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 1px;
+    background-color: rgb(255, 255, 255);
+
+}
+
+.couponItemli{
+    padding: 20px;
+    flex: 1 1 auto;
+}
+
+.couponItemri {
+    flex-direction: column-reverse;
+    flex: 0 0 auto;
+    width: 207px;
+    border-top: none;
+    border-left: 1px dashed rgb(228, 228, 228);
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-height: 68px;
+    background-color: rgba(240, 240, 240, 0.5);
+    border-top: 1px dashed rgb(228, 228, 228);
+    cursor: pointer;
+}
+
+.couponItemLiDo{
+    display: flex;
+}
+
+.CouponItemImg{
+    height: 26px;
+    width: 26px;
+    display: inline-block;
+    background: url(../img/book.webp) no-repeat center center;
+    background-size: cover;
+}
+
+.couponItemLebel{
+    display: inline-block;
+    padding: 4px 8px;
+    margin-bottom: 10px;
+    background-color: rgb(253, 244, 243);
+    border-radius: 4px;
+    /*color: var(--main-bg-color);*/
+    color: rgb(248, 100, 83);
+    font-weight: 500;
+    font-size: 13px ;
+    line-height: 22px ;
+    font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.fundingimg{
+    height: 28px;
+    width: 28px;
+    display: inline-block;
+    color: rgb(248, 100, 83);
+    background: url(../img/Icon-funding.png) no-repeat center center;
+    background-size: cover;
+    margin-bottom: 10px;
+}

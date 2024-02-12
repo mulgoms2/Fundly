@@ -13,6 +13,7 @@ public class SelBuyMsgDetailsDto {
     private Integer seq;
     private String send_user_id;
     private Date svr_intime;
+    private String svr_intime_string;
     private String msg_read_yn;
     private String msg_cont;
     private Date dba_reg_dtm;

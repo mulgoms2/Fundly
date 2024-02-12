@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public interface ChatService {
     String SEL_BUY_MSG_DETAILS = "SEL_BUY_MSG_DETAILS";
-//    ChatRoomDto findRoom(ChatRoomDto chatRoomDto) throws Exception;
-
     boolean saveMessage(SelBuyMsgDetailsDto message);
 
     ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto);

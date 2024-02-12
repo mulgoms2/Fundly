@@ -95,7 +95,7 @@
                         <div class="pageItem" id = "Profile"> 프로필 </div>
                         <div class="pageItem" id = "Coupon"> 응원권 </div>
                         <div class="line"></div>
-                        <div class="pageItem" id = "Order"> 후원한 프로젝트 </div>
+                        <div class="pageItem" id = "fundingProject"> 후원한 프로젝트 </div>
                         <div class="pageItem" id = "Like"> 관심 프로젝트 </div>
                         <div class="line"></div>
                         <div class="pageItem" id = "Alarm"> 알림 </div>
@@ -404,20 +404,24 @@
     })
 
     const MyPageList = document.getElementById('MyPageList');
+
     MyPageList.addEventListener("click",(e)=>{
 
         if(e.target.id == "Profile"){
             // 프로필 화면으로
-            alert('프로필 화면으로 가자 ')
-            return window.location.href = '/mypage/mypage';
+            return window.location.href = '/mypage/profile';
 
         } else if(e.target.id == "Coupon") {
+            // 응원권 화면으로
+            return window.location.href = '/mypage/coupon';
 
-        } else if(e.target.id == "Order") {
+        } else if(e.target.id == "fundingProject") {
+            // 후원한 프로젝트 화면으로
+            return window.location.href = '/mypage/fundingProject';
 
         } else if(e.target.id == "Like") {
-
             return window.location.href = '/like';
+
         } else if(e.target.id == "Alarm") {
 
         } else if(e.target.id == "Msg") {
