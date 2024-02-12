@@ -46,7 +46,6 @@ public class ChatController {
         return message;
     }
 
-
     @PostMapping("/chat/file")
     @ResponseBody
     public void uploadFile(FileDto file, SelBuyMsgDetailsDto message) {
@@ -55,7 +54,7 @@ public class ChatController {
             chatService.saveImageFile(file, message);
         } catch (Exception e) {
             log.error("error with uploadFile = {}", file);
-            throw new RuntimeException(e);
+            throw new RuntimeException("error with uploadFile(FileDto file, SelBuyMsgDatailsDto message)",e);
         }
 //        채팅방에 이미지 경로가 담긴 메시지를 전달한다.
         simpMessagingTemplate.convertAndSend("/chatSub/" + message.getRoom_num(), message);
