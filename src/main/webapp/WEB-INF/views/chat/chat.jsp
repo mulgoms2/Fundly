@@ -92,7 +92,7 @@
         console.log("Disconnected");
     }
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         const message = document.querySelector("#chat").value;
 
         if (message.trim() === "") {
@@ -110,10 +110,13 @@
 
         stompClient.publish({
             destination: "/chatPub/chat/${chatRequest.chatRoomDto.room_num}",
+
             body: JSON.stringify(messageDto)
         });
 
-        document.querySelector("#chat").value = "";
+        setTimeout(() => {
+            document.querySelector("#chat").value = "";
+        }, 1);
     }
 
     const sendImg = () => {
@@ -146,14 +149,14 @@
     // 메시지 생성시 하단 스크롤 유지
     const scrollToBottom = () => {
         const scrollHeight = document.querySelector(".chatMainContainer").scrollHeight;
-        window.scrollTo({top: scrollHeight});
+        document.querySelector(".chatMainContainer").scrollTo({top: scrollHeight});
     }
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
     // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
     const parsingMessage = (message) => {
         const date = new Date();
-        let hour  = date.getHours();
+        let hour = date.getHours();
         let minute = date.getMinutes();
         hour = hour < 10 ? '0' + hour : hour;
         minute = minute < 10 ? '0' + minute : minute;
@@ -162,7 +165,7 @@
 
         const position = message.send_user_id !== "${sessionScope.loginId}" ? "right" : "left";
 
-        const msg = message.file_cnt != 0 ? paintImg(position, message.file_url,time) : paintChat(position, message.msg_cont, time);
+        const msg = message.file_cnt != 0 ? paintImg(position, message.file_url, time) : paintChat(position, message.msg_cont, time);
 
         // 사진은 get 요청이 종료된 후에
 
@@ -181,8 +184,8 @@
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
-        document.querySelector("#chat").addEventListener("keypress", (e)=>{
-            if(e.key === "Enter"){
+        document.querySelector("#chat").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
                 sendMessage();
             }
         });
@@ -190,6 +193,8 @@
         document.querySelector("#img").addEventListener('input', sendImg);
         // document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
+
+        // document.querySelector(".chatBox").setAttribute("data-time", "heheh");
     };
 </script>
 </body>

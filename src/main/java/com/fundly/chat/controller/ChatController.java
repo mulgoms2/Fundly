@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @Slf4j
 public class ChatController {
@@ -26,12 +28,14 @@ public class ChatController {
     ChatService chatService;
 
     @GetMapping("/chat")
+//    테스트용
     public String chatRoom() {
         return "chat/chatIndex";
     }
 
     @GetMapping("/chatPop")
     public String joinChatRoom(@ModelAttribute ChatRequest chatRequest, Model model) {
+//        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         chatService.getChatRoom(chatRequest);
 
         return "chat/chat";
@@ -41,8 +45,15 @@ public class ChatController {
     @MessageMapping("/chat/{roomNum}")
     @SendTo("/chatSub/{roomNum}")
     public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomNum, SelBuyMsgDetailsDto message, SimpMessageHeaderAccessor accessor) {
+//        httpsession 객체에 담긴 데이터를 이용할 수 있다.
+        Object session = accessor.getSessionAttributes().get("session");
+
+        System.out.println(((HttpSession) session).getAttribute("user_email"));
+
+//        채팅을 저장
         chatService.saveMessage(message);
 
+//        메시지를 토픽에 발행한다. sendTo /chatSup/{}
         return message;
     }
 
@@ -56,12 +67,13 @@ public class ChatController {
             log.error("error with uploadFile = {}", file);
             throw new RuntimeException("error with uploadFile(FileDto file, SelBuyMsgDatailsDto message)",e);
         }
-//        채팅방에 이미지 경로가 담긴 메시지를 전달한다.
+//        채팅방에 이미지 경로가 담긴 메시지를 토픽에 발행한다ㅣ
         simpMessagingTemplate.convertAndSend("/chatSub/" + message.getRoom_num(), message);
     }
 
     @GetMapping(value = "**/file/{fileName}")
     @ResponseBody
+//    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
     public Resource getImageResource(@PathVariable("fileName") String fileName) {
         try {
             return chatService.loadImgFile(fileName);

@@ -94,7 +94,9 @@
         const tap_itemProfile = document.getElementById('tap_itemProfile');
 
         function chatBtn(){
-            return window.location.href = '/chat';
+            <%--let url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + $("#pj").val();--%>
+<%----%>
+//             window.open(url, "_blank", 'width=600px,height=800px,scrollbars=yes');
         }
 
         /* 로그인/회원가입 or 로그인 회원 정보 */
