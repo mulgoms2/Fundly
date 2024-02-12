@@ -72,7 +72,7 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public String logout(HttpSession session, HttpServletResponse response) throws Exception {
-        log.error("\n\n " + "로그아웃하러왔다" +"\n\n");
+//        log.error("\n\n " + "로그아웃하러왔다" +"\n\n");
         session.invalidate();
         Cookie user_profile_img_url_cookie = new Cookie("user_profile_img_url", null);
         user_profile_img_url_cookie.setPath("/");
