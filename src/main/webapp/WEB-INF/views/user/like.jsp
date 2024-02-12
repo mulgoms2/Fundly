@@ -1,3 +1,4 @@
+<jsp:useBean id="likedto" class="com.persistence.dto.LikeDto" scope="request"/>
 <%--
   Created by IntelliJ IDEA.
   User: bada
@@ -16,14 +17,27 @@
 </head>
 <body>
     <h1>관심 프로젝트 리스트</h1>
-<%--    <h1>${user_id}</h1>--%>
-    <c:if test="${result!=null}">
-        <c:if test="${result == 0}">
-        <h2>빈하트</h2>
-        </c:if>
-        <c:if test="${result == 1}">
-        <h2>빨간하트</h2>
-        </c:if>
-    </c:if>
+<%--    <h2>${likedto.Pj_id}</h2>--%>
+<%--    <h2>${likedto.User_id}</h2>--%>
+    <h5>1이면 좋아요</h5>
+    <h5>0이면 좋아요취소</h5>
+    <table border="1">
+        <tr>
+            <td>번호</td>
+            <td>프로젝트 제목</td>
+            <td>프로젝트 아이디</td>
+            <td>회원 아이디</td>
+            <td>좋아요 상태</td>
+        </tr>
+        <c:forEach items="${list}" var="likedto">
+            <tr>
+                <td><c:out value="${likedto.bno}"/></td>
+                <td><c:out value="프로젝트 제목"/></td>
+                <td><c:out value="${likedto.pj_id}"/></td>
+                <td><c:out value="${likedto.user_id}"/></td>
+                <td><c:out value="${likedto.like_status}"/></td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>

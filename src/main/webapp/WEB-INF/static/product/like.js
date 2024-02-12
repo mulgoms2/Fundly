@@ -78,3 +78,36 @@
 // // 		 	});
 // //        });
 // //    });
+
+// 좋아요 버튼 클릭시 좋아요 + -
+function clicklike(type) {
+    const like_cnt = document.getElementById("like_cnt")
+    let curr_cnt = like_cnt.innerText;
+
+    if(type === 'plus') {
+        curr_cnt = parseInt(curr_cnt) + 1;
+    } else if(type === 'minus') {
+        curr_cnt = parseInt(curr_cnt) -1 ;
+    }
+
+    like_cnt.innerText = curr_cnt;
+}
+
+// ajax로 좋아요 클릭시 데이터 전송 (페이지 이동x)
+
+function ajax(){
+
+    $.ajax({
+        url: "/like2",
+        dataType : "json",
+        data: { user_id : "user",
+            pj_id : "P1010"},
+        type: "POST",
+        success : function(data){
+            alert("성공")
+        },
+        error : function(){
+            alert("에러")
+        }
+    });
+}

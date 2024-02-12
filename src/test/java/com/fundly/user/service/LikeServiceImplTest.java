@@ -29,6 +29,7 @@ class LikeServiceImplTest {
     @SneakyThrows
     @DisplayName("처음좋아요")
     void checkLikeTestWhenListIsEmpty() {
+        likedto = new LikeDto("bada","P001");
         assertTrue(likeservice.checkLike(likedto)==1);
     }
 
@@ -37,7 +38,14 @@ class LikeServiceImplTest {
     @DisplayName("좋아요취소")
     void checkLikeTestWhenListIsNotEmpty() {
         likedto = new LikeDto("bada","P001");
-        likedao.insertLike(likedto);
         assertTrue(likeservice.checkLike(likedto)==0);
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("다시 좋아요")
+    void checkLike() {
+        likedto = new LikeDto("bada","P001");
+        assertTrue(likeservice.checkLike(likedto)==1);
     }
 }
