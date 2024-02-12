@@ -11,7 +11,7 @@
 
     <!-- email 중복 -->
     <select id="emailCheck" resultType="int">
-        SELECT COUNT(*) FROM user_info
+        SELECT COUNT(*) FROM user_info where user_email = #{user_email}
     </select>
 
     <!-- id 중복 -->
@@ -20,9 +20,9 @@
     </select>
 
     <!-- 회원가입 -->
-    <insert id="insert" parameterType="userDto">
-        INSERT INTO user_info (`user_id`, `user_name`, `user_pwd`, `user_email`,`user_status`,`dba_reg_id`)
-        VALUES(#{user_id}, #{user_name}, #{user_pwd}, #{user_email}, #{user_status}, #{dba_reg_id});
+    <insert id="insert" parameterType="UserDto">
+        INSERT INTO user_info (user_id, user_name, user_pwd, user_email, site_term_agree_yn, p_Info_agree_yn, age_agree_yn, p_info_oth_agree_yn, m_info_rcv_agree_yn, user_status, dba_reg_id)
+        VALUES(#{user_id}, #{user_name}, #{user_pwd}, #{user_email}, #{site_term_agree_yn}, #{p_Info_agree_yn}, #{age_agree_yn}, #{p_info_oth_agree_yn}, #{m_info_rcv_agree_yn}, #{user_status}, #{dba_reg_id});
     </insert>
 
 </mapper>

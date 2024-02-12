@@ -23,6 +23,11 @@ class UserLoginDaoTest {
     }
 
     @Test
+    void LoginCheck() {
+
+    }
+
+    @Test
     void idCheck() {
     }
 }

@@ -1,0 +1,258 @@
+::selection {
+    background-color: #CCE2FF;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+/* line */
+.line{
+    width: 100%;
+    /* width: 5000px; */
+    height: 1px;
+    background: rgb(240, 240, 240);
+    /* background: #555353; */
+    content: " ";
+}
+
+/* font */
+.fontcolor{
+    color: rgb(160, 155, 155);
+    font-size: 18px;
+}
+
+/* main */
+.main-container {
+    display: flex;
+    justify-content: center;
+}
+
+.main, .footer, .company, .noticeMsg{
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+.pageComponent{
+    margin: 0 auto;
+}
+
+.ifImg > span {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    background: url(/img/avatar.webp) no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: rgb(208, 208, 208) 0px 0px 1px 0px inset,
+    rgb(208, 208, 208) 0px 0px 1px 0px;
+}
+
+.tapContainer{
+    display: inline-flex;
+    margin: 20px 10px;
+}
+
+.tapContainer >div{
+    margin: 0 30px 0 0;
+}
+.profileInfo{
+    display: flex;
+    padding: 40px 0 0 ;
+}
+
+.userInfoDetail{
+    display: flex;
+    justify-content: center;
+}
+
+.userInfo{
+    display: flex;
+    margin-left: 25px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.username{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.userInfoDetail > span {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background: url(img/Icon-settings.png) no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+    margin: 5px 5px;
+}
+
+.userJoindate{
+    font-size: 12px;
+    color: rgb(109, 109, 109);
+}
+
+/* tap  */
+.tapItem{
+    margin-right: 20px;
+    /* color: #ccc; */
+    font-weight: 700;
+    line-height: 56px;
+    position: relative;
+    background: none;
+    border: 0;
+}
+
+.tapItem:hover{
+    color: #555353;
+}
+
+.tapItem > a {
+    text-decoration: none;
+    color:inherit;
+}
+
+
+/* container */
+
+.container{
+    height: 150px;
+    margin-top: 30px;
+}
+
+.on::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    /* position: absolute; */
+    left: 0;
+    bottom: 0;
+    background: #000;
+}
+
+.tapItem .fontcolor.on::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #cf1212;
+}
+
+/* footer */
+
+.footer{
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.menu{
+    position: relative;
+    height: 210px;
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.infoList {
+    display: flex;
+}
+
+.infoList>div{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.infoList>a{
+    color:inherit;
+    text-decoration: none;
+}
+
+.customerInfo{
+    position: absolute;
+    right: 0;
+}
+
+.customerInfo>div{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.customerInfo>p{
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgb(109, 109, 109);
+
+}
+
+.infoItem, .customerInfo{
+    margin: 20px 40px 0 0;
+}
+
+.infoItem >a{
+    margin-top: 20px;
+    font-size: 14px;
+    color: rgb(109, 109, 109);
+}
+
+.infoItem>a:hover{
+    color: rgb(34, 33, 33);
+}
+
+.chat{
+    margin-top: 10px;
+    display: flex;
+    width: 180px;
+    height: 42px;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(61, 61, 61);
+    background-color: white;
+    border: 1px solid rgb(228, 228, 228);
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out 0s;
+    font-weight: 500;
+}
+
+.chat:hover{
+    border: 1px solid rgb(109, 109, 109);
+    color: rgb(61, 61, 61);
+}
+
+/* footer companyInfo */
+
+.companyInfo{
+    margin: 10px 0 ;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    -webkit-box-pack: start;
+    place-content: flex-start;
+}
+
+.companyInfoItem{
+    padding-right: 15px;
+}
+
+.padding0 {
+    padding-left: 0px;
+
+}
+
+.copyright{
+    padding-left: 15px;
+    color: gray;
+}
+
+/* footer notice */
+.notice{
+    display: flex;
+    justify-content: center;
+    background: rgb(240, 240, 240);
+    color: rgb(109, 109, 109);
+    /* align-items: center; */
+}

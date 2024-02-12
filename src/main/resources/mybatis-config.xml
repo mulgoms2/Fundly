@@ -18,8 +18,10 @@
         <typeAlias alias="ItemDto" type="com.persistence.dto.ItemDto"/>
         <typeAlias type="com.persistence.dto.ChatRoomDto" alias="ChatRoomDto"/>
         <typeAlias type="com.persistence.dto.SelBuyMsgDetailsDto" alias="SelBuyMsgDetailsDto"/>
-        <typeAlias alias="userDto" type="com.persistence.dto.UserDto"/>
+        <typeAlias alias="UserDto" type="com.persistence.dto.UserDto"/>
         <typeAlias alias="PayMeansDto" type="com.persistence.dto.PayMeansDto"/>
         <typeAlias alias="LikeDto" type="com.persistence.dto.LikeDto"/>
+        <typeAlias type="com.persistence.dto.FileDto" alias="FileDto"/>
+        <typeAlias type="com.persistence.dto.ChatRequest" alias="ChatRequest"/>
     </typeAliases>
 </configuration>

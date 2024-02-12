@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>신용/체크 카드 등록</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
 <form action="" id="form" method="post">
@@ -71,29 +72,29 @@
             </span>
     </div>
 
-    <div><label for="card_co_info_agree_yn"><input id="card_co_info_agree_yn" type="checkbox" name="card_co_info_agree_yn" value="Y">결제사 정보제공 동의</label></div>
-    <div><label for="default_pay_means_yn"><input id="default_pay_means_yn" type="checkbox" name="default_pay_means_yn" value="Y">기본 결제수단으로 등록</label></div>
+    <div><input id="card_co_info_agree_yn" type="checkbox" name="card_co_info_agree_yn" value="Y">결제사 정보제공 동의</div>
+    <div><input id="default_pay_means_yn" type="checkbox" name="default_pay_means_yn" value="Y">기본 결제수단으로 등록</div>
     <div><button id="submitBtn" type="submit">등록 완료</button></div>
 </form>
 <script>
-    function updateCardValidDate() {
-        let months = document.getElementById('months').value;
-        let years = document.getElementById('years').value;
-
-        // 'card_valid_date' input 요소에 값을 설정
-        document.getElementById('card_valid_date').value = years + '-' + months;
-    }
-
-    // select 요소가 변경될 때마다 updateCardExpiration 함수 호출
-    document.getElementById('months').addEventListener('change', updateCardValidDate);
-    document.getElementById('years').addEventListener('change', updateCardValidDate);
-
     $(document).ready(function() {
-        $("#submitBtn").on("click", function () {
+        $('#card_valid_date').val($('#years').val() + '-' + $('#months').val());
+
+        $('#months, #years').change(function () {
+            $('#card_valid_date').val($('#years').val() + '-' + $('#months').val());
+        })
+
+        $("#submitBtn").click(function (e) {
             let form = $("#form");
             form.attr("action", "<c:url value='/pay/register'/>");
             form.attr("method", "post");
-            form.submit();
+
+            if (!$("#card_co_info_agree_yn").prop("checked")) {
+                alert("결제사 정보제공에 동의하셔야 합니다.");
+                e.preventDefault(); // prevent form submit
+            } else {
+                form.submit();
+            }
         })
     })
 </script>

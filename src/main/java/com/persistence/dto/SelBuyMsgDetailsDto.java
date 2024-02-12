@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class SelBuyMsgDetailsDto {
+    private Integer room_num;
     private String msg_id;
     private String buy_id;
     private String pj_id;
