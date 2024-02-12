@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import static java.util.stream.Collectors.toCollection;
@@ -65,13 +67,23 @@ public class ChatServiceImpl implements ChatService {
     public ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto) {
         try {
 //            메시지 전체 조회 후 첨부파일 경로를 매핑해서 전달.
-            return chatRoomDao.loadAllMessages(chatRoomDto).stream().map(this::mappingImgUrl).collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
+            return chatRoomDao.loadAllMessages(chatRoomDto).stream()
+                    .map(this::timeFormatting)
+                    .map(this::mappingImgUrl)
+                    .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
         } catch (Exception e) {
 //            에러메시지를 전달한다.
             throw new RuntimeException("error with message loading", e);
         }
     }
 
+    private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
+        Date date = selBuyMsgDetailsDto.getSvr_intime();
+        String hourAndMinute = new SimpleDateFormat("hh:mm").format(date);
+        selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
+
+        return selBuyMsgDetailsDto;
+    }
     private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
 //        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
         if (!isFileAttached(selBuyMsgDetailsDto)) {

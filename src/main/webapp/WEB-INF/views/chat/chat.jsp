@@ -9,37 +9,51 @@
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <script src="https://kit.fontawesome.com/99823c8069.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/chat/css/chatCss.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Serif+KR:wght@300&display=swap"
+          rel="stylesheet">
 </head>
 <body id="chatBody">
 <div class="chatMainContainer">
-    <div class="chatTableBox">
-        <table id="conversation" class="chatTable">
-            <tbody id="chatBox">
-            <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
-                <c:if test="${msg.file_cnt ne 0}">
-                    <tr class="chatRight">
-                        <td>
-                            <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
-                        </td>
-                    </tr>
+    <div id="chatContainer" class="chatContainer">
+        <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
+            <c:if test="${msg.file_cnt ne 0}">
+                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                    ${sessionScope.loginId}
+                    <div class="chatBox right" data-time="${msg.svr_intime_string}">
+                        <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
+                    </div>
                 </c:if>
-                <c:if test="${msg.file_cnt eq 0}">
-                    <tr>
-                        <td id="msgCont" class="chatRight">${msg.msg_cont}</td>
-                    </tr>
+                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                    <div class="chatBox left" data-time="${msg.svr_intime_string}">
+                        <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
+                    </div>
                 </c:if>
-            </c:forEach>
-            </tbody>
-        </table>
+            </c:if>
+            <c:if test="${msg.file_cnt eq 0}">
+                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                    <div class="chatBox right" data-time="${msg.svr_intime_string}">
+                        <div class="chat">${msg.msg_cont}</div>
+                    </div>
+                </c:if>
+                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                    <div class="chatBox left" data-time="${msg.svr_intime_string}">
+                        <div class="chat">${msg.msg_cont}</div>
+                    </div>
+                </c:if>
+            </c:if>
+        </c:forEach>
     </div>
     <div class="chatFormContainer">
         <form id="chatForm">
             <div class="chatIptBox">
-                <input type="text" id="chat" class="chatIpt" required>
+                <textarea id="chat" class="chatIpt" autocomplete="off"></textarea>
                 <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
             </div>
         </form>
-        <input id="img" class="imgIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
+        <label class="labelImgFileIpt" for="img"><i class="fa-solid fa-upload"></i></label>
+        <input id="img" class="imgFileIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>
@@ -55,10 +69,10 @@
         stompClient.onConnect = (frame) => {
             console.log("connected");
             stompClient.subscribe('/chatSub/${chatRequest.chatRoomDto.room_num}', (response) => {
-                displayMessage(JSON.parse(response.body));
+                parsingMessage(JSON.parse(response.body));
             });
 
-            scrollToButtom();
+            scrollToBottom();
         };
 
         stompClient.onWebSocketError = (error) => {
@@ -81,7 +95,8 @@
     const sendMessage = () => {
         const message = document.querySelector("#chat").value;
 
-        if (message === "") {
+        if (message.trim() === "") {
+            document.querySelector("#chat").value = "";
             return;
         }
 
@@ -115,6 +130,7 @@
         formData.append("file", files[0]);
         formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
         formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
+        formData.append("send_user_id", "${chatRequest.chatRoomDto.user_id}");
         formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
         formData.append("file_cnt", files.length);
 
@@ -128,37 +144,48 @@
     }
 
     // 메시지 생성시 하단 스크롤 유지
-    const scrollToButtom = () => {
-        const scrollHeight = document.querySelector("#chatBody").scrollHeight;
+    const scrollToBottom = () => {
+        const scrollHeight = document.querySelector(".chatMainContainer").scrollHeight;
         window.scrollTo({top: scrollHeight});
     }
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
     // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
-    const displayMessage = (message) => {
+    const parsingMessage = (message) => {
         const date = new Date();
-        const hour = date.getHours();
-        const minute = date.getMinutes();
-        console.log(message);
+        let hour  = date.getHours();
+        let minute = date.getMinutes();
+        hour = hour < 10 ? '0' + hour : hour;
+        minute = minute < 10 ? '0' + minute : minute;
 
-        if (message.file_cnt !== 0) {
-            // 이미지 출력
-            document.querySelector("#chatBox").innerHTML += `<tr><td><img class="chatAttImg" src="${"${message.file_url}"}" /></td></tr>`;
-            return;
-        }
+        const time = hour + ":" + minute;
 
-        // 일반 메시지 출력
+        const position = message.send_user_id !== "${sessionScope.loginId}" ? "right" : "left";
 
-      <%--if (message.send_user_id === "${sessionScope.loginId}")--%>
-      //   if (message.send_user_id === )
+        const msg = message.file_cnt != 0 ? paintImg(position, message.file_url,time) : paintChat(position, message.msg_cont, time);
 
-        document.querySelector("#chatBox").innerHTML += `<tr class="chatRight"><td> ${'${message.msg_cont}'} </td></tr>`;
+        // 사진은 get 요청이 종료된 후에
 
-        scrollToButtom();
+        scrollToBottom();
+    }
+
+    const paintChat = (position, text, time) => {
+        document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><div class="chat">${'${text}'}</div></div>`;
+    }
+
+    const paintImg = (position, imgUrl, time) => {
+        document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><img id="imgTag" class="chatAttImg" src="${"${imgUrl}"}" onload="scrollToBottom()"/></div>`;
+        // document.querySelector("#imgTag").addEventListener("load", scrollToBottom
+        // );
     }
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
+        document.querySelector("#chat").addEventListener("keypress", (e)=>{
+            if(e.key === "Enter"){
+                sendMessage();
+            }
+        });
         document.querySelector("#send").addEventListener('click', sendMessage);
         document.querySelector("#img").addEventListener('input', sendImg);
         // document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
