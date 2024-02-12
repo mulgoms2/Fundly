@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
-    <link rel="stylesheet" href="<c:url value='/static/user/userLogin.css?after'/>">
+    <link rel="stylesheet" href="<c:url value='/static/user/Login.css?after'/>">
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
