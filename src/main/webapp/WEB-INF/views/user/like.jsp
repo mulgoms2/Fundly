@@ -1,4 +1,3 @@
-<jsp:useBean id="likedto" class="com.persistence.dto.LikeDto" scope="request"/>
 <%--
   Created by IntelliJ IDEA.
   User: bada
@@ -17,8 +16,6 @@
 </head>
 <body>
     <h1>관심 프로젝트 리스트</h1>
-<%--    <h2>${likedto.Pj_id}</h2>--%>
-<%--    <h2>${likedto.User_id}</h2>--%>
     <h5>1이면 좋아요</h5>
     <h5>0이면 좋아요취소</h5>
     <table border="1">

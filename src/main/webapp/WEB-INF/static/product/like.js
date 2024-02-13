@@ -86,8 +86,10 @@ function clicklike(type) {
 
     if(type === 'plus') {
         curr_cnt = parseInt(curr_cnt) + 1;
+        alert("좋아요")
     } else if(type === 'minus') {
         curr_cnt = parseInt(curr_cnt) -1 ;
+        alert("좋아요취소")
     }
 
     like_cnt.innerText = curr_cnt;
@@ -95,15 +97,16 @@ function clicklike(type) {
 
 // ajax로 좋아요 클릭시 데이터 전송 (페이지 이동x)
 
-function ajax(){
+function sendajax(){
+
+    var params = $('#formtest').serialize();
 
     $.ajax({
         url: "/like2",
         dataType : "json",
-        data: { user_id : "user",
-            pj_id : "P1010"},
+        data: params,
         type: "POST",
-        success : function(data){
+        success : function(){
             alert("성공")
         },
         error : function(){
