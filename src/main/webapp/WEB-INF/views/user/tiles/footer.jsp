@@ -125,17 +125,25 @@
                 // 후원한 프로젝트 화면으로
                 return window.location.href = '/mypage/fundingProject';
 
-            } else if(e.target.id == "Like") {
-
-                return window.location.href = '/like';
+            // } else if(e.target.id == "Like") {
+            //
+            //     return window.location.href = '/like';
 
             } else if(e.target.id == "Alarm") {
+                // 알림 화면으로
+                return window.location.href = '/mypage/alarm';
 
-            } else if(e.target.id == "Msg") {
+            } else if(e.target.id == "Message") {
+                // 메시지 화면으로
+                return window.location.href = '/mypage/message';
 
             } else if(e.target.id == "MakeProject") {
+                // 내가 만든 프로젝트 화면으로
+                return window.location.href = '/mypage/makeProject';
 
             } else if(e.target.id == "Setting") {
+                // 설정 화면으로
+                return window.location.href = '/mypage/setting';
 
             } else if(e.target.id == "LogOut") {
 
