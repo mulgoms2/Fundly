@@ -24,12 +24,12 @@ public class ChatController {
     SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     ChatService chatService;
-
-    @GetMapping("/chat")
-//    테스트용
-    public String chatRoom() {
-        return "chat/chatIndex";
-    }
+//
+//    @GetMapping("/chat")
+////    테스트용
+//    public String chatRoom() {
+//        return "chat/chatIndex";
+//    }
 
     @GetMapping("/chatPop")
     public String joinChatRoom(@ModelAttribute ChatRequest chatRequest, Model model) {

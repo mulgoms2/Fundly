@@ -61,7 +61,7 @@ public class ChatServiceImpl implements ChatService {
             message.setSvr_intime_string(svr_intime);
         } catch (Exception e) {
             log.error("error with save Message");
-            throw new RuntimeException(e);
+            throw new RuntimeException("error with saveMessage(SelBuyMsgDetailsDto message)" ,e);
         }
         return true;
     }

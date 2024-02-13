@@ -423,7 +423,7 @@
                                 </div>
                                 <div class="btnWrap">
                                     <button class="msg">
-                                        <a href="#" target="_blank">
+                                        <a id="chatBtn" target="_blank" style="cursor: pointer">
                                             <i class="fa-regular fa-envelope"></i>
                                             창작자 문의
                                         </a>
@@ -1216,5 +1216,20 @@
         <button class="taskButton b-close">확인</button>
     </div>
 </div>
+<script>
+    (()=>{
+        const url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + "123";
+        const chatBtn = document.querySelector("#chatBtn");
+
+
+        chatBtn.addEventListener("click", ()=>{
+            window.open(url , "_blank", 'width=600px,height=800px,scrollbars=yes');
+
+            return false;
+        });
+
+        console.dir(document.querySelector("#chatBtn"));
+    })();
+</script>
 </body>
 </html>
