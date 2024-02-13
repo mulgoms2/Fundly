@@ -24,7 +24,7 @@ public class ChatController {
     SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     ChatService chatService;
-//
+
 //    @GetMapping("/chat")
 ////    테스트용
 //    public String chatRoom() {
