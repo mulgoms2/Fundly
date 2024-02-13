@@ -409,7 +409,7 @@ i {
 }
 /* default 상태 */
 .btnWrap .likeBtn .btnIco .icoImg.on {
-    display: none;
+    display : none;
 }
 .btnWrap .likeBtn .btnIco .icoImg {
     display: block;
