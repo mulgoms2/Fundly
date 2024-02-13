@@ -18,7 +18,7 @@
     <script src="https://kit.fontawesome.com/a26f9e7c74.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/project/css/reward.css">
     <script defer src="/static/project/js/reward.js"></script>
     <style>
@@ -100,18 +100,22 @@
         <div class="pjBox gift" id="gift">
             <div class="pjInfo">
                 <div>
-                    <div>
-                        <div class="myList">내가 만든 선물 count</div>
-                        <div></div>
+                    <div class="myList">내가 만든 선물 count</div>
+                    <div id="giftList">
+                        <div>
+                            <strong>1,000원+</strong>
+                            <span>선물 없이 후원하기</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="pjForm">
                 <div>
-                    <div>
-                        <p>선물 만들기</p>
-                        <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
-                        <p>다양한 금액대로 여러 개의 선물을 만들어주세요. 펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                    <div class="first">
+                        <p class="tit">선물 만들기</p>
+                        <p class="cont">선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. <br>
+                            다양한 금액대로 여러 개의 선물을 만들어주세요. <br>
+                            펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
                     </div>
                     <section>
                         <div>
@@ -119,9 +123,9 @@
                             <p>선물을 구성하는 아이템을 추가해주세요.</p>
                         </div>
                         <div>
-                            <div class="dropdown" style="border:0.1px solid black; cursor:pointer">
+                            <div class="dropdown">
                                 <%--                                    <input style="border:none;outline:none;margin:0" type="text" inputmode="text" size=22 placeholder="아이템을 선택해주세요(클릭)" disabled>--%>
-                                아이템을 선택해주세요(클릭) <i class="fas fa-regular fa-chevron-down"></i>
+                                <span>아이템을 선택해주세요(클릭)</span><span><i class="fas fa-regular fa-chevron-down"></i></span>
                             </div>
                             <div id="itmDropdown">
                                 <%--                                        <ul>--%>
@@ -142,7 +146,7 @@
                             <p>선물 이름</p>
                             <p>어떤 아이템으로 구성되어있는지 쉽게 알 수 있도록 선물 이름을 붙여주세요</p>
                         </div>
-                        <div>
+                        <div class="inputBx">
                             <input type="text" id="giftName" placeholder="방향제+엽서 세트 A" value="">
                         </div>
                         <div></div>
@@ -152,48 +156,63 @@
                             <p>수량제한</p>
                             <p>선착순으로 선물을 제공하는 경우 총 선물 수량을 설정해주세요.</p>
                         </div>
-                        <div>
+                        <div class="limRadio check">
                             <div>
-                                <label for="lim">있음</label>
                                 <input name="limit" id="lim" type="radio" value="수량제한 있음">
-                                <span style="visibility:hidden;"><input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">개</span>
-                                <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
+                                <label for="lim">있음</label>
+                                <span style="visibility:hidden;">
+                                        <input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
+                                        <div>개</div>
+                                    </span>
                             </div>
-                            <label for="unlim">없음</label>
-                            <input name="limit" id="unlim" type="radio" value="수량제한 없음">
+                            <div>
+                                <input name="limit" id="unlim" type="radio" value="수량제한 없음">
+                                <label for="unlim">없음</label>
+                            </div>
                         </div>
+                        <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
                     </section>
                     <section>
                         <div>
                             <p>1인당 최대 선택 제한</p>
                             <p>후원자 1명이 이 선물을 몇 개까지 선택할 수 있는지 설정해주세요.</p>
                         </div>
-                        <div>
+                        <div class="limRadio check">
                             <div>
-                                <label for="maxLim">있음</label>
                                 <input name="maxLimit" id="maxLim" type="radio" value="1인당 선택 제한 있음">
-                                <span style="visibility: hidden;"><input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">개</span>
-                                <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
+                                <label for="maxLim">있음</label>
+                                <span style="visibility: hidden;">
+                                        <input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
+                                        <div>개</div>
+                                    </span>
                             </div>
-                            <label for="maxUnlim">없음</label>
-                            <input name="maxLimit" id="maxUnlim" type="radio" value="1인당 선택 제한 없음">
+                            <div>
+                                <input name="maxLimit" id="maxUnlim" type="radio" value="1인당 선택 제한 없음">
+                                <label for="maxUnlim">없음</label>
+                            </div>
                         </div>
+                        <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
                     </section>
                     <section>
                         <p>예상전달일</p>
-                        <div>
+                        <div class="cal">
                             <div id="shipDate">
+                                <i class="far fa-regular fa-calendar"></i>
+                                <span></span>
                             </div>
                             <hr>
                             <div>
                                 <p>결제 종료일(2024-03-01)로부터</p> <!--여기 나중에 고쳐야 함. 하드코딩 xx-->
                                 <div>
-                                    <input type="hidden" value="2024-03-01"> <!--pj에서 넘어온 값을 넣어줘야함 <%--${pj.fund_end_dtm}--%> -->
-                                    <input type="number" onkeyup="validRNum(this,1825);calcDate(this)">일 뒤
+                                    <div>
+                                        <input type="hidden" value="2024-03-01"> <!--pj에서 넘어온 값을 넣어줘야함 <%--${pj.fund_end_dtm}--%> -->
+                                        <input type="number" onkeyup="validDays(this,1825);calcDate(this)">
+                                        <div>일 뒤</div>
+                                    </div>
                                 </div>
-                                <p class="notice" style="display:none">최대 1825일(5년) 이내로 입력하세요</p>
                             </div>
                         </div>
+                        <p class="notice" style="display:none">최대 1825일(5년) 이내로 입력하세요</p>
                     </section>
                     <!-- <section></section> 배송여부는 제외함 -->
                     <section>
@@ -202,15 +221,17 @@
                             <p>선물 제작 및 전달에 필요한 모든 비용(포장비, 배송비 등)이 포함된 금액으로 입력해주세요.</p>
                         </div>
                         <div>
-                            <div>
-                                <input type="text" onkeyup="validRNum(this,10000000);inputNumberFormat(this);" placeholder="1000원 이상의 금액을 입력하세요.">원
+                            <div class="inputBx money check">
+                                <input type="text" onkeyup="validRNum(this,10000000);inputNumberFormat(this);" placeholder="1000원 이상의 금액을 입력하세요.">
+                                <div>원</div>
                             </div>
                             <p class="notice" style="display:none">10,000,000원 이하로 입력해주세요.</p>
+                            <!--여긴 왜 적용이 안되지 css-->
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button">초기화</button>
-                        <button type="button">저장</button>
+                        <button type="button" class="init">초기화</button>
+                        <button type="button" class="save" disabled>저장</button>
                     </div>
                 </div>
             </div>
@@ -253,12 +274,12 @@
                 <div>
                     <div class="first">
                         <p class="tit">아이템 만들기</p>
-                        <p class="cont">아이템은 선물에 포함되는 구성 품목을 말합니다. 특별한 물건부터 의미있는 경험까지 선물을 구성할 아이템을 만들어 보세요.</p>
+                        <p class="cont">아이템은 선물에 포함되는 구성 품목을 말합니다.<br>특별한 물건부터 의미있는 경험까지 선물을 구성할 아이템을 만들어 보세요.</p>
                     </div>
                     <section>
                         <p>아이템 이름</p>
                         <div class="inputBx">
-                            <input id="itmName" class="input" type="text" placeholder="아이템 이름을 50자 이내로 입력해주세요.">
+                            <input autofocus id="itmName" class="input" type="text" placeholder="아이템 이름을 50자 이내로 입력해주세요.">
                         </div>
                         <div></div>
                     </section>
@@ -266,16 +287,16 @@
                         <p>옵션 조건</p>
                         <div class="optBox">
                             <div>
-                                <label for="noOpt">없음</label>
                                 <input type="radio" name="optType" id="noOpt" value="옵션 없음">
+                                <label for="noOpt">없음</label>
                             </div>
                             <div>
-                                <label for="singleOpt">주관식</label>
                                 <input type="radio" name="optType" id="singleOpt" value="주관식 옵션">
+                                <label for="singleOpt">주관식</label>
                             </div>
                             <div>
-                                <label for="multiOpt">객관식</label>
                                 <input type="radio" name="optType" id="multiOpt" value="객관식 옵션">
+                                <label for="multiOpt">객관식</label>
                             </div>
                         </div>
                     </section>
@@ -284,30 +305,34 @@
                         <div class="radio multiOpt">
                             <div>
                                 <p>옵션 항목</p>
-                                <p>입력완료 후 Enter키를 누르면 옵션 항목이 생성됩니다.</p>
+                                <p>입력완료 후 Enter키를 누르면 옵션 항목이 생성됩니다.
+                                    <br>최소 2개 이상의 옵션 항목을 만들어주세요.</p>
+                            </div>
+                            <div class="txtCont">
+                                <textarea autofocus class="input" placeholder="최소 2개 이상의 옵션항목을 입력해주세요.(100자 이내)  &#13;&#10;*예시* 블랙-230mm, 블랙-240mm"></textarea> <!--엔터키를 치면 아래에 버튼이 생성됨-->
                             </div>
                             <div>
-                                <textarea class="input" placeholder="최소 2개 이상의 옵션항목을 입력해주세요.(100자 이내) *예시* 블랙-230mm, 블랙-240mm"></textarea> <!--엔터키를 치면 아래에 버튼이 생성됨-->
                             </div>
                             <div>
-                            </div>
-                            <section>
                                 <div id="multiResult">
                                 </div>
-                            </section>
+                            </div>
                         </div>
                         <div></div>
                         <!--주관식-->
                         <div class="radio singleOpt">
                             <div>
-                                <textarea class="input" placeholder="예) 각인할 메세지를 입력하세요."></textarea>
+                                <p>옵션 항목</p>
+                            </div>
+                            <div class="txtCont">
+                                <textarea autofocus class="input" placeholder="예) 각인할 메세지를 입력하세요."></textarea>
                             </div>
                             <div></div>
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button" class="init">초기화</button>
-                        <button type="button" class="save">저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
+                        <button type="button" id="optInit" class="init">초기화</button>
+                        <button type="button" id="optSave" class="save" disabled>저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
                     </div>
                 </div>
             </div>
