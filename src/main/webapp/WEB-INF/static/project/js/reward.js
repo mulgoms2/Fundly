@@ -1,7 +1,7 @@
 let optArr = []; //window.onload 안에 있으면 함수에서 못 갖다 쓴다.
 let itemArr = [];
-
 //아이템 페이지의 요소들
+//header.js에 옮김
 const itemPage = document.querySelector("#item"); //아이템 페이지 div단락
 const giftPage = document.querySelector("#gift"); //선물 페이지 div단락
 const strPage = document.querySelector("#str"); //선물 만들기 첫 페이지
@@ -20,11 +20,32 @@ const radioBtns = document.querySelector('.pjBox.gift').querySelectorAll('input[
 const maxInputs = document.querySelectorAll('.maxInput');
 const pjForm = document.querySelector('.pjBox.item').querySelector('.pjForm');
 
+
+
+
+window.onscroll = function(){ //window.onscroll
+    let scroll = window.scrollY;
+    const fixedCont = document.querySelector('.fixedContentWrapper');
+    // alert(fixedCont);
+    console.log(fixedCont);
+    const subHead = document.querySelector('div.subHead');
+    if(scroll >= 104){
+        fixedCont.classList.add('fixed');
+        subHead.classList.add('fixed');
+    } else {
+        fixedCont.classList.remove('fixed');
+        subHead.classList.remove('fixed');
+    }
+}
+
 window.onload = function () {
+    console.log(itmBtn);
+    console.log(gftBtn);
 
     //window.onload시 #itemList에 있는 item수를 세고
     const cnt = document.querySelectorAll("#itemList > div");
     console.dir(cnt);
+
     mkHidden([itemPage]);//이건 cnt와 상관없이
     if (cnt.length === 0) {
         mkHidden([giftPage]); //아이템이 하나도 없으면 선물시작페이지(strPage)가 뜨도록 giftPage는 숨김처리
@@ -42,6 +63,7 @@ window.onload = function () {
         strBtn.addEventListener("click", function () {
             // giftPage.style.display = "none";
             location.href = "#item";
+            window.scrollTo(0,0); //최상단으로 이동
             mkHidden([giftPage, strPage]);
             mkVisible(itemPage);
         })
@@ -52,52 +74,40 @@ window.onload = function () {
         } else saveBtn.disabled = false;
     })
 
-
-    // mkHidden([itemPage]);
-    // mkVisible(itemPage);
-    // if(itemList==null){ //만든 아이템이 하나도 없으면 아이템 만들기 유도 페이지를 로드
-    //    mkHidden([giftPage, itemPage]);
-    //     strBtn.addEventListener("click",function(){
-    //         // giftPage.style.display = "none";
-    //         location.href = "#item";
-    //         mkHidden([giftPage, strPage]);
-    //         mkVisible(itemPage);
-    //     })
-    // } else { //만든 아이템이 있다면 바로 선물 페이지로 이동
-    //     mkVisible(giftPage);
-    //     mkHidden([itemPage,strPage]);
-    // }
-
     gftBtn.addEventListener("click", function () {
         const cnt = document.querySelectorAll("#itemList div");
         console.dir(cnt); //
+        this.querySelector('i').style.color = '#f86453';
+        this.querySelector('span').style.color = '#3d3d3d';
+        itmBtn.querySelector('i').style.color = '#c4c4c4';
+        itmBtn.querySelector('span').style.color = '#c4c4c4';
         //alert(cnt.length);
         // 원래는 ${itemList.size()}로 비교하려했는데 실시간 반영이 안되더라.
         //비동기라서 화면 전환이 되는ㄱㅔ 아니다보니--%>
         if (cnt.length === 0) { //등록된 아이템이 없으면 선물 페이지를 보여주지 않는다.
             mkHidden([itemPage, giftPage])
             location.href = "#str"
+            window.scrollTo(0,0); //최상단으로 이동
             mkVisible(strPage);
         } else {
             mkHidden([itemPage, strPage])
             location.href = "#gift"
+            window.scrollTo(0,0); //최상단으로 이동
             mkVisible(giftPage);
         }
-        // const pjBox = document.querySelector(".pjBox");
-        // console.dir(pjBox);
-        // //location.href = "#gift";
-        // location.href = "#"+pjBox.id;
-        // alert(pjBox.id);
-        // // strPage.style.display = "none";
-        // // giftPage.style.display = "block";
-        // mkHidden([itemPage]);
-        // //mkVisible(giftPage);
-        // mkVisible(pjBox);
     })
+
+
+
     itmBtn.addEventListener("click", function () {
         const cnt = document.querySelectorAll("#itemList > div");
         console.dir(cnt); //
+        this.querySelector('i').style.color = '#f86453';
+        this.querySelector('span').style.color = '#3d3d3d';
+        gftBtn.querySelector('i').style.color = '#c4c4c4';
+        gftBtn.querySelector('span').style.color = '#c4c4c4';
         location.href = "#item";
+        window.scrollTo(0,0); //최상단으로 이동
         if (cnt.length === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
             mkHidden([strPage])
         } else {
@@ -392,6 +402,8 @@ const tglHidden = function (elements) {
         element.classList.toggle("hidden");
     })
 }
+
+//header.js로 옮김//
 const mkHidden = function (elements) {
     elements.forEach(element => {
         if (element != null)
@@ -415,16 +427,17 @@ const lengthCheck = function (elem, maxLength, string) {
     // alert(elem.value)
     if (elem.value.trim().length === 0) {
         elem.focus();
-        len.innerHTML = '<p>' + string + '을 입력해주세요.<p>'
+        len.innerHTML = '<p class="notice">' + string + '을 입력해주세요.<p>'
         len.style.color = "#ff5757"
     } else if (elem.value.trim().length > maxLength) {
         elem.focus();
-        len.innerHTML = '<p>' + string + '은 ' + maxLength + '자 이내여야 합니다.<p>'
+        len.innerHTML = '<p class="notice">' + string + '은 ' + maxLength + '자 이내여야 합니다.<p>'
 
     } else {
         elem.parentElement.style.border = ".5px solid black";
         len.innerHTML = '<p>' + elem.value.trim().length + '/' + maxLength + '</p>';
         len.style.color = "#9e9e9e";
+        lent.style.fontSize = '12px';
     }
 }
 const makeBlur = function () {
