@@ -37,18 +37,34 @@ public class PayController {
         this.portOneService = portOneService;
     }
 
+    @PostMapping("/remove")
+    public String remove(PayMeansDto payMeansDto, RedirectAttributes rattr) {
+        String payMeansId = payMeansDto.getPay_means_id();
+        try {
+            int rowCnt = payMeansService.removePayMeans(payMeansId);
+            if (rowCnt != 1) throw new Exception("Remove Failed.");
+
+            rattr.addFlashAttribute("msg", "DEL_SUCCESS");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "DEL_ERROR");
+        }
+
+        return "redirect:/pay/list";
+    }
+
     @GetMapping("/list")
     public String list(Model m) {
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
 
         try {
             List<PayMeansDto> list = payMeansService.getAllPayMeans(userId);
-            log.info("list???" + list);
             m.addAttribute("list", list);
 
         } catch (Exception e) {
             e.printStackTrace();
-            m.addAttribute("msg", "LIST_ERR");
+            m.addAttribute("msg", "LIST_ERROR");
         }
 
         return "pay/userPayMeansPage";
@@ -82,7 +98,8 @@ public class PayController {
             payMeansDto.setBill_key(billKeyResponseDto.getBillKey());
             payMeansDto.setCard_co_type(billKeyResponseDto.getCardCoType());
 
-            payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
+            int rowCnt = payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
+            if (rowCnt != 1) throw new Exception("Register Failed.");
 
             rattr.addFlashAttribute("msg", "REG_SUCCESS");
 
