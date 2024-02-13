@@ -4,14 +4,14 @@
 }
 
 /* line */
-.line{
-    width: 100%;
-    /* width: 5000px; */
-    height: 1px;
-    background: rgb(240, 240, 240);
-    /* background: #555353; */
-    content: " ";
-}
+/*.line{*/
+/*    width: 100%;*/
+/*    !* width: 5000px; *!*/
+/*    height: 1px;*/
+/*    background: rgb(240, 240, 240);*/
+/*    !* background: #555353; *!*/
+/*    content: " ";*/
+/*}*/
 
 /* font */
 .fontcolor{
@@ -33,6 +33,10 @@
 
 .pageComponent{
     margin: 0 auto;
+}
+
+.pageComponent > div{
+    border-bottom: 1px solid rgb(240, 240, 240);
 }
 
 .ifImg > span {

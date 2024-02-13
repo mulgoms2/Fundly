@@ -9,8 +9,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
 
-<%--<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>--%>
-
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/static/user/Alarm.css'/>">
@@ -29,8 +27,6 @@
                     <span class="tapItem font1"><a href="" id="4">프로젝트</a></span>
                 </div>
             </div>
-
-            <div class="line"></div>
 
             <div class="NotificationListMain">
                 <div class="NotificationList">
