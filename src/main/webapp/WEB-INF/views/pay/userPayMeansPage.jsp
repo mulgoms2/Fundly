@@ -11,15 +11,19 @@
 <html>
 <head>
     <title>결제 수단</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <script>
     let msg = "${msg}";
-    if (msg == "REG_SUCCESS") alert("결제 수단 등록에 성공했습니다.");
-    if (msg == "REG_ERROR") alert("결제 수단 등록에 실패했습니다. 다시 시도해 주세요.");
-    if (msg == "LIST_ERR")  alert("결제 수단 조회에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "REG_SUCCESS") alert("결제수단 등록에 성공했습니다.");
+    if (msg === "REG_ERROR") alert("결제수단 등록에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "LIST_ERROR")  alert("결제수단 조회에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "DEL_ERROR")  alert("결제수단 삭제에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "UPDATE_ERROR")  alert("기본 결제수단 지정에 실패했습니다. 다시 시도해 주세요.");
+
 </script>
 <style>
-    .btn-register {
+    .btn {
         background-color: rgb(236, 236, 236);
         border: none;
         color: black;
@@ -30,14 +34,26 @@
         margin-left: 30px;
     }
 
-    .btn-register:hover {
+    .btn:hover {
         text-decoration: underline;
     }
+
+    .default_tag {
+        background-color: orangered;
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-left: 50px;
+    }
+
 </style>
 <body>
 <div style="display: inline-flex">
     <div><h2>등록된 결제수단</h2></div>
-    <div><button type="button" id="regBtn" class="btn-register" onclick="location.href='<c:url value="/pay/register"/>'">+ 추가</button></div>
+    <div><button type="button" id="regBtn" class="btn" onclick="location.href='<c:url value="/pay/register"/>'">+ 추가</button></div>
 </div>
 
 <table>
@@ -47,17 +63,60 @@
         <th class="own_type">유형</th>
         <th class="default_pay_means_yn">기본결제수단여부</th>
         <th class="card_co_type">카드사</th>
+        <th class=""></th>
+        <th class=""></th>
+        <th class=""></th>
     </tr>
     <c:forEach var="payMeansDto" items="${list}">
         <tr>
             <td class="user_id">${payMeansDto.user_id}</td>
-            <td class="pay_id">${payMeansDto.pay_means_id}</td>
+            <td class="pay_means_id">${payMeansDto.pay_means_id}</td>
             <td class="own_type">${payMeansDto.own_type}</td>
             <td class="default_pay_means_yn">${payMeansDto.default_pay_means_yn}</td>
             <td class="card_co_type">${payMeansDto.card_co_type}</td>
+            <td class=""><button type="button" class="btn removeBtn">삭제</button></td>
+            <td class=""><button type="button" class="btn defaultSetBtn">기본 결제수단 지정</button></td>
+            <c:if test="${payMeansDto.default_pay_means_yn == 'Y'}">
+                <td class="default_tag">기본</td>
+            </c:if>
         </tr>
     </c:forEach>
-</table>
+    <script>
+        $(document).ready(function () {
+            $(".removeBtn").click(function () {
+                if(!confirm("정말로 삭제하시겠습니까?")) return; // '취소' 클릭 시
 
+                let payMeansId = $(this).closest("tr").find(".pay_means_id").text();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/pay/remove",
+                    data: {pay_means_id: payMeansId},
+                    success: function () {
+                        // 성공한 경우 페이지 새로고침
+                        location.reload();
+                    },
+                    error: function () {}
+                })
+            })
+
+            $(".defaultSetBtn").click(function () {
+                let userId = $(this).closest("tr").find(".user_id").text();
+                let payMeansId = $(this).closest("tr").find(".pay_means_id").text();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/pay/update",
+                    data: {user_id: userId, pay_means_id: payMeansId},
+                    success: function () {
+                        // 성공한 경우 페이지 새로고침
+                        location.reload();
+                    },
+                    error: function () {}
+                })
+            })
+        })
+    </script>
+</table>
 </body>
 </html>

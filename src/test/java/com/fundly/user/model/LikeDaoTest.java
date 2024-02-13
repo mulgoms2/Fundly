@@ -32,17 +32,17 @@ class LikeDaoTest {
     @DisplayName("DB에 데이터넣기")
     void start() {
         userdto = new UserDto("bada","바다","1234");
-        pjdto = new ProjectDto("P001");
+        pjdto = new ProjectDto("P001",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
     }
 
-    @AfterEach
-    @SneakyThrows
-    @DisplayName("DB에 데이터삭제")
-    void end() {
-        int result = likedao.deleteAllLike();
-        System.out.println("result = " + result);
-    }
+//    @AfterEach
+//    @SneakyThrows
+//    @DisplayName("DB에 데이터삭제")
+//    void end() {
+//        int result = likedao.deleteAllLike();
+//        System.out.println("result = " + result);
+//    }
 
     @Test
     @SneakyThrows
@@ -55,7 +55,7 @@ class LikeDaoTest {
         assertTrue(list.size()==1);
         System.out.println("list = " + list);
         userdto = new UserDto("bada","바다","1234");
-        pjdto = new ProjectDto("P002");
+        pjdto = new ProjectDto("P002",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
         assertTrue(likedao.insertLike(likedto)==1);
         list = likedao.getLikeList(likedto);
@@ -69,7 +69,7 @@ class LikeDaoTest {
     void insertLikeTest() {
         assertTrue(likedao.insertLike(likedto)==1);
         userdto = new UserDto("bada","바다","1234");
-        pjdto = new ProjectDto("P002");
+        pjdto = new ProjectDto("P002",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
         assertTrue(likedao.insertLike(likedto)==1);
     }

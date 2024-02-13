@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PayMeansServiceImpl implements PayMeansService {
@@ -29,8 +30,8 @@ public class PayMeansServiceImpl implements PayMeansService {
     }
 
     @Override
-    public int unsetDefaultPayMeans(PayMeansDto payMeansDto) throws Exception {
-        return payMeansDao.updateDefaultMeansToNo(payMeansDto);
+    public int unsetDefaultPayMeans(Map map) throws Exception {
+        return payMeansDao.updateDefaultMeansToNo(map);
     }
 
     @Override
@@ -64,7 +65,12 @@ public class PayMeansServiceImpl implements PayMeansService {
     }
 
     @Override
-    public PayMeansDto getDefaultPayMeans() throws Exception {
-        return payMeansDao.selectDefaultMeans();
+    public PayMeansDto getDefaultPayMeans(String user_id) throws Exception {
+        return payMeansDao.selectDefaultMeans(user_id);
+    }
+
+    @Override
+    public int getDefaultPayMeansCount(String user_id) throws Exception {
+        return payMeansDao.countDefaultMeans(user_id);
     }
 }
