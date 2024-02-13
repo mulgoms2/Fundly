@@ -54,7 +54,7 @@
             </div>
         </form>
         <label class="labelImgFileIpt" for="img"><i class="fa-solid fa-upload"></i></label>
-        <input id="img" class="imgFileIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
+        <input id="img" class="imgFileIpt" name="file_img" type="file" accept="image/*" formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>

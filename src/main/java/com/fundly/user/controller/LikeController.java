@@ -1,23 +1,13 @@
 package com.fundly.user.controller;
 
 import com.fundly.user.service.LikeService;
-import com.persistence.dto.ItemDto;
 import com.persistence.dto.LikeDto;
-import com.persistence.dto.ProjectDto;
-import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @Slf4j
