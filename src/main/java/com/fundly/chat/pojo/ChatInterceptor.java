@@ -14,7 +14,7 @@ public class ChatInterceptor implements HandlerInterceptor {
 
             System.out.println("로그인 된 사용자만 채팅에 참여할 수 있습니다.");
 
-            return true;
+            return false;
         }
 
         return true;

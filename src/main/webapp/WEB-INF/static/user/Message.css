@@ -1,0 +1,130 @@
+:root{
+    --main-bg-color: #5060D6;
+}
+
+/*공통*/
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.main{
+    margin-top: 2.5%;
+    height: 760px;
+    /*height: 60%;*/
+}
+
+.title{
+    font-size: 30px;
+    font-weight: bold;
+    padding: 48px 0 28px 0;
+}
+
+/* font */
+.font1{
+    color: rgb(160, 155, 155);
+    font-size: 18px;
+}
+
+/* 안 읽은 메세지 */
+.chkmag{
+    width: 1160px;
+    height: 27px;
+    padding: 0px;
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    margin: 20px auto 0px ;
+}
+
+.chkmag label{
+    margin-left: 10px;
+}
+
+.noreadchk{
+    width: 20px;
+    height: 20px;
+}
+
+/* 메세지 */
+.msgListItem{
+    padding: 24px 0;
+}
+.msgItem{
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: transparent;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-image: initial;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 16px 0px;
+    margin: 0px;
+    color: rgb(13, 13, 13);
+    list-style: none;
+    border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.itemInfo{
+    display: flex;
+}
+
+.itemInfoCont em {
+    font-weight: 500;
+    margin: 0px 0px 10px;
+    font-size: 16px ;
+    line-height: 24px ;
+    font-style: normal;
+    overflow: hidden;
+    opacity: 0.7;
+}
+
+.itemInfoCont strong{
+    font-weight: 700;
+    margin: 0px 0px 10px;
+    font-size: 16px ;
+    line-height: 24px ;
+    opacity: 0.7;
+    text-overflow: ellipsis;
+    word-break: normal;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.itemInfoCont p{
+    font-weight: 700;
+    font-size: 16px ;
+    line-height: 24px ;
+    opacity: 0.4;
+    text-overflow: ellipsis;
+    word-break: normal;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.itemImg{
+    width: 56px;
+    height: 56px;
+    margin-right: 20px;
+    display: inline-block;
+    background: url(../testimg/angela.webp) no-repeat center center;
+    background-size: cover;
+}
+
+.itemImg2{
+    width: 56px;
+    height: 56px;
+    margin-right: 20px;
+    display: inline-block;
+    background: url(../testimg/remoroll.webp) no-repeat center center;
+    background-size: cover;
+}
