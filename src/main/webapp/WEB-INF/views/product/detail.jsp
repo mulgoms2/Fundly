@@ -131,10 +131,10 @@
                         <div class="sttElm">
                             <div class="elmTit">후원자</div>
                             <div class="elmBox">
-                                    <span class="val">
-                                        186
-                                        <span class="sMall">명</span>
-                                    </span>
+                                <span class="val">
+                                    186
+                                    <span class="sMall">명</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -157,7 +157,6 @@
                             <form name="formtest" action="/like" method="POST">
                             <input type="text" name="pj_id" placeholder="pj_id" value="p001" hidden="">
                             <input type="text" name="user_id" placeholder="user_id" value="user" hidden="">
-                                <div>
                                 <input type="submit">
                                 <div class="btnIco">
                                     <div class="icoImg">
@@ -169,7 +168,6 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fa6462" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
                                     </div>
                                     <span id="like_cnt">0</span>
-                                </div>
                                 </div>
                             </form>
                         </button>
@@ -748,18 +746,2017 @@
             <div class="cont">
                 <div class="tabMenu">
                     <div class="tabCont">
-                        <div class="cont on">2</div>
+                        <div class="cont on">
+                            <div class="tabFlx">
+                                <div class="cardRow">
+                                    <div class="cardItem"><!--업데이트 작가 공지사항-->
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="../img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="../img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="../img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="../img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gftInfo">
+                                    <div class="crtInfo">
+                                        <div class="crtBox">
+                                            <div class="crtTit">창작자 소개</div>
+                                            <div class="crtGr">
+                                                <div class="crtPrf">
+                                                    <a href="#" class="prfImg">
+                                                        <img src="../img/seili.webp" alt="">
+                                                    </a>
+                                                    <div class="crtIf">
+                                                        <div class="crtName">
+                                                            <a href="#">세이리 SEI LI</a>
+                                                        </div>
+                                                        <div class="lastLogin">
+                                                            <span>마지막 로그인</span>
+                                                            <b>1시간 전</b>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="crtDesc">
+                                                세이리는 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻은
+                                                조향을 하며 마치 작품을 선물하듯 향이 지니는 고유의 그림이 새겨져
+                                                있습니다. 저희가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의
+                                                방식을 나타내주며 나아가 당신을 새로운 곳으로 안내하길 꿈꿉니다.
+                                                기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의
+                                                여정을 함께하고 싶습니다.
+                                            </div>
+                                            <div class="btnWrap">
+                                                <button class="msg">
+                                                    <a href="#" target="_blank">
+                                                        <i class="fa-regular fa-envelope"></i>
+                                                        창작자 문의
+                                                    </a>
+                                                </button>
+                                            </div>
+                                            <div class="reviewInfo">
+                                                <div class="revwBox">
+                                                    <a href="#">
+                                                        <div class="revwTit">
+                                                            이전 프로젝트 후기
+                                                            <span class="revwCount">492</span>
+                                                        </div>
+                                                        <i class="fa-solid fa-chevron-right"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="revwWrap">
+                                                        <span class="revwTag">
+                                                            <span>퀄리티가 좋아요</span>
+                                                            <strong>411</strong>
+                                                        </span>
+                                                    <span class="revwTag">
+                                                            <span>특별해요</span>
+                                                            <strong>337</strong>
+                                                        </span>
+                                                    <span class="revwTag">
+                                                            <span>즐거움을 줘요</span>
+                                                            <strong>308</strong>
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftSlct">
+                                        <h3>선물 선택</h3>
+<%--                                        <div class="gftslctGroup">--%>
+<%--                                            <div class="gftslctTit">선물</div>--%>
+<%--                                            <div class="gftPrdt">--%>
+<%--                                                <div class="prdtSlct">--%>
+<%--                                                    <div class="prdtBox">--%>
+<%--                                                        <div class="prdboxGrp">--%>
+<%--                                                            <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함</div>--%>
+<%--                                                            <div class="xBtnWrap">--%>
+<%--                                                                <button class="b-close btnSlct">닫기</button>--%>
+<%--                                                            </div>--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="prdDtail">--%>
+<%--                                                            <ul class="prdList">--%>
+<%--                                                                <li>블로썸 오드퍼퓸(50ML)(x1)</li>--%>
+<%--                                                                <li>세이리 미니퍼퓸(3ML)(x1)</li>--%>
+<%--                                                                <li>일러스트 엽서(x1)</li>--%>
+<%--                                                            </ul>--%>
+<%--                                                            <div class="prdDtlst">--%>
+<%--                                                                <div class="prdCount">--%>
+<%--                                                                    <button id="decrBtn">--%>
+<%--                                                                        ---%>
+<%--                                                                    </button>--%>
+<%--                                                                    <input readonly type="number" id="numIpt" value="1" disabled>--%>
+<%--                                                                    <button id="incrBtn">--%>
+<%--                                                                        +--%>
+<%--                                                                    </button>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="prdVal">--%>
+<%--                                                                    <span id="formattedPrice">29800</span>원--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                        </div>--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                                <div class="prdPlus">--%>
+<%--                                                    <div class="plusSup">--%>
+<%--                                                        <div class="supTit">--%>
+<%--                                                            추가 후원금<span>(선택)</span>--%>
+<%--                                                        </div>--%>
+<%--                                                    </div>--%>
+<%--                                                    <div class="supIpt">--%>
+<%--                                                        <input type="number" id="valueIpt" min="1" max="10000000">--%>
+<%--                                                        <button></button>--%>
+<%--                                                    </div>--%>
+<%--                                                    <div class="supDt">--%>
+<%--                                                        *추가 후원금으로 프로젝트를 응원해주세요.--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                                <div class="twinBtnwrap">--%>
+<%--                                                    <button class="gftAddbtn">선물 추가하기</button>--%>
+<%--                                                    <button class="gftCalcbtn">--%>
+<%--                                                        총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기--%>
+<%--                                                    </button>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+                                        <div class="gftBox">
+                                            <div class="gftEl">
+                                                <div class="gftVal">
+                                                    1,000원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    선물 없이 후원하기
+                                                </div>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            2개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            28개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    29,800원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            15개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            5개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    51,100원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            10개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            10개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    65,700원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            11개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            4개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    95,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                        <span>택(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x3)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x3)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            8개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            2개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    149,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                        <span>택(x4)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x5)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x5)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl soldOut">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            100개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            선착순 마감
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    34,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl soldOut">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            50개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            선착순 마감
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    35,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="cont">
                 <div class="tabCont">
-                    <div class="cont on">3</div>
+                    <div class="cont on">
+                        <div class="tabConWrap">
+                            <div class="tabFlx">
+                                <!--이중 탭-->
+                                <div class="">
+                                    <!--콘텐츠-->
+                                </div>
+                                <div class="gftInfo">
+                                    <div class="crtInfo">
+                                        <div class="crtBox">
+                                            <div class="crtTit">창작자 소개</div>
+                                            <div class="crtGr">
+                                                <div class="crtPrf">
+                                                    <a href="#" class="prfImg">
+                                                        <img src="../img/seili.webp" alt="">
+                                                    </a>
+                                                    <div class="crtIf">
+                                                        <div class="crtName">
+                                                            <a href="#">세이리 SEI LI</a>
+                                                        </div>
+                                                        <div class="lastLogin">
+                                                            <span>마지막 로그인</span>
+                                                            <b>1시간 전</b>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="crtDesc">
+                                                세이리는 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻은
+                                                조향을 하며 마치 작품을 선물하듯 향이 지니는 고유의 그림이 새겨져
+                                                있습니다. 저희가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의
+                                                방식을 나타내주며 나아가 당신을 새로운 곳으로 안내하길 꿈꿉니다.
+                                                기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의
+                                                여정을 함께하고 싶습니다.
+                                            </div>
+                                            <div class="btnWrap">
+                                                <button class="msg">
+                                                    <a href="#" target="_blank">
+                                                        <i class="fa-regular fa-envelope"></i>
+                                                        창작자 문의
+                                                    </a>
+                                                </button>
+                                            </div>
+                                            <div class="reviewInfo">
+                                                <div class="revwBox">
+                                                    <a href="#">
+                                                        <div class="revwTit">
+                                                            이전 프로젝트 후기
+                                                            <span class="revwCount">492</span>
+                                                        </div>
+                                                        <i class="fa-solid fa-chevron-right"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="revwWrap">
+                                                    <span class="revwTag">
+                                                        <span>퀄리티가 좋아요</span>
+                                                        <strong>411</strong>
+                                                    </span>
+                                                    <span class="revwTag">
+                                                        <span>특별해요</span>
+                                                        <strong>337</strong>
+                                                    </span>
+                                                    <span class="revwTag">
+                                                        <span>즐거움을 줘요</span>
+                                                        <strong>308</strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftSlct">
+                                        <h3>선물 선택</h3>
+<%--                                        <div class="gftslctGroup">--%>
+<%--                                            <div class="gftslctTit">선물</div>--%>
+<%--                                            <div class="gftPrdt">--%>
+<%--                                                <div class="prdtSlct">--%>
+<%--                                                    <div class="prdtBox">--%>
+<%--                                                        <div class="prdboxGrp">--%>
+<%--                                                            <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함</div>--%>
+<%--                                                            <div class="xBtnWrap">--%>
+<%--                                                                <button class="b-close btnSlct">닫기</button>--%>
+<%--                                                            </div>--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="prdDtail">--%>
+<%--                                                            <ul class="prdList">--%>
+<%--                                                                <li>블로썸 오드퍼퓸(50ML)(x1)</li>--%>
+<%--                                                                <li>세이리 미니퍼퓸(3ML)(x1)</li>--%>
+<%--                                                                <li>일러스트 엽서(x1)</li>--%>
+<%--                                                            </ul>--%>
+<%--                                                            <div class="prdDtlst">--%>
+<%--                                                                <div class="prdCount">--%>
+<%--                                                                    <button id="decrBtn">--%>
+<%--                                                                        ---%>
+<%--                                                                    </button>--%>
+<%--                                                                    <input readonly type="number" id="numIpt" value="1" disabled>--%>
+<%--                                                                    <button id="incrBtn">--%>
+<%--                                                                        +--%>
+<%--                                                                    </button>--%>
+<%--                                                                </div>--%>
+<%--                                                                <div class="prdVal">--%>
+<%--                                                                    <span id="formattedPrice">29800</span>원--%>
+<%--                                                                </div>--%>
+<%--                                                            </div>--%>
+<%--                                                        </div>--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                                <div class="prdPlus">--%>
+<%--                                                    <div class="plusSup">--%>
+<%--                                                        <div class="supTit">--%>
+<%--                                                            추가 후원금<span>(선택)</span>--%>
+<%--                                                        </div>--%>
+<%--                                                    </div>--%>
+<%--                                                    <div class="supIpt">--%>
+<%--                                                        <input type="number" id="valueIpt" min="1" max="10000000">--%>
+<%--                                                        <button></button>--%>
+<%--                                                    </div>--%>
+<%--                                                    <div class="supDt">--%>
+<%--                                                        *추가 후원금으로 프로젝트를 응원해주세요.--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                                <div class="twinBtnwrap">--%>
+<%--                                                    <button class="gftAddbtn">선물 추가하기</button>--%>
+<%--                                                    <button class="gftCalcbtn">--%>
+<%--                                                        총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기--%>
+<%--                                                    </button>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+                                        <div class="gftBox">
+                                            <div class="gftEl">
+                                                <div class="gftVal">
+                                                    1,000원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    선물 없이 후원하기
+                                                </div>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            2개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            28개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    29,800원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            15개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            5개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    51,100원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            10개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            10개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    65,700원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            11개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            4개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    95,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                        <span>택(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x3)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x3)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            8개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            2개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    149,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                        <span>택(x4)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x5)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x5)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl soldOut">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            100개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            선착순 마감
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    34,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl soldOut">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            50개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            선착순 마감
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    35,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="cont">
                 <div class="tabCont">
-                    <div class="cont on">4</div>
+                    <div class="cont on">
+                        <div class="tabFlx">
+                            <div class="tabConWrap">
+                                <div class="containTit">
+                                    이 프로젝트들은 어떠신가요?
+                                </div>
+                                <div class="recmdPrjt">
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban02.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">실용·취미</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">MINCHANG</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>101% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban03.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">액세서리</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Mirror in MIRROr</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1406% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban04.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 문구</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">글리팅(glitting)</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1422% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban05.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 소품</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">아나레 ahnale</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>722% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban06.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">가방</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Vao</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>52% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban02.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">실용·취미</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">MINCHANG</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>101% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban03.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">액세서리</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Mirror in MIRROr</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1406% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban04.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 문구</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">글리팅(glitting)</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1422% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban05.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 소품</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">아나레 ahnale</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>722% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban06.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">가방</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Vao</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>52% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban02.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">실용·취미</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">MINCHANG</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>101% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban03.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">액세서리</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Mirror in MIRROr</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1406% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban04.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 문구</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">글리팅(glitting)</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1422% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban05.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 소품</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">아나레 ahnale</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>722% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban06.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">가방</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Vao</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>52% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban02.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">실용·취미</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">MINCHANG</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>101% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban03.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">액세서리</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Mirror in MIRROr</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1406% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban04.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 문구</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">글리팅(glitting)</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1422% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban05.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 소품</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">아나레 ahnale</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>722% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban06.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">가방</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Vao</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>52% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban02.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">실용·취미</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">MINCHANG</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>101% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban03.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">액세서리</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Mirror in MIRROr</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1406% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban04.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 문구</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">글리팅(glitting)</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>1422% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban05.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 소품</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">아나레 ahnale</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>722% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban06.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">가방</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Vao</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>52% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban05.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">디자인 소품</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">아나레 ahnale</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>722% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBanBox">
+                                        <div class="mnBan">
+                                            <div class="banImg">
+                                                <a href="#">
+                                                    <img src="../img/mnban06.webp" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="banTxt">
+                                            <div class="txtGr">
+                                                <div class="subTxt">
+                                                        <span>
+                                                            <a href="#">가방</a>
+                                                        </span>
+                                                    <span class="bar">
+                                                            <a href="#">Vao</a>
+                                                        </span>
+                                                </div>
+                                                <div class="subTit">
+                                                    <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
+                                                </div>
+                                                <div class="pstTag">
+                                                    <span>52% 달성</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gftInfo">
+                                <div class="crtInfo">
+                                    <div class="crtBox">
+                                        <div class="crtTit">창작자 소개</div>
+                                        <div class="crtGr">
+                                            <div class="crtPrf">
+                                                <a href="#" class="prfImg">
+                                                    <img src="../img/seili.webp" alt="">
+                                                </a>
+                                                <div class="crtIf">
+                                                    <div class="crtName">
+                                                        <a href="#">세이리 SEI LI</a>
+                                                    </div>
+                                                    <div class="lastLogin">
+                                                        <span>마지막 로그인</span>
+                                                        <b>1시간 전</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtDesc">
+                                            세이리는 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻은
+                                            조향을 하며 마치 작품을 선물하듯 향이 지니는 고유의 그림이 새겨져
+                                            있습니다. 저희가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의
+                                            방식을 나타내주며 나아가 당신을 새로운 곳으로 안내하길 꿈꿉니다.
+                                            기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의
+                                            여정을 함께하고 싶습니다.
+                                        </div>
+                                        <div class="btnWrap">
+                                            <button class="msg">
+                                                <a href="#" target="_blank">
+                                                    <i class="fa-regular fa-envelope"></i>
+                                                    창작자 문의
+                                                </a>
+                                            </button>
+                                        </div>
+                                        <div class="reviewInfo">
+                                            <div class="revwBox">
+                                                <a href="#">
+                                                    <div class="revwTit">
+                                                        이전 프로젝트 후기
+                                                        <span class="revwCount">492</span>
+                                                    </div>
+                                                    <i class="fa-solid fa-chevron-right"></i>
+                                                </a>
+                                            </div>
+                                            <div class="revwWrap">
+                                                    <span class="revwTag">
+                                                        <span>퀄리티가 좋아요</span>
+                                                        <strong>411</strong>
+                                                    </span>
+                                                <span class="revwTag">
+                                                        <span>특별해요</span>
+                                                        <strong>337</strong>
+                                                    </span>
+                                                <span class="revwTag">
+                                                        <span>즐거움을 줘요</span>
+                                                        <strong>308</strong>
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gftSlct">
+                                    <h3>선물 선택</h3>
+                                    <div class="gftslctGroup">
+                                        <div class="gftslctTit">선물</div>
+                                        <div class="gftPrdt">
+                                            <div class="prdtSlct">
+                                                <div class="prdtBox">
+                                                    <div class="prdboxGrp">
+                                                        <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함</div>
+                                                        <div class="xBtnWrap">
+                                                            <button class="b-close btnSlct">닫기</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="prdDtail">
+                                                        <ul class="prdList">
+                                                            <li>블로썸 오드퍼퓸(50ML)(x1)</li>
+                                                            <li>세이리 미니퍼퓸(3ML)(x1)</li>
+                                                            <li>일러스트 엽서(x1)</li>
+                                                        </ul>
+                                                        <div class="prdDtlst">
+                                                            <div class="prdCount">
+                                                                <button id="decrBtn">
+                                                                    -
+                                                                </button>
+                                                                <input readonly type="number" id="numIpt" value="1" disabled>
+                                                                <button id="incrBtn">
+                                                                    +
+                                                                </button>
+                                                            </div>
+                                                            <div class="prdVal">
+                                                                <span id="formattedPrice">29800</span>원
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="prdPlus">
+                                                <div class="plusSup">
+                                                    <div class="supTit">
+                                                        추가 후원금<span>(선택)</span>
+                                                    </div>
+                                                </div>
+                                                <div class="supIpt">
+                                                    <input type="number" id="valueIpt" min="1" max="10000000">
+                                                    <button></button>
+                                                </div>
+                                                <div class="supDt">
+                                                    *추가 후원금으로 프로젝트를 응원해주세요.
+                                                </div>
+                                            </div>
+                                            <div class="twinBtnwrap">
+                                                <button class="gftAddbtn">선물 추가하기</button>
+                                                <button class="gftCalcbtn">
+                                                    총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftBox">
+                                        <div class="gftEl">
+                                            <div class="gftVal">
+                                                1,000원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                선물 없이 후원하기
+                                            </div>
+                                        </div>
+                                        <div class="gftEl">
+                                            <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        2개 선택
+                                                    </span>
+                                                <span class="slctRmn">
+                                                        28개 남음
+                                                    </span>
+                                            </div>
+                                            <div class="gftVal">
+                                                29,800원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                [텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <span>블로썸 오드퍼퓸(50ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 미니퍼퓸(3ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>일러스트 엽서</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="gftEl">
+                                            <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        15개 선택
+                                                    </span>
+                                                <span class="slctRmn">
+                                                        5개 남음
+                                                    </span>
+                                            </div>
+                                            <div class="gftVal">
+                                                51,100원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                [얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <span>블로썸 오드퍼퓸(50ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 미니퍼퓸(3ML)</span>
+                                                    <span>(x2)</span>
+                                                </li>
+                                                <li>
+                                                    <span>일러스트 엽서</span>
+                                                    <span>(x2)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="gftEl">
+                                            <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        10개 선택
+                                                    </span>
+                                                <span class="slctRmn">
+                                                        10개 남음
+                                                    </span>
+                                            </div>
+                                            <div class="gftVal">
+                                                65,700원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                [얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <span>블로썸 오드퍼퓸(50ML)</span>
+                                                    <span>(x2)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 미니퍼퓸(3ML)</span>
+                                                    <span>(x2)</span>
+                                                </li>
+                                                <li>
+                                                    <span>일러스트 엽서</span>
+                                                    <span>(x2)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="gftEl">
+                                            <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        11개 선택
+                                                    </span>
+                                                <span class="slctRmn">
+                                                        4개 남음
+                                                    </span>
+                                            </div>
+                                            <div class="gftVal">
+                                                95,500원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                [얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <span>블로썸 오드퍼퓸(50ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                    <span>택(x2)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 미니퍼퓸(3ML)</span>
+                                                    <span>(x3)</span>
+                                                </li>
+                                                <li>
+                                                    <span>일러스트 엽서</span>
+                                                    <span>(x3)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="gftEl">
+                                            <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        8개 선택
+                                                    </span>
+                                                <span class="slctRmn">
+                                                        2개 남음
+                                                    </span>
+                                            </div>
+                                            <div class="gftVal">
+                                                149,500원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                [세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <span>블로썸 오드퍼퓸(50ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                    <span>택(x4)</span>
+                                                </li>
+                                                <li>
+                                                    <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 미니퍼퓸(3ML)</span>
+                                                    <span>(x5)</span>
+                                                </li>
+                                                <li>
+                                                    <span>일러스트 엽서</span>
+                                                    <span>(x5)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="gftEl soldOut">
+                                            <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        100개 선택
+                                                    </span>
+                                                <span class="slctRmn">
+                                                        선착순 마감
+                                                    </span>
+                                            </div>
+                                            <div class="gftVal">
+                                                34,500원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                [얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <span>블로썸 오드퍼퓸(50ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 미니퍼퓸(3ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>일러스트 엽서</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="gftEl soldOut">
+                                            <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        50개 선택
+                                                    </span>
+                                                <span class="slctRmn">
+                                                        선착순 마감
+                                                    </span>
+                                            </div>
+                                            <div class="gftVal">
+                                                35,500원 +
+                                            </div>
+                                            <div class="gftDesc">
+                                                [얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <span>블로썸 오드퍼퓸(50ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>세이리 미니퍼퓸(3ML)</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                                <li>
+                                                    <span>일러스트 엽서</span>
+                                                    <span>(x1)</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1215,13 +3212,38 @@
 </div>
 <div class="bPopWrap" id="popReport">
     <div class="popTit">
-        <p class="pTit">팝업</p>
+        <p class="pTit">프로젝트 신고</p>
         <div class="xBtnWrap">
             <button class="b-close">닫기</button>
         </div>
+        <span class="popDesc">이 프로젝트에 문제가 있다면 텀블벅에게 알려주세요</span>
     </div>
     <div class="popScr">
-        내용
+        <button class="popBoxbtn">
+            <div class="popBoxtit">이용약관 또는 프로젝트 심사 기준을 위반했습니다.</div>
+            <span>시중에 판매·유통되었던 제품·콘텐츠</span>
+            <span>프로젝트 진행중 타 채널 동시 판매</span>
+            <span>프로젝트 관련 허위 사실 게시</span>
+            <span>기부 목적의 후원금 모금</span>
+        </button>
+        <button class="popBoxbtn">
+            <div class="popBoxtit">커뮤니티 운영원칙을 위반했습니다.</div>
+            <span>욕설, 외설 및 혐오표현 게시</span>
+            <span>광고성 콘텐츠의 도배</span>
+        </button>
+        <button class="popBoxbtn">
+            <div class="popBoxtit">개인정보 보호 권리를 침해했습니다.</div>
+            <span>선물 전달 이외 목적의 개인정보 사용</span>
+        </button>
+        <button class="popBoxbtn">
+            <div class="popBoxtit">지식재산권을 침해했습니다.</div>
+            <span>타인의 디자인권, 상표권, 특허권 등의 지식재산권을 침해함</span>
+        </button>
+        <button class="popBoxbtn">
+            <div class="popBoxtit">프로젝트 이행에 문제가 있습니다.</div>
+            <span>선물 전달 지연 및 선물 불량</span>
+            <span>창작자의 의사소통 부재</span>
+        </button>
     </div>
     <div class="popBtm">
         <button class="taskButton b-close">확인</button>
