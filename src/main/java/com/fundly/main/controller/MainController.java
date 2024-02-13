@@ -42,7 +42,7 @@ public class MainController {
         log.error("\n\n user_name = " + user_name + "\n\n");
 
         model.addAttribute("userInfo",userInfo);
-        model.addAttribute("userstatus",user_status);
+        model.addAttribute("user_status",user_status);
         model.addAttribute("user_name",user_name);
         model.addAttribute("user_email",user_email);
 

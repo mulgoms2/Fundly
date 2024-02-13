@@ -102,10 +102,10 @@
                                 <div class="pageItem" id = "Coupon"> 응원권 </div>
                                 <div class="line"></div>
                                 <div class="pageItem" id = "fundingProject"> 후원한 프로젝트 </div>
-                                <div class="pageItem" id = "Like"> 관심 프로젝트 </div>
-                                <div class="line"></div>
+<%--                                <div class="pageItem" id = "Like"> 관심 프로젝트 </div>--%>
+<%--                                <div class="line"></div>--%>
                                 <div class="pageItem" id = "Alarm"> 알림 </div>
-                                <div class="pageItem" id = "Msg"> 메시지 </div>
+                                <div class="pageItem" id = "Message"> 메시지 </div>
                                 <div class="line"></div>
                                 <div class="pageItem" id = "MakeProject"> 내가 만든 프로젝트 </div>
                                 <div class="pageItem" id = "Setting"> 설정 </div>

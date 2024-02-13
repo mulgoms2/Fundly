@@ -46,14 +46,15 @@
     rgb(208, 208, 208) 0px 0px 1px 0px;
 }
 
-.tapContainer{
+.tapContainerList{
     display: inline-flex;
     margin: 20px 10px;
 }
 
-.tapContainer >div{
+.tapContainerList >div{
     margin: 0 30px 0 0;
 }
+
 
 .profileInfo{
     display: flex;
@@ -111,7 +112,6 @@
     text-decoration: none;
     color:inherit;
 }
-
 
 /* container */
 .container{
