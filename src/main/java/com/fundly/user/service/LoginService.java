@@ -1,26 +1,16 @@
 package com.fundly.user.service;
 
-import com.fundly.user.model.UserJoinDao;
-import com.fundly.user.model.UserLoginDao;
 import com.persistence.dto.UserDto;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
-import java.util.UUID;
+import javax.servlet.http.HttpSession;
 
-@Service
-@Slf4j
-public class LoginService {
+public interface LoginService {
 
-    @Autowired
-    UserLoginDao userLoginDao;
+    int count() throws Exception;
 
-    public int emailCheck(String user_email) throws Exception {
-        return userLoginDao.emailCheck(user_email);
-    }
+//    int userCheck(String user_email, String user_pwd) throws Exception;
 
-    public int count() throws Exception {
-        return userLoginDao.count();
-    }
+    UserDto Login(String user_email, String user_pwd, HttpSession session) throws Exception;
+
 }

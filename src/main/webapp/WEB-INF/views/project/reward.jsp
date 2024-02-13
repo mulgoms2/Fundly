@@ -14,7 +14,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/a26f9e7c74.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/project/css/reward.css">
+    <script defer src="/static/project/js/reward.js"></script>
     <style>
+        .hidden {
+            display : none;
+        }
         .pjBox {
             display: flex;
             flex-direction: row;
@@ -27,11 +37,29 @@
         input {
             outline : none;
         }
+        div.multiOpt, div.singleOpt {
+            display : none;
+        }
+        li:hover {
+            cursor: pointer;
+        }
+        .input {
+            width: 80%;
+        }
+        .dropdown {
+            width: 29%;
+            padding: 5px;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
 <div class="pjSubTb">
-    <button class="isActive" type="button" id="gftBtn">
+    <button type="button" id="gftBtn">
         선물
     </button>
     <button type="button" id="itmBtn">
@@ -41,18 +69,18 @@
 
 <div class="pjWrap">
     <div class="pjCont">
-
         <!-- reward.jsp 요청시, 등록된 아이템이 하나도 없다면 보여주는 화면 -->
-        <%--        <c:if test="#{empty itemList}">--%>
-        <div class="pjBox str">
-            <div id="pjItmGft">
+        <%--        <c:set var="itemList" value="${itemList}"/>--%>
+        <%--        <c:if test="${empty itemList}"> <!--JS로 처리하고 싶었지만 안된다 -->--%>
+        <div class="pjBox str" id="str">
+            <div>
                 <div>
                     <div>
                         선물 만들기
                     </div>
                 </div>
                 <div>
-                    <button type="button" id="strBtn">아이템을 만들어주세요</button>
+                    <button type="button" id="strBtn">아이템을 먼저 만들어주세요</button>
                     <div>
                         <h2>후원 가치를 높이는 선물</h2>
                         <br>
@@ -68,14 +96,14 @@
         <%--        </c:if>--%>
 
         <!-- 선물 만들기 페이지 -->
-        <%--        <c:if test="#{not empty itemList}">--%>
+        <!--역시 JS로 하고 싶었지만 -->
         <div class="pjBox gift" id="gift">
             <div class="pjInfo">
                 <div>
-                    <div>내가 만든 선물 count</div>
-                    <ul>
-                        <li></li>
-                    </ul>
+                    <div>
+                        <div class="myList">내가 만든 선물 count</div>
+                        <div></div>
+                    </div>
                 </div>
             </div>
             <div class="pjForm">
@@ -91,21 +119,23 @@
                             <p>선물을 구성하는 아이템을 추가해주세요.</p>
                         </div>
                         <div>
-                            <input readonly="" type="text" inputmode="text" value="아이템을 선택해주세요">
-                            <div>
-                                <div>
-                                    <ul>
-                                        <li>러닝화 (객관식 옵션) </li>
-                                        <li>만년필 (주관식 옵션) </li>
-                                        <li>감자칩 (옵션 없음) </li>
-                                    </ul>
-                                    <div class="footer">
-                                        <p>2개의 아이템 선택</p>
-                                        <button type="button">선택완료</button>
-                                    </div>
-                                </div>
+                            <div class="dropdown" style="border:0.1px solid black; cursor:pointer">
+                                <%--                                    <input style="border:none;outline:none;margin:0" type="text" inputmode="text" size=22 placeholder="아이템을 선택해주세요(클릭)" disabled>--%>
+                                아이템을 선택해주세요(클릭) <i class="fas fa-regular fa-chevron-down"></i>
                             </div>
+                            <div id="itmDropdown">
+                                <%--                                        <ul>--%>
+                                <%--                                            <li>러닝화 (객관식 옵션) </li>--%>
+                                <%--                                            <li>만년필 (주관식 옵션) </li>--%>
+                                <%--                                            <li>감자칩 (옵션 없음) </li>--%>
+                                <%--                                        </ul>--%>
+                            </div>
+                            <%--                                <div class="footer">--%>
+                            <%--                                    <p>0개의 아이템 선택</p>--%>
+                            <%--                                </div>--%>
+                            <%--                                    <button type="button">선택완료</button>--%>
                         </div>
+                        <div id="selectItm"></div>
                     </section>
                     <section>
                         <div>
@@ -113,9 +143,9 @@
                             <p>어떤 아이템으로 구성되어있는지 쉽게 알 수 있도록 선물 이름을 붙여주세요</p>
                         </div>
                         <div>
-                            <input type="text" inputmode="text" placeholder="방향제+엽서 세트 A" value="">
-                            <p>0/50</p>
+                            <input type="text" id="giftName" placeholder="방향제+엽서 세트 A" value="">
                         </div>
+                        <div></div>
                     </section>
                     <section>
                         <div>
@@ -125,11 +155,12 @@
                         <div>
                             <div>
                                 <label for="lim">있음</label>
-                                <input name="lim" id="lim" type="radio">
-                                <input type="text"><p>개</p>
+                                <input name="limit" id="lim" type="radio" value="수량제한 있음">
+                                <span style="visibility:hidden;"><input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">개</span>
+                                <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
                             </div>
                             <label for="unlim">없음</label>
-                            <input name="unlim" id="unlim" type="radio">
+                            <input name="limit" id="unlim" type="radio" value="수량제한 없음">
                         </div>
                     </section>
                     <section>
@@ -140,24 +171,27 @@
                         <div>
                             <div>
                                 <label for="maxLim">있음</label>
-                                <input name="maxLim" id="maxLim" type="radio">
-                                <input type="text"><p>개</p>
+                                <input name="maxLimit" id="maxLim" type="radio" value="1인당 선택 제한 있음">
+                                <span style="visibility: hidden;"><input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">개</span>
+                                <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
                             </div>
                             <label for="maxUnlim">없음</label>
-                            <input name="maxUnlim" id="maxUnlim" type="radio">
+                            <input name="maxLimit" id="maxUnlim" type="radio" value="1인당 선택 제한 없음">
                         </div>
                     </section>
                     <section>
                         <p>예상전달일</p>
                         <div>
-                            <p>2024년 4월 2일</p>
+                            <div id="shipDate">
+                            </div>
                             <hr>
                             <div>
-                                <p>결제 종료일(2024-03-29)로부터</p>
+                                <p>결제 종료일(2024-03-01)로부터</p> <!--여기 나중에 고쳐야 함. 하드코딩 xx-->
                                 <div>
-                                    <input type="text" inputmode="numeric">
-                                    <p>일 뒤</p>
+                                    <input type="hidden" value="2024-03-01"> <!--pj에서 넘어온 값을 넣어줘야함 <%--${pj.fund_end_dtm}--%> -->
+                                    <input type="number" onkeyup="validRNum(this,1825);calcDate(this)">일 뒤
                                 </div>
+                                <p class="notice" style="display:none">최대 1825일(5년) 이내로 입력하세요</p>
                             </div>
                         </div>
                     </section>
@@ -168,84 +202,112 @@
                             <p>선물 제작 및 전달에 필요한 모든 비용(포장비, 배송비 등)이 포함된 금액으로 입력해주세요.</p>
                         </div>
                         <div>
-                            <input type="text" inputmode="numeric" placeholder="1000원 이상의 금액을 입력하세요.">
-                            <p>원</p>
+                            <div>
+                                <input type="text" onkeyup="validRNum(this,10000000);inputNumberFormat(this);" placeholder="1000원 이상의 금액을 입력하세요.">원
+                            </div>
+                            <p class="notice" style="display:none">10,000,000원 이하로 입력해주세요.</p>
                         </div>
                     </section>
                     <div class="btnWrap">
                         <button type="button">초기화</button>
-                        <buton type="button">저장</buton>
+                        <button type="button">저장</button>
                     </div>
                 </div>
             </div>
         </div> <!--gift-->
-        <%--</c:if>--%>
 
         <!--아이템 만들기 페이지-->
         <div class="pjBox item" id="item">
             <div class="pjInfo">
                 <div>
-                    <div>내가 만든 아이템 count</div>
-                    <ul>
-                        <li></li>
-                    </ul>
+                    <div class="myList">내가 만든 아이템 count</div>
+                    <div id="itemList">
+                        <c:forEach var="itemDto" items="${itemList}">
+                            <%--                        <div style="cursor:pointer" onclick=removeItm(itemArr,this)>--%>
+
+                            <div style="cursor:pointer" onclick=removeItm(itemArr,this) data-item_id='${itemDto.item_id}' data-pj_id='${itemDto.pj_id}'>
+                                    <%--                        <input type="hidden" value="${itemDto.item_id}"/>--%>
+                                    <%--                        <input type="hidden" value="${itemDto.pj_id}"/>--%>
+                                <div class="itmTit" style="border:none;">
+                                    <p style="font-weight: 600">${itemDto.item_name}</p>
+                                    <div>
+                                        <i class="far fa-regular fa-trash-can"></i>
+                                    </div>
+                                </div>
+
+                                <p class="itmT">${itemDto.item_option_type}</p>
+                                <c:if test="${not empty itemDto.item_option}">
+                                    <ul class="itmL">
+                                        <c:forEach var="item_option" items="${itemDto.item_option}">
+                                            <li>${item_option}</li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
+                            </div>
+
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
             <div class="pjForm">
                 <div>
-                    <div>
-                        <p>아이템 만들기</p>
-                        <p>아이템은 선물에 포함되는 구성 품목을 말합니다. 특별한 물건부터 의미있는 경험까지 선물을 구성할 아이템을 만들어 보세요.</p>
+                    <div class="first">
+                        <p class="tit">아이템 만들기</p>
+                        <p class="cont">아이템은 선물에 포함되는 구성 품목을 말합니다. 특별한 물건부터 의미있는 경험까지 선물을 구성할 아이템을 만들어 보세요.</p>
                     </div>
                     <section>
                         <p>아이템 이름</p>
-                        <div>
-                            <input id="itmName" type="text" inputmode="text" placeholder="아이템 이름을 입력해주세요.">
+                        <div class="inputBx">
+                            <input id="itmName" class="input" type="text" placeholder="아이템 이름을 50자 이내로 입력해주세요.">
                         </div>
-                        <div>
-                            <span>`${'${itmName.value.length}'}/50`</span>
-                        </div>
+                        <div></div>
                     </section>
                     <section>
                         <p>옵션 조건</p>
-                        <div>
+                        <div class="optBox">
                             <div>
-                                <label for="optType">없음</label>
-                                <input type="radio" name="optType">
+                                <label for="noOpt">없음</label>
+                                <input type="radio" name="optType" id="noOpt" value="옵션 없음">
                             </div>
                             <div>
-                                <label for="optType">주관식</label>
-                                <input type="radio" name="optType">
+                                <label for="singleOpt">주관식</label>
+                                <input type="radio" name="optType" id="singleOpt" value="주관식 옵션">
                             </div>
                             <div>
-                                <label for="optType">객관식</label>
-                                <input type="radio" name="optType">
+                                <label for="multiOpt">객관식</label>
+                                <input type="radio" name="optType" id="multiOpt" value="객관식 옵션">
                             </div>
                         </div>
                     </section>
-                    <section id="">
-                        <div>
-                            <p>옵션 항목</p>
-                            <p>입력완료 후 Enter키를 누르면 옵션 항목이 생성됩니다.</p>
-                        </div>
-                        <!--객관식-->
-                        <div class="multi txtWrap">
-                            <textarea placeholder="옵션항목을 입력해주세요."></textarea>
-                        </div>
-                        <section id="multi result">
+                    <!--객관식-->
+                    <section>
+                        <div class="radio multiOpt">
                             <div>
-                                <button type="button">250mm</button>
-                                <button type="button">255mm</button>
+                                <p>옵션 항목</p>
+                                <p>입력완료 후 Enter키를 누르면 옵션 항목이 생성됩니다.</p>
                             </div>
-                        </section>
+                            <div>
+                                <textarea class="input" placeholder="최소 2개 이상의 옵션항목을 입력해주세요.(100자 이내) *예시* 블랙-230mm, 블랙-240mm"></textarea> <!--엔터키를 치면 아래에 버튼이 생성됨-->
+                            </div>
+                            <div>
+                            </div>
+                            <section>
+                                <div id="multiResult">
+                                </div>
+                            </section>
+                        </div>
+                        <div></div>
                         <!--주관식-->
-                        <div id="single">
-                            <textarea placeholder="예) 각인할 메세지를 입력하세요."></textarea>
+                        <div class="radio singleOpt">
+                            <div>
+                                <textarea class="input" placeholder="예) 각인할 메세지를 입력하세요."></textarea>
+                            </div>
+                            <div></div>
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button">초기화</button>
-                        <buton type="button">저장</buton>
+                        <button type="button" class="init">초기화</button>
+                        <button type="button" class="save">저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
                     </div>
                 </div>
             </div>
@@ -253,75 +315,6 @@
     </div>
 </div>
 <script>
-    window.onload = function(){
-        const itemPage = document.querySelector("#item");
-        const giftPage = document.querySelector("#gift");
-        const pjItmGft = document.querySelector("#pjItmGft");
-        const strBtn = document.querySelector("#strBtn");
-        const gftBtn = document.querySelector("#gftBtn");
-        const itmBtn = document.querySelector("#itmBtn");
-        const itmName = document.querySelector("#itmName");
-
-
-        // console.dir(itemPage);
-        // console.dir(giftPage);
-        mkHidden([giftPage, itemPage]);
-
-        strBtn.addEventListener("click",function(){
-            // giftPage.style.display = "none";
-            location.href = "#item";
-            mkHidden([giftPage, pjItmGft]);
-            mkVisible(itemPage);
-        })
-        gftBtn.addEventListener("click",function(){
-            location.href = "#gift";
-            // pjItmGft.style.display = "none";
-            // giftPage.style.display = "block";
-            mkHidden([itemPage, pjItmGft]);
-            mkVisible(giftPage);
-        })
-        itmBtn.addEventListener("click",function(){
-            location.href = "#item";
-            mkHidden([giftPage, pjItmGft]);
-            mkVisible(itemPage);
-        })
-
-        itmName.addEventListener("input",function(){
-            console.dir(this);
-            lengthCheck(this,50);
-        })
-
-
-    }// window.onload
-
-    const tglHidden = function(elements){
-        elements.forEach(element => {
-            element.classList.toggle("hidden");
-        })
-    }
-    const mkHidden = function(elements){
-        elements.forEach(element => {
-            element.style.display = "none";
-        })
-    }
-    const mkVisible = function(element){
-        element.style.display = "flex";
-    }
-
-    const lengthCheck = function(elem, maxLength){
-        if(elem.value.length===0){
-            alert("아이템 이름을 입력하세요.")
-            elem.style.border = "1.5px solid red";
-            elem.focus();
-
-        }
-        if(elem.value.length > maxLength){
-            alert("아이템 이름의 길이는 50글자 이하여야 합니다.")
-            elem.style.border = "1.5px solid red";
-            elem.focus();
-
-        }
-    }
 </script>
 </body>
 </html>

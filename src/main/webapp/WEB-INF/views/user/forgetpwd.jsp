@@ -24,7 +24,7 @@
         <input type="text" name="user_email" placeholder="가입하신 이메일 주소를 입력해주세요." />
 
         <p>펀들리 가입시 이메일 계정을 입력해주세요. 비밀번호를 새로 만들 수 있는 링크를 이메일로 발송해드립니다.</p>
-        <button class="rinkbtn" value="sumbit">비밀번호 설정 링크 받기</button>
+        <button class="rinkbtn" value="sumbit">링크 발송</button>
     </div>
 </div>
 </body>

@@ -1,0 +1,165 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: #b4d1ed;
+    margin: 0;
+    height: 100%;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.chatMainContainer {
+    height: calc(100% - 70px);
+    overflow: scroll;
+}
+
+.chatContainer {
+}
+
+.chatBox {
+    display: flex;
+}
+
+.chatBox .chat {
+    font-size: 14px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin: 4px 7px;
+    background-color: white;
+    max-width: 60%;
+    word-wrap: break-word; /* 줄 바꿈 */
+    overflow-wrap: break-word;
+    box-shadow: 1px 2px 8px -2px #8c8c8c;
+}
+
+.chatBox.right {
+    flex-direction: row-reverse;
+
+}
+
+.chatBox.right .chat {
+    background-color: rgb(242, 222, 75);
+}
+
+.chatBox::after {
+    content: attr(data-time);
+    position: relative;
+    top: 19px;
+    left: 2px;
+    font-size: 10px;
+    color: #636363;
+}
+
+/*.chatBox.right::after {*/
+/*    content: attr(data-time);*/
+/*    position: relative;*/
+/*    top: 19px;*/
+/*    right: 2px;*/
+/*    font-size: 10px;*/
+/*    color: #636363;*/
+/*}*/
+
+.chatFormContainer {
+    position: relative;
+}
+
+.chatIptBox {
+    position: relative;
+}
+
+.chatIpt {
+    /*box-sizing: border-box;*/
+    /*width: 100%;*/
+    /*height: 95px;*/
+    /*border: 0.1px solid gray;*/
+
+    position: fixed;
+    box-sizing: border-box;
+    width: 100%;
+    height: 95px;
+    border: 0.1px solid gray;
+    bottom: 0;
+    padding: 10px;
+}
+
+.chatIpt:focus {
+    outline: none;
+}
+
+.labelImgFileIpt {
+    /*display: inline-block;*/
+    /*padding: 0.5em 0.75em;*/
+    /*color: #6265d2;*/
+    /*font-size: inherit;*/
+    /*line-height: normal;*/
+    /*vertical-align: middle;*/
+    /*!*background-color: #fdfdfd;*!*/
+    /*cursor: pointer;*/
+    /*!*border: 1px solid #ebebeb;*!*/
+    /*!*border-bottom-color: #e2e2e2;*!*/
+    /*!*border-radius: 0.25em;*!*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*transition: 0.2s;*/
+
+    color: #6265d2;
+    font-size: 18px;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    position: fixed;
+    left: 10px;
+    bottom: 6px;
+    transition: 0.2s;
+}
+
+.labelImgFileIpt:hover{
+    transition: 0.2s;
+    color: #4332b7;
+}
+
+.labelImgFileIpt:active{
+    transition: 0.2s;
+    color: #6b5cbe;
+}
+
+.imgFileIpt {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.sendBtn {
+    padding: 11px 14px;
+    border-radius: 50%;
+    border: 0;
+    position: fixed;
+    /* top: 31px; */
+    bottom: 10px;
+    right: 10px;
+    transition: 0.3s;
+    background-color: #756AB6;
+    color: white;
+}
+
+.sendBtn:hover {
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #52478f;
+}
+
+.sendBtn:active {
+    transition: 0.1s;
+    background-color: #413685;
+}
+
+.chatAttImg {
+    display: block;
+    width: 300px;
+}

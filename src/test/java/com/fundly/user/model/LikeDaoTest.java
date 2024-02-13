@@ -1,18 +1,18 @@
 package com.fundly.user.model;
 
+import com.persistence.dto.LikeDto;
+import com.persistence.dto.ProjectDto;
 import com.persistence.dto.UserDto;
 import config.RootContext;
 import config.ServletContext;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,48 +24,79 @@ class LikeDaoTest {
     @Autowired
     LikeDao likedao;
     UserDto userdto;
+    ProjectDto pjdto;
+    LikeDto likedto;
 
-    @Test
     @BeforeEach
     @SneakyThrows
+    @DisplayName("DB에 데이터넣기")
     void start() {
-        Map map = new HashMap();
-        String user_id = "bada";
-        String pj_id = "P001";
-        map.put("user_id", user_id);
-        map.put("pj_id", pj_id);
-//        LikeDao.insertLike(map);
-        System.out.println("map = " + map);
+        userdto = new UserDto("bada","바다","1234");
+        pjdto = new ProjectDto("P001");
+        likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
     }
+
     @AfterEach
     @SneakyThrows
-    void deleteLike() {
-//        LikeDao.deleteLike();
+    @DisplayName("DB에 데이터삭제")
+    void end() {
+        int result = likedao.deleteAllLike();
+        System.out.println("result = " + result);
     }
 
     @Test
     @SneakyThrows
-    @DisplayName("좋아요상태확인")
-    void checkLikeTest() {
-//        LikeDao.checkLike(userdto);
+    @DisplayName("좋아요목록")
+    void getLikeListTest() {
+        List<LikeDto> list = likedao.getLikeList(likedto);
+        assertTrue(list.size()==0);
+        assertTrue(likedao.insertLike(likedto)==1);
+        list = likedao.getLikeList(likedto);
+        assertTrue(list.size()==1);
+        System.out.println("list = " + list);
+        userdto = new UserDto("bada","바다","1234");
+        pjdto = new ProjectDto("P002");
+        likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
+        assertTrue(likedao.insertLike(likedto)==1);
+        list = likedao.getLikeList(likedto);
+        assertTrue(list.size()==1);
+        System.out.println("list = " + list);
     }
 
     @Test
     @SneakyThrows
     @DisplayName("처음좋아요")
     void insertLikeTest() {
-        assertTrue(true);
+        assertTrue(likedao.insertLike(likedto)==1);
+        userdto = new UserDto("bada","바다","1234");
+        pjdto = new ProjectDto("P002");
+        likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
+        assertTrue(likedao.insertLike(likedto)==1);
     }
 
     @Test
     @SneakyThrows
-    @DisplayName("안좋아요")
+    @DisplayName("좋아요취소")
     void cancelLikeTest() {
+        assertTrue(likedao.insertLike(likedto)==1);
+        //좋아요목록 불러와서
+        likedao.getLikeList(likedto);
+        //좋아요 상태가 1이면
+        assertTrue(likedao.cancelLike(likedto)==1);
+        //likedao.cancelLike()
     }
+
 
     @Test
     @SneakyThrows
     @DisplayName("다시좋아요")
     void reLikeTest() {
+        //좋아요목록 불러와서
+        assertTrue(likedao.insertLike(likedto)==1);
+        //좋아요 상태가 0이면
+        likedao.getLikeList(likedto);
+        assertTrue(likedao.cancelLike(likedto)==1);
+        //likedao.reLike()
+        assertTrue(likedao.reLike(likedto)==1);
     }
 }

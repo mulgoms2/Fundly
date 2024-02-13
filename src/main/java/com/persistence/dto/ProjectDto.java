@@ -1,7 +1,6 @@
 package com.persistence.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -9,7 +8,11 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProjectDto {
+    @NonNull
     private String pj_id;
     private Integer seq;
     private String pj_sel_id; //로그인 세션에서 가져오기.

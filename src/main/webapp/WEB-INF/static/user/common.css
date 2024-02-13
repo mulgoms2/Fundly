@@ -1,0 +1,151 @@
+::selection {
+    background-color: #CCE2FF;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+/* line */
+.line{
+    width: 100%;
+    /* width: 5000px; */
+    height: 1px;
+    background: rgb(240, 240, 240);
+    /* background: #555353; */
+    content: " ";
+}
+
+/* font */
+.fontcolor{
+    color: rgb(160, 155, 155);
+    font-size: 18px;
+}
+
+/* main */
+.main-container {
+    display: flex;
+    justify-content: center;
+}
+
+.menu{
+    position: relative;
+    height: 210px;
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.main, .footer, .company, .noticeMsg{
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+/* footer */
+
+.footer{
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+
+.infoList {
+    display: flex;
+}
+
+.infoList>div{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.infoList>a{
+    color:inherit;
+    text-decoration: none;
+}
+
+.customerInfo{
+    position: absolute;
+    right: 0;
+}
+
+.customerInfo>div{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.customerInfo>p{
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgb(109, 109, 109);
+
+}
+
+.infoItem, .customerInfo{
+    margin: 20px 40px 0 0;
+}
+
+.infoItem >a{
+    margin-top: 20px;
+    font-size: 14px;
+    color: rgb(109, 109, 109);
+}
+
+.infoItem>a:hover{
+    color: rgb(34, 33, 33);
+}
+
+.chat{
+    margin-top: 10px;
+    display: flex;
+    width: 180px;
+    height: 42px;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(61, 61, 61);
+    background-color: white;
+    border: 1px solid rgb(228, 228, 228);
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out 0s;
+    font-weight: 500;
+}
+
+.chat:hover{
+    border: 1px solid rgb(109, 109, 109);
+    color: rgb(61, 61, 61);
+}
+
+/* footer companyInfo */
+
+.companyInfo{
+    margin: 10px 0 ;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    -webkit-box-pack: start;
+    place-content: flex-start;
+}
+
+.companyInfoItem{
+    padding-right: 15px;
+}
+
+.padding0 {
+    padding-left: 0px;
+
+}
+
+.copyright{
+    padding-left: 15px;
+    color: gray;
+}
+
+/* footer notice */
+.notice{
+    display: flex;
+    justify-content: center;
+    background: rgb(240, 240, 240);
+    color: rgb(109, 109, 109);
+    /* align-items: center; */
+}

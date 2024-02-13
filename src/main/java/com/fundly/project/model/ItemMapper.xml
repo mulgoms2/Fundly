@@ -23,15 +23,21 @@
 
     <!--2. 해당 프로젝트의 모든 아이템 출력 -->
     <select id="selectAllFromPj" resultType="ItemDto">
-        SELECT item_name, item_option
+        SELECT *
         FROM pj_item_tmp
         WHERE pj_id = #{pj_id}
     </select>
 
     <!--3. 모든 프로젝트의 모든 아이템 출력 -->
     <select id="selectAll" resultType="ItemDto">
-        SELECT item_name, item_option
+        SELECT *
         FROM pj_item_tmp
+    </select>
+
+    <select id="select" resultType="ItemDto">
+        SELECT *
+        FROM pj_item_tmp
+        WHERE item_id = #{item_id}
     </select>
 
     <!--4. 아이템 등록 -->
@@ -40,10 +46,29 @@
             SELECT concat((ifnull(Max(seq),0)+1),#{pj_id}) from pj_item_tmp
         </selectKey>
         INSERT into pj_item_tmp
-        (item_id, pj_id, item_name, item_option)
+        (item_id, pj_id, item_name, item_option_type, item_option, dba_reg_id )
         VALUES
-        (#{item_id}, #{pj_id},#{item_name},#{item_option})
+        (#{item_id}, #{pj_id},#{item_name},#{item_option_type}, #{item_option}, #{dba_reg_id})
     </insert>
+
+    <!--5. 아이템 모두 삭제-->
+    <delete id="deleteAll">
+        DELETE FROM pj_item_tmp
+    </delete>
+
+    <!--    &lt;!&ndash;6. 해당 아이템 삭제&ndash;&gt;-->
+    <!--    <delete id="delete">-->
+    <!--        DELETE FROM pj_item_tmp-->
+    <!--        WHERE item_id = #{item_id} and dba_reg_id = #{dba_reg_id}-->
+    <!--    </delete>-->
+
+    <!--6. 해당 아이템 삭제-->
+    <delete id="delete">
+        DELETE FROM pj_item_tmp
+        WHERE item_id = #{item_id} and dba_reg_id = #{dba_reg_id}
+    </delete>
+
+
 
 
 </mapper>

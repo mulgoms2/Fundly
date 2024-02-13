@@ -23,7 +23,6 @@
             <artifactId>spring-websocket</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-messaging</artifactId>
@@ -40,6 +39,24 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
+        <!--     file upload    -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <!--      WebClient      -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        <!-- ClientHttpConnector for WebClient -->
+        <dependency>
+            <groupId>io.projectreactor.netty</groupId>
+            <artifactId>reactor-netty</artifactId>
+            <version>1.1.15</version>
+        </dependency>
         <!--    servlet   -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -54,17 +71,28 @@
             <version>3.1.1</version>
             <scope>provided</scope>
         </dependency>
-        <!--        <dependency>-->
-<!--            <groupId>jakarta.servlet.jsp.jstl</groupId>-->
-<!--            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>-->
-<!--            <version>1.2.7</version>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+        <!--        jstl        -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!-- 메일 발송 지원 기능 포함  -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <!--   java Mail API     -->
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
         <!--                         DB                           -->
         <!--        my batis       -->
         <dependency>
@@ -131,10 +159,21 @@
             <version>5.10.1</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+
+    <!--  bulid  -->
     <build>
         <finalName>Fundly</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
         <resources>
             <resource>
                 <directory>src/main/java</directory>

@@ -14,6 +14,10 @@ public interface ItemMapper {
     int count(@Param("pj_id") String pj_id) throws Exception;
     List<ItemDto> selectAllFromPj(@Param("pj_id") String pj_id) throws Exception;
     List<ItemDto> selectAll() throws Exception;
+    ItemDto select(@Param("item_id") String item_id) throws Exception;
     int insert(ItemDto itemDto) throws Exception;
+    int deleteAll() throws Exception;
+    int delete(@Param("item_id") String item_id, @Param("dba_reg_id") String dba_reg_id) throws Exception;
+//    int delete(Map map) throws Exception;
 
 }

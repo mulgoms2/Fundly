@@ -4,17 +4,18 @@ import com.fundly.user.model.UserJoinDao;
 import com.persistence.dto.UserDto;
 import config.RootContext;
 import config.ServletContext;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 @Slf4j
+@SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class JoinServiceImplTest {
 
     @Autowired
@@ -27,6 +28,8 @@ class JoinServiceImplTest {
 
 
     @Test
+    @DisplayName("db select Test")
+    @SneakyThrows
     void count() throws Exception {
 
         log.error("count() = " + joinService.count());
@@ -34,6 +37,8 @@ class JoinServiceImplTest {
     }
 
     @Test
+    @DisplayName("db insert Test")
+    @SneakyThrows
     void insert()   {
         uuid_user_id = UUID.randomUUID().toString();
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)

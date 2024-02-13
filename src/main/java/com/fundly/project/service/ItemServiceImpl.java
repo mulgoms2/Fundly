@@ -28,8 +28,30 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    public ItemDto getItem(String item_id) throws Exception {
+        return itemMapper.select(item_id);
+    }
+
+
+    @Override
     public int registerItem(ItemDto itemDto) throws Exception {
         return itemMapper.insert(itemDto);
     }
 
+    @Override
+    public int removeAll() throws Exception {
+        return itemMapper.deleteAll();
+    }
+
+    //    @Override
+//    public int remove(String item_id, String dba_reg_id) throws Exception {
+//        Map map = new HashMap();
+//        map.put("item_id",item_id);
+//        map.put("dba_reg_id",dba_reg_id);
+//        return itemMapper.delete(map);
+//    }
+    @Override
+    public int remove(String item_id, String dba_reg_id) throws Exception {
+        return itemMapper.delete(item_id, dba_reg_id);
+    }
 }

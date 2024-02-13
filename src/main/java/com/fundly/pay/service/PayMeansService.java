@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public interface PayMeansService {
     int getPayMeansCount() throws Exception;
+    String getPayMeansId(String UserId) throws Exception;
     int registerPayMeans(PayMeansDto payMeansDto) throws Exception;
     int unsetDefaultPayMeans(PayMeansDto payMeansDto) throws Exception;
     int setDefaultPayMeans(PayMeansDto payMeansDto) throws Exception;

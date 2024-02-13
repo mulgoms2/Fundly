@@ -1,134 +1,193 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Hello WebSocket</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-    <%--    <script src="/static/chat/app.js"></script>--%>
+    <script src="https://kit.fontawesome.com/99823c8069.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/chat/css/chatCss.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Serif+KR:wght@300&display=swap"
+          rel="stylesheet">
 </head>
-<body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <input type="text" id="chat" class="form-control">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-            <button id="exit">EXIT</button>
-        </div>
+<body id="chatBody">
+<div class="chatMainContainer">
+    <div id="chatContainer" class="chatContainer">
+        <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
+            <c:set var="time" value="${msg.svr_intime_string}"/>
+            <c:if test="${msg.file_cnt ne 0}">
+                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                    ${sessionScope.loginId}
+                    <div class="chatBox right" data-time="${time}">
+                        <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
+                    </div>
+                </c:if>
+                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                    <div class="chatBox left" data-time="${time}">
+                        <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
+                    </div>
+                </c:if>
+            </c:if>
+            <c:if test="${msg.file_cnt eq 0}">
+                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                    <div class="chatBox right" data-time="${time}">
+                        <div class="chat">${msg.msg_cont}</div>
+                    </div>
+                </c:if>
+                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                    <div class="chatBox left" data-time="${time}">
+                        <div class="chat">${msg.msg_cont}</div>
+                    </div>
+                </c:if>
+            </c:if>
+        </c:forEach>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>chat</th>
-                </tr>
-                </thead>
-                <tbody id="chatBox">
-                <c:forEach items="${messageList}" var="msg">
-                    <tr>
-                        <td>${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+    <div class="chatFormContainer">
+        <form id="chatForm">
+            <div class="chatIptBox">
+                <textarea id="chat" class="chatIpt" autocomplete="off"></textarea>
+                <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
+            </div>
+        </form>
+        <label class="labelImgFileIpt" for="img"><i class="fa-solid fa-upload"></i></label>
+        <input id="img" class="imgFileIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>
-
-
     const stompClient = new StompJs.Client({
         brokerURL: 'ws://localhost:8080/endPoint'
     });
 
-    stompClient.onConnect = (frame) => {
-        setConnected(true);
 
-        console.log("connected");
-        stompClient.subscribe('/chatSub/${roomName}', (response) => {
-            displayMessage(JSON.parse(response.body).msg_cont);
-        });
-    };
-
-    stompClient.onWebSocketError = (error) => {
-        console.error('Error with websocket', error);
-    };
-
-    stompClient.onStompError = (frame) => {
-        console.error('Broker reported error: ' + frame.headers['message']);
-        console.error('Additional details: ' + frame.body);
-    };
-
-    function setConnected(connected) {
-        $("#connect").prop("disabled", connected);
-        $("#disconnect").prop("disabled", !connected);
-        if (connected) {
-            $("#conversation").show();
-        } else {
-            $("#conversation").hide();
-        }
-        // $("#chatBox").html("");
-    }
-
-    function connect() {
+    const connect = () => {
+        // 화면이 로딩되면 스톰프 연결 및 콜백 메서드 초기화를 진행한다.
         stompClient.activate();
+
+        stompClient.onConnect = (frame) => {
+            console.log("connected");
+            stompClient.subscribe('/chatSub/${chatRequest.chatRoomDto.room_num}', (response) => {
+                parsingMessage(JSON.parse(response.body));
+            });
+
+            scrollToBottom();
+        };
+
+        stompClient.onWebSocketError = (error) => {
+            console.error('Error with websocket', error);
+        };
+
+        stompClient.onStompError = (frame) => {
+            console.error('Broker reported error: ' + frame.headers['message']);
+            console.error('Additional details: ' + frame.body);
+        };
     }
 
-    function disconnect() {
+    // 나가기 버튼에 매핑해서 호출하자.
+    const disconnect = () => {
         stompClient.deactivate();
         setConnected(false);
         console.log("Disconnected");
     }
 
-    function sendMessage() {
-        const message = {
-            msg_cont: $("#chat").val(),
-            buy_id: "${user_id}",
-            pj_id: "${pj_id}",
-            send_user_id: "${user_id}"
+    const sendMessage = async () => {
+        const message = document.querySelector("#chat").value;
+
+        if (message.trim() === "") {
+            document.querySelector("#chat").value = "";
+            return;
+        }
+
+        const messageDto = {
+            room_num:${chatRequest.chatRoomDto.room_num},
+            msg_cont: message,
+            buy_id: "${chatRequest.chatRoomDto.user_id}",
+            pj_id: "${chatRequest.chatRoomDto.pj_id}",
+            send_user_id: "${chatRequest.chatRoomDto.user_id}"
         };
+
         stompClient.publish({
-            destination: "/chatPub/chat/${roomName}",
-            body: JSON.stringify(message)
+            destination: "/chatPub/chat/${chatRequest.chatRoomDto.room_num}",
+
+            body: JSON.stringify(messageDto)
         });
 
-        $("#chat").val("");
+        setTimeout(() => {
+            document.querySelector("#chat").value = "";
+        }, 1);
     }
 
-    function displayMessage(message) {
-        const date = new Date();
-        const hour = date.getHours();
-        const minute = date.getMinutes();
+    const sendImg = () => {
 
-        $("#chatBox").append("<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>");
+        if (document.querySelector("#img").value === "") {
+            return;
+        }
+        const formData = new FormData();
 
-        // document.querySelector("#chatBox").innerHTML += "<tr><td>" + hour + " : " + minute + " " + message + "</td></tr>";
+        const files = document.querySelector("#img").files;
+
+
+        // 멀티파트 전송시에도 메시지를 함께 첨부할 수 있으며, 컨트롤러에서 하나 이상의 dto에 나누어 담을 수 있다.
+        formData.append("file", files[0]);
+        formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
+        formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
+        formData.append("send_user_id", "${chatRequest.chatRoomDto.user_id}");
+        formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
+        formData.append("file_cnt", files.length);
+
+        document.querySelector("#img").value = "";
+
+        const result = fetch("/chat/file", {
+            method: "POST",
+            headers: {},
+            body: formData
+        });
     }
 
-    $(() => {
-        $("form").on('submit', (e) => e.preventDefault());
-        $("#exit").click(() => {
-            disconnect();
-            //     창닫기 해결해야한다.
-        })
-        $("#send").click(() => sendMessage());
-    });
+    // 메시지 생성시 하단 스크롤 유지
+    const scrollToBottom = () => {
+        const scrollHeight = document.querySelector(".chatMainContainer").scrollHeight;
+        document.querySelector(".chatMainContainer").scrollTo({top: scrollHeight});
+    }
+
+    // 구독중인 토픽에 변화가 생길때 실행되는 콜백
+    // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
+    const parsingMessage = (message) => {
+        const position = message.send_user_id !== "${sessionScope.loginId}" ? "right" : "left";
+
+        const msg = message.file_cnt != 0 ? paintImg(position, message.file_url, message.svr_intime_string) : paintChat(position, message.msg_cont, message.svr_intime_string);
+
+        scrollToBottom();
+    }
+
+    const paintChat = (position, text, time) => {
+        document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><div class="chat">${'${text}'}</div></div>`;
+    }
+
+    const paintImg = (position, imgUrl, time) => {
+        document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><img id="imgTag" class="chatAttImg" src="${"${imgUrl}"}" onload="scrollToBottom()"/></div>`;
+        // document.querySelector("#imgTag").addEventListener("load", scrollToBottom
+        // );
+    }
 
     window.onload = () => {
+        document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
+        document.querySelector("#chat").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+        document.querySelector("#send").addEventListener('click', sendMessage);
+        document.querySelector("#img").addEventListener('input', sendImg);
+        // document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
-    };
 
+        // const lo = document.querySelectorAll(".chatBox");
+        // lo.forEach(e => e.setAttribute("data-time", "ddd"));
+    };
 </script>
 </body>
 </html>
