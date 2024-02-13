@@ -20,12 +20,12 @@
     </insert>
 
 <!--    새로운 기본 결제수단이 지정되면, 기존 기본 결제수단은 해제-->
-    <update id="updateDefaultMeansToNo" parameterType="PayMeansDto">
+    <update id="updateDefaultMeansToNo" parameterType="map">
         update pay_means_reg
         set default_pay_means_yn = 'N',
             dba_mod_dtm = now(),
             dba_mod_id = #{dba_mod_id}
-        where default_pay_means_yn = 'Y'
+        where user_id = #{user_id} and default_pay_means_yn = 'Y'
     </update>
 
     <update id="updateDefaultMeansToYes" parameterType="PayMeansDto">
@@ -33,7 +33,7 @@
         set default_pay_means_yn = 'Y',
             dba_mod_dtm = now(),
             dba_mod_id = #{dba_mod_id}
-        where pay_means_id = #{pay_means_id}
+        where user_id = #{user_id} and pay_means_id = #{pay_means_id}
     </update>
 
     <delete id="delete" parameterType="String">
@@ -50,7 +50,7 @@
         where pay_means_id = #{pay_means_id}
     </select>
 
-<!--    해당 유저가 등록한 모든 결제수단 조회-->
+<!--    회워별 결제수단 목록 조회-->
     <select id="selectAllForUser" parameterType="String" resultType="PayMeansDto">
         select * from pay_means_reg
         where user_id = #{user_id}
@@ -62,11 +62,16 @@
         order by dba_reg_dtm DESC
     </select>
 
-<!--    기본 결제수단 조회-->
-    <select id="selectDefaultMeans" resultType="PayMeansDto">
+<!--    회원별 기본 결제수단 조회-->
+    <select id="selectDefaultMeans" parameterType="String" resultType="PayMeansDto">
         select * from pay_means_reg
-        where default_pay_means_yn = 'Y'
-        order by dba_reg_dtm DESC
+        where user_id = #{user_id} and default_pay_means_yn = 'Y'
+    </select>
+
+    <!--    회원별 기본 결제수단 개수 조회-->
+    <select id="countDefaultMeans" parameterType="String" resultType="int">
+        select count(*) from pay_means_reg
+        where user_id = #{user_id} and default_pay_means_yn = 'Y'
     </select>
 
 </mapper>

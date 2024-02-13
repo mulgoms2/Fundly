@@ -24,7 +24,7 @@ public class PayMeansDto {
     private String card_co_type; // 카드사 종류
 //    private String card_own_kor_name; // 카드 소유주 한글이름
 //    private String card_own_eng_name; // 카드 소유주 영문이름
-    private String card_no; // 카드 번호 TODO: DB 컬럼 새로 추가
+    private String card_no; // 카드 뒷자리 번호 4개 TODO: DB 컬럼 새로 추가
     private String card_pwd; // 카드 비밀번호 앞 2자리 TODO: DB 타입 변경 (Integer -> String)
     private String card_valid_date; // 카드 유효기간
 //    private String card_valid_yn; // 카드 사용가능 여부
