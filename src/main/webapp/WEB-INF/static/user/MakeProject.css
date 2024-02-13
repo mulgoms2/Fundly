@@ -1,0 +1,285 @@
+:root{
+    --main-bg-color: #5060D6;
+}
+
+/*공통*/
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.main{
+    margin-top: 2.5%;
+    height: 760px;
+}
+
+.title{
+    font-size: 30px;
+    font-weight: bold;
+    padding: 48px 0 28px 0;
+}
+
+/* font */
+.font1 {
+    margin: 0px;
+    font-family: "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, NotoSansKR, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -0.32px;
+}
+
+.projectState{
+    margin: 20px auto 0px;
+    width: 1160px;
+    padding: 0px;
+}
+
+/* tap state */
+
+.stateOn{
+    margin-right: 10px;
+    padding: 4px 16px;
+    display: inline-flex;
+    flex-shrink: 0;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 32px;
+    font-size: 12px;
+    line-height: 24px;
+    min-width: 55px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 23px;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    user-select: none;
+    background: rgb(61, 61, 61);
+    color: rgb(255, 255, 255);
+    border: none;
+}
+
+.stateOut{
+    margin-right: 10px;
+    padding: 4px 16px;
+    display: inline-flex;
+    flex-shrink: 0;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 32px;
+    font-size: 12px;
+    line-height: 24px;
+    color: rgb(61, 61, 61);
+    min-width: 55px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid rgb(240, 240, 240);
+    box-sizing: border-box;
+    border-radius: 23px;
+    overflow-wrap: break-word;
+    white-space: nowrap;
+    user-select: none;
+}
+
+/* projectMakeList */
+
+.projectMakeList{
+    display: flex;
+    flex-direction: column;
+}
+
+.projectMakeListItemWrap{
+    margin-top: 16px;
+}
+
+.projectMakeTotalCnt{
+    margin-top: 40px;
+    display: flex;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(13, 13, 13);
+}
+
+.projectMakeItemWrap{
+    overflow: hidden;
+    display: flex;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(228, 228, 228);
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.projectMakeItem{
+
+    display: flex;
+    width: 100%;
+    /*flex-direction: column;*/
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+
+
+    padding: 20px 26px;
+    flex-direction: row;
+}
+
+.projectItemImg{
+    overflow: hidden;
+    position: relative;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: row;
+    background: rgb(240, 240, 240);
+    border-radius: 4px;
+    cursor: pointer;
+
+    align-self: flex-start;
+    margin-right: 26px;
+    min-width: 172px;
+    min-height: 129px;
+}
+
+.itemImg{
+    width: 34px;
+    height: 34px;
+    background: url(../img/Icon-images.png) no-repeat center center;
+    background-size: cover;
+}
+
+.projectItemContent{
+    padding-right: 52px;    overflow: hidden;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.itemState{
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    color: rgb(109, 109, 109);
+    font-size: 13px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.itemStateTag{
+    margin-right: 10px;
+    padding: 2px 4px;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    background: rgba(240, 240, 240, 0.5);
+    border-radius: 4px;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgb(61, 61, 61);
+    white-space: nowrap;
+}
+
+.itemTitle{
+    overflow: hidden;
+    margin-top: 11px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    min-width: 0px;
+    font-size: 16px;
+    line-height: 24px;
+    max-height: 24px;
+    cursor: pointer;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1 1 0%;
+    font-weight: bold;
+    color: rgb(13, 13, 13);
+}
+
+.itemDescription{
+    margin-top: 4px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(109, 109, 109);
+}
+
+.projectItemBtn{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemManagement{
+    display: inline-flex;
+    height: 42px;
+    min-width: 150px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgb(240, 240, 240);
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(61, 61, 61);
+    border-radius: 4px;
+    cursor: pointer;
+
+    margin: 0px;
+    width: 150px;
+}
+
+.itemDel{
+    display: inline-flex;
+    height: 42px;
+    min-width: 150px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(61, 61, 61);
+    cursor: pointer;
+
+    margin: 0px;
+    width: 150px;
+
+    margin-top: 8px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 4px;
+}
