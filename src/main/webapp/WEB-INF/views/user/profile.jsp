@@ -1,7 +1,7 @@
 <%--
   Created by IntelliJ IDEA.
   User: init
-  Date: 2024-02-11
+  Date: 2024-02-12
   Time: 오전 11:56
   To change this template use File | Settings | File Templates.
 --%>
@@ -37,11 +37,13 @@
                         </div>
                     </div>
 
-                    <div class="tapContainer" id="divtapContainer">
-                        <span class="tapItem fontcolor"><a href="" id="itemProfile">프로필</a></span>
-                        <span class="tapItem fontcolor"><a href="" id="itemProjectReview">프로젝트 후기</a></span>
-                        <span class="tapItem fontcolor"><a href="" id="itemMakeProject">올린 프로젝트</a></span>
-                        <span class="tapItem fontcolor"><a href="" id="itemProjectOrder">후원한 프로젝트</a></span>
+                    <div class="tapContainer">
+                        <div class="tapContainerList" id="divtapContainer">
+                            <span class="tapItem fontcolor"><a href="" id="itemProfile">프로필</a></span>
+                            <span class="tapItem fontcolor"><a href="" id="itemProjectReview">프로젝트 후기</a></span>
+                            <span class="tapItem fontcolor"><a href="" id="itemMakeProject">올린 프로젝트</a></span>
+                            <span class="tapItem fontcolor"><a href="" id="itemProjectOrder">후원한 프로젝트</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
