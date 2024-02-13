@@ -32,9 +32,9 @@ public class LikeController {
 //        return "user/like";
 //    }
 
-    @PostMapping("/like2")
+    @PostMapping("/like")
     @ResponseBody
-    public List<LikeDto> addLikePj(@RequestBody LikeDto likedto) throws Exception {
+    public List<LikeDto> handleLike(@RequestBody LikeDto likedto) throws Exception {
         // 좋아요 상태 확인
         int isLike =  likeservice.checkLike(likedto);
         likedto.setLike_status(isLike);

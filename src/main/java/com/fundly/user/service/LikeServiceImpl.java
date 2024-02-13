@@ -19,7 +19,6 @@ public class LikeServiceImpl implements LikeService {
     public int checkLike(LikeDto likedto) throws Exception {
 
         int result = 0;
-        int bno = 1;
 
         // 찜한 목록 조회
         List<LikeDto> likes = likedao.getLikeList(likedto);
@@ -27,9 +26,9 @@ public class LikeServiceImpl implements LikeService {
         if(likes.isEmpty()) {
             result = likedao.insertLike(likedto);
         } else {
-            for(int i = 0; i < likes.size(); i++) {
-                likedto = likes.get(i);
-                if(likedto.getLike_status()==1) {
+            for (LikeDto like : likes) {
+                likedto = like;
+                if (likedto.getLike_status() == 1) {
                     likedao.cancelLike(likedto);
                 } else {
                     result = likedao.reLike(likedto);
