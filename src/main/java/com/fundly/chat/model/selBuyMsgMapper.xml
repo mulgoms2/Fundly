@@ -6,8 +6,8 @@
         <selectKey keyProperty="msg_id" resultType="String" order="BEFORE">
             select concat("MSG_", now(), " ", ifnull(Max(seq), 0) +1 ) from SEL_BUY_MSG_DETAILS
         </selectKey>
-        insert into SEL_BUY_MSG_DETAILS (msg_id,buy_id, pj_id, msg_cont, send_user_id, file_url, file_cnt)
-        values (#{msg_id} , #{buy_id}, #{pj_id}, #{msg_cont}, #{send_user_id}, #{file_url}, #{file_cnt})
+        insert into SEL_BUY_MSG_DETAILS (room_num ,msg_id,buy_id, pj_id, msg_cont, send_user_id, file_cnt)
+        values (#{room_num},#{msg_id} , #{buy_id}, #{pj_id}, #{msg_cont}, #{send_user_id}, #{file_cnt})
     </insert>
 
 <!--    <insert id="saveImageUrl">-->
@@ -15,9 +15,7 @@
 <!--        values (#{msg_id}, #{buy_id}, #{pj_id}, #{send_user_id}, #{file_url}, #{file_cnt});-->
 <!--    </insert>-->
 
-    <select id="loadAllMessages" resultType="SelBuyMsgDetailsDto">
-        select * from SEL_BUY_MSG_DETAILS where buy_id = #{buy_id} and pj_id = #{pj_id}
+    <select id="loadAllMessages" parameterType="ChatRoomDto" resultType="SelBuyMsgDetailsDto">
+        select * from SEL_BUY_MSG_DETAILS where room_num = #{room_num}
     </select>
-
-
 </mapper>

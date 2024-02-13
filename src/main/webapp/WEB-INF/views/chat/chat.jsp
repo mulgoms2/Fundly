@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,43 +9,52 @@
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <script src="https://kit.fontawesome.com/99823c8069.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/chat/css/chatCss.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic+Coding&family=Noto+Serif+KR:wght@300&display=swap"
+          rel="stylesheet">
 </head>
 <body id="chatBody">
 <div class="chatMainContainer">
-    <div class="chatTableBox">
-        <table id="conversation" class="chatTable">
-            <thead>
-            <tr>
-                <th>chat</th>
-            </tr>
-            </thead>
-            <tbody id="chatBox">
-            <c:forEach items="${messageList}" var="msg">
-                <c:if test="${msg.file_cnt ne 0}">
-                    <tr>
-                        <td>
-                            <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt="" />
-                        </td>
-                    </tr>
+    <div id="chatContainer" class="chatContainer">
+        <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
+            <c:set var="time" value="${msg.svr_intime_string}"/>
+            <c:if test="${msg.file_cnt ne 0}">
+                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                    ${sessionScope.loginId}
+                    <div class="chatBox right" data-time="${time}">
+                        <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
+                    </div>
                 </c:if>
-                <c:if test="${msg.file_cnt eq 0}">
-                    <tr>
-                        <td>${msg.send_user_id} ${msg.dba_reg_dtm.hours} : ${msg.dba_reg_dtm.minutes} ${msg.msg_cont}</td>
-                    </tr>
+                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                    <div class="chatBox left" data-time="${time}">
+                        <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
+                    </div>
                 </c:if>
-            </c:forEach>
-            </tbody>
-        </table>
+            </c:if>
+            <c:if test="${msg.file_cnt eq 0}">
+                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                    <div class="chatBox right" data-time="${time}">
+                        <div class="chat">${msg.msg_cont}</div>
+                    </div>
+                </c:if>
+                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                    <div class="chatBox left" data-time="${time}">
+                        <div class="chat">${msg.msg_cont}</div>
+                    </div>
+                </c:if>
+            </c:if>
+        </c:forEach>
     </div>
     <div class="chatFormContainer">
         <form id="chatForm">
             <div class="chatIptBox">
-                <input type="text" id="chat" class="chatIpt" required>
+                <textarea id="chat" class="chatIpt" autocomplete="off"></textarea>
                 <button id="send" class="sendBtn" type="submit"><i class="fa-solid fa-arrow-up"></i></button>
             </div>
         </form>
-        <input id="img" name="file_img" type="file" formenctype="multipart/form-data"/>
-        <button id="imgSendBtn">보내기</button>
+        <label class="labelImgFileIpt" for="img"><i class="fa-solid fa-upload"></i></label>
+        <input id="img" class="imgFileIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>
@@ -59,11 +69,11 @@
 
         stompClient.onConnect = (frame) => {
             console.log("connected");
-            stompClient.subscribe('/chatSub/${roomName}', (response) => {
-                displayMessage(JSON.parse(response.body));
+            stompClient.subscribe('/chatSub/${chatRequest.chatRoomDto.room_num}', (response) => {
+                parsingMessage(JSON.parse(response.body));
             });
 
-            scrollToButtom();
+            scrollToBottom();
         };
 
         stompClient.onWebSocketError = (error) => {
@@ -83,97 +93,102 @@
         console.log("Disconnected");
     }
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         const message = document.querySelector("#chat").value;
 
-        if (message === "") {
+        if (message.trim() === "") {
+            document.querySelector("#chat").value = "";
             return;
         }
 
         const messageDto = {
+            room_num:${chatRequest.chatRoomDto.room_num},
             msg_cont: message,
-            buy_id: "${user_id}",
-            pj_id: "${pj_id}",
-            send_user_id: "${user_id}"
+            buy_id: "${chatRequest.chatRoomDto.user_id}",
+            pj_id: "${chatRequest.chatRoomDto.pj_id}",
+            send_user_id: "${chatRequest.chatRoomDto.user_id}"
         };
 
         stompClient.publish({
-            destination: "/chatPub/chat/${roomName}",
+            destination: "/chatPub/chat/${chatRequest.chatRoomDto.room_num}",
+
             body: JSON.stringify(messageDto)
         });
 
-        document.querySelector("#chat").value = "";
+        setTimeout(() => {
+            document.querySelector("#chat").value = "";
+        }, 1);
     }
 
-    const sendImg = async () => {
+    const sendImg = () => {
 
         if (document.querySelector("#img").value === "") {
             return;
         }
-        const img_file = document.querySelector("#img").files[0];
-
         const formData = new FormData();
-        formData.append("img_file", img_file);
+
+        const files = document.querySelector("#img").files;
+
+
+        // 멀티파트 전송시에도 메시지를 함께 첨부할 수 있으며, 컨트롤러에서 하나 이상의 dto에 나누어 담을 수 있다.
+        formData.append("file", files[0]);
+        formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
+        formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
+        formData.append("send_user_id", "${chatRequest.chatRoomDto.user_id}");
+        formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
+        formData.append("file_cnt", files.length);
 
         document.querySelector("#img").value = "";
 
-        // await 은 fetch의 then 결과를 가져온다.
-        const result = await fetch("/chat/file", {
+        const result = fetch("/chat/file", {
             method: "POST",
             headers: {},
             body: formData
         });
-
-        const resultObject = await result.json();
-
-        const savedImgUrl = resultObject[0];
-
-        // 스톰프 서버에서는 메시지 발행이  이미지가 들어있는
-        const messageDto = {
-            buy_id: "${user_id}",
-            pj_id: "${pj_id}",
-            send_user_id: "${user_id}",
-            file_cnt: resultObject.length,
-            file_url: savedImgUrl
-        };
-
-        // 토픽 발행 완료. 발행과 동시에 displayMessage 콜백 호출일 일어난다.
-        stompClient.publish({
-            destination: "/chatPub/chat/${roomName}",
-            body: JSON.stringify(messageDto)
-        });
     }
 
-    const scrollToButtom = () => {
-        const scrollHeight = document.querySelector("#chatBody").scrollHeight;
-        window.scrollTo({top: scrollHeight});
+    // 메시지 생성시 하단 스크롤 유지
+    const scrollToBottom = () => {
+        const scrollHeight = document.querySelector(".chatMainContainer").scrollHeight;
+        document.querySelector(".chatMainContainer").scrollTo({top: scrollHeight});
     }
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
-    const displayMessage = (message) => {
-        const date = new Date();
-        const hour = date.getHours();
-        const minute = date.getMinutes();
+    // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
+    const parsingMessage = (message) => {
+        const position = message.send_user_id !== "${sessionScope.loginId}" ? "right" : "left";
 
-        // if(message.file) 만약에 토픽에서 발행된 메시지에 이미지(src경로)가 존재하면 파일 html 을 인서트
-        console.log(message);
+        const msg = message.file_cnt != 0 ? paintImg(position, message.file_url, message.svr_intime_string) : paintChat(position, message.msg_cont, message.svr_intime_string);
 
-        if (message.file_cnt !== 0) {
-            document.querySelector("#chatBox").innerHTML += '<img class=\"chatAttImg\" src=\"' + message.file_url + '\" style="width: 200px" />';
 
-            return;
-        }
+        setTimeout(scrollToBottom, 1);
+        // scrollToBottom();
+    }
 
-        document.querySelector("#chatBox").innerHTML += "<tr><td>" + message.send_user_id + "  " + hour + " : " + minute + " " + message.msg_cont + "</td></tr>";
+    const paintChat = (position, text, time) => {
+        document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><div class="chat">${'${text}'}</div></div>`;
+    }
 
-        scrollToButtom();
+    const paintImg = (position, imgUrl, time) => {
+        document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><img id="imgTag" class="chatAttImg" src="${"${imgUrl}"}" onload="scrollToBottom()"/></div>`;
+        // document.querySelector("#imgTag").addEventListener("load", scrollToBottom
+        // );
     }
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
-        document.querySelector("#send").addEventListener('click', sendMessage)
-        document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
+        document.querySelector("#chat").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+        document.querySelector("#send").addEventListener('click', sendMessage);
+        document.querySelector("#img").addEventListener('input', sendImg);
+        // document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
+
+        // const lo = document.querySelectorAll(".chatBox");
+        // lo.forEach(e => e.setAttribute("data-time", "ddd"));
     };
 </script>
 </body>

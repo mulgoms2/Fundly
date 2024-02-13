@@ -1,103 +1,82 @@
 package com.fundly.chat.controller;
 
-import com.fundly.chat.service.ChatFileService;
 import com.fundly.chat.service.ChatService;
+import com.persistence.dto.ChatRequest;
+import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.core.io.Resource;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @Slf4j
 public class ChatController {
 
     @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
+    @Autowired
     ChatService chatService;
 
-    @Autowired
-    ChatFileService chatFileService;
-
     @GetMapping("/chat")
+//    테스트용
     public String chatRoom() {
         return "chat/chatIndex";
     }
 
     @GetMapping("/chatPop")
-    public String joinChatRoom(String user_id, String pj_id, Model model) {
+    public String joinChatRoom(@ModelAttribute ChatRequest chatRequest, Model model) {
+//        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
+        chatService.getChatRoom(chatRequest);
 
-//        유저id, 프로젝트 id로 채팅방을 얻어온다.
-        String chatRoomName = chatService.getChatRoomName(user_id, pj_id);
-
-        model.addAttribute("roomName", chatRoomName);
-
-//        지난 채팅메시지를 가져온다.
-        ArrayList<SelBuyMsgDetailsDto> messageList = chatService.loadMessages(user_id, pj_id);
-
-        model.addAttribute("messageList", messageList);
-
-//        model에 아이디랑 pj_id를 임시로 담았다 왜담았지?
-        model.addAttribute("user_id", user_id);
-        model.addAttribute("pj_id", pj_id);
-
-//        채팅방에 입장하면서 자동으로 채팅방에 대한 구독이 시작된다.
         return "chat/chat";
     }
 
-    @MessageMapping("/chat/{roomName}")
-    @SendTo("/chatSub/{roomName}")
-    public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomName, SelBuyMsgDetailsDto message) {
+    //    MessageMapping을 통해 유저의 메시지 전송이 매핑되며. /chatPub/chat/{방번호} pathVariable 의 일종인 것 같다.
+    @MessageMapping("/chat/{roomNum}")
+    @SendTo("/chatSub/{roomNum}")
+    public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomNum, SelBuyMsgDetailsDto message, SimpMessageHeaderAccessor accessor) {
+//        httpsession 객체에 담긴 데이터를 이용할 수 있다.
+//        Object session = accessor.getSessionAttributes().get("session");
+//        System.out.println(((HttpSession) session).getAttribute("user_email"));
 
+//        채팅을 저장
         chatService.saveMessage(message);
 
+//        메시지를 토픽에 발행한다. sendTo /chatSup/{}
         return message;
     }
 
     @PostMapping("/chat/file")
     @ResponseBody
-    public ArrayList file(@RequestParam("img_file") MultipartFile file) {
-//        파일 저장 처리후에 파일 저장 경로를 리턴한다.
-        List<String> list = new ArrayList<>();
-
-//        파일을 저장하고 저장경로를 받는다.
-        String savedUrl = chatFileService.saveImageFile(file);
-
-//        저장경로를 json으로 리턴한다.
-//        테스트 중.
-        list.add(savedUrl);
-
-        return (ArrayList) list;
+    public void uploadFile(FileDto file, SelBuyMsgDetailsDto message) {
+        try {
+//            이미지 파일을 서버에 저장한다.
+            chatService.saveImageFile(file, message);
+        } catch (Exception e) {
+            log.error("error with uploadFile = {}", file);
+            throw new RuntimeException("error with uploadFile(FileDto file, SelBuyMsgDatailsDto message)",e);
+        }
+//        채팅방에 이미지 경로가 담긴 메시지를 토픽에 발행한다ㅣ
+        simpMessagingTemplate.convertAndSend("/chatSub/" + message.getRoom_num(), message);
     }
 
-    @GetMapping(
-            value = "**/file/{fileName}",
-            produces = MediaType.IMAGE_JPEG_VALUE
-    )
+    @GetMapping(value = "**/file/{fileName}")
     @ResponseBody
-    public byte[] loadImageFile(@PathVariable("fileName") String fileName) throws FileNotFoundException {
-
-//        InputStream is = new FileInputStream("/Users/dobigulbi/IdeaProjects/Fundly/target/Fundly/WEB-INF/static/chat/file/" + fileName);
-        InputStream is = new FileInputStream("/Users/dobigulbi/chat/file/" + fileName);
-
+//    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
+    public Resource getImageResource(@PathVariable("fileName") String fileName) {
         try {
-            return IOUtils.toByteArray(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            return chatService.loadImgFile(fileName);
+        } catch (Exception e) {
+            log.error("error with getImageResouce = {}", fileName);
+            throw new RuntimeException("유효하지 않은 파일명 입니다.", e);
         }
     }
-
 }

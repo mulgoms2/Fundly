@@ -22,7 +22,7 @@
     background-size: cover;
 }
 .header .hd .lftSmn {
-    width: 300px;
+    /*width: 300px;*/
     height: 100%;
     display: flex;
     justify-content: space-between;

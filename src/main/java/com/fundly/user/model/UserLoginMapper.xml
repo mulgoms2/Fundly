@@ -15,7 +15,7 @@
 <!--    </select>-->
 
     <!-- userInfo   -->
-    <select id="userInfo" parameterType="String">
+    <select id="selectUser" parameterType="String">
         SELECT  user_name, user_pwd, user_email, user_status FROM USER_INFO WHERE user_email = #{user_email} AND user_pwd = #{user_pwd};
     </select>
 

@@ -1,5 +1,10 @@
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%--<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>--%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page session ="false"%>
+
+<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>
+
 <html>
 <head>
     <%--    <meta charset="UTF-8">--%>
@@ -8,8 +13,61 @@
     <link rel="stylesheet" href="<c:url value='/static/main/common.css'/>">
     <link rel="stylesheet" href="<c:url value='/static/main/style.css'/>">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
+
+    <style>
+        .infoGr{
+            position: relative;
+        }
+
+        .MyPageList{
+
+            position: absolute;
+            display: none;
+            flex-direction: column;
+            top: 50px;
+            right: 0px;
+            width: 240px;
+            transition: all 0.3s ease-in-out 0s;
+            border: 1px solid rgb(228, 228, 228);
+            box-sizing: border-box;
+            border-radius: 4px;
+            z-index: 1200;
+            padding: 10px 0;
+            overflow: hidden;
+            background: rgb(255, 255, 255);
+        }
+
+        .pageItem {
+            padding: 4px 16px;
+            display: flex;
+            width: 100%;
+            height: 46px;
+            min-height: 46px;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: start;
+            justify-content: flex-start;
+            font-size: 14px;
+            line-height: 22px;
+            color: rgb(13, 13, 13);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out 0s;
+        }
+        .pageItem:hover {
+            background: rgba(110, 110, 110, 0.1);
+        }
+        .line{
+            display: flex;
+            width: 100%;
+            height: 1px;
+            background: rgb(240, 240, 240);
+            content: " ";
+        }
+    </style>
 </head>
+
 <body>
+
 <div class="header">
     <div class="hd">
         <h1 class="logo">
@@ -26,17 +84,31 @@
                 <i class="fa-regular fa-bell"></i>
             </div>
             <div class="userIf">
-                <div class="infoGr">
+                <div class="infoGr" id = "loginInfo" >
                     <div class="ifImg">
                         <span></span>
                     </div>
-                    <div class="fontsize" >
-                        <a href="<c:url value='/login/login'/>">로그인</a>
-                        <%--                    <div class="ifTxt">로그인/회원가입</div>--%>
-                        <%--                    <div class="ifTxt">이한수</div>--%>
-                    </div> <div class="fontsize" >
-                    <a href="<c:url value='/join/add'/>">회원가입</a>
-                </div>
+                    <div class="ifTxt" >${loginInfo}</div>
+<%--                         onclick="toggleContent('MyPageList')">${loginInfo}</div>--%>
+
+                    <div class="MyPageList" id = "MyPageList">
+                        <div class="pageItem" id = "Profile"> 프로필 </div>
+                        <div class="pageItem" id = "Coupon"> 응원권 </div>
+                        <div class="line"></div>
+                        <div class="pageItem" id = "fundingProject"> 후원한 프로젝트 </div>
+<%--                        <div class="pageItem" id = "Like"> 관심 프로젝트 </div>--%>
+<%--                        <div class="line"></div>--%>
+                        <div class="pageItem" id = "Alarm"> 알림 </div>
+                        <div class="pageItem" id = "Message"> 메시지 </div>
+                        <div class="line"></div>
+                        <div class="pageItem" id = "MakeProject"> 내가 만든 프로젝트 </div>
+                        <div class="pageItem" id = "Setting"> 설정 </div>
+                        <div class="line"></div>
+                        <div class="pageItem" id = "LogOut"> 로그아웃 </div>
+                    </div>
+
+<%--                        &lt;%&ndash;                    <div class="ifTxt">로그인/회원가입</div>&ndash;%&gt;--%>
+<%--                        &lt;%&ndash;                    <div class="ifTxt">이한수</div>&ndash;%&gt;--%>
                 </div>
             </div>
         </div>
@@ -318,6 +390,74 @@
 </div>
 </body>
 <script>
+    <%--alert(${user_email});--%>
+    /* 로그인/회원가입 or 로그인 회원 정보 */
+    const loginInfo = document.getElementById('loginInfo');
+
+    loginInfo.addEventListener("click",() => {
+
+        if(loginInfo.outerText !== '로그인/회원가입'){
+            toggleContent("MyPageList");
+        }else{
+            return window.location.href='/login/login';
+        }
+    })
+
+    const MyPageList = document.getElementById('MyPageList');
+
+    MyPageList.addEventListener("click",(e)=>{
+
+        if(e.target.id == "Profile"){
+            // 프로필 화면으로
+            return window.location.href = '/mypage/profile';
+
+        } else if(e.target.id == "Coupon") {
+            // 응원권 화면으로
+            return window.location.href = '/mypage/coupon';
+
+        } else if(e.target.id == "fundingProject") {
+            // 후원한 프로젝트 화면으로
+            return window.location.href = '/mypage/fundingProject';
+
+        // } else if(e.target.id == "Like") {
+        //     return window.location.href = '/like';
+
+        } else if(e.target.id == "Alarm") {
+            // 알림 화면으로
+            return window.location.href = '/mypage/alarm';
+
+        } else if(e.target.id == "Message") {
+            // 메시지 화면으로
+            return window.location.href = '/mypage/message';
+
+        } else if(e.target.id == "MakeProject") {
+            // 내가 만든 프로젝트 화면으로
+            return window.location.href = '/mypage/makeProject';
+
+        } else if(e.target.id == "Setting") {
+            // 설정 화면으로
+            return window.location.href = '/mypage/setting';
+
+        } else if(e.target.id == "LogOut") {
+
+            toggleContent("MyPageList");
+            return window.location.href = '/login/logout';
+        }
+    })
+
+    function toggleContent(MyPageList){
+
+        var content = document.getElementById(MyPageList);
+
+        if(content.style.display=="none"){
+
+            content.style.display="block";
+        } else{
+            content.style.display="none";
+        }
+    }
+
+
 
 
 </script>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.user.model.UserInfoDao">
+
+    <!-- sql test -->
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM user_info
+    </select>
+
+<!--    &lt;!&ndash; userInfo 체크 &ndash;&gt;-->
+<!--    <select id="userCheck" resultType="int" parameterType="String">-->
+<!--        SELECT COUNT(*) FROM user_info WHERE user_email = #{user_email} AND user_pwd = #{user_pwd}-->
+<!--    </select>-->
+
+    <!-- userInfo   -->
+    <select id="userInfo" parameterType="String">
+        SELECT * FROM USER_INFO WHERE user_email = #{user_email}
+    </select>
+
+</mapper>
