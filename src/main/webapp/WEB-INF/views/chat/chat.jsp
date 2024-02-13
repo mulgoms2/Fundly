@@ -160,7 +160,9 @@
 
         const msg = message.file_cnt != 0 ? paintImg(position, message.file_url, message.svr_intime_string) : paintChat(position, message.msg_cont, message.svr_intime_string);
 
-        scrollToBottom();
+
+        setTimeout(scrollToBottom, 1);
+        // scrollToBottom();
     }
 
     const paintChat = (position, text, time) => {
