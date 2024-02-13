@@ -1,6 +1,8 @@
 package com.fundly.admin.controller;
 
+import com.fundly.admin.service.CtgGuideService;
 import com.fundly.admin.service.NewsService;
+import com.persistence.dto.CtgGuideDto;
 import com.persistence.dto.NewsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ import java.util.List;
 public class AdminController {
     @Autowired
     NewsService newsService;
+    @Autowired
+    CtgGuideService ctgGuideService;
 
 
     @GetMapping("/list")
@@ -30,6 +34,19 @@ public class AdminController {
         }
 
     }
+
+    @GetMapping("/ctglist")
+    public String getCtgList(Model model){
+        try {
+            List<CtgGuideDto> CtgList = ctgGuideService.selectAllCtg();
+            model.addAttribute("CtgList",CtgList);
+            return "admin/ctgguide";
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
+
 
     @RequestMapping("/select")
     public String selectNews(Integer news_seq, Model model){
