@@ -15,10 +15,12 @@
 </head>
 <script>
     let msg = "${msg}";
-    if (msg == "REG_SUCCESS") alert("결제 수단 등록에 성공했습니다.");
-    if (msg == "REG_ERROR") alert("결제 수단 등록에 실패했습니다. 다시 시도해 주세요.");
-    if (msg == "LIST_ERROR")  alert("결제 수단 조회에 실패했습니다. 다시 시도해 주세요.");
-    if (msg == "DEL_ERROR")  alert("결제 수단 삭제에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "REG_SUCCESS") alert("결제수단 등록에 성공했습니다.");
+    if (msg === "REG_ERROR") alert("결제수단 등록에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "LIST_ERROR")  alert("결제수단 조회에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "DEL_ERROR")  alert("결제수단 삭제에 실패했습니다. 다시 시도해 주세요.");
+    if (msg === "UPDATE_ERROR")  alert("기본 결제수단 지정에 실패했습니다. 다시 시도해 주세요.");
+
 </script>
 <style>
     .btn {
@@ -35,6 +37,18 @@
     .btn:hover {
         text-decoration: underline;
     }
+
+    .default_tag {
+        background-color: orangered;
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-left: 50px;
+    }
+
 </style>
 <body>
 <div style="display: inline-flex">
@@ -51,6 +65,7 @@
         <th class="card_co_type">카드사</th>
         <th class=""></th>
         <th class=""></th>
+        <th class=""></th>
     </tr>
     <c:forEach var="payMeansDto" items="${list}">
         <tr>
@@ -61,6 +76,9 @@
             <td class="card_co_type">${payMeansDto.card_co_type}</td>
             <td class=""><button type="button" class="btn removeBtn">삭제</button></td>
             <td class=""><button type="button" class="btn defaultSetBtn">기본 결제수단 지정</button></td>
+            <c:if test="${payMeansDto.default_pay_means_yn == 'Y'}">
+                <td class="default_tag">기본</td>
+            </c:if>
         </tr>
     </c:forEach>
     <script>
@@ -74,6 +92,22 @@
                     type: "POST",
                     url: "/pay/remove",
                     data: {pay_means_id: payMeansId},
+                    success: function () {
+                        // 성공한 경우 페이지 새로고침
+                        location.reload();
+                    },
+                    error: function () {}
+                })
+            })
+
+            $(".defaultSetBtn").click(function () {
+                let userId = $(this).closest("tr").find(".user_id").text();
+                let payMeansId = $(this).closest("tr").find(".pay_means_id").text();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/pay/update",
+                    data: {user_id: userId, pay_means_id: payMeansId},
                     success: function () {
                         // 성공한 경우 페이지 새로고침
                         location.reload();
