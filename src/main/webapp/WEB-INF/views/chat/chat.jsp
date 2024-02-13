@@ -18,27 +18,28 @@
 <div class="chatMainContainer">
     <div id="chatContainer" class="chatContainer">
         <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
+            <c:set var="time" value="${msg.svr_intime_string}"/>
             <c:if test="${msg.file_cnt ne 0}">
                 <c:if test="${msg.send_user_id eq sessionScope.loginId}">
                     ${sessionScope.loginId}
-                    <div class="chatBox right" data-time="${msg.svr_intime_string}">
+                    <div class="chatBox right" data-time="${time}">
                         <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
                     </div>
                 </c:if>
                 <c:if test="${msg.send_user_id ne sessionScope.loginId}">
-                    <div class="chatBox left" data-time="${msg.svr_intime_string}">
+                    <div class="chatBox left" data-time="${time}">
                         <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
                     </div>
                 </c:if>
             </c:if>
             <c:if test="${msg.file_cnt eq 0}">
                 <c:if test="${msg.send_user_id eq sessionScope.loginId}">
-                    <div class="chatBox right" data-time="${msg.svr_intime_string}">
+                    <div class="chatBox right" data-time="${time}">
                         <div class="chat">${msg.msg_cont}</div>
                     </div>
                 </c:if>
                 <c:if test="${msg.send_user_id ne sessionScope.loginId}">
-                    <div class="chatBox left" data-time="${msg.svr_intime_string}">
+                    <div class="chatBox left" data-time="${time}">
                         <div class="chat">${msg.msg_cont}</div>
                     </div>
                 </c:if>
@@ -92,7 +93,7 @@
         console.log("Disconnected");
     }
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         const message = document.querySelector("#chat").value;
 
         if (message.trim() === "") {
@@ -110,10 +111,13 @@
 
         stompClient.publish({
             destination: "/chatPub/chat/${chatRequest.chatRoomDto.room_num}",
+
             body: JSON.stringify(messageDto)
         });
 
-        document.querySelector("#chat").value = "";
+        setTimeout(() => {
+            document.querySelector("#chat").value = "";
+        }, 1);
     }
 
     const sendImg = () => {
@@ -146,25 +150,15 @@
     // 메시지 생성시 하단 스크롤 유지
     const scrollToBottom = () => {
         const scrollHeight = document.querySelector(".chatMainContainer").scrollHeight;
-        window.scrollTo({top: scrollHeight});
+        document.querySelector(".chatMainContainer").scrollTo({top: scrollHeight});
     }
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
     // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
     const parsingMessage = (message) => {
-        const date = new Date();
-        let hour  = date.getHours();
-        let minute = date.getMinutes();
-        hour = hour < 10 ? '0' + hour : hour;
-        minute = minute < 10 ? '0' + minute : minute;
-
-        const time = hour + ":" + minute;
-
         const position = message.send_user_id !== "${sessionScope.loginId}" ? "right" : "left";
 
-        const msg = message.file_cnt != 0 ? paintImg(position, message.file_url,time) : paintChat(position, message.msg_cont, time);
-
-        // 사진은 get 요청이 종료된 후에
+        const msg = message.file_cnt != 0 ? paintImg(position, message.file_url, message.svr_intime_string) : paintChat(position, message.msg_cont, message.svr_intime_string);
 
         scrollToBottom();
     }
@@ -181,8 +175,8 @@
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());
-        document.querySelector("#chat").addEventListener("keypress", (e)=>{
-            if(e.key === "Enter"){
+        document.querySelector("#chat").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
                 sendMessage();
             }
         });
@@ -190,6 +184,9 @@
         document.querySelector("#img").addEventListener('input', sendImg);
         // document.querySelector("#imgSendBtn").addEventListener('click', sendImg);
         connect();
+
+        // const lo = document.querySelectorAll(".chatBox");
+        // lo.forEach(e => e.setAttribute("data-time", "ddd"));
     };
 </script>
 </body>
