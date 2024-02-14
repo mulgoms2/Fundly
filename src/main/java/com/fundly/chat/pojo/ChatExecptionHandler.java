@@ -12,7 +12,7 @@ public class ChatExecptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String commonExceptionHandling() {
-        log.error("잡았따");
+        log.error("ChatExeptionHandle.commonExecptionHandling() ");
         return "chat/error";
     }
 }
