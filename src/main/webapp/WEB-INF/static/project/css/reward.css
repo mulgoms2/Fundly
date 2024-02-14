@@ -9,6 +9,13 @@
 input {
     outline:none;
 }
+/*input[type=number]의 오른쪽 화살표 없애기*/
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
 body {
     background-color: #fcfcfc;
     font-family: "Noto Sans KR", sans-serif;
@@ -62,12 +69,7 @@ div.subTab > div.leftTab > button {
     flex-direction: row;
     align-items: center;
 }
-div.subTab > div.leftTab > button:active > div > i {
 
-}
-div.subTab > div.leftTab > button:active > div > span {
-
-}
 div.subTab > div.leftTab > button > div {
     display: flex;
     flex-direction: row;
@@ -76,22 +78,24 @@ div.subTab > div.leftTab > button > div {
 div.subTab > div.leftTab > button > div > i{
     font-size: 10px;
     display: block;
-    font-weight: 700;
+    font-weight: 600;
     color: #c4c4c4;
     margin-top: 2px;
 }
 div.subTab > div.leftTab > button > div > span{
     margin-left: 5px;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     color: #c4c4c4;
 }
 
 div.subTab > div.leftTab > button.active > div > i {
     color: #f86453;
+
 }
 div.subTab > div.leftTab > button.active > div > span {
     color: #3d3d3d;
+    font-weight: 700;
 }
 
 div.subTab > div.rightBtn {
@@ -128,17 +132,20 @@ div.subTab > div.rightBtn > div > a > i{
     font-weight: 700;
     color: #f86453;
 }
+/*여기까지 헤더의 일부*/
 
 
-/*헤더의 일부*/
 
-
-/*main 요소들*/
+/*진짜 main 요소들*/
 .pjWrap {
-    width: 1080px;
-    margin: 0 163.3px;
+    width: 100%;
+    box-shadow: inset 0 15px 10px -14px #ececec;
+    border-radius: 0;
 }
 .pjWrap .pjCont {
+    width: 1080px;
+    /*margin: 0 163.3px;*/
+    margin: 0 auto;
     padding: 44px 0 0;
 }
 .pjWrap .pjCont .pjBox {
@@ -233,13 +240,14 @@ div.subTab > div.rightBtn > div > a > i{
 .pjBox .pjForm{
     width: 630px; /*양 옆으로 여백 없애고 싶은데...? 어떻게 없애지*/
     padding: 44px 48px 44px;
-    margin-top: 50px;
+    /*margin-top: 44px;*/
     margin-bottom: 50px;
     border: .5px solid #ececec;
     box-sizing: border-box;
     height: 100%;
     background-color: #ffffff;
 }
+
 .pjBox .pjForm .first .tit{
     font-size: 16px;
     font-weight: 700;
@@ -380,13 +388,6 @@ div.subTab > div.rightBtn > div > a > i{
     font-style: normal; /*왜 body에 적용한 폰트가 textarea에서는 적용이 안될까*/
     color: #000000DE;
 }
-/*.pjBox .pjForm div.radio div p:nth-child(2){*/
-/*    font-size: 14px;*/
-/*    line-height: 24px;*/
-/*    font-weight: 400;*/
-/*    color : #6d6d6d;*/
-/*    margin: 0 0 10px;*/
-/*}*/
 
 .pjBox .pjForm div.radio div.txtCont textarea::placeholder{
     color: #d2d2d2;
