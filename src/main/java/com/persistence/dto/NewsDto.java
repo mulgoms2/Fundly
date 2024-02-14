@@ -13,7 +13,7 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 public class NewsDto {
-    private int news_seq;
+    private Integer news_seq;
     private int news_sort;
     private String news_title;
     private String news_cont;
