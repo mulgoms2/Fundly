@@ -12,7 +12,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/static/user/Likes.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/common.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/usercommon.css'/>">
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     </head>
 
@@ -23,76 +23,39 @@
                 <div class="title">관심 프로젝트</div>
                 <div class="tapContainer">
                     <div class="tapContainerList" id="divtapContainer">
-                        <span class="tapItem fontcolor"><a href="" >프로필</a></span>
-                        <span class="tapItem fontcolor"><a href="" >계정</a></span>
-                        <span class="tapItem fontcolor"><a href="" >결제수단</a></span>
-                        <span class="tapItem fontcolor"><a href="" >배송지</a></span>
-                        <span class="tapItem fontcolor"><a href="" >알림</a></span>
+                        <span class="tapItem fontcolor"><a href="" >좋아한 1<div></div></a></span>
+                        <span class="tapItem fontcolor"><a href="" >알림신청 0<div></div></a></span>
                     </div>
                 </div>
             </div>
-            <div class="line"></div>
 
             <!-- 탭 값 -->
-
             <div class="tapContainerMain">
                 <div class="container">
-                    <div class="profileimg">
-                        <div class="profileimgFormHeader">
-                            <p class="pTag">프로필 사진</p>
-                            <button class="ButtonTag">변경</button>
+                    <div class="stateCombo">
+                        <div class = "stateList" id="stateList" >진행중
+                            <div class="upDown" id ="upDown"></div>
+                            <div class="likestate" id = "likestate">
+                                <div class="stateItem" id="all">전체</div>
+                                <div class="stateItem" id="ing">진행중</div>
+                                <div class="stateItem" id="close">종료된</div>
+                            </div>
                         </div>
-                        <div class="proImg">
-                            <div class="proImgWrap">
-                                <div class="proImgFile" src=""></div>
+
+                        <div class="orderList" id="orderList">추가순
+                            <div class="upDown2" id ="upDown2"></div>
+                            <div class="stateOrderby" id="stateOrderby">
+                                <div class="stateOrderbyItem" id="add">추가순</div>
+                                <div class="stateOrderbyItem" id="deadline">마감 임박순</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="userName">
-                        <div class="userNameFormHeader">
-                            <p class="pTag">이름</p>
-                            <button class="ButtonTag">변경</button>
-                        </div>
-                        ${user_name}
-                    </div>
-
-                    <div class="userIntro">
-                        <div class="userIntroFormHeader">
-                            <p class="pTag">소개</p>
-                            <button class="ButtonTag">변경</button>
-                        </div>
-<%--                        ${user_name}--%>
-                        안녕하세요 ${user_name} 이라고 합니다.
-
-                    </div>
-
-                </div>
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-                <div class="userSettingContainer">
-                    <div class="userInfoMod"></div>
-                    <div class="userInfoComment">
-                        <p>어떤 정보가 프로필에 공개되나요?</p>
-                        <div class="userInfoCommentContent">
-                            프로필 사진과, 이름, 사용자 이름, 소개글, 웹사이트 및 회원님과 관련된 프로젝트 등이 프로필 페이지에 공개 됩니다. 프라이버시 설정을 활성화하시면 후원한 프로젝트 목록을 숨길 수 있습니다.
-                            <span><a href="<c:url value='/mypage/profile'/>">내 프로필 바로가기</a></span>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -103,12 +66,13 @@
             const tapContainer = document.getElementById('divtapContainer');
 
             tapContainer.addEventListener("click",(e)=>{
-                const tapItems = document.querySelectorAll('.tapItem');
 
-                tapItems.forEach(item => {
-                    // item.classList.add('on');
-                    // item.classList.remove('on'); // 모든 탭의 활성화 클래스를 제거합니다.
-                });
+                // const tapItems = document.querySelectorAll('.tapItem');
+                //
+                // tapItems.forEach(item => {
+                //     // item.classList.add('on');
+                //     // item.classList.remove('on'); // 모든 탭의 활성화 클래스를 제거합니다.
+                // });
 
                 if(e.target.id=="itemProfile"){
                     // e.target.parentElement.classList.add('on');
@@ -135,6 +99,67 @@
                     // alert('후원');
                 }
             })
+
+            // const stateList = document.getElementById('stateList');
+            // const orderList = document.getElementById('orderList');
+            //
+            // stateList.addEventListener('click', (e) => {
+            //     toggleContent("likestate");
+            //     if (stateOrderby.style.display == "block") {
+            //         toggleContent("stateOrderby");
+            //     }
+            // });
+            //
+            // orderList.addEventListener('click', (e) => {
+            //     toggleContent("stateOrderby");
+            //     if (likestate.style.display == "block") {
+            //         toggleContent("likestate");
+            //     }
+            // });
+
+            window.addEventListener("click",(e)=>{
+
+                const likestate = document.getElementById("likestate");
+                const stateOrderby = document.getElementById("stateOrderby");
+
+                if(e.target.id==='') {
+                    if (likestate.style.display == "block") {
+                        toggleContent("likestate");
+                    } else if (stateOrderby.style.display == "block") {
+                        toggleContent("stateOrderby");
+                    }
+
+                }else if(e.target.id==="stateList" || e.target.id==="upDown"){
+                    toggleContent("likestate");
+                    if(stateOrderby.style.display=="block"){ toggleContent("stateOrderby");}
+
+                    if(e.target.id == "all"){
+                    } else if(e.target.id == "ing") {
+                    } else if(e.target.id == "close") {
+                    }
+
+                }else if(e.target.id==="orderList" || e.target.id==="upDown2"){
+                    toggleContent("stateOrderby");
+                    if(likestate.style.display=="block"){ toggleContent("likestate");}
+
+                    if(e.target.id == "all"){
+                    } else if(e.target.id == "ing") {
+                    } else if(e.target.id == "close") {
+                    }
+                }
+            })
+
+            function toggleContent(list){
+                const content = document.getElementById(list);
+
+                if(content.style.display=="none"){
+
+                    content.style.display="block";
+
+                } else{
+                    content.style.display="none";
+                }
+            }
         </script>
     </body>
 </html>
