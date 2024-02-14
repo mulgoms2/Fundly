@@ -18,11 +18,18 @@ public class LikeController {
 
     @PostMapping("/like")
     @ResponseBody
-    public LikeDto handleLike(@RequestBody LikeDto likedto) throws Exception {
-        // 좋아요 상태 확인
-        int isLike =  likeservice.checkLike(likedto);
+    public LikeDto clickLike(@RequestBody LikeDto likedto) throws Exception {
+        // 변경된 좋아요 상태 가져오기
+        int isLike =  likeservice.changeLike(likedto);
         likedto.setLike_status(isLike);
-        return likeservice.getList(likedto);
+        return likeservice.getLike(likedto);
+    }
+
+    @PostMapping("/like/status")
+    @ResponseBody
+    public LikeDto IsLike(@RequestBody LikeDto likedto) throws Exception {
+        // 현재 좋아요 상태 가져오기
+        return likeservice.getLike(likedto);
     }
 
 //    @RequestMapping(value="/like")

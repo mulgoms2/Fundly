@@ -16,7 +16,7 @@ public class LikeServiceImpl implements LikeService {
     private final LikeDao likedao;
 
     @Override
-    public int checkLike(LikeDto likedto) throws Exception {
+    public int changeLike(LikeDto likedto) throws Exception {
 
         int result = 0;
 
@@ -36,7 +36,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public LikeDto getList(LikeDto likedto) throws Exception{
+    public LikeDto getLike(LikeDto likedto) throws Exception{
         return likedao.getLike(likedto);
     }
 

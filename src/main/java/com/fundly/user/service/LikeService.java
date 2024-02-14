@@ -8,10 +8,10 @@ import java.util.List;
 public interface LikeService {
 
     //    찜 상태 확인
-    int checkLike(LikeDto likedto) throws Exception;
+    int changeLike(LikeDto likedto) throws Exception;
 
     //    찜목록 가져오기
-    LikeDto getList(LikeDto likedto) throws Exception;
+    LikeDto getLike(LikeDto likedto) throws Exception;
 
     //    찜 취소하기
     int remove(LikeDto likedto);
