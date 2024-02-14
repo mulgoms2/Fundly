@@ -8,7 +8,7 @@ public class FileDto {
     private Integer seq;
     private MultipartFile file;
     private String table_name;
-    private String origin_uri;
-    private String saved_uri;
+    private String file_origin_url;
+    private String file_saved_url;
     private String table_key;
 }
