@@ -9,12 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
 
-<%--<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>--%>
-
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/static/user/Message.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/common.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/usercommon.css'/>">
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     </head>
 

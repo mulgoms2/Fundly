@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -35,6 +37,56 @@ public class PayController {
     public PayController(PayMeansService payMeansService, PortOneService portOneService) {
         this.payMeansService = payMeansService;
         this.portOneService = portOneService;
+    }
+
+    @PostMapping("/update")
+    public String updateDefaultMeans(PayMeansDto payMeansDto, RedirectAttributes rattr) {
+        // 1. 기본결제수단지정 버튼을 클릭한다.
+        // 2. Y인 row가 있으면 N으로 바꾼다.
+        // 3. 해당 결제수단을 Y로 바꾼다.
+        // 4. Y인 row가 1개인지 검증한다.
+        // 4. Y인 것은 태그를 붙이고 첫번째로 출력한다.
+        String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
+        try {
+            log.info("payMeansDto ??? " + payMeansDto);
+            // 1. session의 user Id와 payMeansDto user Id가 같은지 확인한다.
+            if (!userCheck(payMeansDto.getUser_id())) {
+                throw new Exception("Update Failed. - userCheck Error");
+            }
+            log.info("userCheck 성공");
+
+            // 2. Y인 row가 있으면 N으로 바꾼다.
+            Map map = new HashMap();
+            map.put("user_id", userId);
+            map.put("dba_mod_id", userId);
+            int rowCnt = payMeansService.unsetDefaultPayMeans(map);
+            if (rowCnt != 1) {
+                throw new Exception("Update Failed. - unsetDefaultPayMeans Error");
+            }
+            log.info("unsetDefaultPayMeans 성공");
+
+            // 3. 해당 결제수단을 Y로 바꾼다.
+            payMeansDto.setDba_mod_id(userId);
+            rowCnt = payMeansService.setDefaultPayMeans(payMeansDto);
+            if (rowCnt != 1) {
+                throw new Exception("Update Failed. - setDefaultPayMeans Error");
+            }
+            log.info("setDefaultPayMeans 성공");
+
+            // 4. Y인 row가 1개인지 검증한다.
+            rowCnt = payMeansService.getDefaultPayMeansCount(userId);
+            if (rowCnt != 1) {
+                throw new Exception("Update Failed. - getDefaultPayMeansCount Error");
+            }
+            log.info("getDefaultPayMeansCount 성공");
+
+            rattr.addFlashAttribute("msg", "UPDATE_SUCCESS");
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("update 실패");
+            rattr.addFlashAttribute("msg", "UPDATE_ERROR");
+        }
+        return "redirect:/pay/list";
     }
 
     @PostMapping("/remove")
@@ -80,10 +132,13 @@ public class PayController {
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
         payMeansDto.setUser_id(userId);
         payMeansDto.setDba_reg_id(userId);
+        if (payMeansDto.getDefault_pay_means_yn() == null) {
+            payMeansDto.setDefault_pay_means_yn("N");
+        }
         try {
             String payMeansId = payMeansService.getPayMeansId(userId);
             payMeansDto.setPay_means_id(payMeansId);
-            log.info("payMeansId = " + payMeansId);
+//            log.info("payMeansId = " + payMeansId);
 
             BillKeyRequestDto billKeyRequestDto = new BillKeyRequestDto(
                     payMeansDto.getCard_no(),payMeansDto.getCard_valid_date(), payMeansDto.getOwn_birth(),
@@ -108,6 +163,12 @@ public class PayController {
             rattr.addFlashAttribute("msg", "REG_ERROR");
         }
         return "redirect:/pay/list";
+    }
+
+    private boolean userCheck(String payMeansDtoUserId) {
+//        String sessionId = (String) session.getAttribute("id");
+        String sessionId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
+        return sessionId.equals(payMeansDtoUserId);
     }
 
 }
