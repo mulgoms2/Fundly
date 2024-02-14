@@ -11,12 +11,12 @@
     </insert>
 
     <select id="select" parameterType="int" resultType="CtgGuideDto">
-        SELECT ctg_guide_seq, ctg_guide_title, ctg_guide_cont, reg_id, ctg_guide_view_cnt, reg_dtm, mod_dtm,hid_yn
+        SELECT ctg_guide_seq, ctg_guide_title, ctg_guide_cont, reg_id, ctg_guide_view_cnt, reg_dtm, mod_dtm,hid_yn,mod_id
         FROM ctg_guide WHERE ctg_guide_seq=#{ctg_guide_seq}
     </select>
 
     <select id="selectAll" resultType="CtgGuideDto">
-        SELECT ctg_guide_seq, ctg_guide_title, ctg_guide_cont, reg_id, ctg_guide_view_cnt, reg_dtm,hid_yn
+        SELECT ctg_guide_seq, ctg_guide_title, ctg_guide_cont, reg_id, ctg_guide_view_cnt, reg_dtm,hid_yn,mod_dtm,mod_id
         FROM ctg_guide
     </select>
 
