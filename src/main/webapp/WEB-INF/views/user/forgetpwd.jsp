@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>비밀번호 찾기</title>
-<%--    <link rel="stylesheet" href="<c:url value='/static/user/userJoin.css'/>">--%>
+
 <%--    <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>--%>
 <%--    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>--%>
 </head>

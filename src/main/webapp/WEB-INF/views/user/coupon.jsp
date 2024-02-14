@@ -12,7 +12,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/static/user/Coupon.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/common.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/usercommon.css'/>">
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     </head>
 

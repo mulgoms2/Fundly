@@ -12,7 +12,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/static/user/Setting.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/common.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/usercommon.css'/>">
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     </head>
 
@@ -31,7 +31,6 @@
                     </div>
                 </div>
             </div>
-            <div class="line"></div>
 
             <!-- 탭 값 -->
 
@@ -64,11 +63,8 @@
                         </div>
 <%--                        ${user_name}--%>
                         안녕하세요 ${user_name} 이라고 합니다.
-
                     </div>
-
                 </div>
-
 
 
                 <div class="userSettingContainer">
@@ -80,13 +76,11 @@
                             <span><a href="<c:url value='/mypage/profile'/>">내 프로필 바로가기</a></span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
 
         <script>
-
             const tapContainer = document.getElementById('divtapContainer');
 
             tapContainer.addEventListener("click",(e)=>{

@@ -11,7 +11,7 @@
 
 <head>
     <title>회원가입</title>
-    <link rel="stylesheet" href="<c:url value='/static/user/userJoin.css?after'/>">
+    <link rel="stylesheet" href="<c:url value='/static/user/Join.css?after'/>">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
@@ -53,12 +53,20 @@
 
                     <h3>비밀번호</h3>
                     <div class="usPwd">
-                        <input type="password" id ="user_pwd" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
+                        <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
+                        <div class="eyes">
+                            <div class="password-toggle" id="togglePwd"></div>
+                        </div>
                         <div id="msgPwd" class="msg"/>
                     </div>
 
-                    <div class="usPwd">
+                    <div class="usPwd2">
                         <input type="password" id = "user_pwdConfirm" name="user_pwdConfirm" placeholder="비밀번호 확인" autocomplete="off"/>
+
+                        <div class="eyes">
+                            <div class="password-toggle" id="togglePwdConfirm"></div>
+                        </div>
+
                         <div id="msgPwdConfirm" class="msg"/>
                     </div>
 
@@ -146,6 +154,36 @@
 
     /* form */
     let joinForm = document.querySelector("#joinForm");
+
+    /* pwd eye */
+    const pwdInput = document.getElementById('user_pwd');
+    const pwdInputConfirm = document.getElementById('user_pwdConfirm');
+
+    const togglePwd = document.getElementById('togglePwd');
+    const togglePwdConfirm = document.getElementById('togglePwdConfirm');
+
+    togglePwd.addEventListener('click', function () {
+
+        if (pwdInput.type === 'password') {
+            pwdInput.type = 'text';
+            togglePwd.style.backgroundImage = 'url("/static/img/Icon-eye.png")';
+        } else {
+            pwdInput.type = 'password';
+            togglePwd.style.backgroundImage = 'url("/static/img/Icon-private.png")';
+        }
+    });
+
+    togglePwdConfirm.addEventListener('click', function () {
+
+        if (pwdInputConfirm.type === 'password') {
+            pwdInputConfirm.type = 'text';
+            togglePwdConfirm.style.backgroundImage = 'url("/static/img/Icon-eye.png")';
+        } else {
+            pwdInputConfirm.type = 'password';
+            togglePwdConfirm.style.backgroundImage = 'url("/static/img/Icon-private.png")';
+        }
+    });
+
 
     /* 정규식 */
     // 이메일 정규식
