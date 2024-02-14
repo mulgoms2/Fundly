@@ -8,7 +8,7 @@ public interface UserJoinDao {
 
     int count() throws Exception;
 
-    int emailCheck(String email) throws Exception;
+    int emailCheck(UserDto userdto) throws Exception;
 
     int idCheck() throws Exception;
 

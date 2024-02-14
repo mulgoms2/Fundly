@@ -76,11 +76,13 @@ window.onload = function () {
 
     gftBtn.addEventListener("click", function () {
         const cnt = document.querySelectorAll("#itemList div");
-        console.dir(cnt); //
+        // console.dir(cnt); //
         this.querySelector('i').style.color = '#f86453';
         this.querySelector('span').style.color = '#3d3d3d';
+        this.querySelector('span').style.fontWeight = '700';
         itmBtn.querySelector('i').style.color = '#c4c4c4';
         itmBtn.querySelector('span').style.color = '#c4c4c4';
+        itmBtn.querySelector('span').style.fontWeight = '600';
         //alert(cnt.length);
         // 원래는 ${itemList.size()}로 비교하려했는데 실시간 반영이 안되더라.
         //비동기라서 화면 전환이 되는ㄱㅔ 아니다보니--%>
@@ -102,10 +104,13 @@ window.onload = function () {
     itmBtn.addEventListener("click", function () {
         const cnt = document.querySelectorAll("#itemList > div");
         console.dir(cnt); //
+
         this.querySelector('i').style.color = '#f86453';
         this.querySelector('span').style.color = '#3d3d3d';
+        this.querySelector('span').style.fontWeight = '700';
         gftBtn.querySelector('i').style.color = '#c4c4c4';
         gftBtn.querySelector('span').style.color = '#c4c4c4';
+        gftBtn.querySelector('span').style.fontWeight = '600';
         location.href = "#item";
         window.scrollTo(0,0); //최상단으로 이동
         if (cnt.length === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
@@ -915,4 +920,6 @@ const init = function () {
     const multiResult = document.querySelector("#multiResult");
     showList(mkOptList(optArr), multiResult);
 }
+
+
 

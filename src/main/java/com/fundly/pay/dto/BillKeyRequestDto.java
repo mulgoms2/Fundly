@@ -3,6 +3,7 @@ package com.fundly.pay.dto;
 import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class FundGuideDto {
-    private int fund_guide_seq;
+    private Integer fund_guide_seq;
     private int fund_guide_sort;
     private String fund_guide_type;
     private String fund_guide_title;

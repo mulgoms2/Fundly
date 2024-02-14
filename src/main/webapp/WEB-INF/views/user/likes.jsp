@@ -51,100 +51,94 @@
                         </div>
                     </div>
 
-
-
-
-
-
-
+                    <div class="projectListWithCard">
+                        <div class="projectCardWrap">
+                            <div class="cardWrap">
+                                <div class="banBox"><!--2번 배너-->
+                                    <div class="mnBan">
+                                        <div class="banImg after">
+                                            <a href="#">
+                                                <img src="/static/testimg/item2.webp" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="banTxt">
+                                        <div class="txtGr">
+                                            <div class="subTxt">
+                                                 <span>
+                                                    <a href="#">캐릭터·굿즈</a>
+                                                </span>
+                                                <span class="bar">
+                                                    <a href="#">왈맹 스튜디오</a>
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <div class="subTit">
+                                                    <a href="#">너 눈을 왜 그렇게 떠...? 왈맹이 굿즈... 컴백...</a>
+                                                </div>
+                                                <div class="subDt">
+                                                    <a href="#">카카오톡 이모티콘 '너 눈을 왜 그렇게 떠' 시리즈의 주인공 왈맹이를 만나보세요.</a>
+                                                </div>
+                                                 <div class="psTag">
+                                                     <span class="per">1625%</span>
+                                                     <span class="won"><em>16,853,700</em>원</span>
+                                                     <span class="day">20일 남음</span>
+                                                 </div>
+                                            </div>
+                                            <div class="percentBar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script>
 
-            const tapContainer = document.getElementById('divtapContainer');
+            const likestate = document.getElementById("likestate");
+            const stateOrderby = document.getElementById("stateOrderby");
 
-            tapContainer.addEventListener("click",(e)=>{
+            const stateList = document.querySelector('.stateList');
+            const orderList = document.querySelector('.orderList');
 
-                // const tapItems = document.querySelectorAll('.tapItem');
-                //
-                // tapItems.forEach(item => {
-                //     // item.classList.add('on');
-                //     // item.classList.remove('on'); // 모든 탭의 활성화 클래스를 제거합니다.
-                // });
+            stateList.addEventListener("click",()=> {
+                toggleContent("likestate");
+                if(stateOrderby.style.display==="block"){ toggleContent("stateOrderby");}
+                if(MyPageList.style.display==="block"){ toggleContent("MyPageList");}
+            },{capture:true});
 
-                if(e.target.id=="itemProfile"){
-                    // e.target.parentElement.classList.add('on');
-                    // tap_itemProfile.style.display = "block";
+            orderList.addEventListener('click', () => {
+                toggleContent("stateOrderby");
+                if(likestate.style.display==="block"){ toggleContent("likestate");}
+                if(MyPageList.style.display==="block"){ toggleContent("MyPageList");}
+            },{capture:true});
 
-                    // tap_itemProfile.style.display = "block";
-                    // // itemProjectReview.style.display = "none";
-                    // // alert('프로필');
-
-                }
-                else if(e.target.id=="itemProjectReview"){
-                    // tap_itemProfile.style.display = "none";
-                    // // itemProjectReview.style.display = "block";
-                    // alert('후기');
-
-                } else if(e.target.id=="itemMakeProject"){
-                    // tap_itemProfile.style.display = "none";
-                    // // itemProjectReview.style.display = "none";
-                    // alert('올린');
-
-                } else if(e.target.id=="itemProjectOrder"){
-                    // tap_itemProfile.style.display = "none";
-                    // // itemProjectReview.style.display = "none";
-                    // alert('후원');
-                }
-            })
-
-            // const stateList = document.getElementById('stateList');
-            // const orderList = document.getElementById('orderList');
-            //
-            // stateList.addEventListener('click', (e) => {
-            //     toggleContent("likestate");
-            //     if (stateOrderby.style.display == "block") {
-            //         toggleContent("stateOrderby");
+            // userIf.removeEvent("click");
+            // userIf.addEventListener("click",()=> {
+            //     if(loginInfo.outerText !== '로그인/회원가입' ){
+            //         toggleContent("MyPageList");
+            //         if(likestate.style.display==="block"){ toggleContent("likestate");}
+            //         if(stateOrderby.style.display==="block"){ toggleContent("stateOrderby");}
+            //     }else{
+            //         return window.location.href='/login/login';
             //     }
-            // });
-            //
-            // orderList.addEventListener('click', (e) => {
-            //     toggleContent("stateOrderby");
-            //     if (likestate.style.display == "block") {
-            //         toggleContent("likestate");
-            //     }
-            // });
+            // },{capture:true});
 
-            window.addEventListener("click",(e)=>{
 
-                const likestate = document.getElementById("likestate");
-                const stateOrderby = document.getElementById("stateOrderby");
 
-                if(e.target.id==='') {
-                    if (likestate.style.display == "block") {
+            window.addEventListener("click",(e)=> {
+                // if (e.target.classList !== 'likestate' ||e.target.classList!=='stateOrderby') {\
+                if(e.target.id ===''){
+                    if (likestate.style.display === "block") {
                         toggleContent("likestate");
-                    } else if (stateOrderby.style.display == "block") {
+                    } else if (stateOrderby.style.display === "block") {
                         toggleContent("stateOrderby");
                     }
-
-                }else if(e.target.id==="stateList" || e.target.id==="upDown"){
-                    toggleContent("likestate");
-                    if(stateOrderby.style.display=="block"){ toggleContent("stateOrderby");}
-
-                    if(e.target.id == "all"){
-                    } else if(e.target.id == "ing") {
-                    } else if(e.target.id == "close") {
-                    }
-
-                }else if(e.target.id==="orderList" || e.target.id==="upDown2"){
-                    toggleContent("stateOrderby");
-                    if(likestate.style.display=="block"){ toggleContent("likestate");}
-
-                    if(e.target.id == "all"){
-                    } else if(e.target.id == "ing") {
-                    } else if(e.target.id == "close") {
+                    else if (document.getElementById('MyPageList').style.display === "block") {
+                        toggleContent("MyPageList");
                     }
                 }
             })
@@ -152,8 +146,7 @@
             function toggleContent(list){
                 const content = document.getElementById(list);
 
-                if(content.style.display=="none"){
-
+                if(content.style.display==="none" || content.style.display === ""){
                     content.style.display="block";
 
                 } else{

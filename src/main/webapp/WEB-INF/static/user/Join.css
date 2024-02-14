@@ -21,6 +21,7 @@
 
 #main{
     margin-top: 2.5%;
+    margin-bottom: 2%;
     /*margin: 0 auto;*/
 }
 
@@ -203,29 +204,22 @@ h3{
 }
 
 /* pwd eye */
-
 .usPwd, .usPwd2 {
     position: relative;
-    /*display: inline-block;*/
-    /*align-items: center;*/
 }
 
 .usPwd input[type="password"], .usPwd input[type="text"] {
     padding-right: 30px;
 }
 
+
 .password-toggle {
+    width: 20px;
+    height: 20px;
     position: absolute;
-    /*top : 50%;*/
-    right: 5px;
-    /*transform: translateY(-50%);*/
-    transform: translateY(-190%);
-    cursor: pointer;
-
-
-    width: 30px;
-    height: 30px;
-    margin-left: 20px;
+    right: 12px;
+    top: 9px;
     background: url(../img/Icon-private.png) no-repeat center center;
+    /*background: url(/static/img/Icon-private.png) no-repeat center center;*/
     background-size: cover;
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.admin.model.SubHelpDao">
+    <insert id="insert" parameterType="SubHelpDto">
+        INSERT INTO sub_help
+            (sub_help_title, sub_help_sort,sub_help_cont, reg_id)
+        VALUES
+            (#{sub_help_title}, #{sub_help_sort},#{sub_help_cont},#{reg_id})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="SubHelpDto">
+        SELECT sub_help_seq, sub_help_title, sub_help_cont, reg_id, sub_help_view_cnt, reg_dtm, mod_dtm,hid_yn,mod_id
+        FROM sub_help WHERE sub_help_seq=#{sub_help_seq}
+    </select>
+
+    <select id="selectAll" parameterType="int" resultType="SubHelpDto">
+        SELECT sub_help_seq, sub_help_title, sub_help_cont, reg_id, sub_help_view_cnt, reg_dtm,hid_yn,mod_dtm,mod_id,sub_help_sort
+        FROM sub_help
+        WHERE sub_help_sort = #{sub_help_sort}
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM sub_help where sub_help_seq=#{sub_help_seq} and reg_id=#{reg_id}
+    </delete>
+
+    <delete id="deleteAll" >
+        DELETE FROM sub_help
+    </delete>
+
+    <update id="update" parameterType="SubHelpDto">
+        UPDATE sub_help
+        SET   sub_help_title = #{sub_help_title}
+          , sub_help_cont = #{sub_help_cont}
+          , mod_dtm = now()
+          ,  mod_id = #{reg_id}
+        WHERE sub_help_seq = #{sub_help_seq} and reg_id = #{reg_id}
+    </update>
+
+    <select id="count"  parameterType="int" resultType="int">
+        select count(*) from sub_help where sub_help_sort = #{sub_help_sort}
+    </select>
+
+    <select id="countSub"   resultType="int">
+        select count(DISTINCT sub_help_sort)
+        from sub_help;
+    </select>
+
+    <update id="increaseView" parameterType="int">
+        UPDATE sub_help
+        SET sub_help_view_cnt = sub_help_view_cnt + 1
+        WHERE sub_help_seq = #{sub_help_seq}
+    </update>
+</mapper>
