@@ -23,5 +23,6 @@
         <typeAlias alias="LikeDto" type="com.persistence.dto.LikeDto"/>
         <typeAlias type="com.persistence.dto.FileDto" alias="FileDto"/>
         <typeAlias type="com.persistence.dto.ChatRequest" alias="ChatRequest"/>
+        <typeAlias alias="OrderDto" type="com.persistence.dto.OrderDto" />
     </typeAliases>
 </configuration>
