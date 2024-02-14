@@ -19,9 +19,9 @@
                             </textarea>
     <button onclick="goToWrite()" style=${newsModifyInfo!=null ? "display:none" : ""}>등록</button>
     <button onclick="goToModify()" style=${newsModifyInfo!=null ? "" : "display:none"} >수정완료</button>
-    <button onclick="location.href='<c:url value="/admin/list"/>'"  style=${newsModifyInfo!=null ? "" : "display:none"}>취소</button>
     <button onclick="goToDelete()">삭제</button>
 </form>
+<button onclick="location.href='<c:url value="/admin/list"/>'"  style=${newsModifyInfo!=null ? "" : "display:none"}>취소</button>
 <script>
     function goToWrite(){
         let form = document.getElementById("push");
