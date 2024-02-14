@@ -8,87 +8,69 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://kit.fontawesome.com/a26f9e7c74.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/project/css/reward.css">
-    <script defer src="/static/project/js/reward.js"></script>
-    <style>
-        .hidden {
-            display : none;
-        }
-        .pjBox {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-        }
-        .pjBox .pjForm {
-            display: flex;
-            flex-direction: column;
-        }
-        input {
-            outline : none;
-        }
-        div.multiOpt, div.singleOpt {
-            display : none;
-        }
-        li:hover {
-            cursor: pointer;
-        }
-        .input {
-            width: 80%;
-        }
-        .dropdown {
-            width: 29%;
-            padding: 5px;
-        }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-<div class="pjSubTb">
-    <button type="button" id="gftBtn">
-        선물
-    </button>
-    <button type="button" id="itmBtn">
-        아이템
-    </button>
-</div>
 
-<div class="pjWrap">
+<!--헤더의 일부-->
+<div class="subHead">
+    <div class="subTab">
+        <div class="leftTab">
+            <button id="gftBtn" class="active" type="button">
+                <div><i class="fas fa-solid fa-gift"></i><span>선물</span></div>
+            </button>
+            <button id="itmBtn" type="button">
+                <div><i class="fas fa-solid fa-list"></i><span>아이템</span></div>
+            </button>
+        </div>
+        <div class="rightBtn">
+            <div>
+                <a href="javascript:void(0)">
+                    <i class="fas fa-solid fa-circle-info"></i>
+                    <span>선물&middot;아이템&middot;옵션&middot;가이드</span>
+                </a>
+            </div>
+            <div>
+                <a href="javascript:void(0)">
+                    <i class="far fa-regular fa-lightbulb"></i>
+                    <span>선물 아이디어</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--헤더의 일부-->
+
+<div class="pjWrap reward">
     <div class="pjCont">
         <!-- reward.jsp 요청시, 등록된 아이템이 하나도 없다면 보여주는 화면 -->
         <%--        <c:set var="itemList" value="${itemList}"/>--%>
         <%--        <c:if test="${empty itemList}"> <!--JS로 처리하고 싶었지만 안된다 -->--%>
         <div class="pjBox str" id="str">
-            <div>
+            <div class="pjInfo">
                 <div>
+                    <div class="myList">내가 만든 선물 count</div>
                     <div>
-                        선물 만들기
+                        <div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="pjForm">
                 <div>
-                    <button type="button" id="strBtn">아이템을 먼저 만들어주세요</button>
                     <div>
-                        <h2>후원 가치를 높이는 선물</h2>
-                        <br>
-                        <p>아직 등록된 아이템이 없습니다.</p>
-                        <br>
-                        <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
-                        <p>아이템을 등록 후 다양한 금액대로 여러 개의 선물을 만들어주세요. </p>
-                        <p>펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                        <div>
+                            선물 만들기
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" id="strBtn">아이템을 먼저 만들어주세요</button>
+                        <div>
+                            <h2>후원 가치를 높이는 선물</h2>
+                            <br>
+                            <p>아직 등록된 아이템이 없습니다.</p>
+                            <br>
+                            <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
+                            <p>아이템을 등록 후 다양한 금액대로 여러 개의 선물을 만들어주세요. </p>
+                            <p>펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -302,7 +284,7 @@
                     </section>
                     <!--객관식-->
                     <section>
-                        <div class="radio multiOpt">
+                        <div class="radio multiOpt" style="display:none">
                             <div>
                                 <p>옵션 항목</p>
                                 <p>입력완료 후 Enter키를 누르면 옵션 항목이 생성됩니다.
@@ -320,7 +302,7 @@
                         </div>
                         <div></div>
                         <!--주관식-->
-                        <div class="radio singleOpt">
+                        <div class="radio singleOpt" style="display:none">
                             <div>
                                 <p>옵션 항목</p>
                             </div>
@@ -339,10 +321,7 @@
         </div> <!--Item-->
     </div>
 </div>
-<script>
-</script>
-</body>
-</html>
+<%--<script src="/static/project/js/reward.js"></script>--%>
 
 
 

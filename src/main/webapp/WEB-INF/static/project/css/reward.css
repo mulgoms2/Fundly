@@ -6,6 +6,16 @@
     box-sizing: border-box;
     /*border-radius :5px;*/
 }
+input {
+    outline:none;
+}
+/*input[type=number]의 오른쪽 화살표 없애기*/
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
 body {
     background-color: #fcfcfc;
     font-family: "Noto Sans KR", sans-serif;
@@ -18,12 +28,125 @@ body {
 div {
     border-radius: 4px;
 }
-.pjWrap {
+div.subHead {
+    width: 100%;
+    border-top: .5px solid #ececec;
+    border-bottom: .5px solid #ececec;
+    background-color: #ffffff;
+}
+/*헤더의 일부*/
+div.subHead.fixed {
+    position: fixed;
+    top: 124px;
+    z-index: 9;
+
+}
+div.subTab{
     width: 1080px;
-    margin : 0 auto;
+    height: 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 163.3px;
+
+
+}
+div.subTab > div.leftTab{
+    width: 135px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+div.subTab > div.leftTab > button {
+    height: 24px;
+    border: none;
+    background-color: transparent;
+    color: #3d3d3d;
+    margin: 0 18px 0 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.subTab > div.leftTab > button > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+div.subTab > div.leftTab > button > div > i{
+    font-size: 10px;
+    display: block;
+    font-weight: 600;
+    color: #c4c4c4;
+    margin-top: 2px;
+}
+div.subTab > div.leftTab > button > div > span{
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #c4c4c4;
+}
+
+div.subTab > div.leftTab > button.active > div > i {
+    color: #f86453;
+
+}
+div.subTab > div.leftTab > button.active > div > span {
+    color: #3d3d3d;
+    font-weight: 700;
+}
+
+div.subTab > div.rightBtn {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #3d3d3d;
+}
+
+div.subTab > div.rightBtn > div > a {
+    height: 36px;
+    border: .5px solid #ececec;
+    border-radius: 45px;
+    padding: 0 17px;
+    margin-left: 12px;
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.subTab > div.rightBtn > div > a > span{
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    margin-left: 5px;
+}
+
+div.subTab > div.rightBtn > div > a > i{
+    font-size: 11px;
+    font-weight: 700;
+    color: #f86453;
+}
+/*여기까지 헤더의 일부*/
+
+
+
+/*진짜 main 요소들*/
+.pjWrap {
+    width: 100%;
+    box-shadow: inset 0 15px 10px -14px #ececec;
+    border-radius: 0;
 }
 .pjWrap .pjCont {
-    padding: 0;
+    width: 1080px;
+    /*margin: 0 163.3px;*/
+    margin: 0 auto;
+    padding: 44px 0 0;
 }
 .pjWrap .pjCont .pjBox {
 
@@ -33,7 +156,6 @@ div {
     flex-direction: row;
     justify-content: space-between;
     width: 1080px;
-    padding: 0;
 }
 .pjBox .pjInfo {
     width: 360px;
@@ -118,12 +240,14 @@ div {
 .pjBox .pjForm{
     width: 630px; /*양 옆으로 여백 없애고 싶은데...? 어떻게 없애지*/
     padding: 44px 48px 44px;
+    /*margin-top: 44px;*/
+    margin-bottom: 50px;
     border: .5px solid #ececec;
     box-sizing: border-box;
     height: 100%;
-    margin: auto 0;
     background-color: #ffffff;
 }
+
 .pjBox .pjForm .first .tit{
     font-size: 16px;
     font-weight: 700;
@@ -264,13 +388,6 @@ div {
     font-style: normal; /*왜 body에 적용한 폰트가 textarea에서는 적용이 안될까*/
     color: #000000DE;
 }
-/*.pjBox .pjForm div.radio div p:nth-child(2){*/
-/*    font-size: 14px;*/
-/*    line-height: 24px;*/
-/*    font-weight: 400;*/
-/*    color : #6d6d6d;*/
-/*    margin: 0 0 10px;*/
-/*}*/
 
 .pjBox .pjForm div.radio div.txtCont textarea::placeholder{
     color: #d2d2d2;
@@ -345,6 +462,7 @@ div {
 }
 .pjBox .pjInfo #giftList > div strong {
     font-size: 20px;
+    font-weight: 700;
     margin: 0 0 8px;
 }
 .pjBox .pjInfo #giftList > div span {
@@ -570,13 +688,25 @@ div {
     border: .5px solid #ececec;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     align-items: center;
     margin-top: 11px;
     padding: 10px 16px 10px;
+    position: relative;
 }
 .pjBox .pjForm  div.limRadio > div:hover {
     cursor: pointer;
+}
+.pjBox .pjForm div.limRadio > div > span {
+    width: 138px;
+    height: 35px;
+    border: .5px solid #ececec;
+    padding-left: 12px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 15px;
+    /*justify-content: flex-end;*/
 }
 .pjBox .pjForm  div.limRadio > div > input[type=radio]{
     -webkit-appearance: none;
@@ -602,15 +732,6 @@ div {
 .pjBox .pjForm div.limRadio > div > input[type=radio]+label {
     line-height: 56px;
     padding-left: 15px;
-}
-.pjBox .pjForm div.limRadio > div > span {
-    width: 138px;
-    height: 35px;
-    border: .5px solid #ececec;
-    padding-left: 12px;
-    display: flex;
-    flex-direction: row;
-    /*justify-content: flex-end;*/
 }
 .pjBox .pjForm div.limRadio > div > span > input{
     border: none;

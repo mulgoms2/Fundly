@@ -65,7 +65,7 @@ body{
 }
 
 .kakaBtn{
-    position: relative;
+    /*position: relative;*/
     display: inline-flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -200,4 +200,32 @@ h3{
 
 .single{
     font-size: 12px;
+}
+
+/* pwd eye */
+
+.usPwd, .usPwd2 {
+    position: relative;
+    /*display: inline-block;*/
+    /*align-items: center;*/
+}
+
+.usPwd input[type="password"], .usPwd input[type="text"] {
+    padding-right: 30px;
+}
+
+.password-toggle {
+    position: absolute;
+    /*top : 50%;*/
+    right: 5px;
+    /*transform: translateY(-50%);*/
+    transform: translateY(-190%);
+    cursor: pointer;
+
+
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+    background: url(../img/Icon-private.png) no-repeat center center;
+    background-size: cover;
 }

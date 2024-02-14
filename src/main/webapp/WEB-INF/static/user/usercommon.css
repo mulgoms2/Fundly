@@ -3,6 +3,81 @@
     color: rgba(0, 0, 0, 0.87);
 }
 
+/* header */
+
+.infoGr{
+    position: relative;
+}
+
+.MyPageList{
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    top: 50px;
+    right: 0px;
+    width: 240px;
+    transition: all 0.3s ease-in-out 0s;
+    border: 1px solid rgb(228, 228, 228);
+    box-sizing: border-box;
+    border-radius: 4px;
+    z-index: 1200;
+    padding: 10px 0;
+    overflow: hidden;
+    background: rgb(255, 255, 255);
+}
+
+.userIf{
+    z-index: 100;
+}
+
+.pageItem {
+    padding: 4px 16px;
+    display: flex;
+    width: 100%;
+    height: 46px;
+    min-height: 46px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    font-size: 14px;
+    line-height: 22px;
+    color: rgb(13, 13, 13);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.pageItem:hover {
+    background: rgba(110, 110, 110, 0.1);
+}
+
+.line{
+    display: flex;
+    width: 100%;
+    height: 1px;
+    background: rgb(240, 240, 240);
+    content: " ";
+}
+
+/* header end */
+
+.header {
+    /*width: 100%;*/
+    /*height: 1px;*/
+    /*background: rgb(240, 240, 240);*/
+    /*content: " ";*/
+}
+
+/* font */
+.fontcolor{
+    color: rgb(160, 155, 155);
+    font-size: 18px;
+}
+
+.infoGr{
+    padding: 5px;
+}
+
 /* line */
 .line{
     width: 100%;
@@ -11,12 +86,6 @@
     background: rgb(240, 240, 240);
     /* background: #555353; */
     content: " ";
-}
-
-/* font */
-.fontcolor{
-    color: rgb(160, 155, 155);
-    font-size: 18px;
 }
 
 /* main */

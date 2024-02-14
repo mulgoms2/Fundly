@@ -88,82 +88,13 @@
             </div>
         </div>
     </body>
-
     <script>
         const chat = document.getElementById('chat');
-        const tap_itemProfile = document.getElementById('tap_itemProfile');
 
         function chatBtn(){
             <%--let url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + $("#pj").val();--%>
-<%----%>
+            <%----%>
 //             window.open(url, "_blank", 'width=600px,height=800px,scrollbars=yes');
-        }
-
-        /* 로그인/회원가입 or 로그인 회원 정보 */
-        const loginInfo = document.getElementById('loginInfo');
-
-        loginInfo.addEventListener("click",() => {
-
-            if(loginInfo.outerText !== '로그인/회원가입'){
-                toggleContent("MyPageList");
-            }else{
-                return window.location.href='/login/login';
-            }
-        })
-
-        const MyPageList = document.getElementById('MyPageList');
-
-        MyPageList.addEventListener("click",(e)=>{
-
-            if(e.target.id == "Profile"){
-                // 프로필 화면으로
-                return window.location.href = '/mypage/profile';
-
-            } else if(e.target.id == "Coupon") {
-                // 응원권 화면으로
-                return window.location.href = '/mypage/coupon';
-
-            } else if(e.target.id == "fundingProject") {
-                // 후원한 프로젝트 화면으로
-                return window.location.href = '/mypage/fundingProject';
-
-            // } else if(e.target.id == "Like") {
-            //
-            //     return window.location.href = '/like';
-
-            } else if(e.target.id == "Alarm") {
-                // 알림 화면으로
-                return window.location.href = '/mypage/alarm';
-
-            } else if(e.target.id == "Message") {
-                // 메시지 화면으로
-                return window.location.href = '/mypage/message';
-
-            } else if(e.target.id == "MakeProject") {
-                // 내가 만든 프로젝트 화면으로
-                return window.location.href = '/mypage/makeProject';
-
-            } else if(e.target.id == "Setting") {
-                // 설정 화면으로
-                return window.location.href = '/mypage/setting';
-
-            } else if(e.target.id == "LogOut") {
-
-                toggleContent("MyPageList");
-                return window.location.href = '/login/logout';
-            }
-        })
-
-        function toggleContent(MyPageList){
-
-            var content = document.getElementById(MyPageList);
-
-            if(content.style.display=="none"){
-
-                content.style.display="block";
-            } else{
-                content.style.display="none";
-            }
         }
     </script>
 </html>

@@ -112,6 +112,11 @@ ul{
     cursor: pointer;
 }
 
+.couponItemLiUp{
+    border-bottom: 1px solid rgb(240, 240, 240);
+
+}
+
 .couponItemLiDo{
     display: flex;
     margin-top: 20px;

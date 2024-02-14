@@ -44,6 +44,15 @@ public class MyPageController {
         return selViewPage("tiles.index","user.fundingProject",session,model);
     }
 
+    /* 관심 프로젝트 */
+    @GetMapping("/likes")
+    public String mypageLikes(HttpSession session,Model model){
+
+        log.error("\n\n" + selViewPage("tiles.index","user.likes",session,model) + "\n\n");
+
+        return selViewPage("tiles.index","user.likes",session,model);
+    }
+
     /* 알림 */
     @GetMapping("/alarm")
     public String mypageAlarm(HttpSession session,Model model){
