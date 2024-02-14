@@ -4,10 +4,16 @@
 
 <mapper namespace="com.fundly.user.model.LikeDao">
 
-    <select id="getLikeList" resultType="LikeDto">
+    <select id="getLike" resultType="LikeDto">
         select * from LIKE_PJ_TMP
         where user_id = #{user_id}
         and pj_id = #{pj_id}
+    </select>
+
+    <select id="getLikeListAll" resultType="LikeDto">
+        select * from LIKE_PJ_TMP
+        where user_id = #{user_id}
+        and like_status = 1
     </select>
 
     <insert id="insertLike">

@@ -38,7 +38,7 @@
 </div>
 <!--헤더의 일부-->
 
-<div class="pjWrap">
+<div class="pjWrap reward">
     <div class="pjCont">
         <!-- reward.jsp 요청시, 등록된 아이템이 하나도 없다면 보여주는 화면 -->
         <%--        <c:set var="itemList" value="${itemList}"/>--%>
@@ -321,7 +321,7 @@
         </div> <!--Item-->
     </div>
 </div>
-<%--<script>--%>
-<%--</script>--%>
-<%--</body>--%>
-<%--</html>--%>
+<%--<script src="/static/project/js/reward.js"></script>--%>
+
+
+

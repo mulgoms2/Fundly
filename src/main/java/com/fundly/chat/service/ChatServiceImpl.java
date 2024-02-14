@@ -1,6 +1,6 @@
 package com.fundly.chat.service;
 
-import com.fundly.chat.model.ChatRoomDao;
+import com.fundly.chat.model.SelBuyMsgDao;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.FileDto;
@@ -13,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class ChatServiceImpl implements ChatService {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
-    ChatRoomDao chatRoomDao;
+    SelBuyMsgDao selBuyMsgDao;
     @Autowired
     FileDao fileDao;
 
@@ -41,9 +42,9 @@ public class ChatServiceImpl implements ChatService {
 //        채팅룸이 존재하면 채팅방 리턴
         ChatRoomDto chatRoomDto;
 
-        if ((chatRoomDto = chatRoomDao.selectChatRoom(chatRequest)) == null) {
+        if ((chatRoomDto = selBuyMsgDao.selectChatRoom(chatRequest)) == null) {
 //            채팅방 생성과 동시에 chatRequest 에 세팅된다
-            chatRoomDao.makeChatRoom(chatRequest);
+            selBuyMsgDao.makeChatRoom(chatRequest);
         } else {
 //            채팅방이 존재하면 메시지 리스트를 가져온다.
             chatRoomDto.setMessage_list(loadMessages(chatRoomDto));
@@ -55,7 +56,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
         try {
-            chatRoomDao.insertMsg(message);
+            selBuyMsgDao.insertMsg(message);
 
             String svr_intime = new SimpleDateFormat("HH:mm").format(new Date());
             message.setSvr_intime_string(svr_intime);
@@ -70,7 +71,7 @@ public class ChatServiceImpl implements ChatService {
     public ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto) {
         try {
 //            메시지 전체 조회 후 첨부파일 경로를 매핑해서 전달.
-            return chatRoomDao.loadAllMessages(chatRoomDto).stream()
+            return selBuyMsgDao.loadAllMessages(chatRoomDto).stream()
                     .map(this::timeFormatting)
                     .map(this::mappingImgUrl)
                     .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
@@ -124,8 +125,8 @@ public class ChatServiceImpl implements ChatService {
             img_file.getFile().transferTo(new File(savedImgUrl));
 //            파일 테이블에 저장된 파일 경로를 담아야한다.
             img_file.setTable_name(SEL_BUY_MSG_DETAILS);
-            img_file.setSaved_uri(savedImgUrl);
-            img_file.setOrigin_uri(IMG_SAVE_LOCATION + originFileName);
+            img_file.setFile_saved_url(savedImgUrl);
+            img_file.setFile_origin_url(IMG_SAVE_LOCATION + originFileName);
             img_file.setTable_key(message.getMsg_id());
 
 //            파일 Dto에 해당 메시지의 식별자를 적어서 저장해야한다.
@@ -146,4 +147,9 @@ public class ChatServiceImpl implements ChatService {
             throw new RuntimeException(e);
         }
     }
+
+//    @ExceptionHandler(Exception.class)
+//    public String handleException() {
+//        return "chat/error";
+//    }
 }

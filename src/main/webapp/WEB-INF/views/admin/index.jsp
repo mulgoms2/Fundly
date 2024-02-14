@@ -117,11 +117,11 @@
     </div>
     <div class="btnWrap">
         <div class="lftBtngrp">
-            <a href="#">
+            <a href="<c:url value='/admin/list'/>">
                 <i class="fa-regular fa-comments"></i>
                 <span>보도 자료</span>
             </a>
-            <a href="#">
+            <a href="<c:url value='/admin/ctglist'/>">
                 <i class="fa-solid fa-location-dot fa-lg"></i>
                 <span>공지사항</span>
             </a>

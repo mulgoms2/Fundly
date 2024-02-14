@@ -1,0 +1,252 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    /*border-radius :5px;*/
+}
+input, textarea {
+    outline:none;
+}
+/*input[type=number]의 오른쪽 화살표 없애기*/
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+body {
+    background-color: #fcfcfc;
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 14px;
+    font-style: normal;
+}
+div {
+    border-radius: 4px;
+}
+/*진짜 main 요소들*/
+.pjWrap {
+    width: 100%;
+    box-shadow: inset 0 15px 10px -14px #ececec;
+    border-radius: 0;
+}
+.pjWrap .pjCont {
+    width: 1080px;
+    margin: 0 auto;
+    padding: 84px 0 0;
+
+}
+.pjWrap .pjCont .pjBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 48px;
+    margin-bottom: 56px;
+    border-bottom: .5px solid #ececec;
+}
+.pjWrap .pjCont .pjBox:last-child {
+    border-bottom: none;
+}
+.pjBox dl.none {
+    width: 350px;
+}
+.pjBox dl.pjInfo dt.pjInfoTit{
+    font-size: 16px;
+    font-weight: 700;
+    color: #3d3d3d;
+    margin: 0 0 12px;
+
+}
+.pjBox dl.pjInfo dt.pjInfoTit > span.icon {
+
+}
+.pjBox dl.pjInfo dt.pjInfoTit > span.icon > i {
+    font-size: 12px;
+    color: #f86453;
+
+}
+.pjBox .pjInfo .pjInfoDscpt{
+    font-size: 14px;
+    line-height: 24px;
+    color: #818181;
+
+}
+.pjBox dl.pjInfo .pjNotice {
+    width: 351px;
+    height: 130px;
+    margin: 25px 0 0;
+    padding: 20px 24px 20px 50px;
+    line-height: 20px;
+    background-color: #fdf4f3;;
+    position: relative;
+}
+.pjBox dl.pjInfo .pjNotice i {
+    position: absolute;
+    top: 24px;
+    left: 30px;
+    font-size: 12px;
+    color: #f86453;
+}
+.pjBox dl.pjInfo .pjNotice p.pjNoticeTit {
+    color: #f86453;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0 0 10px;
+}
+.pjBox dl.pjInfo .pjNotice p.pjNoticeCont {
+    color: #6d6d6d;
+    font-size: 12px;
+}
+
+.pjBox .none {
+    background-color: #fcfcfc;
+    border: none;
+    width: 630px;
+    padding: 0;
+}
+
+.pjBox .formBx {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.pjBox .formBx > div {
+    width: 307px;
+}
+
+.pjBox .formBx > div > p{
+    color: #3d3d3d;
+    font-size: 11px;
+    line-height: 18px;
+    font-weight: bold;
+    margin: 0 0 8px;
+}
+.pjBox .formBx > div > div {
+    width: 307px;
+    background-color: #ffffff;
+    border: .5px solid #ececec;
+    border-radius: 0;
+    padding: 0 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #3d3d3d;
+}
+.pjBox .formBx > div > div > input{
+    width: 260px;
+    height: 40px;
+    border: none;
+    padding: 11px 0;
+}
+.pjBox .formBx > div > div > input:hover {
+    cursor:pointer;
+}
+.pjBox .pjForm .titBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.pjBox .pjForm .titBox > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.pjBox .pjForm .titBox > div > div.pjTitle {
+    color: #3d3d3d;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: bold;
+    margin: 0 0 8px;
+}
+.pjBox .pjForm .titBox > div > div.pjInputWrap {
+    height: 72px;
+}
+.pjBox .pjForm .titBox > div > div.pjInputWrap > div,
+.tag .pjForm .pjInputWrap > div:first-child {
+    border : .5px solid #f86453;
+    border-radius: 0;
+    height: 43.7px;
+    padding: 0 18px;
+}
+.pjBox .pjForm .titBox > div > div.pjInputWrap > div > input,
+.tag .pjForm .pjInputWrap > div > input {
+    width: 100%;
+    border: none;
+    padding: 11px 0;
+
+}
+.pjBox .pjForm .titBox > div > div.pjInputWrap > p,
+.tag .pjForm .pjInputWrap > div > p{
+    margin: 8px 0 0;
+    text-align: right;
+    font-size: 12px;
+    color: #f86453;
+}
+.pjBox .pjForm .pjInputWrap .pjInputBx {
+    border: .5px solid #3d3d3d;
+    border-radius: 0;
+    background-color: #ffffff;
+    height: 77px;
+    padding: 0 18px;
+}
+.pjBox .pjForm .pjInputWrap .pjInputBx textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    margin: 11px 0;
+}
+.pjBox .pjForm .pjInputWrap .notice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.pjBox .pjForm .pjInputWrap .notice p {
+    font-size: 12px;
+    color: #929292;
+    text-align: right;
+    margin-top: 8px;
+}
+
+.pjBox .pjForm .pjImgUp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.thumb .pjForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pjBox .pjForm .pjImgUp {
+    width: 100%;
+    padding: 13px;
+    border: .5px solid #ececec;
+    background-color: #ffffff;
+}
+.pjBox .pjForm .pjImgUp span, .pjBox .pjForm .pjImgUp p, .pjBox .pjForm .pjImgUp strong {
+    font-size: 12px;
+    line-height: 20px;
+}
+.pjBox .pjForm .pjImgUp span {
+    font-weight: 500;
+    color: #3d3d3d;
+}
+.pjBox .pjForm .pjImgUp p {
+    color: #818181;
+}
+.pjBox .pjForm .pjImgUp strong {
+    color: #f86453;
+    font-weight: 500;
+}
+.pjBox .pjForm .pjImgUp span i {
+    color: #f86453;
+    padding-right: 8px;
+}
+.pjBox .pjForm .pjImgUp input[type=file] {
+    display: none;
+}

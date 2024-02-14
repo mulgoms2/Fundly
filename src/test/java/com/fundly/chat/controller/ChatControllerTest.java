@@ -1,7 +1,7 @@
 
 package com.fundly.chat.controller;
 
-import com.fundly.chat.model.ChatRoomDao;
+import com.fundly.chat.model.SelBuyMsgDao;
 import com.fundly.chat.service.ChatService;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import config.RootContext;
@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 class ChatControllerTest {
 
   @Autowired
-  ChatRoomDao chatRoomDao;
+  SelBuyMsgDao selBuyMsgDao;
 
   @Autowired
   ChatService chatService;

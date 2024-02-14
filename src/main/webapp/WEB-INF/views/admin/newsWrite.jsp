@@ -11,7 +11,7 @@
 </head>
 <body>
 <form id="push" action="" method="">
-    <input type="text" name="news_seq" value="${newsModifyInfo.news_seq}" style="display: none">
+    <input type="text" name="news_seq" value="${newsModifyInfo.news_seq}" hidden="hidden">
     <input type="text" name="news_title" value="${newsModifyInfo.news_title}" placeholder="제목">
     <input type="text" name="reg_id" value="${newsModifyInfo.reg_id}" placeholder="작성자">
     <textarea class="pjStr" name="news_cont">
@@ -19,9 +19,9 @@
                             </textarea>
     <button onclick="goToWrite()" style=${newsModifyInfo!=null ? "display:none" : ""}>등록</button>
     <button onclick="goToModify()" style=${newsModifyInfo!=null ? "" : "display:none"} >수정완료</button>
-    <button onclick="location.href='<c:url value="/admin/list"/>'"  style=${newsModifyInfo!=null ? "" : "display:none"}>취소</button>
     <button onclick="goToDelete()">삭제</button>
 </form>
+<button onclick="location.href='<c:url value="/admin/list"/>'"  style=${newsModifyInfo!=null ? "" : "display:none"}>취소</button>
 <script>
     function goToWrite(){
         let form = document.getElementById("push");

@@ -18,6 +18,9 @@ a {
 button:hover {
     cursor: pointer;
 }
+body {
+    background-color: #ffffff;
+}
 
 .topContents {
     display: flex;

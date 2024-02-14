@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class EventDto {
-    private int event_seq;
+    private Integer event_seq;
     private int event_sort;
     private String event_title;
     private String event_cont;

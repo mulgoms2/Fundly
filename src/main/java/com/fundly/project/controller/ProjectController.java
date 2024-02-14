@@ -22,12 +22,31 @@ public class ProjectController {
     @Autowired
     ItemServiceImpl itemService;
 
+    //기본정보 작성 페이지
+    @GetMapping("/default")
+    public String defaultPage(){
+        return "project.basicInfo";
+    }
 
-//    @GetMapping("/test")
-//    public String test(){
-//        return "project.reward";
-//    }
+    //펀딩 계획
+    @GetMapping("/funding")
+    public String fundingPlan(){
+        return "project.funding";
+    }
 
+    //프로젝트 계획
+    @GetMapping("/story")
+    public String makeStory(){
+        return "project.story";
+    }
+
+    //창작자 정보 입력
+    @GetMapping("/creator")
+    public String creatorInfo(){
+        return "project.creator";
+    }
+
+    // 아이템+선물 페이지
     @GetMapping("/reward")
     public String makeGift(Model m){
         //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
