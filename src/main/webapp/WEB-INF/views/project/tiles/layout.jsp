@@ -13,9 +13,14 @@
     <script src="https://kit.fontawesome.com/a26f9e7c74.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/project/css/header.css">
     <link rel="stylesheet" href="/static/project/css/reward.css">
+    <link rel="stylesheet" href="/static/project/css/basicInfo.css">
+
+    <%--    <link rel="stylesheet" href="/static/project/css/basicInfo.css">--%>
+
+    <!--별개의 JS파일은 각 main에 따로 두는 것 고려 -->
     <script defer src="/static/project/js/reward.js"></script>
 
 </head>
