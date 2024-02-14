@@ -11,7 +11,7 @@ public interface LikeService {
     int checkLike(LikeDto likedto) throws Exception;
 
     //    찜목록 가져오기
-    List<LikeDto> getList(LikeDto likedto) throws Exception;
+    LikeDto getList(LikeDto likedto) throws Exception;
 
     //    찜 취소하기
     int remove(LikeDto likedto);

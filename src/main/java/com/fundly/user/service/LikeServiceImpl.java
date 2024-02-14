@@ -21,26 +21,23 @@ public class LikeServiceImpl implements LikeService {
         int result = 0;
 
         // 찜한 목록 조회
-        List<LikeDto> likes = likedao.getLikeList(likedto);
+        LikeDto likes = likedao.getLike(likedto);
 
-        if(likes.isEmpty()) {
+        if(likes == null) {
             result = likedao.insertLike(likedto);
         } else {
-            for (LikeDto like : likes) {
-                likedto = like;
-                if (likedto.getLike_status() == 1) {
+                if (likes.getLike_status() == 1) {
                     likedao.cancelLike(likedto);
                 } else {
                     result = likedao.reLike(likedto);
                 }
             }
-        }
         return result;
     }
 
     @Override
-    public List<LikeDto> getList(LikeDto likedto) throws Exception{
-        return likedao.getLikeList(likedto);
+    public LikeDto getList(LikeDto likedto) throws Exception{
+        return likedao.getLike(likedto);
     }
 
     @Override
