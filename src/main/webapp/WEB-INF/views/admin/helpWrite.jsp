@@ -7,25 +7,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Summernote with Bootstrap 4</title>
+    <link rel="stylesheet" href="<q:url value='/static/admin/css/helpWrite.css'/>">
     <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
+
+<div class="header-wrapper">
+    <div class="notice"></div>
+    <header class="header">
+        <div class="logo">
+            <a  href="<c:url value="/help/subList"/> ">
+                <img src="/img/logo.png" alt="로고">
+                헬프센터
+            </a>
+        </div>
+        <div class="nav-wrapper">
+            <span class="icon-menu"></span>
+            <nav class="user-nav" id="user-nav">
+                <a href="/Fundly/">텀블벅으로 돌아가기</a>
+                <a href="">문의하기</a>
+            </nav>
+        </div>
+    </header>
+</div>
 <form id="push" action="" method="">
-    <input type="text" name="news_seq" value="${newsModifyInfo.news_seq}" hidden="hidden">
-    <input type="text" name="news_title" value="${newsModifyInfo.news_title}" placeholder="제목">
-    <input type="text" name="reg_id" value="${newsModifyInfo.reg_id}" placeholder="작성자">
-    <textarea class="pjStr" name="news_cont">
-        ${newsModifyInfo.news_cont}
-                            </textarea>
-    <button onclick="goToWrite()" style=${newsModifyInfo!=null ? "display:none" : ""}>등록</button>
-    <button onclick="goToModify()" style=${newsModifyInfo!=null ? "" : "display:none"} >수정완료</button>
-    <button onclick="location.href='<c:url value="/admin/list"/>'"  style=${newsModifyInfo!=null ? "" : "display:none"}>취소</button>
+    <input type="text" name="sub_help_seq" value="${helpModifyInfo.sub_help_seq}" style="display: none">
+    <input type="text" name="sub_help_title" value="${helpModifyInfo.sub_help_title}" placeholder="제목">
+    <input type="text" name="reg_id" value="${helpModifyInfo.reg_id}" placeholder="작성자">
+    <select name="sub_help_sort" id="sub_help_sort">
+        <option value="0">텀블벅 기본</option>
+        <option value="1">후원자 질문</option>
+        <option value="2">프로젝트 올리기</option>
+        <option value="3">시작하고 알리기</option>
+        <option value="4">소통하고 전달하기</option>
+    </select>
+    <textarea class="pjStr" name="sub_help_cont">
+        ${helpModifyInfo.sub_help_cont}
+    </textarea>
+
+    <button onclick="goToWrite()" style=${helpModifyInfo!=null ? "display:none" : ""}>등록</button>
+    <button onclick="goToModify()" style=${helpModifyInfo!=null ? "" : "display:none"} >수정완료</button>
+    <button onclick="location.href='<c:url value="/admin/list"/>'"  style=${helpModifyInfo!=null ? "" : "display:none"}>취소</button>
     <button onclick="goToDelete()">삭제</button>
 </form>
 <script>
     function goToWrite(){
         let form = document.getElementById("push");
-        form.setAttribute("action","<c:url value="/admin/write"/>");
+        form.setAttribute("action","<c:url value="/help/write"/>");
         form.setAttribute("method","post");
         form.submit();
     }
