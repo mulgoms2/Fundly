@@ -1,8 +1,8 @@
 package com.fundly.pay.service;
 
-import com.fundly.pay.dto.BillKeyRequestDto;
-import com.fundly.pay.dto.BillKeyResponseDto;
-import com.fundly.pay.dto.TokenResponseDto;
+import com.fundly.pay.dto.*;
+import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
+import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @PropertySource(value = "/WEB-INF/config/pay.properties")
 @Slf4j
 public class PortOneServiceImpl implements PortOneService {
-
     @Autowired
     WebClient webClient;
 
@@ -26,6 +25,24 @@ public class PortOneServiceImpl implements PortOneService {
 
     @Value("${PORTONE_API_SECRET}")
     private String PORTONE_API_SECRET;
+
+    public ScheduledPayResponseDto getScheduledPay(ScheduledPayRequestDto scheduledPayRequestDto, String authToken) throws Exception {
+        String requestUrl = "/subscribe/customers/";
+
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(requestUrl + "{customer_uid}" + "/schedules")
+                        .queryParam("from", scheduledPayRequestDto.getFrom())
+                        .queryParam("to", scheduledPayRequestDto.getTo())
+                        .queryParam("schedule-status", scheduledPayRequestDto.getSchedule_status())
+                        .build(scheduledPayRequestDto.getCustomer_uid()))
+                .header("Authorization", "Bearer " + authToken)
+                .retrieve()
+                .bodyToMono(ScheduledPayResponseDto.class)
+                .doOnSuccess(res -> log.info("getScheduledPay 요청 성공"))
+                .doOnError(res -> log.info("getScheduledPay 요청 실패"))
+                .block();
+    }
 
     // 2. 결제사에 카드 등록: getBillKey() -> registerPayMeans()
     public BillKeyResponseDto getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception {
@@ -69,5 +86,4 @@ public class PortOneServiceImpl implements PortOneService {
                 .doOnError(res -> log.info("getToken 요청 실패"))
                 .block();
     }
-
 }
