@@ -15,62 +15,6 @@
     <head>
         <link rel="stylesheet" href="<c:url value='/static/main/common.css'/>">
         <link rel="stylesheet" href="<c:url value='/static/main/style.css'/>">
-        <style>
-            .infoGr{
-                position: relative;
-            }
-
-            .MyPageList{
-                position: absolute;
-                display: none;
-                flex-direction: column;
-                top: 50px;
-                right: 0px;
-                width: 240px;
-                transition: all 0.3s ease-in-out 0s;
-                border: 1px solid rgb(228, 228, 228);
-                box-sizing: border-box;
-                border-radius: 4px;
-                z-index: 1200;
-                padding: 10px 0;
-                overflow: hidden;
-                background: rgb(255, 255, 255);
-            }
-
-            .pageItem {
-                padding: 4px 16px;
-                display: flex;
-                width: 100%;
-                height: 46px;
-                min-height: 46px;
-                -webkit-box-align: center;
-                align-items: center;
-                -webkit-box-pack: start;
-                justify-content: flex-start;
-                font-size: 14px;
-                line-height: 22px;
-                color: rgb(13, 13, 13);
-                cursor: pointer;
-                transition: all 0.3s ease-in-out 0s;
-            }
-
-            .pageItem:hover {
-                background: rgba(110, 110, 110, 0.1);
-            }
-
-            .line{
-                display: flex;
-                width: 100%;
-                height: 1px;
-                background: rgb(240, 240, 240);
-                content: " ";
-            }
-
-            .tap_itemProfile{
-                display: none;
-            }
-
-        </style>
     </head>
 
     <body>
@@ -89,8 +33,8 @@
                     <div class="alm">
                         <i class="fa-regular fa-bell"></i>
                     </div>
-                    <div class="userIf">
-                        <div class="infoGr" id = "loginInfo" >
+                    <div class="userIf" >
+                        <div class="infoGr"  id = "loginInfo">
                             <div class="ifImg">
                                 <span></span>
                             </div>
@@ -102,8 +46,8 @@
                                 <div class="pageItem" id = "Coupon"> 응원권 </div>
                                 <div class="line"></div>
                                 <div class="pageItem" id = "fundingProject"> 후원한 프로젝트 </div>
-<%--                                <div class="pageItem" id = "Like"> 관심 프로젝트 </div>--%>
-<%--                                <div class="line"></div>--%>
+                                <div class="pageItem" id = "Likes"> 관심 프로젝트 </div>
+                                <div class="line"></div>
                                 <div class="pageItem" id = "Alarm"> 알림 </div>
                                 <div class="pageItem" id = "Message"> 메시지 </div>
                                 <div class="line"></div>
@@ -150,5 +94,90 @@
 
         <div class="line"></div>
     </body>
+
+    <script>
+        const chat = document.getElementById('chat');
+
+        function chatBtn(){
+            <%--let url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + $("#pj").val();--%>
+            <%----%>
+//             window.open(url, "_blank", 'width=600px,height=800px,scrollbars=yes');
+        }
+
+        /* 로그인/회원가입 or 로그인 회원 정보 */
+        const userIf = document.querySelector('.userIf');
+
+        userIf.addEventListener("click",()=> {
+            if(loginInfo.outerText !== '로그인/회원가입'){
+                toggleContent("MyPageList");
+            }else{
+                return window.location.href='/login/login';
+            }
+        },{capture:true})
+
+        window.addEventListener("click", (e)=>{
+
+            // if(e.target.id==='') {
+            //     if (MyPageList.style.display == "block") {
+            //         toggleContent("MyPageList");
+            //     }
+            // }
+        })
+
+        const MyPageList = document.getElementById('MyPageList');
+
+        MyPageList.addEventListener("click",(e)=>{
+
+            if(e.target.id == "Profile"){
+                // 프로필 화면으로
+                return window.location.href = '/mypage/profile';
+
+            } else if(e.target.id == "Coupon") {
+                // 응원권 화면으로
+                return window.location.href = '/mypage/coupon';
+
+            } else if(e.target.id == "fundingProject") {
+                // 후원한 프로젝트 화면으로
+                return window.location.href = '/mypage/fundingProject';
+
+            } else if(e.target.id == "Likes") {
+                // 관심 프로젝트
+                return window.location.href = '/mypage/likes';
+
+            } else if(e.target.id == "Alarm") {
+                // 알림 화면으로
+                return window.location.href = '/mypage/alarm';
+
+            } else if(e.target.id == "Message") {
+                // 메시지 화면으로
+                return window.location.href = '/mypage/message';
+
+            } else if(e.target.id == "MakeProject") {
+                // 내가 만든 프로젝트 화면으로
+                return window.location.href = '/mypage/makeProject';
+
+            } else if(e.target.id == "Setting") {
+                // 설정 화면으로
+                return window.location.href = '/mypage/setting';
+
+            } else if(e.target.id == "LogOut") {
+
+                toggleContent("MyPageList");
+                return window.location.href = '/login/logout';
+            }
+        })
+
+        function toggleContent(MyPageList){
+
+            var content = document.getElementById(MyPageList);
+
+            if(content.style.display=="none"){
+
+                content.style.display="block";
+            } else{
+                content.style.display="none";
+            }
+        }
+    </script>
 </html>
 

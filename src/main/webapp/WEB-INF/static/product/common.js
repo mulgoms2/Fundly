@@ -90,13 +90,13 @@ $(function () {
     });
 
     //* 하트 클릭 시 색상 변경 *//
-    $('.icoImg').click(function(){
-        if ( $(this).hasClass('on') ){
-            return false;
-        } else {
-            $(this).addClass('on').siblings('.icoImg').removeClass('on'); // 버튼의 형제들에게서 'on' 클래스 제거
-        }
-    });
+    // $('.icoImg').click(function(){
+    //     if ( $(this).hasClass('on') ){
+    //         return false;
+    //     } else {
+    //         $(this).addClass('on').siblings('.icoImg').removeClass('on'); // 버튼의 형제들에게서 'on' 클래스 제거
+    //     }
+    // });
 
     //* 카운트 올라가는 버튼(미완성) *//
     var unitPrice = 29800; // 각 단위당 가격 설정
