@@ -54,7 +54,7 @@
     <select id="selectAllForUser" parameterType="String" resultType="PayMeansDto">
         select * from pay_means_reg
         where user_id = #{user_id}
-        order by dba_reg_dtm DESC
+        order by default_pay_means_yn DESC, dba_reg_dtm DESC
     </select>
 
     <select id="selectAll" resultType="PayMeansDto">
@@ -73,5 +73,4 @@
         select count(*) from pay_means_reg
         where user_id = #{user_id} and default_pay_means_yn = 'Y'
     </select>
-
 </mapper>
