@@ -52,21 +52,29 @@
                     </div>
 
                     <h3>비밀번호</h3>
+<%--                    <div class="ex">--%>
+<%--                        <div class="exa">--%>
+<%--                            <input type="password" class="exipt" placeholder="비밀번호 입력" autocomplete="off"/>--%>
+<%--                            <div class="eximg"></div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                     <div class="usPwd">
-                        <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
-                        <div class="eyes">
-                            <div class="password-toggle" id="togglePwd"></div>
+                        <div class="usPwdWrap">
+                            <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
+                            <div class="eyes">
+                                <div class="password-toggle" id="togglePwd"></div>
+                            </div>
+                            <div id="msgPwd" class="msg"/>
                         </div>
-                        <div id="msgPwd" class="msg"/>
                     </div>
 
                     <div class="usPwd2">
-                        <input type="password" id = "user_pwdConfirm" name="user_pwdConfirm" placeholder="비밀번호 확인" autocomplete="off"/>
-
-                        <div class="eyes">
-                            <div class="password-toggle" id="togglePwdConfirm"></div>
+                        <div class="usPwdWrap">
+                            <input type="password" id = "user_pwdConfirm" name="user_pwdConfirm" placeholder="비밀번호 확인" autocomplete="off"/>
+                            <div class="eyes">
+                                <div class="password-toggle" id="togglePwdConfirm"></div>
+                            </div>
                         </div>
-
                         <div id="msgPwdConfirm" class="msg"/>
                     </div>
 
@@ -76,34 +84,34 @@
 
                          <div class="agrLine">
                              <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "age_agree_yn">
+                                 <input type="checkbox" class="singleChk" id = "age_agree_yn" name="age_agree_yn">
                                     <label for="age_agree_yn" class="single">만 14세 이상입니다.(필수)</label>
                                  </input>
                              </div>
 
                              <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "site_term_agree_yn">
+                                 <input type="checkbox" class="singleChk" id = "site_term_agree_yn" name = "site_term_agree_yn">
                                      <label for="site_term_agree_yn" class="single">텀블벅 이용 약관동의(필수)</label>
                                      <a href="" >내용보기</a>
                              </input>
                              </div>
 
                              <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "p_Info_agree_yn">
+                                 <input type="checkbox" class="singleChk" id = "p_Info_agree_yn" name="p_Info_agree_yn">
                                     <label for="p_Info_agree_yn" class="single">개인정보 수집 및 이용 동의(필수)</label>
                                     <a href="" >내용보기</a>
                                  </input>
                              </div>
 
                              <div class="selectChk">
-                                 <input type="checkbox" class="selectChk" id= "p_info_oth_agree_yn">
+                                 <input type="checkbox" class="selectChk" id= "p_info_oth_agree_yn" name="p_info_oth_agree_yn">
                                      <label for="p_info_oth_agree_yn" class="single">개인정보 제 3자 제공 동의(선택)</label>
                                      <a href="" >내용보기</a>
                                  </input>
                              </div>
 
                              <div class="selectChk">
-                                 <input type="checkbox" class="selectChk" id= "m_info_rcv_agree_yn">
+                                 <input type="checkbox" class="selectChk" id= "m_info_rcv_agree_yn" name="m_info_rcv_agree_yn">
                                  <label for = "m_info_rcv_agree_yn" class="single">마케팅 정보 수신 동의(선택)</label>
                                  </input>
                              </div>
@@ -315,7 +323,7 @@
                 setMessage('필수 동의 내용을 체크해주세요.', "", "agreeName", "red");
             }
             else{
-                setMessage('.', "", "agreeName", "black");
+                setMessage('', "", "agreeName", "black");
             }
             if(singleChk.length + selectChk.length  == 5) {checkAll.checked = true;}else{checkAll.checked = false;}
         });

@@ -10,7 +10,7 @@ public interface JoinService {
 //    @Transactional(rollbackFor = Exception.class)
     int userJoin(UserDto userDto);
 
-    int emailCheck(String user_email) throws Exception;
+    int emailCheck(UserDto userdto) throws Exception;
 
     int count() throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.fundly.user.model;
 
+import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.UserDto;
 import config.RootContext;
 import config.ServletContext;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Slf4j
@@ -18,6 +20,8 @@ class UserJoinDaoTest {
 
     @Autowired
     UserJoinDao userJoinDao;
+
+
 
     @Test
     void count() throws Exception {
@@ -29,7 +33,10 @@ class UserJoinDaoTest {
 
     @Test
     void emailCheck() throws Exception {
-        int cnt = userJoinDao.emailCheck("asdf@asdf.com");
+        UserDto user = new UserDto();
+        user.setUser_email("asdf@asdf.com");
+
+        int cnt = userJoinDao.emailCheck(user);
         assertTrue(cnt==1);
     }
 
@@ -41,9 +48,17 @@ class UserJoinDaoTest {
 
             UserDto userDto = new UserDto();
             userDto.setUser_id(uuid_user_id);
-            userDto.setUser_pwd("1111");
             userDto.setUser_name("호랑이");
+            userDto.setUser_pwd("1111");
             userDto.setUser_email("aaa" + i + "@abc.com");
+            // ow.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+
+            userDto.setUser_join_date("2024-02-14 14:30:24.333");
+            userDto.setSite_term_agree_yn("Y");
+            userDto.setP_Info_agree_yn("Y");
+            userDto.setM_info_rcv_agree_yn("Y");
+            userDto.setAge_agree_yn("Y");
+
             userDto.setUser_status(user_status);
             userDto.setDba_reg_id(uuid_user_id);
 
