@@ -23,6 +23,11 @@ public class ProjectController {
     ItemServiceImpl itemService;
 
 
+//    @GetMapping("/test")
+//    public String test(){
+//        return "project.reward";
+//    }
+
     @GetMapping("/reward")
     public String makeGift(Model m){
         //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
@@ -34,7 +39,7 @@ public class ProjectController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "project/reward";
+        return "project.reward";
     }
     @PostMapping("/item")
     @ResponseBody

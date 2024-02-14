@@ -23,16 +23,21 @@
     <button type="submit">post</button>
 </form>
 
+<button onclick="test()"> test</button>
 <script>
-    $("#join").on("submit", (e) => {
-        e.preventDefault();
-
-        console.log("Helo");
-
-        let url = "chatPop?user_id=" + $("#user").val() + "&pj_id=" + $("#pj").val();
-
-        window.open(url, "_blank", 'width=600px,height=800px,scrollbars=yes');
-    });
+    function test() {
+        const obj = {
+            user_id : "sfesfs",
+            pj_id : "heshfes"
+        }
+        fetch("/like2", {
+            method : "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify(obj)
+        }).then(resp => resp.json()).then(console.log);
+    }
 </script>
 </body>
 </html>

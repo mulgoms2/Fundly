@@ -33,6 +33,7 @@ public class ProjectDto {
     private String gift_ship_due_date; //상품 전달 예정일
     private String pj_status; //프로젝트 상태
     private String fund_result_status; //펀딩 결과 상태
+    @NonNull
     private Integer curr_pj_like_cnt; //프로젝트 좋아요 현재 집계
     private BigInteger curr_fund_money;//펀딩 모금액 현재 집계
     private Integer curr_buy_cnt; //후원자 수 현재 집계
