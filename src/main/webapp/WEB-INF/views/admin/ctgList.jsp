@@ -117,11 +117,11 @@
     </div>
     <div class="btnWrap">
         <div class="lftBtngrp">
-            <a href="<c:url value='/admin/list'/>">
+            <a href="#">
                 <i class="fa-regular fa-comments"></i>
                 <span>보도 자료</span>
             </a>
-            <a href="<c:url value='/admin/ctglist'/>">
+            <a href="#">
                 <i class="fa-solid fa-location-dot fa-lg"></i>
                 <span>공지사항</span>
             </a>
@@ -156,15 +156,15 @@
 <%--                    <p class="noData">데이터가 없습니다</p>--%>
 <%--                </td>--%>
 
-                <c:forEach var="NewsDto" items="${NewsList}">
+                <c:forEach var="CtgDto" items="${CtgList}">
                     <tr>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_seq}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_title}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_id}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_view_cnt}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.mod_dtm!=null? NewsDto.mod_dtm :NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.hid_yn}</a></td>
+                        <td><a href="<c:url value='/admin/select?ctg_guide_seq=${CtgDto.ctg_guide_seq}'/>">${CtgDto.ctg_guide_seq}</a></td>
+                        <td><a href="<c:url value='/admin/select?ctg_guide_seq=${CtgDto.ctg_guide_seq}'/>">${CtgDto.ctg_guide_title}</a></td>
+                        <td><a href="<c:url value='/admin/select?ctg_guide_seq=${CtgDto.ctg_guide_seq}'/>">${CtgDto.reg_id}</a></td>
+                        <td><a href="<c:url value='/admin/select?ctg_guide_seq=${CtgDto.ctg_guide_seq}'/>">${CtgDto.ctg_guide_view_cnt}</a></td>
+                        <td><a href="<c:url value='/admin/select?ctg_guide_seq=${CtgDto.ctg_guide_seq}'/>">${CtgDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?ctg_guide_seq=${CtgDto.ctg_guide_seq}'/>">${CtgDto.mod_dtm!=null? CtgDto.mod_dtm :CtgDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?ctg_guide_seq=${CtgDto.ctg_guide_seq}'/>">${CtgDto.hid_yn}</a></td>
                     </tr>
                 </c:forEach>
             </table>
