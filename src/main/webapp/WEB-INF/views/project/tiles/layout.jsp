@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/project/css/header.css">
     <link rel="stylesheet" href="/static/project/css/reward.css">
+    <link rel="stylesheet" href="/static/project/css/funding.css">
     <link rel="stylesheet" href="/static/project/css/basicInfo.css">
 
     <%--    <link rel="stylesheet" href="/static/project/css/basicInfo.css">--%>
