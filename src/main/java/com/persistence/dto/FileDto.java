@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class FileDto {
+    private Integer seq;
     private MultipartFile file;
     private String table_name;
     private String origin_uri;
