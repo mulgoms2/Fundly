@@ -26,6 +26,21 @@ public class PortOneServiceImpl implements PortOneService {
     @Value("${PORTONE_API_SECRET}")
     private String PORTONE_API_SECRET;
 
+    public BillKeyResponseDto removeBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception {
+        String requestUrl = "/subscribe/customers/";
+
+        return webClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path(requestUrl + "{customer_uid}")
+                        .build(billKeyRequestDto.getCustomer_uid()))
+                .header("Authorization", "Bearer " + authToken)
+                .retrieve()
+                .bodyToMono(BillKeyResponseDto.class)
+                .doOnSuccess(res -> log.info("removeBillKey 요청 성공"))
+                .doOnError(res -> log.info("removeBillKey 요청 실패"))
+                .block();
+    }
+
     public ScheduledPayResponseDto getScheduledPay(ScheduledPayRequestDto scheduledPayRequestDto, String authToken) throws Exception {
         String requestUrl = "/subscribe/customers/";
 
