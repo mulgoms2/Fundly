@@ -33,14 +33,15 @@ public class JoinServiceImpl implements JoinService {
         userDto.getUser_email();
 
         userDto.setUser_join_date(String.valueOf(LocalDate.now()));
-        userDto.getSite_term_agree_yn();
-        userDto.getP_Info_agree_yn();
-        userDto.getAge_agree_yn();
-        userDto.getP_info_oth_agree_yn();
-        userDto.getM_info_rcv_agree_yn();
+        if("on".equals((userDto.getSite_term_agree_yn()))) userDto.setSite_term_agree_yn("Y");
+        if("on".equals((userDto.getP_Info_agree_yn()))) userDto.setP_Info_agree_yn("Y");
+        if("on".equals((userDto.getAge_agree_yn()))) userDto.setAge_agree_yn("Y");
+        if("on".equals((userDto.getP_info_oth_agree_yn()))) userDto.setP_info_oth_agree_yn("Y");
+        if("on".equals((userDto.getM_info_rcv_agree_yn()))) userDto.setM_info_rcv_agree_yn("Y");
         userDto.setUser_status(user_status);
 //        userDto.setDba_reg_id(uuid_user_id);
         userDto.setDba_reg_id(userDto.getUser_email());
+
         try{
             return userJoinDao.insert(userDto);
 
@@ -50,8 +51,8 @@ public class JoinServiceImpl implements JoinService {
     }
 
     @Override
-    public int emailCheck(String user_email) throws Exception {
-        return userJoinDao.emailCheck(user_email);
+    public int emailCheck(UserDto userdto) throws Exception {
+        return userJoinDao.emailCheck(userdto);
     }
 
     @Override

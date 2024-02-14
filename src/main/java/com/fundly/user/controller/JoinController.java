@@ -33,6 +33,8 @@ public class JoinController {
     @PostMapping("/add")
     public String joinsave(UserDto userDto) throws Exception {
 
+        log.error("값보시오~~ \n\n\n" + userDto);
+
         try {
             if(joinService.userJoin(userDto) != 1){
                 throw new RuntimeException("회원가입 실패");

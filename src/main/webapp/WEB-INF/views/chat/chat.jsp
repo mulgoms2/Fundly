@@ -84,14 +84,14 @@
             console.error('Broker reported error: ' + frame.headers['message']);
             console.error('Additional details: ' + frame.body);
         };
-    }
+    };
 
     // 나가기 버튼에 매핑해서 호출하자.
     const disconnect = () => {
         stompClient.deactivate();
         setConnected(false);
         console.log("Disconnected");
-    }
+    };
 
     const sendMessage = () => {
         const message = document.querySelector("#chat").value;
@@ -118,7 +118,7 @@
         setTimeout(() => {
             document.querySelector("#chat").value = "";
         }, 1);
-    }
+    };
 
     const sendImg = () => {
 
@@ -145,13 +145,13 @@
             headers: {},
             body: formData
         });
-    }
+    };
 
     // 메시지 생성시 하단 스크롤 유지
     const scrollToBottom = () => {
         const scrollHeight = document.querySelector(".chatMainContainer").scrollHeight;
         document.querySelector(".chatMainContainer").scrollTo({top: scrollHeight});
-    }
+    };
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
     // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
@@ -161,17 +161,17 @@
         const msg = message.file_cnt != 0 ? paintImg(position, message.file_url, message.svr_intime_string) : paintChat(position, message.msg_cont, message.svr_intime_string);
 
         setTimeout(scrollToBottom, 1);
-    }
+    };
 
     const paintChat = (position, text, time) => {
         document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><div class="chat">${'${text}'}</div></div>`;
-    }
+    };
 
     const paintImg = (position, imgUrl, time) => {
         document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><img id="imgTag" class="chatAttImg" src="${"${imgUrl}"}" onload="scrollToBottom()"/></div>`;
         // document.querySelector("#imgTag").addEventListener("load", scrollToBottom
         // );
-    }
+    };
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());

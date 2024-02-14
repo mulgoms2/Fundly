@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Mapper
 @Repository
-public interface ChatRoomDao {
+public interface SelBuyMsgDao {
     ChatRoomDto selectChatRoom(ChatRequest chatRequest) throws Exception;
 
     int makeChatRoom(ChatRequest chatRequest) throws Exception;

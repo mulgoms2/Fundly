@@ -71,27 +71,26 @@
     background: #cf1212;
 }
 
-/* container */
-.container{
-    width: 672px;
-    margin: 0px 32px 0px 0px;
-    flex: 0 0 auto;
+/*.container{*/
+/*    width: 672px;*/
+/*    margin: 0px 32px 0px 0px;*/
+/*    flex: 0 0 auto;*/
 
-    box-sizing: border-box;
-}
+/*    box-sizing: border-box;*/
+/*}*/
 
-.container > div{
-    border-bottom: 1px solid rgb(230, 230, 230);
-    margin: 0px 0px 16px;
-}
+/*.container > div{*/
+/*    border-bottom: 1px solid rgb(230, 230, 230);*/
+/*    margin: 0px 0px 16px;*/
+/*}*/
 
-.container div{
-    padding: 0px 0px 10px;
-}
+/*.container div{*/
+/*    padding: 0px 0px 10px;*/
+/*}*/
 
 
 .stateCombo{
-    padding: 14px 16px 24px 16px;
+    padding: 14px 16px 24px 0px;
     display: flex;
     position: relative;
     margin: 0px auto;
@@ -105,7 +104,8 @@
     position: relative;
     height: 25px;
     width: 70px;
-    padding: 10px;
+    padding: 10px 10px 10px 0;
+    cursor:pointer;
     /*border: 1px solid black;*/
 }
 
@@ -171,3 +171,83 @@
     right: 0;
 }
 
+.projectListWithCard{
+    width: 1160px;
+    margin: 0px auto;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.projectCardWrap{
+    padding: 0px;
+    margin: 0px -12px;
+
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    max-width: 1160px;
+    width: 100%;
+}
+
+.cardWrap{
+    width: 25%;
+    padding: 0px 12px;
+    height: 470px;
+}
+
+.mnBan .banImg.after {
+    width: 264px;
+    height: 226px;
+}
+
+.mnBan .banImg.after img {
+    width: 264px;
+    height: 226px;
+}
+
+.subDt>a{
+    width: 93%;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    max-height: 48px;
+    word-break: keep-all;
+    color: rgb(158, 158, 158);
+    font-size: 13px;
+    line-height: 21px;
+}
+
+.per{
+    font-size: 15px;
+    font-weight: 700;
+    color: rgb(255, 87, 87);
+}
+
+.won{
+    margin-left: 4px;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+    color: rgb(61, 61, 61);
+}
+
+.day{
+    margin-left: 80px;
+    font-size: 12px;
+    line-height: 19px;
+    letter-spacing: -0.01em;
+    color: rgb(109, 109, 109);
+    font-weight: 700;
+}
+
+.percentBar{
+    width: 100%;
+    display: block;
+    height:  3px;
+    background: rgb(255, 87, 87);
+}
+/*.banImg{*/
+/*    width: 264px;*/
+/*    height: 226px;*/
+/*}*/
