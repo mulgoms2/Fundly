@@ -96,8 +96,8 @@
                         <div class="pageItem" id = "Coupon"> 응원권 </div>
                         <div class="line"></div>
                         <div class="pageItem" id = "fundingProject"> 후원한 프로젝트 </div>
-<%--                        <div class="pageItem" id = "Like"> 관심 프로젝트 </div>--%>
-<%--                        <div class="line"></div>--%>
+                        <div class="pageItem" id = "Likes"> 관심 프로젝트 </div>
+                        <div class="line"></div>
                         <div class="pageItem" id = "Alarm"> 알림 </div>
                         <div class="pageItem" id = "Message"> 메시지 </div>
                         <div class="line"></div>
@@ -183,9 +183,9 @@
                 <div class="banTxt">
                     <div class="txtGr">
                         <div class="subTxt">
-                                <span>
-                                    <a href="#">아트북디자인더하트</a>
-                                </span>
+                            <span>
+                                <a href="#">아트북디자인더하트</a>
+                            </span>
                         </div>
                         <div class="subTit">
                             <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
@@ -389,6 +389,7 @@
     </div>
 </div>
 </body>
+
 <script>
     <%--alert(${user_email});--%>
     /* 로그인/회원가입 or 로그인 회원 정보 */
@@ -419,8 +420,9 @@
             // 후원한 프로젝트 화면으로
             return window.location.href = '/mypage/fundingProject';
 
-        // } else if(e.target.id == "Like") {
-        //     return window.location.href = '/like';
+        } else if(e.target.id == "Likes") {
+            // 관심 프로젝트
+            return window.location.href = '/mypage/likes';
 
         } else if(e.target.id == "Alarm") {
             // 알림 화면으로

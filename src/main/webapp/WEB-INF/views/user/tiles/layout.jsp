@@ -8,13 +8,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title><tiles:insertAttribute name="title"/></title>
-</head>
+    <head>
+        <title><tiles:insertAttribute name="title"/></title>
+    </head>
 
-<tiles:insertAttribute name="header"/>
-<body>
-    <tiles:insertAttribute name="body"/>
-</body>
-<tiles:insertAttribute name="footer"/>
+    <body>
+    <tiles:insertAttribute name="header"/>
+        <tiles:insertAttribute name="body"/>
+    <tiles:insertAttribute name="footer"/>
+    </body>
 </html>
