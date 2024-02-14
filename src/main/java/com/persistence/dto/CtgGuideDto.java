@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class CtgGuideDto {
-    private int ctg_guide_seq;
+    private Integer ctg_guide_seq;
     private String ctg_guide_title;
     private String ctg_guide_cont;
     private int ctg_guide_view_cnt;

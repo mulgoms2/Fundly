@@ -7,6 +7,7 @@
         <setting name="logImpl" value="LOG4J2"/>
     </settings>
     <typeAliases>
+        <typeAlias alias="SubHelpDto" type="com.persistence.dto.SubHelpDto"/>
         <typeAlias alias="AdminDto" type="com.persistence.dto.AdminDto"/>
         <typeAlias alias="NewsDto" type="com.persistence.dto.NewsDto"/>
         <typeAlias alias="CtgGuideDto" type="com.persistence.dto.CtgGuideDto"/>

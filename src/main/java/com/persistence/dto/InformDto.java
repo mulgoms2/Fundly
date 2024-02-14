@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class InformDto {
-    private int inform_seq;
+    private Integer inform_seq;
     private int inform_sort;
     private String inform_title;
     private String inform_cont;
