@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+서비스 수행 도중 에러가 발생하였습니다.
 </body>
 </html>

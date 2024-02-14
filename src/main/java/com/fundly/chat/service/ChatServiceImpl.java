@@ -13,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -146,4 +147,9 @@ public class ChatServiceImpl implements ChatService {
             throw new RuntimeException(e);
         }
     }
+
+//    @ExceptionHandler(Exception.class)
+//    public String handleException() {
+//        return "chat/error";
+//    }
 }

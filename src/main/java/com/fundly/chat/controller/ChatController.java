@@ -13,8 +13,15 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+//import javax.validation.Valid;
+
+//import javax.validation.Valid;
 
 @Controller
 @Slf4j
@@ -25,16 +32,21 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
-//    @GetMapping("/chat")
-////    테스트용
-//    public String chatRoom() {
-//        return "chat/chatIndex";
-//    }
+    @GetMapping("/chat")
+//    테스트용
+    @ResponseBody
+    public ChatRequest chatRoom(@Valid ChatRequest chatRequest, Errors errors)  {
+
+        System.out.println(errors.hasErrors());
+
+        return chatRequest;
+    }
 
     @GetMapping("/chatPop")
-    public String joinChatRoom(@ModelAttribute ChatRequest chatRequest, Model model) {
+    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, Errors errors) {
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         chatService.getChatRoom(chatRequest);
+
 
         return "chat/chat";
     }
@@ -48,6 +60,7 @@ public class ChatController {
 //        System.out.println(((HttpSession) session).getAttribute("user_email"));
 
 //        채팅을 저장
+
         chatService.saveMessage(message);
 
 //        메시지를 토픽에 발행한다. sendTo /chatSup/{}
@@ -80,8 +93,9 @@ public class ChatController {
         }
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RuntimeException.class)
     public String handleException() {
+        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
         return "chat/error";
     }
 }
