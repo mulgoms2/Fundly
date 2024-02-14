@@ -16,6 +16,15 @@ public class LikeController {
     @Autowired
     LikeService likeservice;
 
+    @PostMapping("/like")
+    @ResponseBody
+    public LikeDto handleLike(@RequestBody LikeDto likedto) throws Exception {
+        // 좋아요 상태 확인
+        int isLike =  likeservice.checkLike(likedto);
+        likedto.setLike_status(isLike);
+        return likeservice.getList(likedto);
+    }
+
 //    @RequestMapping(value="/like")
 //    public String like(HttpServletRequest req, Model model) throws Exception {
 //        String pj_id = req.getParameter("pj_id");
@@ -31,13 +40,4 @@ public class LikeController {
 //        model.addAttribute("list", likeservice.getList(likedto));
 //        return "user/like";
 //    }
-
-    @PostMapping("/like")
-    @ResponseBody
-    public List<LikeDto> handleLike(@RequestBody LikeDto likedto) throws Exception {
-        // 좋아요 상태 확인
-        int isLike =  likeservice.checkLike(likedto);
-        likedto.setLike_status(isLike);
-        return likeservice.getList(likedto);
-    }
 }

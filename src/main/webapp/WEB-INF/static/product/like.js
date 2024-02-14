@@ -1,55 +1,86 @@
-// 좋아요 버튼 클릭시 좋아요 + -
+window.onload = loadIsLike();
+
+// 좋아요 버튼 클릭시 서버로 정보 전송
 const clickLikeBtn = () => {
 
-    //     1. 서버로 좋아요 정보 전송
+    // 1. 서버로 좋아요 정보 전송
     const obj = {
       pj_id : "P5040",
       user_id : "user"
     };
 
-    //     2. 서버 응답 받는다.
+    // 2. 서버 응답 받기
     fetch("/like", {
         method: "POST",
         headers: {
             "content-type": "application/json"
         },
         body: JSON.stringify(obj)
-    }).then(res => res.json()).then(handleLike);
+    }).then(res => res.json()).then(handleLike).catch(error=>console.log(error));
 };
 
-// jason객체로 parsing된 데이터 가져오기
 const handleLike = (likes) => {
 
-    const like_cnt = document.querySelector("#like_cnt")
+        if(likes.like_status === 0) {
+
+        // 3. 상태0일 때 좋아요 - 카운트
+            countLike('minus');
+
+        // 4. 좋아요 버튼 하양
+            onloadLike('white');
+
+            console.log(likes.like_status);
+
+        } else if(likes.like_status === 1) {
+
+        // 5. 상태1일 때 좋아요 + 카운트
+            countLike('plus');
+
+        // 6. 좋아요 버튼 빨강
+            onloadLike('red');
+
+            console.log(likes.like_status);
+        }
+}
+
+// 1. 좋아요 상태에 따라 버튼이미지 전환
+function onloadLike(type) {
+
     const heartRed = document.querySelector(".icoImg.on")
     const heartWhite = document.querySelector(".icoImg")
-    let curr_cnt = like_cnt.innerText;
 
-    for(var i in likes) {
+    // 2. 상태0이면 하양하트로 고정
+    if(type === 'white') {
+        heartRed.style.display = 'none';
+        heartWhite.style.display = 'block';
 
-    //     3. 상태0일 때 좋아요 카운트 -
-    //     4. 좋아요 버튼 하양
-        if(likes[0].like_status === 0) {
-            curr_cnt = parseInt(curr_cnt) - 1;
-            heartRed.style.display = 'none';
-            heartWhite.style.display = 'block';
-            console.log(curr_cnt);
-            console.log(likes[0].like_status);
-
-    //     5. 상태1일 때 좋아요 카운트 +
-    //     6. 좋아요 버튼 빨강
-        } else if(likes[0].like_status === 1) {
-            curr_cnt = parseInt(curr_cnt) + 1;
-            heartRed.style.display = 'block';
-            heartWhite.style.display = 'none';
-            console.log(curr_cnt);
-            console.log(likes[0].like_status);
-        }
+    // 3. 상태1이면 빨강하트로 고정
+    } else if(type === 'red') {
+        heartRed.style.display = 'block';
+        heartWhite.style.display = 'none';
     }
 }
 
-const loadLike = () => {
-    alert("좋아요상태체크하기")
+// 1. 좋아요 버튼 클릭 시 좋아요 수 변화
+function countLike(type) {
+
+    const like_cnt = document.getElementById("like_cnt")
+    let curr_cnt = like_cnt.innerText;
+
+    // 2. 좋아요 누르면 증가
+    if (type === 'plus') {
+        curr_cnt = parseInt(curr_cnt) + 1;
+
+    // 3. 좋아요 취소하면 감소
+    } else if (type === 'minus') {
+        curr_cnt = parseInt(curr_cnt) - 1;
+    }
+    like_cnt.innerText = curr_cnt;
+}
+
+// 좋아요 상태 고정시키기
+function loadIsLike() {
+    alert('좋아요상태고정시키기!')
 }
 
 // const fetchLikeInfo = () => {
@@ -62,24 +93,6 @@ const loadLike = () => {
 //         },
 //         body: params
 //     });
-// }
-//
-// function clicklike(type) {
-//     const like_cnt = document.getElementById("like_cnt")
-//     let curr_cnt = like_cnt.innerText;
-//
-//     if (type === 'plus') {
-//         curr_cnt = parseInt(curr_cnt) + 1;
-//         alert("좋아요")
-//     } else if (type === 'minus') {
-//         curr_cnt = parseInt(curr_cnt) - 1;
-//         alert("좋아요취소")
-//     }
-//
-//     like_cnt.innerText = curr_cnt;
-//
-//     sendLikeInfo();
-//
 // }
 //
 // // ajax로 좋아요 클릭시 데이터 전송 (페이지 이동x)
