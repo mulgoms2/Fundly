@@ -2,6 +2,8 @@ package com.fundly.pay.controller;
 
 import com.fundly.pay.dto.BillKeyRequestDto;
 import com.fundly.pay.dto.BillKeyResponseDto;
+import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
+import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import com.fundly.pay.service.PayMeansService;
 import com.fundly.pay.service.PortOneService;
 import com.persistence.dto.PayMeansDto;
@@ -48,7 +50,7 @@ public class PayController {
         // 4. Y인 것은 태그를 붙이고 첫번째로 출력한다.
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
         try {
-            log.info("payMeansDto ??? " + payMeansDto);
+//            log.info("payMeansDto ??? " + payMeansDto);
             // 1. session의 user Id와 payMeansDto user Id가 같은지 확인한다.
             if (!userCheck(payMeansDto.getUser_id())) {
                 throw new Exception("Update Failed. - userCheck Error");
@@ -90,11 +92,34 @@ public class PayController {
     }
 
     @PostMapping("/remove")
-    public String remove(PayMeansDto payMeansDto, RedirectAttributes rattr) {
+    public String remove(PayMeansDto payMeansDto, long from, long to, RedirectAttributes rattr) {
         String payMeansId = payMeansDto.getPay_means_id();
         try {
+            if (!userCheck(payMeansDto.getUser_id())) {
+                throw new Exception("Remove Failed. - userCheck Error");
+            }
+            String authToken = portOneService.getToken();
+
+            // 1. 예약된 결제 내역이 있는지 확인한다.
+            ScheduledPayRequestDto scheduledPayRequestDto = new ScheduledPayRequestDto(payMeansId, "scheduled", from, to);
+            log.info("from: " + from);
+            log.info("to: " + to);
+            ScheduledPayResponseDto scheduledPayResponseDto = portOneService.getScheduledPay(scheduledPayRequestDto, authToken);
+            if (scheduledPayResponseDto.getCode() != 0) throw new Exception("Remove Failed. - getScheduledPay Error");
+            if (scheduledPayResponseDto.getResponse().getTotal() != 0) throw new Exception("Remove Failed. - 예약된 결제가 있습니다.");
+            log.info("getScheduledPay 성공");
+
+            // 2. 예약된 결제 내역이 없으면 PortOne에서 삭제한다.
+            BillKeyRequestDto billKeyRequestDto = new BillKeyRequestDto();
+            billKeyRequestDto.setCustomer_uid(payMeansId);
+            BillKeyResponseDto billKeyResponseDto = portOneService.removeBillKey(billKeyRequestDto, authToken);
+            if (billKeyResponseDto.getCode() != 0) throw new Exception("Remove Failed. - removeBillKey Error");
+            log.info("removeBillKey 성공");
+
+            // 3. PortOne에서 삭제되면 DB에서 삭제한다.
             int rowCnt = payMeansService.removePayMeans(payMeansId);
-            if (rowCnt != 1) throw new Exception("Remove Failed.");
+            if (rowCnt != 1) throw new Exception("Remove Failed. - DB Delete Error");
+            log.info("removePayMeans 성공");
 
             rattr.addFlashAttribute("msg", "DEL_SUCCESS");
 
@@ -147,14 +172,13 @@ public class PayController {
             String authToken = portOneService.getToken();
 
             BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
-            if (billKeyResponseDto.getCode() != 0) {
-                throw new Exception();
-            }
+            if (billKeyResponseDto.getCode() != 0) throw new Exception("Register Failed. - getBillKey Error");
+
             payMeansDto.setBill_key(billKeyResponseDto.getBillKey());
             payMeansDto.setCard_co_type(billKeyResponseDto.getCardCoType());
 
             int rowCnt = payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
-            if (rowCnt != 1) throw new Exception("Register Failed.");
+            if (rowCnt != 1) throw new Exception("Register Failed. - registerPayMeans Error");
 
             rattr.addFlashAttribute("msg", "REG_SUCCESS");
 

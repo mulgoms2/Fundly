@@ -85,15 +85,17 @@
         $(document).ready(function () {
             $(".removeBtn").click(function () {
                 if(!confirm("정말로 삭제하시겠습니까?")) return; // '취소' 클릭 시
-
+                let userId = $(this).closest("tr").find(".user_id").text();
                 let payMeansId = $(this).closest("tr").find(".pay_means_id").text();
+                let currentUnixTime = Math.floor((new Date()).getTime() / 1000); // 현재시간 unix time
+                let threeMonthsAgoUnixTime = currentUnixTime - (3 * 30 * 24 * 60 * 60); // 현재 시간으로부터 3개월 전 unix time
 
                 $.ajax({
                     type: "POST",
                     url: "/pay/remove",
-                    data: {pay_means_id: payMeansId},
+                    data: {user_id: userId, pay_means_id: payMeansId,
+                        from: threeMonthsAgoUnixTime, to: currentUnixTime},
                     success: function () {
-                        // 성공한 경우 페이지 새로고침
                         location.reload();
                     },
                     error: function () {}
