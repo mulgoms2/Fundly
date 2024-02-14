@@ -79,4 +79,9 @@ public class ChatController {
             throw new RuntimeException("유효하지 않은 파일명 입니다.", e);
         }
     }
+
+    @ExceptionHandler(Exception.class)
+    public String handleException() {
+        return "chat/error";
+    }
 }
