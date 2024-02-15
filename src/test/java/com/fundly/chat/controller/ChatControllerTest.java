@@ -44,20 +44,14 @@ class ChatControllerTest {
 
   @Test
   @SneakyThrows
-  @DisplayName("채팅방 get 메시지 수신 검사")
+  @DisplayName("채팅방 getChat메서드")
   void chatTest() {
 
     mockMvc.perform(get("/chat")
             .param("asdf", "1234"))
             .andExpect(status().isOk());
 
-//    chatRoomDao.selectChatRoom("test", "testPj");
 
-//    System.out.println("chatService = " + chatService);
-
-//    ChatRoomDto room = chatService.findRoom("test", "testPj");
-//
-//    assert (room != null);
 
   }
 

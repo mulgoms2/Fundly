@@ -35,16 +35,12 @@ public class ChatController {
 
     @GetMapping("/chat")
 //    테스트용
-    public String chatRoom(ChatRequest chatRequest, BindingResult result)  {
+    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result)  {
 
-        if (true) {
-            throw new RuntimeException("^_^");
+
+        if (result.hasErrors()) {
+            return "chat/error";
         }
-
-//        if (result.hasErrors()) {
-//            return chatRequest;
-//            return "chat/error";
-//        }
 
 //        return chatRequest;
         return "chat/chat";

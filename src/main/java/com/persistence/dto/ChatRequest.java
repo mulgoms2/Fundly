@@ -20,13 +20,13 @@ public class ChatRequest {
    @Valid
    private ChatRoomDto chatRoomDto;
 
-   @Email
+   @NotNull
    private String user_id;
 
-   @Min(10)
+   @NotNull
    private String pj_id;
 
-   @NotNull
+   @NotNull(message = "heloo^")
    private Integer helo;
 
 }
