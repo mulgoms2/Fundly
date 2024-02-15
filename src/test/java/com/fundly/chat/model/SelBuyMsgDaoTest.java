@@ -2,6 +2,7 @@ package com.fundly.chat.model;
 
 import com.fundly.chat.model.SelBuyMsgDao;
 import com.persistence.dto.ChatRequest;
+import com.persistence.dto.ChatRequest.ChatRequestBuilder;
 import com.persistence.dto.ChatRoomDto;
 import config.RootContext;
 import config.ServletContext;
@@ -29,7 +30,16 @@ public class SelBuyMsgDaoTest {
     public void setTest() {
         selBuyMsgDao.deleteAllChatRoom();
 
-         this.chatRequest = new ChatRequest();
+//         this.chatRequest = new ChatRequest();
+
+
+
+
+//        ChatRequest chatRequest1 = ChatRequest.builder()
+//                .helo(231)
+//                .pj_id("123")
+//                .user_id("hehe")
+//                .build();
 
         chatRequest.setUser_id("asdf");
         chatRequest.setPj_id("1234");

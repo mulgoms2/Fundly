@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -44,6 +45,8 @@ public class ChatServiceImpl implements ChatService {
     public void getChatRoom(ChatRequest chatRequest) {
 //        채팅룸이 존재하면 채팅방 리턴
         ChatRoomDto chatRoomDto;
+
+        selBuyMsgDao.selectChatRoom(chatRequest);
 
         if ((chatRoomDto = selBuyMsgDao.selectChatRoom(chatRequest)) == null) {
 //            채팅방 생성과 동시에 chatRequest 에 세팅된다
@@ -87,6 +90,7 @@ public class ChatServiceImpl implements ChatService {
     private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
         Date date = selBuyMsgDetailsDto.getSvr_intime();
         String hourAndMinute = new SimpleDateFormat("HH:mm").format(date);
+
         selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
 
         return selBuyMsgDetailsDto;
