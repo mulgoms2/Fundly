@@ -104,7 +104,7 @@ public class PayController {
             if (!userCheck(payMeansDto.getUser_id())) {
                 throw new Exception("Remove Failed. - userCheck Error");
             }
-            String authToken = portOneService.getToken();
+            String authToken = portOneService.getToken().getResponse().getAccess_token();
 
             // 1. 예약된 결제 내역이 있는지 확인한다.
             ScheduledPayRequestDto scheduledPayRequestDto = new ScheduledPayRequestDto(payMeansId, "scheduled", from, to);
@@ -176,7 +176,7 @@ public class PayController {
                     payMeansDto.getCard_no(),payMeansDto.getCard_valid_date(), payMeansDto.getOwn_birth(),
                     payMeansDto.getCard_pwd(), payMeansDto.getPay_means_id());
 
-            String authToken = portOneService.getToken();
+            String authToken = portOneService.getToken().getResponse().getAccess_token();
 
             BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
             if (billKeyResponseDto.getCode() != 0) throw new Exception("Register Failed. - getBillKey Error");

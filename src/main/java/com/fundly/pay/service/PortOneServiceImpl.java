@@ -4,12 +4,10 @@ import com.fundly.pay.dto.billkey.BillKeyRequestDto;
 import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
-import com.fundly.pay.dto.token.TokenData;
 import com.fundly.pay.dto.token.TokenResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,7 +15,6 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
-@PropertySource(value = "/WEB-INF/config/pay.properties")
 @Slf4j
 public class PortOneServiceImpl implements PortOneService {
     @Autowired
@@ -81,14 +78,13 @@ public class PortOneServiceImpl implements PortOneService {
                 .body(BodyInserters.fromFormData(map))
                 .retrieve()
                 .bodyToMono(BillKeyResponseDto.class)
-//                .map(BillKeyResponseDto::getBillKey)
                 .doOnSuccess(res -> log.info("getBillKey 요청 성공"))
                 .doOnError(res -> log.info("getBillKey 요청 실패"))
                 .block();
     }
 
     // 1. 포트원 API 호출 전, 모든 함수 공통 호출: getToken()
-    public String getToken() throws Exception {
+    public TokenResponseDto getToken() throws Exception {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("imp_key", PORTONE_API_KEY);
         map.add("imp_secret", PORTONE_API_SECRET);
@@ -99,8 +95,6 @@ public class PortOneServiceImpl implements PortOneService {
                 .body(BodyInserters.fromFormData(map)) // set body value
                 .retrieve() // 요청 전송
                 .bodyToMono(TokenResponseDto.class) // response를 Mono로 변환
-                .map(TokenResponseDto::getResponse)
-                .map(TokenData::getAccess_token)
                 .doOnSuccess(res -> log.info("getToken 요청 성공"))
                 .doOnError(res -> log.info("getToken 요청 실패"))
                 .block();
