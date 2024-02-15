@@ -53,7 +53,8 @@ class UserJoinDaoTest {
             userDto.setUser_email("aaa" + i + "@abc.com");
             // ow.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
 
-            userDto.setUser_join_date("2024-02-14 14:30:24.333");
+
+//            userDto.setUser_join_date("2024-02-14 14:30:24.333");
             userDto.setSite_term_agree_yn("Y");
             userDto.setP_Info_agree_yn("Y");
             userDto.setM_info_rcv_agree_yn("Y");

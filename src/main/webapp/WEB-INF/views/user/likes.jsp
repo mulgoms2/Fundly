@@ -2,7 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
 <%--관심 프로젝트--%>
-<body>
 <div class="main">
     <div class="userSetting">
         <div class="title">관심 프로젝트</div>

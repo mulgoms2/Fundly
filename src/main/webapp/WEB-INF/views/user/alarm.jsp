@@ -1,36 +1,21 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: init
-  Date: 2024-02-12
-  Time: 오후 16:55
-  To change this template use File | Settings | File Templates.
---%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
-
-<html>
-    <head>
-        <link rel="stylesheet" href="<c:url value='/static/user/Alarm.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/usercommon.css'/>">
-        <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
-    </head>
-
     <%-- 후원한 프로젝트 --%>
-    <body>
-        <div class="main">
-            <div class="title">알림</div>
-            <div class="tapContainer">
-                <div class="tapContainerList" id="divtapContainer">
-                    <span class="tapItem font1"><a href="" id="5">전체</a></span>
-                    <span class="tapItem font1"><a href="" id="3">활동</a></span>
-                    <span class="tapItem font1"><a href="" id="4">프로젝트</a></span>
-                </div>
+    <div class="main">
+        <div class="title">알림</div>
+        <div class="tapContainer">
+            <div class="tapContainerList" id="divtapContainer">
+                <span class="tapItem font1"><a href="" id="5">전체</a></span>
+                <span class="tapItem font1"><a href="" id="3">활동</a></span>
+                <span class="tapItem font1"><a href="" id="4">프로젝트</a></span>
             </div>
+        </div>
 
-            <div class="NotificationListMain">
-                <div class="NotificationList">
-                    <div class="NotificationListItem">
+        <div class="NotificationListMain">
+            <div class="NotificationList">
+                <div class="NotificationListItem">
+                    <div class ="itemWrap">
                         <div class="itemImg"></div>
                         <div class="itemInfo">
                             <div class="notifiContent">좋아하신 <b>주술회전 0</b> 프로젝트에 창작자의 새 게시글이 올라왔습니다.</div>
@@ -40,8 +25,10 @@
                         </div>
                         <div class="itemDel"><a href="">삭제</a></div>
                     </div>
+                </div>
 
-                    <div class="NotificationListItem">
+                <div class="NotificationListItem">
+                    <div class ="itemWrap">
                         <div class="itemImg"></div>
                         <div class="itemInfo">
                             <div class="notifiContent">좋아하신 <b>주술회전 0</b> 프로젝트에 창작자의 새 게시글이 올라왔습니다.</div>
@@ -50,8 +37,10 @@
                         </div>
                         <div class="itemDel"><a href="">삭제</a></div>
                     </div>
+                </div>
 
-                    <div class="NotificationListItem">
+                <div class="NotificationListItem">
+                    <div class ="itemWrap">
                         <div class="itemImg"></div>
                         <div class="itemInfo">
                             <div class="notifiContent">펀들리 생활백서가 배달되었습니다📔</div>
@@ -60,10 +49,7 @@
                         </div>
                         <div class="itemDel"><a href="">삭제</a></div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-    </body>
-</html>
+    </div>

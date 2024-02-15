@@ -265,18 +265,27 @@ h3{
 }
 
 .password-toggle {
-    position: absolute;
-    top : 50%;
-    right: 5px;
-    transform: translateY(-50%);
-    cursor: pointer;
-
-
     width: 20px;
     height: 20px;
-    margin-left: 20px;
+    position: absolute;
+    right: 12px;
+    top: 9px;
     background: url(../../img/Icon-private.png) no-repeat center center;
+
+    /*background: url(/static/img/Icon-private.png) no-repeat center center;*/
     background-size: cover;
+    /*position: absolute;*/
+    /*top : 50%;*/
+    /*right: 5px;*/
+    /*transform: translateY(-50%);*/
+    /*cursor: pointer;*/
+
+
+    /*width: 20px;*/
+    /*height: 20px;*/
+    /*margin-left: 20px;*/
+    /*background: url(../../img/Icon-private.png) no-repeat center center;*/
+    /*background-size: cover;*/
 }
 
 /* 맨 마지막 copyr */

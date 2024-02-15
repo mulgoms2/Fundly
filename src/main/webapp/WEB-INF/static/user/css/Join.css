@@ -262,6 +262,7 @@ h3{
     right: 12px;
     top: 9px;
     background: url(../../img/Icon-private.png) no-repeat center center;
+
     /*background: url(/static/img/Icon-private.png) no-repeat center center;*/
     background-size: cover;
 }
