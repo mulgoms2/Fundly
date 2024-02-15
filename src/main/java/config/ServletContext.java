@@ -62,21 +62,11 @@ public class ServletContext implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
+
         ms.setBasename("message.messages");
-//        ms.setBasename("classpath:/message/messages.properties");
         ms.setDefaultEncoding("UTF-8");
         return ms;
     }
-//        @Bean
-//    public ReloadableResourceBundleMessageSource messageSource() {
-//        ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
-//
-//        res.setDefaultEncoding("UTF-8");
-//		res.setBasename("message.messages");  //1개인 경우
-//
-//        return res;
-//    }
-
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
