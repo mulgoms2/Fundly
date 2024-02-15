@@ -1,18 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: init
-  Date: 2024-02-12
-  Time: 오후 12:50
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-    <head>
-
-    </head>
-
-    <body>
-        <div class="line"></div>
         <div class="footer">
             <div class ="menu">
                 <div class="infoList">
@@ -83,21 +69,6 @@
 
             <div class="notice">
                 <div class="noticeMsg">펀들리는 플랫폼 제공자로서 프로젝트의 당사자가 아니며, 직접적인 통신판매를 진행하지 않습니다. 프로젝트의 완수 및 선물제공의 책임은 해당 프로젝트의 창작자에게 있으며, 프로젝트와 관련하여 후원자와 발생하는 법적 분쟁에 대한 책임은 해당 창작자가 부담합니다.
-
                 </div>
             </div>
         </div>
-    </body>
-<%--    <script>--%>
-<%--        const chat = document.getElementById('chat');--%>
-
-<%--        function chatBtn(){--%>
-<%--            &lt;%&ndash;let url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + $("#pj").val();&ndash;%&gt;--%>
-<%--            &lt;%&ndash;&ndash;%&gt;--%>
-<%--//             window.open(url, "_blank", 'width=600px,height=800px,scrollbars=yes');--%>
-<%--        }--%>
-<%--    </script>--%>
-</html>
-
-
-
