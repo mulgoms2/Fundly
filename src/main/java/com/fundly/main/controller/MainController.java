@@ -31,7 +31,7 @@ public class MainController {
         log.error("\n\n user_email = " + user_email + "\n\n");
 
         if(user_email == null){
-            return "tiles.index";
+            return "main.index";
         }
 
         UserDto userInfo = userInfoService.userInfo(user_email);
@@ -46,7 +46,7 @@ public class MainController {
         model.addAttribute("user_name",user_name);
         model.addAttribute("user_email",user_email);
 
-        return "tiles.index";
+        return "main.index";
 //        UserDto userInfo = loginService.Login()
 //
 
