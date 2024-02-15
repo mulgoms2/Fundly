@@ -15,6 +15,8 @@ public interface SelBuyMsgDao {
 
     int makeChatRoom(ChatRequest chatRequest) throws Exception;
 
+    int deleteAllChatRoom();
+
 //    int insertMsg(SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
 
 //    ArrayList<SelBuyMsgDetailsDto> loadAllMessages(ChatRoomDto chatRoomDto) throws Exception;
