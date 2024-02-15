@@ -10,12 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.core.convert.Property;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -23,15 +18,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 @Slf4j
 @Configuration
 @PropertySource(value = {"/WEB-INF/config/db.properties","/WEB-INF/config/mailPro.properties"})
-//@PropertySource(value = "/WEB-INF/config/db.properties")
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.fundly.**.model", "com.persistence.dto.domain"})
 public class RootContext {
