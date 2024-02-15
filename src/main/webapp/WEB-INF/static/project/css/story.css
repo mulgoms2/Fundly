@@ -1,0 +1,63 @@
+
+
+.story dl.pjInfo  {
+    width: 302px;
+}
+.story dl.pjInfo .pjNotice {
+    width: 302px;
+    padding: 20px 24px;
+    position: relative;
+}
+.story dl.pjInfo .pjNotice i{
+    font-size: 10px;
+    position: absolute;
+    left: 20px;
+    top: 25px;
+
+}
+.story dl.pjInfo .pjNotice .pjNoticeTit{
+    padding-left: 12px;
+}
+.story dl.pjInfo .pjNotice p.pjNoticeCont{
+    padding-bottom: 5px;
+}
+.story dl.pjInfo .pjNotice p.pjNoticeCont:last-child{
+    font-weight: 500;
+}
+.story dl.pjInfo .pjNotice p.pjNoticeCont::before {
+    content:"*";
+    font-size: 12px;
+    font-weight: 400;
+    padding-right: 5px;
+}
+
+.pjBox .pjForm.story{
+    margin-top: 47px;
+    display: flex;
+    flex-direction: column;
+    width: 722px;
+    border-radius: 0;
+    padding: 0 36px 32px;
+
+}
+.pjWrap .pjCont .pjBox .pjForm.story > div {
+    padding: 32px 0;
+    border-bottom: .5px solid #ececec;
+}
+.pjWrap .pjCont .pjBox .pjForm.story > div.reward {
+    border-bottom: none;
+}
+.pjWrap .pjCont .pjBox .pjForm.story .tit > p {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0d0d0d;
+}
+.pjWrap .pjCont .pjBox .story .descp > p{
+    margin-top: 10px;
+}
+.pjWrap .pjCont .pjBox .story textarea{
+    resize: none;
+}
+.pjWrap .pjCont .pjBox .story .textWrp {
+    margin-top: 16px;
+}
