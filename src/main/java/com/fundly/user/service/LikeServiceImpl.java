@@ -62,7 +62,7 @@ public class LikeServiceImpl implements LikeService {
     public List<LikeDto> getLikeList(LikeDto likedto) {
         try {
 
-            return likedao.getLikeListAll(likedto);
+            return likedao.AllLikeList(likedto);
 
         } catch (Exception e) {
 
