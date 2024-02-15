@@ -15,8 +15,8 @@
 <!--        <selectKey keyProperty="pay_means_id" resultType="String" order="BEFORE">-->
 <!--            select concat("PAY_", #{user_id}, "_", (ifnull(Max(seq), 0) + 1)) from pay_means_reg-->
 <!--        </selectKey>-->
-        insert into pay_means_reg(pay_means_id, user_id, own_type, bill_key, default_pay_means_yn, card_co_info_agree_yn, card_co_type, dba_reg_id)
-        values (#{pay_means_id}, #{user_id}, #{own_type}, #{bill_key}, #{default_pay_means_yn}, #{card_co_info_agree_yn}, #{card_co_type}, #{dba_reg_id})
+        insert into pay_means_reg(pay_means_id, user_id, own_type, bill_key, default_pay_means_yn, card_co_info_agree_yn, card_co_type, card_no, dba_reg_id)
+        values (#{pay_means_id}, #{user_id}, #{own_type}, #{bill_key}, #{default_pay_means_yn}, #{card_co_info_agree_yn}, #{card_co_type}, #{card_no}, #{dba_reg_id})
     </insert>
 
 <!--    새로운 기본 결제수단이 지정되면, 기존 기본 결제수단은 해제-->

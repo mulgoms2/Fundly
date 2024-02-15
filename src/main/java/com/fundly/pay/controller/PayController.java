@@ -184,6 +184,11 @@ public class PayController {
             payMeansDto.setBill_key(billKeyResponseDto.getResponse().getCustomer_id());
             payMeansDto.setCard_co_type(billKeyResponseDto.getResponse().getCard_publisher_name());
 
+            // 카드번호 뒤 4자리
+            String cardNumber =billKeyResponseDto.getResponse().getCard_number();
+            cardNumber = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
+            payMeansDto.setCard_no(cardNumber);
+
             int rowCnt;
             int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
             // 기존 기본결제수단이 있는 경우, 기본결제수단지정 체크한 상태면 기존 것은 unset
