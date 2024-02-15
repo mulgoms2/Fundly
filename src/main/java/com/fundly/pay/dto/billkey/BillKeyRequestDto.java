@@ -1,4 +1,4 @@
-package com.fundly.pay.dto;
+package com.fundly.pay.dto.billkey;
 
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.fundly.pay.controller;
 
-import com.fundly.pay.dto.BillKeyRequestDto;
-import com.fundly.pay.dto.BillKeyResponseDto;
+import com.fundly.pay.dto.billkey.BillKeyRequestDto;
+import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import com.fundly.pay.service.PayMeansService;
@@ -181,8 +181,8 @@ public class PayController {
             BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
             if (billKeyResponseDto.getCode() != 0) throw new Exception("Register Failed. - getBillKey Error");
 
-            payMeansDto.setBill_key(billKeyResponseDto.getBillKey());
-            payMeansDto.setCard_co_type(billKeyResponseDto.getCardCoType());
+            payMeansDto.setBill_key(billKeyResponseDto.getResponse().getCustomer_id());
+            payMeansDto.setCard_co_type(billKeyResponseDto.getResponse().getCard_publisher_name());
 
             int rowCnt;
             int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());

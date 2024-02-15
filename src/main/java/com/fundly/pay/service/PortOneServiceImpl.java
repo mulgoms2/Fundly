@@ -1,8 +1,11 @@
 package com.fundly.pay.service;
 
-import com.fundly.pay.dto.*;
+import com.fundly.pay.dto.billkey.BillKeyRequestDto;
+import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
+import com.fundly.pay.dto.token.TokenData;
+import com.fundly.pay.dto.token.TokenResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,7 +99,8 @@ public class PortOneServiceImpl implements PortOneService {
                 .body(BodyInserters.fromFormData(map)) // set body value
                 .retrieve() // 요청 전송
                 .bodyToMono(TokenResponseDto.class) // response를 Mono로 변환
-                .map(TokenResponseDto::getAccess_token)
+                .map(TokenResponseDto::getResponse)
+                .map(TokenData::getAccess_token)
                 .doOnSuccess(res -> log.info("getToken 요청 성공"))
                 .doOnError(res -> log.info("getToken 요청 실패"))
                 .block();
