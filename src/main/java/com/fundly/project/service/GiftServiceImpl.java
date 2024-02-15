@@ -18,7 +18,7 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    public List<GiftDto> getGift(String pj_id, String gift_name) throws Exception {
+    public GiftDto getGift(String pj_id, String gift_name) throws Exception {
         return giftMapper.select(pj_id, gift_name);
     }
 

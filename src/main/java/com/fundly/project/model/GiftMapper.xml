@@ -54,9 +54,6 @@
     </select>
 
     <!--3. 선물 하나 삭제 -->
-    <delete id="delete" resultType="    ">
-
-    </delete>
 
 
 

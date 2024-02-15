@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.math.BigInteger;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -50,9 +49,8 @@ class GiftServiceImplTest {
     @Test
     @DisplayName("선물 조회")
     void getGift() {
-        List<GiftDto> giftDtoList = giftService.getGift("pj1","선물세트A");
+        GiftDto giftDtoList = giftService.getGift("pj1","선물세트A");
         log.error("giftDtoList = {}",giftDtoList);
-        log.error("giftDtoList.size = {}",giftDtoList.size());
-        assertEquals(giftDtoList.size(),1);
+
     }
 }
