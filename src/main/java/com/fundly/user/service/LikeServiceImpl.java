@@ -16,32 +16,59 @@ public class LikeServiceImpl implements LikeService {
     private final LikeDao likedao;
 
     @Override
-    public int checkLike(LikeDto likedto) throws Exception {
+    public int changeLike(LikeDto likedto) {
 
-        int result = 0;
+        try {
 
-        // 찜한 목록 조회
-        LikeDto likes = likedao.getLike(likedto);
-
-        if(likes == null) {
-            result = likedao.insertLike(likedto);
-        } else {
+            int result = 0;
+            // 찜한 목록 조회
+            LikeDto likes = likedao.getLike(likedto);
+            //
+            if(likes == null) {
+                result = likedao.insertLike(likedto);
+            } else {
                 if (likes.getLike_status() == 1) {
                     likedao.cancelLike(likedto);
                 } else {
                     result = likedao.reLike(likedto);
                 }
             }
-        return result;
+            return result;
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
+
     }
 
     @Override
-    public LikeDto getList(LikeDto likedto) throws Exception{
-        return likedao.getLike(likedto);
+    public LikeDto getLike(LikeDto likedto) {
+
+        try {
+
+            return likedao.getLike(likedto);
+
+        } catch(Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
+
     }
 
     @Override
-    public int remove(LikeDto likedto) {
-        return 0;
+    public List<LikeDto> getLikeList(LikeDto likedto) {
+        try {
+
+            return likedao.getLikeListAll(likedto);
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
     }
+
 }
