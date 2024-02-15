@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="pjForm">
-                <div>
+                <div class="start">
                     <div>
                         <div class="tit">
                             <p>선물 만들기</p>

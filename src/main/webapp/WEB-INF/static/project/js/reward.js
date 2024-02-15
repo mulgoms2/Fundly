@@ -62,6 +62,12 @@ window.onload = function () {
     if (strBtn !== null) {
         strBtn.addEventListener("click", function () {
             // giftPage.style.display = "none";
+            itmBtn.querySelector('i').style.color = '#f86453';
+            itmBtn.querySelector('span').style.color = '#3d3d3d';
+            itmBtn.querySelector('span').style.fontWeight = '700';
+            gftBtn.querySelector('i').style.color = '#c4c4c4';
+            gftBtn.querySelector('span').style.color = '#c4c4c4';
+            gftBtn.querySelector('span').style.fontWeight = '600';
             location.href = "#item";
             window.scrollTo(0,0); //최상단으로 이동
             mkHidden([giftPage, strPage]);
