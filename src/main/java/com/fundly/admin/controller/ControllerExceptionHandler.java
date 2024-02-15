@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.sql.SQLException;
 
-@ControllerAdvice
+@ControllerAdvice("com.fundly.admin")
 public class ControllerExceptionHandler {
-    @ExceptionHandler({RuntimeException.class, SQLException.class})
+    @ExceptionHandler(RuntimeException.class)
     public String handleRuntimeException() {
 
         return "admin/error";
