@@ -20,25 +20,25 @@
         <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
             <c:set var="time" value="${msg.svr_intime_string}"/>
             <c:if test="${msg.file_cnt ne 0}">
-                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                <c:if test="${msg.send_user_id eq sessionScope.user_email}">
                     ${sessionScope.loginId}
                     <div class="chatBox right" data-time="${time}">
                         <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
                     </div>
                 </c:if>
-                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                <c:if test="${msg.send_user_id ne sessionScope.user_email}">
                     <div class="chatBox left" data-time="${time}">
                         <img class="chatAttImg" src="${msg.file_url}" style="width: 300px" alt=""/>
                     </div>
                 </c:if>
             </c:if>
             <c:if test="${msg.file_cnt eq 0}">
-                <c:if test="${msg.send_user_id eq sessionScope.loginId}">
+                <c:if test="${msg.send_user_id eq sessionScope.user_email}">
                     <div class="chatBox right" data-time="${time}">
                         <div class="chat">${msg.msg_cont}</div>
                     </div>
                 </c:if>
-                <c:if test="${msg.send_user_id ne sessionScope.loginId}">
+                <c:if test="${msg.send_user_id ne sessionScope.user_email}">
                     <div class="chatBox left" data-time="${time}">
                         <div class="chat">${msg.msg_cont}</div>
                     </div>
@@ -54,7 +54,7 @@
             </div>
         </form>
         <label class="labelImgFileIpt" for="img"><i class="fa-solid fa-upload"></i></label>
-        <input id="img" class="imgFileIpt" name="file_img" type="file" formenctype="multipart/form-data"/>
+        <input id="img" class="imgFileIpt" name="file_img" type="file" accept="image/*" formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>
@@ -84,16 +84,16 @@
             console.error('Broker reported error: ' + frame.headers['message']);
             console.error('Additional details: ' + frame.body);
         };
-    }
+    };
 
     // 나가기 버튼에 매핑해서 호출하자.
     const disconnect = () => {
         stompClient.deactivate();
         setConnected(false);
         console.log("Disconnected");
-    }
+    };
 
-    const sendMessage = async () => {
+    const sendMessage = () => {
         const message = document.querySelector("#chat").value;
 
         if (message.trim() === "") {
@@ -106,7 +106,7 @@
             msg_cont: message,
             buy_id: "${chatRequest.chatRoomDto.user_id}",
             pj_id: "${chatRequest.chatRoomDto.pj_id}",
-            send_user_id: "${chatRequest.chatRoomDto.user_id}"
+            send_user_id: "${sessionScope.user_email}"
         };
 
         stompClient.publish({
@@ -118,7 +118,7 @@
         setTimeout(() => {
             document.querySelector("#chat").value = "";
         }, 1);
-    }
+    };
 
     const sendImg = () => {
 
@@ -134,7 +134,7 @@
         formData.append("file", files[0]);
         formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
         formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
-        formData.append("send_user_id", "${chatRequest.chatRoomDto.user_id}");
+        formData.append("send_user_id", "${sessionScope.user_email}");
         formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
         formData.append("file_cnt", files.length);
 
@@ -145,33 +145,33 @@
             headers: {},
             body: formData
         });
-    }
+    };
 
     // 메시지 생성시 하단 스크롤 유지
     const scrollToBottom = () => {
         const scrollHeight = document.querySelector(".chatMainContainer").scrollHeight;
         document.querySelector(".chatMainContainer").scrollTo({top: scrollHeight});
-    }
+    };
 
     // 구독중인 토픽에 변화가 생길때 실행되는 콜백
     // 채팅방에 입장해서 생기는 일은 모델에 데이터를 담아와서 jsp로 처리하고있다.
     const parsingMessage = (message) => {
-        const position = message.send_user_id !== "${sessionScope.loginId}" ? "right" : "left";
+        const position = message.send_user_id === "${sessionScope.user_email}" ? "right" : "left";
 
         const msg = message.file_cnt != 0 ? paintImg(position, message.file_url, message.svr_intime_string) : paintChat(position, message.msg_cont, message.svr_intime_string);
 
-        scrollToBottom();
-    }
+        setTimeout(scrollToBottom, 1);
+    };
 
     const paintChat = (position, text, time) => {
         document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><div class="chat">${'${text}'}</div></div>`;
-    }
+    };
 
     const paintImg = (position, imgUrl, time) => {
         document.querySelector("#chatContainer").innerHTML += `<div class="chatBox ${'${position}'}" data-time="${'${time}'}"><img id="imgTag" class="chatAttImg" src="${"${imgUrl}"}" onload="scrollToBottom()"/></div>`;
         // document.querySelector("#imgTag").addEventListener("load", scrollToBottom
         // );
-    }
+    };
 
     window.onload = () => {
         document.querySelector("#chatForm").addEventListener("submit", e => e.preventDefault());

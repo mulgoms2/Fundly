@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface LikeService {
 
-//    찜 상태 확인
-    int checkLike(LikeDto likedto) throws Exception;
+    //    찜 상태 변경
+    int changeLike(LikeDto likedto) throws Exception;
 
-//    찜목록 가져오기
-    List<LikeDto> getList(String user_id);
+    //    현재 찜한 정보 가져오기
+    LikeDto getLike(LikeDto likedto) throws Exception;
 
-    //    찜 취소하기
-    int remove(String user_id, String pj_id);
+    // 찜한 목록 전체 가져오기
+    List<LikeDto> getLikeList(LikeDto likedto) throws Exception;
 
 }

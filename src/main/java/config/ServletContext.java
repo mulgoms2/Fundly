@@ -2,13 +2,18 @@ package config;
 
 import com.fundly.chat.pojo.ChatInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.validation.MessageCodesResolver;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.*;
@@ -52,6 +57,25 @@ public class ServletContext implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(new ChatInterceptor()).addPathPatterns("/chat*");
     }
+
+
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
+        ms.setBasename("message.messages");
+//        ms.setBasename("classpath:/message/messages.properties");
+        ms.setDefaultEncoding("UTF-8");
+        return ms;
+    }
+//        @Bean
+//    public ReloadableResourceBundleMessageSource messageSource() {
+//        ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
+//
+//        res.setDefaultEncoding("UTF-8");
+//		res.setBasename("message.messages");  //1개인 경우
+//
+//        return res;
+//    }
 
     @Bean
     public WebClient webClient() {

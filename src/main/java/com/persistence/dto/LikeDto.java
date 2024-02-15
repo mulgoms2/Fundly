@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class LikeDto {
+
+    private int bno;
     @NonNull
     private String user_id;
     @NonNull

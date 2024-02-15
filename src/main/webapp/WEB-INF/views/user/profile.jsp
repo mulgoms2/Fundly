@@ -1,7 +1,7 @@
 <%--
   Created by IntelliJ IDEA.
   User: init
-  Date: 2024-02-11
+  Date: 2024-02-12
   Time: 오전 11:56
   To change this template use File | Settings | File Templates.
 --%>
@@ -9,12 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
 
-<%--<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>--%>
-
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/static/user/Profile.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/common.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/usercommon.css'/>">
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     </head>
 
@@ -37,16 +35,18 @@
                         </div>
                     </div>
 
-                    <div class="tapContainer" id="divtapContainer">
-                        <span class="tapItem fontcolor"><a href="" id="itemProfile">프로필</a></span>
-                        <span class="tapItem fontcolor"><a href="" id="itemProjectReview">프로젝트 후기</a></span>
-                        <span class="tapItem fontcolor"><a href="" id="itemMakeProject">올린 프로젝트</a></span>
-                        <span class="tapItem fontcolor"><a href="" id="itemProjectOrder">후원한 프로젝트</a></span>
+                    <div class="tapContainer">
+                        <div class="tapContainerList" id="divtapContainer">
+                            <span class="tapItem fontcolor on"><a href="" id="itemProfile">프로필</a></span>
+                            <span class="tapItem fontcolor"><a href="" id="itemProjectReview">프로젝트 후기</a></span>
+                            <span class="tapItem fontcolor"><a href="" id="itemMakeProject">올린 프로젝트</a></span>
+                            <span class="tapItem fontcolor"><a href="" id="itemProjectOrder">후원한 프로젝트</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="line"></div>
+<%--            <div class="line"></div>--%>
 
             <!-- 탭 값 -->
             <div class="container">

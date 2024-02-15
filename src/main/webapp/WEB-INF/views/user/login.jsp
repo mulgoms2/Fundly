@@ -39,6 +39,10 @@
                         <div class="usPwd">
                             <input type="password" id="user_pwd" name="user_pwd" placeholder="비밀번호 입력" />
 
+                            <div class="eyes">
+                                <div class="password-toggle" id="togglePwd"></div>
+                            </div>
+
                             <div id="msg" class="msg"></div>
                         </div>
 
@@ -52,13 +56,21 @@
 
                     </form>
                 </div>
-            <%--    <div class="socLogin">--%>
-            <%--        <div class="styLine">--%>
-            <%--            <span>다른 방법으로 로그인</span>--%>
-            <%--            <button class="kakaBtn" value="sumbit">카카오로 로그인</button>--%>
-            <%--            <button class="googleBtn" value="sumbit">구글 로그인</button>--%>
-            <%--        </div>--%>
-            <%--    </div>--%>
+                <div class="socLogin">
+                    <div class="styLine">
+                        <div class="otherLogin">
+                            <span>다른 방법으로 로그인</span>
+                        </div>
+                        <button id="kakaBtn" class="kakaBtn" >
+                            <div class="kakaImg"></div>
+                            <div>카카오톡으로 로그인</div>
+                        </button>
+                        <button id="googleBtn" class="googleBtn">
+                            <div class="googleImg"></div>
+                            <div>구글로 로그인</div>
+                        </button>
+                    </div>
+                </div>
                 <div class ="joinLink">
                     <span>아직 펀들리 계정이 없으신가요?  </span><a href="<c:url value='/join/add'/>" class="join">회원가입</a>
                 </div>
@@ -117,6 +129,19 @@
         usLoginForm.submit();
     })
 
+    const pwdInput = document.getElementById('user_pwd');
+    const togglePwd = document.getElementById('togglePwd');
+
+    togglePwd.addEventListener('click', function () {
+
+        if (pwdInput.type === 'password') {
+            pwdInput.type = 'text';
+            togglePwd.style.backgroundImage = 'url("/static/img/Icon-eye.png")';
+        } else {
+            pwdInput.type = 'password';
+            togglePwd.style.backgroundImage = 'url("/static/img/Icon-private.png")';
+        }
+    });
 
 </script>
 

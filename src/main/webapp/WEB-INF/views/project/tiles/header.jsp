@@ -1,30 +1,34 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dobigulbi
-  Date: 1/31/24
-  Time: 10:49 PM
-  To change this template use File | Settings | File Templates.
---%>
+<!--Header-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%--<html lang="en">--%>
+<%--<head>--%>
+<%--    <script defer src="/static/project/js/header.js"></script>--%>
+<%--</head>--%>
+<%--<body>--%>
 <div class="topContents">
     <div class="header">
-        <p>This is Header</p>
+        <div>
+            <a href="javascript:void(0)"></a><i class="fas fa-solid fa-arrow-left"></i>
+        </div>
+        <div class="hBtnWrap">
+            <button type="button" class="preview"><i class="fas fa-solid fa-eye"></i> &nbsp;&nbsp;미리 보기</button>
+            <button type="button" class="save">저장</button>
+        </div>
     </div>
     <div class="topContentsWrapper">
-        <p>This is topContentsWrapper</p>
+        <span>프로젝트 기획</span>
     </div>
     <div class="fixedContentWrapper">
-        <p>This is fixedContentWrapper</p>
+        <div class="planWrap">
+            <ul>
+                <li><a id="default" class="active" href="<c:url value='/project/default'/>">기본 정보</a></li>
+                <li><a id="funding" href="<c:url value='/project/funding'/>">펀딩 계획</a></li>
+                <li><a id="reward" href="<c:url value='/project/reward'/>">선물 구성</a></li>
+                <li><a id="story" href="<c:url value='/project/story'/>">프로젝트 계획</a></li>
+                <li><a id="creator" href="<c:url value='/project/creator'/>">창작자 정보</a></li>
+            </ul>
+        </div>
     </div>
 </div>
-
-</body>
-</html>

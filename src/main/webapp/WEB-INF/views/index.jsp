@@ -96,10 +96,10 @@
                         <div class="pageItem" id = "Coupon"> 응원권 </div>
                         <div class="line"></div>
                         <div class="pageItem" id = "fundingProject"> 후원한 프로젝트 </div>
-                        <div class="pageItem" id = "Like"> 관심 프로젝트 </div>
+                        <div class="pageItem" id = "Likes"> 관심 프로젝트 </div>
                         <div class="line"></div>
                         <div class="pageItem" id = "Alarm"> 알림 </div>
-                        <div class="pageItem" id = "Msg"> 메시지 </div>
+                        <div class="pageItem" id = "Message"> 메시지 </div>
                         <div class="line"></div>
                         <div class="pageItem" id = "MakeProject"> 내가 만든 프로젝트 </div>
                         <div class="pageItem" id = "Setting"> 설정 </div>
@@ -183,9 +183,9 @@
                 <div class="banTxt">
                     <div class="txtGr">
                         <div class="subTxt">
-                                <span>
-                                    <a href="#">아트북디자인더하트</a>
-                                </span>
+                            <span>
+                                <a href="#">아트북디자인더하트</a>
+                            </span>
                         </div>
                         <div class="subTit">
                             <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
@@ -389,6 +389,7 @@
     </div>
 </div>
 </body>
+
 <script>
     <%--alert(${user_email});--%>
     /* 로그인/회원가입 or 로그인 회원 정보 */
@@ -407,30 +408,39 @@
 
     MyPageList.addEventListener("click",(e)=>{
 
-        if(e.target.id == "Profile"){
+        if(e.target.id === "Profile"){
             // 프로필 화면으로
             return window.location.href = '/mypage/profile';
 
-        } else if(e.target.id == "Coupon") {
+        } else if(e.target.id === "Coupon") {
             // 응원권 화면으로
             return window.location.href = '/mypage/coupon';
 
-        } else if(e.target.id == "fundingProject") {
+        } else if(e.target.id === "fundingProject") {
             // 후원한 프로젝트 화면으로
             return window.location.href = '/mypage/fundingProject';
 
-        } else if(e.target.id == "Like") {
-            return window.location.href = '/like';
+        } else if(e.target.id === "Likes") {
+            // 관심 프로젝트
+            return window.location.href = '/mypage/likes';
 
-        } else if(e.target.id == "Alarm") {
+        } else if(e.target.id === "Alarm") {
+            // 알림 화면으로
+            return window.location.href = '/mypage/alarm';
 
-        } else if(e.target.id == "Msg") {
+        } else if(e.target.id === "Message") {
+            // 메시지 화면으로
+            return window.location.href = '/mypage/message';
 
-        } else if(e.target.id == "MakeProject") {
+        } else if(e.target.id === "MakeProject") {
+            // 내가 만든 프로젝트 화면으로
+            return window.location.href = '/mypage/makeProject';
 
-        } else if(e.target.id == "Setting") {
+        } else if(e.target.id === "Setting") {
+            // 설정 화면으로
+            return window.location.href = '/mypage/setting';
 
-        } else if(e.target.id == "LogOut") {
+        } else if(e.target.id === "LogOut") {
 
             toggleContent("MyPageList");
             return window.location.href = '/login/logout';
@@ -441,7 +451,7 @@
 
         var content = document.getElementById(MyPageList);
 
-        if(content.style.display=="none"){
+        if(content.style.display==="none" || content.style.display === ""){
 
             content.style.display="block";
         } else{

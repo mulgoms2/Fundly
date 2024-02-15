@@ -1,7 +1,9 @@
 package com.fundly.pay.controller;
 
-import com.fundly.pay.dto.BillKeyRequestDto;
-import com.fundly.pay.dto.BillKeyResponseDto;
+import com.fundly.pay.dto.billkey.BillKeyRequestDto;
+import com.fundly.pay.dto.billkey.BillKeyResponseDto;
+import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
+import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import com.fundly.pay.service.PayMeansService;
 import com.fundly.pay.service.PortOneService;
 import com.persistence.dto.PayMeansDto;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -37,18 +41,113 @@ public class PayController {
         this.portOneService = portOneService;
     }
 
+    @PostMapping("/update")
+    public String updateDefaultMeans(PayMeansDto payMeansDto, RedirectAttributes rattr) {
+        // 1. 기본결제수단지정 버튼을 클릭한다.
+        // 2. Y인 row가 있으면 N으로 바꾼다.
+        // 3. 해당 결제수단을 Y로 바꾼다.
+        // 4. Y인 row가 1개인지 검증한다.
+        // 4. Y인 것은 태그를 붙이고 첫번째로 출력한다.
+        String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
+        try {
+//            log.info("payMeansDto ??? " + payMeansDto);
+            // 1. session의 user Id와 payMeansDto user Id가 같은지 확인한다.
+            if (!userCheck(payMeansDto.getUser_id())) {
+                throw new Exception("Update Failed. - userCheck Error");
+            }
+            log.info("userCheck 성공");
+
+            // 2. Y인 row가 있으면 N으로 바꾼다.
+            Map map = new HashMap();
+            map.put("user_id", userId);
+            map.put("dba_mod_id", userId);
+
+            // 기존 기뵨결제수단이 있는지 확인 (있다면 값은 1)
+            int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
+            // 기존의 기본결제수단이 있다면 해제
+            int rowCnt;
+            if (defaultPayMeansCnt != 0) {
+                rowCnt = payMeansService.unsetDefaultPayMeans(map);
+                if (rowCnt != 1) {
+                    throw new Exception("Update Failed. - unsetDefaultPayMeans Error");
+                }
+                log.info("unsetDefaultPayMeans 성공");
+            }
+
+            // 3. 해당 결제수단을 Y로 바꾼다.
+            payMeansDto.setDba_mod_id(userId);
+            rowCnt = payMeansService.setDefaultPayMeans(payMeansDto);
+            if (rowCnt != 1) {
+                throw new Exception("Update Failed. - setDefaultPayMeans Error");
+            }
+            log.info("setDefaultPayMeans 성공");
+
+            // 4. Y인 row가 1개인지 검증한다.
+            if (defaultPayMeansCnt != 1) {
+                throw new Exception("Update Failed. - getDefaultPayMeansCount Error");
+            }
+            log.info("getDefaultPayMeansCount 성공");
+
+            rattr.addFlashAttribute("msg", "UPDATE_SUCCESS");
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("update 실패");
+            rattr.addFlashAttribute("msg", "UPDATE_ERROR");
+        }
+        return "redirect:/pay/list";
+    }
+
+    @PostMapping("/remove")
+    public String remove(PayMeansDto payMeansDto, long from, long to, RedirectAttributes rattr) {
+        String payMeansId = payMeansDto.getPay_means_id();
+        try {
+            if (!userCheck(payMeansDto.getUser_id())) {
+                throw new Exception("Remove Failed. - userCheck Error");
+            }
+            String authToken = portOneService.getToken();
+
+            // 1. 예약된 결제 내역이 있는지 확인한다.
+            ScheduledPayRequestDto scheduledPayRequestDto = new ScheduledPayRequestDto(payMeansId, "scheduled", from, to);
+            log.info("from: " + from);
+            log.info("to: " + to);
+            ScheduledPayResponseDto scheduledPayResponseDto = portOneService.getScheduledPay(scheduledPayRequestDto, authToken);
+            if (scheduledPayResponseDto.getCode() != 0) throw new Exception("Remove Failed. - getScheduledPay Error");
+            if (scheduledPayResponseDto.getResponse().getTotal() != 0) throw new Exception("Remove Failed. - 예약된 결제가 있습니다.");
+            log.info("getScheduledPay 성공");
+
+            // 2. 예약된 결제 내역이 없으면 PortOne에서 삭제한다.
+            BillKeyRequestDto billKeyRequestDto = new BillKeyRequestDto();
+            billKeyRequestDto.setCustomer_uid(payMeansId);
+            BillKeyResponseDto billKeyResponseDto = portOneService.removeBillKey(billKeyRequestDto, authToken);
+            if (billKeyResponseDto.getCode() != 0) throw new Exception("Remove Failed. - removeBillKey Error");
+            log.info("removeBillKey 성공");
+
+            // 3. PortOne에서 삭제되면 DB에서 삭제한다.
+            int rowCnt = payMeansService.removePayMeans(payMeansId);
+            if (rowCnt != 1) throw new Exception("Remove Failed. - DB Delete Error");
+            log.info("removePayMeans 성공");
+
+            rattr.addFlashAttribute("msg", "DEL_SUCCESS");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "DEL_ERROR");
+        }
+
+        return "redirect:/pay/list";
+    }
+
     @GetMapping("/list")
     public String list(Model m) {
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
 
         try {
             List<PayMeansDto> list = payMeansService.getAllPayMeans(userId);
-            log.info("list???" + list);
             m.addAttribute("list", list);
 
         } catch (Exception e) {
             e.printStackTrace();
-            m.addAttribute("msg", "LIST_ERR");
+            m.addAttribute("msg", "LIST_ERROR");
         }
 
         return "pay/userPayMeansPage";
@@ -64,10 +163,14 @@ public class PayController {
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
         payMeansDto.setUser_id(userId);
         payMeansDto.setDba_reg_id(userId);
+        if (payMeansDto.getDefault_pay_means_yn() == null) {
+            payMeansDto.setDefault_pay_means_yn("N");
+        }
         try {
+            // userID 이용하여 결제수단테이블 id(pay_means_id) 생성
             String payMeansId = payMeansService.getPayMeansId(userId);
             payMeansDto.setPay_means_id(payMeansId);
-            log.info("payMeansId = " + payMeansId);
+//            log.info("payMeansId = " + payMeansId);
 
             BillKeyRequestDto billKeyRequestDto = new BillKeyRequestDto(
                     payMeansDto.getCard_no(),payMeansDto.getCard_valid_date(), payMeansDto.getOwn_birth(),
@@ -76,13 +179,31 @@ public class PayController {
             String authToken = portOneService.getToken();
 
             BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
-            if (billKeyResponseDto.getCode() != 0) {
-                throw new Exception();
-            }
-            payMeansDto.setBill_key(billKeyResponseDto.getBillKey());
-            payMeansDto.setCard_co_type(billKeyResponseDto.getCardCoType());
+            if (billKeyResponseDto.getCode() != 0) throw new Exception("Register Failed. - getBillKey Error");
 
-            payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
+            payMeansDto.setBill_key(billKeyResponseDto.getResponse().getCustomer_id());
+            payMeansDto.setCard_co_type(billKeyResponseDto.getResponse().getCard_publisher_name());
+
+            // 카드번호 뒤 4자리
+            String cardNumber =billKeyResponseDto.getResponse().getCard_number();
+            cardNumber = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
+            payMeansDto.setCard_no(cardNumber);
+
+            int rowCnt;
+            int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
+            // 기존 기본결제수단이 있는 경우, 기본결제수단지정 체크한 상태면 기존 것은 unset
+            if (defaultPayMeansCnt != 0) {
+                if (payMeansDto.getDefault_pay_means_yn().equals("Y")) {
+                    Map map = new HashMap();
+                    map.put("user_id", userId);
+                    map.put("dba_mod_id", userId);
+                    rowCnt = payMeansService.unsetDefaultPayMeans(map);
+                    if (rowCnt != 1) throw new Exception("Register Failed. - unsetDefaultPayMeans Error");
+                    log.info("unsetDefaultPayMeans 성공");
+                }
+            }
+            rowCnt = payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
+            if (rowCnt != 1) throw new Exception("Register Failed. - registerPayMeans Error");
 
             rattr.addFlashAttribute("msg", "REG_SUCCESS");
 
@@ -91,6 +212,12 @@ public class PayController {
             rattr.addFlashAttribute("msg", "REG_ERROR");
         }
         return "redirect:/pay/list";
+    }
+
+    private boolean userCheck(String payMeansDtoUserId) {
+//        String sessionId = (String) session.getAttribute("id");
+        String sessionId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
+        return sessionId.equals(payMeansDtoUserId);
     }
 
 }

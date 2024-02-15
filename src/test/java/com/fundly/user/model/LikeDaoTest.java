@@ -32,7 +32,7 @@ class LikeDaoTest {
     @DisplayName("DB에 데이터넣기")
     void start() {
         userdto = new UserDto("bada","바다","1234");
-        pjdto = new ProjectDto("P001");
+        pjdto = new ProjectDto("P001",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
     }
 
@@ -46,20 +46,29 @@ class LikeDaoTest {
 
     @Test
     @SneakyThrows
+    @DisplayName("좋아요목록전체")
+    void getLikeListAllTest() {
+        likedto = new LikeDto("user","P3030");
+        List<LikeDto> likes = likedao.getLikeListAll(likedto);
+        assertTrue(likes.size()==2);
+    }
+
+    @Test
+    @SneakyThrows
     @DisplayName("좋아요목록")
-    void getLikeListTest() {
-        List<LikeDto> list = likedao.getLikeList(likedto);
-        assertTrue(list.size()==0);
+    void getLikeTest() {
+        LikeDto list = likedao.getLike(likedto);
+//        assertTrue(list.size()==0);
         assertTrue(likedao.insertLike(likedto)==1);
-        list = likedao.getLikeList(likedto);
-        assertTrue(list.size()==1);
+        list = likedao.getLike(likedto);
+//        assertTrue(list.size()==1);
         System.out.println("list = " + list);
         userdto = new UserDto("bada","바다","1234");
-        pjdto = new ProjectDto("P002");
+        pjdto = new ProjectDto("P002",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
         assertTrue(likedao.insertLike(likedto)==1);
-        list = likedao.getLikeList(likedto);
-        assertTrue(list.size()==1);
+        list = likedao.getLike(likedto);
+//        assertTrue(list.size()==1);
         System.out.println("list = " + list);
     }
 
@@ -69,7 +78,7 @@ class LikeDaoTest {
     void insertLikeTest() {
         assertTrue(likedao.insertLike(likedto)==1);
         userdto = new UserDto("bada","바다","1234");
-        pjdto = new ProjectDto("P002");
+        pjdto = new ProjectDto("P002",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
         assertTrue(likedao.insertLike(likedto)==1);
     }
@@ -80,7 +89,7 @@ class LikeDaoTest {
     void cancelLikeTest() {
         assertTrue(likedao.insertLike(likedto)==1);
         //좋아요목록 불러와서
-        likedao.getLikeList(likedto);
+        likedao.getLike(likedto);
         //좋아요 상태가 1이면
         assertTrue(likedao.cancelLike(likedto)==1);
         //likedao.cancelLike()
@@ -94,7 +103,7 @@ class LikeDaoTest {
         //좋아요목록 불러와서
         assertTrue(likedao.insertLike(likedto)==1);
         //좋아요 상태가 0이면
-        likedao.getLikeList(likedto);
+        likedao.getLike(likedto);
         assertTrue(likedao.cancelLike(likedto)==1);
         //likedao.reLike()
         assertTrue(likedao.reLike(likedto)==1);

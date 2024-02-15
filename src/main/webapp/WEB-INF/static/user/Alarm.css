@@ -1,0 +1,133 @@
+:root{
+    --main-bg-color: #5060D6;
+}
+
+/*공통*/
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+
+.main{
+    margin-top: 2.5%;
+    height: 760px;
+    /*height: 60%;*/
+}
+
+.title{
+    font-size: 30px;
+    font-weight: bold;
+    padding: 48px 0 28px 0;
+}
+
+/* font */
+.font1{
+    color: rgb(160, 155, 155);
+    font-size: 18px;
+}
+
+.tapContainer{
+    border-bottom: 1px solid rgb(240, 240, 240);
+}
+
+.tapContainerList{
+    display: inline-flex;
+    margin: 0 10px 0 0;
+}
+
+.tapContainerList >div{
+    margin: 0 30px 0 0;
+}
+
+/* tap  */
+.tapItem{
+    margin-right: 20px;
+    /* color: #ccc; */
+    font-weight: 700;
+    line-height: 56px;
+    position: relative;
+    background: none;
+    border: 0;
+}
+
+.tapItem:hover{
+    color: #555353;
+}
+
+.tapItem > a {
+    text-decoration: none;
+    color:inherit;
+}
+
+.notificationListMain{
+    margin-top: 40px;
+}
+
+.NotificationList{
+    border: 1px solid rgb(239, 239, 239);
+    border-radius: 4px;
+}
+
+.NotificationListItem{
+    /*padding: 24px 0 0 36px;*/
+    /*width: 100%;*/
+    padding:20px 1px 0 36px;
+    /*overflow: hidden;*/
+    display: inline-flex;
+    flex-direction: row;
+    min-height: 80px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out 0s;
+    border: none;
+    background: rgb(255, 255, 255);
+}
+
+.NotificationListItem:hover{
+    background: rgba(39, 163, 255, 0.07);
+}
+
+/* item info */
+.itemImg{
+    width: 56px;
+    height: 56px;
+    display: inline-block;
+    background: url(../testimg/item1.jpeg) no-repeat center center;
+    background-size: cover;
+    margin-right: 30px;
+}
+
+.itemInfo{
+    width: 100%;
+    font-size: 14px;
+    /*margin: 10px;*/
+    /*margin-bottom: 10px;*/
+}
+
+
+.itemInfo>div{
+    margin: 0 10px 10px 0;
+}
+
+.itemDel{
+    width: 90px;
+
+    color: rgb(55, 165, 247);
+    text-decoration: underline;
+}
+.itemTitle{
+    font-size: 13px;
+}
+
+.itemDate{
+    margin-top: 8px;
+    display: flex;
+    min-width: 40px;
+    font-size: 11px;
+    color: rgb(158, 158, 158);
+    line-height: 17px;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+}

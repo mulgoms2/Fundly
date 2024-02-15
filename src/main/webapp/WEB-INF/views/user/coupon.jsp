@@ -1,7 +1,7 @@
 <%--
   Created by IntelliJ IDEA.
   User: init
-  Date: 2024-02-11
+  Date: 2024-02-12
   Time: 오전 11:56
   To change this template use File | Settings | File Templates.
 --%>
@@ -9,12 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
 
-<%--<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>--%>
-
 <html>
     <head>
         <link rel="stylesheet" href="<c:url value='/static/user/Coupon.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/common.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/usercommon.css'/>">
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     </head>
 
@@ -32,8 +30,8 @@
                                 <p class="font2">1,000원</p>
                                 <p class="font3">오픈 10분 만에 초과달성 기념 할인</p>
                                 <p class="font4">응원권 사용 기간 : 프로젝트 종료일인 2024-02-16까지<br>선물없이 후원하기에서 사용 불가</p>
-
                             </div>
+
                             <div class="couponItemLiDo">
                                 <div class="CouponItemImg"></div>
                                 <p class="font5">컬러, 종이, 인쇄 한권으로 종결 &lt 컬러 & 페이퍼 올인원&gt</p>
@@ -47,6 +45,16 @@
                     </div>
                 </li>
             </ul>
+
+            <div class = "page">
+                <div class="pageNavi">
+                    <ul unselectable="unselectable">
+                        <li title="이전 페이지" class="leftarrow" aria-disabled="true"></li>
+                        <li title="1" class="naviactive" tabindex="0"><a rel="nofollow">1</a></li>
+                        <li title="다음 페이지" class="rightarrow" aria-disabled="true"></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </body>
 </html>
