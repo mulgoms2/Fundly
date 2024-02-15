@@ -112,7 +112,6 @@
                         <p>필수 항목입니다.</p>
                         <p>0/50</p>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -139,14 +138,14 @@
                 <div class="pjImage">
                     <img src="" alt="">
                 </div>
-                <div class="pjImgUp">
+                <label class="pjImgUp">
                     <span><i class="fa-solid fa-arrow-up-from-bracket"></i>이미지 업로드</span>
                     <p>최소 1개, 최대 5개까지 업로드 가능</p>
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
 
                     <input accept=".jpg, .jpeg, .png" type="file" multiple="">
-                </div>
+                </label>
             </div>
         </div>
         <!-- 프로젝트 해시태그 -->

@@ -1,7 +1,7 @@
 package com.fundly.pay.controller;
 
-import com.fundly.pay.dto.BillKeyRequestDto;
-import com.fundly.pay.dto.BillKeyResponseDto;
+import com.fundly.pay.dto.billkey.BillKeyRequestDto;
+import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import com.fundly.pay.service.PayMeansService;
@@ -181,17 +181,18 @@ public class PayController {
             BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
             if (billKeyResponseDto.getCode() != 0) throw new Exception("Register Failed. - getBillKey Error");
 
-            payMeansDto.setBill_key(billKeyResponseDto.getBillKey());
-            payMeansDto.setCard_co_type(billKeyResponseDto.getCardCoType());
+            payMeansDto.setBill_key(billKeyResponseDto.getResponse().getCustomer_id());
+            payMeansDto.setCard_co_type(billKeyResponseDto.getResponse().getCard_publisher_name());
 
-            // 기본결제수단은 반드시 1개 존재해야 한다.
+            // 카드번호 뒤 4자리
+            String cardNumber =billKeyResponseDto.getResponse().getCard_number();
+            cardNumber = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
+            payMeansDto.setCard_no(cardNumber);
+
             int rowCnt;
             int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
-            // 기존 기본결제수단이 없는 경우, 기본결제수단으로 insert
-            if (defaultPayMeansCnt == 0) {
-                payMeansDto.setDefault_pay_means_yn("Y");
-            } else {
-                // 기존 결제수단이 있는 경우, 기존결제수단지정 체크한 상태면 기존 것은 unset
+            // 기존 기본결제수단이 있는 경우, 기본결제수단지정 체크한 상태면 기존 것은 unset
+            if (defaultPayMeansCnt != 0) {
                 if (payMeansDto.getDefault_pay_means_yn().equals("Y")) {
                     Map map = new HashMap();
                     map.put("user_id", userId);

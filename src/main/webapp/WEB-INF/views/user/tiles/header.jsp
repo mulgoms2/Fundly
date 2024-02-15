@@ -108,59 +108,70 @@
         const userIf = document.querySelector('.userIf');
 
         userIf.addEventListener("click",()=> {
-            if(loginInfo.outerText !== '로그인/회원가입'){
+            if(loginInfo.outerText !== '로그인/회원가입' ){
                 toggleContent("MyPageList");
             }else{
                 return window.location.href='/login/login';
             }
         },{capture:true})
 
-        window.addEventListener("click", (e)=>{
+        // const ifImg = document.querySelector('.ifImg');
+        // const infoGr = document.querySelector('.infoGr');
+        // const ifTxt = document.querySelector('.ifTxt');
+        //
+        // ifImg.addEventListener('click', (event) => {
+        //     event.stopPropagation();
+        //     userIf.click();
+        // });
+        //
+        // infoGr.addEventListener('click', (event) => {
+        //     event.stopPropagation();
+        //     userIf.click();
+        // });
+        //
+        // ifTxt.addEventListener('click', (event) => {
+        //     event.stopPropagation();
+        //     userIf.click();
+        // });
 
-            // if(e.target.id==='') {
-            //     if (MyPageList.style.display == "block") {
-            //         toggleContent("MyPageList");
-            //     }
-            // }
-        })
 
         const MyPageList = document.getElementById('MyPageList');
 
         MyPageList.addEventListener("click",(e)=>{
 
-            if(e.target.id == "Profile"){
+            if(e.target.id === "Profile"){
                 // 프로필 화면으로
                 return window.location.href = '/mypage/profile';
 
-            } else if(e.target.id == "Coupon") {
+            } else if(e.target.id === "Coupon") {
                 // 응원권 화면으로
                 return window.location.href = '/mypage/coupon';
 
-            } else if(e.target.id == "fundingProject") {
+            } else if(e.target.id === "fundingProject") {
                 // 후원한 프로젝트 화면으로
                 return window.location.href = '/mypage/fundingProject';
 
-            } else if(e.target.id == "Likes") {
+            } else if(e.target.id === "Likes") {
                 // 관심 프로젝트
                 return window.location.href = '/mypage/likes';
 
-            } else if(e.target.id == "Alarm") {
+            } else if(e.target.id === "Alarm") {
                 // 알림 화면으로
                 return window.location.href = '/mypage/alarm';
 
-            } else if(e.target.id == "Message") {
+            } else if(e.target.id === "Message") {
                 // 메시지 화면으로
                 return window.location.href = '/mypage/message';
 
-            } else if(e.target.id == "MakeProject") {
+            } else if(e.target.id === "MakeProject") {
                 // 내가 만든 프로젝트 화면으로
                 return window.location.href = '/mypage/makeProject';
 
-            } else if(e.target.id == "Setting") {
+            } else if(e.target.id === "Setting") {
                 // 설정 화면으로
                 return window.location.href = '/mypage/setting';
 
-            } else if(e.target.id == "LogOut") {
+            } else if(e.target.id === "LogOut") {
 
                 toggleContent("MyPageList");
                 return window.location.href = '/login/logout';
@@ -168,11 +179,9 @@
         })
 
         function toggleContent(MyPageList){
+            const content = document.getElementById(MyPageList);
 
-            var content = document.getElementById(MyPageList);
-
-            if(content.style.display=="none"){
-
+            if(content.style.display==="none" || content.style.display === ""){
                 content.style.display="block";
             } else{
                 content.style.display="none";

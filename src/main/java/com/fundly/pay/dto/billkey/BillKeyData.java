@@ -1,4 +1,4 @@
-package com.fundly.pay.dto;
+package com.fundly.pay.dto.billkey;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,23 +9,7 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor
 @ToString
-public class BillKeyResponseDto {
-    private Integer code;
-    private String message;
-    private BillKeyData response;
-
-    public String getBillKey() {
-        return response != null ? response.getCustomer_id() : null;
-    }
-    public String getCardCoType() {
-        return response != null ? response.getCard_publisher_name() : null;
-    }
-}
-
-@Getter
-@NoArgsConstructor
-@ToString
-class BillKeyData {
+public class BillKeyData {
     private String card_code;
     private String card_issuer_code;
     private String card_issuer_name;

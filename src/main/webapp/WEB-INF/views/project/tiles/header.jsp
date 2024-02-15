@@ -1,5 +1,7 @@
 <!--Header-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%--<html lang="en">--%>
 <%--<head>--%>
 <%--    <script defer src="/static/project/js/header.js"></script>--%>
@@ -21,11 +23,11 @@
     <div class="fixedContentWrapper">
         <div class="planWrap">
             <ul>
-                <li><a class="active" href="javascript:void(0)">기본 정보</a></li>
-                <li><a href="javascript:void(0)">펀딩 계획</a></li>
-                <li><a href="javascript:void(0)">선물 구성</a></li>
-                <li><a href="javascript:void(0)">프로젝트 계획</a></li>
-                <li><a href="javascript:void(0)">창작자 정보</a></li>
+                <li><a id="default" class="active" href="<c:url value='/project/default'/>">기본 정보</a></li>
+                <li><a id="funding" href="<c:url value='/project/funding'/>">펀딩 계획</a></li>
+                <li><a id="reward" href="<c:url value='/project/reward'/>">선물 구성</a></li>
+                <li><a id="story" href="<c:url value='/project/story'/>">프로젝트 계획</a></li>
+                <li><a id="creator" href="<c:url value='/project/creator'/>">창작자 정보</a></li>
             </ul>
         </div>
     </div>
