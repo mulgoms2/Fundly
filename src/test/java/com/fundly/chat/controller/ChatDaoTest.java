@@ -1,7 +1,7 @@
 package com.fundly.chat.controller;
 
 
-import com.fundly.chat.model.ChatRoomDao;
+import com.fundly.chat.model.SelBuyMsgDao;
 import config.RootContext;
 import config.ServletContext;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringJUnitWebConfig(classes = {RootContext.class, ServletContext.class})
 public class ChatDaoTest {
     @Autowired
-    ChatRoomDao chatRoomDao;
+    SelBuyMsgDao selBuyMsgDao;
 
     @Test
     @BeforeEach

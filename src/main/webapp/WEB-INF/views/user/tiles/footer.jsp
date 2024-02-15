@@ -88,15 +88,15 @@
             </div>
         </div>
     </body>
-    <script>
-        const chat = document.getElementById('chat');
+<%--    <script>--%>
+<%--        const chat = document.getElementById('chat');--%>
 
-        function chatBtn(){
-            <%--let url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + $("#pj").val();--%>
-            <%----%>
-//             window.open(url, "_blank", 'width=600px,height=800px,scrollbars=yes');
-        }
-    </script>
+<%--        function chatBtn(){--%>
+<%--            &lt;%&ndash;let url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + $("#pj").val();&ndash;%&gt;--%>
+<%--            &lt;%&ndash;&ndash;%&gt;--%>
+<%--//             window.open(url, "_blank", 'width=600px,height=800px,scrollbars=yes');--%>
+<%--        }--%>
+<%--    </script>--%>
 </html>
 
 

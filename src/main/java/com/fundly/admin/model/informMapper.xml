@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.admin.model.InformDao">
+    <insert id="insert" parameterType="InformDto">
+        INSERT INTO inform
+            (inform_title, inform_cont, reg_id)
+        VALUES
+            (#{inform_title}, #{inform_cont}, #{reg_id})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="InformDto">
+        SELECT inform_seq, inform_title, inform_cont, reg_id, inform_view_cnt, reg_dtm, mod_dtm,hid_yn,mod_id
+        FROM inform WHERE inform_seq=#{inform_seq}
+    </select>
+
+    <select id="selectAll" resultType="InformDto">
+        SELECT inform_seq, inform_title, inform_cont, reg_id, news_view_cnt, reg_dtm,hid_yn,mod_dtm,mod_id
+        FROM inform
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM inform where inform_seq=#{inform_seq} and reg_id=#{reg_id}
+    </delete>
+
+    <delete id="deleteAll" >
+        DELETE FROM inform
+    </delete>
+
+    <update id="update" parameterType="InformDto">
+        UPDATE inform
+        SET   inform_title = #{inform_title}
+          , inform_cont = #{inform_cont}
+          , mod_dtm = now()
+          ,  mod_id = #{reg_id}
+        WHERE inform_seq = #{inform_seq} and reg_id = #{reg_id}
+    </update>
+
+    <select id="count" resultType="int">
+        select count(*) from inform
+    </select>
+
+    <update id="increaseView" parameterType="int">
+        UPDATE inform
+        SET inform_view_cnt = inform_view_cnt + 1
+        WHERE inform_seq = #{inform_seq}
+    </update>
+</mapper>

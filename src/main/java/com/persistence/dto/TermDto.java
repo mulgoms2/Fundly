@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class TermDto {
-   private int term_seq;
+   private Integer term_seq;
     private String term_title;
     private String term_cont;
     private String term_srt_date;
