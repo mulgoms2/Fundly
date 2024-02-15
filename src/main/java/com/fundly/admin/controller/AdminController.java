@@ -136,9 +136,6 @@ public class AdminController {
 
     @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class})
     public String handleException() {
-
         return "admin/error";
     }
-
-
 }

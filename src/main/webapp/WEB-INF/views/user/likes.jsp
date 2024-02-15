@@ -14,7 +14,7 @@
     </div>
     <!-- 탭 값 -->
     <div class="tapContainerMain">
-        <div class="container">
+        <div class="containerlike">
             <div class="stateCombo">
                 <div class = "stateList" id="stateList" >진행중
                     <div class="upDown" id ="upDown"></div>

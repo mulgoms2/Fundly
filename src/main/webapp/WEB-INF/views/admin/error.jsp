@@ -14,5 +14,6 @@
 <body>
     작업처리 도중 에러가 발생하였습니다.
     <%= exception%>
+
 </body>
 </html>

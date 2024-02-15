@@ -33,13 +33,13 @@
     right: 100%;
 }
 
- .line > span::before, .line > span::after {
-     content: "";
-     position: absolute;
-     border-bottom: 1px solid rgb(240, 240, 240);
-     top: 50%;
-     width: 5000px;
- }
+.line > span::before, .line > span::after {
+    content: "";
+    position: absolute;
+    border-bottom: 1px solid rgb(240, 240, 240);
+    top: 50%;
+    width: 5000px;
+}
 
 .mainWrap{
     border: 1px solid rgb(228, 228, 228);
@@ -175,7 +175,7 @@ h3{
     font-size: 16px;
 }
 
- input[type=checkbox]{
+input[type=checkbox]{
     margin : 10px 0 10px 0 ;
 }
 

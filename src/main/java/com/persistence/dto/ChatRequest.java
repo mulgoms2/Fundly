@@ -7,22 +7,20 @@ package com.persistence.dto;
 //import jakarta.validation.constraints.NotNull;
 //import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 //import javax.validation.constraints.NotNull;
 
 @Data
 public class ChatRequest {
 
-
    @Valid
    private ChatRoomDto chatRoomDto;
 
+   @Email
    private String user_id;
 
    @Min(10)

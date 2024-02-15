@@ -35,12 +35,16 @@ public class ChatController {
 
     @GetMapping("/chat")
 //    테스트용
-    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result)  {
+    public String chatRoom(ChatRequest chatRequest, BindingResult result)  {
 
-        if (result.hasErrors()) {
-//            return chatRequest;
-            return "chat/error";
+        if (true) {
+            throw new RuntimeException("^_^");
         }
+
+//        if (result.hasErrors()) {
+//            return chatRequest;
+//            return "chat/error";
+//        }
 
 //        return chatRequest;
         return "chat/chat";
@@ -97,9 +101,9 @@ public class ChatController {
         }
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public String handleException() {
-        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
-        return "chat/error";
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public String handleException() {
+//        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
+//        return "chat/error";
+//    }
 }

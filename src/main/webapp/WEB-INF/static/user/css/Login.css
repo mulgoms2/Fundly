@@ -71,7 +71,7 @@ input[type=text],input[type=password] {
     padding: 0 10px;
     border: 1px solid #ddd;
     /*var(--main-bg-color);*/
-     /* 입력 필드 주위의 보더를 부드러운 회색으로 변경하세요 */
+    /* 입력 필드 주위의 보더를 부드러운 회색으로 변경하세요 */
     border-radius: 5px;
     font-size: 14px;
     transition: border-color 0.3s;

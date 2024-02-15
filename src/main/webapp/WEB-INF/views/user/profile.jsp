@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: init
-  Date: 2024-02-12
-  Time: 오전 11:56
-  To change this template use File | Settings | File Templates.
---%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
@@ -36,11 +29,8 @@
     <div class="container">
 
         <div class="tap_itemProfile fontcolor" id="tap_itemProfile">
-
             등록된 소개가 없습니다.
-
         </div>
     </div>
-
     <!-- 프로젝트후기, 올린프로젝트, 후원한 프로젝트 -->
 </div>
