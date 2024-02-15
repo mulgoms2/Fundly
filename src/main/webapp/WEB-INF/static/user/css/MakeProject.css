@@ -154,7 +154,7 @@
 .itemImg{
     width: 34px;
     height: 34px;
-    background: url(../img/Icon-images.png) no-repeat center center;
+    background: url(../../img/Icon-images.png) no-repeat center center;
     background-size: cover;
 }
 

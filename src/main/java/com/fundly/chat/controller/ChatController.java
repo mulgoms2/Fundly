@@ -13,6 +13,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +35,23 @@ public class ChatController {
 
     @GetMapping("/chat")
 //    테스트용
-    @ResponseBody
-    public ChatRequest chatRoom(@Valid ChatRequest chatRequest, Errors errors)  {
+    public String chatRoom(ChatRequest chatRequest, BindingResult result)  {
 
-        System.out.println(errors.hasErrors());
+        if (true) {
+            throw new RuntimeException("^_^");
+        }
 
-        return chatRequest;
+//        if (result.hasErrors()) {
+//            return chatRequest;
+//            return "chat/error";
+//        }
+
+//        return chatRequest;
+        return "chat/chat";
     }
 
     @GetMapping("/chatPop")
-    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, Errors errors) {
+    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, Errors errors, BindingResult result) {
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         chatService.getChatRoom(chatRequest);
 
@@ -93,9 +101,9 @@ public class ChatController {
         }
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public String handleException() {
-        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
-        return "chat/error";
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public String handleException() {
+//        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
+//        return "chat/error";
+//    }
 }

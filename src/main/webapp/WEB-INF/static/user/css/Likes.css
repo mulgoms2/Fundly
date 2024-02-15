@@ -112,14 +112,14 @@
 .upDown{
     width: 20px;
     height: 20px;
-    background: url(../img/Icon-arrowdown.png) no-repeat center center;
+    background: url(../../img/Icon-arrowdown.png) no-repeat center center;
     background-size: cover;
 }
 
 .upDown2{
     width: 20px;
     height: 20px;
-    background: url(../img/Icon-arrowdown.png) no-repeat center center;
+    background: url(../../img/Icon-arrowdown.png) no-repeat center center;
     background-size: cover;
 }
 

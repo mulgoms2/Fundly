@@ -61,8 +61,9 @@
         <th class="user_id">회원 ID</th>
         <th class="pay_id">결제수단 ID</th>
         <th class="own_type">유형</th>
-        <th class="default_pay_means_yn">기본결제수단여부</th>
+        <th class="card_no">카드번호</th>
         <th class="card_co_type">카드사</th>
+        <th class="default_pay_means_yn">기본결제수단여부</th>
         <th class=""></th>
         <th class=""></th>
         <th class=""></th>
@@ -72,8 +73,9 @@
             <td class="user_id">${payMeansDto.user_id}</td>
             <td class="pay_means_id">${payMeansDto.pay_means_id}</td>
             <td class="own_type">${payMeansDto.own_type}</td>
-            <td class="default_pay_means_yn">${payMeansDto.default_pay_means_yn}</td>
+            <td class="card_no">${payMeansDto.card_no}</td>
             <td class="card_co_type">${payMeansDto.card_co_type}</td>
+            <td class="default_pay_means_yn">${payMeansDto.default_pay_means_yn}</td>
             <td class=""><button type="button" class="btn removeBtn">삭제</button></td>
             <td class=""><button type="button" class="btn defaultSetBtn">기본 결제수단 지정</button></td>
             <c:if test="${payMeansDto.default_pay_means_yn == 'Y'}">

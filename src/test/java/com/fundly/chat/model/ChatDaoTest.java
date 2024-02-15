@@ -1,4 +1,4 @@
-package com.fundly.chat.controller;
+package com.fundly.chat.model;
 
 
 import com.fundly.chat.model.SelBuyMsgDao;

@@ -3,144 +3,97 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
 
-<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>
+<%--<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>--%>
 
-<html>
-<head>
-    <%--    <meta charset="UTF-8">--%>
-    <%--    <meta name="viewport" content="width=device-width, initial-scale=1.0">--%>
-    <title>텀블벅</title>
-    <link rel="stylesheet" href="<c:url value='/static/main/common.css'/>">
-    <link rel="stylesheet" href="<c:url value='/static/main/style.css'/>">
-    <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
+<%--<html>--%>
+<%--<head>--%>
+<%--    &lt;%&ndash;    <meta charset="UTF-8">&ndash;%&gt;--%>
+<%--    &lt;%&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1.0">&ndash;%&gt;--%>
+<%--    <title>텀블벅</title>--%>
+<%--    <link rel="stylesheet" href="<c:url value='/static/main/common.css'/>">--%>
+<%--    <link rel="stylesheet" href="<c:url value='/static/main/style.css'/>">--%>
+<%--    <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>--%>
 
-    <style>
-        .infoGr{
-            position: relative;
-        }
+<%--    <style>--%>
 
-        .MyPageList{
+<%--    </style>--%>
+<%--</head>--%>
 
-            position: absolute;
-            display: none;
-            flex-direction: column;
-            top: 50px;
-            right: 0px;
-            width: 240px;
-            transition: all 0.3s ease-in-out 0s;
-            border: 1px solid rgb(228, 228, 228);
-            box-sizing: border-box;
-            border-radius: 4px;
-            z-index: 1200;
-            padding: 10px 0;
-            overflow: hidden;
-            background: rgb(255, 255, 255);
-        }
+<%--<body>--%>
 
-        .pageItem {
-            padding: 4px 16px;
-            display: flex;
-            width: 100%;
-            height: 46px;
-            min-height: 46px;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: start;
-            justify-content: flex-start;
-            font-size: 14px;
-            line-height: 22px;
-            color: rgb(13, 13, 13);
-            cursor: pointer;
-            transition: all 0.3s ease-in-out 0s;
-        }
-        .pageItem:hover {
-            background: rgba(110, 110, 110, 0.1);
-        }
-        .line{
-            display: flex;
-            width: 100%;
-            height: 1px;
-            background: rgb(240, 240, 240);
-            content: " ";
-        }
-    </style>
-</head>
+<%--<div class="header">--%>
+<%--    <div class="hd">--%>
+<%--            <a href='<c:url value="/"/>'>--%>
+<%--                <h1 class="logo">Fundly</h1>--%>
+<%--            </a>--%>
 
-<body>
+<%--        <div class="lftSmn">--%>
+<%--            <div class="pjtUp">--%>
+<%--                <a href="#">프로젝트 올리기</a>--%>
+<%--            </div>--%>
+<%--            <div class="like">--%>
+<%--                <i class="fa-regular fa-heart"></i>--%>
+<%--            </div>--%>
+<%--            <div class="alm">--%>
+<%--                <i class="fa-regular fa-bell"></i>--%>
+<%--            </div>--%>
+<%--            <div class="userIf">--%>
+<%--                <div class="infoGr" id = "loginInfo" >--%>
+<%--                    <div class="ifImg">--%>
+<%--                        <span></span>--%>
+<%--                    </div>--%>
+<%--                    <div class="ifTxt" >${loginInfo}</div>--%>
+<%--&lt;%&ndash;                         onclick="toggleContent('MyPageList')">${loginInfo}</div>&ndash;%&gt;--%>
 
-<div class="header">
-    <div class="hd">
-        <h1 class="logo">
-            <a href="#"></a>
-        </h1>
-        <div class="lftSmn">
-            <div class="pjtUp">
-                <a href="#">프로젝트 올리기</a>
-            </div>
-            <div class="like">
-                <i class="fa-regular fa-heart"></i>
-            </div>
-            <div class="alm">
-                <i class="fa-regular fa-bell"></i>
-            </div>
-            <div class="userIf">
-                <div class="infoGr" id = "loginInfo" >
-                    <div class="ifImg">
-                        <span></span>
-                    </div>
-                    <div class="ifTxt" >${loginInfo}</div>
-<%--                         onclick="toggleContent('MyPageList')">${loginInfo}</div>--%>
-
-                    <div class="MyPageList" id = "MyPageList">
-                        <div class="pageItem" id = "Profile"> 프로필 </div>
-                        <div class="pageItem" id = "Coupon"> 응원권 </div>
-                        <div class="line"></div>
-                        <div class="pageItem" id = "fundingProject"> 후원한 프로젝트 </div>
-                        <div class="pageItem" id = "Likes"> 관심 프로젝트 </div>
-                        <div class="line"></div>
-                        <div class="pageItem" id = "Alarm"> 알림 </div>
-                        <div class="pageItem" id = "Message"> 메시지 </div>
-                        <div class="line"></div>
-                        <div class="pageItem" id = "MakeProject"> 내가 만든 프로젝트 </div>
-                        <div class="pageItem" id = "Setting"> 설정 </div>
-                        <div class="line"></div>
-                        <div class="pageItem" id = "LogOut"> 로그아웃 </div>
-                    </div>
-
-<%--                        &lt;%&ndash;                    <div class="ifTxt">로그인/회원가입</div>&ndash;%&gt;--%>
-<%--                        &lt;%&ndash;                    <div class="ifTxt">이한수</div>&ndash;%&gt;--%>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--스크롤 시 고정되는 header-->
-    <div class="sd">
-        <div class="lftCtmn">
-            <!--메뉴 슬라이드-->
-            <div class="cateMn">
-                <div class="mnSld">
-                    <div class="hmMenu">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    카테고리
-                </div>
-                <div class="home">홈</div>
-                <div class="popul">인기</div>
-                <div class="new">신규</div>
-                <div class="final">마감임박</div>
-            </div>
-            <!--검색창-->
-            <div class="schMn">
-                <input type="text" placeholder="검색어를 입력해주세요.">
-                <div class="schIcon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<%--                    <div class="MyPageList" id = "MyPageList">--%>
+<%--                        <div class="pageItem" id = "Profile"><a href="<c:url value='/mypage/profile'/>">프로필</a></div>--%>
+<%--                        <div class="pageItem" id = "Coupon"><a href="<c:url value='/mypage/coupon'/>">응원권</a></div>--%>
+<%--                        <div class="line"></div>--%>
+<%--                        <div class="pageItem" id = "fundingProject"><a href="<c:url value='/mypage/fundingProject'/>">후원한 프로젝트</a></div>--%>
+<%--                        <div class="pageItem" id = "Likes"><a href="<c:url value='/mypage/likes'/>">관심 프로젝트</a></div>--%>
+<%--                        <div class="line"></div>--%>
+<%--                        <div class="pageItem" id = "Alarm"><a href="<c:url value='/mypage/alarm'/>">알림</a></div>--%>
+<%--                        <div class="pageItem" id = "Message"><a href="<c:url value='/mypage/message'/>">메시지</a></div>--%>
+<%--                        <div class="line"></div>--%>
+<%--                        <div class="pageItem" id = "MakeProject"><a href="<c:url value='/mypage/makeProject'/>">내가 만든 프로젝트</a></div>--%>
+<%--                        <div class="pageItem" id = "Setting"><a href="<c:url value='/mypage/setting'/>">설정</a></div>--%>
+<%--                        <div class="line"></div>--%>
+<%--                        <div class="pageItem" id = "LogOut"><a href="<c:url value='/login/logout'/>">로그아웃</a></div>--%>
+<%--                    </div>--%>
+<%--&lt;%&ndash;                        &lt;%&ndash;                    <div class="ifTxt">로그인/회원가입</div>&ndash;%&gt;&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        &lt;%&ndash;                    <div class="ifTxt">이한수</div>&ndash;%&gt;&ndash;%&gt;--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--    <!--스크롤 시 고정되는 header-->--%>
+<%--    <div class="sd">--%>
+<%--        <div class="lftCtmn">--%>
+<%--            <!--메뉴 슬라이드-->--%>
+<%--            <div class="cateMn">--%>
+<%--                <div class="mnSld">--%>
+<%--                    <div class="hmMenu">--%>
+<%--                        <span></span>--%>
+<%--                        <span></span>--%>
+<%--                        <span></span>--%>
+<%--                    </div>--%>
+<%--                    카테고리--%>
+<%--                </div>--%>
+<%--                <div class="home">홈</div>--%>
+<%--                <div class="popul">인기</div>--%>
+<%--                <div class="new">신규</div>--%>
+<%--                <div class="final">마감임박</div>--%>
+<%--            </div>--%>
+<%--            <!--검색창-->--%>
+<%--            <div class="schMn">--%>
+<%--                <input type="text" placeholder="검색어를 입력해주세요.">--%>
+<%--                <div class="schIcon">--%>
+<%--                    <i class="fa-solid fa-magnifying-glass"></i>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <div class="coNt">
     <!--왼쪽 배너-->
     <div class="lFt">
@@ -388,79 +341,63 @@
         </div>
     </div>
 </div>
-</body>
+<%--</body>--%>
 
-<script>
-    <%--alert(${user_email});--%>
-    /* 로그인/회원가입 or 로그인 회원 정보 */
-    const loginInfo = document.getElementById('loginInfo');
+<%--<script>--%>
 
-    loginInfo.addEventListener("click",() => {
+<%--    // const MyPageList = document.getElementById('MyPageList');--%>
+<%--    //--%>
+<%--    // MyPageList.addEventListener("click",(e)=>{--%>
+<%--    //--%>
+<%--    //     if(e.target.id === "Profile"){--%>
+<%--    //         // 프로필 화면으로--%>
+<%--    //         return window.location.href = '/mypage/profile';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "Coupon") {--%>
+<%--    //         // 응원권 화면으로--%>
+<%--    //         return window.location.href = '/mypage/coupon';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "fundingProject") {--%>
+<%--    //         // 후원한 프로젝트 화면으로--%>
+<%--    //         return window.location.href = '/mypage/fundingProject';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "Likes") {--%>
+<%--    //         // 관심 프로젝트--%>
+<%--    //         return window.location.href = '/mypage/likes';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "Alarm") {--%>
+<%--    //         // 알림 화면으로--%>
+<%--    //         return window.location.href = '/mypage/alarm';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "Message") {--%>
+<%--    //         // 메시지 화면으로--%>
+<%--    //         return window.location.href = '/mypage/message';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "MakeProject") {--%>
+<%--    //         // 내가 만든 프로젝트 화면으로--%>
+<%--    //         return window.location.href = '/mypage/makeProject';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "Setting") {--%>
+<%--    //         // 설정 화면으로--%>
+<%--    //         return window.location.href = '/mypage/setting';--%>
+<%--    //--%>
+<%--    //     } else if(e.target.id === "LogOut") {--%>
+<%--    //--%>
+<%--    //         toggleContent("MyPageList");--%>
+<%--    //         return window.location.href = '/login/l ogout';--%>
+<%--    //     }--%>
+<%--    // })--%>
 
-        if(loginInfo.outerText !== '로그인/회원가입'){
-            toggleContent("MyPageList");
-        }else{
-            return window.location.href='/login/login';
-        }
-    })
+<%--    function toggleContent(MyPageList){--%>
 
-    const MyPageList = document.getElementById('MyPageList');
+<%--        var content = document.getElementById(MyPageList);--%>
 
-    MyPageList.addEventListener("click",(e)=>{
+<%--        if(content.style.display==="none" || content.style.display === ""){--%>
 
-        if(e.target.id === "Profile"){
-            // 프로필 화면으로
-            return window.location.href = '/mypage/profile';
-
-        } else if(e.target.id === "Coupon") {
-            // 응원권 화면으로
-            return window.location.href = '/mypage/coupon';
-
-        } else if(e.target.id === "fundingProject") {
-            // 후원한 프로젝트 화면으로
-            return window.location.href = '/mypage/fundingProject';
-
-        } else if(e.target.id === "Likes") {
-            // 관심 프로젝트
-            return window.location.href = '/mypage/likes';
-
-        } else if(e.target.id === "Alarm") {
-            // 알림 화면으로
-            return window.location.href = '/mypage/alarm';
-
-        } else if(e.target.id === "Message") {
-            // 메시지 화면으로
-            return window.location.href = '/mypage/message';
-
-        } else if(e.target.id === "MakeProject") {
-            // 내가 만든 프로젝트 화면으로
-            return window.location.href = '/mypage/makeProject';
-
-        } else if(e.target.id === "Setting") {
-            // 설정 화면으로
-            return window.location.href = '/mypage/setting';
-
-        } else if(e.target.id === "LogOut") {
-
-            toggleContent("MyPageList");
-            return window.location.href = '/login/logout';
-        }
-    })
-
-    function toggleContent(MyPageList){
-
-        var content = document.getElementById(MyPageList);
-
-        if(content.style.display==="none" || content.style.display === ""){
-
-            content.style.display="block";
-        } else{
-            content.style.display="none";
-        }
-    }
-
-
-
-
-</script>
-</html>
+<%--            content.style.display="block";--%>
+<%--        } else{--%>
+<%--            content.style.display="none";--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
+<%--</html>--%>

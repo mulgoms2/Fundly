@@ -94,7 +94,7 @@
     width: 56px;
     height: 56px;
     display: inline-block;
-    background: url(../testimg/item1.jpeg) no-repeat center center;
+    background: url(../../testimg/item1.jpeg) no-repeat center center;
     background-size: cover;
     margin-right: 30px;
 }
