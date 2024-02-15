@@ -2,6 +2,7 @@ package com.persistence.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import java.sql.Date;
 import java.util.ArrayList;
 

@@ -176,7 +176,7 @@
     height: 100%;
     position: relative;
     z-index: 2;
-    background: url(../img/avatar.webp) 50% 37% / cover no-repeat;
+    background: url(../../img/avatar.webp) 50% 37% / cover no-repeat;
 }
 
 .userName{
