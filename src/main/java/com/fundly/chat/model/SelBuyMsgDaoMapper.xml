@@ -21,4 +21,8 @@
             where user_id = #{user_id} and pj_id = #{pj_id}
         </selectKey>
     </insert>
+
+    <delete id="deleteAllChatRoom" >
+        delete from SEL_BUY_MSG
+    </delete>
 </mapper>

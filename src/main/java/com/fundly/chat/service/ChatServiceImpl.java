@@ -1,6 +1,7 @@
 package com.fundly.chat.service;
 
 import com.fundly.chat.model.SelBuyMsgDao;
+import com.fundly.chat.model.SelBuyMsgDetailsDao;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.FileDto;
@@ -34,6 +35,8 @@ public class ChatServiceImpl implements ChatService {
     @Autowired
     SelBuyMsgDao selBuyMsgDao;
     @Autowired
+    SelBuyMsgDetailsDao selBuyMsgDetailsDao;
+    @Autowired
     FileDao fileDao;
 
     @SneakyThrows
@@ -56,7 +59,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
         try {
-            selBuyMsgDao.insertMsg(message);
+            selBuyMsgDetailsDao.insertMsg(message);
 
             String svr_intime = new SimpleDateFormat("HH:mm").format(new Date());
             message.setSvr_intime_string(svr_intime);
@@ -71,7 +74,7 @@ public class ChatServiceImpl implements ChatService {
     public ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto) {
         try {
 //            메시지 전체 조회 후 첨부파일 경로를 매핑해서 전달.
-            return selBuyMsgDao.loadAllMessages(chatRoomDto).stream()
+            return selBuyMsgDetailsDao.loadAllMessages(chatRoomDto).stream()
                     .map(this::timeFormatting)
                     .map(this::mappingImgUrl)
                     .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
