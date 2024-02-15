@@ -46,6 +46,7 @@ public class ProjectController {
         return "project.creator";
     }
 
+
     // 아이템+선물 페이지
     @GetMapping("/reward")
     public String makeGift(Model m){
@@ -84,11 +85,7 @@ public class ProjectController {
 
 
     }
-//    @PostMapping("/delItm") // deleteMapping으로 써보기
 
-    //    @PostMapping("/delItm")
-//    @ResponseBody
-//    public ResponseEntity<List<ItemDto>> removeItem(@RequestBody ItemDto itemDto, HttpSession session){
     @DeleteMapping("/item")
     @ResponseBody
     public ResponseEntity<List<ItemDto>> removeItem(String item_id, HttpSession session){
