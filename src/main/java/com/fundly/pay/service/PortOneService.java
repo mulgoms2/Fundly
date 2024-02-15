@@ -1,7 +1,7 @@
 package com.fundly.pay.service;
 
-import com.fundly.pay.dto.BillKeyRequestDto;
-import com.fundly.pay.dto.BillKeyResponseDto;
+import com.fundly.pay.dto.billkey.BillKeyRequestDto;
+import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import org.springframework.stereotype.Service;

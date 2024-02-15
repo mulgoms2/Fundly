@@ -13,6 +13,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +35,19 @@ public class ChatController {
 
     @GetMapping("/chat")
 //    테스트용
-    @ResponseBody
-    public ChatRequest chatRoom(@Valid ChatRequest chatRequest, Errors errors)  {
+    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result)  {
 
-        System.out.println(errors.hasErrors());
+        if (result.hasErrors()) {
+//            return chatRequest;
+            return "chat/error";
+        }
 
-        return chatRequest;
+//        return chatRequest;
+        return "chat/chat";
     }
 
     @GetMapping("/chatPop")
-    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, Errors errors) {
+    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, Errors errors, BindingResult result) {
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         chatService.getChatRoom(chatRequest);
 

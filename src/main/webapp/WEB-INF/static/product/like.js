@@ -1,6 +1,25 @@
-window.onload = loadIsLike();
+window.onload = function() {currLike();}
 
-// 좋아요 버튼 클릭시 서버로 정보 전송
+// 현재 좋아요 상태 정보 가져오기
+const currLike = () => {
+
+    // 1. 서버로 좋아요 정보 전송
+    const obj = {
+        pj_id : "P5040",
+        user_id : "user"
+    };
+
+    // 2. 서버 응답 받기
+    fetch("/like/status", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }).then(res => res.json()).then(handleLike).catch(error=>console.log(error));
+};
+
+// 좋아요 버튼 클릭시 정보 전송하고 상태값 변경 시킨 후 가져오기
 const clickLikeBtn = () => {
 
     // 1. 서버로 좋아요 정보 전송
@@ -27,7 +46,7 @@ const handleLike = (likes) => {
             countLike('minus');
 
         // 4. 좋아요 버튼 하양
-            onloadLike('white');
+            colorLike('white');
 
             console.log(likes.like_status);
 
@@ -37,14 +56,14 @@ const handleLike = (likes) => {
             countLike('plus');
 
         // 6. 좋아요 버튼 빨강
-            onloadLike('red');
+            colorLike('red');
 
             console.log(likes.like_status);
         }
 }
 
 // 1. 좋아요 상태에 따라 버튼이미지 전환
-function onloadLike(type) {
+function colorLike(type) {
 
     const heartRed = document.querySelector(".icoImg.on")
     const heartWhite = document.querySelector(".icoImg")
@@ -79,9 +98,25 @@ function countLike(type) {
 }
 
 // 좋아요 상태 고정시키기
-function loadIsLike() {
-    alert('좋아요상태고정시키기!')
-}
+// const observer = new MutationObserver(function (mutations) {
+//
+//     const heartRed = document.querySelector(".icoImg.on");
+//     let previousValue = heartRed.style.display;
+//
+//     mutations.forEach(function (mutation) {
+//         if (mutation.attributeName !== 'style') return;
+//         const currentValue = mutation.target.style.display;
+//         if (currentValue !== previousValue) {
+//             if (previousValue === "none" && currentValue !== "none") {
+//                 console.log("display none has just been removed!");
+//             }
+//
+//             previousValue = mutation.target.style.display;
+//         }
+//     });
+// });
+//
+// observer.observe(heartRed, { attributes: true });
 
 // const fetchLikeInfo = () => {
 //     var params = $('#formtest').serialize();
