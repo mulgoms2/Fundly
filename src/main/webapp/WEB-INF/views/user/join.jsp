@@ -11,134 +11,143 @@
 
 <head>
     <title>회원가입</title>
-    <link rel="stylesheet" href="<c:url value='/static/user/Join.css?after'/>">
+    <link rel="stylesheet" href="<c:url value='/static/user/css/Join.css?after'/>">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
-    <header id="header"><a href="/">Fundly<div class="line"></div></a></header>
-    <main id="main">
-        <div class="mainWrap">
+<header id="header"><a href="<c:url value='/'/>">Fundly</a></header>
+<main id="main">
+    <div class="mainWrap">
 
-            <%--        <div class="joinBox">--%>
-            <%--            <h2>간편 가입</h2>--%>
+        <%--        <div class="joinBox">--%>
+        <%--            <h2>간편 가입</h2>--%>
 
-            <%--            <div class = "snsAuth">--%>
-            <%--                <button>구글</button>--%>
-            <%--                <button>카카오</button>--%>
-            <%--            </div>--%>
-            <%--        </div>--%>
+        <%--            <div class = "snsAuth">--%>
+        <%--                <button>구글</button>--%>
+        <%--                <button>카카오</button>--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
 
-            <div class="joinCont">
-<%--                <h2>이메일 간편가입</h2>--%>
+        <div class="joinCont">
+            <%--                <h2>이메일 간편가입</h2>--%>
 
-                <form id = "joinForm">
+            <form id = "joinForm">
 
-                    <h3>이메일</h3>
-                    <div class="usEmail">
-                        <div class ="emailView">
-                            <input type="text" id ="user_email" name="user_email" placeholder="이메일 계정" autocomplete="off"/>
-    <%--                        <button>인증하기</button>--%>
+                <h3>이메일</h3>
+                <div class="usEmail">
+                    <div class ="emailView">
+                        <input type="text" id ="user_email" name="user_email" placeholder="이메일 계정" autocomplete="off"/>
+                        <%--                        <button>인증하기</button>--%>
+                    </div>
+                    <div id="msgEmail" class="msg"/>
+
+                </div>
+
+                <h3>이름</h3>
+                <div class="usName">
+                    <input type="text" id ="user_name" name="user_name" placeholder="이름 입력" autocomplete="off"/>
+                    <div id="msgName" class="msg"/>
+                </div>
+
+                <h3>비밀번호</h3>
+                <%--                    <div class="ex">--%>
+                <%--                        <div class="exa">--%>
+                <%--                            <input type="password" class="exipt" placeholder="비밀번호 입력" autocomplete="off"/>--%>
+                <%--                            <div class="eximg"></div>--%>
+                <%--                        </div>--%>
+                <%--                    </div>--%>
+                <div class="usPwd">
+                    <div class="usPwdWrap">
+                        <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
+                        <div class="eyes">
+                            <div class="password-toggle" id="togglePwd"></div>
                         </div>
-                        <div id="msgEmail" class="msg"/>
-
+                        <div id="msgPwd" class="msg"/>
                     </div>
+                </div>
 
-                    <h3>이름</h3>
-                    <div class="usName">
-                        <input type="text" id ="user_name" name="user_name" placeholder="이름 입력" autocomplete="off"/>
-                        <div id="msgName" class="msg"/>
-                    </div>
-
-                    <h3>비밀번호</h3>
-<%--                    <div class="ex">--%>
-<%--                        <div class="exa">--%>
-<%--                            <input type="password" class="exipt" placeholder="비밀번호 입력" autocomplete="off"/>--%>
-<%--                            <div class="eximg"></div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-                    <div class="usPwd">
-                        <div class="usPwdWrap">
-                            <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
-                            <div class="eyes">
-                                <div class="password-toggle" id="togglePwd"></div>
-                            </div>
-                            <div id="msgPwd" class="msg"/>
+                <div class="usPwd2">
+                    <div class="usPwdWrap">
+                        <input type="password" id = "user_pwdConfirm" name="user_pwdConfirm" placeholder="비밀번호 확인" autocomplete="off"/>
+                        <div class="eyes">
+                            <div class="password-toggle" id="togglePwdConfirm"></div>
                         </div>
                     </div>
+                    <div id="msgPwdConfirm" class="msg"/>
+                </div>
 
-                    <div class="usPwd2">
-                        <div class="usPwdWrap">
-                            <input type="password" id = "user_pwdConfirm" name="user_pwdConfirm" placeholder="비밀번호 확인" autocomplete="off"/>
-                            <div class="eyes">
-                                <div class="password-toggle" id="togglePwdConfirm"></div>
-                            </div>
+                <div class="agreeAll">
+                    <input type="checkbox" id = "allchk" onclick="AllCheck()">
+                    <label for="allchk" id="all"> 전체동의</label>
+
+                    <div class="agrLine">
+                        <div class="singleChk">
+                            <input type="checkbox" class="singleChk" id = "age_agree_yn" name="age_agree_yn">
+                            <label for="age_agree_yn" class="single">만 14세 이상입니다.(필수)</label>
+                            </input>
                         </div>
-                        <div id="msgPwdConfirm" class="msg"/>
+
+                        <div class="singleChk">
+                            <input type="checkbox" class="singleChk" id = "site_term_agree_yn" name = "site_term_agree_yn">
+                            <label for="site_term_agree_yn" class="single">텀블벅 이용 약관동의(필수)</label>
+                            <a href="" >내용보기</a>
+                            </input>
+                        </div>
+
+                        <div class="singleChk">
+                            <input type="checkbox" class="singleChk" id = "p_Info_agree_yn" name="p_Info_agree_yn">
+                            <label for="p_Info_agree_yn" class="single">개인정보 수집 및 이용 동의(필수)</label>
+                            <a href="" >내용보기</a>
+                            </input>
+                        </div>
+
+                        <div class="selectChk">
+                            <input type="checkbox" class="selectChk" id= "p_info_oth_agree_yn" name="p_info_oth_agree_yn">
+                            <label for="p_info_oth_agree_yn" class="single">개인정보 제 3자 제공 동의(선택)</label>
+                            <a href="" >내용보기</a>
+                            </input>
+                        </div>
+
+                        <div class="selectChk">
+                            <input type="checkbox" class="selectChk" id= "m_info_rcv_agree_yn" name="m_info_rcv_agree_yn">
+                            <label for = "m_info_rcv_agree_yn" class="single">마케팅 정보 수신 동의(선택)</label>
+                            </input>
+                        </div>
                     </div>
+                </div>
 
-                     <div class="agreeAll">
-                         <input type="checkbox" id = "allchk" onclick="AllCheck()">
-                            <label for="allchk" id="all"> 전체동의</label>
+                <div id="agreeName" class="msg"></div>
 
-                         <div class="agrLine">
-                             <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "age_agree_yn" name="age_agree_yn">
-                                    <label for="age_agree_yn" class="single">만 14세 이상입니다.(필수)</label>
-                                 </input>
-                             </div>
+                <div>
+                    <button id="joinBtn" class="joinBtn">가입하기</button>
+                </div>
 
-                             <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "site_term_agree_yn" name = "site_term_agree_yn">
-                                     <label for="site_term_agree_yn" class="single">텀블벅 이용 약관동의(필수)</label>
-                                     <a href="" >내용보기</a>
-                             </input>
-                             </div>
+                <div class="centerDiv">
+                    <p>이미 펀들리 계정이 있으신가요?</p>
+                    <a href="<c:url value='/login/login'/>">기존 계정으로 로그인하기</a>
 
-                             <div class="singleChk">
-                                 <input type="checkbox" class="singleChk" id = "p_Info_agree_yn" name="p_Info_agree_yn">
-                                    <label for="p_Info_agree_yn" class="single">개인정보 수집 및 이용 동의(필수)</label>
-                                    <a href="" >내용보기</a>
-                                 </input>
-                             </div>
-
-                             <div class="selectChk">
-                                 <input type="checkbox" class="selectChk" id= "p_info_oth_agree_yn" name="p_info_oth_agree_yn">
-                                     <label for="p_info_oth_agree_yn" class="single">개인정보 제 3자 제공 동의(선택)</label>
-                                     <a href="" >내용보기</a>
-                                 </input>
-                             </div>
-
-                             <div class="selectChk">
-                                 <input type="checkbox" class="selectChk" id= "m_info_rcv_agree_yn" name="m_info_rcv_agree_yn">
-                                 <label for = "m_info_rcv_agree_yn" class="single">마케팅 정보 수신 동의(선택)</label>
-                                 </input>
-                             </div>
-                         </div>
-                     </div>
-
-                    <div id="agreeName" class="msg"></div>
-
-                    <div>
-                        <button id="joinBtn" class="joinBtn">가입하기</button>
+                    <div class="otherJoin">
+                             <span>
+                                 또는
+                             </span>
                     </div>
-
-                     <div class="centerDiv">
-                         <p>이미 펀들리 계정이 있으신가요?</p>
-                         <a href="<c:url value='/login/login'/>"기존 계정으로 로그인하기</a>
-                         <div class="line">
-                            <span>또는</span>
-                         </div>
-                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+    </div>
 
-<%--        <button class="kakaBtn"> 카카오로 가입하기 </button>--%>
-
-        <p> @2024 Fundly Inc.</p>
-    </main>
+    <button id="kakaBtn" class="kakaBtn" >
+        <div class="kakaImg"></div>
+        <div>카카오톡으로 로그인</div>
+    </button>
+</main>
+<div class="copyr">
+    <div>
+        <p > @2024 Fundly Inc.</p>
+    </div>
+</div>
 </body>
 
 
@@ -329,5 +338,5 @@
         });
     })
 
-    </script>
+</script>
 </html>
