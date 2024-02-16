@@ -41,17 +41,13 @@ public class PayMeansDto {
     private Timestamp dba_mod_dtm;
     private String dba_mod_id;
 
-    public PayMeansDto(String user_id, String own_type, String own_birth, String default_pay_means_yn, String card_co_info_agree_yn, String card_no, String card_pwd, String card_valid_date, String dba_reg_id, Timestamp dba_reg_dtm) {
+    public PayMeansDto(String user_id, String own_type, String bill_key, String default_pay_means_yn, String card_no, String dba_reg_id) {
         this.user_id = user_id;
         this.own_type = own_type;
-        this.own_birth = own_birth;
+        this.bill_key = bill_key;
         this.default_pay_means_yn = default_pay_means_yn;
-        this.card_co_info_agree_yn = card_co_info_agree_yn;
         this.card_no = card_no;
-        this.card_pwd = card_pwd;
-        this.card_valid_date = card_valid_date;
         this.dba_reg_id = dba_reg_id;
-        this.dba_reg_dtm = dba_reg_dtm;
     }
 
     public String getCard_co_info_agree_yn() {
