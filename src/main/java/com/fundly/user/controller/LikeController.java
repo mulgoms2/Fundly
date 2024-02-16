@@ -10,8 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @Slf4j
 public class LikeController {
 
@@ -19,7 +20,6 @@ public class LikeController {
     LikeService likeservice;
 
     @PostMapping("/like")
-    @ResponseBody
     public ResponseEntity<LikeDto> clickLike(@RequestBody LikeDto likedto) {
 
         try {
@@ -38,7 +38,6 @@ public class LikeController {
     }
 
     @PostMapping("/like/status")
-    @ResponseBody
     public ResponseEntity<LikeDto> IsLike(@RequestBody LikeDto likedto) {
         try {
 
@@ -50,11 +49,6 @@ public class LikeController {
             throw new RuntimeException(e);
 
         }
-    }
-
-    @RequestMapping("/likes")
-    public String showLikes() {
-        return "user/likes";
     }
 
 }
