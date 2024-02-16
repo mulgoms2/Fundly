@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -14,6 +16,10 @@ import java.util.List;
 public class LikeServiceImpl implements LikeService {
 
     private final LikeDao likedao;
+
+    public void transJason(LikeDto likedto) {
+
+    }
 
     @Override
     public int changeLike(LikeDto likedto) {

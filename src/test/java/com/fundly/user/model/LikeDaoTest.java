@@ -31,7 +31,7 @@ class LikeDaoTest {
 
     // String -> LocalDateTime
     // str = js에서 const curr = new Date();로 현재시간 가져온 값
-    String str = "2021-11-05 13:47:13";
+    String str = "2024-02-16T12:25:12.004Z";
     DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     LocalDateTime strtoDatetime = LocalDateTime.parse(str,format);
 
