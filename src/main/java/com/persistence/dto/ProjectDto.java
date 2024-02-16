@@ -1,6 +1,7 @@
 package com.persistence.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -27,7 +28,9 @@ public class ProjectDto {
     private String pj_sel_intro; //창작자 소개(t.e에서 작성)
     private String pj_gift_intro; //선물 설명(t.e에서 작성)
     private BigInteger fund_goal_money; //펀딩 목표금액
+    @DateTimeFormat
     private Timestamp fund_str_dtm;// 펀딩시작일시
+    @DateTimeFormat
     private Timestamp fund_end_dtm; //펀딩 종료일시
     private Timestamp fund_calc_due_dtm;//펀딩 정산예정일
     private String gift_ship_due_date; //상품 전달 예정일
