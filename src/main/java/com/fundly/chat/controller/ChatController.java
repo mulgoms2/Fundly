@@ -30,7 +30,6 @@ import java.io.IOException;
 @Controller
 @Slf4j
 public class ChatController {
-
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
