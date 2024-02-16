@@ -1,6 +1,7 @@
 
 package com.fundly.chat.controller;
 
+import com.persistence.dto.ChatRequest;
 import config.RootContext;
 import config.ServletContext;
 import lombok.SneakyThrows;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -17,7 +19,10 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.servlet.http.HttpSession;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
@@ -48,11 +53,26 @@ class ChatControllerTest {
   void chatTest() {
 
     mockMvc.perform(get("/chat")
-            .param("asdf", "1234"))
-            .andExpect(status().isOk());
+                    .param("mulgom", "1234"))
+            .andExpect(status().isOk())
+            .andDo(print());
 
+  }
 
+  @Test
+  @DisplayName("게시글 업로드 : 게시글 업로드시 Image 파일은 필수입니다")
+  void uploadPostImageTest() throws Exception {
 
+    //given
+
+    //when
+    mockMvc.perform(multipart( "/chat/file")
+                    .file("image", null)
+            )
+            .andExpect(status().isBadRequest())
+            .andDo(print());
+
+    //then
   }
 
   @Test

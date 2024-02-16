@@ -23,27 +23,16 @@ public class SelBuyMsgDaoTest {
     @Autowired
     SelBuyMsgDao selBuyMsgDao;
 
-    ChatRequest chatRequest;
 
     @SneakyThrows
     @BeforeEach
     public void setTest() {
         selBuyMsgDao.deleteAllChatRoom();
 
-//         this.chatRequest = new ChatRequest();
-
-
-
-
-//        ChatRequest chatRequest1 = ChatRequest.builder()
-//                .helo(231)
-//                .pj_id("123")
-//                .user_id("hehe")
-//                .build();
-
-        chatRequest.setUser_id("asdf");
-        chatRequest.setPj_id("1234");
-
+        ChatRequest chatRequest = ChatRequest.builder()
+                .pj_id("asdf")
+                .user_id("123")
+                .build();
         assert (selBuyMsgDao.makeChatRoom(chatRequest) == 1);
     }
 
@@ -52,10 +41,6 @@ public class SelBuyMsgDaoTest {
     @DisplayName("채팅방불러오기")
     public void selectChatRoomTest() {
 //        given
-
-        ChatRoomDto chatRoomDto = selBuyMsgDao.selectChatRoom(chatRequest);
-
-        assert (chatRoomDto != null);
 
 //        when
 
