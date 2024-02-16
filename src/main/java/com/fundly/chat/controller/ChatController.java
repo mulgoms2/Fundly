@@ -1,6 +1,5 @@
 package com.fundly.chat.controller;
 
-import com.fundly.chat.pojo.FileValidator;
 import com.fundly.chat.service.ChatService;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.FileDto;
@@ -15,13 +14,9 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 //import javax.validation.Valid;
 

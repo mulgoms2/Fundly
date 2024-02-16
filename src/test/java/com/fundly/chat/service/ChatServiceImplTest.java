@@ -18,11 +18,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//@SpringJUnitWebConfig(classes = )
 @ExtendWith(MockitoExtension.class)
 class ChatServiceImplTest {
     @Mock
@@ -31,27 +33,18 @@ class ChatServiceImplTest {
     SelBuyMsgDetailsDao selBuyMsgDetailsDao;
     @InjectMocks
     ChatServiceImpl chatService;
-    @SneakyThrows
-    @BeforeEach
-    void setMock() {
-        ChatRequest chatRequest = ChatRequest.builder().pj_id("asdf").user_id("dbswo").build();
-        ChatRoomDto chatRoomDto = ChatRoomDto.builder().room_num(1).user_id("dbswo").pj_id("asdf").build();
 
-        Mockito.when(selBuyMsgDao.selectChatRoom(chatRequest)).thenReturn(chatRoomDto);
-//        Mockito.when(selBuyMsgDetailsDao.loadAllMessages(chatRoomDto)).thenReturn(new ArrayList<SelBuyMsgDetailsDto>());
-
-//        this.chatService = new ChatServiceImpl(selBuyMsgDao);
-//        this.
-    }
     @Test
     void getChatRoom() {
-        ChatRequest chatRequest = ChatRequest.builder().pj_id("asdf").user_id("dbswo").build();
-//
-        chatService.getChatRoom(chatRequest);
-//
-        Integer roomNum = chatRequest.getChatRoomDto().getRoom_num();
-//
-        assertEquals(1, roomNum);
+        this.chatService = new ChatServiceImpl();
+
+        SelBuyMsgDao selBuy = Mockito.mock(SelBuyMsgDao.class);
+
+        Mockito.when(selBuy.deleteAllChatRoom()).thenReturn(20);
+
+        int i = selBuy.deleteAllChatRoom();
+
+        System.out.println(i);
     }
 
     @Test

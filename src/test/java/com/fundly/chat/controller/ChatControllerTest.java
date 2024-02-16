@@ -31,7 +31,6 @@ class ChatControllerTest {
 
   @Autowired
   private WebApplicationContext webApplicationContext;
-
   private MockMvc mockMvc;
 
   @BeforeEach

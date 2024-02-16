@@ -1,4 +1,4 @@
-package com.fundly.chat.pojo;
+package com.fundly.chat.utils;
 
 import org.apache.tika.Tika;
 import org.springframework.web.multipart.MultipartFile;

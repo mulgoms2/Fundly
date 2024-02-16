@@ -1,6 +1,6 @@
 package config;
 
-import com.fundly.chat.pojo.ChatInterceptor;
+import com.fundly.chat.utils.ChatInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
