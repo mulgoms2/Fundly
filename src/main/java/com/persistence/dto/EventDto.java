@@ -21,6 +21,5 @@ public class EventDto {
     private String reg_id;
     private Date mod_dtm;
     private String mod_id;
-
     private int file_cnt;
 }

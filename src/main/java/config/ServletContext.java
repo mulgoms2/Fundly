@@ -7,13 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.validation.MessageCodesResolver;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.*;
@@ -24,6 +21,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com", "com.fundly"})
 @PropertySource(value = "/WEB-INF/config/pay.properties")
+//@PropertySource(value = {"/WEB-INF/config/pay.properties", "/WEB-INF/config/payTest.properties"})
 public class ServletContext implements WebMvcConfigurer {
 
     @Autowired
@@ -62,21 +60,11 @@ public class ServletContext implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
+
         ms.setBasename("message.messages");
-//        ms.setBasename("classpath:/message/messages.properties");
         ms.setDefaultEncoding("UTF-8");
         return ms;
     }
-//        @Bean
-//    public ReloadableResourceBundleMessageSource messageSource() {
-//        ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
-//
-//        res.setDefaultEncoding("UTF-8");
-//		res.setBasename("message.messages");  //1개인 경우
-//
-//        return res;
-//    }
-
     @Bean
     public WebClient webClient() {
         return WebClient.builder()

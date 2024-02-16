@@ -12,10 +12,20 @@
         <put-attribute name="header" value="/WEB-INF/views/project/tiles/header.jsp" />
         <put-attribute name="body" value="/WEB-INF/views/project/{1}.jsp" />
     </definition>
+
+    <!-- userMypage -->
     <definition name="user.*" template="/WEB-INF/views/user/tiles/layout.jsp">
         <put-attribute name="title" value="펀들리 - 모두 함께 즐거운 크라우드펀딩" />
         <put-attribute name="header" value="/WEB-INF/views/user/tiles/header.jsp" />
         <put-attribute name="body" value="/WEB-INF/views/user/{1}.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/user/tiles/footer.jsp" />
+    </definition>
+
+    <!-- Mainpage -->
+    <definition name="main.*" template="/WEB-INF/views/user/tiles/layout.jsp">
+        <put-attribute name="title" value="펀들리 - 모두 함께 즐거운 크라우드펀딩" />
+        <put-attribute name="header" value="/WEB-INF/views/user/tiles/header.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
         <put-attribute name="footer" value="/WEB-INF/views/user/tiles/footer.jsp" />
     </definition>
 </tiles-definitions>

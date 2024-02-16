@@ -3,6 +3,7 @@
     color: rgba(0, 0, 0, 0.87);
 }
 
+
 /*!* line *!*/
 /*.line{*/
 /*    width: 100%;*/
@@ -98,9 +99,9 @@
     box-sizing: border-box;
 }
 
-.container > div{
+.containerSet > div{
     border-bottom: 1px solid rgb(230, 230, 230);
-    margin: 0px 0px 16px;
+    margin: 10px 0px 16px;
 }
 
 .container div{
@@ -176,7 +177,7 @@
     height: 100%;
     position: relative;
     z-index: 2;
-    background: url(../img/avatar.webp) 50% 37% / cover no-repeat;
+    background: url(../../img/avatar.webp) 50% 37% / cover no-repeat;
 }
 
 .userName{

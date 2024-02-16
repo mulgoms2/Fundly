@@ -14,11 +14,16 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
+
 @RequestMapping("/mypage")
 public class MyPageController {
 
-    @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    public MyPageController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
 
 
     /* 프로필 */

@@ -1,11 +1,14 @@
 package com.persistence.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import java.sql.Date;
 import java.util.ArrayList;
 
 @Data
+@Builder
 public class ChatRoomDto {
     private Integer room_num;
     private ArrayList<SelBuyMsgDetailsDto> message_list;

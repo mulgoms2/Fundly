@@ -3,44 +3,36 @@
 
 <!--현재 작성중인 Mapper와 연결시켜줄 DAO객체를 명시한다-->
 <mapper namespace="com.fundly.project.model.ItemMapper">
-    <!--
-    1. 게시물 갯수 세기 (count)
-    2. 게시물 목록/리스트 가져오기 (select)
-    3. 게시글 읽기(select)
-    4. 게시물 쓰기 (write)
-    5. 게시물 수정 (modify)
-    6. 게시물 삭제 (delete) bno와 writer를 모두 확인
-    7. 게시물 삭제 for Admin
-    8. 게시글 전체 삭제
-    -->
 
-    <!--1. 해당 프로젝틍 등록된 아이템 갯수 세기-->
+
+    <!--1. 해당(특정) 프로젝트에 등록된 아이템 갯수 세기-->
     <select id="count" resultType="int">
         SELECT count(*)
         FROM pj_item_tmp
         WHERE pj_id = #{pj_id}
     </select>
 
-    <!--2. 해당 프로젝트의 모든 아이템 출력 -->
+    <!--2. 해당(특정) 프로젝트의 모든 아이템 출력 -->
     <select id="selectAllFromPj" resultType="ItemDto">
         SELECT *
         FROM pj_item_tmp
         WHERE pj_id = #{pj_id}
     </select>
 
-    <!--3. 모든 프로젝트의 모든 아이템 출력 -->
+    <!--3. (모든 프로젝트의) 모든 아이템 출력 -->
     <select id="selectAll" resultType="ItemDto">
         SELECT *
         FROM pj_item_tmp
     </select>
 
+    <!--4. 특정 아이템 출력(아이템 아이디로 식별) -->
     <select id="select" resultType="ItemDto">
         SELECT *
         FROM pj_item_tmp
         WHERE item_id = #{item_id}
     </select>
 
-    <!--4. 아이템 등록 -->
+    <!--5. 아이템 하나 등록 -->
     <insert id="insert" parameterType="ItemDto">
         <selectKey keyProperty="item_id" resultType="String" order="BEFORE">
             SELECT concat((ifnull(Max(seq),0)+1),#{pj_id}) from pj_item_tmp
@@ -51,23 +43,16 @@
         (#{item_id}, #{pj_id},#{item_name},#{item_option_type}, #{item_option}, #{dba_reg_id})
     </insert>
 
-    <!--5. 아이템 모두 삭제-->
-    <delete id="deleteAll">
-        DELETE FROM pj_item_tmp
-    </delete>
-
-    <!--    &lt;!&ndash;6. 해당 아이템 삭제&ndash;&gt;-->
-    <!--    <delete id="delete">-->
-    <!--        DELETE FROM pj_item_tmp-->
-    <!--        WHERE item_id = #{item_id} and dba_reg_id = #{dba_reg_id}-->
-    <!--    </delete>-->
-
     <!--6. 해당 아이템 삭제-->
     <delete id="delete">
         DELETE FROM pj_item_tmp
         WHERE item_id = #{item_id} and dba_reg_id = #{dba_reg_id}
     </delete>
 
+    <!--7. 아이템 모두 삭제-->
+    <delete id="deleteAll">
+        DELETE FROM pj_item_tmp
+    </delete>
 
 
 

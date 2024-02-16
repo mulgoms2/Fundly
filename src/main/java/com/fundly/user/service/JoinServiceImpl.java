@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Service
@@ -20,6 +22,7 @@ public class JoinServiceImpl implements JoinService {
 
     @Override
 //    @Transactional
+
     public int userJoin(UserDto userDto) {
 
 //        uuid_user_id = UUID.randomUUID().toString();
@@ -32,7 +35,7 @@ public class JoinServiceImpl implements JoinService {
         userDto.getUser_name();
         userDto.getUser_email();
 
-        userDto.setUser_join_date(String.valueOf(LocalDate.now()));
+        userDto.setUser_join_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));//String.valueOf(LocalDate.now())
         if("on".equals((userDto.getSite_term_agree_yn()))) userDto.setSite_term_agree_yn("Y");
         if("on".equals((userDto.getP_Info_agree_yn()))) userDto.setP_Info_agree_yn("Y");
         if("on".equals((userDto.getAge_agree_yn()))) userDto.setAge_agree_yn("Y");
