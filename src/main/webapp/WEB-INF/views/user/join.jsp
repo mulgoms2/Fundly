@@ -60,7 +60,8 @@
                 <%--                    </div>--%>
                 <div class="usPwd">
                     <div class="usPwdWrap">
-                        <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
+                        <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력"/>
+<%--                        autocomplete="off"/>--%>
                         <div class="eyes">
                             <div class="password-toggle" id="togglePwd"></div>
                         </div>
@@ -224,13 +225,13 @@
     // 비밀번호는 8자~20자 / 공백 / 숫자, 영문, 특수문자 조합
     user_pwd.addEventListener("keyup", () => {
         // if (user_pwd.value.length < 8 && user_pwd.value.length > 20 ) {
-        if (!(user_pwd.value.length > 8 && user_pwd.value.length < 20) && user_pwd.value.length!= 0) {
+        if (!(user_pwd.value.length > 8 && user_pwd.value.length < 20) && user_pwd.value.length!== 0) {
             setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "user_pwd", "msgPwd", "red");
             return false;
-        } else if(user_pwd.value.search(/\s/) != -1){
+        } else if(user_pwd.value.search(/\s/) !== -1){
             setMessage('비밀번호는 공백 없이 입력해주세요.', "user_pwd", "msgPwd", "red");
             return false;
-        } else if(!pwd.test(user_pwd.value)&& user_pwd.value.length!= 0){
+        } else if(!pwd.test(user_pwd.value)&& user_pwd.value.length!== 0){
             setMessage('영문, 숫자, 특수문자를 혼합하여 입력해주세요.', "user_pwd", "msgPwd", "red");
             return false;
         }

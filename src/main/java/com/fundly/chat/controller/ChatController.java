@@ -1,5 +1,6 @@
 package com.fundly.chat.controller;
 
+import com.fundly.chat.pojo.FileValidator;
 import com.fundly.chat.service.ChatService;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.FileDto;
@@ -17,8 +18,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 //import javax.validation.Valid;
 
@@ -27,7 +30,6 @@ import javax.validation.Valid;
 @Controller
 @Slf4j
 public class ChatController {
-
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
@@ -35,26 +37,21 @@ public class ChatController {
 
     @GetMapping("/chat")
 //    테스트용
-    public String chatRoom(ChatRequest chatRequest, BindingResult result)  {
+    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result)  {
 
-        if (true) {
-            throw new RuntimeException("^_^");
+        if (result.hasErrors()) {
+            return "chat/error";
         }
-
-//        if (result.hasErrors()) {
-//            return chatRequest;
-//            return "chat/error";
-//        }
 
 //        return chatRequest;
         return "chat/chat";
     }
 
     @GetMapping("/chatPop")
-    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, Errors errors, BindingResult result) {
+    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
+//        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         chatService.getChatRoom(chatRequest);
-
 
         return "chat/chat";
     }
@@ -77,7 +74,11 @@ public class ChatController {
 
     @PostMapping("/chat/file")
     @ResponseBody
-    public void uploadFile(FileDto file, SelBuyMsgDetailsDto message) {
+    public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message, BindingResult result) {
+        if (result.hasErrors()) {
+            return;
+        }
+
         try {
 //            이미지 파일을 서버에 저장한다.
             chatService.saveImageFile(file, message);
@@ -101,9 +102,9 @@ public class ChatController {
         }
     }
 
-//    @ExceptionHandler(RuntimeException.class)
-//    public String handleException() {
-//        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
-//        return "chat/error";
-//    }
+    @ExceptionHandler(RuntimeException.class)
+    public String handleException() {
+        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
+        return "chat/error";
+    }
 }
