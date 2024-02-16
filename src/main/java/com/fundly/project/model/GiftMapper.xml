@@ -4,54 +4,106 @@
 <!--현재 작성중인 Mapper와 연결시켜줄 DAO객체를 명시한다-->
 <mapper namespace="com.fundly.project.model.GiftMapper">
 
+    <sql id="selectFromGiftTb">
+        SELECT * from pj_gift_tmp2
+    </sql>
+
+<!-- (특정 프로젝트의) 모든 선물 갯수 세기 -->
+    <select id="count" resultType="int">
+        SELECT count(gift_id) FROM pj_gift_tmp2
+        WHERE pj_id = #{pj_id}
+    </select>
+
 <!--    1. (특정 프로젝트의) 선물 등록하기 -->
-    <insert id="insert" parameterType="GiftDto">
-        <selectKey keyProperty="gift_id" resultType="String" order="BEFORE">
-            SELECT concat((ifnull(Max(seq),0)+1),#{pj_id},#{item_id}) from pj_gift_tmp
-        </selectKey>
-        INSERT INTO pj_gift_tmp
-        (gift_id, pj_id, item_id, item_qty, gift_name, gift_qty_lim_yn, gift_total_qty,
-         gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,
-         gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id)
-        VALUES <!--처음 선물을 등록시, 팔린 선물 수량과 현재 남은 선물 수량은 모두 등록한 선물 수량으로 입력 -->
-        (#{gift_id}, #{pj_id}, #{item_id}, #{item_qty}, #{gift_name}, #{gift_qty_lim_yn}, #{gift_total_qty},
-        #{gift_max_qty_per_person}, #{gift_ship_due_date}, #{gift_ship_need_yn}, #{gift_money},
-        0, #{gift_total_qty}, #{gift_status}, #{dba_reg_id})
+    <insert id="insert">
+        INSERT INTO pj_gift_tmp2
+        VALUES (#{gift_id},#{pj_id},#{gift_name},#{gift_qty_lim_yn}, #{gift_total_qty},
+                #{gift_max_qty_per_person}, #{gift_ship_due_date}, #{gift_ship_need_yn}, #{gift_money},
+                #{gift_sold_qty}, #{gift_curr_qty}, #{gift_status}, #{dba_reg_id})
     </insert>
 
+<!--    선물 조회하기     -->
+    <!--    2. 선물 하나 조회하기 -->
+    <select id="select" resultType="GiftDto">
+        <include refid="selectFromGiftTb"/>
+        WHERE gift_id = #{gift_id}
+    </select>
 
-<!--    <select id="select" resultType="giftDto">-->
-<!--        SELECT g.*-->
-<!--        FROM pj_gift_tmp g-->
-<!--             INNER JOIN pj_item_tmp i-->
-<!--        ON g.item_id = i.item_id-->
-<!--        WHERE gift_name = #{gift_name}-->
-<!--        AND g.pj_id = #{pj_id}-->
-<!--    </select>-->
+    <!--    3. 특정 프로젝트의 모든 선물 조회 -->
+    <select id="selectAllByPj" resultType="GiftDto">
+        <include refid="selectFromGiftTb"/>
+        WHERE pj_id = #{pj_id}
+    </select>
 
-    <!--    2. 특정 선물 정보 가져오기 -->
-<!--    <select id="select" resultType="giftDto">-->
-<!--        SELECT *-->
-<!--        FROM pj_gift_tmp-->
-<!--        WHERE gift_name = #{gift_name}-->
-<!--          AND pj_id = #{pj_id}-->
-<!--    </select>-->
+    <!--   4. (특정 프로젝트에 속한 선물 중) 판매 상태에 따른 선물 조회 -->
+    <select id="selectByStatus" resultType="GiftDto">
+        <include refid="selectFromGiftTb"/>
+        WHERE pj_id = #{pj_id}
+        AND gift_status = #{gift_status}
+    </select>
+
+<!--    선물의 상태 변경-->
+    <!--    5. (프로젝트 심사 요청 이전) 선물의 상세 내용 변경 -->
+    <update id="updateContentBefore">
+        UPDATE pj_gift_tmp2
+        SET pj_id = #{gift_name},
+            gift_qty_lim_yn = #{gift_qty_lim_yn},
+            gift_total_qty = #{gift_total_qty},
+            gift_max_qty_per_person = #{gift_max_qty_per_person},
+            gift_ship_due_date = #{gift_ship_due_date},
+            gift_ship_need_yn = #{gift_ship_need_yn},
+            gift_money = #{gift_money}
+            gift_curr_qty = #{gift_curr_qty}
+        WHERE gift_id = #{gift_id}
+        <!-- 아직 프로젝트 승인 이전이므로
+        최초 등록시 입력된 값 중 변경이 일어나지 않는 초기값(ex.판매량, 선물등록자 등)은
+        업데이트 항목에서 제외-->
+    </update>
+
+
+    <!--    6. (프로젝트 진행 중) 특정 선물의 판매 상태 변경 (ex. 판매중 -> 일시품절)  -->
+    <update id="updateStatus">
+        UPDATE pj_gift_tmp2
+        SET gift_status = #{gift_status}
+        WHERE gift_id = #{gift_id}
+    </update>
+
+    <!-- 7. (프로젝트 진행 중) 특정 선물의 선물 수량 변경 -->
+    <update id="updateQty">
+        UPDATE pj_gift_tmp2
+        SET  gift_qty_lim_yn = #{gift_qty_lim_yn},
+             gift_total_qty = #{gift_total_qty},
+             gift_max_qty_per_person = #{gift_max_qty_per_person}
+        WHERE gift_id = #{gift_id}
+    </update>
+
+<!--    선물 삭제하기     -->
+    <!--  7. 특정 선물 삭제  -->
+    <delete id="delete">
+        DELETE FROM pj_gift_tmp2
+        WHERE gift_id = #{gift_id}
+    </delete>
+
+
+
+
+
 
     <!-- 2.특정 선물 정보 가져오기 -->
     <!-- 특정 프로젝트의 한 선물 특정하기, 각 item은 갯수와 #로 묶은 후 아이템들을 문자열로 연결해서 출력. -->
-    <select id="select" resultType="giftDto">
-        SELECT pj_id, group_concat(concat(item_id,'#',item_qty)) as item_id,
-                gift_name, gift_qty_lim_yn, gift_total_qty,
-               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,
-               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id
-        FROM pj_gift_tmp
-        WHERE pj_id = #{pj_id}
-        GROUP BY pj_id,
-                gift_name, gift_qty_lim_yn, gift_total_qty,
-               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,
-               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id
-        HAVING gift_name = #{gift_name}
-    </select>
+<!--    <select id="select" resultType="giftDto">-->
+<!--        SELECT pj_id, group_concat(concat(item_id,'#',item_qty)) as item_id,-->
+<!--                gift_name, gift_qty_lim_yn, gift_total_qty,-->
+<!--               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,-->
+<!--               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id-->
+<!--        FROM pj_gift_tmp-->
+<!--        WHERE pj_id = #{pj_id}-->
+<!--        GROUP BY pj_id,-->
+<!--                gift_name, gift_qty_lim_yn, gift_total_qty,-->
+<!--               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,-->
+<!--               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id-->
+<!--        HAVING gift_name = #{gift_name}-->
+<!--    </select>-->
 
     <!--3. 선물 하나 삭제 -->
 
