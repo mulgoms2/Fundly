@@ -58,7 +58,6 @@ public class ChatController {
 //        httpsession 객체에 담긴 데이터를 이용할 수 있다.
 //        Object session = accessor.getSessionAttributes().get("session");
 //        System.out.println(((HttpSession) session).getAttribute("user_email"));
-
 //        채팅을 저장
 
         chatService.saveMessage(message);

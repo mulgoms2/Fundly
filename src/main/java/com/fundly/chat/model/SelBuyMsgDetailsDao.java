@@ -1,6 +1,6 @@
 package com.fundly.chat.model;
 
-import com.persistence.dto.ChatRoomDto;
+import com.persistence.dto.SelBuyMsgDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,9 @@ import java.util.ArrayList;
 public interface SelBuyMsgDetailsDao {
     int insertMsg(SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
 
-    ArrayList<SelBuyMsgDetailsDto> loadAllMessages(ChatRoomDto chatRoomDto) throws Exception;
+    ArrayList<SelBuyMsgDetailsDto> loadAllMessages(int roomNum) throws Exception;
+
+    int deleteAll();
+
+    int count();
 }

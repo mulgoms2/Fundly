@@ -1,7 +1,7 @@
 package com.fundly.chat.service;
 
 import com.persistence.dto.ChatRequest;
-import com.persistence.dto.ChatRoomDto;
+import com.persistence.dto.SelBuyMsgDto;
 import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import org.springframework.core.io.Resource;
@@ -12,9 +12,9 @@ public interface ChatService {
     String SEL_BUY_MSG_DETAILS = "SEL_BUY_MSG_DETAILS";
     boolean saveMessage(SelBuyMsgDetailsDto message);
 
-    ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto);
+    ArrayList<SelBuyMsgDetailsDto> loadMessages(SelBuyMsgDto selBuyMsgDto);
 
-    void getChatRoom(ChatRequest chatRoomDto);
+    SelBuyMsgDto getChatRoom(ChatRequest chatRoomDto);
     String IMG_SAVE_LOCATION = "/Users/dobigulbi/chat/file/";
     void saveImageFile(FileDto img_file, SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
 

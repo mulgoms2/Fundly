@@ -3248,7 +3248,7 @@
 </div>
 <script>
     (()=>{
-        const url = "chatPop?user_id=" + "${sessionScope.user_email}" + "&pj_id=" + "123";
+        const url = "chatPop?buy_id=" + "${sessionScope.user_email}" + "&pj_id=" + "123";
         const chatBtn = document.querySelector("#chatBtn");
 
 

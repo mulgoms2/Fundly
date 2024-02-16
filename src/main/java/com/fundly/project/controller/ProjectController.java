@@ -24,7 +24,7 @@ public class ProjectController {
 
     //기본정보 작성 페이지
     @GetMapping("/default")
-    public String defaultPage(){
+    public String defaultPage() {
         return "project.basicInfo";
     }
 

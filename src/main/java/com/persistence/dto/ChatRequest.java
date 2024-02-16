@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class ChatRequest {
 
-   private ChatRoomDto chatRoomDto;
+   private SelBuyMsgDto selBuyMsgDto;
 
    @NotNull
-   private String user_id;
+   private String buy_id;
 
    @NotNull
    private String pj_id;

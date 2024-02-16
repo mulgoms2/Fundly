@@ -1,13 +1,11 @@
 package com.fundly.chat.model;
 
-import com.fundly.chat.model.SelBuyMsgDao;
+import com.fundly.chat.entity.SelbuyMsgEntity;
 import com.persistence.dto.ChatRequest;
-import com.persistence.dto.ChatRequest.ChatRequestBuilder;
-import com.persistence.dto.ChatRoomDto;
+import com.persistence.dto.SelBuyMsgDto;
 import config.RootContext;
 import config.ServletContext;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
+import static org.junit.jupiter.api.Assertions.*;
+
 @Transactional
 @SpringJUnitWebConfig(classes = {RootContext.class, ServletContext.class})
 public class SelBuyMsgDaoTest {
@@ -23,17 +22,21 @@ public class SelBuyMsgDaoTest {
     @Autowired
     SelBuyMsgDao selBuyMsgDao;
 
+    ChatRequest chatRequest;
 
     @SneakyThrows
     @BeforeEach
     public void setTest() {
         selBuyMsgDao.deleteAllChatRoom();
 
-        ChatRequest chatRequest = ChatRequest.builder()
+        assertEquals(0, selBuyMsgDao.count());
+
+        chatRequest = ChatRequest.builder()
                 .pj_id("asdf")
-                .user_id("123")
+                .buy_id("123")
                 .build();
-        assert (selBuyMsgDao.makeChatRoom(chatRequest) == 1);
+
+        assertEquals(1, selBuyMsgDao.makeChatRoom(chatRequest));
     }
 
     @SneakyThrows
@@ -41,10 +44,15 @@ public class SelBuyMsgDaoTest {
     @DisplayName("채팅방불러오기")
     public void selectChatRoomTest() {
 //        given
-
 //        when
-
+        SelbuyMsgEntity selbuyMsgEntity = selBuyMsgDao.selectChatRoom(chatRequest);
 //        then
 
+        assertNotNull(selbuyMsgEntity);
+
+        SelBuyMsgDto selBuyMsgDto = selbuyMsgEntity.toSelBuyMsgDto();
+
+        assertEquals(selBuyMsgDto.getBuy_id(), "123");
+        assertEquals(selBuyMsgDto.getPj_id(), "asdf");
     }
 }

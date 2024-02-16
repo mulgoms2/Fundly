@@ -10,12 +10,20 @@
         values (#{room_num},#{msg_id} , #{buy_id}, #{pj_id}, #{msg_cont}, #{send_user_id}, #{file_cnt})
     </insert>
 
-<!--    <insert id="saveImageUrl">-->
+    <delete id="deleteAll">
+        delete from SEL_BUY_MSG_DETAILS
+    </delete>
+
+    <!--    <insert id="saveImageUrl">-->
 <!--        insert into SEL_BUY_MSG_DETAILS (msg_id, buy_id, pj_id, send_user_id, file_url, file_cnt)-->
 <!--        values (#{msg_id}, #{buy_id}, #{pj_id}, #{send_user_id}, #{file_url}, #{file_cnt});-->
 <!--    </insert>-->
 
-    <select id="loadAllMessages" parameterType="ChatRoomDto" resultType="SelBuyMsgDetailsDto">
+    <select id="loadAllMessages" resultType="SelBuyMsgDetailsDto">
         select * from SEL_BUY_MSG_DETAILS where room_num = #{room_num}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from SEL_BUY_MSG_DETAILS
     </select>
 </mapper>

@@ -1,24 +1,21 @@
 package com.fundly.chat.model;
 
+import com.fundly.chat.entity.SelbuyMsgEntity;
 import com.persistence.dto.ChatRequest;
-import com.persistence.dto.ChatRoomDto;
-import com.persistence.dto.SelBuyMsgDetailsDto;
+import com.persistence.dto.SelBuyMsgDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
 
 @Mapper
 @Repository
 public interface SelBuyMsgDao {
-    ChatRoomDto selectChatRoom(ChatRequest chatRequest) throws Exception;
+    SelbuyMsgEntity selectChatRoom(ChatRequest chatRequest) throws Exception;
 
     int makeChatRoom(ChatRequest chatRequest) throws Exception;
 
     int deleteAllChatRoom();
 
-//    int insertMsg(SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
-
-//    ArrayList<SelBuyMsgDetailsDto> loadAllMessages(ChatRoomDto chatRoomDto) throws Exception;
+    int count();
 
 }

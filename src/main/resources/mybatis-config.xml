@@ -17,7 +17,7 @@
         <typeAlias alias="InformDto" type="com.persistence.dto.InformDto"/>
         <typeAlias alias="TermDto" type="com.persistence.dto.TermDto"/>
         <typeAlias alias="ItemDto" type="com.persistence.dto.ItemDto"/>
-        <typeAlias type="com.persistence.dto.ChatRoomDto" alias="ChatRoomDto"/>
+        <typeAlias type="com.persistence.dto.SelBuyMsgDto" alias="SelBuyMsgDto"/>
         <typeAlias type="com.persistence.dto.SelBuyMsgDetailsDto" alias="SelBuyMsgDetailsDto"/>
         <typeAlias alias="UserDto" type="com.persistence.dto.UserDto"/>
         <typeAlias alias="PayMeansDto" type="com.persistence.dto.PayMeansDto"/>
@@ -25,5 +25,6 @@
         <typeAlias type="com.persistence.dto.FileDto" alias="FileDto"/>
         <typeAlias type="com.persistence.dto.ChatRequest" alias="ChatRequest"/>
         <typeAlias alias="OrderDto" type="com.persistence.dto.OrderDto" />
+        <typeAlias type="com.fundly.chat.entity.SelbuyMsgEntity" alias="SelBuyMsgEntity"/>
     </typeAliases>
 </configuration>
