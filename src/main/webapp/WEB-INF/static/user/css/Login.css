@@ -71,7 +71,7 @@ input[type=text],input[type=password] {
     padding: 0 10px;
     border: 1px solid #ddd;
     /*var(--main-bg-color);*/
-     /* 입력 필드 주위의 보더를 부드러운 회색으로 변경하세요 */
+    /* 입력 필드 주위의 보더를 부드러운 회색으로 변경하세요 */
     border-radius: 5px;
     font-size: 14px;
     transition: border-color 0.3s;
@@ -265,18 +265,27 @@ h3{
 }
 
 .password-toggle {
-    position: absolute;
-    top : 50%;
-    right: 5px;
-    transform: translateY(-50%);
-    cursor: pointer;
-
-
     width: 20px;
     height: 20px;
-    margin-left: 20px;
+    position: absolute;
+    right: 12px;
+    top: 9px;
     background: url(../../img/Icon-private.png) no-repeat center center;
+
+    /*background: url(/static/img/Icon-private.png) no-repeat center center;*/
     background-size: cover;
+    /*position: absolute;*/
+    /*top : 50%;*/
+    /*right: 5px;*/
+    /*transform: translateY(-50%);*/
+    /*cursor: pointer;*/
+
+
+    /*width: 20px;*/
+    /*height: 20px;*/
+    /*margin-left: 20px;*/
+    /*background: url(../../img/Icon-private.png) no-repeat center center;*/
+    /*background-size: cover;*/
 }
 
 /* 맨 마지막 copyr */

@@ -64,6 +64,7 @@
 
 .notificationListMain{
     margin-top: 40px;
+    max-width: 1160px;
 }
 
 .NotificationList{
@@ -71,12 +72,16 @@
     border-radius: 4px;
 }
 
+.itemWrap{
+    /*width: 100%*/
+}
+
 .NotificationListItem{
     /*padding: 24px 0 0 36px;*/
     /*width: 100%;*/
     padding:20px 1px 0 36px;
     /*overflow: hidden;*/
-    display: inline-flex;
+    /*display: inline-flex;*/
     flex-direction: row;
     min-height: 80px;
     cursor: pointer;
