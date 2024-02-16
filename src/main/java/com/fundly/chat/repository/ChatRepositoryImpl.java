@@ -28,6 +28,9 @@ public class ChatRepositoryImpl implements ChatRepository {
     public SelBuyMsgDto findRoom(ChatRequest chatRequest) {
         try {
             SelbuyMsgEntity selbuyMsgEntity = selBuyMsgDao.selectChatRoom(chatRequest);
+            if (selbuyMsgEntity == null) {
+                return null;
+            }
             return selbuyMsgEntity.toSelBuyMsgDto();
         } catch (Exception e) {
             log.error("error ChatRepositoryImpl.findRoom()");
@@ -51,6 +54,7 @@ public class ChatRepositoryImpl implements ChatRepository {
         try {
             return selBuyMsgDetailsDao.loadAllMessages(roomNum);
         } catch (Exception e) {
+            log.error("ChatRepositoryImpl.loadAllMessages");
             throw new RuntimeException(e);
         }
     }
@@ -59,11 +63,8 @@ public class ChatRepositoryImpl implements ChatRepository {
         try {
             return selBuyMsgDetailsDao.insertMsg(selBuyMsgDetailsDto);
         } catch (Exception e) {
+            log.error("ChatRepositoryImpl.insertMsg() 호출중 에러");
             throw new RuntimeException(e);
         }
     }
-
-    //    public void updateChatRoom(SelBuyMsgDto selBuyMsgDto) {
-//
-//    }
 }
