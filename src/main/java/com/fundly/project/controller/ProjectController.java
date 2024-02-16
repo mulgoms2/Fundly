@@ -1,6 +1,7 @@
 package com.fundly.project.controller;
 
-import com.fundly.project.service.ItemServiceImpl;
+import com.fundly.project.service.GiftService;
+import com.fundly.project.service.ItemService;
 import com.persistence.dto.ItemDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
+    ItemService itemService;
+    GiftService giftService;
+
     @Autowired
-    ItemServiceImpl itemService;
+    ProjectController(ItemService itemService, GiftService giftService){
+        this.itemService = itemService;
+        this.giftService = giftService;
+    }
 
     //기본정보 작성 페이지
     @GetMapping("/default")
@@ -123,7 +130,7 @@ public class ProjectController {
 
     @GetMapping("/items")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){
+    public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){ //Dto로 넘겨주도록 수정해야함
         System.out.println("item_id = " + item_id);
         List<ItemDto> list = new ArrayList<>();
         try {
@@ -140,5 +147,13 @@ public class ProjectController {
             return new ResponseEntity<>(list,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    @PostMapping("/gift")
+//    @ResponseBody
+//    public ResponseEntity<List<GiftDto>> RegisterGift(GiftRequest giftRequest){
+//        log.error("giftRequest={}",giftRequest);
+//        giftService.registerGift(giftRequest);
+//
+//    }
 
 }
