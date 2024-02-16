@@ -16,7 +16,7 @@
 <script>
     let msg = "${msg}";
     if (msg === "REG_SUCCESS") alert("결제수단 등록에 성공했습니다.");
-    if (msg === "REG_ERROR") alert("결제수단 등록에 실패했습니다. 다시 시도해 주세요.");
+    // if (msg === "REG_ERROR") alert("결제수단 등록에 실패했습니다. 다시 시도해 주세요.");
     if (msg === "LIST_ERROR")  alert("결제수단 조회에 실패했습니다. 다시 시도해 주세요.");
     if (msg === "DEL_ERROR")  alert("결제수단 삭제에 실패했습니다. 다시 시도해 주세요.");
     if (msg === "UPDATE_ERROR")  alert("기본 결제수단 지정에 실패했습니다. 다시 시도해 주세요.");
@@ -72,7 +72,10 @@
         <tr>
             <td class="user_id">${payMeansDto.user_id}</td>
             <td class="pay_means_id">${payMeansDto.pay_means_id}</td>
-            <td class="own_type">${payMeansDto.own_type}</td>
+            <td class="own_type">
+                <c:if test="${payMeansDto.own_type eq 'personal'}">개인</c:if>
+                <c:if test="${payMeansDto.own_type eq 'corporate'}">법인</c:if>
+            </td>
             <td class="card_no">${payMeansDto.card_no}</td>
             <td class="card_co_type">${payMeansDto.card_co_type}</td>
             <td class="default_pay_means_yn">${payMeansDto.default_pay_means_yn}</td>
