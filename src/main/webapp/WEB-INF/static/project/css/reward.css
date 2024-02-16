@@ -148,23 +148,80 @@ div.subTab > div.rightBtn > div > a > i{
     margin: 0 auto;
     padding: 44px 0 0;
 }
-.pjWrap .pjCont .pjBox {
-
-}
 .pjBox.str, .pjBox.gift, .pjBox.item{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 1080px;
 }
+.pjBox.str {
+    border-bottom : none;
+}
 .pjBox .pjInfo {
     width: 360px;
+    padding: 0 12px 24px;
 }
+
 .pjBox .pjInfo .myList {
     color: rgb(13, 13, 13);
     font-size: 16px;
     font-weight: 700;
     margin: 0 0 20px;
+}
+.pjBox .pjInfo .listCon{
+    background-color: #ffffff;
+    border: .5px solid #ececec;
+    height: 166px;
+}
+.pjBox .pjInfo > div > .listCon p{
+    font-size: 12px;
+    color: #6d6d6d;
+    text-align: center;
+    line-height: 166px;
+}
+.pjBox.str .pjForm {
+    margin-top: 10px;
+}
+.pjBox.str .pjForm .tit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.pjBox.str .pjForm .tit p {
+    font-size: 14px;
+    font-weight: 700;
+}
+.pjBox.str .pjForm .tit i {
+    color: #f86453;
+    padding-left: 5px;
+    margin-top: 2px;
+}
+.pjBox.str .pjForm .cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pjBox.str .pjForm h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+.pjBox.str .pjForm .cont {
+    margin: 0 54px;
+}
+.pjBox.str .pjForm .cont p {
+    font-size: 13px;
+    color: #6d6d6d;
+    line-height: 22px;
+}
+.pjBox.str .pjForm .cont button {
+    width: 100%;
+    height: 44px;
+    border: 0.5px solid #f86453;
+    border-radius: 4px;
+    background-color: #f86453;
+    color: #ffffff;
+    font-size: 13px;
+    margin-top: 24px;
 }
 .pjBox .pjInfo #itemList {
     display: flex;

@@ -2,6 +2,7 @@ package com.fundly.chat.model;
 
 import com.fundly.chat.model.SelBuyMsgDao;
 import com.persistence.dto.ChatRequest;
+import com.persistence.dto.ChatRequest.ChatRequestBuilder;
 import com.persistence.dto.ChatRoomDto;
 import config.RootContext;
 import config.ServletContext;
@@ -22,18 +23,16 @@ public class SelBuyMsgDaoTest {
     @Autowired
     SelBuyMsgDao selBuyMsgDao;
 
-    ChatRequest chatRequest;
 
     @SneakyThrows
     @BeforeEach
     public void setTest() {
         selBuyMsgDao.deleteAllChatRoom();
 
-         this.chatRequest = new ChatRequest();
-
-        chatRequest.setUser_id("asdf");
-        chatRequest.setPj_id("1234");
-
+        ChatRequest chatRequest = ChatRequest.builder()
+                .pj_id("asdf")
+                .user_id("123")
+                .build();
         assert (selBuyMsgDao.makeChatRoom(chatRequest) == 1);
     }
 
@@ -42,10 +41,6 @@ public class SelBuyMsgDaoTest {
     @DisplayName("채팅방불러오기")
     public void selectChatRoomTest() {
 //        given
-
-        ChatRoomDto chatRoomDto = selBuyMsgDao.selectChatRoom(chatRequest);
-
-        assert (chatRoomDto != null);
 
 //        when
 

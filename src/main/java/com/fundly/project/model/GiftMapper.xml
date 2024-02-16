@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--현재 작성중인 Mapper와 연결시켜줄 DAO객체를 명시한다-->
+<mapper namespace="com.fundly.project.model.GiftMapper">
+
+<!--    1. (특정 프로젝트의) 선물 등록하기 -->
+    <insert id="insert" parameterType="GiftDto">
+        <selectKey keyProperty="gift_id" resultType="String" order="BEFORE">
+            SELECT concat((ifnull(Max(seq),0)+1),#{pj_id},#{item_id}) from pj_gift_tmp
+        </selectKey>
+        INSERT INTO pj_gift_tmp
+        (gift_id, pj_id, item_id, item_qty, gift_name, gift_qty_lim_yn, gift_total_qty,
+         gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,
+         gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id)
+        VALUES <!--처음 선물을 등록시, 팔린 선물 수량과 현재 남은 선물 수량은 모두 등록한 선물 수량으로 입력 -->
+        (#{gift_id}, #{pj_id}, #{item_id}, #{item_qty}, #{gift_name}, #{gift_qty_lim_yn}, #{gift_total_qty},
+        #{gift_max_qty_per_person}, #{gift_ship_due_date}, #{gift_ship_need_yn}, #{gift_money},
+        0, #{gift_total_qty}, #{gift_status}, #{dba_reg_id})
+    </insert>
+
+
+<!--    <select id="select" resultType="giftDto">-->
+<!--        SELECT g.*-->
+<!--        FROM pj_gift_tmp g-->
+<!--             INNER JOIN pj_item_tmp i-->
+<!--        ON g.item_id = i.item_id-->
+<!--        WHERE gift_name = #{gift_name}-->
+<!--        AND g.pj_id = #{pj_id}-->
+<!--    </select>-->
+
+    <!--    2. 특정 선물 정보 가져오기 -->
+<!--    <select id="select" resultType="giftDto">-->
+<!--        SELECT *-->
+<!--        FROM pj_gift_tmp-->
+<!--        WHERE gift_name = #{gift_name}-->
+<!--          AND pj_id = #{pj_id}-->
+<!--    </select>-->
+
+    <!-- 2.특정 선물 정보 가져오기 -->
+    <!-- 특정 프로젝트의 한 선물 특정하기, 각 item은 갯수와 #로 묶은 후 아이템들을 문자열로 연결해서 출력. -->
+    <select id="select" resultType="giftDto">
+        SELECT pj_id, group_concat(concat(item_id,'#',item_qty)) as item_id,
+                gift_name, gift_qty_lim_yn, gift_total_qty,
+               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,
+               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id
+        FROM pj_gift_tmp
+        WHERE pj_id = #{pj_id}
+        GROUP BY pj_id,
+                gift_name, gift_qty_lim_yn, gift_total_qty,
+               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,
+               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id
+        HAVING gift_name = #{gift_name}
+    </select>
+
+    <!--3. 선물 하나 삭제 -->
+
+
+
+
+
+</mapper>

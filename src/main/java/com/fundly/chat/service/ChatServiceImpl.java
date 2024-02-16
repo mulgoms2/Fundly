@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -30,14 +31,25 @@ import static java.util.stream.Collectors.toCollection;
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
-    @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
-    @Autowired
     SelBuyMsgDao selBuyMsgDao;
-    @Autowired
     SelBuyMsgDetailsDao selBuyMsgDetailsDao;
-    @Autowired
     FileDao fileDao;
+
+    public ChatServiceImpl() {
+    }
+
+    public ChatServiceImpl(SelBuyMsgDao selBuyMsgDao) {
+        this.selBuyMsgDao = selBuyMsgDao;
+    }
+
+    @Autowired
+    public ChatServiceImpl(SimpMessagingTemplate simpMessagingTemplate, SelBuyMsgDao selBuyMsgDao, SelBuyMsgDetailsDao selBuyMsgDetailsDao, FileDao fileDao) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.selBuyMsgDao = selBuyMsgDao;
+        this.selBuyMsgDetailsDao = selBuyMsgDetailsDao;
+        this.fileDao = fileDao;
+    }
 
     @SneakyThrows
     @Override
@@ -45,9 +57,12 @@ public class ChatServiceImpl implements ChatService {
 //        채팅룸이 존재하면 채팅방 리턴
         ChatRoomDto chatRoomDto;
 
+        selBuyMsgDao.selectChatRoom(chatRequest);
+
         if ((chatRoomDto = selBuyMsgDao.selectChatRoom(chatRequest)) == null) {
 //            채팅방 생성과 동시에 chatRequest 에 세팅된다
             selBuyMsgDao.makeChatRoom(chatRequest);
+
         } else {
 //            채팅방이 존재하면 메시지 리스트를 가져온다.
             chatRoomDto.setMessage_list(loadMessages(chatRoomDto));
@@ -65,7 +80,7 @@ public class ChatServiceImpl implements ChatService {
             message.setSvr_intime_string(svr_intime);
         } catch (Exception e) {
             log.error("error with save Message");
-            throw new RuntimeException("error with saveMessage(SelBuyMsgDetailsDto message)" ,e);
+            throw new RuntimeException("error with saveMessage(SelBuyMsgDetailsDto message)", e);
         }
         return true;
     }
@@ -87,10 +102,12 @@ public class ChatServiceImpl implements ChatService {
     private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
         Date date = selBuyMsgDetailsDto.getSvr_intime();
         String hourAndMinute = new SimpleDateFormat("HH:mm").format(date);
+
         selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
 
         return selBuyMsgDetailsDto;
     }
+
     private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
 //        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
         if (!isFileAttached(selBuyMsgDetailsDto)) {
@@ -135,7 +152,7 @@ public class ChatServiceImpl implements ChatService {
 //            파일 Dto에 해당 메시지의 식별자를 적어서 저장해야한다.
             fileDao.saveFile(img_file);
         } catch (IOException e) {
-            throw new RuntimeException("error with new File(savedImgUrl)",e);
+            throw new RuntimeException("error with new File(savedImgUrl)", e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
