@@ -1,14 +1,13 @@
 package com.persistence.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class GiftItemDetailDto {
     private Integer gift_item_id;
     private Integer gift_id;

@@ -5,59 +5,64 @@
 <mapper namespace="com.fundly.project.model.GiftItemDetailMapper">
 
 
-<!-- 1. 해당 아이템이 특정 프로젝트의 몇개의 선물에 포함되어 있는지 count (선물 등록 페이지에 필요)-->
+    <!-- 1. 해당 아이템이 특정 프로젝트의 몇개의 선물에 포함되어 있는지 count (선물 등록 페이지에 필요)-->
     <select id="countGiftByItem" resultType="int">
         SELECT count(gift_id)
         FROM pj_gift_item_detail
         WHERE item_id = #{item_id}
     </select>
 
-<!-- 2. 해당 선물이 몇개의 아이템을 가지고 있는지 count -->
+    <!-- 2. 해당 선물이 몇개의 아이템을 가지고 있는지 count -->
     <select id="countItemByGift" resultType="int">
         SELECT count(*)
         FROM pj_gift_item_detail
         WHERE gift_id = #{gift_id}
     </select>
 
-<!-- 3. 해당 선물의 아이템 디테일 목록 가져오기 -->
+    <!-- 3. 해당 선물의 아이템 디테일 목록 가져오기 -->
     <select id="selectItemDetail" resultType="GiftItemDetailDto">
         SELECT *
         FROM pj_gift_item_detail
         WHERE gift_id = #{gift_id}
     </select>
 
-<!--  4. 해당 아이템을 포함하는 모든 선물 리스트를 가져오기 -->
+    <!--  4. 해당 아이템을 포함하는 모든 선물 리스트를 가져오기 -->
     <select id="selectGift" resultType="int">
         SELECT gift_id
         FROM pj_gift_item_detail
         WHERE item_id = #{item_id}
     </select>
 
-<!--  5. (선물 수정/등록시) 해당 선물을 구성하는 아이템의 종류와 해당 아이템의 갯수를 등록하기-->
-    <insert id="insert">
+    <!--  5. (선물 수정/등록시) 해당 선물을 구성하는 아이템의 종류와 해당 아이템의 갯수를 등록하기-->
+    <insert id="insert" parameterType="GiftItemDetailDto">
         INSERT INTO pj_gift_item_detail
+            (gift_id, item_id, item_qty)
         VALUES (#{gift_id},#{item_id},#{item_qty})
     </insert>
 
 
-<!--  6. (선물 수정시) 해당 선물을 구성하는 아이템의 수량의 변경 -->
-    <update id="update">
+    <!--  6. (선물 수정시) 해당 선물을 구성하는 아이템의 수량의 변경 -->
+    <update id="update" parameterType="GiftItemDetailDto">
         UPDATE pj_gift_item_detail
         SET item_qty = #{item_qty}
         WHERE gift_item_id = #{gift_item_id}
     </update>
 
-<!--  7.  (선물 수정시) 해당 선물을 구성하는 개별 아이템의 삭제 -->
+    <!--  7.  (선물 수정시) 해당 선물을 구성하는 개별 아이템의 삭제 -->
     <delete id="delete">
         DELETE FROM pj_gift_item_detail
         WHERE gift_item_id = #{gift_item_id}
     </delete>
 
 
-<!--  8.  (선물 삭제시) 해당 선물을 구성하는 개별 아이템의 삭제 -->
+    <!--  8.  (선물 삭제시) 해당 선물을 구성하는 개별 아이템의 삭제 -->
     <delete id="deleteAllByGift">
         DELETE FROM pj_gift_item_detail
         WHERE gift_id = #{gift_id}
+    </delete>
+
+    <delete id="deleteAll">
+        TRUNCATE table pj_gift_item_detail
     </delete>
 
 </mapper>
