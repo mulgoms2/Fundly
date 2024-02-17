@@ -52,9 +52,9 @@
 
 <!--    회원별 결제수단 목록 조회-->
     <select id="selectAllForUser" parameterType="String" resultType="PayMeansDto">
-        select * from pay_means_reg
-        where user_id = #{user_id}
-        order by default_pay_means_yn DESC, dba_reg_dtm DESC
+        select * from pay_means_reg as r, pay_means_file as f
+        where r.card_co_type = f.card_co_type and r.user_id = #{pay_means_id}
+        order by r.default_pay_means_yn DESC, r.dba_reg_dtm DESC
     </select>
 
     <select id="selectAll" resultType="PayMeansDto">
