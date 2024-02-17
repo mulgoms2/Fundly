@@ -95,7 +95,9 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
+    @Transactional
     public int removeGift(Integer gift_id) throws Exception {
+        giftItemDetailMapper.deleteAllByGift(gift_id);
         return giftMapper.delete(gift_id);
     }
 

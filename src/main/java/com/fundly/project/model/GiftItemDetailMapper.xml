@@ -26,25 +26,38 @@
         WHERE gift_id = #{gift_id}
     </select>
 
-<!--  4. (선물 수정/등록시) 해당 선물을 구성하는 아이템의 종류와 해당 아이템의 갯수를 등록하기-->
+<!--  4. 해당 아이템을 포함하는 모든 선물 리스트를 가져오기 -->
+    <select id="selectGift" resultType="int">
+        SELECT gift_id
+        FROM pj_gift_item_detail
+        WHERE item_id = #{item_id}
+    </select>
+
+<!--  5. (선물 수정/등록시) 해당 선물을 구성하는 아이템의 종류와 해당 아이템의 갯수를 등록하기-->
     <insert id="insert">
         INSERT INTO pj_gift_item_detail
         VALUES (#{gift_id},#{item_id},#{item_qty})
     </insert>
 
 
-<!--  5. (선물 수정시) 해당 선물을 구성하는 아이템의 수량의 변경 -->
+<!--  6. (선물 수정시) 해당 선물을 구성하는 아이템의 수량의 변경 -->
     <update id="update">
         UPDATE pj_gift_item_detail
         SET item_qty = #{item_qty}
         WHERE gift_item_id = #{gift_item_id}
     </update>
 
-<!--  6.  (선물 수정시) 해당 선물을 구성하는 아이템의 삭제 -->
+<!--  7.  (선물 수정시) 해당 선물을 구성하는 개별 아이템의 삭제 -->
     <delete id="delete">
         DELETE FROM pj_gift_item_detail
         WHERE gift_item_id = #{gift_item_id}
     </delete>
 
+
+<!--  8.  (선물 삭제시) 해당 선물을 구성하는 개별 아이템의 삭제 -->
+    <delete id="deleteAllByGift">
+        DELETE FROM pj_gift_item_detail
+        WHERE gift_id = #{gift_id}
+    </delete>
 
 </mapper>

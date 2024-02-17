@@ -84,31 +84,4 @@
         WHERE gift_id = #{gift_id}
     </delete>
 
-
-
-
-
-
-    <!-- 2.특정 선물 정보 가져오기 -->
-    <!-- 특정 프로젝트의 한 선물 특정하기, 각 item은 갯수와 #로 묶은 후 아이템들을 문자열로 연결해서 출력. -->
-<!--    <select id="select" resultType="giftDto">-->
-<!--        SELECT pj_id, group_concat(concat(item_id,'#',item_qty)) as item_id,-->
-<!--                gift_name, gift_qty_lim_yn, gift_total_qty,-->
-<!--               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,-->
-<!--               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id-->
-<!--        FROM pj_gift_tmp-->
-<!--        WHERE pj_id = #{pj_id}-->
-<!--        GROUP BY pj_id,-->
-<!--                gift_name, gift_qty_lim_yn, gift_total_qty,-->
-<!--               gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,-->
-<!--               gift_sold_qty, gift_curr_qty, gift_status, dba_reg_id-->
-<!--        HAVING gift_name = #{gift_name}-->
-<!--    </select>-->
-
-    <!--3. 선물 하나 삭제 -->
-
-
-
-
-
 </mapper>

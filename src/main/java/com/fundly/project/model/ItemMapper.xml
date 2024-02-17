@@ -34,24 +34,30 @@
 
     <!--5. 아이템 하나 등록 -->
     <insert id="insert" parameterType="ItemDto">
-        <selectKey keyProperty="item_id" resultType="String" order="BEFORE">
-            SELECT concat((ifnull(Max(seq),0)+1),#{pj_id}) from pj_item_tmp
-        </selectKey>
-        INSERT into pj_item_tmp
-        (item_id, pj_id, item_name, item_option_type, item_option, dba_reg_id )
+        INSERT INTO pj_item_tmp
+        (pj_id, item_name, item_option_type, item_option, dba_reg_id)
         VALUES
-        (#{item_id}, #{pj_id},#{item_name},#{item_option_type}, #{item_option}, #{dba_reg_id})
+        (#{pj_id}, #{item_name}, #{item_option_type}, #{item_option}, #{dba_reg_id})
     </insert>
+
+    <!-- 6. 특정 아이템 업데이트-->
+    <update id="update">
+        UPDATE pj_item_tmp
+        SET item_name = #{item_name},
+            item_option_type = #{item_option_type},
+            item_option = #{item_option}
+        WHERE item_id = #{item_id}
+    </update>
 
     <!--6. 해당 아이템 삭제-->
     <delete id="delete">
         DELETE FROM pj_item_tmp
-        WHERE item_id = #{item_id} and dba_reg_id = #{dba_reg_id}
+        WHERE item_id = #{item_id}
     </delete>
 
     <!--7. 아이템 모두 삭제-->
     <delete id="deleteAll">
-        DELETE FROM pj_item_tmp
+        TRUNCATE pj_item_tmp
     </delete>
 
 
