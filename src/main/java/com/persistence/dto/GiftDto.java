@@ -7,9 +7,11 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class GiftDto {
     private Integer gift_id;
     private String pj_id;
@@ -32,7 +34,7 @@ public class GiftDto {
     private Timestamp dba_mod_dtm;
     private String dba_mod_id;
 
-//
+    //
 //    public GiftDto(String gift_name){
 //        this.gift_name = gift_name;
 //    }
@@ -57,6 +59,20 @@ public class GiftDto {
 //        this.dba_reg_id = dba_reg_id;
 //
 //    }
+
+    public GiftDto(String gift_name, String pj_id, String gift_qty_lim_yn, Integer gift_total_qty,
+                   Integer gift_max_qty_per_person, String gift_ship_due_date, String gift_ship_need_yn,
+                   Integer gift_money, Integer gift_curr_qty){
+        this.gift_name = gift_name;
+        this.pj_id = pj_id;
+        this.gift_qty_lim_yn = gift_qty_lim_yn;
+        this.gift_total_qty = gift_total_qty;
+        this.gift_max_qty_per_person = gift_max_qty_per_person;
+        this.gift_ship_due_date = gift_ship_due_date;
+        this.gift_ship_need_yn = gift_ship_need_yn;
+        this.gift_money = BigInteger.valueOf(gift_money);
+        this.gift_curr_qty = gift_curr_qty;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

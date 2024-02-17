@@ -13,8 +13,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @Slf4j
@@ -105,6 +104,20 @@ class ItemMapperTest {
         assertTrue(itemDto2==null); //삭제 한 후 해당 아이템을 꺼내면 꺼내지는게 없음.
 
 
+
+    }
+    @Test
+    @DisplayName("해당 아이템 업데이트")
+    void update() throws Exception {
+        itemDto = itemMapper.select(2);
+        log.error("itemDto={}",itemDto);
+        itemDto.setItem_name("아이템7");
+        int rowCnt = itemMapper.update(itemDto);
+        assertEquals(rowCnt,1);
+        ItemDto itemDto2 = itemMapper.select(itemDto.getItem_id());
+        assertEquals(itemDto2.getItem_id(),itemDto.getItem_id());
+        log.error("itemDto2={}",itemDto2);
+        assertTrue(itemDto.getItem_name()!=itemDto2.getItem_name());
 
     }
 

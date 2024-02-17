@@ -41,7 +41,7 @@
     </insert>
 
     <!-- 6. 특정 아이템 업데이트-->
-    <update id="update">
+    <update id="update" parameterType="ItemDto">
         UPDATE pj_item_tmp
         SET item_name = #{item_name},
             item_option_type = #{item_option_type},

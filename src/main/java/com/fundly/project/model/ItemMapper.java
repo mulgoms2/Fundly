@@ -16,7 +16,7 @@ public interface ItemMapper {
     List<ItemDto> selectAll() throws Exception;
     ItemDto select(@Param("item_id") Integer item_id) throws Exception;
     int insert(ItemDto itemDto) throws Exception;
-    int update(@Param("ItemDto") ItemDto itemDto) throws Exception;
+    int update(ItemDto itemDto) throws Exception;
     int delete(@Param("item_id") Integer item_id) throws Exception;
     int deleteAll() throws Exception;
 
