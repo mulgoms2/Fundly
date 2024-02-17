@@ -9,6 +9,7 @@ import com.persistence.dto.SelBuyMsgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -25,29 +26,24 @@ public class ChatRepositoryImpl implements ChatRepository {
     }
 
     @Override
-    public SelBuyMsgDto findRoom(ChatRequest chatRequest) {
-        try {
-            SelbuyMsgEntity selbuyMsgEntity = selBuyMsgDao.selectChatRoom(chatRequest);
-            if (selbuyMsgEntity == null) {
-                return null;
+    public SelBuyMsgDto getChatRoom(ChatRequest chatRequest) throws Exception {
+            SelBuyMsgDto selBuyMsgDto = selBuyMsgDao.selectChatRoom(chatRequest);
+//            채팅방이 존재하면 메시지를 채워서 반환한다.
+            if (selBuyMsgDto != null) {
+                selBuyMsgDto.setMessage_list(loadAllMessages(selBuyMsgDto));
+                return selBuyMsgDto;
             }
-            return selbuyMsgEntity.toSelBuyMsgDto();
-        } catch (Exception e) {
-            log.error("error ChatRepositoryImpl.findRoom()");
-            throw new RuntimeException(e);
-        }
+            return selBuyMsgDto;
     }
 
     //    채팅방 만들기
     @Override
-    public int makeChatRoom(ChatRequest request) {
-        try {
-            return selBuyMsgDao.makeChatRoom(request);
-        } catch (Exception e) {
-            log.error("error ChatRepositoryImpl.makeChatRoom()");
-            throw new RuntimeException(e);
-        }
+    @Transactional
+    public SelBuyMsgDto makeChatRoom(ChatRequest request) throws Exception {
+        selBuyMsgDao.makeChatRoom(request);
+        return selBuyMsgDao.selectChatRoom(request);
     }
+
     @Override
     public ArrayList<SelBuyMsgDetailsDto> loadAllMessages(SelBuyMsgDto selBuyMsgDto) {
         int roomNum = selBuyMsgDto.getRoom_num();
@@ -58,8 +54,9 @@ public class ChatRepositoryImpl implements ChatRepository {
             throw new RuntimeException(e);
         }
     }
+
     @Override
-    public int insertMsg(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
+    public int saveMessage(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
         try {
             return selBuyMsgDetailsDao.insertMsg(selBuyMsgDetailsDto);
         } catch (Exception e) {

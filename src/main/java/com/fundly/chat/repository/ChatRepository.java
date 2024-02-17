@@ -7,12 +7,13 @@ import com.persistence.dto.SelBuyMsgDto;
 import java.util.ArrayList;
 
 public interface ChatRepository {
-    SelBuyMsgDto findRoom(ChatRequest chatRequest);
+    SelBuyMsgDto getChatRoom(ChatRequest chatRequest) throws Exception;
 
-    int makeChatRoom(ChatRequest chatRequest);
+    SelBuyMsgDto makeChatRoom(ChatRequest chatRequest) throws Exception;
 
     ArrayList<SelBuyMsgDetailsDto> loadAllMessages(SelBuyMsgDto selBuyMsgDto);
 
-    int insertMsg(SelBuyMsgDetailsDto selBuyMsgDetailsDto);
+    int saveMessage(SelBuyMsgDetailsDto selBuyMsgDetailsDto);
 
+//    void saveImgMessage();
 }

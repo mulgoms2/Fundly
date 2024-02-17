@@ -12,9 +12,10 @@ public interface ChatService {
     String SEL_BUY_MSG_DETAILS = "SEL_BUY_MSG_DETAILS";
     boolean saveMessage(SelBuyMsgDetailsDto message);
 
+//    메시지를 얻기위해서는 메시지 테이블을 room_num으로 조회하면 된다.
     ArrayList<SelBuyMsgDetailsDto> loadMessages(SelBuyMsgDto selBuyMsgDto);
 
-    SelBuyMsgDto getChatRoom(ChatRequest chatRoomDto);
+    SelBuyMsgDto joinChatRoom(ChatRequest chatRoomDto);
     String IMG_SAVE_LOCATION = "/Users/dobigulbi/chat/file/";
     void saveImageFile(FileDto img_file, SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
 

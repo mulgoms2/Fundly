@@ -35,7 +35,6 @@ public class ChatController {
     @GetMapping("/chat")
 //    테스트용
     public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result) {
-
         if (result.hasErrors()) {
             return "chat/error";
         }
@@ -47,7 +46,8 @@ public class ChatController {
     @GetMapping("/chatPop")
     public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
-        SelBuyMsgDto chatRoom = chatService.getChatRoom(chatRequest);
+        SelBuyMsgDto chatRoom = chatService.joinChatRoom(chatRequest);
+
         chatRequest.setSelBuyMsgDto(chatRoom);
 
         return "chat/chat";

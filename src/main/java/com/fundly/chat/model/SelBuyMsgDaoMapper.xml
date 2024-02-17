@@ -3,7 +3,7 @@
 
 <mapper namespace="com.fundly.chat.model.SelBuyMsgDao">
 
-    <select id="selectChatRoom" parameterType="ChatRequest" resultType="SelbuyMsgEntity">
+    <select id="selectChatRoom" parameterType="ChatRequest" resultType="SelBuyMsgDto">
         select *
         from SEL_BUY_MSG
         where buy_id = #{buy_id}

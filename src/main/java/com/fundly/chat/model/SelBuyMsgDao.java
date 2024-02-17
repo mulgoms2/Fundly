@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface SelBuyMsgDao {
-    SelbuyMsgEntity selectChatRoom(ChatRequest chatRequest) throws Exception;
+    SelBuyMsgDto selectChatRoom(ChatRequest chatRequest) throws Exception;
 
     int makeChatRoom(ChatRequest chatRequest) throws Exception;
 

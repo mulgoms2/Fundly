@@ -45,12 +45,9 @@ public class SelBuyMsgDaoTest {
     public void selectChatRoomTest() {
 //        given
 //        when
-        SelbuyMsgEntity selbuyMsgEntity = selBuyMsgDao.selectChatRoom(chatRequest);
+        SelBuyMsgDto selBuyMsgDto = selBuyMsgDao.selectChatRoom(chatRequest);
 //        then
 
-        assertNotNull(selbuyMsgEntity);
-
-        SelBuyMsgDto selBuyMsgDto = selbuyMsgEntity.toSelBuyMsgDto();
 
         assertEquals(selBuyMsgDto.getBuy_id(), "123");
         assertEquals(selBuyMsgDto.getPj_id(), "asdf");
