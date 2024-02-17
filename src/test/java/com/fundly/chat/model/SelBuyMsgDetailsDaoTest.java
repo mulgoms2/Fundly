@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +53,7 @@ class SelBuyMsgDetailsDaoTest {
         }
         assertEquals(100, selBuyMsgDetailsDao.count());
 
-        ArrayList<SelBuyMsgDetailsDto> selBuyMsgDetailsDtos = selBuyMsgDetailsDao.loadAllMessages(1);
+        List<SelBuyMsgDetailsDto> selBuyMsgDetailsDtos = selBuyMsgDetailsDao.loadAllMessages(1);
 
         assertEquals(100, selBuyMsgDetailsDtos.size());
 

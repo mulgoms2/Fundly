@@ -99,7 +99,7 @@ class ChatRepositoryImplTest {
         }
 
 //        then
-        ArrayList<SelBuyMsgDetailsDto> result = chatRepository.loadAllMessages(selBuyMsgDto);
+        List<SelBuyMsgDetailsDto> result = chatRepository.loadAllMessages(selBuyMsgDto);
 
         assertEquals(100, result.size());
     }

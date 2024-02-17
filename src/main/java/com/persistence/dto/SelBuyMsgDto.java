@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SelBuyMsgDto {
-    private Integer room_num;
+    private Long room_num;
     private List<SelBuyMsgDetailsDto> message_list;
     private String buy_id;
     private String pj_id;

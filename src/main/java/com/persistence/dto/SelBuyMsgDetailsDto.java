@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SelBuyMsgDetailsDto {
-    private Integer room_num;
+    private Long room_num;
     private String msg_id;
     private String buy_id;
     private String pj_id;

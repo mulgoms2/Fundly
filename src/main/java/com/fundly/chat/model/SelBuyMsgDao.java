@@ -11,11 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SelBuyMsgDao {
     SelBuyMsgDto selectChatRoom(ChatRequest chatRequest) throws Exception;
-
     int makeChatRoom(ChatRequest chatRequest) throws Exception;
-
     int deleteAllChatRoom();
-
     int count();
-
 }

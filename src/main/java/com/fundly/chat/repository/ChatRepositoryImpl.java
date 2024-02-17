@@ -1,6 +1,5 @@
 package com.fundly.chat.repository;
 
-import com.fundly.chat.entity.SelbuyMsgEntity;
 import com.fundly.chat.model.SelBuyMsgDao;
 import com.fundly.chat.model.SelBuyMsgDetailsDao;
 import com.persistence.dto.ChatRequest;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Repository
@@ -45,7 +45,7 @@ public class ChatRepositoryImpl implements ChatRepository {
     }
 
     @Override
-    public ArrayList<SelBuyMsgDetailsDto> loadAllMessages(SelBuyMsgDto selBuyMsgDto) {
+    public List<SelBuyMsgDetailsDto> loadAllMessages(SelBuyMsgDto selBuyMsgDto) {
         int roomNum = selBuyMsgDto.getRoom_num();
         try {
             return selBuyMsgDetailsDao.loadAllMessages(roomNum);

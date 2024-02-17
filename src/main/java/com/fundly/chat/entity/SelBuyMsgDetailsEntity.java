@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class SelBuyMsgDetailsEntity {
     private Integer seq;
-    private Integer room_num;
+    private Long room_num;
     private String pj_id;
     private String buy_id;
     private String msg_id;
