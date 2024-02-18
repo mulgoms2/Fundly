@@ -95,7 +95,7 @@ public class ProjectController {
 
     @DeleteMapping("/item")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> removeItem(String item_id, HttpSession session){
+    public ResponseEntity<List<ItemDto>> removeItem(Integer item_id, HttpSession session){
 //        System.out.println("itemDto = " + itemDto);
 //        System.out.println("itemDto.getItem_id() = " + itemDto.getItem_id());
 
@@ -104,7 +104,7 @@ public class ProjectController {
         String id = "asdf";
         String pj_id = "pj1";
         try {
-            int rowCnt = itemService.remove(item_id, id);
+            int rowCnt = itemService.remove(item_id);
             System.out.println("rowCnt = " + rowCnt);
             if(rowCnt!=1) throw new Exception("item delete ERR");
             List<ItemDto> list = itemService.getItemList(pj_id);
@@ -138,7 +138,7 @@ public class ProjectController {
                 String[] itemIdArr = item_id.split(",");
                 System.out.println("itemIdArr = " + Arrays.toString(itemIdArr));
                 for (int i = 0; i < itemIdArr.length; i++) {
-                    list.add(itemService.getItem(itemIdArr[i]));
+                    list.add(itemService.getItem(Integer.valueOf(itemIdArr[i])));
                 }
             }
             return new ResponseEntity<>(list, HttpStatus.OK);
@@ -148,12 +148,5 @@ public class ProjectController {
         }
     }
 
-//    @PostMapping("/gift")
-//    @ResponseBody
-//    public ResponseEntity<List<GiftDto>> RegisterGift(GiftRequest giftRequest){
-//        log.error("giftRequest={}",giftRequest);
-//        giftService.registerGift(giftRequest);
-//
-//    }
 
 }
