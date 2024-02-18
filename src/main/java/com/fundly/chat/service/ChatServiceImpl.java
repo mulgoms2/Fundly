@@ -41,8 +41,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
         try {
-            String svr_intime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
-            message.setSvr_intime_string(svr_intime);
+            message.setSvr_intime_string(getHoursAndMinutes());
 
             chatRepository.saveMessage(message);
         } catch (Exception e) {
@@ -52,49 +51,16 @@ public class ChatServiceImpl implements ChatService {
         return true;
     }
 
-
-//    private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-//        LocalDateTime date = selBuyMsgDetailsDto.getSvr_intime();
-//
-//        String hourAndMinute = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//
-//        selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
-//
-//        return selBuyMsgDetailsDto;
-//    }
-//
-//    private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-////        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
-//        if (!isFileAttached(selBuyMsgDetailsDto)) {
-//            return selBuyMsgDetailsDto;
-//        }
-//
-//        try {
-////            파일 테이블에서 첨부파일 url을 가져와 dto에 세팅한다.
-//            String msgKey = selBuyMsgDetailsDto.getMsg_id();
-////            String savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS, msgKey);
-////            selBuyMsgDetailsDto.setFile_url(savedFileUri);
-//            return selBuyMsgDetailsDto;
-//        } catch (Exception e) {
-//            log.error("error with getSavedFileUri");
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-    public boolean isFileAttached(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-        return selBuyMsgDetailsDto.getFile_cnt() != 0;
-    }
-
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void saveFileMessage(FileDto savedFile, SelBuyMsgDetailsDto message) {
         String fileSavedUrl = savedFile.getFile_saved_url();
 //            파일 저장과 동시에 채팅창에 보여지기 위해 이미지 url을 넣어준다.
 //            메시지에 파일 경로를 저장
         message.setFile_url(fileSavedUrl);
+        message.setSvr_intime_string(getHoursAndMinutes());
         savedFile.setTable_name(SEL_BUY_MSG_DETAILS);
 //            파일 Dto에 해당 메시지의 식별자를 적어서 저장한다.
-
 //            파일 정보를 db에 저장한다.
         try {
             chatRepository.saveMessage(message);
@@ -106,6 +72,11 @@ public class ChatServiceImpl implements ChatService {
             log.error("error ChatServiceImpl.saveImageFile()");
             throw new RuntimeException(e);
         }
+    }
+
+    private String getHoursAndMinutes() {
+        String hoursAndMinutes = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        return hoursAndMinutes;
     }
 
     @ExceptionHandler(Exception.class)
