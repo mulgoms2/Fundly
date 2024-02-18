@@ -1,10 +1,8 @@
-package com.fundly.chat.model;
+package com.fundly.chat.dao;
 
-import com.persistence.dto.SelBuyMsgDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper

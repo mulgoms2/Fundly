@@ -1,9 +1,5 @@
 package config;
 
-import com.fundly.chat.repository.ChatRepository;
-import com.fundly.chat.repository.ChatRepositoryImpl;
-import com.fundly.chat.service.ChatService;
-import com.fundly.chat.service.ChatServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -28,9 +24,10 @@ import java.util.Properties;
 
 @Slf4j
 @Configuration
-@MapperScan(basePackages = {"com.fundly.**.model", "com.persistence.dto.domain"})
+@MapperScan(basePackages = {"com.fundly.**.model", "com.**.dao"})
 @PropertySource(value = {"/WEB-INF/config/db.properties", "/WEB-INF/config/mailPro.properties"})
 @ComponentScan(basePackages = "com.fundly", excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class ))
+@EnableTransactionManagement
 public class RootContext {
     @Autowired
     ApplicationContext applicationContext;

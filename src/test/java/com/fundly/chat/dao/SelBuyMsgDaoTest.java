@@ -1,6 +1,5 @@
-package com.fundly.chat.model;
+package com.fundly.chat.dao;
 
-import com.fundly.chat.entity.SelbuyMsgEntity;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.SelBuyMsgDto;
 import config.RootContext;

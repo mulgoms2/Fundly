@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.persistence.dto.domain.FileDao">
+<mapper namespace="com.persistence.dao.FileDao">
     <insert id="saveFile" parameterType="FileDto">
         insert into FILE (table_name, file_origin_url, file_saved_url, table_key)
         values (#{table_name}, #{file_origin_url}, #{file_saved_url}, #{table_key})

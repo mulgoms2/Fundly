@@ -1,7 +1,7 @@
 package com.fundly.chat.repository;
 
-import com.fundly.chat.model.SelBuyMsgDao;
-import com.fundly.chat.model.SelBuyMsgDetailsDao;
+import com.fundly.chat.dao.SelBuyMsgDao;
+import com.fundly.chat.dao.SelBuyMsgDetailsDao;
 import com.fundly.chat.service.ChatService;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.SelBuyMsgDetailsDto;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

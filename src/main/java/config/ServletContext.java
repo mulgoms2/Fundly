@@ -22,8 +22,6 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com", "com.fundly"}, includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class))
 @PropertySource(value = "/WEB-INF/config/pay.properties")
-//@MapperScan(basePackages = {"com.fundly.**.model", "com.persistence.dto.domain"})
-//@EnableTransactionManagement
 //@PropertySource(value = {"/WEB-INF/config/pay.properties", "/WEB-INF/config/payTest.properties"})
 public class ServletContext implements WebMvcConfigurer {
 

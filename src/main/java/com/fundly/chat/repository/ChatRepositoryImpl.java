@@ -1,12 +1,12 @@
 package com.fundly.chat.repository;
 
-import com.fundly.chat.model.SelBuyMsgDao;
-import com.fundly.chat.model.SelBuyMsgDetailsDao;
+import com.fundly.chat.dao.SelBuyMsgDao;
+import com.fundly.chat.dao.SelBuyMsgDetailsDao;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.SelBuyMsgDto;
-import com.persistence.dto.domain.FileDao;
+import com.persistence.dao.FileDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

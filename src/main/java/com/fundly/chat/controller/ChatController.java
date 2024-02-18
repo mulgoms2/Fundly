@@ -34,14 +34,11 @@ public class ChatController {
     SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     ChatService chatService;
-    @Autowired
-    ApplicationContext applicationContext;
 
     @GetMapping("/chat")
 //    테스트용
     public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result) {
 
-        System.out.println("\n\n\n" + Arrays.toString(applicationContext.getBeanDefinitionNames())+ "\n\n\n");
         if (result.hasErrors()) {
             return "chat/error";
         }

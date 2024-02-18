@@ -1,11 +1,9 @@
 package com.fundly.chat.service;
 
-import com.fundly.chat.model.SelBuyMsgDao;
-import com.fundly.chat.model.SelBuyMsgDetailsDao;
+import com.fundly.chat.dao.SelBuyMsgDao;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 

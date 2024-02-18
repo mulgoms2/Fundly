@@ -1,4 +1,4 @@
-package com.persistence.dto.domain;
+package com.persistence.dao;
 
 import com.persistence.dto.FileDto;
 import org.apache.ibatis.annotations.Mapper;
