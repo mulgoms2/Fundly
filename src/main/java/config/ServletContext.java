@@ -1,6 +1,7 @@
 package config;
 
 import com.fundly.chat.validate.ChatInterceptor;
+import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -10,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -20,7 +22,10 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com", "com.fundly"}, includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class))
+@ComponentScan(basePackages = {"com", "com.fundly"},
+        includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class),
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Service.class, Repository.class, Mapper.class})
+)
 @PropertySource(value = "/WEB-INF/config/pay.properties")
 //@PropertySource(value = {"/WEB-INF/config/pay.properties", "/WEB-INF/config/payTest.properties"})
 public class ServletContext implements WebMvcConfigurer {

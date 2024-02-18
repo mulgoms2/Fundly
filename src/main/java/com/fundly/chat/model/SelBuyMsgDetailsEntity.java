@@ -1,4 +1,4 @@
-package com.fundly.chat.entity;
+package com.fundly.chat.model;
 
 import com.persistence.dto.SelBuyMsgDetailsDto;
 
