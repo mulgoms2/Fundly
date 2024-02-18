@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor //기본생성자 꼭 필요(맵핑)
+@Builder
 public class ItemDto {
     private Integer item_id;
     private String pj_id;

@@ -32,6 +32,7 @@ public class GiftServiceImpl implements GiftService {
         for(int i=0; i<itemList.size(); i++){
             giftItemDetailMapper.insert(itemList.get(i));
         }
+//        throw new Exception("for Tx test");
         return giftMapper.insert(giftDto);
     }// 선물 등록하기 (선물 테이블에 insert + 선물 아이템 상세 테이블에도 insert)
 
@@ -59,8 +60,8 @@ public class GiftServiceImpl implements GiftService {
         // -> Tx로 묶인다.
 
         //선물의 수정이 발생하면, 해당 선물의 등록된 아이템 리스트를 전부 살펴보아야 한다.
-            // 새로 추가된 아이템이 있는지(insert), 기존 아이템의 수량 변경이 발생했는지(update)
-            // 기존 아이템이 삭제되었는지(delete), 또는 아이템 리스트에는 변화 없이 선물 테이블에만 변경이 있을 수도 있음.
+        // 새로 추가된 아이템이 있는지(insert), 기존 아이템의 수량 변경이 발생했는지(update)
+        // 기존 아이템이 삭제되었는지(delete), 또는 아이템 리스트에는 변화 없이 선물 테이블에만 변경이 있을 수도 있음.
         List<GiftItemDetailDto> beforeList = giftItemDetailMapper.selectItemDetail(giftDto.getGift_id());
 
         //선물의 수정이 새로운 아이템을 포함(insert)하거나 기존 아이템의 수량을 변경(update)하는 경우
@@ -81,6 +82,7 @@ public class GiftServiceImpl implements GiftService {
             }
         }
         //gift테이블의 정보 수정 (이것도 변경사항이 무엇인지 체크를 해야하는걸까.. 아니면 그냥 업데이트 해도 되나)
+//        throw new Exception("Tx test");
         return giftMapper.updateContentBefore(giftDto);
     }
 
@@ -98,6 +100,7 @@ public class GiftServiceImpl implements GiftService {
     @Transactional
     public int removeGift(Integer gift_id) throws Exception {
         giftItemDetailMapper.deleteAllByGift(gift_id);
+//        throw new RuntimeException("Tx테스트"); //테스트용
         return giftMapper.delete(gift_id);
     }
 

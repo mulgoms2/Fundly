@@ -35,9 +35,9 @@
     <!--5. 아이템 하나 등록 -->
     <insert id="insert" parameterType="ItemDto">
         INSERT INTO pj_item_tmp
-        (pj_id, item_name, item_option_type, item_option, dba_reg_id)
+            (pj_id, item_name, item_option_type, item_option, dba_reg_id)
         VALUES
-        (#{pj_id}, #{item_name}, #{item_option_type}, #{item_option}, #{dba_reg_id})
+            (#{pj_id}, #{item_name}, #{item_option_type}, #{item_option}, #{dba_reg_id})
     </insert>
 
     <!-- 6. 특정 아이템 업데이트-->

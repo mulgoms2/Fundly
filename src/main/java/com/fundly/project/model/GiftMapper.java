@@ -33,4 +33,7 @@ public interface GiftMapper {
     // 해당 선물 삭제
 
 
+
+
+
 }

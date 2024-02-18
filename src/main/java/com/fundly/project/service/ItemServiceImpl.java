@@ -1,7 +1,6 @@
 package com.fundly.project.service;
 
 import com.fundly.project.model.GiftItemDetailMapper;
-import com.fundly.project.model.GiftMapper;
 import com.fundly.project.model.ItemMapper;
 import com.persistence.dto.ItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +13,13 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService{
     ItemMapper itemMapper;
     GiftItemDetailMapper giftItemDetailMapper;
-    GiftMapper giftMapper;
+    GiftService giftService;
 
     @Autowired
-    ItemServiceImpl(ItemMapper itemMapper, GiftItemDetailMapper giftItemDetailMapper, GiftMapper giftMapper){
+    ItemServiceImpl(ItemMapper itemMapper, GiftItemDetailMapper giftItemDetailMapper,  GiftService giftService){
         this.itemMapper = itemMapper;
         this.giftItemDetailMapper = giftItemDetailMapper;
-        this.giftMapper = giftMapper;
+        this.giftService = giftService;
     }
 
     @Override
@@ -69,9 +68,11 @@ public class ItemServiceImpl implements ItemService{
         List<Integer> giftList = giftItemDetailMapper.selectGift(item_id);
         if(giftList!=null){ //giftList가 비어있지 않으면(즉, 아이템을 포함하는 선물들이 조회되면)
             for(int gift_id : giftList){
-                giftMapper.delete(gift_id); //모든 선물들을 삭제
+                //giftMapper.delete(gift_id); //모든 선물들을 삭제
+                giftService.removeGift(gift_id); //사실 이 메서드도 Tx걸려있음..
             }
         }
+//        throw new RuntimeException("Tx테스트");
         return itemMapper.delete(item_id); //아이템도 아이템 테이블에서 삭제
     }
 }
