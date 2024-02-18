@@ -148,7 +148,7 @@ public class PayController {
             m.addAttribute("msg", "LIST_ERROR");
         }
 
-        return "pay/userPayMeansPage";
+        return "pay/settingPayMeans";
     }
 
     @GetMapping("/register")
