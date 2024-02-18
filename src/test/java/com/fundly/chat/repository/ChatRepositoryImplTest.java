@@ -50,6 +50,7 @@ class ChatRepositoryImplTest {
 
         request = ChatRequest.builder().pj_id("123").buy_id("asdf").build();
     }
+
     @Test
     @SneakyThrows
     @DisplayName("채팅방 저장후 가져오기 검사")
@@ -115,5 +116,25 @@ class ChatRepositoryImplTest {
         int i = chatRepository.saveMessage(message);
 
         assertEquals(1, i);
+    }
+
+    @Test
+    @DisplayName("메시지 로딩시 시간 매핑하기")
+    void time() throws Exception {
+//        사진만 첨부한 메시지도 정상적으로 시간이 불러와지는지 확인한다.
+        //when
+        SelBuyMsgDto selBuyMsgDto = chatRepository.makeChatRoom(request);
+//        메시지 리스트를 만들어서 넣는다.
+
+        for (int i = 0; i < 100; i++) {
+            SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder().room_num(selBuyMsgDto.getRoom_num()).msg_cont("helo" + i).build();
+            chatService.saveMessage(message);
+        }
+
+        List<SelBuyMsgDetailsDto> selBuyMsgDetailsDtos = chatRepository.loadAllMessages(selBuyMsgDto);
+
+        boolean b = selBuyMsgDetailsDtos.stream().peek(e-> System.out.println(e+"\n\n")).anyMatch(message -> !message.getSvr_intime_string().isEmpty());
+
+        assertEquals(true, b);
     }
 }
