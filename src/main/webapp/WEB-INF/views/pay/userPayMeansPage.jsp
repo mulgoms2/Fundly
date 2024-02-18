@@ -16,7 +16,7 @@
 <script>
     let msg = "${msg}";
     if (msg === "REG_SUCCESS") alert("결제수단 등록에 성공했습니다.");
-    if (msg === "REG_ERROR") alert("결제수단 등록에 실패했습니다. 다시 시도해 주세요.");
+    // if (msg === "REG_ERROR") alert("결제수단 등록에 실패했습니다. 다시 시도해 주세요.");
     if (msg === "LIST_ERROR")  alert("결제수단 조회에 실패했습니다. 다시 시도해 주세요.");
     if (msg === "DEL_ERROR")  alert("결제수단 삭제에 실패했습니다. 다시 시도해 주세요.");
     if (msg === "UPDATE_ERROR")  alert("기본 결제수단 지정에 실패했습니다. 다시 시도해 주세요.");
@@ -49,6 +49,15 @@
         margin-left: 50px;
     }
 
+    .imgBox {
+        display: block;
+        border-radius: 4px;
+        overflow: hidden;
+        /*width: 85px;*/
+        width: 120px;
+        height: 54px;
+    }
+
 </style>
 <body>
 <div style="display: inline-flex">
@@ -58,6 +67,7 @@
 
 <table>
     <tr>
+        <th class="img_url">이미지</th>
         <th class="user_id">회원 ID</th>
         <th class="pay_id">결제수단 ID</th>
         <th class="own_type">유형</th>
@@ -70,16 +80,22 @@
     </tr>
     <c:forEach var="payMeansDto" items="${list}">
         <tr>
+            <td class="img_url">
+                <img class="imgBox" src="<c:url value='${payMeansDto.file_path}${payMeansDto.file_name}${payMeansDto.file_extension}'/>" alt="결제수단 이미지">
+            </td>
             <td class="user_id">${payMeansDto.user_id}</td>
             <td class="pay_means_id">${payMeansDto.pay_means_id}</td>
-            <td class="own_type">${payMeansDto.own_type}</td>
-            <td class="card_no">${payMeansDto.card_no}</td>
+            <td class="own_type">
+                <c:if test="${payMeansDto.own_type eq 'personal'}">개인</c:if>
+                <c:if test="${payMeansDto.own_type eq 'corporate'}">법인</c:if>
+            </td>
+            <td class="card_no">************${payMeansDto.card_no}</td>
             <td class="card_co_type">${payMeansDto.card_co_type}</td>
             <td class="default_pay_means_yn">${payMeansDto.default_pay_means_yn}</td>
             <td class=""><button type="button" class="btn removeBtn">삭제</button></td>
             <td class=""><button type="button" class="btn defaultSetBtn">기본 결제수단 지정</button></td>
             <c:if test="${payMeansDto.default_pay_means_yn == 'Y'}">
-                <td class="default_tag">기본</td>
+                <td><span class="default_tag">기본</span></td>
             </c:if>
         </tr>
     </c:forEach>

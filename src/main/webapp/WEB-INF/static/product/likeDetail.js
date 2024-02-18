@@ -1,3 +1,6 @@
+
+
+
 window.onload = function() {currLike();}
 
 // 현재 좋아요 상태 정보 가져오기
@@ -6,8 +9,13 @@ const currLike = () => {
     // 1. 서버로 좋아요 정보 전송
     const obj = {
         pj_id : "P5040",
-        user_id : "user"
+        user_id : "user",
+        like_dtm : new Date()
     };
+
+    console.log(JSON.stringify(obj));
+
+    console.log(JSON.parse(JSON.stringify(obj)));
 
     // 2. 서버 응답 받기
     fetch("/like/status", {
@@ -24,8 +32,9 @@ const clickLikeBtn = () => {
 
     // 1. 서버로 좋아요 정보 전송
     const obj = {
-      pj_id : "P5040",
-      user_id : "user"
+        pj_id : "P5040",
+        user_id : "user",
+        like_dtm : new Date()
     };
 
     // 2. 서버 응답 받기
@@ -96,6 +105,17 @@ function countLike(type) {
     }
     like_cnt.innerText = curr_cnt;
 }
+
+const now = new Date;
+const year = now.getFullYear();
+const month = ('0' + (now.getMonth() + 1)).slice(-2);
+const day = ('0' + now.getDate()).slice(-2);
+const hours = ('0' + now.getHours()).slice(-2);
+const minutes = ('0' + now.getMinutes()).slice(-2);
+const seconds = ('0' + now.getSeconds()).slice(-2);
+const datetimeString = year + '-' + month  + '-' + day + ' ' + hours + ':' + minutes  + ':' + seconds;
+
+console.log(datetimeString);
 
 // 좋아요 상태 고정시키기
 // const observer = new MutationObserver(function (mutations) {
