@@ -1,4 +1,4 @@
-package com.fundly.chat.utils;
+package com.fundly.chat.validate;
 
 import org.apache.tika.Tika;
 import org.springframework.web.multipart.MultipartFile;

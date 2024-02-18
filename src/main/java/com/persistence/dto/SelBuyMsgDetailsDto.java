@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,7 +20,8 @@ public class SelBuyMsgDetailsDto {
     private String pj_id;
     private Integer seq;
     private String send_user_id;
-    private Date svr_intime;
+    private LocalDateTime svr_intime;
+//    private Date svr_intime;
     private String svr_intime_string;
     private String msg_read_yn;
     private String msg_cont;

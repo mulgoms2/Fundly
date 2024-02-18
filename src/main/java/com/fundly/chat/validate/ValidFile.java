@@ -1,4 +1,4 @@
-package com.fundly.chat.utils;
+package com.fundly.chat.validate;
 
 
 import javax.validation.Constraint;

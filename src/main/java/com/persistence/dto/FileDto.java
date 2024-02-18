@@ -1,10 +1,8 @@
 package com.persistence.dto;
 
-import com.fundly.chat.utils.ValidFile;
-import lombok.AllArgsConstructor;
+import com.fundly.chat.validate.ValidFile;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data

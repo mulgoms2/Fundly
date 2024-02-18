@@ -34,7 +34,7 @@ class SelBuyMsgDetailsDaoTest {
     @Test
     @DisplayName("메시지 삽입")
     void insertMsg() {
-        SelBuyMsgDetailsDto selBuyMsgDetailsDto = SelBuyMsgDetailsDto.builder().room_num(1).msg_cont("hello how are you").buy_id("asdf").pj_id("123").send_user_id("asdf").build();
+        SelBuyMsgDetailsDto selBuyMsgDetailsDto = SelBuyMsgDetailsDto.builder().room_num(1L).msg_cont("hello how are you").buy_id("asdf").pj_id("123").send_user_id("asdf").build();
 
         for (int i = 0; i < 100; i++) {
             selBuyMsgDetailsDao.insertMsg(selBuyMsgDetailsDto);
@@ -46,14 +46,14 @@ class SelBuyMsgDetailsDaoTest {
     @Test
     @DisplayName("메시지 가져오기")
     void loadAllMessages() {
-        SelBuyMsgDetailsDto selBuyMsgDetailsDto = SelBuyMsgDetailsDto.builder().room_num(1).msg_cont("hello how are you").buy_id("asdf").pj_id("123").send_user_id("asdf").build();
+        SelBuyMsgDetailsDto selBuyMsgDetailsDto = SelBuyMsgDetailsDto.builder().room_num(1L).msg_cont("hello how are you").buy_id("asdf").pj_id("123").send_user_id("asdf").build();
 
         for (int i = 0; i < 100; i++) {
             selBuyMsgDetailsDao.insertMsg(selBuyMsgDetailsDto);
         }
         assertEquals(100, selBuyMsgDetailsDao.count());
 
-        List<SelBuyMsgDetailsDto> selBuyMsgDetailsDtos = selBuyMsgDetailsDao.loadAllMessages(1);
+        List<SelBuyMsgDetailsDto> selBuyMsgDetailsDtos = selBuyMsgDetailsDao.loadAllMessages(1L);
 
         assertEquals(100, selBuyMsgDetailsDtos.size());
 

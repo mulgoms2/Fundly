@@ -1,4 +1,4 @@
-package com.fundly.chat.utils;
+package com.fundly.chat.validate;
 
 
 import lombok.extern.slf4j.Slf4j;

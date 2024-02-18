@@ -7,18 +7,14 @@ import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-import static java.util.stream.Collectors.toCollection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Slf4j
@@ -45,10 +41,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
         try {
-            chatRepository.saveMessage(message);
-
-            String svr_intime = new SimpleDateFormat("HH:mm").format(new Date());
+            String svr_intime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
             message.setSvr_intime_string(svr_intime);
+
+            chatRepository.saveMessage(message);
         } catch (Exception e) {
             log.error("error with save Message");
             throw new RuntimeException("error with saveMessage(SelBuyMsgDetailsDto message)", e);
@@ -56,72 +52,58 @@ public class ChatServiceImpl implements ChatService {
         return true;
     }
 
-    @Override
-    public ArrayList<SelBuyMsgDetailsDto> loadMessages(SelBuyMsgDto selBuyMsgDto) {
-        try {
-//            메시지 전체 조회 후 첨부파일 경로를 매핑해서 전달.
-            return chatRepository.loadAllMessages(selBuyMsgDto).stream()
-                    .map(this::timeFormatting)
-//                    .map(this::mappingImgUrl)
-                    .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
-        } catch (Exception e) {
-//            에러메시지를 전달한다.
-            throw new RuntimeException("error with message loading", e);
-        }
-    }
 
-    private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-        Date date = selBuyMsgDetailsDto.getSvr_intime();
-        String hourAndMinute = new SimpleDateFormat("HH:mm").format(date);
-
-        selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
-
-        return selBuyMsgDetailsDto;
-    }
-
-    private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-//        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
-        if (!isFileAttached(selBuyMsgDetailsDto)) {
-            return selBuyMsgDetailsDto;
-        }
-
-        try {
-//            파일 테이블에서 첨부파일 url을 가져와 dto에 세팅한다.
-            String msgKey = selBuyMsgDetailsDto.getMsg_id();
-//            String savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS, msgKey);
-//            selBuyMsgDetailsDto.setFile_url(savedFileUri);
-            return selBuyMsgDetailsDto;
-        } catch (Exception e) {
-            log.error("error with getSavedFileUri");
-            throw new RuntimeException(e);
-        }
-    }
+//    private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
+//        LocalDateTime date = selBuyMsgDetailsDto.getSvr_intime();
+//
+//        String hourAndMinute = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//
+//        selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
+//
+//        return selBuyMsgDetailsDto;
+//    }
+//
+//    private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
+////        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
+//        if (!isFileAttached(selBuyMsgDetailsDto)) {
+//            return selBuyMsgDetailsDto;
+//        }
+//
+//        try {
+////            파일 테이블에서 첨부파일 url을 가져와 dto에 세팅한다.
+//            String msgKey = selBuyMsgDetailsDto.getMsg_id();
+////            String savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS, msgKey);
+////            selBuyMsgDetailsDto.setFile_url(savedFileUri);
+//            return selBuyMsgDetailsDto;
+//        } catch (Exception e) {
+//            log.error("error with getSavedFileUri");
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public boolean isFileAttached(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
         return selBuyMsgDetailsDto.getFile_cnt() != 0;
     }
 
     @Override
-    public void saveImageFile(FileDto savedFile, SelBuyMsgDetailsDto message) {
+    @Transactional(rollbackFor = Exception.class)
+    public void saveFileMessage(FileDto savedFile, SelBuyMsgDetailsDto message) {
         String fileSavedUrl = savedFile.getFile_saved_url();
-//            메시지에 파일 경로를 저장
-        saveMessage(message);
 //            파일 저장과 동시에 채팅창에 보여지기 위해 이미지 url을 넣어준다.
+//            메시지에 파일 경로를 저장
         message.setFile_url(fileSavedUrl);
         savedFile.setTable_name(SEL_BUY_MSG_DETAILS);
 //            파일 Dto에 해당 메시지의 식별자를 적어서 저장한다.
-        savedFile.setTable_key(message.getMsg_id());
 
 //            파일 정보를 db에 저장한다.
-//        fileRepository.saveFile(savedFile);
-    }
-
-    @Override
-    public Resource loadImgFile(String fileName) throws Exception {
         try {
-            return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
-        } catch (MalformedURLException e) {
-            log.error("fail ChatServiceImpl.loadImgFile() : {}", e.getCause());
+            chatRepository.saveMessage(message);
+//            메시지가 db에 저장 될 때 마이바티스가 seq를 생성한다.
+//            savedFile.setTable_key(String.valueOf(message.getSeq()));
+            savedFile.setTable_key(String.valueOf(message.getMsg_id()));
+            chatRepository.saveImageFile(savedFile);
+        } catch (Exception e) {
+            log.error("error ChatServiceImpl.saveImageFile()");
             throw new RuntimeException(e);
         }
     }

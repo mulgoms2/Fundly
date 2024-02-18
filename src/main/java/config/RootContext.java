@@ -1,5 +1,9 @@
 package config;
 
+import com.fundly.chat.repository.ChatRepository;
+import com.fundly.chat.repository.ChatRepositoryImpl;
+import com.fundly.chat.service.ChatService;
+import com.fundly.chat.service.ChatServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -7,30 +11,34 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Slf4j
 @Configuration
-@PropertySource(value = {"/WEB-INF/config/db.properties","/WEB-INF/config/mailPro.properties"})
-@EnableTransactionManagement
 @MapperScan(basePackages = {"com.fundly.**.model", "com.persistence.dto.domain"})
+@PropertySource(value = {"/WEB-INF/config/db.properties", "/WEB-INF/config/mailPro.properties"})
+@ComponentScan(basePackages = "com.fundly", excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class ))
 public class RootContext {
     @Autowired
     ApplicationContext applicationContext;
 
     @Autowired
     Environment env; //스프링 내장객체. 외부파일을 읽어주는 기능(properties)
+
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -41,6 +49,7 @@ public class RootContext {
 
         return dataSource;
     }
+
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
@@ -55,10 +64,12 @@ public class RootContext {
 
         return sqlSessionFactoryBean.getObject();
     }
+
     @Bean
     public SqlSessionTemplate sqlSession() throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory());
     }
+
     @Bean
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
@@ -94,6 +105,10 @@ public class RootContext {
 //        javaMailSender.setJavaMailProperties(properties);
 
         return javaMailSender;
+    }
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder().baseUrl(env.getProperty("PORTONE_BASE_URL")).defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE).defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).build();
     }
 
 

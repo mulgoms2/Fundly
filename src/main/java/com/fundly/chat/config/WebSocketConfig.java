@@ -1,6 +1,6 @@
 package com.fundly.chat.config;
 
-import com.fundly.chat.utils.HttpHandShakeInterceptor;
+import com.fundly.chat.validate.HttpHandShakeInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;

@@ -7,7 +7,9 @@ import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.SelBuyMsgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
@@ -31,10 +34,14 @@ public class ChatController {
     SimpMessagingTemplate simpMessagingTemplate;
     @Autowired
     ChatService chatService;
+    @Autowired
+    ApplicationContext applicationContext;
 
     @GetMapping("/chat")
 //    테스트용
     public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result) {
+
+        System.out.println("\n\n\n" + Arrays.toString(applicationContext.getBeanDefinitionNames())+ "\n\n\n");
         if (result.hasErrors()) {
             return "chat/error";
         }
@@ -78,7 +85,7 @@ public class ChatController {
 //            이미지 파일을 서버에 저장한다.
             saveFileToDrive(file);
 //            파일 url을 저장한다.
-            chatService.saveImageFile(file, message);
+            chatService.saveFileMessage(file, message);
         } catch (Exception e) {
             log.error("error with uploadFile = {}", file);
             throw new RuntimeException("error with uploadFile(FileDto file, SelBuyMsgDatailsDto message)", e);
@@ -92,7 +99,7 @@ public class ChatController {
 //    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
     public Resource getImageResource(@PathVariable("fileName") String fileName) {
         try {
-            return chatService.loadImgFile(fileName);
+            return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
         } catch (Exception e) {
             log.error("error with getImageResouce = {}", fileName);
             throw new RuntimeException("유효하지 않은 파일명 입니다.", e);

@@ -1,6 +1,7 @@
 package com.fundly.chat.repository;
 
 import com.persistence.dto.ChatRequest;
+import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.SelBuyMsgDto;
 
@@ -12,9 +13,9 @@ public interface ChatRepository {
 
     SelBuyMsgDto makeChatRoom(ChatRequest chatRequest) throws Exception;
 
-    List<SelBuyMsgDetailsDto> loadAllMessages(SelBuyMsgDto selBuyMsgDto);
+    List<SelBuyMsgDetailsDto> loadAllMessages(SelBuyMsgDto selBuyMsgDto) throws Exception;
 
-    int saveMessage(SelBuyMsgDetailsDto selBuyMsgDetailsDto);
+    int saveMessage(SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
 
-//    void saveImgMessage();
+    void saveImageFile(FileDto fileDto) throws Exception;
 }
