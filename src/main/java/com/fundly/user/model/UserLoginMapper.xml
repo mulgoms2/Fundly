@@ -3,20 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fundly.user.model.UserLoginDao">
-
-    <!-- sql test -->
-    <select id="count" resultType="int">
-        SELECT COUNT(*) FROM user_info
+    <!-- userInfo -->
+    <select id="selectUser" parameterType="UserDto" resultType="UserDto">
+        SELECT  user_name,
+                user_pwd,
+                user_email,
+                user_status
+        FROM USER_INFO
+        WHERE user_email = #{user_email};
+<!--          AND user_pwd = #{user_pwd};-->
     </select>
-
-<!--    &lt;!&ndash; userInfo 체크 &ndash;&gt;-->
-<!--    <select id="userCheck" resultType="int" parameterType="String">-->
-<!--        SELECT COUNT(*) FROM user_info WHERE user_email = #{user_email} AND user_pwd = #{user_pwd}-->
-<!--    </select>-->
-
-    <!-- userInfo   -->
-    <select id="selectUser" parameterType="String">
-        SELECT  user_name, user_pwd, user_email, user_status FROM USER_INFO WHERE user_email = #{user_email} AND user_pwd = #{user_pwd};
-    </select>
-
 </mapper>

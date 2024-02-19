@@ -3,26 +3,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fundly.user.model.UserJoinDao">
-
-    <!-- sql test -->
-    <select id="count" resultType="int">
-        SELECT COUNT(*) FROM user_info
-    </select>
-
-    <!-- email 중복 -->
+    <!-- email check -->
     <select id="emailCheck" resultType="int">
-        SELECT COUNT(*) FROM user_info where user_email = #{user_email}
+        SELECT COUNT(*)
+        FROM user_info
+        where user_email = #{user_email}
     </select>
-
-    <!-- id 중복 -->
-    <select id="idCheck" resultType="int" parameterType="UserDto">
-        SELECT COUNT(*) FROM user_info WHERE user_id = #{user_id}
-    </select>
-
-    <!-- 회원가입 -->
+    <!-- join insert -->
     <insert id="insert" parameterType="UserDto">
-        INSERT INTO user_info (user_id, user_name, user_pwd, user_email, user_join_date, site_term_agree_yn, p_Info_agree_yn, age_agree_yn, p_info_oth_agree_yn, m_info_rcv_agree_yn, user_status, dba_reg_id)
-        VALUES(#{user_id}, #{user_name}, #{user_pwd}, #{user_email}, #{user_join_date}, #{site_term_agree_yn}, #{p_Info_agree_yn}, #{age_agree_yn}, #{p_info_oth_agree_yn}, #{m_info_rcv_agree_yn}, #{user_status}, #{dba_reg_id});
+        INSERT INTO user_info (user_id,
+                               user_name,
+                               user_pwd,
+                               user_email,
+                               user_join_date,
+                               site_term_agree_yn,
+                               p_Info_agree_yn,
+                               age_agree_yn,
+                               p_info_oth_agree_yn,
+                               m_info_rcv_agree_yn,
+                               user_status,
+                               dba_reg_id)
+                    VALUES(#{user_id},
+                           #{user_name},
+                           #{user_pwd},
+                           #{user_email},
+                           #{user_join_date},
+                           #{site_term_agree_yn},
+                           #{p_Info_agree_yn},
+                           #{age_agree_yn},
+                           #{p_info_oth_agree_yn},
+                           #{m_info_rcv_agree_yn},
+                           #{user_status},
+                           #{dba_reg_id});
     </insert>
-
 </mapper>

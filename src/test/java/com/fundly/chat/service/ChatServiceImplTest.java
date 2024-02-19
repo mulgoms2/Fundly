@@ -36,6 +36,7 @@ class ChatServiceImplTest {
     void setMock() {
         ChatRequest chatRequest = ChatRequest.builder().pj_id("asdf").user_id("dbswo").build();
         ChatRoomDto chatRoomDto = ChatRoomDto.builder().room_num(1).user_id("dbswo").pj_id("asdf").build();
+        System.out.println("chatRequest = " + chatRequest);
 
         Mockito.when(selBuyMsgDao.selectChatRoom(chatRequest)).thenReturn(chatRoomDto);
 //        Mockito.when(selBuyMsgDetailsDao.loadAllMessages(chatRoomDto)).thenReturn(new ArrayList<SelBuyMsgDetailsDto>());

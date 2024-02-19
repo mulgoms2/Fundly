@@ -6,24 +6,23 @@ import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Slf4j
 @Controller
 @RequestMapping("/join")
 public class JoinController {
-
-    @Autowired
     private JoinService joinService;
-
-//    @Autowired
 //    private MailSendService mailSendService;
 
-    JoinController(JoinService joinService){
+    public JoinController(){}
+    @Autowired
+    public JoinController(JoinService joinService){
         this.joinService = joinService;
     }
 
@@ -31,19 +30,16 @@ public class JoinController {
     public String join(){ return "user/join";}
 
     @PostMapping("/add")
-    public String joinsave(UserDto userDto) throws Exception {
-
-        log.error("값보시오~~ \n\n\n" + userDto);
+    public String joinsave( UserDto userDto) throws Exception {
 
         try {
-            if(joinService.userJoin(userDto) != 1){
-                throw new RuntimeException("회원가입 실패");
-            }
+
+            joinService.userJoin(userDto);
+
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             throw new RuntimeException(e);
         }
-
 //        회원가입 후 로그인 화면으로 갈것인가 ? 메인으로 갈것인가 ?
         return "user/login";
     }

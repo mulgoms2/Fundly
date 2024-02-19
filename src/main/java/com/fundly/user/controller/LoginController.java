@@ -19,8 +19,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-
-    @Autowired
     private LoginService loginService;
 
     /*
@@ -29,12 +27,17 @@ public class LoginController {
     *
     * */
 
+    public LoginController(){}
+    @Autowired
+    public LoginController(LoginService loginService){
+        this.loginService = loginService;
+    }
+
     @GetMapping("/login")
     public String login(){ return "user/login";}
 
     @PostMapping("/login")
-    public String login(String user_email, String user_pwd, HttpSession session, RedirectAttributes rattr) throws Exception {
-
+    public String login(UserDto userDto, HttpSession session, RedirectAttributes rattr) throws Exception {
         /*
             1. 기존 로그인 정보가 있는가? 있다면 자동으로 로그인 된 값을 가져 와서 화면에 보여준다.
                 - 추후 소셜로그인 정보와 함께 고민
@@ -42,18 +45,14 @@ public class LoginController {
              2-1 가입된 정보를 확인 후 정보가 있으면 로그인
              2-2 가입된 정보가 없다면 id/pwd 확인 요청
         * */
-
-        UserDto userInfo = loginService.Login(user_email, user_pwd, session);
-
+        try {
+            UserDto userInfo = loginService.Login(userDto, session);
 //        log.error("\n\n\n\n\n\n\n\n email , pwd = " + user_email + " , " + user_pwd );
 //        log.error("userInfo = " + userInfo);
 //        log.error("user_email = " + session.getAttribute("user_email"));
-        try {
-            // 2-1
-            if(userInfo != null){
 
-            } else {
-                // 2-2
+            // 2-2
+            if(userInfo == null){
                 rattr.addFlashAttribute("msg", "Fundly에 등록되지 않은 이메일주소 또는 비밀번호가 일치 하지 않습니다. ");
                 return "redirect:/login/login";
             }
@@ -72,7 +71,6 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public String logout(HttpSession session, HttpServletResponse response) throws Exception {
-//        log.error("\n\n " + "로그아웃하러왔다" +"\n\n");
         session.invalidate();
         Cookie user_profile_img_url_cookie = new Cookie("user_profile_img_url", null);
         user_profile_img_url_cookie.setPath("/");

@@ -4,62 +4,76 @@ import com.fundly.user.model.UserJoinDao;
 import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
-@Service
 @Slf4j
+@Service
 public class JoinServiceImpl implements JoinService {
 
-    @Autowired
     private UserJoinDao userJoinDao;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private String uuid_user_id;
+    public JoinServiceImpl () {}
+    public JoinServiceImpl (UserJoinDao userJoinDao) {this.userJoinDao = userJoinDao;}
+    @Autowired
+    public JoinServiceImpl(UserJoinDao userJoinDao, BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.userJoinDao = userJoinDao;
+        this.bCryptPasswordEncoder =bCryptPasswordEncoder;
+    }
 
     @Override
-//    @Transactional
+    public int emailCheck(UserDto userdto) throws Exception {
 
-    public int userJoin(UserDto userDto) {
 
-//        uuid_user_id = UUID.randomUUID().toString();
+
+        return userJoinDao.emailCheck(userdto);
+    }
+
+    @Override
+//    @Transactional(rollbackFor = SQLException.class)
+    @Transactional(rollbackFor = Exception.class)
+    public int userJoin(UserDto userDto) throws Exception {
+
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)
 
-//        userDto.setUser_id(uuid_user_id);
-        userDto.setUser_id(userDto.getUser_email());
-        userDto.getUser_pwd();
-//        userDto.setUser_pwd("1111"); // 임시 하드코딩
-        userDto.getUser_name();
-        userDto.getUser_email();
-
-        userDto.setUser_join_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));//String.valueOf(LocalDate.now())
-        if("on".equals((userDto.getSite_term_agree_yn()))) userDto.setSite_term_agree_yn("Y");
-        if("on".equals((userDto.getP_Info_agree_yn()))) userDto.setP_Info_agree_yn("Y");
-        if("on".equals((userDto.getAge_agree_yn()))) userDto.setAge_agree_yn("Y");
-        if("on".equals((userDto.getP_info_oth_agree_yn()))) userDto.setP_info_oth_agree_yn("Y");
-        if("on".equals((userDto.getM_info_rcv_agree_yn()))) userDto.setM_info_rcv_agree_yn("Y");
-        userDto.setUser_status(user_status);
-//        userDto.setDba_reg_id(uuid_user_id);
-        userDto.setDba_reg_id(userDto.getUser_email());
-
         try{
+
+            if(userJoinDao.emailCheck(userDto)==1){
+                throw new RuntimeException("이미 가입된 사용자입니다.");
+            }
+
+            String userInPwd = userDto.getUser_pwd();
+            String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
+
+            System.out.println("bCryptPasswordEncoder.encode(\"qwerrr123!\") = " + bCryptPasswordEncoder.encode("qwerrr123!"));
+            System.out.println("userInPwd = " + userInPwd);
+            System.out.println("encoderPwd = " + encoderPwd);
+
+            userDto.setUser_id(userDto.getUser_email());
+//            userDto.getUser_pwd();
+            userDto.setUser_pwd(encoderPwd);
+            userDto.getUser_name();
+            userDto.getUser_email();
+            userDto.setUser_join_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));//String.valueOf(LocalDate.now())
+            if("on".equals((userDto.getSite_term_agree_yn()))) userDto.setSite_term_agree_yn("Y");
+            if("on".equals((userDto.getP_Info_agree_yn()))) userDto.setP_Info_agree_yn("Y");
+            if("on".equals((userDto.getAge_agree_yn()))) userDto.setAge_agree_yn("Y");
+            if("on".equals((userDto.getP_info_oth_agree_yn()))) userDto.setP_info_oth_agree_yn("Y");
+            if("on".equals((userDto.getM_info_rcv_agree_yn()))) userDto.setM_info_rcv_agree_yn("Y");
+            userDto.setUser_status(user_status);
+            userDto.setDba_reg_id(userDto.getUser_email());
+
+
+            System.out.println("userDto = " + userDto);
             return userJoinDao.insert(userDto);
 
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public int emailCheck(UserDto userdto) throws Exception {
-        return userJoinDao.emailCheck(userdto);
-    }
-
-    @Override
-    public int count() throws Exception {
-        return userJoinDao.count();
     }
 }
