@@ -4,42 +4,35 @@ import com.fundly.user.model.LikeDao;
 import com.persistence.dto.LikeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class LikeServiceImpl implements LikeService {
 
-    private final LikeDao likedao;
-
-    public void transJason(LikeDto likedto) {
-
-    }
+    @Autowired LikeDao likedao;
 
     @Override
-    public int changeLike(LikeDto likedto) {
+    public void changeLike(LikeDto likedto) {
 
         try {
 
-            int result = 0;
             // 찜한 목록 조회
             LikeDto likes = likedao.getLike(likedto);
-            //
+
             if(likes == null) {
-                result = likedao.insertLike(likedto);
+                likedao.insertLike(likedto);
             } else {
                 if (likes.getLike_status() == 1) {
                     likedao.cancelLike(likedto);
                 } else {
-                    result = likedao.reLike(likedto);
+                    likedao.reLike(likedto);
                 }
             }
-            return result;
 
         } catch (Exception e) {
 
@@ -77,4 +70,7 @@ public class LikeServiceImpl implements LikeService {
         }
     }
 
+    public List<LikeDto> getPage(Map map) throws Exception {
+        return likedao.selectPage(map);
+    }
 }
