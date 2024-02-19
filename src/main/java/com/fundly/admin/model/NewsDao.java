@@ -26,4 +26,8 @@ public interface NewsDao {
     int update(NewsDto dto) throws Exception;
 
     int increaseView(Integer news_seq) throws Exception;
+
+    List<NewsDto> selectPage(Map map) throws Exception;
+
+    List<NewsDto> search(String news_title) throws Exception;
 }
