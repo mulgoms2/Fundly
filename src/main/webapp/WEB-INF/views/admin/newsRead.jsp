@@ -37,6 +37,6 @@
   /admin/newsWrite 페이지로의 포워딩 직후에 다시
  /admin/newsRead 페이지로의 포워딩이 발생. --%>
 <button onclick="location.href='<c:url value="/admin/modify?news_seq="/>${News.news_seq}'">수정하기</button>
-<button onclick="location.href='<c:url value="/admin/list"/>'">목록</button>
+<button onclick="location.href='<c:url value="/admin/list?page=${page}"/>'">목록</button>
 </body>
 </html>

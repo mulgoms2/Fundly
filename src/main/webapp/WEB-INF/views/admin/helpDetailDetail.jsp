@@ -40,7 +40,7 @@
                     </li>
                     </c:forEach>
                 </ul>
-                <a href="<c:url value="/help/detail?sub_help_sort=${subHelpDto.sub_help_sort}"/> " class="article-sidebar-item">더보기</a>
+                <a href="<c:url value='/help/detail?sub_help_sort=${subHelpDto.sub_help_sort}'/> " class="article-sidebar-item">더보기</a>
             </section>
         </section>
         <article class="article">

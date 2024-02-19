@@ -11,7 +11,7 @@
     </insert>
 
     <select id="select" parameterType="int" resultType="SubHelpDto">
-        SELECT sub_help_seq, sub_help_title, sub_help_cont, reg_id, sub_help_view_cnt, reg_dtm, mod_dtm,hid_yn,mod_id
+        SELECT sub_help_seq, sub_help_sort,sub_help_title, sub_help_cont, reg_id, sub_help_view_cnt, reg_dtm, mod_dtm,hid_yn,mod_id
         FROM sub_help WHERE sub_help_seq=#{sub_help_seq}
     </select>
 

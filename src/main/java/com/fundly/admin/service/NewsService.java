@@ -4,6 +4,7 @@ import com.persistence.dto.NewsDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface NewsService {
@@ -21,7 +22,8 @@ public interface NewsService {
 
     public int updateNews(NewsDto dto) throws Exception;
 
+    public List<NewsDto> selectPage(Integer page,Integer pageSize) throws Exception;
 
-
+    public List<NewsDto> searchNews(String news_title) throws Exception;
 
 }

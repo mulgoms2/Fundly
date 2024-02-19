@@ -53,7 +53,7 @@ public class SubHelpServiceImpl implements SubHelpService{
     }
 
     @Override
-    public int countSub(Integer sub_help_sort) throws Exception {
-        return subHelpDao.countSub(sub_help_sort);
+    public int countSub() throws Exception {
+        return subHelpDao.countSub();
     }
 }
