@@ -66,7 +66,6 @@ public class ChatController {
                     }
             );
 
-            BeanPropertyBindingResult
 
             return new ResponseEntity<>(chatRequest, HttpStatus.BAD_REQUEST);
         }
