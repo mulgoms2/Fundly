@@ -25,7 +25,6 @@ public class MailSendService {
         authNumber = r.nextInt(888888) + 111111;
     }
 
-
     //이메일 보낼 양식
     public String joinEmail(String email) {
         makeRandomNumber();

@@ -1,9 +1,14 @@
 package com.fundly.user.model;
 
+import com.persistence.dto.UserDto;
 import config.RootContext;
 import config.ServletContext;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,21 +18,30 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class UserLoginDaoTest {
 
-    @Test
-    void count() {
+    private final UserLoginDao userLoginDao;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    public UserLoginDaoTest(UserLoginDao userLoginDao, BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.userLoginDao = userLoginDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Test
-    void emailCheck() {
+//    @SneakyThrows
+    @DisplayName("회원 정보 조회")
+    void selectUser(){
+        try {
+            UserDto userdto = UserDto.builder()
+                    .user_email("abc@test.com")
+                    .user_pwd("1234qwer!").build();
 
-    }
+            UserDto userinfo = userLoginDao.selectUser(userdto);
 
-    @Test
-    void LoginCheck() {
-
-    }
-
-    @Test
-    void idCheck() {
+            assertTrue(bCryptPasswordEncoder.matches(userdto.getUser_pwd(),userinfo.getUser_pwd()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
