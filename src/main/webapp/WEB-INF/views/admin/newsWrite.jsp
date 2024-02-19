@@ -12,16 +12,17 @@
 <body>
 <form id="push" action="" method="">
     <input type="text" name="news_seq" value="${newsModifyInfo.news_seq}" hidden="hidden">
-    <input type="text" name="news_title" value="${newsModifyInfo.news_title}" placeholder="제목">
-    <input type="text" name="reg_id" value="${newsModifyInfo.reg_id}" placeholder="작성자">
+    <input type="text" name="news_title" value="${newsModifyInfo.news_title ==null ? newsDto.news_title: newsModifyInfo.news_title}" placeholder="제목">
+    <input type="text" name="reg_id" value="${newsModifyInfo.reg_id==null ? newsDto.reg_id: newsModifyInfo.reg_id}" placeholder="작성자">
     <textarea class="pjStr" name="news_cont">
-        ${newsModifyInfo.news_cont}
+        ${newsModifyInfo.news_cont==null ? newsDto.news_cont: newsModifyInfo.news_cont}
                             </textarea>
     <button onclick="goToWrite()" style=${newsModifyInfo!=null ? "display:none" : ""}>등록</button>
     <button onclick="goToModify()" style=${newsModifyInfo!=null ? "" : "display:none"} >수정완료</button>
     <button onclick="goToDelete()">삭제</button>
 </form>
 <button onclick="location.href='<c:url value="/admin/list"/>'"  style=${newsModifyInfo!=null ? "" : "display:none"}>취소</button>
+
 <script>
     function goToWrite(){
         let form = document.getElementById("push");
@@ -98,6 +99,8 @@ once you do not need it anymore.
         content_style:
             'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
     });
+    let msg = "${msg}";
+    if( msg != "") {alert("게시물 등록에 실패하였습니다. 다시 시도해 주세요.");}
 </script>
 </body>
 </html>
