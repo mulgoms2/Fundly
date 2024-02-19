@@ -11,6 +11,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan(basePackages = {"com", "com.fundly"})
 @PropertySource(value = "/WEB-INF/config/pay.properties")
 //@PropertySource(value = {"/WEB-INF/config/pay.properties", "/WEB-INF/config/payTest.properties"})
@@ -62,6 +64,7 @@ public class ServletContext implements WebMvcConfigurer {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
 
         ms.setBasename("message.messages");
+        ms.addBasenames("message.project_message");
         ms.setDefaultEncoding("UTF-8");
         return ms;
     }

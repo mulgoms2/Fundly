@@ -134,9 +134,10 @@ class ItemServiceImplTest2 {
 
 //    @Test
 //    @SneakyThrows
+//    @DisplayName("롤백 테스트")
 //    public void failTest(){
 //        //giftService.remove()또는 itemService.remove()에서 exception발생한 상황을 가정
-//        RuntimeException e = Assertions.assertThrows(RuntimeException.class
+//        Exception e = Assertions.assertThrows(Exception.class
 //                , () -> itemService.remove(itemDto.getItem_id()));
 //        e.printStackTrace();
 //

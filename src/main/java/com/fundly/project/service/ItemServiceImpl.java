@@ -72,7 +72,7 @@ public class ItemServiceImpl implements ItemService{
                 giftService.removeGift(gift_id); //사실 이 메서드도 Tx걸려있음..
             }
         }
-//        throw new RuntimeException("Tx테스트");
+//        throw new Exception("Tx테스트");
         return itemMapper.delete(item_id); //아이템도 아이템 테이블에서 삭제
     }
 }
