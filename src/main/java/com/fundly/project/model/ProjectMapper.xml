@@ -4,5 +4,8 @@
 
 <mapper namespace="com.fundly.project.model.ProjectMapper">
 
-
+    <delete id="deleteAll">
+        delete
+        from PJ
+    </delete>
 </mapper>

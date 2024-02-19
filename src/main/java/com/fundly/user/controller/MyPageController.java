@@ -115,12 +115,13 @@ public class MyPageController {
             LikeDto likedto = new LikeDto("bada@gamil.com","");
             List<LikeDto> likes = likeservice.getLikeList(likedto);
 
-            UserDto userInfo = userInfoService.userInfo(user_email);
-            String user_name = userInfo.getUser_name();
-
-            model.addAttribute("userInfo",userInfo);
-            model.addAttribute("user_name",user_name);
-            model.addAttribute("user_email",user_email);
+//            UserDto userInfo = userInfoService.userInfo(user_email);
+//
+//            String user_name = userInfo.getUser_name();
+//
+//            model.addAttribute("userInfo",userInfo);
+//            model.addAttribute("user_name",user_name);
+//            model.addAttribute("user_email",user_email);
 
             model.addAttribute("likes", likes);
 

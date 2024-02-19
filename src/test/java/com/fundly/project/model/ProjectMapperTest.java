@@ -22,6 +22,15 @@ class ProjectMapperTest {
     @DisplayName("전체 삭제 검사")
     void delete() {
 //        전체 행을 삭제한다.
-//        projectMapper.deleteAll();
+        int rowCount = projectMapper.deleteAll();
+
+        assertEquals(0, rowCount);
     }
+
+    @Test
+    @DisplayName("프로젝트 하나를 생성한다.")
+    void insert() {
+        projectMapper.insert();
+    }
+
 }
