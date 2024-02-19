@@ -9,13 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 @ControllerAdvice("com.fundly.project")
 public class ProjectGlobalCatcher {
-//    @ExceptionHandler(Exception.class)
-//    public String catcher(Exception ex, Model m){
-//        //구체적으로 어떤 에러를 공통으로 처리할 것인지 코드 작성하기
-//
-//        m.addAttribute("ex",ex);
-//        return "project/error";
-//    }
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String catcher(Exception e){

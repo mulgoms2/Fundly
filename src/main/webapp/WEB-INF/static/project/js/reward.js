@@ -198,6 +198,7 @@ window.onload = function () {
             },
             error: function (result) {
                 alert('아이템 등록에 실패했습니다.')
+                console.log(result);
             }
         });
     });
@@ -448,7 +449,7 @@ const lengthCheck = function (elem, maxLength, string) {
         elem.parentElement.style.border = ".5px solid black";
         len.innerHTML = '<p>' + elem.value.trim().length + '/' + maxLength + '</p>';
         len.style.color = "#9e9e9e";
-        lent.style.fontSize = '12px';
+        len.style.fontSize = '12px';
     }
 }
 const makeBlur = function () {
