@@ -17,6 +17,9 @@ public class PayMeansDto {
     private String own_type; // 카드소유주/예금주 유형 (개인, 법인)
     private String own_birth; // 생년월일
     private String bill_key; // 포트원 결제수단별 등록키 TODO: DB 컬럼 새로 추가
+    private String file_path; // 결제수단 이미지 파일 경로
+    private String file_name; // 결제수단 이미지 파일명
+    private String file_extension; // 결제수단 이미지 파일 확장자
 
 // 2. 카드
     private String default_pay_means_yn; // 기본 결제수단 여부
@@ -41,17 +44,25 @@ public class PayMeansDto {
     private Timestamp dba_mod_dtm;
     private String dba_mod_id;
 
-    public PayMeansDto(String user_id, String own_type, String own_birth, String default_pay_means_yn, String card_co_info_agree_yn, String card_no, String card_pwd, String card_valid_date, String dba_reg_id, Timestamp dba_reg_dtm) {
+    public PayMeansDto(String user_id, String own_type, String bill_key, String default_pay_means_yn, String card_no, String dba_reg_id) {
         this.user_id = user_id;
         this.own_type = own_type;
-        this.own_birth = own_birth;
+        this.bill_key = bill_key;
         this.default_pay_means_yn = default_pay_means_yn;
-        this.card_co_info_agree_yn = card_co_info_agree_yn;
         this.card_no = card_no;
-        this.card_pwd = card_pwd;
-        this.card_valid_date = card_valid_date;
         this.dba_reg_id = dba_reg_id;
-        this.dba_reg_dtm = dba_reg_dtm;
+    }
+
+    public String getFile_path() {
+        return file_path;
+    }
+
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public String getFile_extension() {
+        return file_extension;
     }
 
     public String getCard_co_info_agree_yn() {
