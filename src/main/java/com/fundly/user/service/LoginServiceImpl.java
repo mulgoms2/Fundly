@@ -4,44 +4,47 @@ import com.fundly.user.model.UserLoginDao;
 import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 
-@Service
 @Slf4j
+@Service
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
     private UserLoginDao userLoginDao;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public int count() throws Exception {
-        return userLoginDao.count();
+    public LoginServiceImpl(){}
+    public LoginServiceImpl(UserLoginDao userLoginDao){
+        this.userLoginDao = userLoginDao;
+    }
+    @Autowired
+    public LoginServiceImpl(UserLoginDao userLoginDao,BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.userLoginDao = userLoginDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-//    @Override
-//    public int userCheck(String user_email, String user_pwd) throws Exception {
-//        return userLoginDao.userCheck(user_email,user_pwd);
-//    }
-
     @Override
-    public UserDto Login(String user_email, String user_pwd, HttpSession session) throws Exception {
+    public UserDto Login(UserDto userDto, HttpSession session) throws Exception {
 
         /*
         * 1. 로그인성공,실패 값
         * */
 
         try {
-            UserDto userInfo = userLoginDao.selectUser(user_email, user_pwd);
+            UserDto userInfo = userLoginDao.selectUser(userDto);
 
-            if(userInfo!=null){
+            String user_email = userInfo.getUser_email();
+            String user_status = userInfo.getUser_status();
 
-                String user_status = userInfo.getUser_status();
-
-                log.error("user status " + user_status);
-
+            /* 암호화 체크 */
+            if(!bCryptPasswordEncoder.matches(userDto.getUser_pwd(),userInfo.getUser_pwd())){
+                throw new RuntimeException("비밀번호를 확인해 주세요.");
+            }
+            if(user_email!=null){
+                /* 활동중이 아닌 경우 */
                 if(!user_status.equals("A")){
                     return userInfo;
                 }
@@ -49,7 +52,6 @@ public class LoginServiceImpl implements LoginService {
                 session.setAttribute("user_email",user_email);
                 // 세션의 유효시간 (30분)
                 session.setMaxInactiveInterval(1800);
-
                 return userInfo;
             } else {
                 return null;

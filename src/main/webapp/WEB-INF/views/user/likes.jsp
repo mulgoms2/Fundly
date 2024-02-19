@@ -10,9 +10,9 @@
 <%@ page session ="false"%>
 <%--관심 프로젝트--%>
 <div class="main">
-    <div class="userSetting">
+    <div class="LikesuserSetting">
         <div class="title">관심 프로젝트</div>
-        <div class="tapContainer">
+        <div class="LikestapContainer">
             <div class="info">
                 <span class="font1">0</span>개의 프로젝트를 좋아합니다.
             </div>
@@ -79,6 +79,25 @@
                                         </div>
                                     </div>
                                     <div class="percentBar"></div>
+
+                                    <div class="list">
+                                        <table border="1">
+                                            <tr>
+                                                <th>프로젝트제목</th>
+                                                <th>유저이름</th>
+                                                <th>등록일</th>
+                                                <th>좋아요상태</th>
+                                            </tr>
+                                            <c:forEach var="likes" items="${likes}">
+                                                <tr>
+                                                    <td>${likes.pj_id}</td>
+                                                    <td>${likes.user_id}</td>
+                                                    <td>${likes.like_dtm}</td>
+                                                    <td>${likes.like_status}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -4,15 +4,19 @@
 
 <mapper namespace="com.fundly.user.model.LikeDao">
 
+    <select id="countLike" resultType="int">
+        select count(*) from LIKE_PJ
+    </select>
+
     <select id="getLike" resultType="LikeDto">
-        select user_id, pj_id from LIKE_PJ
+        select * from LIKE_PJ
         where user_id = #{user_id}
         and pj_id = #{pj_id}
     </select>
 
     <insert id="insertLike">
-        insert into LIKE_PJ (user_id,pj_id,like_status,like_dtm)
-        values(#{user_id},#{pj_id},1,#{like_dtm})
+        insert into LIKE_PJ (user_id,pj_id,like_status)
+        values(#{user_id},#{pj_id},1)
     </insert>
 
     <update id="cancelLike">
@@ -24,7 +28,7 @@
 
     <update id="reLike">
         update LIKE_PJ
-        set like_status = 1, like_dtm = now()
+        set like_status = 1, like_dtm = NOW()
         where user_id = #{user_id}
         and pj_id = #{pj_id}
     </update>
@@ -38,16 +42,15 @@
         select * from LIKE_PJ
         where user_id = #{user_id}
         and like_status = 1
-    </select>
-
-    <!--    최근 좋아요한 순으로 나열-->
-    <select id="LikeListByTime" resultType="LikeDto">
-        select * from LIKE_PJ
-        where user_id = #{user_id}
-          and like_status = 1
         order by like_dtm desc
     </select>
 
+    <select id="selectPage" parameterType="map" resultType="LikeDto">
+        select * from LIKE_PJ
+        where like_status = 1
+        order by like_dtm desc
+        LIMIT #{offset}, #{pageSize}
+    </select>
 <!--    좋아요목록 진행중 상태만-->
 <!--    <select id="IngLikeList" resultType="LikeDto">-->
 <!--        select * from LIKE_PJ-->

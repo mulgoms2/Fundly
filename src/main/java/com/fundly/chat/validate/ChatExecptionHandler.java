@@ -1,10 +1,7 @@
-package com.fundly.chat.pojo;
+package com.fundly.chat.validate;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.impl.FileUploadIOException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Slf4j
 //@ControllerAdvice("com.fundly.chat")

@@ -1,4 +1,4 @@
-package com.fundly.chat.pojo;
+package com.fundly.chat.validate;
 
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;

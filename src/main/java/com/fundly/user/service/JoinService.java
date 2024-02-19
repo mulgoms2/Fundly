@@ -1,16 +1,8 @@
 package com.fundly.user.service;
 
 import com.persistence.dto.UserDto;
-import org.springframework.stereotype.Service;
-
-@Service
 
 public interface JoinService {
-
-//    @Transactional(rollbackFor = Exception.class)
-    int userJoin(UserDto userDto);
-
+    int userJoin(UserDto userDto) throws Exception;
     int emailCheck(UserDto userdto) throws Exception;
-
-    int count() throws Exception;
 }
