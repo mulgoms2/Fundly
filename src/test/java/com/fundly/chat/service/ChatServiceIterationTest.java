@@ -12,6 +12,7 @@ import config.RootContext;
 import config.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -26,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @Transactional
-@SpringJUnitWebConfig(classes = {ServletContext.class, RootContext.class})
+@SpringJUnitWebConfig(classes = {RootContext.class})
 class ChatServiceIterationTest {
     @Autowired
     ApplicationContext ac;
@@ -43,9 +44,10 @@ class ChatServiceIterationTest {
     @Autowired
     ChatService chatService;
 
+    FileDto file;
+    SelBuyMsgDetailsDto message;
+
     @BeforeEach
-
-
     void setUp() {
         fileDao.deleteAll();
         selBuyMsgDao.deleteAllChatRoom();
@@ -54,6 +56,9 @@ class ChatServiceIterationTest {
         assertEquals(0, fileDao.count());
         assertEquals(0, selBuyMsgDao.count());
         assertEquals(0, selBuyMsgDetailsDao.count());
+
+        this.file = FileDto.builder().table_name("MSG_TABLE").table_key("msg1").file_saved_url("url").build();
+        this.message = SelBuyMsgDetailsDto.builder().room_num(1L).pj_id("asdf").buy_id("123").build();
     }
 
     @Test
@@ -89,16 +94,55 @@ class ChatServiceIterationTest {
         assertEquals(true, b);
     }
 
+
     @Test
+    @DisplayName("파일 저장시 메세지에 파일 경로 세팅되는지 확인")
+    void setFileUrlTest() {
+        FileDto file1 = FileDto.builder().table_name("MSG_TABLE").table_key("msg1").file_saved_url("url").build();
+        SelBuyMsgDetailsDto message1 = SelBuyMsgDetailsDto.builder().room_num(1L).pj_id("asdf").buy_id("123").build();
+
+        chatService.saveFileMessage(file1, message1);
+
+        String fileUrl = message1.getFile_url();
+        assertEquals(message1.getFile_url(), fileUrl);
+    }
+
+    @Test
+    @DisplayName("파일이 null일때 검사")
+    void saveNullFile() {
+        //given
+
+        SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder().msg_cont("hello").room_num(1l).build();
+//        매개변수가 널일때
+        String errorMsg = assertThrows(NullPointerException.class,
+                () -> {
+                    chatService.saveFileMessage(null, message);
+                }
+        ).getMessage();
+
+        assertEquals("is empty file", errorMsg);
+
+        String errorMsg2 = assertThrows(NullPointerException.class,
+                () -> chatService.saveFileMessage(file, null)
+        ).getMessage();
+
+        assertEquals("is empty message", errorMsg2);
+    }
+
+    @Test
+    @DisplayName("파일 저장 테스트")
     void saveFileMessage() {
         //given
-        MultipartFile file = (MultipartFile) new File("myFile");
-        FileDto fileDto = FileDto.builder().file(file).build();
-        SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder().room_num(1L).pj_id("asdf").buy_id("123").build();
+        FileDto file1 = FileDto.builder().table_name("MSG_TABLE").table_key("msg1").build();
+        FileDto file2 = FileDto.builder().table_name("MSG_TABLE").table_key("msg1").build();
+        SelBuyMsgDetailsDto message1 = SelBuyMsgDetailsDto.builder().room_num(1L).pj_id("asdf").buy_id("123").build();
+        SelBuyMsgDetailsDto message2 = SelBuyMsgDetailsDto.builder().room_num(2L).pj_id("dddd").buy_id("333").build();
 
         // when
-        chatService.saveFileMessage(fileDto, message);
+//        파일을 저장했다.
+        chatService.saveFileMessage(file1, message1);
+        chatService.saveFileMessage(file2, message2);
 
-
+//        저장한 파일을 불러온다
     }
 }
