@@ -17,6 +17,9 @@
         <typeAlias alias="InformDto" type="com.persistence.dto.InformDto"/>
         <typeAlias alias="TermDto" type="com.persistence.dto.TermDto"/>
         <typeAlias alias="ItemDto" type="com.persistence.dto.ItemDto"/>
+        <typeAlias alias="GiftDto" type="com.persistence.dto.GiftDto"/>
+        <typeAlias alias="GiftItemDetailDto" type="com.persistence.dto.GiftItemDetailDto"/>
+        <typeAlias alias="ProjectDto" type="com.persistence.dto.ProjectDto"/>
         <typeAlias type="com.persistence.dto.SelBuyMsgDto" alias="SelBuyMsgDto"/>
         <typeAlias type="com.persistence.dto.SelBuyMsgDetailsDto" alias="SelBuyMsgDetailsDto"/>
         <typeAlias alias="UserDto" type="com.persistence.dto.UserDto"/>

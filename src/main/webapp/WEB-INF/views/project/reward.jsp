@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!--헤더의 일부-->
 <div class="subHead">
@@ -46,23 +47,24 @@
         <div class="pjBox str" id="str">
             <div class="pjInfo">
                 <div>
-                    <div class="myList">내가 만든 선물 count</div>
-                    <div>
-                        <div>
-                        </div>
+                    <div class="myList">
+                        내가 만든 선물 0
+                    </div>
+                    <div class="listCon">
+                        <p>만든 선물이 없습니다.</p>
                     </div>
                 </div>
             </div>
             <div class="pjForm">
-                <div>
+                <div class="start">
                     <div>
-                        <div>
-                            선물 만들기
+                        <div class="tit">
+                            <p>선물 만들기</p>
+                            <i class="fas fa-solid fa-asterisk"></i>
                         </div>
                     </div>
                     <div>
-                        <button type="button" id="strBtn">아이템을 먼저 만들어주세요</button>
-                        <div>
+                        <div class="cont">
                             <h2>후원 가치를 높이는 선물</h2>
                             <br>
                             <p>아직 등록된 아이템이 없습니다.</p>
@@ -70,6 +72,7 @@
                             <p>선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. </p>
                             <p>아이템을 등록 후 다양한 금액대로 여러 개의 선물을 만들어주세요. </p>
                             <p>펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
+                            <button type="button" id="strBtn">아이템을 먼저 만들어주세요</button>
                         </div>
                     </div>
                 </div>

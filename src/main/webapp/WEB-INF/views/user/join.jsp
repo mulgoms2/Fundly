@@ -60,7 +60,8 @@
                 <%--                    </div>--%>
                 <div class="usPwd">
                     <div class="usPwdWrap">
-                        <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력" autocomplete="off"/>
+                        <input type="password" id ="user_pwd" class="pwdpad" name="user_pwd" placeholder="비밀번호 입력"/>
+<%--                        autocomplete="off"/>--%>
                         <div class="eyes">
                             <div class="password-toggle" id="togglePwd"></div>
                         </div>
@@ -91,7 +92,7 @@
 
                         <div class="singleChk">
                             <input type="checkbox" class="singleChk" id = "site_term_agree_yn" name = "site_term_agree_yn">
-                            <label for="site_term_agree_yn" class="single">텀블벅 이용 약관동의(필수)</label>
+                            <label for="site_term_agree_yn" class="single">펀들리 이용 약관동의(필수)</label>
                             <a href="" >내용보기</a>
                             </input>
                         </div>
@@ -179,6 +180,21 @@
     const togglePwd = document.getElementById('togglePwd');
     const togglePwdConfirm = document.getElementById('togglePwdConfirm');
 
+
+    /* Oauth2 */
+
+    const kakaBtn = document.getElementById('kakaBtn');
+
+    kakaBtn.addEventListener('click',()=>{
+        const kakao = document.createElement('form');
+        kakao.action = '<c:url value="/oauth/kakao"/>';
+        kakao.method = 'post';
+        document.body.appendChild(kakao);
+        kakao.submit();
+    });
+
+
+
     togglePwd.addEventListener('click', function () {
 
         if (pwdInput.type === 'password') {
@@ -205,7 +221,7 @@
     /* 정규식 */
     // 이메일 정규식
     user_email.addEventListener("keyup", () => {
-        if(!email.test(user_email.value) && user_email.value.length!=0) {
+        if(!email.test(user_email.value) && user_email.value.length!==0) {
             setMessage('유효하지 않은 이메일 형식입니다.', "user_email", "msgEmail", "red");
         } else{
             setMessage('', "user_email", "msgEmail","black");
@@ -214,7 +230,7 @@
 
     // 이름은 최소 2자 이상 입력
     user_name.addEventListener("keyup", () => {
-        if (user_name.value.length <= 2 && user_name.value.length!=0) {
+        if (user_name.value.length <= 2 && user_name.value.length!==0) {
             setMessage('최소 2자 이상 입력해주세요.', "user_name", "msgName", "red");
         }else {
             setMessage('', "user_name", "msgName", "black");
@@ -224,13 +240,13 @@
     // 비밀번호는 8자~20자 / 공백 / 숫자, 영문, 특수문자 조합
     user_pwd.addEventListener("keyup", () => {
         // if (user_pwd.value.length < 8 && user_pwd.value.length > 20 ) {
-        if (!(user_pwd.value.length > 8 && user_pwd.value.length < 20) && user_pwd.value.length!= 0) {
+        if (!(user_pwd.value.length > 8 && user_pwd.value.length < 20) && user_pwd.value.length!== 0) {
             setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "user_pwd", "msgPwd", "red");
             return false;
-        } else if(user_pwd.value.search(/\s/) != -1){
+        } else if(user_pwd.value.search(/\s/) !== -1){
             setMessage('비밀번호는 공백 없이 입력해주세요.', "user_pwd", "msgPwd", "red");
             return false;
-        } else if(!pwd.test(user_pwd.value)&& user_pwd.value.length!= 0){
+        } else if(!pwd.test(user_pwd.value)&& user_pwd.value.length!== 0){
             setMessage('영문, 숫자, 특수문자를 혼합하여 입력해주세요.', "user_pwd", "msgPwd", "red");
             return false;
         }
@@ -242,14 +258,14 @@
     // 비밀번호는 8자 이상 20자(21개 변경) 이하 / 숫자, 영문 대소문자, 특수문자 중 2가지 이상 조합 / 3개 이상 연속으로 동일한 문자
     // user_pwd와 비교
     user_pwdConfirm.addEventListener("keyup", () => {
-        if (!(user_pwdConfirm.value.length > 8 && user_pwdConfirm.value.length < 20) && user_pwdConfirm.length!= 0) {
+        if (!(user_pwdConfirm.value.length > 8 && user_pwdConfirm.value.length < 20) && user_pwdConfirm.length!== 0) {
             setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "user_pwdConfirm", "msgPwdConfirm", "red");
             return false;
         }
-        else if(user_pwdConfirm.value.search(/\s/) != -1){
+        else if(user_pwdConfirm.value.search(/\s/) !== -1){
             setMessage('비밀번호는 공백 없이 입력해주세요.', "user_pwdConfirm", "msgPwdConfirm", "red");
             return false;
-        } else if(!pwd.test(user_pwdConfirm.value)&& user_pwdConfirm.value.length!= 0){
+        } else if(!pwd.test(user_pwdConfirm.value)&& user_pwdConfirm.value.length!== 0){
             setMessage('영문, 숫자, 특수문자를 혼합하여 입력해주세요.', "user_pwdConfirm", "msgPwdConfirm", "red");
             return false;
         }else if(user_pwdConfirm.value !== user_pwd.value){
@@ -328,15 +344,16 @@
                 checkAll.checked = false;
             }
 
-            if(singleChk.length != 0 && singleChk.length< 3 || selectChk.length!=0 && singleChk.length == 0){
+            if(singleChk.length !== 0 && singleChk.length< 3 || selectChk.length!==0 && singleChk.length === 0){
                 setMessage('필수 동의 내용을 체크해주세요.', "", "agreeName", "red");
             }
             else{
                 setMessage('', "", "agreeName", "black");
             }
-            if(singleChk.length + selectChk.length  == 5) {checkAll.checked = true;}else{checkAll.checked = false;}
+            if(singleChk.length + selectChk.length  === 5) {checkAll.checked = true;}else{checkAll.checked = false;}
         });
     })
+
 
 </script>
 </html>

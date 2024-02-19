@@ -4,68 +4,85 @@ import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.UserDto;
 import config.RootContext;
 import config.ServletContext;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Slf4j
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class UserJoinDaoTest {
 
+    private final UserJoinDao userJoinDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    UserJoinDao userJoinDao;
-
-
-
-    @Test
-    void count() throws Exception {
-
-        int cnt = userJoinDao.count();
-        assertTrue(cnt==3);
-
+    public UserJoinDaoTest(UserJoinDao userJoinDao, BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.userJoinDao = userJoinDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Test
-    void emailCheck() throws Exception {
-        UserDto user = new UserDto();
-        user.setUser_email("asdf@asdf.com");
+//    @SneakyThrows
+    @DisplayName("회원 이메일 중복 체크")
+    void emailCheck() {
+        try {
+            UserDto userDto = UserDto.builder().user_email("111@111.com").build();
 
-        int cnt = userJoinDao.emailCheck(user);
-        assertTrue(cnt==1);
+            int cnt = userJoinDao.emailCheck(userDto);
+
+            assertEquals(1,cnt);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
-    void insert() throws Exception {
-        for(int i = 0; i <10; i++) {
-            String uuid_user_id = UUID.randomUUID().toString();
-            String user_status = "A"; // 활동중
+//    @SneakyThrows
+    @DisplayName("회원가입")
+    @Transactional
+//    @Rollback(true)
+    void insert() {
+        try {
+            UserDto userdto = UserDto.builder()
+                    .user_id("abc123@test.com")
+                    .user_pwd("1234qwer!")
+                    .user_name("홍길동")
+                    .user_email("abc123@test.com")
+                    .user_join_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                    .site_term_agree_yn("Y")
+                    .p_Info_agree_yn("Y")
+                    .age_agree_yn("Y")
+                    .p_info_oth_agree_yn("Y")
+                    .m_info_rcv_agree_yn("Y")
+                    .user_status("A")
+                    .dba_reg_id("abc123@test.com")
+                    .build();
 
-            UserDto userDto = new UserDto();
-            userDto.setUser_id(uuid_user_id);
-            userDto.setUser_name("호랑이");
-            userDto.setUser_pwd("1111");
-            userDto.setUser_email("aaa" + i + "@abc.com");
-            // ow.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+            String userInPwd = userdto.getUser_pwd();
+            String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
+//            log.error("encoderPwd = " +encoderPwd);
+//            log.error("\n\n");
 
-            userDto.setUser_join_date("2024-02-14 14:30:24.333");
-            userDto.setSite_term_agree_yn("Y");
-            userDto.setP_Info_agree_yn("Y");
-            userDto.setM_info_rcv_agree_yn("Y");
-            userDto.setAge_agree_yn("Y");
+            userdto.setUser_pwd(encoderPwd);
 
-            userDto.setUser_status(user_status);
-            userDto.setDba_reg_id(uuid_user_id);
+            int cnt = userJoinDao.insert(userdto);
 
-            System.out.println("userDto = " + userDto);
+            assertEquals(1, cnt);
 
-            int cnt = userJoinDao.insert(userDto);
-            System.out.println("cnt = " + cnt);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
