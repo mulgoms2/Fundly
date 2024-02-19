@@ -24,11 +24,6 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
         InputStream inputStream = null;
         try {
             inputStream = file.getInputStream();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
             List<String> allowFileList = Arrays.asList("image/jpeg", "image/pjpeg", "image/png", "image/gif", "image/bmp", "image/x-windows-bmp");
 
 //            실제 파일의 mimeType 검출. 확장자를 속여도 소용 없다.

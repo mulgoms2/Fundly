@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +29,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringJUnitWebConfig(classes = {ServletContext.class, RootContext.class})
 class ChatServiceIterationTest {
     @Autowired
+    ApplicationContext ac;
+
+    @Autowired
     FileDao fileDao;
     @Autowired
     SelBuyMsgDao selBuyMsgDao;
@@ -39,6 +44,8 @@ class ChatServiceIterationTest {
     ChatService chatService;
 
     @BeforeEach
+
+
     void setUp() {
         fileDao.deleteAll();
         selBuyMsgDao.deleteAllChatRoom();

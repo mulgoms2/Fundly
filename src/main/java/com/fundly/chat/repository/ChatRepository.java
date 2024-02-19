@@ -16,6 +16,5 @@ public interface ChatRepository {
     List<SelBuyMsgDetailsDto> loadAllMessages(SelBuyMsgDto selBuyMsgDto) throws Exception;
 
     int saveMessage(SelBuyMsgDetailsDto selBuyMsgDetailsDto) throws Exception;
-
     void saveImageFile(FileDto fileDto) throws Exception;
 }

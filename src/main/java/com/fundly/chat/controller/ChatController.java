@@ -35,17 +35,17 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
-    @GetMapping("/chat")
-//    테스트용
-    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "chat/error";
-        }
-
-//        return chatRequest;
-        return "chat/chat";
-    }
+//    @GetMapping("/chat")
+////    테스트용
+//    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result) {
+//
+//        if (result.hasErrors()) {
+//            return "chat/error";
+//        }
+//
+////        return chatRequest;
+//        return "chat/chat";
+//    }
 
     @GetMapping("/chatPop")
     public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
@@ -75,6 +75,7 @@ public class ChatController {
     @ResponseBody
     public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message, BindingResult result) {
         if (result.hasErrors()) {
+//            사용자가 올릴 수 없는 파일을 전송했을 때 에러메시지를 사용자에게 보여주어야 한다.
             log.error("some one sent fake imgFile on chat. user_email = {}", message.getSend_user_id());
             return;
         }
