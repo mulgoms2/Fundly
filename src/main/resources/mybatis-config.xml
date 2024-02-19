@@ -25,6 +25,5 @@
         <typeAlias type="com.persistence.dto.FileDto" alias="FileDto"/>
         <typeAlias type="com.persistence.dto.ChatRequest" alias="ChatRequest"/>
         <typeAlias alias="OrderDto" type="com.persistence.dto.OrderDto" />
-        <typeAlias type="com.fundly.chat.model.SelbuyMsgEntity" alias="SelBuyMsgEntity"/>
     </typeAliases>
 </configuration>

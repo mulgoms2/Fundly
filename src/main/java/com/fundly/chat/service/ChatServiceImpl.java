@@ -41,8 +41,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
         try {
+//            메시지에 시간을 세팅한다.
             message.setSvr_intime_string(getHoursAndMinutes());
 
+//            메시지를 저장한다.
             chatRepository.saveMessage(message);
         } catch (Exception e) {
             log.error("error with save Message");
@@ -60,12 +62,10 @@ public class ChatServiceImpl implements ChatService {
         message.setFile_url(fileSavedUrl);
         message.setSvr_intime_string(getHoursAndMinutes());
         savedFile.setTable_name(SEL_BUY_MSG_DETAILS);
-//            파일 Dto에 해당 메시지의 식별자를 적어서 저장한다.
-//            파일 정보를 db에 저장한다.
         try {
+//            파일 정보를 db에 저장한다.
             chatRepository.saveMessage(message);
 //            메시지가 db에 저장 될 때 마이바티스가 seq를 생성한다.
-//            savedFile.setTable_key(String.valueOf(message.getSeq()));
             savedFile.setTable_key(String.valueOf(message.getMsg_id()));
             chatRepository.saveImageFile(savedFile);
         } catch (Exception e) {

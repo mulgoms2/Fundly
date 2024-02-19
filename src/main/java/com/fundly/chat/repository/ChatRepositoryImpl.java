@@ -22,6 +22,7 @@ import static java.util.stream.Collectors.toCollection;
 
 @Slf4j
 @Repository
+@Transactional
 public class ChatRepositoryImpl implements ChatRepository {
     SelBuyMsgDao selBuyMsgDao;
     SelBuyMsgDetailsDao selBuyMsgDetailsDao;

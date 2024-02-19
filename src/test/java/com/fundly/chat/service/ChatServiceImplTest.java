@@ -1,9 +1,11 @@
 package com.fundly.chat.service;
 
 import com.fundly.chat.dao.SelBuyMsgDao;
+import com.fundly.chat.repository.ChatRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -11,19 +13,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class ChatServiceImplTest {
 
+    @Mock
+    ChatRepository chatRepository;
+
     @InjectMocks
     ChatServiceImpl chatService;
 
     @Test
     void getChatRoom() {
 
-        SelBuyMsgDao selBuy = Mockito.mock(SelBuyMsgDao.class);
-
-        Mockito.when(selBuy.deleteAllChatRoom()).thenReturn(20);
-
-        int i = selBuy.deleteAllChatRoom();
-
-        System.out.println(i);
     }
 
     @Test
