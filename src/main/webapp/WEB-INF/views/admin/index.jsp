@@ -106,6 +106,13 @@
         <p class="tit">게시판 관리</p>
     </div>
     <div class="sttBox">
+        <div>
+            <form action="<c:url value='/admin/search' />" method="post">
+                    <input type="text" name="news_title" value="">
+                    <button type="submit">검색</button>
+
+            </form>
+        </div>
 <%--        <div class="lftBox">--%>
 <%--            <span class="sttBlue">선물 전달 중</span>--%>
 <%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
@@ -158,18 +165,30 @@
 
                 <c:forEach var="NewsDto" items="${NewsList}">
                     <tr>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_seq}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_title}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_id}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_view_cnt}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.mod_dtm!=null? NewsDto.mod_dtm :NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.hid_yn}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_seq}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_title}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.reg_id}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_view_cnt}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.mod_dtm!=null? NewsDto.mod_dtm :NewsDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.hid_yn}</a></td>
                     </tr>
                 </c:forEach>
             </table>
         </div>
     </div>
+    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">
+        <c:if test="${ph.showPrev}">
+            <a href="<c:url value='/admin/list?page=${ph.beginPage-1}'/>">&lt;</a>
+        </c:if>
+        <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+            <a href="<c:url value='/admin/list?page=${i}'/> ">${i}</a>
+        </c:forEach>
+        <c:if test="${ph.showNext}">
+            <a href="<c:url value='/admin/list?page=${ph.endPage+1}'/>">&gt;</a>
+        </c:if>
+    </div>
+    <input type="text" id="searchInput"  placeholder="검색어를 입력하세요">
 </div>
 <footer>
     <p>@Copyright 2024. 텀블벅 관리자 사이트 All Rights Reserved.</p>

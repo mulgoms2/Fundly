@@ -46,4 +46,16 @@
         SET news_view_cnt = news_view_cnt + 1
         WHERE news_seq = #{news_seq}
     </update>
+    <select id="selectPage" parameterType="map" resultType="NewsDto">
+        SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm,hid_yn,mod_dtm,mod_id
+        FROM news
+        ORDER BY reg_dtm DESC, news_seq DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="search" parameterType="string" resultType="NewsDto">
+        SELECT * FROM news
+        WHERE news_title LIKE #{news_title}
+        ORDER BY reg_dtm DESC
+    </select>
 </mapper>
