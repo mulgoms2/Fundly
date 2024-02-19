@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +27,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
@@ -48,13 +52,32 @@ public class ChatController {
 //    }
 
     @GetMapping("/chatPop")
-    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
+    @ResponseBody
+    public ResponseEntity<ChatRequest> joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
+        if (result.hasErrors()) {
+//            return "chat/error";
+            System.out.println(result);
+
+            Map<String, Object> model = result.getModel();
+
+            model.entrySet().forEach(
+                    (e)-> {
+                        System.out.println("\nentry = " + e + "\n");
+                    }
+            );
+
+            BeanPropertyBindingResult
+
+            return new ResponseEntity<>(chatRequest, HttpStatus.BAD_REQUEST);
+        }
+
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         SelBuyMsgDto chatRoom = chatService.joinChatRoom(chatRequest);
 
         chatRequest.setSelBuyMsgDto(chatRoom);
 
-        return "chat/chat";
+        return new ResponseEntity<>(chatRequest,HttpStatus.OK);
+//        return "chat/chat";
     }
 
     //    MessageMapping을 통해 유저의 메시지 전송이 매핑되며. /chatPub/chat/{방번호} pathVariable 의 일종인 것 같다.
@@ -64,6 +87,7 @@ public class ChatController {
 //        httpsession 객체에 담긴 데이터를 이용할 수 있다.
 //        Object session = accessor.getSessionAttributes().get("session");
 //        System.out.println(((HttpSession) session).getAttribute("user_email"));
+
 //        채팅을 저장
         chatService.saveMessage(message);
 
