@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
+@Transactional
 class LikeDaoTest {
 
     @Autowired
@@ -31,12 +33,12 @@ class LikeDaoTest {
 
     // String -> LocalDateTime
     // str = js에서 const curr = new Date();로 현재시간 가져온 값
-    String str = "2024-02-16T12:25:12.004Z";
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    LocalDateTime strtoDatetime = LocalDateTime.parse(str,format);
-
-    // LocalDateTime -> String
-    String nowtoString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//    String str = "2024-02-16T12:25:12.004Z";
+//    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//    LocalDateTime strtoDatetime = LocalDateTime.parse(str,format);
+//
+//    // LocalDateTime -> String
+//    String nowtoString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     @BeforeEach
     @SneakyThrows
@@ -45,15 +47,14 @@ class LikeDaoTest {
 
         userdto = new UserDto("user","바다","1234");
         pjdto = new ProjectDto("P5040",0);
-        likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id(),strtoDatetime);
+        likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
         log.error("\n\n\n" + likedto);
 
     }
-
-    @AfterEach
+    @Test
     @SneakyThrows
-    @DisplayName("DB에 데이터삭제")
-    void end() {
+    @DisplayName("좋아요목록삭제")
+    void deleteAllLikeTest() {
         int result = likedao.deleteAllLike();
         System.out.println("result = " + result);
     }
@@ -81,10 +82,10 @@ class LikeDaoTest {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime strtoDatetime2 = LocalDateTime.parse(str2,format);
 
-        LikeDto likedto2 = new LikeDto (userdto.getUser_id(),"P1010",strtoDatetime2);
+        LikeDto likedto2 = new LikeDto (userdto.getUser_id(),"P1010");
         assertTrue(likedao.insertLike(likedto2)==1);
 
-        List<LikeDto> likes = likedao.LikeListByTime(likedto);
+        List<LikeDto> likes = likedao.AllLikeList(likedto);
         assertTrue(likes.size()==2);
         log.error("\n\n\n" + likes);
 
@@ -94,7 +95,7 @@ class LikeDaoTest {
         assertTrue(likedao.reLike(likedto)==1);
 
         // 다시 좋아요한 프로젝트가 먼저인지 순서 확인
-        List<LikeDto> likes2 = likedao.LikeListByTime(likedto);
+        List<LikeDto> likes2 = likedao.AllLikeList(likedto);
         assertTrue(likes.size()==2);
         log.error("\n\n\n" + likes2);
 
@@ -146,5 +147,15 @@ class LikeDaoTest {
         assertTrue(likedao.cancelLike(likedto)==1);
         //likedao.reLike()
         assertTrue(likedao.reLike(likedto)==1);
+    }
+    
+    @Test
+    @SneakyThrows
+    void selectPageTest() {
+        Map map = new HashMap();
+        map.put("offset",1);
+        map.put("pageSize", 10);
+        List<LikeDto> result = likedao.selectPage(map);
+        log.error("\n\n\n" + result);
     }
 }
