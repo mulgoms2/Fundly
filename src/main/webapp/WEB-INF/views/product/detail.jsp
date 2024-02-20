@@ -1848,7 +1848,7 @@
                                                                     <button>
                                                                         -
                                                                     </button>
-                                                                    <input readonly type="number" id="numIpt" value="1" disabled>
+                                                                    <input readonly type="number" value="1" disabled>
                                                                     <button>
                                                                         +
                                                                     </button>
@@ -2957,7 +2957,7 @@
                                                                 <button>
                                                                     -
                                                                 </button>
-                                                                <input readonly type="number" id="numIpt" value="1" disabled>
+                                                                <input readonly type="number" value="1" disabled>
                                                                 <button>
                                                                     +
                                                                 </button>
