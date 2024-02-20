@@ -21,7 +21,7 @@ public class ItemValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        log.error("ItemValidator is called");
+        log.error("\n\n ItemValidator is called \n\n");
         ItemDto itemDto = (ItemDto)target;
 
         String item_name = itemDto.getItem_name();
@@ -40,6 +40,7 @@ public class ItemValidator implements Validator {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "item_option", "required");
         }
 
+        //todo view단에서 객관식 옵션에 seperator(,)는 입력될 수 없게 막는 조치를 추가하기.
         //객관식 옵션 검증
         if(item_option_type.equals("객관식 옵션")){
             String[] optArr = item_option.split(",");
@@ -55,7 +56,7 @@ public class ItemValidator implements Validator {
 
         //주관식 옵션 검증
         if(item_option_type.equals("주관식 옵션")){ //각 옵션의 길이는 100자를 넘지 않는다.
-            if(item_option == null || item_option.length() > 100){
+            if(item_option == null || item_option.length() > 3){
                 errors.rejectValue("item_option","invalidLength",new String[]{"1","100"},null);
             }
         }

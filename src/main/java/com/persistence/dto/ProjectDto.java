@@ -3,8 +3,7 @@ package com.persistence.dto;
 import lombok.*;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,12 +13,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Builder
 public class ProjectDto {
-    @NonNull
-    private String pj_id; //uuid만들어서 그대로 집어넣으면?? // PK를 노출하는 것은 좋지 않다고....하는데..
-    private Integer seq; //seq 필요함?
-    private String pj_sel_id; //로그인 세션에서 가져오기.
-    private String pj_url; //이건 없애기로 한거 아닌가.
 
+    private String pj_id; //uuid만들어서 그대로 집어넣으면?? // PK를 노출하는 것은 좋지 않다고....하는데..
+    private String pj_sel_id; //로그인 세션에서 가져오기.
 
     //프로젝트 기획 - 기본 정보
     private String ctg; //카테고리
@@ -32,10 +28,10 @@ public class ProjectDto {
 
     //프로젝트 기획 - 펀딩 계획
     private BigInteger fund_goal_money; //펀딩 목표금액
-    private Timestamp fund_str_dtm;// 펀딩시작일시
-    private Timestamp fund_end_dtm; //펀딩 종료일시
-    private Timestamp pj_pay_due_dtm; //후원 결제 예정일
-    private Timestamp fund_calc_due_dtm;//펀딩 정산예정일
+    private LocalDateTime fund_str_dtm;// 펀딩시작일시
+    private LocalDateTime fund_end_dtm; //펀딩 종료일시
+    private LocalDateTime pj_pay_due_dtm; //후원 결제 예정일
+    private LocalDateTime fund_calc_due_dtm;//펀딩 정산예정일
 
     //프로젝트 기획 - 프로젝트 계획
     private String pj_intro; //프로젝트 소개(t.e에서 작성)
@@ -61,26 +57,14 @@ public class ProjectDto {
     private Integer curr_pj_like_cnt; //프로젝트 좋아요 현재 집계
     private BigInteger curr_fund_money;//펀딩 모금액 현재 집계
     private Integer curr_buy_cnt; //후원자 수 현재 집계
-    private Timestamp dba_reg_dtm;
+    private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
-    private Timestamp dba_mod_dtm;
+    private LocalDateTime dba_mod_dtm;
     private String dba_mod_id;
 
     //이미지들에 대한 관리
     // 프로젝트 대표이미지, 프로필 이미지 -> 한개씩이니까 접근성 좋게 pj테이블에 column으로 관리?
+
     // t.e에서 첨부하는 이미지들은.... 파일 테이블 이용??
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProjectDto that = (ProjectDto) o;
-        return Objects.equals(pj_id, that.pj_id) && Objects.equals(seq, that.seq) && Objects.equals(pj_sel_id, that.pj_sel_id) && Objects.equals(pj_status, that.pj_status);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pj_id, seq, pj_sel_id, pj_status);
-    }
 }

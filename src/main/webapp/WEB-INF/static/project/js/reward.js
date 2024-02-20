@@ -178,14 +178,17 @@ window.onload = function () {
             headers: {"content-type": "application/json"},
             data: JSON.stringify({
                 'item_name': itmName.value,
+                // 'item_name': '', 테스트용
                 'item_option_type': item_option_type.val(),
                 'item_option': item_option
             }),
+            dataType: "json",
             success: function (result) {
                 alert('아이템이 성공적으로 등록되었습니다.');
                 init(); //기존 입력창을 초기화한다.
                 saveBtn.disabled = true;
                 // itemArr.push(result);
+                console.dir(result);
                 itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
                 console.dir(itemArr);
                 // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
@@ -198,7 +201,18 @@ window.onload = function () {
             },
             error: function (result) {
                 alert('아이템 등록에 실패했습니다.')
-                console.log(result);
+                // const parseResult = JSON.parse(result);
+                // console.dir(parseResult);
+                console.dir(result); //상태코드 400을 가지고 있는, errorResult를 포함한 어떤(?) 객체..
+                console.dir(result.errorDetails); //이거는 undefined
+                console.dir(result.responseJSON.errorDetails); //이렇게 접근해야 에러메시지를 읽을 수가 있었다...
+                const errArr = result.responseJSON.errorDetails;
+                let errorMessage = ''
+                for(err of errArr){
+                    errorMessage += err.errorMessage+"\n";
+                }
+                // 왜 이렇게까지 꺼내야 하는걸까?
+                alert(errorMessage); //각 필드에 에러메시지를 뜨게 하는게 목표인데, 일단은 alert까지라도.
             }
         });
     });
