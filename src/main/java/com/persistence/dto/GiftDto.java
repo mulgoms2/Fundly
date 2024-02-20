@@ -18,12 +18,12 @@ public class GiftDto {
     private String gift_qty_lim_yn;
     private Integer gift_total_qty;
     private Integer gift_max_qty_per_person;
-    private String gift_ship_due_date;
+    private LocalDateTime gift_ship_due_date;
     private String gift_ship_need_yn;
     private Integer gift_money;
     private Integer gift_sold_qty;
     private Integer gift_curr_qty;
-    private String gift_status;
+    private String gift_status; //insert시 "등록중"을 default값을 등록
     private LocalDateTime gift_reg_dtm;
     private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
@@ -31,7 +31,7 @@ public class GiftDto {
     private String dba_mod_id;
 
     public GiftDto(String gift_name, String pj_id, String gift_qty_lim_yn, Integer gift_total_qty,
-                   Integer gift_max_qty_per_person, String gift_ship_due_date, String gift_ship_need_yn,
+                   Integer gift_max_qty_per_person, LocalDateTime gift_ship_due_date, String gift_ship_need_yn,
                    Integer gift_money, Integer gift_curr_qty){
         this.gift_name = gift_name;
         this.pj_id = pj_id;

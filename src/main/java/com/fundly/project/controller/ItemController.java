@@ -25,13 +25,13 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/project")
-public class GiftItemController {
+public class ItemController {
     ItemService itemService;
     GiftService giftService;
 
     MessageSource messageSource;
     @Autowired
-    GiftItemController(ItemService itemService, GiftService giftService, MessageSource messageSource){
+    ItemController(ItemService itemService, GiftService giftService, MessageSource messageSource){
         this.itemService = itemService;
         this.giftService = giftService;
         this.messageSource = messageSource;

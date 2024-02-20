@@ -1,37 +1,40 @@
 package com.fundly.project.controller;
 
-import com.persistence.dto.GiftDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Slf4j
 public class GiftValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return GiftDto.class.isAssignableFrom(clazz);
+        return GiftForm.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
         log.error("\n\n GiftValidator is called \n\n");
-        GiftDto giftDto = (GiftDto) target;
+        GiftForm giftForm = (GiftForm) target;
 
-        String gift_name = giftDto.getGift_name(); //0~50자 이하.
-        String gift_qty_lim_yn = giftDto.getGift_qty_lim_yn(); //y또는 n이어야 함
-        Integer gift_total_qty = giftDto.getGift_total_qty(); //y인 경우에만 입력값이 존재. 1000이하의 값
-        Integer gift_max_qty_per_person = giftDto.getGift_max_qty_per_person();
+        String gift_name = giftForm.getGift_name(); //0~50자 이하.
+        String gift_qty_lim_yn = giftForm.getGift_qty_lim_yn(); //y또는 n이어야 함
+        Integer gift_total_qty = giftForm.getGift_total_qty(); //y인 경우에만 입력값이 존재. 1000이하의 값
+        Integer gift_max_qty_per_person = giftForm.getGift_max_qty_per_person();
         //y라면 total qty이하의 값을 가져야하고, n이라면 1000 이하의 값
 
-        String gift_ship_due_date = giftDto.getGift_ship_due_date();
+        LocalDateTime gift_ship_due_date = giftForm.getGift_ship_due_date();
+        LocalDateTime pj_pay_due_dtm = giftForm.getPj_pay_due_dtm();
         // 현재 날짜 기준최대 1825일
 
-        String gift_ship_need_yn = giftDto.getGift_ship_need_yn();
+        String gift_ship_need_yn = giftForm.getGift_ship_need_yn();
         //y또는 n
 
-        Integer gift_money = giftDto.getGift_money();
+        Integer gift_money = giftForm.getGift_money();
         //1000이상 10,000,000 이하
 
 
@@ -67,8 +70,10 @@ public class GiftValidator implements Validator {
 
         //5. 선물 예상 전달일 ( **결제 최종 종료일 : 펀딩 마감일 + 7일)
         // 결제 최종 종료일(pj테이블에 저장된 값)로부터 1일~1825일 내로 입력해야함
-        //todo 결제 최종 종료일이 비교 기준으로 필요하다. giftDto를 giftRequest로 수정이 필요?
-        //
+        long days = ChronoUnit.DAYS.between(pj_pay_due_dtm, gift_ship_due_date);
+        // 후원자 결제 종료일로부터 1일 이상 1825이하의 날짜로 정해야 유효한 값.
+        if(days<1 || days>1825)
+            errors.rejectValue("gift_ship_due_date", "invalidNumber", new String[]{"1","1825"},null);
 
 
 
