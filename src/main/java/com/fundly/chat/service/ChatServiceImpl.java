@@ -1,83 +1,51 @@
 package com.fundly.chat.service;
 
-import com.fundly.chat.model.SelBuyMsgDao;
-import com.fundly.chat.model.SelBuyMsgDetailsDao;
+import com.fundly.chat.repository.ChatRepository;
 import com.persistence.dto.ChatRequest;
-import com.persistence.dto.ChatRoomDto;
+import com.persistence.dto.SelBuyMsgDto;
 import com.persistence.dto.FileDto;
 import com.persistence.dto.SelBuyMsgDetailsDto;
-import com.persistence.dto.domain.FileDao;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
-
-import static java.util.stream.Collectors.toCollection;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
-    SimpMessagingTemplate simpMessagingTemplate;
-    SelBuyMsgDao selBuyMsgDao;
-    SelBuyMsgDetailsDao selBuyMsgDetailsDao;
-    FileDao fileDao;
-
-    public ChatServiceImpl() {
-    }
-
-    public ChatServiceImpl(SelBuyMsgDao selBuyMsgDao) {
-        this.selBuyMsgDao = selBuyMsgDao;
-    }
+    ChatRepository chatRepository;
 
     @Autowired
-    public ChatServiceImpl(SimpMessagingTemplate simpMessagingTemplate, SelBuyMsgDao selBuyMsgDao, SelBuyMsgDetailsDao selBuyMsgDetailsDao, FileDao fileDao) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
-        this.selBuyMsgDao = selBuyMsgDao;
-        this.selBuyMsgDetailsDao = selBuyMsgDetailsDao;
-        this.fileDao = fileDao;
+    public ChatServiceImpl(ChatRepository chatRepository) {
+        this.chatRepository = chatRepository;
     }
 
-    @SneakyThrows
     @Override
-    public void getChatRoom(ChatRequest chatRequest) {
-//        채팅룸이 존재하면 채팅방 리턴
-        ChatRoomDto chatRoomDto;
-
-        selBuyMsgDao.selectChatRoom(chatRequest);
-
-        if ((chatRoomDto = selBuyMsgDao.selectChatRoom(chatRequest)) == null) {
-//            채팅방 생성과 동시에 chatRequest 에 세팅된다
-            selBuyMsgDao.makeChatRoom(chatRequest);
-
-        } else {
-//            채팅방이 존재하면 메시지 리스트를 가져온다.
-            chatRoomDto.setMessage_list(loadMessages(chatRoomDto));
-//            채팅방 요청 객체에 채팅방을 담는다.
-            chatRequest.setChatRoomDto(chatRoomDto);
+    public SelBuyMsgDto joinChatRoom(ChatRequest request) {
+        SelBuyMsgDto selBuyMsgDto;
+        try {
+//            기존의 채팅방이 존재하면 그대로 전달, 없으면 만들어서 전달한다.
+            return (selBuyMsgDto = chatRepository.getChatRoom(request)) != null ? selBuyMsgDto : chatRepository.makeChatRoom(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public boolean saveMessage(SelBuyMsgDetailsDto message) {
         try {
-            selBuyMsgDetailsDao.insertMsg(message);
+//            메시지에 시간을 세팅한다.
+            message.setSvr_intime_string(getHoursAndMinutes());
 
-            String svr_intime = new SimpleDateFormat("HH:mm").format(new Date());
-            message.setSvr_intime_string(svr_intime);
+//            메시지를 저장한다.
+            chatRepository.saveMessage(message);
         } catch (Exception e) {
             log.error("error with save Message");
             throw new RuntimeException("error with saveMessage(SelBuyMsgDetailsDto message)", e);
@@ -86,90 +54,33 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ArrayList<SelBuyMsgDetailsDto> loadMessages(ChatRoomDto chatRoomDto) {
-        try {
-//            메시지 전체 조회 후 첨부파일 경로를 매핑해서 전달.
-            return selBuyMsgDetailsDao.loadAllMessages(chatRoomDto).stream()
-                    .map(this::timeFormatting)
-                    .map(this::mappingImgUrl)
-                    .collect(toCollection(ArrayList<SelBuyMsgDetailsDto>::new));
-        } catch (Exception e) {
-//            에러메시지를 전달한다.
-            throw new RuntimeException("error with message loading", e);
-        }
-    }
-
-    private SelBuyMsgDetailsDto timeFormatting(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-        Date date = selBuyMsgDetailsDto.getSvr_intime();
-        String hourAndMinute = new SimpleDateFormat("HH:mm").format(date);
-
-        selBuyMsgDetailsDto.setSvr_intime_string(hourAndMinute);
-
-        return selBuyMsgDetailsDto;
-    }
-
-    private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-//        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
-        if (!isFileAttached(selBuyMsgDetailsDto)) {
-            return selBuyMsgDetailsDto;
-        }
-
-        try {
-//            파일 테이블에서 첨부파일 url을 가져와 dto에 세팅한다.
-            String msgKey = selBuyMsgDetailsDto.getMsg_id();
-            String savedFileUri = fileDao.getSavedFileUri(SEL_BUY_MSG_DETAILS, msgKey);
-            selBuyMsgDetailsDto.setFile_url(savedFileUri);
-            return selBuyMsgDetailsDto;
-        } catch (Exception e) {
-            log.error("error with getSavedFileUri");
-            throw new RuntimeException(e);
-        }
-    }
-
-    public boolean isFileAttached(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
-        return selBuyMsgDetailsDto.getFile_cnt() != 0;
-    }
-
-    @Override
-    public void saveImageFile(FileDto img_file, SelBuyMsgDetailsDto message) {
-        String originFileName = img_file.getFile().getOriginalFilename();
-        String uuid = UUID.randomUUID().toString();
-        String savedImgUrl = IMG_SAVE_LOCATION + uuid + originFileName;
-
-        try {
-//            메시지를 db에 저장
-            saveMessage(message);
+    @Transactional
+    public void saveFileMessage(FileDto savedFile, SelBuyMsgDetailsDto message) {
+        String fileSavedUrl = savedFile.getFile_saved_url();
 //            파일 저장과 동시에 채팅창에 보여지기 위해 이미지 url을 넣어준다.
-            message.setFile_url(savedImgUrl);
-//            파일을 서버에 저장했다.
-            img_file.getFile().transferTo(new File(savedImgUrl));
-//            파일 테이블에 저장된 파일 경로를 담아야한다.
-            img_file.setTable_name(SEL_BUY_MSG_DETAILS);
-            img_file.setFile_saved_url(savedImgUrl);
-            img_file.setFile_origin_url(IMG_SAVE_LOCATION + originFileName);
-            img_file.setTable_key(message.getMsg_id());
-
-//            파일 Dto에 해당 메시지의 식별자를 적어서 저장해야한다.
-            fileDao.saveFile(img_file);
-        } catch (IOException e) {
-            throw new RuntimeException("error with new File(savedImgUrl)", e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public Resource loadImgFile(String fileName) throws Exception {
+//            메시지에 파일 경로를 저장
+        message.setFile_url(fileSavedUrl);
+        message.setSvr_intime_string(getHoursAndMinutes());
+        savedFile.setTable_name(SEL_BUY_MSG_DETAILS);
         try {
-            return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
-        } catch (MalformedURLException e) {
-            log.error("fail to save file : {}", fileName);
+//            파일 정보를 db에 저장한다.
+            chatRepository.saveMessage(message);
+//            메시지가 db에 저장 될 때 마이바티스가 seq를 생성한다.
+            savedFile.setTable_key(String.valueOf(message.getMsg_id()));
+            chatRepository.saveImageFile(savedFile);
+        } catch (Exception e) {
+            log.error("error ChatServiceImpl.saveImageFile()");
             throw new RuntimeException(e);
         }
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public String handleException() {
-//        return "chat/error";
-//    }
+    private String getHoursAndMinutes() {
+        String hoursAndMinutes = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        return hoursAndMinutes;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleException() {
+        return "chat/error";
+    }
 }

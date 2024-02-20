@@ -20,7 +20,7 @@ public interface SubHelpService {
 
     public int count(Integer sub_help_sort) throws Exception;
 
-    public int countSub(Integer sub_help_sort) throws Exception;
+    public int countSub() throws Exception;
 
     public int updateSubHelp(SubHelpDto dto) throws Exception;
 

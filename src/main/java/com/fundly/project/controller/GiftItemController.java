@@ -34,7 +34,7 @@ public class GiftItemController {
         this.giftService = giftService;
     }
 
-    // 아이템+선물 페이지
+
 
 //    @GetMapping("/reward")
 //    public String makeGift(Model m){
@@ -49,8 +49,12 @@ public class GiftItemController {
 //        }
 //        return "project.reward";
 //    }  //try-catch
+
+
+
+    // 아이템+선물 페이지
     @GetMapping("/reward")
-    public String makeGift(Model m) throws Exception {
+    public String makeGift(Model m) throws Exception { //global catcher에서 예외처리
         //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
         //뷰단에서는 itemDtoList가 empty면 보여줄 화면과 empty가 아니면 보여줄 화면이 나뉨.
         List<ItemDto> itemList = itemService.getItemList("pj1");
@@ -62,19 +66,22 @@ public class GiftItemController {
     }
 
 
+    //아이템을 등록하기
     @PostMapping("/item")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result, Model m){ //아이템 등록
+    public ResponseEntity<List<?>> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result){ //아이템 등록
 
         log.error("binding result={}",result);
+        log.error("**** error codes ****");
+        result.getAllErrors().stream().forEach(
+                error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
+        ); //어떤 에러코드가 출력되는지
+
         try {
             if(result.hasErrors()){
                 log.error("result={}",result);
-                throw new Exception("validation failed"); //어떻게 하면 view에 에러메시지를 출력할 수 있을까
-
-
+                throw new Exception("validation failed"); //errorField마다 에러 메시지를 출력할 수 있도록 수정하기..
             }
-//            itemService.removeAll(); //테스트용..
 //        log.info("itemDto",itemDto);
             itemDto.setPj_id("pj1"); //지금은 하드코딩이지만 나중에 현 프로젝트 아이디를 넣어줘야함.
             itemDto.setDba_reg_id("asdf"); //원래는 세션에서 얻어온 아이디를 넣어줘야한다.
@@ -87,7 +94,10 @@ public class GiftItemController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            List<ItemDto> list = new ArrayList<>();
+            list.add(itemDto); //에러가 발생했을 경우 원래 사용자 입력값을 다시 보내줘서 사용자 화면에서 에러를 출력하기.
+            return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -128,7 +138,7 @@ public class GiftItemController {
 
     @GetMapping("/items")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){ //Dto로 넘겨주도록 수정해야함
+    public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){ //Dto로 넘겨주도록 수정
         System.out.println("item_id = " + item_id);
         List<ItemDto> list = new ArrayList<>();
         try {
@@ -147,11 +157,13 @@ public class GiftItemController {
     }
 
     @InitBinder
-    public void toTimeStamp(WebDataBinder binder){
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+    public void dataBind(WebDataBinder binder){
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 //        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(df,false));
+        // 이건 item이 아니라 gift쪽에서 날짜 입력받을 때 쓰기.
+
         binder.setValidator(new ItemValidator());
-//        binder.addValidators(new GiftValidator()); //giftValidator 여기 등록하면 에러남..
+//        binder.addValidators(new GiftValidator()); //giftValidator
         List<Validator> validatorList = binder.getValidators();
         log.error("validatorList = {}",validatorList);
     }
