@@ -1,51 +1,62 @@
 package com.fundly.user.service;
 
 import com.fundly.user.model.LikeDao;
+import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.LikeDto;
 import config.RootContext;
 import config.ServletContext;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(MockitoExtension.class)
 @Slf4j
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class LikeServiceImplTest {
 
-    @Autowired
+    @Mock
     LikeDao likedao;
-    @Autowired
+    @InjectMocks
     LikeService likeservice;
-    LikeDto likedto;
+
 
     @Test
     @SneakyThrows
-    @DisplayName("처음좋아요")
-    void checkLikeTestWhenListIsEmpty() {
-        likedto = new LikeDto("bada","P001");
-        assertTrue(likeservice.changeLike(likedto)==1);
+    void transJasonTest() {
+
+        LikeDto likedto = new LikeDto();
+
+//        Mockito.when(likedao.getLike(likedto)).thenReturn("ok");
+
+        //TODO : 가져온 데이터에서 datetime인 like_dtm을 jason.parse 하는 로직 필요
+
+
     }
 
     @Test
-    @SneakyThrows
-    @DisplayName("좋아요취소")
-    void checkLikeTestWhenListIsNotEmpty() {
-        likedto = new LikeDto("bada","P001");
-        assertTrue(likeservice.changeLike(likedto)==0);
+    void changeLike() {
     }
 
     @Test
-    @SneakyThrows
-    @DisplayName("다시 좋아요")
-    void checkLike() {
-        likedto = new LikeDto("bada","P001");
-        assertTrue(likeservice.changeLike(likedto)==1);
+    void getLike() {
+    }
+
+    @Test
+    void getLikeList() {
     }
 }

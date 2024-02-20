@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: init
+  Date: 2024-02-13
+  Time: 오후 12:16
+  To change this template use File | Settings | File Templates.
+--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
@@ -6,10 +13,13 @@
     <div class="userSetting">
         <div class="title">관심 프로젝트</div>
         <div class="tapContainer">
-            <div class="tapContainerList" id="divtapContainer">
-                <span class="tapItem fontcolor"><a href="" >좋아한 1<div></div></a></span>
-                <span class="tapItem fontcolor"><a href="" >알림신청 0<div></div></a></span>
+            <div class="info">
+                <span class="font1">0</span>개의 프로젝트를 좋아합니다.
             </div>
+<%--            <div class="tapContainerList" id="divtapContainer">--%>
+<%--                <span class="tapItem fontcolor"><a href="" >좋아한 1<div></div></a></span>--%>
+<%--                <span class="tapItem fontcolor"><a href="" >알림신청 0<div></div></a></span>--%>
+<%--            </div>--%>
         </div>
     </div>
     <!-- 탭 값 -->

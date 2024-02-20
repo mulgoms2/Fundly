@@ -1,0 +1,16 @@
+package com.persistence.dto;
+
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
+public class GiftItemDetailDto {
+    private Integer gift_item_id;
+    private Integer gift_id;
+    private Integer item_id;
+    private Integer item_qty;
+}

@@ -18,7 +18,7 @@
     <script type="text/javascript" src="/static/product/vendor/daterangepicker.js"></script>
     <script type="text/javascript" src="/static/product/common.js"></script>
     <script type="text/javascript" src="/static/product/detail.js"></script>
-    <script type="text/javascript" src="/static/product/like.js"></script>
+    <script type="text/javascript" src="/static/product/likeDetail.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
@@ -641,13 +641,13 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                            <span class="slctGft">
-                                                <i class="fa-solid fa-check"></i>
-                                                10개 선택
-                                            </span>
+                                        <span class="slctGft">
+                                            <i class="fa-solid fa-check"></i>
+                                            10개 선택
+                                        </span>
                                         <span class="slctRmn">
-                                                10개 남음
-                                            </span>
+                                            10개 남음
+                                        </span>
                                     </div>
                                     <div class="gftVal">
                                         65,700원 +
@@ -1808,18 +1808,18 @@
                                                     </a>
                                                 </div>
                                                 <div class="revwWrap">
-                                                        <span class="revwTag">
-                                                            <span>퀄리티가 좋아요</span>
-                                                            <strong>411</strong>
-                                                        </span>
                                                     <span class="revwTag">
-                                                            <span>특별해요</span>
-                                                            <strong>337</strong>
-                                                        </span>
+                                                        <span>퀄리티가 좋아요</span>
+                                                        <strong>411</strong>
+                                                    </span>
                                                     <span class="revwTag">
-                                                            <span>즐거움을 줘요</span>
-                                                            <strong>308</strong>
-                                                        </span>
+                                                        <span>특별해요</span>
+                                                        <strong>337</strong>
+                                                    </span>
+                                                    <span class="revwTag">
+                                                        <span>즐거움을 줘요</span>
+                                                        <strong>308</strong>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -1845,16 +1845,16 @@
                                                             </ul>
                                                             <div class="prdDtlst">
                                                                 <div class="prdCount">
-                                                                    <button id="decrBtn">
+                                                                    <button>
                                                                         -
                                                                     </button>
                                                                     <input readonly type="number" id="numIpt" value="1" disabled>
-                                                                    <button id="incrBtn">
+                                                                    <button>
                                                                         +
                                                                     </button>
                                                                 </div>
                                                                 <div class="prdVal">
-                                                                    <span id="formattedPrice">29800</span>원
+                                                                    <span>29800</span>원
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1867,7 +1867,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="supIpt">
-                                                        <input type="number" id="valueIpt" min="1" max="10000000">
+                                                        <input type="number" min="1" max="10000000">
                                                         <button></button>
                                                     </div>
                                                     <div class="supDt">
@@ -1877,7 +1877,7 @@
                                                 <div class="twinBtnwrap">
                                                     <button class="gftAddbtn">선물 추가하기</button>
                                                     <button class="gftCalcbtn">
-                                                        총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                                        총&nbsp;<b><span></span>원</b>&nbsp;후원하기
                                                     </button>
                                                 </div>
                                             </div>
@@ -2954,16 +2954,16 @@
                                                         </ul>
                                                         <div class="prdDtlst">
                                                             <div class="prdCount">
-                                                                <button id="decrBtn">
+                                                                <button>
                                                                     -
                                                                 </button>
                                                                 <input readonly type="number" id="numIpt" value="1" disabled>
-                                                                <button id="incrBtn">
+                                                                <button>
                                                                     +
                                                                 </button>
                                                             </div>
                                                             <div class="prdVal">
-                                                                <span id="formattedPrice">29800</span>원
+                                                                <span>29800</span>원
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2976,7 +2976,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="supIpt">
-                                                    <input type="number" id="valueIpt" min="1" max="10000000">
+                                                    <input type="number" min="1" max="10000000">
                                                     <button></button>
                                                 </div>
                                                 <div class="supDt">
@@ -2986,7 +2986,7 @@
                                             <div class="twinBtnwrap">
                                                 <button class="gftAddbtn">선물 추가하기</button>
                                                 <button class="gftCalcbtn">
-                                                    총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                                    총&nbsp;<b><span></span>원</b>&nbsp;후원하기
                                                 </button>
                                             </div>
                                         </div>

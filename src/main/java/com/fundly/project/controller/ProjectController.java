@@ -1,6 +1,7 @@
 package com.fundly.project.controller;
 
-import com.fundly.project.service.ItemServiceImpl;
+import com.fundly.project.service.GiftService;
+import com.fundly.project.service.ItemService;
 import com.persistence.dto.ItemDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
+    ItemService itemService;
+    GiftService giftService;
+
     @Autowired
-    ItemServiceImpl itemService;
+    ProjectController(ItemService itemService, GiftService giftService){
+        this.itemService = itemService;
+        this.giftService = giftService;
+    }
 
     //기본정보 작성 페이지
     @GetMapping("/default")
@@ -88,7 +95,7 @@ public class ProjectController {
 
     @DeleteMapping("/item")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> removeItem(String item_id, HttpSession session){
+    public ResponseEntity<List<ItemDto>> removeItem(Integer item_id, HttpSession session){
 //        System.out.println("itemDto = " + itemDto);
 //        System.out.println("itemDto.getItem_id() = " + itemDto.getItem_id());
 
@@ -97,7 +104,7 @@ public class ProjectController {
         String id = "asdf";
         String pj_id = "pj1";
         try {
-            int rowCnt = itemService.remove(item_id, id);
+            int rowCnt = itemService.remove(item_id);
             System.out.println("rowCnt = " + rowCnt);
             if(rowCnt!=1) throw new Exception("item delete ERR");
             List<ItemDto> list = itemService.getItemList(pj_id);
@@ -123,7 +130,7 @@ public class ProjectController {
 
     @GetMapping("/items")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){
+    public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){ //Dto로 넘겨주도록 수정해야함
         System.out.println("item_id = " + item_id);
         List<ItemDto> list = new ArrayList<>();
         try {
@@ -131,7 +138,7 @@ public class ProjectController {
                 String[] itemIdArr = item_id.split(",");
                 System.out.println("itemIdArr = " + Arrays.toString(itemIdArr));
                 for (int i = 0; i < itemIdArr.length; i++) {
-                    list.add(itemService.getItem(itemIdArr[i]));
+                    list.add(itemService.getItem(Integer.valueOf(itemIdArr[i])));
                 }
             }
             return new ResponseEntity<>(list, HttpStatus.OK);
@@ -140,5 +147,6 @@ public class ProjectController {
             return new ResponseEntity<>(list,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 }
