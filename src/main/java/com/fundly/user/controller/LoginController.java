@@ -61,7 +61,6 @@ public class LoginController {
                 rattr.addFlashAttribute(key, validResult.get(key));
             }
 
-
             log.info("\n\n\n" + userLoginDto +"\n\n\n");
 
             rattr.addFlashAttribute(userLoginDto);
@@ -96,21 +95,26 @@ public class LoginController {
     @RequestMapping("/logout")
     public String logout(HttpSession session, HttpServletResponse response) throws Exception {
 
-        session.invalidate();
+        try {
+            String user_email = (String)(session.getAttribute("user_email"));
 
-        String user_email = (String)(session.getAttribute("user_email"));
-        // 1. 쿠키를 삭제
-        Cookie cookie = new Cookie("user_email", user_email); // ctrl+shift+o 자동 import
-        cookie.setMaxAge(0); // 쿠키를 삭제
+            session.invalidate();
+
+            // 1. 쿠키를 삭제
+            Cookie cookie = new Cookie("user_email", user_email); // ctrl+shift+o 자동 import
+            cookie.setMaxAge(0); // 쿠키를 삭제
 //		  2. 응답에 저장
-        response.addCookie(cookie);
+            response.addCookie(cookie);
 
 //        profile img
 //        Cookie user_profile_img_url_cookie = new Cookie("user_profile_img_url", null);
 //        user_profile_img_url_cookie.setPath("/");
 //        user_profile_img_url_cookie.setMaxAge(0);
 //        response.addCookie(user_profile_img_url_cookie);
-        return "redirect:/";
+            return "redirect:/";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // 유효성 체크

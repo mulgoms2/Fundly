@@ -1,7 +1,6 @@
 package com.fundly.user.service;
 
 import com.fundly.user.model.LikeDao;
-import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.LikeDto;
 import config.RootContext;
 import config.ServletContext;

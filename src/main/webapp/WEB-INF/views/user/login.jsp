@@ -32,12 +32,14 @@
                     <h2>로그인</h2>
                     <form id="usLoginForm">
                         <div class ="emailView">
-                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" autocomplete="off" spellcheck="false"/>
+<%--                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" autocomplete="off" spellcheck="false"/>--%>
+                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" spellcheck="false"/>
                             <div id="msgEmail" class="msg"></div>
                         </div>
 
                         <div class="usPwd">
-                            <input type="password" id="user_pwd" name="user_pwd" value="${userLoginDto.user_pwd}" placeholder="비밀번호 입력" autocomplete="new-password"/>
+<%--                            <input type="password" id="user_pwd" name="user_pwd" value="${userLoginDto.user_pwd}" placeholder="비밀번호 입력" autocomplete="new-password"/>--%>
+                            <input type="password" id="user_pwd" name="user_pwd" value="${userLoginDto.user_pwd}" placeholder="비밀번호 입력" />
 
                             <div class="eyes">
                                 <div class="password-toggle" id="togglePwd"></div>
