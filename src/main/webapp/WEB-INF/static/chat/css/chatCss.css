@@ -10,7 +10,7 @@ body {
 }
 
 .chatMainContainer {
-    height: calc(100% - 70px);
+    height: calc(100% - 80px);
     overflow: scroll;
 }
 
@@ -162,4 +162,5 @@ body {
 .chatAttImg {
     display: block;
     width: 300px;
+    padding: 6px;
 }

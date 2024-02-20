@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.persistence.dao.FileDao">
+    <insert id="saveFile" parameterType="FileDto">
+        insert into FILE (table_name, file_origin_url, file_saved_url, table_key)
+        values (#{table_name}, #{file_origin_url}, #{file_saved_url}, #{table_key})
+    </insert>
+    <delete id="deleteAll">
+        delete from FILE
+    </delete>
+
+    <select id="getFileList" resultType="FileDto">
+        select *
+        from FILE
+        where table_name = #{table_name}
+          and table_key = #{table_key}
+    </select>
+
+    <select id="getFile" resultType="FileDto">
+        select *
+        from FILE
+        where table_name = #{table_name}
+          and table_key = #{table_key}
+    </select>
+
+    <select id="getSavedFileUri" resultType="String">
+        select file_saved_url
+        from FILE
+        where table_name = #{table_name}
+          and table_key = #{table_key}
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from FILE
+    </select>
+</mapper>

@@ -17,7 +17,7 @@
 <body id="chatBody">
 <div class="chatMainContainer">
     <div id="chatContainer" class="chatContainer">
-        <c:forEach items="${chatRequest.chatRoomDto.message_list}" var="msg">
+        <c:forEach items="${chatRequest.selBuyMsgDto.message_list}" var="msg">
             <c:set var="time" value="${msg.svr_intime_string}"/>
             <c:if test="${msg.file_cnt ne 0}">
                 <c:if test="${msg.send_user_id eq sessionScope.user_email}">
@@ -69,7 +69,7 @@
 
         stompClient.onConnect = (frame) => {
             console.log("connected");
-            stompClient.subscribe('/chatSub/${chatRequest.chatRoomDto.room_num}', (response) => {
+            stompClient.subscribe('/chatSub/${chatRequest.selBuyMsgDto.room_num}', (response) => {
                 parsingMessage(JSON.parse(response.body));
             });
 
@@ -102,15 +102,15 @@
         }
 
         const messageDto = {
-            room_num:${chatRequest.chatRoomDto.room_num},
+            room_num:${chatRequest.selBuyMsgDto.room_num},
             msg_cont: message,
-            buy_id: "${chatRequest.chatRoomDto.user_id}",
-            pj_id: "${chatRequest.chatRoomDto.pj_id}",
+            buy_id: "${chatRequest.selBuyMsgDto.buy_id}",
+            pj_id: "${chatRequest.selBuyMsgDto.pj_id}",
             send_user_id: "${sessionScope.user_email}"
         };
 
         stompClient.publish({
-            destination: "/chatPub/chat/${chatRequest.chatRoomDto.room_num}",
+            destination: "/chatPub/chat/${chatRequest.selBuyMsgDto.room_num}",
 
             body: JSON.stringify(messageDto)
         });
@@ -132,10 +132,10 @@
 
         // 멀티파트 전송시에도 메시지를 함께 첨부할 수 있으며, 컨트롤러에서 하나 이상의 dto에 나누어 담을 수 있다.
         formData.append("file", files[0]);
-        formData.append("buy_id", "${chatRequest.chatRoomDto.user_id}");
-        formData.append("pj_id", "${chatRequest.chatRoomDto.pj_id}");
+        formData.append("buy_id", "${chatRequest.selBuyMsgDto.buy_id}");
+        formData.append("pj_id", "${chatRequest.selBuyMsgDto.pj_id}");
         formData.append("send_user_id", "${sessionScope.user_email}");
-        formData.append("room_num", "${chatRequest.chatRoomDto.room_num}");
+        formData.append("room_num", "${chatRequest.selBuyMsgDto.room_num}");
         formData.append("file_cnt", files.length);
 
         document.querySelector("#img").value = "";

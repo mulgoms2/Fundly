@@ -31,7 +31,6 @@ class ChatControllerTest {
 
   @Autowired
   private WebApplicationContext webApplicationContext;
-
   private MockMvc mockMvc;
 
   @BeforeEach
@@ -44,14 +43,13 @@ class ChatControllerTest {
             .addFilter(characterEncodingFilter, "/*")
             .build();
 
-    session.setAttribute("user_email" , "dbswoi123@naver.com");
+//    session.setAttribute("user_email" , "dbswoi123@naver.com");
   }
 
   @Test
   @SneakyThrows
   @DisplayName("채팅방 getChat메서드")
-  void chatTest() {
-
+  void getChatRoom() {
     mockMvc.perform(get("/chat")
                     .param("mulgom", "1234"))
             .andExpect(status().isOk())

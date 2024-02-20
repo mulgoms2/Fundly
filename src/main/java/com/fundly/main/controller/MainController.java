@@ -28,18 +28,20 @@ public class MainController {
 
         String user_email = (String)(session.getAttribute("user_email"));// "helloworld@abc.com";
 
-        log.error("\n\n user_email = " + user_email + "\n\n");
+//        log.error("\n\n user_email = " + user_email + "\n\n");
 
         if(user_email == null){
             return "main.index";
         }
 
-        UserDto userInfo = userInfoService.userInfo(user_email);
+        UserDto dto = UserDto.builder().user_email(user_email).build();
+
+        UserDto userInfo = userInfoService.userInfo(dto);
         String user_status = userInfo.getUser_status();
         String user_name = userInfo.getUser_name();
 
-        log.error("\n\n user_email = " + user_email + "\n\n");
-        log.error("\n\n user_name = " + user_name + "\n\n");
+//        log.error("\n\n user_email = " + user_email + "\n\n");
+//        log.error("\n\n user_name = " + user_name + "\n\n");
 
         model.addAttribute("userInfo",userInfo);
         model.addAttribute("user_status",user_status);
@@ -47,8 +49,5 @@ public class MainController {
         model.addAttribute("user_email",user_email);
 
         return "main.index";
-//        UserDto userInfo = loginService.Login()
-//
-
     }
 }
