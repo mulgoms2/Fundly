@@ -89,7 +89,6 @@
     margin-top: 10px;
 }
 
-
 .kakaBtn:hover {
     border: 1px solid black;
 }
@@ -261,7 +260,7 @@ input[type=checkbox]{
     position: absolute;
     right: 12px;
     top: 9px;
-    background: url(../../img/Icon-private.png) no-repeat center center;
+    background: url(../../img/Icon-eye.png) no-repeat center center;
 
     /*background: url(/static/img/Icon-private.png) no-repeat center center;*/
     background-size: cover;

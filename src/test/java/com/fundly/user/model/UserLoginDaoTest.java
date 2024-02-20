@@ -1,5 +1,6 @@
 package com.fundly.user.model;
 
+import com.fundly.user.dto.UserLoginDto;
 import com.persistence.dto.UserDto;
 import config.RootContext;
 import config.ServletContext;
@@ -33,13 +34,13 @@ class UserLoginDaoTest {
     @DisplayName("회원 정보 조회")
     void selectUser(){
         try {
-            UserDto userdto = UserDto.builder()
+            UserLoginDto userLoginDto = UserLoginDto.builder()
                     .user_email("abc@test.com")
                     .user_pwd("1234qwer!").build();
 
-            UserDto userinfo = userLoginDao.selectUser(userdto);
+            UserLoginDto userinfo = userLoginDao.selectUser(userLoginDto);
 
-            assertTrue(bCryptPasswordEncoder.matches(userdto.getUser_pwd(),userinfo.getUser_pwd()));
+            assertTrue(bCryptPasswordEncoder.matches(userLoginDto.getUser_pwd(),userinfo.getUser_pwd()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
