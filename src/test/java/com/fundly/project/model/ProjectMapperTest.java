@@ -276,7 +276,7 @@ class ProjectMapperTest {
         List<ProjectDto> likedList = new ArrayList<>();
 
         for (int i = 1; i <= 3; i++) {
-            ProjectDto likedPj = projectMapper.selectBySatus(String.valueOf(i), "ing");
+            ProjectDto likedPj = projectMapper.selectByStatus(String.valueOf(i), "ing");
 
             if (likedPj != null) {
                 likedList.add(likedPj);
