@@ -16,10 +16,10 @@ public class ChatRequest {
 
    private SelBuyMsgDto selBuyMsgDto;
 
-   @NotEmpty(message = "바보래요")
+   @NotEmpty(message = "로그인 후 이용해주세요.")
    private String buy_id;
 
-   @NotNull(message = "바보보")
+   @NotNull()
    private String pj_id;
 
 }

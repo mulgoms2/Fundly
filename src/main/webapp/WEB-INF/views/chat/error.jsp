@@ -20,26 +20,9 @@
     <title>Title</title>
 </head>
 <body>
-<%
-    Enumeration<String> attributeNames = request.getAttributeNames();
-
-    Iterator<String> iterator = attributeNames.asIterator();
-
-    while (iterator.hasNext()) {
-        String next = iterator.next();
-        System.out.println(next);
-    }
-    Object requ = request.getAttribute("org.springframework.validation.BindingResult.chatRequest");
-
-    System.out.println("\n\n\n"+requ+"\n\n\n");
-
-    BeanPropertyBindingResult result = (BeanPropertyBindingResult) requ;
-    List<FieldError> list =  result.getFieldErrors();
-
-    list.stream().forEach(System.out::println);
-%>
-<%=((ChatRequest)request.getAttribute("chatRequest")).getBuy_id()%>
-<%--<form:errors path="chatRequest.buy_id"/>--%>
-<%--<form:errors path="chatRequest.pj_id"/>--%>
+<script>
+    window.alert("로그인 후 이용해주세요");
+    window.close();
+</script>
 </body>
 </html>

@@ -7,7 +7,6 @@ import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.SelBuyMsgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,8 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.UUID;
 
 import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
@@ -36,47 +32,35 @@ import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
 public class ChatController {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
+
     @Autowired
     ChatService chatService;
 
-//    @GetMapping("/chat")
-////    테스트용
-//    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result) {
-//
-//        if (result.hasErrors()) {
-//            return "chat/error";
-//        }
-//
-////        return chatRequest;
-//        return "chat/chat";
-//    }
+    @GetMapping("/chat/test")
+//    테스트용
+    public String chatRoom() {
+        return "chat/asyncAwait";
+    }
+
+    @PostMapping("/chat/test")
+    @ResponseBody
+    public ResponseEntity<Boolean> test() {
+        return new ResponseEntity<>( true ,HttpStatus.OK);
+    }
 
     @GetMapping("/chatPop")
-    @ResponseBody
-    public ResponseEntity<ChatRequest> joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
+    public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
+
         if (result.hasErrors()) {
-//            return "chat/error";
-            System.out.println(result);
-
-            Map<String, Object> model = result.getModel();
-
-            model.entrySet().forEach(
-                    (e)-> {
-                        System.out.println("\nentry = " + e + "\n");
-                    }
-            );
-
-
-            return new ResponseEntity<>(chatRequest, HttpStatus.BAD_REQUEST);
+//            로그인 정보를 담지 않은 사용자가 접속하려고 한다.
+            return "chat/error";
         }
-
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         SelBuyMsgDto chatRoom = chatService.joinChatRoom(chatRequest);
 
         chatRequest.setSelBuyMsgDto(chatRoom);
 
-        return new ResponseEntity<>(chatRequest,HttpStatus.OK);
-//        return "chat/chat";
+        return "chat/chat";
     }
 
     //    MessageMapping을 통해 유저의 메시지 전송이 매핑되며. /chatPub/chat/{방번호} pathVariable 의 일종인 것 같다.
@@ -96,12 +80,8 @@ public class ChatController {
 
     @PostMapping("/chat/file")
     @ResponseBody
-    public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message, BindingResult result) {
-        if (result.hasErrors()) {
-//            사용자가 올릴 수 없는 파일을 전송했을 때 에러메시지를 사용자에게 보여주어야 한다.
-            log.error("some one sent fake imgFile on chat. user_email = {}", message.getSend_user_id());
-            return;
-        }
+    public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message) {
+//        유효하지 않은 파일이 오면 브라우저에 400 에러가 응답으로 전송된다.
         try {
 //            이미지 파일을 서버에 저장한다.
             saveFileToDrive(file);

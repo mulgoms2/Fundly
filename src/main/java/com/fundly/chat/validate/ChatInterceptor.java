@@ -15,7 +15,7 @@ public class ChatInterceptor implements HandlerInterceptor {
 
             return true;
         }
-        //todo
+        //todo 유저 이메일이 채팅방의 식별자와 같을때만 접속할 수 있다.
 
         return true;
     }
