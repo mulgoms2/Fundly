@@ -1,7 +1,7 @@
 package com.fundly.user.service;
 
+import com.fundly.user.dto.UserJoinDto;
 import com.fundly.user.model.UserJoinDao;
-import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,10 +15,10 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class JoinServiceImpl implements JoinService {
 
-    private UserJoinDao userJoinDao;
+    private final UserJoinDao userJoinDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public JoinServiceImpl () {}
+//    public JoinServiceImpl () {}
     public JoinServiceImpl (UserJoinDao userJoinDao) {this.userJoinDao = userJoinDao;}
     @Autowired
     public JoinServiceImpl(UserJoinDao userJoinDao, BCryptPasswordEncoder bCryptPasswordEncoder){
@@ -27,53 +27,50 @@ public class JoinServiceImpl implements JoinService {
     }
 
     @Override
-    public int emailCheck(UserDto userdto) throws Exception {
-
-
-
-        return userJoinDao.emailCheck(userdto);
+    public int emailCheck(UserJoinDto userJoinDto) throws Exception {
+        return userJoinDao.emailCheck(userJoinDto);
     }
 
     @Override
 //    @Transactional(rollbackFor = SQLException.class)
     @Transactional(rollbackFor = Exception.class)
-    public int userJoin(UserDto userDto) throws Exception {
+    public int userJoin(UserJoinDto userJoinDto) throws Exception {
 
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)
 
         try{
 
-            if(userJoinDao.emailCheck(userDto)==1){
-                throw new RuntimeException("이미 가입된 사용자입니다.");
+            if(userJoinDao.emailCheck(userJoinDto)==1){
+                // 익셉션에 (에러)에 따른 사용자에게 전달을 구별해서 컨트롤러에서 msg 전달 RuntimeException(x)
+//                throw new RuntimeException("이미 가입된 사용자입니다.");
+                throw new RuntimeException("JOIN_DUP_ERROR");
             }
 
-            String userInPwd = userDto.getUser_pwd();
+            String userInPwd = userJoinDto.getUser_pwd();
             String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
 
-            System.out.println("bCryptPasswordEncoder.encode(\"qwerrr123!\") = " + bCryptPasswordEncoder.encode("qwerrr123!"));
-            System.out.println("userInPwd = " + userInPwd);
-            System.out.println("encoderPwd = " + encoderPwd);
-
-            userDto.setUser_id(userDto.getUser_email());
+            userJoinDto.setUser_id(userJoinDto.getUser_email());
 //            userDto.getUser_pwd();
-            userDto.setUser_pwd(encoderPwd);
-            userDto.getUser_name();
-            userDto.getUser_email();
-            userDto.setUser_join_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));//String.valueOf(LocalDate.now())
-            if("on".equals((userDto.getSite_term_agree_yn()))) userDto.setSite_term_agree_yn("Y");
-            if("on".equals((userDto.getP_Info_agree_yn()))) userDto.setP_Info_agree_yn("Y");
-            if("on".equals((userDto.getAge_agree_yn()))) userDto.setAge_agree_yn("Y");
-            if("on".equals((userDto.getP_info_oth_agree_yn()))) userDto.setP_info_oth_agree_yn("Y");
-            if("on".equals((userDto.getM_info_rcv_agree_yn()))) userDto.setM_info_rcv_agree_yn("Y");
-            userDto.setUser_status(user_status);
-            userDto.setDba_reg_id(userDto.getUser_email());
+            userJoinDto.setUser_pwd(encoderPwd);
+            userJoinDto.getUser_name();
+            userJoinDto.getUser_email();
+            userJoinDto.setUser_join_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));//String.valueOf(LocalDate.now())
+            if("on".equals((userJoinDto.getSite_term_agree_yn()))) userJoinDto.setSite_term_agree_yn("Y");
+            if("on".equals((userJoinDto.getP_Info_agree_yn()))) userJoinDto.setP_Info_agree_yn("Y");
+            if("on".equals((userJoinDto.getAge_agree_yn()))) userJoinDto.setAge_agree_yn("Y");
+            if("on".equals((userJoinDto.getP_info_oth_agree_yn()))) userJoinDto.setP_info_oth_agree_yn("Y");
+            if("on".equals((userJoinDto.getM_info_rcv_agree_yn()))) userJoinDto.setM_info_rcv_agree_yn("Y");
+            userJoinDto.setUser_status(user_status);
+            userJoinDto.setDba_reg_id(userJoinDto.getUser_email());
 
-
-            System.out.println("userDto = " + userDto);
-            return userJoinDao.insert(userDto);
+            return userJoinDao.insert(userJoinDto);
 
         }catch (Exception e){
+            log.info(e.getMessage());
             throw new RuntimeException(e);
+            /* 어떤 에러가 일어 날 수 있는가 .. ?
+            *  Exception 외의 에러에서 joincontroller에서 가능한가 ?
+            *  RuntimeException.class, SQLException.class,IllegalArgumentException.class ? */
         }
     }
 }

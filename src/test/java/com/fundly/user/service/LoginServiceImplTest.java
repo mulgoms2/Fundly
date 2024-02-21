@@ -1,5 +1,6 @@
 package com.fundly.user.service;
 
+import com.fundly.user.dto.UserLoginDto;
 import com.fundly.user.model.UserLoginDao;
 import com.persistence.dto.UserDto;
 import config.RootContext;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.security.PrivilegedAction;
 
@@ -34,19 +36,21 @@ class LoginServiceImplTest {
     @Mock
     private HttpSession session;
 
+    @Mock
+    private HttpServletResponse response;
+
     @Test
 //    @SneakyThrows
     @DisplayName("로그인 서비스 & 세션 만들기(로그인)")
     void login(){
-        UserDto userdto = UserDto.builder()
+        UserLoginDto userLoginDto = UserLoginDto.builder()
                 .user_pwd("12345q!")
                 .user_email("ab12345@test.com")
-                .user_id("ab12345@test.com")
                 .build();
         try {
-            UserDto userinfo = loginService.Login(userdto,session);
+            UserLoginDto userinfo = loginService.Login(userLoginDto,session,response);
 
-            assertEquals(userdto.getUser_email(),userinfo.getUser_email());
+            assertEquals(userLoginDto.getUser_email(),userinfo.getUser_email());
         } catch (Exception e) {
 //            e.printStackTrace();
             throw new RuntimeException(e);
