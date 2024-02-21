@@ -65,9 +65,9 @@ public class ItemServiceImpl implements ItemService{
         //해당 아이템을 포함하는 선물을 조회한다
         //아이템을 포함하는 선물이 없다면, 아이템만 삭제하고 끝
         //아이템을 포함하는 선물들이 있다면, 그 선물들을 모두 삭제해야함.
-        List<Integer> giftList = giftItemDetailMapper.selectGift(item_id);
+        List<String> giftList = giftItemDetailMapper.selectGift(item_id);
         if(giftList!=null){ //giftList가 비어있지 않으면(즉, 아이템을 포함하는 선물들이 조회되면)
-            for(int gift_id : giftList){
+            for(String gift_id : giftList){
                 //giftMapper.delete(gift_id); //모든 선물들을 삭제
                 giftService.removeGift(gift_id); //사실 이 메서드도 Tx걸려있음..
             }

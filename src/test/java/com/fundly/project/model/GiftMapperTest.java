@@ -39,7 +39,7 @@ class GiftMapperTest {
                 .gift_total_qty(1000)
                 .gift_max_qty_per_person(30)
                 .gift_ship_due_date(LocalDateTime.now())
-                .gift_ship_need_yn("y")
+//                .gift_ship_need_yn("y")
                 .gift_money(randomMoney())
                 .gift_curr_qty(1000)
                 .build();
@@ -155,7 +155,7 @@ class GiftMapperTest {
                     .gift_total_qty(1000)
                     .gift_max_qty_per_person(30)
                     .gift_ship_due_date(LocalDateTime.now())
-                    .gift_ship_need_yn(i%2==0?"y":"n")
+//                    .gift_ship_need_yn(i%2==0?"y":"n")
                     .gift_money(randomMoney())
                     .gift_curr_qty(1000)
                     .build();

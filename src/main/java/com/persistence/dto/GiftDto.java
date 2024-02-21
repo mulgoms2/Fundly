@@ -12,14 +12,14 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 public class GiftDto {
-    private Integer gift_id;
+    private String gift_id; //UUID
     private String gift_name;
     private String pj_id;
     private String gift_qty_lim_yn;
     private Integer gift_total_qty;
     private Integer gift_max_qty_per_person;
     private LocalDateTime gift_ship_due_date;
-    private String gift_ship_need_yn;
+    //private String gift_ship_need_yn;
     private Integer gift_money;
     private Integer gift_sold_qty;
     private Integer gift_curr_qty;
@@ -39,7 +39,7 @@ public class GiftDto {
         this.gift_total_qty = gift_total_qty;
         this.gift_max_qty_per_person = gift_max_qty_per_person;
         this.gift_ship_due_date = gift_ship_due_date;
-        this.gift_ship_need_yn = gift_ship_need_yn;
+        //this.gift_ship_need_yn = gift_ship_need_yn;
         this.gift_money = gift_money;
         this.gift_curr_qty = gift_curr_qty;
     }

@@ -17,11 +17,11 @@
     <!--    1. (특정 프로젝트의) 선물 등록하기 -->
     <insert id="insert" parameterType="GiftDto">
         INSERT INTO pj_gift_tmp2
-        (gift_name,pj_id,gift_qty_lim_yn,gift_total_qty,
-         gift_max_qty_per_person, gift_ship_due_date, gift_ship_need_yn, gift_money,
+        (gift_id, gift_name,pj_id,gift_qty_lim_yn,gift_total_qty,
+         gift_max_qty_per_person, gift_ship_due_date, gift_money,
          gift_curr_qty, dba_reg_id)
-        VALUES (#{gift_name},#{pj_id},#{gift_qty_lim_yn}, #{gift_total_qty},
-                #{gift_max_qty_per_person}, #{gift_ship_due_date}, #{gift_ship_need_yn}, #{gift_money},
+        VALUES (#{gift_id}, #{gift_name},#{pj_id},#{gift_qty_lim_yn}, #{gift_total_qty},
+                #{gift_max_qty_per_person}, #{gift_ship_due_date}, #{gift_money},
                 #{gift_curr_qty}, #{dba_reg_id})
     </insert>
 
@@ -54,7 +54,6 @@
         gift_total_qty = #{gift_total_qty},
         gift_max_qty_per_person = #{gift_max_qty_per_person},
         gift_ship_due_date = #{gift_ship_due_date},
-        gift_ship_need_yn = #{gift_ship_need_yn},
         gift_money = #{gift_money},
         gift_curr_qty = #{gift_curr_qty}
         WHERE gift_id = #{gift_id}

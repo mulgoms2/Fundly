@@ -58,7 +58,6 @@ class ItemServiceImplTest2 {
                 .gift_total_qty(null)
                 .gift_max_qty_per_person(null)
                 .gift_ship_due_date(LocalDateTime.now())
-                .gift_ship_need_yn("y")
                 .gift_money(30000)
                 .gift_curr_qty(null)
                 .build();
@@ -66,7 +65,7 @@ class ItemServiceImplTest2 {
 
         dto = GiftItemDetailDto.builder()
                 .item_id(1)
-                .gift_id(1)
+                .gift_id("1")
                 .item_qty(3)
                 .build();
         mapper.insert(dto);
@@ -78,14 +77,14 @@ class ItemServiceImplTest2 {
                 .gift_total_qty(null)
                 .gift_max_qty_per_person(null)
                 .gift_ship_due_date(LocalDateTime.now())
-                .gift_ship_need_yn("y")
+//                .gift_ship_need_yn("y")
                 .gift_money(30000)
                 .gift_curr_qty(null)
                 .build();
         giftMapper.insert(giftDto);
         dto = GiftItemDetailDto.builder()
                 .item_id(1)
-                .gift_id(2)
+                .gift_id("2")
                 .item_qty(2)
                 .build();
         mapper.insert(dto);
@@ -98,14 +97,14 @@ class ItemServiceImplTest2 {
                 .gift_total_qty(null)
                 .gift_max_qty_per_person(null)
                 .gift_ship_due_date(LocalDateTime.now())
-                .gift_ship_need_yn("y")
+//                .gift_ship_need_yn("y")
                 .gift_money(30000)
                 .gift_curr_qty(null)
                 .build();
         giftMapper.insert(giftDto);
         dto = GiftItemDetailDto.builder()
                 .item_id(1)
-                .gift_id(3)
+                .gift_id("3")
                 .item_qty(1)
                 .build();
         mapper.insert(dto);
@@ -127,7 +126,7 @@ class ItemServiceImplTest2 {
         itemDto = itemService.getItem(1);
         assertEquals(itemDto,null);
         for(int i=1; i<=3; i++){
-            giftDto = giftMapper.select(1);
+            giftDto = giftMapper.select("1");
             assertEquals(giftDto, null);
         }
     }

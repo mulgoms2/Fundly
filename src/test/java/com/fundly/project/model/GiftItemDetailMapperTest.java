@@ -29,7 +29,7 @@ class GiftItemDetailMapperTest {
         int giftCnt = mapper.countGiftByItem(1);
         assertEquals(giftCnt,2);
         dto = GiftItemDetailDto.builder()
-                .gift_id(3)
+                .gift_id("3")
                 .item_id(1)
                 .item_qty(2)
                 .build();
@@ -44,16 +44,16 @@ class GiftItemDetailMapperTest {
     @SneakyThrows
     @DisplayName("특정 선물에 몇개의 아이템이 있는지")
     void countItemByGift() {
-        int itmCnt = mapper.countItemByGift(1);
+        int itmCnt = mapper.countItemByGift("1");
         assertEquals(itmCnt,5);
         dto = GiftItemDetailDto.builder()
-                .gift_id(1)
+                .gift_id("1")
                 .item_id(7)
                 .item_qty(3)
                 .build();
         int rowCnt = mapper.insert(dto);
         assertEquals(rowCnt,1);
-        itmCnt = mapper.countItemByGift(1);
+        itmCnt = mapper.countItemByGift("1");
         assertEquals(itmCnt,6);
     }
 
@@ -61,17 +61,17 @@ class GiftItemDetailMapperTest {
     @SneakyThrows
     @DisplayName("특정 선물의 모든 아이템 리스트")
     void selectItemDetail() {
-        List<GiftItemDetailDto> list  = mapper.selectItemDetail(1);
+        List<GiftItemDetailDto> list  = mapper.selectItemDetail("1");
         assertEquals(list.size(),5);
         log.error("************list={}",list);
         dto = GiftItemDetailDto.builder()
-                .gift_id(1)
+                .gift_id("1")
                 .item_id(7)
                 .item_qty(3)
                 .build();
         int rowCnt = mapper.insert(dto);
         assertEquals(rowCnt,1);
-        list = mapper.selectItemDetail(1);
+        list = mapper.selectItemDetail("1");
         log.error("***********list={}",list);
         assertEquals(list.size(),6);
 
@@ -81,11 +81,11 @@ class GiftItemDetailMapperTest {
     @SneakyThrows
     @DisplayName("특정 아이템을 포함한 선물 리스트")
     void selectGift() {
-        List<Integer> list = mapper.selectGift(1);
+        List<String> list = mapper.selectGift(1);
         log.error("list={}",list);
         assertEquals(list.size(),2);
         dto = GiftItemDetailDto.builder()
-                .gift_id(3)
+                .gift_id("3")
                 .item_id(1)
                 .item_qty(2)
                 .build();
@@ -102,7 +102,7 @@ class GiftItemDetailMapperTest {
     @DisplayName("특정 선물에 해당하는 아이템 insert")
     void insert() {
         dto = GiftItemDetailDto.builder()
-                .gift_id(1)
+                .gift_id("1")
                 .item_id(6)
                 .item_qty(3)
                 .build();
@@ -115,7 +115,7 @@ class GiftItemDetailMapperTest {
     @SneakyThrows
     @DisplayName("선물 수정시 아이템 update")
     void update() {
-        List<GiftItemDetailDto> list = mapper.selectItemDetail(1);
+        List<GiftItemDetailDto> list = mapper.selectItemDetail("1");
         dto = list.get(0);
         dto.setItem_qty(5);
         int rowCnt = mapper.update(dto);
@@ -128,12 +128,12 @@ class GiftItemDetailMapperTest {
     @SneakyThrows
     @DisplayName("특정 선물의 특정 아이템 상세 지우기")
     void delete() {
-        List<GiftItemDetailDto> list = mapper.selectItemDetail(1);
+        List<GiftItemDetailDto> list = mapper.selectItemDetail("1");
         assertEquals(list.size(),5);
         dto = list.get(0);
         int rowCnt = mapper.delete(dto.getGift_item_id());
         assertEquals(rowCnt,1);
-        list = mapper.selectItemDetail(1);
+        list = mapper.selectItemDetail("1");
         assertEquals(list.size(),4);
     }
 
@@ -141,11 +141,11 @@ class GiftItemDetailMapperTest {
     @SneakyThrows
     @DisplayName("해당 선물에 속한 아이템 상세 모두 삭제")
     void deleteAllByGift() {
-        List<GiftItemDetailDto> list = mapper.selectItemDetail(1);
+        List<GiftItemDetailDto> list = mapper.selectItemDetail("1");
         assertEquals(list.size(),5);
-        int rowCnt = mapper.deleteAllByGift(1);
+        int rowCnt = mapper.deleteAllByGift("1");
         assertEquals(rowCnt,5);
-        list = mapper.selectItemDetail(1);
+        list = mapper.selectItemDetail("1");
         assertEquals(list.size(),0);
     }
 
@@ -160,7 +160,7 @@ class GiftItemDetailMapperTest {
 
         for(int i=0; i<10; i++){
             dto = GiftItemDetailDto.builder()
-                    .gift_id(i/5<1?1:2)
+                    .gift_id(i/5<1?"1":"2")
                     .item_id(i%5+1)
                     .item_qty(getRandomQty())
                     .build();
