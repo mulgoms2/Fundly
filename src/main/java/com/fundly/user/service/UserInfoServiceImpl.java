@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
-    private UserInfoDao userInfoDao;
+    private final UserInfoDao userInfoDao;
 
-    public UserInfoServiceImpl(){}
+//    public UserInfoServiceImpl(){}
     @Autowired
     public UserInfoServiceImpl(UserInfoDao userInfoDao){
         this.userInfoDao = userInfoDao;

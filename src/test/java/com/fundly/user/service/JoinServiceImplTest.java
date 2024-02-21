@@ -1,15 +1,11 @@
 package com.fundly.user.service;
 
-import com.fundly.user.model.UserJoinDao;
-import com.persistence.dto.UserDto;
+import com.fundly.user.dto.UserJoinDto;
 import config.RootContext;
 import config.ServletContext;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,13 +29,13 @@ class JoinServiceImplTest {
 //    @SneakyThrows
     @DisplayName("이메일 중복 확인")
     void emailcheck(){
-        UserDto userdto = UserDto.builder()
+        UserJoinDto userJoinDto = UserJoinDto.builder()
                 .user_pwd("qwerrr123!")
 //                .user_email("a12345@test.com")
                 .user_email("ab33c@test.com")
                 .build();
         try {
-            int cnt = joinService.emailCheck(userdto);
+            int cnt = joinService.emailCheck(userJoinDto);
             assertEquals(1,cnt);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -48,14 +44,14 @@ class JoinServiceImplTest {
     @Test
     @DisplayName("회원가입 service 체크")
 //    @SneakyThrows
-//    @Transactional
+    @Transactional
 //    @Rollback
     void insert()   {
-        UserDto userdto = UserDto.builder()
+        UserJoinDto userJoinDto = UserJoinDto.builder()
                 .user_id("a12345@test.com")
                 .user_pwd("qwerrr123!")
                 .user_name("테스터")
-                .user_email("a12345@test.com")
+                .user_email("a123")
                 .user_join_date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .site_term_agree_yn("Y")
                 .p_Info_agree_yn("Y")
@@ -67,13 +63,13 @@ class JoinServiceImplTest {
                 .build();
 
         try {
-            int cnt = joinService.userJoin(userdto);
+            int cnt = joinService.userJoin(userJoinDto);
             assertEquals(1,cnt);
             System.out.println("cnt = " + cnt);
 
-            userdto.setUser_email("a@test.com");
-            int cnt2 = joinService.emailCheck(userdto);
-            assertEquals(1,cnt2);
+            userJoinDto.setUser_email("a@test.com");
+            int cnt2 = joinService.emailCheck(userJoinDto);
+            assertEquals(0,cnt2);
             System.out.println("cnt2 = " + cnt2);
 
         } catch (Exception e) {

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.fundly.user.model.UserLoginDao">
     <!-- userInfo -->
-    <select id="selectUser" parameterType="UserDto" resultType="UserDto">
+    <select id="selectUser" parameterType="UserLoginDto" resultType="UserLoginDto">
         SELECT  user_name,
                 user_pwd,
                 user_email,

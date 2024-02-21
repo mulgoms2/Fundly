@@ -1,8 +1,8 @@
 package com.fundly.user.service;
 
-import com.persistence.dto.UserDto;
+import com.fundly.user.dto.UserJoinDto;
 
 public interface JoinService {
-    int userJoin(UserDto userDto) throws Exception;
-    int emailCheck(UserDto userdto) throws Exception;
+    int userJoin(UserJoinDto userJoinDto) throws Exception;
+    int emailCheck(UserJoinDto userJoinDto) throws Exception;
 }
