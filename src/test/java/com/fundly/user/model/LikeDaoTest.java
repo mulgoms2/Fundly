@@ -55,7 +55,7 @@ class LikeDaoTest {
     @SneakyThrows
     @DisplayName("좋아요목록삭제")
     void deleteAllLikeTest() {
-        int result = likedao.deleteAllLike();
+        int result = likedao.deleteAllLike(likedto);
         System.out.println("result = " + result);
     }
 

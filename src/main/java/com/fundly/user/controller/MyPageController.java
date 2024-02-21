@@ -103,15 +103,18 @@ public class MyPageController {
             model.addAttribute("user_name",user_name);
             model.addAttribute("user_email",user_email);
 
-            // 유저 아이디 통해 좋아요 목록 불러오기
+            // 유저 아이디 통해 좋아요 목록 불러오기 (디폴트 : 진행중인 프로젝트)
             LikeDto likedto = new LikeDto(user_email);
-            List<ProjectDto> likes = likeservice.getLikeListWithPj(likedto);
-//            List<LikeDto> likes = likeservice.getLikeList(likedto);
-            model.addAttribute("likes", likes);
+            List<ProjectDto> likes = likeservice.getListWithPjStatus(likedto,"ing");
 
-            //좋아요 목록에 있는 프로젝트 정보 불러오기
-//            ProjectDto pjs = pjdao.get
-//            model.addAttribute("pjs", pjs);
+            // 종료된 프로젝트 좋아요 목록
+            // List<ProjectDto> likes = likeservice.getListWithPjStatus(likedto,"end");
+
+            // 전체 프로젝트 좋아요 목록
+            // List<ProjectDto> likes = likeservice.getListWithPjEntire(likedto);
+
+            log.error("\n\n\n likes=" + likes+ "\n\n\n");
+            model.addAttribute("likes", likes);
 
         } catch (Exception e) {
 //

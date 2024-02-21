@@ -11,7 +11,9 @@
 <div class="main" id="likesMain">
     <div class="likesTitle">
         <div class="title">관심 프로젝트</div>
-        <%--        TODO: likeCnt => 유저의 like_status = 1인 likes의 count(*) --%>
+
+<%--    TODO: likeCnt => 유저의 like_status = 1인 likes의 count(*) --%>
+
         <span class="likesCnt">4</span>개의 프로젝트를 좋아합니다.
     </div>
     <div class="likesTap">
@@ -39,7 +41,7 @@
             <div class="projectCardWrap">
                 <c:forEach var="likes" items="${likes}">
                 <div class="cardWrap">
-                    <div class="banBox"><!--2번 배너-->
+                    <div class="banBox">
                         <div class="mnBan">
                             <div class="banImg after">
                                 <a href="#">
@@ -51,24 +53,28 @@
                             <div class="txtGr">
                                 <div class="subTxt">
                                              <span>
-                                                <a href="#">캐릭터·굿즈</a>
-<%--                                                <a href="#">${likes.pj_ctg}</a>--%>
+                                                <a href="#">${likes.sub_ctg}</a>
                                             </span>
                                     <span class="bar">
-                                                <a href="#">${likes.pj_sel_id}</a>
+                                                <a href="#">${likes.pj_sel_name}</a>
                                             </span>
                                 </div>
                                 <div class="detailTxt">
                                     <div class="subTit">
-                                        <a href="#">${likes.pj_id}</a>
-<%--                                            ${likes.like_status}--%>
-                                    </div>
-                                    <div class="subDt">
                                         <a href="#">${likes.pj_long_title}</a>
                                     </div>
+                                    <div class="subDt">
+                                        <a href="#">${likes.pj_intro}</a>
+                                    </div>
                                     <div class="psTag">
+
+                            <%--        TODO: fund_per => curr_fund_money / fund_goal_money * 100 --%>
+
                                         <span class="per">100%</span>
-                                        <span class="won"><em>${likes.curr_fund_money}</em>원</span>
+                                        <span class="won"><em>${likes.curr_fund_money}</em> 원</span>
+
+                            <%--        TODO: left_dtm => fund_end_dtm - fund_str_dtm --%>
+
                                         <span class="day">20일 남음</span>
                                     </div>
                                     <div class="percentBar"></div>
