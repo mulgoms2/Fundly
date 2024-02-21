@@ -1,25 +1,20 @@
 package com.fundly.user.model;
 
-import com.persistence.dto.SelBuyMsgDetailsDto;
-import com.persistence.dto.UserDto;
+import com.fundly.user.dto.UserJoinDto;
 import config.RootContext;
 import config.ServletContext;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 @Slf4j
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
@@ -38,9 +33,9 @@ class UserJoinDaoTest {
     @DisplayName("회원 이메일 중복 체크")
     void emailCheck() {
         try {
-            UserDto userDto = UserDto.builder().user_email("111@111.com").build();
+            UserJoinDto userJoinDto = UserJoinDto.builder().user_email("111@111.com").build();
 
-            int cnt = userJoinDao.emailCheck(userDto);
+            int cnt = userJoinDao.emailCheck(userJoinDto);
 
             assertEquals(1,cnt);
         } catch (Exception e) {
@@ -55,7 +50,7 @@ class UserJoinDaoTest {
 //    @Rollback(true)
     void insert() {
         try {
-            UserDto userdto = UserDto.builder()
+            UserJoinDto userJoinDto = UserJoinDto.builder()
                     .user_id("abc123@test.com")
                     .user_pwd("1234qwer!")
                     .user_name("홍길동")
@@ -70,14 +65,14 @@ class UserJoinDaoTest {
                     .dba_reg_id("abc123@test.com")
                     .build();
 
-            String userInPwd = userdto.getUser_pwd();
+            String userInPwd = userJoinDto.getUser_pwd();
             String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
 //            log.error("encoderPwd = " +encoderPwd);
 //            log.error("\n\n");
 
-            userdto.setUser_pwd(encoderPwd);
+            userJoinDto.setUser_pwd(encoderPwd);
 
-            int cnt = userJoinDao.insert(userdto);
+            int cnt = userJoinDao.insert(userJoinDto);
 
             assertEquals(1, cnt);
 

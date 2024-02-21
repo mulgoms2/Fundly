@@ -120,7 +120,7 @@
         }, 1);
     };
 
-    const sendImg = () => {
+    const sendImg = async() => {
 
         if (document.querySelector("#img").value === "") {
             return;
@@ -140,11 +140,25 @@
 
         document.querySelector("#img").value = "";
 
-        const result = fetch("/chat/file", {
+        // fetch의 결과는 Promise<Result> 이다.
+        // await를 통해 Result 를 프로미스로부터 꺼내온다.
+        // result 객체의 json() 메서드는 Promise<서버로부터 얻은값> 을 리턴한다.
+        // await를 통해 프로미스가 품고있는 서버로부터 얻은 값을 꺼낸다.
+        // const result = await (await fetch("/chat/file", {
+        //     method: "POST",
+        //     headers: {},
+        //     body: formData
+        // })).json();
+
+        const result = await fetch("/chat/file", {
             method: "POST",
             headers: {},
             body: formData
         });
+
+        if (!result.ok) {
+            alert("전송할 수 없는 파일입니다");
+        }
     };
 
     // 메시지 생성시 하단 스크롤 유지

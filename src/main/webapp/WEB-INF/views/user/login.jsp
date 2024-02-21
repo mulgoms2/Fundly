@@ -32,12 +32,14 @@
                     <h2>로그인</h2>
                     <form id="usLoginForm">
                         <div class ="emailView">
-                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" placeholder="이메일 입력" autocomplete="off" spellcheck="false"/>
+<%--                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" autocomplete="off" spellcheck="false"/>--%>
+                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" spellcheck="false"/>
                             <div id="msgEmail" class="msg"></div>
                         </div>
 
                         <div class="usPwd">
-                            <input type="password" id="user_pwd" name="user_pwd" placeholder="비밀번호 입력" />
+<%--                            <input type="password" id="user_pwd" name="user_pwd" value="${userLoginDto.user_pwd}" placeholder="비밀번호 입력" autocomplete="new-password"/>--%>
+                            <input type="password" id="user_pwd" name="user_pwd" value="${userLoginDto.user_pwd}" placeholder="비밀번호 입력" />
 
                             <div class="eyes">
                                 <div class="password-toggle" id="togglePwd"></div>
@@ -116,17 +118,17 @@
     usLoginForm.addEventListener("submit",function(e) {
         e.preventDefault();
 
-        if(user_email.value.length === 0) {
-            setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
-            user_email.focus();
-            return false;
-        }
-
-        if(user_pwd.value.length === 0){
-            setMessage('비밀번호를 입력하세요.', "user_pwd", "msgPwd", "red");
-            user_pwd.focus();
-            return false;
-        }
+        // if(user_email.value.length === 0) {
+        //     setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
+        //     user_email.focus();
+        //     return false;
+        // }
+        //
+        // if(user_pwd.value.length === 0){
+        //     setMessage('비밀번호를 입력하세요.', "user_pwd", "msgPwd", "red");
+        //     user_pwd.focus();
+        //     return false;
+        // }
         usLoginForm.action = '<c:url value="/login/login"/>';
         usLoginForm.method = 'POST';
         usLoginForm.submit();
@@ -142,12 +144,33 @@
     togglePwd.addEventListener('click', function () {
         if (user_pwd.type === 'password') {
             user_pwd.type = 'text';
-
-            togglePwd.style.backgroundImage = "<c:url value='/static/img/Icon-eye.png'/>";
+            togglePwd.style.backgroundImage = 'url("/static/img/Icon-private.png")';
         } else {
             user_pwd.type = 'password';
-            togglePwd.style.backgroundImage = "<c:url value='/static/img/Icon-private.png'/>";
+            togglePwd.style.backgroundImage = 'url("/static/img/Icon-eye.png")';
         }
     });
+
+    /* errmsg redirect */
+    const errmsg = "${errmsg}";
+    if (errmsg === "LOGIN_PWD_ERROR") alert("비밀번호를 확인해주세요.");
+    if (errmsg === "LOGIN_STATUS_ERROR") alert("비활성 유저입니다.");
+    if (errmsg === "LOGIN_EMAIL_ERROR") alert("가입 정보가 없습니다.");
+
+    /* valid errorMsg */
+    const validUserEmail = '${valid_user_email}';
+    const validUserPwd = '${valid_user_pwd}';
+
+    // alert("validUserEmail =" + validUserEmail+ " ,validUserName = "
+    //     + validUserName+", validUserPwd =" + validUserPwd+ " ,validUserPwdConfirm = " + validUserPwdConfirm)
+
+    if(validUserEmail!=='') {
+        setMessage(validUserEmail, "user_email", "msgEmail", "red");
+    }
+
+    if(validUserPwd!=='') {
+        setMessage(validUserPwd, "user_pwd", "msgPwd", "red");
+    }
+
 </script>
 </html>

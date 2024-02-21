@@ -1,6 +1,7 @@
 package com.fundly.user.service;
 
 import com.persistence.dto.LikeDto;
+import com.persistence.dto.ProjectDto;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ public interface LikeService {
 
     // 찜한 목록 전체 가져오기
     List<LikeDto> getLikeList(LikeDto likedto) throws Exception;
+
+    List<ProjectDto> getLikeListWithPj(LikeDto likedto) throws Exception;
 
     List<LikeDto> getPage(Map map) throws Exception;
 
