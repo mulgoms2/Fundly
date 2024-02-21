@@ -28,8 +28,11 @@ public interface LikeDao {
     //다시 좋아요
     int reLike(LikeDto likedto) throws Exception;
 
-    //전체목록 삭제
-    int deleteAllLike() throws Exception;
+    //프로젝트 삭제시 좋아요목록에도 삭제
+    int deleteLike(LikeDto likedto) throws Exception;
+
+    //프로젝트 삭제시 좋아요목록에도 삭제
+    int deleteAllLike(LikeDto likedto) throws Exception;
 
     List<LikeDto> selectPage(Map map) throws Exception;
 }

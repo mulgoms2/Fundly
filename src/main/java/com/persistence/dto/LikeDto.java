@@ -26,4 +26,9 @@ public class LikeDto {
     private String dba_reg_id;
     private Date dba_mod_dtm;
     private String dba_mod_id;
+
+    // 회원의 좋아요 목록을 불러올 때의 생성자
+    public LikeDto(@NonNull String user_id) {
+        this.user_id = user_id;
+    }
 }

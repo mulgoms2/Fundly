@@ -4,5 +4,17 @@
 
 <mapper namespace="com.fundly.project.model.ProjectMapper">
 
+    <select id="getForLikes" resultType="ProjectDto">
+        select pj_id,pj_sel_id,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
+               fund_goal_money,curr_fund_money,fund_str_dtm,fund_end_dtm
+        from PJ
+        where pj_id = #{pj_id}
+    </select>
+
+    <update id="changeLikeCnt">
+        update PJ
+        set pj_like_cnt = #{pj_like_cnt} + 1
+        where pj_id = #{pj_id}
+    </update>
 
 </mapper>

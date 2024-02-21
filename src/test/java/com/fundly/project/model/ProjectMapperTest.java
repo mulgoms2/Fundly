@@ -31,7 +31,7 @@ class ProjectMapperTest {
     @Test
     @SneakyThrows
     void changeLikeCntTest() {
-        pjdto = new ProjectDto("P5040");
+//        pjdto = new ProjectDto("P5040");
         pjdao.changeLikeCnt(pjdto);
     }
 }
