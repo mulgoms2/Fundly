@@ -11,6 +11,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ProjectMapper {
+    ProjectDto getForLikes(String pj_id) throws Exception;
+    int changeLikeCnt(ProjectDto pjdto) throws Exception;
     int deleteAll();
     int insert(ProjectDto project) throws DuplicateKeyException;
     int count();

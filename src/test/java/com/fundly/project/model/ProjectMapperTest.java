@@ -218,5 +218,4 @@ class ProjectMapperTest {
         assertEquals(beforeDelete, afterCount);
         assertEquals(0, delete);
     }
-
 }
