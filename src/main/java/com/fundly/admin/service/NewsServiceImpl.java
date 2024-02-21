@@ -54,5 +54,19 @@ public class NewsServiceImpl implements NewsService{
         return newsDao.update(dto);
     }
 
+    @Override
+    public List<NewsDto> selectPage(Integer page,Integer pageSize) throws Exception {
+        Map map = new HashMap();
+        map.put("offset",(page-1)*10);
+        map.put("pageSize",pageSize);
 
+        return newsDao.selectPage(map);
+    }
+
+    @Override
+    public List<NewsDto> searchNews(String news_title) throws Exception {
+        news_title = '%'+news_title+'%';
+        System.out.println("서비스에서뉴스타이틀"+news_title);
+        return  newsDao.search(news_title);
+    }
 }

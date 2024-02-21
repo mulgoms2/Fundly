@@ -297,6 +297,76 @@
     background-color: #fc7573;
 }
 
+/* 상품 상세 닫기 버튼 */
+.prdboxGrp .xBtnWrap {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    position: absolute;
+    top: 2px;
+    right: 5px;
+}
+.prdboxGrp .xBtnWrap .b-close::before,
+.prdboxGrp .xBtnWrap .b-close::after {
+    content: '';
+    height: 18px;
+    width: 2px;
+    position: absolute;
+    left: 8px;
+    top: 0px;
+    background: #9c9c9c;
+}
+
+/* 상품 상세 신고 팝업 */
+.popTit .popDesc {
+    width: 100%;
+    padding-top: 40px;
+    color: #3d3d3d;
+    font-size: 14px;
+    display: block;
+}
+.popScr .popBoxbtn {
+    width: 100%;
+    margin: 0px 0px 16px;
+    padding: 20px 30px;
+    text-align: left;
+    display: block;
+    background: transparent;
+    border-radius: 4px;
+    border: 1px solid #f0f0f0;
+    box-sizing: border-box;
+}
+.popBoxtit {
+    margin: 0px 0px 8px;
+    color: #0d0d0d;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+}
+.popBoxbtn:active {
+    border: 1px solid #f86453;
+}
+.popBoxbtn span {
+    width: 100%;
+    padding-left: 20px;
+    color: #6d6d6d;
+    font-size: 13px;
+    line-height: 22px;
+    position: relative;
+    display: block;
+}
+.popBoxbtn span::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: 8px;
+    background: #6d6d6d;
+    border-radius: 50%;
+}
+
 /* 스와이퍼 */
 .swiper {
     width: 100%;

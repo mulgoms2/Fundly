@@ -7,6 +7,11 @@ body {
     height: 100%;
     overflow: hidden;
 }
+.pg{
+    display: flex;
+    margin: 20px 300px 40px;
+    justify-content: space-around;
+}
 
 .conWrap {
     width: calc(100% - 240px);

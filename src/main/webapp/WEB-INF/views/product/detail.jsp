@@ -9,6 +9,7 @@
     <title>텀블벅</title>
     <link rel="stylesheet" href="/static/main/style.css">
     <link rel="stylesheet" href="/static/main/common.css">
+    <link rel="stylesheet" href="/static/product/css/detail.css">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery-ui.js"></script>
@@ -16,6 +17,7 @@
     <script type="text/javascript" src="/static/product/vendor/moment.min.js"></script>
     <script type="text/javascript" src="/static/product/vendor/daterangepicker.js"></script>
     <script type="text/javascript" src="/static/product/common.js"></script>
+    <script type="text/javascript" src="/static/product/detail.js"></script>
     <script type="text/javascript" src="/static/product/likeDetail.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -200,8 +202,8 @@
                             </div>
                         </div>
                         <div class="scrMain">
-                            <div class="strCard">
-                                <div class="strIntro" id="section1">
+                            <div class="strCard" id="section1">
+                                <div class="strIntro">
                                     <div class="strTit">프로젝트 소개</div>
                                     <h2 class="strSub">
                                         펀딩 오픈 1분 만에 👀<br>
@@ -354,13 +356,13 @@
                                         <div class="crowdTit">크라우드 펀딩에 대한 안내</div>
                                         <dl>
                                             <dt>
-                                                <img alt="" src="../img/prjone.png">후원은 구매가 아닌 창의적인 계획에 자금을 지원하는 일입니다.
+                                                <img alt="" src="/static/img/prjone.png">후원은 구매가 아닌 창의적인 계획에 자금을 지원하는 일입니다.
                                             </dt>
                                             <dd>전자상거래법상 통신판매는 소비자의 청약 전 규격, 제조연월일 등 구체적인 상품정보가 제공 가능한 것을 대상으로 합니다. 따라서 텀블벅에서의 후원은 통신판매에 해당하지 않고, 전자상거래법 및 소비자보호규정(수령 후 7일 내 청약철회 등)이 적용되지 않습니다.</dd>
                                         </dl>
                                         <dl>
                                             <dt>
-                                                <img alt="" src="../img/prjtwo.png">프로젝트는 계획과 달리 진행될 수 있습니다.
+                                                <img alt="" src="/static/img/prjtwo.png">프로젝트는 계획과 달리 진행될 수 있습니다.
                                             </dt>
                                             <dd>
                                                 예상을 뛰어넘는 멋진 결과가 나올 수 있지만 진행 과정에서 계획이 지연, 변경되거나 무산될 수도 있습니다. 본 프로젝트를 완수할 책임과 권리는 창작자에게 있습니다.
@@ -406,7 +408,7 @@
                                 <div class="crtGr">
                                     <div class="crtPrf">
                                         <a href="#" class="prfImg">
-                                            <img src="../img/seili.webp" alt="">
+                                            <img src="/static/img/seili.webp" alt="">
                                         </a>
                                         <div class="crtIf">
                                             <div class="crtName">
@@ -446,55 +448,124 @@
                                         </a>
                                     </div>
                                     <div class="revwWrap">
-                                            <span class="revwTag">
-                                                <span>퀄리티가 좋아요</span>
-                                                <strong>411</strong>
-                                            </span>
                                         <span class="revwTag">
-                                                <span>특별해요</span>
-                                                <strong>337</strong>
-                                            </span>
+                                            <span>퀄리티가 좋아요</span>
+                                            <strong>411</strong>
+                                        </span>
                                         <span class="revwTag">
-                                                <span>즐거움을 줘요</span>
-                                                <strong>308</strong>
-                                            </span>
+                                            <span>특별해요</span>
+                                            <strong>337</strong>
+                                        </span>
+                                        <span class="revwTag">
+                                            <span>즐거움을 줘요</span>
+                                            <strong>308</strong>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="gftSlct">
                             <h3>선물 선택</h3>
+                            <!-- <div class="gftslctGroup" style="display: none;">
+                                <div class="gftslctTit">선물</div>
+                                <div class="gftPrdt">
+                                    <div class="prdtSlct" id="prdtSuppot">
+                                        <div class="prdtBox">
+                                            <div class="prdboxGrp">
+                                                <div class="prdboxTit">선물 없이 후원하기</div>
+                                                <div class="xBtnWrap">
+                                                    <button class="b-close btnSlct">닫기</button>
+                                                </div>
+                                            </div>
+                                            <div class="prdDtail flEnd">
+                                                <div class="prdDtlst">
+                                                    <div class="prdVal">
+                                                        <span id="formattedPrice">29800</span>원
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="prdPlus">
+                                        <div class="plusSup">
+                                            <div class="supTit">
+                                                추가 후원금<span>(선택)</span>
+                                            </div>
+                                        </div>
+                                        <div class="supIpt">
+                                            <input type="number" id="valueIpt" min="1" max="10000000">
+                                            <button></button>
+                                        </div>
+                                        <div class="supDt">
+                                            *추가 후원금으로 프로젝트를 응원해주세요.
+                                        </div>
+                                    </div>
+                                    <div class="twinBtnwrap">
+                                        <button class="gftAddbtn">선물 추가하기</button>
+                                        <button class="gftCalcbtn">
+                                            총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> -->
                             <div class="gftslctGroup">
                                 <div class="gftslctTit">선물</div>
                                 <div class="gftPrdt">
-                                    <div class="prdtBox">
-                                        <div class="prdboxTit">
-                                            [텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함
-                                        </div>
-                                        <ul class="prdList">
-                                            <li>블로썸 오드퍼퓸(50ML)(x1)</li>
-                                            <li>세이리 미니퍼퓸(3ML)(x1)</li>
-                                            <li>일러스트 엽서(x1)</li>
-                                        </ul>
-                                        <div class="prdDtlst">
-                                            <div class="prdCount">
-                                                <button class="">
-
-                                                </button>
-                                                <input readonly type="number" value="1">
-                                                <button class="">
-
-                                                </button>
+                                    <div class="prdtSlct" id="prdtPayment">
+                                        <div class="prdtBox">
+                                            <div class="prdboxGrp">
+                                                <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함</div>
+                                                <div class="xBtnWrap">
+                                                    <button class="b-close btnSlct">닫기</button>
+                                                </div>
                                             </div>
-                                            <div class="prdVal">
-
+                                            <div class="prdDtail">
+                                                <ul class="prdList">
+                                                    <li>블로썸 오드퍼퓸(50ML)(x1)</li>
+                                                    <li>세이리 미니퍼퓸(3ML)(x1)</li>
+                                                    <li>일러스트 엽서(x1)</li>
+                                                </ul>
+                                                <div class="prdDtlst">
+                                                    <div class="prdCount">
+                                                        <button id="decrBtn">
+                                                            -
+                                                        </button>
+                                                        <input readonly type="number" id="numIpt" value="1">
+                                                        <button id="incrBtn">
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                    <div class="prdVal">
+                                                        <span id="formattedPrice">29800</span>원
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="prdPlus">
+                                        <div class="plusSup">
+                                            <div class="supTit">
+                                                추가 후원금<span>(선택)</span>
+                                            </div>
+                                        </div>
+                                        <div class="supIpt">
+                                            <input type="number" id="valueIpt" min="1" max="10000000">
+                                            <button></button>
+                                        </div>
+                                        <div class="supDt">
+                                            *추가 후원금으로 프로젝트를 응원해주세요.
+                                        </div>
+                                    </div>
+                                    <div class="twinBtnwrap">
+                                        <button class="gftAddbtn">선물 추가하기</button>
+                                        <button class="gftCalcbtn">
+                                            총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="gftBox">
-                                <div class="gftEl">
+                                <div class="gftEl" id="gftnotFnd">
                                     <div class="gftVal">
                                         1,000원 +
                                     </div>
@@ -504,13 +575,13 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                            <span class="slctGft">
-                                                <i class="fa-solid fa-check"></i>
-                                                2개 선택
-                                            </span>
+                                        <span class="slctGft">
+                                            <i class="fa-solid fa-check"></i>
+                                            2개 선택
+                                        </span>
                                         <span class="slctRmn">
-                                                28개 남음
-                                            </span>
+                                            28개 남음
+                                        </span>
                                     </div>
                                     <div class="gftVal">
                                         29,800원 +
@@ -570,13 +641,13 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                            <span class="slctGft">
-                                                <i class="fa-solid fa-check"></i>
-                                                10개 선택
-                                            </span>
+                                        <span class="slctGft">
+                                            <i class="fa-solid fa-check"></i>
+                                            10개 선택
+                                        </span>
                                         <span class="slctRmn">
-                                                10개 남음
-                                            </span>
+                                            10개 남음
+                                        </span>
                                     </div>
                                     <div class="gftVal">
                                         65,700원 +
@@ -636,13 +707,13 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                            <span class="slctGft">
-                                                <i class="fa-solid fa-check"></i>
-                                                8개 선택
-                                            </span>
+                                        <span class="slctGft">
+                                            <i class="fa-solid fa-check"></i>
+                                            8개 선택
+                                        </span>
                                         <span class="slctRmn">
-                                                2개 남음
-                                            </span>
+                                            2개 남음
+                                        </span>
                                     </div>
                                     <div class="gftVal">
                                         149,500원 +
@@ -675,13 +746,13 @@
                                 </div>
                                 <div class="gftEl soldOut">
                                     <div class="spnLine">
-                                            <span class="slctGft">
-                                                <i class="fa-solid fa-check"></i>
-                                                100개 선택
-                                            </span>
+                                        <span class="slctGft">
+                                            <i class="fa-solid fa-check"></i>
+                                            100개 선택
+                                        </span>
                                         <span class="slctRmn">
-                                                선착순 마감
-                                            </span>
+                                            선착순 마감
+                                        </span>
                                     </div>
                                     <div class="gftVal">
                                         34,500원 +
@@ -706,13 +777,13 @@
                                 </div>
                                 <div class="gftEl soldOut">
                                     <div class="spnLine">
-                                            <span class="slctGft">
-                                                <i class="fa-solid fa-check"></i>
-                                                50개 선택
-                                            </span>
+                                        <span class="slctGft">
+                                            <i class="fa-solid fa-check"></i>
+                                            50개 선택
+                                        </span>
                                         <span class="slctRmn">
-                                                선착순 마감
-                                            </span>
+                                            선착순 마감
+                                        </span>
                                     </div>
                                     <div class="gftVal">
                                         35,500원 +
@@ -746,534 +817,277 @@
                         <div class="cont on">
                             <div class="tabFlx">
                                 <div class="cardRow">
-                                    <div class="cardItem"><!--업데이트 작가 공지사항-->
-                                        <div class="crtPrf">
-                                            <a href="#" class="prfImg">
-                                                <img src="../img/seili.webp" alt="">
-                                            </a>
-                                            <div class="crtIf">
-                                                <div class="crtName">
-                                                    <a href="#">세이리 SEI LI</a>
-                                                </div>
-                                                <div class="crtStatus">
-                                                    <span class="crtJob">창작자</span>
-                                                    <span class="crtLmt">후원자 공개</span>
-                                                </div>
+                                    <div class="commuRead">
+                                        <div class="commuNtc">
+                                            <div class="crtUpdimg">
+                                                <i class="fa-solid fa-thumbtack fa-xs" style="color: #eb4e38;"></i>
+                                                <span class="crtUpd">창작자 업데이트</span>
                                             </div>
-                                        </div>
-                                        <div class="crtWrt">
-                                            <div class="crtWdt">
-                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
-                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
-                                            </div>
-                                        </div>
-                                        <div class="wrtInfo">
-                                            <div class="crtDate">
-                                                <span class="wrtDate">2024.01.31</span>
-                                                <span class="wrtStt">수정됨</span>
-                                            </div>
-                                            <div class="crtRepl">
-                                                <button class="crtCmmt">
-                                                    댓글&nbsp;<span>2</span>개
-                                                </button>
-                                                <div class="crtLike">
-                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
-                                                    <span>3</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cardItem">
-                                        <div class="crtPrf">
-                                            <a href="#" class="prfImg">
-                                                <img src="../img/seili.webp" alt="">
-                                            </a>
-                                            <div class="crtIf">
-                                                <div class="crtName">
-                                                    <a href="#">세이리 SEI LI</a>
-                                                </div>
-                                                <div class="crtStatus">
-                                                    <span class="crtJob">창작자</span>
-                                                    <span class="crtLmt">후원자 공개</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="crtWrt">
-                                            <div class="crtWdt">
-                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
-                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
-                                            </div>
-                                        </div>
-                                        <div class="wrtInfo">
-                                            <div class="crtDate">
-                                                <span class="wrtDate">2024.01.31</span>
-                                                <span class="wrtStt">수정됨</span>
-                                            </div>
-                                            <div class="crtRepl">
-                                                <button class="crtCmmt">
-                                                    댓글&nbsp;<span>2</span>개
-                                                </button>
-                                                <div class="crtLike">
-                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
-                                                    <span>3</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cardItem">
-                                        <div class="crtPrf">
-                                            <a href="#" class="prfImg">
-                                                <img src="../img/seili.webp" alt="">
-                                            </a>
-                                            <div class="crtIf">
-                                                <div class="crtName">
-                                                    <a href="#">세이리 SEI LI</a>
-                                                </div>
-                                                <div class="crtStatus">
-                                                    <span class="crtJob">창작자</span>
-                                                    <span class="crtLmt">후원자 공개</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="crtWrt">
-                                            <div class="crtWdt">
-                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
-                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
-                                            </div>
-                                        </div>
-                                        <div class="wrtInfo">
-                                            <div class="crtDate">
-                                                <span class="wrtDate">2024.01.31</span>
-                                                <span class="wrtStt">수정됨</span>
-                                            </div>
-                                            <div class="crtRepl">
-                                                <button class="crtCmmt">
-                                                    댓글&nbsp;<span>2</span>개
-                                                </button>
-                                                <div class="crtLike">
-                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
-                                                    <span>3</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cardItem">
-                                        <div class="crtPrf">
-                                            <a href="#" class="prfImg">
-                                                <img src="../img/seili.webp" alt="">
-                                            </a>
-                                            <div class="crtIf">
-                                                <div class="crtName">
-                                                    <a href="#">세이리 SEI LI</a>
-                                                </div>
-                                                <div class="crtStatus">
-                                                    <span class="crtJob">창작자</span>
-                                                    <span class="crtLmt">후원자 공개</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="crtWrt">
-                                            <div class="crtWdt">
-                                                <img class="lockImg" src="../img/lock.png" alt="자물쇠">
-                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
-                                            </div>
-                                        </div>
-                                        <div class="wrtInfo">
-                                            <div class="crtDate">
-                                                <span class="wrtDate">2024.01.31</span>
-                                                <span class="wrtStt">수정됨</span>
-                                            </div>
-                                            <div class="crtRepl">
-                                                <button class="crtCmmt">
-                                                    댓글&nbsp;<span>2</span>개
-                                                </button>
-                                                <div class="crtLike">
-                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
-                                                    <span>3</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gftInfo">
-                                    <div class="crtInfo">
-                                        <div class="crtBox">
-                                            <div class="crtTit">창작자 소개</div>
-                                            <div class="crtGr">
-                                                <div class="crtPrf">
-                                                    <a href="#" class="prfImg">
-                                                        <img src="../img/seili.webp" alt="">
-                                                    </a>
-                                                    <div class="crtIf">
-                                                        <div class="crtName">
-                                                            <a href="#">세이리 SEI LI</a>
-                                                        </div>
-                                                        <div class="lastLogin">
-                                                            <span>마지막 로그인</span>
-                                                            <b>1시간 전</b>
+                                            <div class="commuBox">
+                                                <div class="crtGr commuBoard">
+                                                    <div class="crtPrf">
+                                                        <a href="#" class="prfImg">
+                                                            <img src="/static/img/seili.webp" alt="">
+                                                        </a>
+                                                        <div class="crtIf">
+                                                            <div class="crtName">
+                                                                <a href="#">세이리 SEI LI</a>
+                                                            </div>
+                                                            <div class="crtGrade">
+                                                                <i class="fa-solid fa-star fa-xs" style="color: #f86453;"></i>
+                                                                <span class="crtGrname">창작자</span>
+                                                                <span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="crtDesc">
-                                                세이리는 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻은
-                                                조향을 하며 마치 작품을 선물하듯 향이 지니는 고유의 그림이 새겨져
-                                                있습니다. 저희가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의
-                                                방식을 나타내주며 나아가 당신을 새로운 곳으로 안내하길 꿈꿉니다.
-                                                기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의
-                                                여정을 함께하고 싶습니다.
-                                            </div>
-                                            <div class="btnWrap">
-                                                <button class="msg">
-                                                    <a href="#" target="_blank">
-                                                        <i class="fa-regular fa-envelope"></i>
-                                                        창작자 문의
-                                                    </a>
-                                                </button>
-                                            </div>
-                                            <div class="reviewInfo">
-                                                <div class="revwBox">
-                                                    <a href="#">
-                                                        <div class="revwTit">
-                                                            이전 프로젝트 후기
-                                                            <span class="revwCount">492</span>
+                                                <div class="commuCrtwrt">
+                                                    <p>
+                                                        <img src="/static/img/uptImg.webp" alt="">
+                                                    </p>
+                                                    <p>&nbsp;</p>
+                                                    <p>안녕하세요. 세이리입니다.&nbsp;</p>
+                                                    <p>&nbsp;</p>
+                                                    <p>라일락 생화를 담은 "블로썸" 오 드 퍼퓸의 텀블벅 런칭을 앞두고</p>
+                                                    <p>펀딩 전, 시향을 해보고 싶다는 분들이 많으셨어요!</p>
+                                                    <p>세이리는 기존에도 <u><strong>시향지키트</strong></u>를 선보이고 있는데요,</p>
+                                                    <p><u><strong>블로썸까지 포함하여 서비스</strong></u>를 해드리기로 하였습니다.</p>
+                                                    <p>&nbsp;</p>
+                                                    <p>시향지의 특성상 향의 첫 노트, 즉 탑노트까지 온전히 전해드릴 수는 없으나</p>
+                                                    <p>향의 전반적인 뉘앙스를 경험하시는 데 도움이 되시리라 생각합니다 ☺️</p>
+                                                    <p>&nbsp;</p>
+                                                    <p><strong>세이리 시향지는</strong></p>
+                                                    <p><strong>2~3회에 걸쳐 적시고 말리는 작업을 반복, 정성껏 작업하여 향이 오랜 시간 지속</strong>됩니다.</p>
+                                                    <p>개별 OPP 비닐에 담아 향이 섞이지 않으며</p>
+                                                    <p>윗부분 접착이 없는 봉투라 살짝 열어 시향 하시면 됩니다.</p>
+                                                    <p>&nbsp;</p>
+                                                    <p>시향지 세트의 가격은 100원이며, 배송비 3,000원이 추가됩니다.</p>
+                                                    <p>펀딩 시작 전까지의 금액이며 추후 100원-&gt;1,000원으로 시향지 세트의 가격은 인상됩니다.</p>
+                                                    <p>&nbsp;</p>
+                                                    <p>&nbsp;</p>
+                                                    <p><u>✔️ <strong>세이리 시향 키트 포함 향기</strong></u></p>
+                                                    <p><strong>누드 / 샘 / 오스만투스 / 그린모스 / 세이렌 / 새벽정원 / 폴인그라스 / 블랑 / **블로썸</strong></p>
+                                                    <p>&nbsp;</p>
+                                                    <p>세이리 예쁜 일러스트 엽서도 동봉해드립니다.</p>
+                                                    <p>공홈이나, 세이리 공식 스마트스토어에서 구매 가능하십니다!&nbsp;</p>
+                                                    <p>세이리를 향한 응원과 관심에 늘 감사드립니다 ☺️</p>
+                                                    <p>&nbsp;</p>
+                                                    <p>&nbsp;</p>
+                                                    <h2><strong>📍 시향지 구매 링크&nbsp;</strong></h2>
+                                                    <h2>
+                                                        <strong>1)
+                                                            <a href="https://www.sei-li.com/product/%EC%84%B8%EC%9D%B4%EB%A6%AC-%EC%8B%9C%ED%96%A5%EC%B9%B4%EB%93%9C-%ED%82%A4%ED%8A%B8/230/category/63/display/1/" target="_blank" rel="noopener noreferrer">세이리 공홈 바로가기</a>
+                                                        </strong>
+                                                    </h2>
+                                                    <h2>
+                                                        <strong>2)
+                                                            <a href="https://smartstore.naver.com/seili/products/9565480917" target="_blank" rel="noopener noreferrer">세이리 네이버스마트스토어 바로가기</a>
+                                                        </strong>
+                                                    </h2>
+                                                    <h2>&nbsp;</h2>
+                                                </div>
+                                                <div class="commuBlur"></div>
+                                                <div class="moreView">
+                                                    <button class="moreBtn">
+                                                        <i class="fa-solid fa-chevron-down"></i>
+                                                        <div class="moreTxt">더보기</div>
+                                                    </button>
+                                                </div>
+                                                <div class="wrtInfo">
+                                                    <div class="crtDate">
+                                                        <span class="wrtDate">2024.01.31</span>
+                                                        <span class="wrtStt">수정됨</span>
+                                                    </div>
+                                                    <div class="crtRepl">
+                                                        <button class="crtCmmt">
+                                                            댓글&nbsp;<span>2</span>개
+                                                        </button>
+                                                        <div class="crtLike">
+                                                            <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                            <span>3</span>
                                                         </div>
-                                                        <i class="fa-solid fa-chevron-right"></i>
-                                                    </a>
+                                                    </div>
                                                 </div>
-                                                <div class="revwWrap">
-                                                        <span class="revwTag">
-                                                            <span>퀄리티가 좋아요</span>
-                                                            <strong>411</strong>
-                                                        </span>
-                                                    <span class="revwTag">
-                                                            <span>특별해요</span>
-                                                            <strong>337</strong>
-                                                        </span>
-                                                    <span class="revwTag">
-                                                            <span>즐거움을 줘요</span>
-                                                            <strong>308</strong>
-                                                        </span>
+                                                <div class="wrtRepl">
+                                                    <div class="replCnt">
+                                                        댓글
+                                                        <strong>0</strong>
+                                                    </div>
+                                                    <div class="imgGroup">
+                                                        <button>
+                                                            <i class="fa-solid fa-comment fa-lg" style="color : #6d6d6d;"></i>
+                                                        </button>
+                                                        <button>
+                                                            <i class="fa-brands fa-twitter fa-lg" style="color: #6d6d6d;"></i>
+                                                        </button>
+                                                        <button>
+                                                            <i class="fa-brands fa-facebook fa-lg" style="color: #6d6d6d;"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="replyPlc">
+                                                    <div class="replTxt">댓글이 없습니다.</div>
+                                                </div>
+                                                <div class="replyIptbox">
+                                                    <div class="userProf"></div>
+                                                    <div class="replyIpt">
+                                                        <form action="">
+                                                            <input type="text" class="replyMessage" placeholder="댓글을 작성해주세요.">
+                                                        </form>
+                                                    </div>
+                                                    <button class="msgsdBtn">등록</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="gftSlct">
-                                        <h3>선물 선택</h3>
-<%--                                        <div class="gftslctGroup">--%>
-<%--                                            <div class="gftslctTit">선물</div>--%>
-<%--                                            <div class="gftPrdt">--%>
-<%--                                                <div class="prdtSlct">--%>
-<%--                                                    <div class="prdtBox">--%>
-<%--                                                        <div class="prdboxGrp">--%>
-<%--                                                            <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함</div>--%>
-<%--                                                            <div class="xBtnWrap">--%>
-<%--                                                                <button class="b-close btnSlct">닫기</button>--%>
-<%--                                                            </div>--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="prdDtail">--%>
-<%--                                                            <ul class="prdList">--%>
-<%--                                                                <li>블로썸 오드퍼퓸(50ML)(x1)</li>--%>
-<%--                                                                <li>세이리 미니퍼퓸(3ML)(x1)</li>--%>
-<%--                                                                <li>일러스트 엽서(x1)</li>--%>
-<%--                                                            </ul>--%>
-<%--                                                            <div class="prdDtlst">--%>
-<%--                                                                <div class="prdCount">--%>
-<%--                                                                    <button id="decrBtn">--%>
-<%--                                                                        ---%>
-<%--                                                                    </button>--%>
-<%--                                                                    <input readonly type="number" id="numIpt" value="1" disabled>--%>
-<%--                                                                    <button id="incrBtn">--%>
-<%--                                                                        +--%>
-<%--                                                                    </button>--%>
-<%--                                                                </div>--%>
-<%--                                                                <div class="prdVal">--%>
-<%--                                                                    <span id="formattedPrice">29800</span>원--%>
-<%--                                                                </div>--%>
-<%--                                                            </div>--%>
-<%--                                                        </div>--%>
-<%--                                                    </div>--%>
-<%--                                                </div>--%>
-<%--                                                <div class="prdPlus">--%>
-<%--                                                    <div class="plusSup">--%>
-<%--                                                        <div class="supTit">--%>
-<%--                                                            추가 후원금<span>(선택)</span>--%>
-<%--                                                        </div>--%>
-<%--                                                    </div>--%>
-<%--                                                    <div class="supIpt">--%>
-<%--                                                        <input type="number" id="valueIpt" min="1" max="10000000">--%>
-<%--                                                        <button></button>--%>
-<%--                                                    </div>--%>
-<%--                                                    <div class="supDt">--%>
-<%--                                                        *추가 후원금으로 프로젝트를 응원해주세요.--%>
-<%--                                                    </div>--%>
-<%--                                                </div>--%>
-<%--                                                <div class="twinBtnwrap">--%>
-<%--                                                    <button class="gftAddbtn">선물 추가하기</button>--%>
-<%--                                                    <button class="gftCalcbtn">--%>
-<%--                                                        총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기--%>
-<%--                                                    </button>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-                                        <div class="gftBox">
-                                            <div class="gftEl">
-                                                <div class="gftVal">
-                                                    1,000원 +
+                                    <div class="cardItem"><!--업데이트 작가 공지사항-->
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
                                                 </div>
-                                                <div class="gftDesc">
-                                                    선물 없이 후원하기
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
                                                 </div>
                                             </div>
-                                            <div class="gftEl">
-                                                <div class="spnLine">
-                                                        <span class="slctGft">
-                                                            <i class="fa-solid fa-check"></i>
-                                                            2개 선택
-                                                        </span>
-                                                    <span class="slctRmn">
-                                                            28개 남음
-                                                        </span>
-                                                </div>
-                                                <div class="gftVal">
-                                                    29,800원 +
-                                                </div>
-                                                <div class="gftDesc">
-                                                    [텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <span>블로썸 오드퍼퓸(50ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 미니퍼퓸(3ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>일러스트 엽서</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                </ul>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="/static/img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
                                             </div>
-                                            <div class="gftEl">
-                                                <div class="spnLine">
-                                                        <span class="slctGft">
-                                                            <i class="fa-solid fa-check"></i>
-                                                            15개 선택
-                                                        </span>
-                                                    <span class="slctRmn">
-                                                            5개 남음
-                                                        </span>
-                                                </div>
-                                                <div class="gftVal">
-                                                    51,100원 +
-                                                </div>
-                                                <div class="gftDesc">
-                                                    [얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <span>블로썸 오드퍼퓸(50ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 미니퍼퓸(3ML)</span>
-                                                        <span>(x2)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>일러스트 엽서</span>
-                                                        <span>(x2)</span>
-                                                    </li>
-                                                </ul>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
                                             </div>
-                                            <div class="gftEl">
-                                                <div class="spnLine">
-                                                        <span class="slctGft">
-                                                            <i class="fa-solid fa-check"></i>
-                                                            10개 선택
-                                                        </span>
-                                                    <span class="slctRmn">
-                                                            10개 남음
-                                                        </span>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
                                                 </div>
-                                                <div class="gftVal">
-                                                    65,700원 +
-                                                </div>
-                                                <div class="gftDesc">
-                                                    [얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <span>블로썸 오드퍼퓸(50ML)</span>
-                                                        <span>(x2)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 미니퍼퓸(3ML)</span>
-                                                        <span>(x2)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>일러스트 엽서</span>
-                                                        <span>(x2)</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="gftEl">
-                                                <div class="spnLine">
-                                                        <span class="slctGft">
-                                                            <i class="fa-solid fa-check"></i>
-                                                            11개 선택
-                                                        </span>
-                                                    <span class="slctRmn">
-                                                            4개 남음
-                                                        </span>
-                                                </div>
-                                                <div class="gftVal">
-                                                    95,500원 +
-                                                </div>
-                                                <div class="gftDesc">
-                                                    [얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <span>블로썸 오드퍼퓸(50ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
-                                                        <span>택(x2)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 미니퍼퓸(3ML)</span>
-                                                        <span>(x3)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>일러스트 엽서</span>
-                                                        <span>(x3)</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="gftEl">
-                                                <div class="spnLine">
-                                                        <span class="slctGft">
-                                                            <i class="fa-solid fa-check"></i>
-                                                            8개 선택
-                                                        </span>
-                                                    <span class="slctRmn">
-                                                            2개 남음
-                                                        </span>
-                                                </div>
-                                                <div class="gftVal">
-                                                    149,500원 +
-                                                </div>
-                                                <div class="gftDesc">
-                                                    [세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <span>블로썸 오드퍼퓸(50ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
-                                                        <span>택(x4)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 미니퍼퓸(3ML)</span>
-                                                        <span>(x5)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>일러스트 엽서</span>
-                                                        <span>(x5)</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="gftEl soldOut">
-                                                <div class="spnLine">
-                                                        <span class="slctGft">
-                                                            <i class="fa-solid fa-check"></i>
-                                                            100개 선택
-                                                        </span>
-                                                    <span class="slctRmn">
-                                                            선착순 마감
-                                                        </span>
-                                                </div>
-                                                <div class="gftVal">
-                                                    34,500원 +
-                                                </div>
-                                                <div class="gftDesc">
-                                                    [얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <span>블로썸 오드퍼퓸(50ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 미니퍼퓸(3ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>일러스트 엽서</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="gftEl soldOut">
-                                                <div class="spnLine">
-                                                        <span class="slctGft">
-                                                            <i class="fa-solid fa-check"></i>
-                                                            50개 선택
-                                                        </span>
-                                                    <span class="slctRmn">
-                                                            선착순 마감
-                                                        </span>
-                                                </div>
-                                                <div class="gftVal">
-                                                    35,500원 +
-                                                </div>
-                                                <div class="gftDesc">
-                                                    [얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함
-                                                </div>
-                                                <ul>
-                                                    <li>
-                                                        <span>블로썸 오드퍼퓸(50ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>세이리 미니퍼퓸(3ML)</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>일러스트 엽서</span>
-                                                        <span>(x1)</span>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cont">
-                <div class="tabCont">
-                    <div class="cont on">
-                        <div class="tabConWrap">
-                            <div class="tabFlx">
-                                <!--이중 탭-->
-                                <div class="">
-                                    <!--콘텐츠-->
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="/static/img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="/static/img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/seili.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">세이리 SEI LI</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="crtJob">창작자</span>
+                                                    <span class="crtLmt">후원자 공개</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="crtWrt">
+                                            <div class="crtWdt">
+                                                <img class="lockImg" src="/static/img/lock.png" alt="자물쇠">
+                                                <p class="lockWrt">후원자만 볼 수 있는 글입니다.</p>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="gftInfo">
                                     <div class="crtInfo">
@@ -1282,7 +1096,7 @@
                                             <div class="crtGr">
                                                 <div class="crtPrf">
                                                     <a href="#" class="prfImg">
-                                                        <img src="../img/seili.webp" alt="">
+                                                        <img src="/static/img/seili.webp" alt="">
                                                     </a>
                                                     <div class="crtIf">
                                                         <div class="crtName">
@@ -1396,6 +1210,678 @@
 <%--                                                </div>--%>
 <%--                                            </div>--%>
 <%--                                        </div>--%>
+                                        <div class="gftBox">
+                                            <div class="gftEl">
+                                                <div class="gftVal">
+                                                    1,000원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    선물 없이 후원하기
+                                                </div>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        2개 선택
+                                                    </span>
+                                                    <span class="slctRmn">
+                                                        28개 남음
+                                                    </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    29,800원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        15개 선택
+                                                    </span>
+                                                    <span class="slctRmn">
+                                                        5개 남음
+                                                    </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    51,100원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        10개 선택
+                                                    </span>
+                                                    <span class="slctRmn">
+                                                        10개 남음
+                                                    </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    65,700원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x2)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                        <span class="slctGft">
+                                                            <i class="fa-solid fa-check"></i>
+                                                            11개 선택
+                                                        </span>
+                                                    <span class="slctRmn">
+                                                            4개 남음
+                                                        </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    95,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                        <span>택(x2)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x3)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x3)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl">
+                                                <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        8개 선택
+                                                    </span>
+                                                    <span class="slctRmn">
+                                                        2개 남음
+                                                    </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    149,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
+                                                        <span>택(x4)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>블로썸 퍼퓸디퓨저(120ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x5)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x5)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl soldOut">
+                                                <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        100개 선택
+                                                    </span>
+                                                    <span class="slctRmn">
+                                                        선착순 마감
+                                                    </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    34,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="gftEl soldOut">
+                                                <div class="spnLine">
+                                                    <span class="slctGft">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        50개 선택
+                                                    </span>
+                                                    <span class="slctRmn">
+                                                        선착순 마감
+                                                    </span>
+                                                </div>
+                                                <div class="gftVal">
+                                                    35,500원 +
+                                                </div>
+                                                <div class="gftDesc">
+                                                    [얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <span>블로썸 오드퍼퓸(50ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>세이리 미니퍼퓸(3ML)</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>일러스트 엽서</span>
+                                                        <span>(x1)</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cont">
+                <div class="tabCont">
+                    <div class="cont on">
+                        <div class="tabConWrap">
+                            <div class="tabFlx coMmu">
+                                <div class="commuCmt" style="display: none;"><!--커뮤니티 글 작성 클릭 시 작성되는 화면-->
+                                    <div class="cmtTit">
+                                        <button class="cmtBtn">
+                                            <i class="fa-solid fa-arrow-left"></i>
+                                            게시글 작성
+                                        </button>
+                                        <button class="cmtaplBtn">등록</button>
+                                    </div>
+                                    <div class="cmtCont">
+                                        <div>
+                                            <div class="cmtTxtarea">
+                                                <div class="cmtInner">
+                                                    <textarea maxlength="1000"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="cmtStatus">
+                                                <p class="cmtMaxleng">
+                                                    10자 이상 1000자 이내로 입력해주세요.
+                                                </p>
+                                                <span class="cmtMaxnum">1/1000</span>
+                                            </div>
+                                        </div>
+                                        <div class="cateTab">
+                                            <div class="cateTabbox">
+                                                <div class="cateTtit">어떤 내용의 글인가요?</div>
+                                                <div class="tabMenu">
+                                                    <div class="tabBtn">
+                                                        <button class="btn on">응원글</button>
+                                                        <button class="btn">의견</button>
+                                                    </div>
+                                                </div>
+                                                <div class="tabCont">
+                                                    <div class="cont on">
+                                                        <div class="infoComment">
+                                                            후원하신 프로젝트 창작자에게 응원의 한마디를 남겨주세요. 창작자에게 후원금만큼 큰 힘이 됩니다.
+                                                        </div>
+                                                        <div class="infoCombox">
+                                                            <div class="infoComtit">
+                                                                <i class="fa-solid fa-circle-info"></i>
+                                                                <div>유의사항</div>
+                                                            </div>
+                                                            <ul class="infoComlst">
+                                                                <li>창작자에게 궁금하신 점이 있다면 ‘창작자에게 문의'로 질문해주세요.</li>
+                                                                <li>텀블벅 <a>커뮤니티 운영원칙</a>을 준수해주세요. 프로젝트와 무관한 내용이나 광고, 도배, 욕설, 혐오 조장, 외설, 사칭 등은 예고 없이 삭제될 수 있습니다.</li>
+                                                                <li>운영원칙 위반 누적시 텀블벅 이용이 제한될 수 있으며, 타인에 대한 모욕이나 명예훼손 등의 경우 법적 책임이 발생할 수도 있습니다.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont">
+                                                        <div class="infoComment">
+                                                            후원하신 프로젝트에 대한 후원자님의 의견을 남길 수 있습니다. 프로젝트를 진행하는 창작자를 존중하는 마음으로 신중하게 작성해주세요.
+                                                        </div>
+                                                        <div class="infoCombox">
+                                                            <div class="infoComtit">
+                                                                <i class="fa-solid fa-circle-info"></i>
+                                                                <div>유의사항</div>
+                                                            </div>
+                                                            <ul class="infoComlst">
+                                                                <li>창작자에게 궁금하신 점이 있다면 ‘창작자에게 문의'로 질문해주세요.</li>
+                                                                <li>텀블벅 <a>커뮤니티 운영원칙</a>을 준수해주세요. 프로젝트와 무관한 내용이나 광고, 도배, 욕설, 혐오 조장, 외설, 사칭 등은 예고 없이 삭제될 수 있습니다.</li>
+                                                                <li>운영원칙 위반 누적시 텀블벅 이용이 제한될 수 있으며, 타인에 대한 모욕이나 명예훼손 등의 경우 법적 책임이 발생할 수도 있습니다.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="commuGroup">
+                                    <div class="gftCommu"><!--커뮤니티 글 작성-->
+                                        <div class="">
+                                            <!-- <a href="">
+                                                <div class="commuIpt">
+                                                    <div class="commuWrt">
+                                                        창작자에게 응원의 한 마디!
+                                                    </div>
+                                                    <div class="commuIco">
+                                                        <i class="fa-solid fa-pen fa-lg" style="color: #9e9e9e;"></i>
+                                                    </div>
+                                                </div>
+                                            </a> -->
+
+                                            <div class="commuIpt" id="iptTowrite">
+                                                <div class="commuWrt">
+                                                    창작자에게 응원의 한 마디!
+                                                </div>
+                                                <div class="commuIco">
+                                                    <i class="fa-solid fa-pen fa-lg" style="color: #9e9e9e;"></i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/avatar.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">홍길동</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="userStt">응원글</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="guestWrt">
+                                            <div class="guestFont">
+                                                <div class="guestTxt">
+                                                    세이리 향수는 친구가 워터페어 펀딩에 참여해서 선물해준 이후로 늘 잘 쓰고 있습니다!
+                                                    오스만투스 써보고 향기 때문에 기분이 좋아진다는 게 뭔지 처음 느낄 수 있었어요.
+                                                    대학생 때 캠퍼스의 등나무꽃 향기를 참 좋아했었는데, 비슷한 계열인 라일락 향수라고 해서 이번 신작이 더더욱 기대됩니다.
+                                                    앤티크하면서도 섬세한 분위기의 일러스트로 더욱 아름다운 병 디자인도 세이리의 큰 매력 포인트라고 생각해요.
+                                                    봄을 기다리는 두근거림으로 &lt;블로썸&gt;을 만나볼 날을 기대하고 있겠습니다!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/avatar.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">김가네</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="userStt">응원글</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="guestWrt">
+                                            <div class="guestFont">
+                                                <div class="guestTxt">
+                                                    오스만투스때 후원을 해서 샘플을 받아보았는데 향이 너무 좋더라구요
+                                                    그래서 이번에도 후원하게 되었습니다!! 첫향은 생화향 수분 가득한 향이
+                                                    나고 조금 지나면 라일락향이 포근하게 그리고 따뜻함까지 느껴지더라고요
+                                                    전체적으로 깨끗한 향이 나서 계속 맡고 싶어지는 향이었습니다!!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/avatar.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">김가네</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="userStt">응원글</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="guestWrt">
+                                            <div class="guestFont">
+                                                <div class="guestTxt">
+                                                    오스만투스때 후원을 해서 샘플을 받아보았는데 향이 너무 좋더라구요
+                                                    그래서 이번에도 후원하게 되었습니다!! 첫향은 생화향 수분 가득한 향이
+                                                    나고 조금 지나면 라일락향이 포근하게 그리고 따뜻함까지 느껴지더라고요
+                                                    전체적으로 깨끗한 향이 나서 계속 맡고 싶어지는 향이었습니다!!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/avatar.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">김가네</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="userStt">응원글</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="guestWrt">
+                                            <div class="guestFont">
+                                                <div class="guestTxt">
+                                                    오스만투스때 후원을 해서 샘플을 받아보았는데 향이 너무 좋더라구요
+                                                    그래서 이번에도 후원하게 되었습니다!! 첫향은 생화향 수분 가득한 향이
+                                                    나고 조금 지나면 라일락향이 포근하게 그리고 따뜻함까지 느껴지더라고요
+                                                    전체적으로 깨끗한 향이 나서 계속 맡고 싶어지는 향이었습니다!!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardItem">
+                                        <div class="crtPrf">
+                                            <a href="#" class="prfImg">
+                                                <img src="/static/img/avatar.webp" alt="">
+                                            </a>
+                                            <div class="crtIf">
+                                                <div class="crtName">
+                                                    <a href="#">김가네</a>
+                                                </div>
+                                                <div class="crtStatus">
+                                                    <span class="userStt">응원글</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="guestWrt">
+                                            <div class="guestFont">
+                                                <div class="guestTxt">
+                                                    오스만투스때 후원을 해서 샘플을 받아보았는데 향이 너무 좋더라구요
+                                                    그래서 이번에도 후원하게 되었습니다!! 첫향은 생화향 수분 가득한 향이
+                                                    나고 조금 지나면 라일락향이 포근하게 그리고 따뜻함까지 느껴지더라고요
+                                                    전체적으로 깨끗한 향이 나서 계속 맡고 싶어지는 향이었습니다!!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wrtInfo">
+                                            <div class="crtDate">
+                                                <span class="wrtDate">2024.01.31</span>
+                                                <span class="wrtStt">수정됨</span>
+                                            </div>
+                                            <div class="crtRepl">
+                                                <button class="crtCmmt">
+                                                    댓글&nbsp;<span>2</span>개
+                                                </button>
+                                                <div class="crtLike">
+                                                    <i class="fa-regular fa-thumbs-up" style="color: #9e9e9e;"></i>
+                                                    <span>3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gftInfo">
+                                    <div class="crtInfo">
+                                        <div class="crtBox">
+                                            <div class="crtTit">창작자 소개</div>
+                                            <div class="crtGr">
+                                                <div class="crtPrf">
+                                                    <a href="#" class="prfImg">
+                                                        <img src="/static/img/seili.webp" alt="">
+                                                    </a>
+                                                    <div class="crtIf">
+                                                        <div class="crtName">
+                                                            <a href="#">세이리 SEI LI</a>
+                                                        </div>
+                                                        <div class="lastLogin">
+                                                            <span>마지막 로그인</span>
+                                                            <b>1시간 전</b>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="crtDesc">
+                                                세이리는 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻은
+                                                조향을 하며 마치 작품을 선물하듯 향이 지니는 고유의 그림이 새겨져
+                                                있습니다. 저희가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의
+                                                방식을 나타내주며 나아가 당신을 새로운 곳으로 안내하길 꿈꿉니다.
+                                                기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의
+                                                여정을 함께하고 싶습니다.
+                                            </div>
+                                            <div class="btnWrap">
+                                                <button class="msg">
+                                                    <a href="#" target="_blank">
+                                                        <i class="fa-regular fa-envelope"></i>
+                                                        창작자 문의
+                                                    </a>
+                                                </button>
+                                            </div>
+                                            <div class="reviewInfo">
+                                                <div class="revwBox">
+                                                    <a href="#">
+                                                        <div class="revwTit">
+                                                            이전 프로젝트 후기
+                                                            <span class="revwCount">492</span>
+                                                        </div>
+                                                        <i class="fa-solid fa-chevron-right"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="revwWrap">
+                                                    <span class="revwTag">
+                                                        <span>퀄리티가 좋아요</span>
+                                                        <strong>411</strong>
+                                                    </span>
+                                                    <span class="revwTag">
+                                                        <span>특별해요</span>
+                                                        <strong>337</strong>
+                                                    </span>
+                                                    <span class="revwTag">
+                                                        <span>즐거움을 줘요</span>
+                                                        <strong>308</strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gftSlct">
+                                        <h3>선물 선택</h3>
+                                        <div class="gftslctGroup">
+                                            <div class="gftslctTit">선물</div>
+                                            <div class="gftPrdt">
+                                                <div class="prdtSlct">
+                                                    <div class="prdtBox">
+                                                        <div class="prdboxGrp">
+                                                            <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함</div>
+                                                            <div class="xBtnWrap">
+                                                                <button class="b-close btnSlct">닫기</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="prdDtail">
+                                                            <ul class="prdList">
+                                                                <li>블로썸 오드퍼퓸(50ML)(x1)</li>
+                                                                <li>세이리 미니퍼퓸(3ML)(x1)</li>
+                                                                <li>일러스트 엽서(x1)</li>
+                                                            </ul>
+                                                            <div class="prdDtlst">
+                                                                <div class="prdCount">
+                                                                    <button>
+                                                                        -
+                                                                    </button>
+                                                                    <input readonly type="number" value="1" disabled>
+                                                                    <button>
+                                                                        +
+                                                                    </button>
+                                                                </div>
+                                                                <div class="prdVal">
+                                                                    <span>29800</span>원
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="prdPlus">
+                                                    <div class="plusSup">
+                                                        <div class="supTit">
+                                                            추가 후원금<span>(선택)</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="supIpt">
+                                                        <input type="number" min="1" max="10000000">
+                                                        <button></button>
+                                                    </div>
+                                                    <div class="supDt">
+                                                        *추가 후원금으로 프로젝트를 응원해주세요.
+                                                    </div>
+                                                </div>
+                                                <div class="twinBtnwrap">
+                                                    <button class="gftAddbtn">선물 추가하기</button>
+                                                    <button class="gftCalcbtn">
+                                                        총&nbsp;<b><span></span>원</b>&nbsp;후원하기
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="gftBox">
                                             <div class="gftEl">
                                                 <div class="gftVal">
@@ -1651,27 +2137,25 @@
                     <div class="cont on">
                         <div class="tabFlx">
                             <div class="tabConWrap">
-                                <div class="containTit">
-                                    이 프로젝트들은 어떠신가요?
-                                </div>
+                                <div class="containTit">이 프로젝트들은 어떠신가요?</div>
                                 <div class="recmdPrjt">
                                     <div class="gftBanBox">
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban02.webp" alt="">
+                                                    <img src="/static/img/mnban02.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">실용·취미</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">실용·취미</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">MINCHANG</a>
-                                                        </span>
+                                                        <a href="#">MINCHANG</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
@@ -1686,19 +2170,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban03.webp" alt="">
+                                                    <img src="/static/img/mnban03.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">액세서리</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">액세서리</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Mirror in MIRROr</a>
-                                                        </span>
+                                                        <a href="#">Mirror in MIRROr</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
@@ -1713,19 +2197,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban04.webp" alt="">
+                                                    <img src="/static/img/mnban04.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 문구</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 문구</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">글리팅(glitting)</a>
-                                                        </span>
+                                                        <a href="#">글리팅(glitting)</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
@@ -1740,19 +2224,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban05.webp" alt="">
+                                                    <img src="/static/img/mnban05.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 소품</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 소품</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">아나레 ahnale</a>
-                                                        </span>
+                                                        <a href="#">아나레 ahnale</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
@@ -1767,19 +2251,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban06.webp" alt="">
+                                                    <img src="/static/img/mnban06.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">가방</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">가방</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Vao</a>
-                                                        </span>
+                                                        <a href="#">Vao</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
@@ -1794,19 +2278,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban02.webp" alt="">
+                                                    <img src="/static/img/mnban02.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">실용·취미</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">실용·취미</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">MINCHANG</a>
-                                                        </span>
+                                                        <a href="#">MINCHANG</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
@@ -1821,19 +2305,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban03.webp" alt="">
+                                                    <img src="/static/img/mnban03.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">액세서리</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">액세서리</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Mirror in MIRROr</a>
-                                                        </span>
+                                                        <a href="#">Mirror in MIRROr</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
@@ -1848,19 +2332,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban04.webp" alt="">
+                                                    <img src="/static/img/mnban04.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 문구</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 문구</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">글리팅(glitting)</a>
-                                                        </span>
+                                                        <a href="#">글리팅(glitting)</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
@@ -1875,19 +2359,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban05.webp" alt="">
+                                                    <img src="/static/img/mnban05.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 소품</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 소품</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">아나레 ahnale</a>
-                                                        </span>
+                                                        <a href="#">아나레 ahnale</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
@@ -1902,19 +2386,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban06.webp" alt="">
+                                                    <img src="/static/img/mnban06.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">가방</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">가방</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Vao</a>
-                                                        </span>
+                                                        <a href="#">Vao</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
@@ -1929,19 +2413,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban02.webp" alt="">
+                                                    <img src="/static/img/mnban02.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">실용·취미</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">실용·취미</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">MINCHANG</a>
-                                                        </span>
+                                                        <a href="#">MINCHANG</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
@@ -1956,19 +2440,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban03.webp" alt="">
+                                                    <img src="/static/img/mnban03.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">액세서리</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">액세서리</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Mirror in MIRROr</a>
-                                                        </span>
+                                                        <a href="#">Mirror in MIRROr</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
@@ -1983,19 +2467,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban04.webp" alt="">
+                                                    <img src="/static/img/mnban04.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 문구</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 문구</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">글리팅(glitting)</a>
-                                                        </span>
+                                                        <a href="#">글리팅(glitting)</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
@@ -2010,19 +2494,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban05.webp" alt="">
+                                                    <img src="/static/img/mnban05.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 소품</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 소품</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">아나레 ahnale</a>
-                                                        </span>
+                                                        <a href="#">아나레 ahnale</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
@@ -2037,19 +2521,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban06.webp" alt="">
+                                                    <img src="/static/img/mnban06.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">가방</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">가방</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Vao</a>
-                                                        </span>
+                                                        <a href="#">Vao</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
@@ -2064,19 +2548,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban02.webp" alt="">
+                                                    <img src="/static/img/mnban02.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">실용·취미</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">실용·취미</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">MINCHANG</a>
-                                                        </span>
+                                                        <a href="#">MINCHANG</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
@@ -2091,19 +2575,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban03.webp" alt="">
+                                                    <img src="/static/img/mnban03.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">액세서리</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">액세서리</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Mirror in MIRROr</a>
-                                                        </span>
+                                                        <a href="#">Mirror in MIRROr</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
@@ -2118,19 +2602,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban04.webp" alt="">
+                                                    <img src="/static/img/mnban04.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 문구</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 문구</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">글리팅(glitting)</a>
-                                                        </span>
+                                                        <a href="#">글리팅(glitting)</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
@@ -2145,19 +2629,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban05.webp" alt="">
+                                                    <img src="/static/img/mnban05.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 소품</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 소품</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">아나레 ahnale</a>
-                                                        </span>
+                                                        <a href="#">아나레 ahnale</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
@@ -2172,19 +2656,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban06.webp" alt="">
+                                                    <img src="/static/img/mnban06.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">가방</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">가방</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Vao</a>
-                                                        </span>
+                                                        <a href="#">Vao</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
@@ -2199,19 +2683,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban02.webp" alt="">
+                                                    <img src="/static/img/mnban02.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">실용·취미</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">실용·취미</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">MINCHANG</a>
-                                                        </span>
+                                                        <a href="#">MINCHANG</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[출판세금] 1인출판사의 세금 실력을 특별하게 하는 법</a>
@@ -2226,19 +2710,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban03.webp" alt="">
+                                                    <img src="/static/img/mnban03.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">액세서리</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">액세서리</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Mirror in MIRROr</a>
-                                                        </span>
+                                                        <a href="#">Mirror in MIRROr</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
@@ -2253,19 +2737,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban04.webp" alt="">
+                                                    <img src="/static/img/mnban04.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 문구</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 문구</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">글리팅(glitting)</a>
-                                                        </span>
+                                                        <a href="#">글리팅(glitting)</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">무하와 전통의 만남, 박지로 색칠하는 &lt;한복 글리팅&gt;</a>
@@ -2280,19 +2764,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban05.webp" alt="">
+                                                    <img src="/static/img/mnban05.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 소품</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 소품</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">아나레 ahnale</a>
-                                                        </span>
+                                                        <a href="#">아나레 ahnale</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
@@ -2307,19 +2791,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban06.webp" alt="">
+                                                    <img src="/static/img/mnban06.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">가방</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">가방</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Vao</a>
-                                                        </span>
+                                                        <a href="#">Vao</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
@@ -2334,19 +2818,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban05.webp" alt="">
+                                                    <img src="/static/img/mnban05.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">디자인 소품</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">디자인 소품</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">아나레 ahnale</a>
-                                                        </span>
+                                                        <a href="#">아나레 ahnale</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">[한정]2024년을 행운의 해로! 마법의 도구 굿럭오마모리</a>
@@ -2361,19 +2845,19 @@
                                         <div class="mnBan">
                                             <div class="banImg">
                                                 <a href="#">
-                                                    <img src="../img/mnban06.webp" alt="">
+                                                    <img src="/static/img/mnban06.webp" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="banTxt">
                                             <div class="txtGr">
                                                 <div class="subTxt">
-                                                        <span>
-                                                            <a href="#">가방</a>
-                                                        </span>
+                                                    <span>
+                                                        <a href="#">가방</a>
+                                                    </span>
                                                     <span class="bar">
-                                                            <a href="#">Vao</a>
-                                                        </span>
+                                                        <a href="#">Vao</a>
+                                                    </span>
                                                 </div>
                                                 <div class="subTit">
                                                     <a href="#">한국의 MBTI를 걸쳐봐, 실용성과 특별함을 담은 꼬꼬지백</a>
@@ -2393,7 +2877,7 @@
                                         <div class="crtGr">
                                             <div class="crtPrf">
                                                 <a href="#" class="prfImg">
-                                                    <img src="../img/seili.webp" alt="">
+                                                    <img src="/static/img/seili.webp" alt="">
                                                 </a>
                                                 <div class="crtIf">
                                                     <div class="crtName">
@@ -2433,18 +2917,18 @@
                                                 </a>
                                             </div>
                                             <div class="revwWrap">
-                                                    <span class="revwTag">
-                                                        <span>퀄리티가 좋아요</span>
-                                                        <strong>411</strong>
-                                                    </span>
                                                 <span class="revwTag">
-                                                        <span>특별해요</span>
-                                                        <strong>337</strong>
-                                                    </span>
+                                                    <span>퀄리티가 좋아요</span>
+                                                    <strong>411</strong>
+                                                </span>
                                                 <span class="revwTag">
-                                                        <span>즐거움을 줘요</span>
-                                                        <strong>308</strong>
-                                                    </span>
+                                                    <span>특별해요</span>
+                                                    <strong>337</strong>
+                                                </span>
+                                                <span class="revwTag">
+                                                    <span>즐거움을 줘요</span>
+                                                    <strong>308</strong>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -2470,16 +2954,16 @@
                                                         </ul>
                                                         <div class="prdDtlst">
                                                             <div class="prdCount">
-                                                                <button id="decrBtn">
+                                                                <button>
                                                                     -
                                                                 </button>
-                                                                <input readonly type="number" id="numIpt" value="1" disabled>
-                                                                <button id="incrBtn">
+                                                                <input readonly type="number" value="1" disabled>
+                                                                <button>
                                                                     +
                                                                 </button>
                                                             </div>
                                                             <div class="prdVal">
-                                                                <span id="formattedPrice">29800</span>원
+                                                                <span>29800</span>원
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2492,7 +2976,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="supIpt">
-                                                    <input type="number" id="valueIpt" min="1" max="10000000">
+                                                    <input type="number" min="1" max="10000000">
                                                     <button></button>
                                                 </div>
                                                 <div class="supDt">
@@ -2502,7 +2986,7 @@
                                             <div class="twinBtnwrap">
                                                 <button class="gftAddbtn">선물 추가하기</button>
                                                 <button class="gftCalcbtn">
-                                                    총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                                    총&nbsp;<b><span></span>원</b>&nbsp;후원하기
                                                 </button>
                                             </div>
                                         </div>
@@ -2518,13 +3002,13 @@
                                         </div>
                                         <div class="gftEl">
                                             <div class="spnLine">
-                                                    <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
-                                                        2개 선택
-                                                    </span>
+                                                <span class="slctGft">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    2개 선택
+                                                </span>
                                                 <span class="slctRmn">
-                                                        28개 남음
-                                                    </span>
+                                                    28개 남음
+                                                </span>
                                             </div>
                                             <div class="gftVal">
                                                 29,800원 +
@@ -2549,13 +3033,13 @@
                                         </div>
                                         <div class="gftEl">
                                             <div class="spnLine">
-                                                    <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
-                                                        15개 선택
-                                                    </span>
+                                                <span class="slctGft">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    15개 선택
+                                                </span>
                                                 <span class="slctRmn">
-                                                        5개 남음
-                                                    </span>
+                                                    5개 남음
+                                                </span>
                                             </div>
                                             <div class="gftVal">
                                                 51,100원 +
@@ -2584,13 +3068,13 @@
                                         </div>
                                         <div class="gftEl">
                                             <div class="spnLine">
-                                                    <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
-                                                        10개 선택
-                                                    </span>
+                                                <span class="slctGft">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    10개 선택
+                                                </span>
                                                 <span class="slctRmn">
-                                                        10개 남음
-                                                    </span>
+                                                    10개 남음
+                                                </span>
                                             </div>
                                             <div class="gftVal">
                                                 65,700원 +
@@ -2615,13 +3099,13 @@
                                         </div>
                                         <div class="gftEl">
                                             <div class="spnLine">
-                                                    <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
-                                                        11개 선택
-                                                    </span>
+                                                <span class="slctGft">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    11개 선택
+                                                </span>
                                                 <span class="slctRmn">
-                                                        4개 남음
-                                                    </span>
+                                                    4개 남음
+                                                </span>
                                             </div>
                                             <div class="gftVal">
                                                 95,500원 +
@@ -2650,13 +3134,13 @@
                                         </div>
                                         <div class="gftEl">
                                             <div class="spnLine">
-                                                    <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
-                                                        8개 선택
-                                                    </span>
+                                                <span class="slctGft">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    8개 선택
+                                                </span>
                                                 <span class="slctRmn">
-                                                        2개 남음
-                                                    </span>
+                                                    2개 남음
+                                                </span>
                                             </div>
                                             <div class="gftVal">
                                                 149,500원 +
@@ -2689,13 +3173,13 @@
                                         </div>
                                         <div class="gftEl soldOut">
                                             <div class="spnLine">
-                                                    <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
-                                                        100개 선택
-                                                    </span>
+                                                <span class="slctGft">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    100개 선택
+                                                </span>
                                                 <span class="slctRmn">
-                                                        선착순 마감
-                                                    </span>
+                                                    선착순 마감
+                                                </span>
                                             </div>
                                             <div class="gftVal">
                                                 34,500원 +
@@ -2720,13 +3204,13 @@
                                         </div>
                                         <div class="gftEl soldOut">
                                             <div class="spnLine">
-                                                    <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
-                                                        50개 선택
-                                                    </span>
+                                                <span class="slctGft">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    50개 선택
+                                                </span>
                                                 <span class="slctRmn">
-                                                        선착순 마감
-                                                    </span>
+                                                    선착순 마감
+                                                </span>
                                             </div>
                                             <div class="gftVal">
                                                 35,500원 +
@@ -2774,7 +3258,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban02.webp" alt="">
+                                <img src="/static/img/mnban02.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -2801,7 +3285,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban03.webp" alt="">
+                                <img src="/static/img/mnban03.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -2828,7 +3312,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban04.webp" alt="">
+                                <img src="/static/img/mnban04.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -2855,7 +3339,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban05.webp" alt="">
+                                <img src="/static/img/mnban05.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -2882,7 +3366,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban06.webp" alt="">
+                                <img src="/static/img/mnban06.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -2923,7 +3407,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban02.webp" alt="">
+                                <img src="/static/img/mnban02.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -2950,7 +3434,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban03.webp" alt="">
+                                <img src="/static/img/mnban03.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -2977,7 +3461,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban04.webp" alt="">
+                                <img src="/static/img/mnban04.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -3004,7 +3488,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban05.webp" alt="">
+                                <img src="/static/img/mnban05.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -3031,7 +3515,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban06.webp" alt="">
+                                <img src="/static/img/mnban06.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -3072,7 +3556,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban02.webp" alt="">
+                                <img src="/static/img/mnban02.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -3099,7 +3583,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban03.webp" alt="">
+                                <img src="/static/img/mnban03.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -3126,7 +3610,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban04.webp" alt="">
+                                <img src="/static/img/mnban04.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -3153,7 +3637,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban05.webp" alt="">
+                                <img src="/static/img/mnban05.webp" alt="">
                             </a>
                         </div>
                     </div>
@@ -3180,7 +3664,7 @@
                     <div class="mnBan">
                         <div class="banImg">
                             <a href="#">
-                                <img src="../img/mnban06.webp" alt="">
+                                <img src="/static/img/mnban06.webp" alt="">
                             </a>
                         </div>
                     </div>

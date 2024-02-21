@@ -19,7 +19,7 @@ public interface SubHelpDao {
 
     int count(Integer sub_help_sort) throws Exception;
 
-    int countSub(Integer sub_help_sort) throws Exception;
+    int countSub() throws Exception;
 
     int update(SubHelpDto dto) throws Exception;
 
