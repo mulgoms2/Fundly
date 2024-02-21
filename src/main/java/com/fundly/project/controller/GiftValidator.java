@@ -64,7 +64,8 @@ public class GiftValidator implements Validator {
                 errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{""+gift_total_qty},null);
             }
         } else {
-            if(gift_max_qty_per_person > 1000){//선착순이 아니어도, 인당 최대 선택수량은 1000개
+            if(gift_max_qty_per_person!=null && gift_max_qty_per_person > 1000){
+                //선착순 선물이 아니어도, 인당 수량을 제한한 경우에는 인당 최대 선택수량은 1000개
                 errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{"1000"}, null);
             }
         }

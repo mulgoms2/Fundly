@@ -172,7 +172,7 @@
                                     </span>
                             </div>
                             <div>
-                                <input name="maxLimit" id="maxUnlim" type="radio" value="n"> <!--1인당 수량 제한 있음-->
+                                <input name="maxLimit" id="maxUnlim" type="radio" value="n"> <!--1인당 수량 제한 없음-->
                                 <label for="maxUnlim">없음</label>
                             </div>
                         </div>

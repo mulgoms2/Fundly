@@ -453,6 +453,7 @@ window.onload = function () {
                 alert("check your console");
                 console.log("here check")
                 console.log(data)
+                console.log(data.dba_reg_dtm.toString())
             }) // 서버로부터 등록된 gift 리스트를 받아서 문자열(<li>태그)로 변환해 DOM 요소를 추가해 화면에 뿌린다.
             .catch((error) => console.log(error))
     })
@@ -691,7 +692,7 @@ const validRNum = function(elem,max){
     // console.log('limValue')
     // console.log(limValue);
     if(elem.closest('div').querySelector('input')){ //이렇게 조건을 안주면 이 요소가 없는 경우 에러가 나서 다음 코드가 안먹힘 ㅠㅠ
-        if(elem.closest('div').querySelector('input').id==='maxLim'){
+        if(elem.closest('div').querySelector('input').id==='maxLimPer'){
             if(num>limValue) {
                 alert('선물 수량을 초과할 수 없습니다.')
                 elem.value='';
