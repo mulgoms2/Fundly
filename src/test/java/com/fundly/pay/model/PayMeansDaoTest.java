@@ -47,7 +47,6 @@ class PayMeansDaoTest {
     }
 
     @Test
-    @SneakyThrows
     void selectPayMeansId() {
     }
 
