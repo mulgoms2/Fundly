@@ -1,4 +1,3 @@
-
 package com.fundly.user.service;
 
 import com.fundly.project.model.ProjectMapper;

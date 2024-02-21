@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -56,6 +57,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     @Transactional
     public void saveFileMessage(FileDto savedFile, SelBuyMsgDetailsDto message) {
+//        매개변수가 널인지 확인한다.
+        Objects.requireNonNull(savedFile, "is empty file");
+        Objects.requireNonNull(message, "is empty message");
+
         String fileSavedUrl = savedFile.getFile_saved_url();
 //            파일 저장과 동시에 채팅창에 보여지기 위해 이미지 url을 넣어준다.
 //            메시지에 파일 경로를 저장

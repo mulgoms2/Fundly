@@ -17,4 +17,61 @@
         where pj_id = #{pj_id}
     </update>
 
+    <insert id="insert" parameterType="ProjectDto">
+        INSERT INTO PJ (pj_id, pj_sel_id, ctg, sub_ctg,  pj_long_title, pj_short_title, pj_intro, pj_short_intro, pj_tag,
+                         pj_pay_due_dtm, pj_sel_intro, pj_gift_intro, fund_goal_money, fund_str_dtm,
+                        fund_end_dtm, fund_calc_due_dtm, gift_ship_due_date, pj_status, fund_result_status, curr_pj_like_cnt,
+                        curr_fund_money, curr_buy_cnt, dba_reg_dtm, dba_reg_id, dba_mod_dtm, dba_mod_id)
+        VALUES (#{pj_id}, #{pj_sel_id}, #{ctg}, #{sub_ctg}, #{pj_long_title}, #{pj_short_title}, #{pj_intro}, #{pj_short_intro}, #{pj_tag},
+                #{pj_pay_due_dtm}, #{pj_sel_intro}, #{pj_gift_intro}, #{fund_goal_money}, #{fund_str_dtm},
+                #{fund_end_dtm}, #{fund_calc_due_dtm}, #{gift_ship_due_date}, #{pj_status}, #{fund_result_status}, #{curr_pj_like_cnt},
+                #{curr_fund_money}, #{curr_buy_cnt}, #{dba_reg_dtm}, #{dba_reg_id}, #{dba_mod_dtm}, #{dba_mod_id})
+    </insert>
+    <update id="update">
+        UPDATE PJ
+        SET
+            pj_sel_id = #{pj_sel_id},
+            ctg = #{ctg},
+            sub_ctg = #{sub_ctg},
+            pj_long_title = #{pj_long_title},
+            pj_short_title = #{pj_short_title},
+            pj_intro = #{pj_intro},
+            pj_short_intro = #{pj_short_intro},
+            pj_tag = #{pj_tag},
+            pj_pay_due_dtm = #{pj_pay_due_dtm},
+            pj_sel_intro = #{pj_sel_intro},
+            pj_gift_intro = #{pj_gift_intro},
+            fund_goal_money = #{fund_goal_money},
+            fund_str_dtm = #{fund_str_dtm},
+            fund_end_dtm = #{fund_end_dtm},
+            fund_calc_due_dtm = #{fund_calc_due_dtm},
+            gift_ship_due_date = #{gift_ship_due_date},
+            pj_status = #{pj_status},
+            fund_result_status = #{fund_result_status},
+            curr_pj_like_cnt = #{curr_pj_like_cnt},
+            curr_fund_money = #{curr_fund_money},
+            curr_buy_cnt = #{curr_buy_cnt},
+            dba_reg_dtm = #{dba_reg_dtm},
+            dba_reg_id = #{dba_reg_id},
+            dba_mod_dtm = #{dba_mod_dtm},
+            dba_mod_id = #{dba_mod_id}
+        WHERE
+            pj_id = #{pj_id}
+    </update>
+    <delete id="deleteAll">
+        delete
+        from PJ
+    </delete>
+    <delete id="delete">
+        delete from PJ where pj_id = #{pj_id}
+    </delete>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from PJ
+    </select>
+    <select id="getByPjId" resultType="com.persistence.dto.ProjectDto">
+        select * from PJ where pj_id = #{pj_id}
+    </select>
+    <select id="getListByUserId" resultType="com.persistence.dto.ProjectDto">
+        select * from pj where pj_sel_id = #{pj_sel_id}
+    </select>
 </mapper>

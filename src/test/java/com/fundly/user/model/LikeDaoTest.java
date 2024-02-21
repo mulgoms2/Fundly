@@ -55,8 +55,8 @@ class LikeDaoTest {
     @SneakyThrows
     @DisplayName("좋아요목록삭제")
     void deleteAllLikeTest() {
-//        int result = likedao.deleteAllLike();
-//        System.out.println("result = " + result);
+        int result = likedao.deleteAllLike();
+        System.out.println("result = " + result);
     }
 
     @Test
@@ -147,8 +147,8 @@ class LikeDaoTest {
         assertTrue(likedao.cancelLike(likedto)==1);
         //likedao.reLike()
         assertTrue(likedao.reLike(likedto)==1);
-    }
-
+    } 
+  
     @Test
     @SneakyThrows
     void selectPageTest() {
@@ -161,3 +161,4 @@ class LikeDaoTest {
 }
     // LocalDateTime -> String
 //    String nowtoString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
