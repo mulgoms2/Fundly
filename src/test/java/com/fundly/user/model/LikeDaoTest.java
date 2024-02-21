@@ -147,8 +147,8 @@ class LikeDaoTest {
         assertTrue(likedao.cancelLike(likedto)==1);
         //likedao.reLike()
         assertTrue(likedao.reLike(likedto)==1);
-    }
-    
+    } 
+  
     @Test
     @SneakyThrows
     void selectPageTest() {
@@ -159,3 +159,6 @@ class LikeDaoTest {
         log.error("\n\n\n" + result);
     }
 }
+    // LocalDateTime -> String
+//    String nowtoString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+

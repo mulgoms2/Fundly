@@ -111,9 +111,11 @@ class ProjectMapperTest {
         projectMapper.insert(project3);
         assertEquals(2, projectMapper.count());
         String pj_id = project3.getPj_id();
+
 //        행위
 //        프로젝트 아이디로 프로젝트를 가져온다.
         ProjectDto resultProject = projectMapper.getByPjId(pj_id);
+
 //        결과
 //        셀렉트 결과로 나온 프로젝트가 삽입한 프로젝트와 일치해야한다.
         assertEquals(project3, resultProject);
@@ -207,6 +209,7 @@ class ProjectMapperTest {
         assertEquals(afterRowCount, beforeRowCount - 1);
         assertEquals(null, projectMapper.getByPjId(pj_id));
 //        assertThrows(ClassNotFoundException.class, () -> projectMapper.getByPjId(pj_id));
+
     }
 
     @Test

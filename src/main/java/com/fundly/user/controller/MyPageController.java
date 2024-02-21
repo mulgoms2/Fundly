@@ -4,6 +4,7 @@ package com.fundly.user.controller;
 import com.fundly.user.service.LikeService;
 import com.fundly.user.service.UserInfoService;
 import com.persistence.dto.LikeDto;
+import com.persistence.dto.ProjectDto;
 import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,24 +89,29 @@ public class MyPageController {
 
             log.error("\n\n user_email = " + user_email + "\n\n");
 
+            // 로그인 안되어있으면 메인??? -> 회원가입 페이지
             if(user_email == null){
                 log.error("로그인되지 않았습니다");
                 return mainView;
             }
 
-            LikeDto likedto = new LikeDto(user_email,"");
-            List<LikeDto> likes = likeservice.getLikeList(likedto);
-
+            // 유저아이디 = 유저이메일
             UserDto dto = UserDto.builder().user_email(user_email).build();
-
             UserDto userInfo = userInfoService.userInfo(dto);
             String user_name = userInfo.getUser_name();
-
             model.addAttribute("userInfo",userInfo);
             model.addAttribute("user_name",user_name);
             model.addAttribute("user_email",user_email);
 
+            // 유저 아이디 통해 좋아요 목록 불러오기
+            LikeDto likedto = new LikeDto(user_email);
+            List<ProjectDto> likes = likeservice.getLikeListWithPj(likedto);
+//            List<LikeDto> likes = likeservice.getLikeList(likedto);
             model.addAttribute("likes", likes);
+
+            //좋아요 목록에 있는 프로젝트 정보 불러오기
+//            ProjectDto pjs = pjdao.get
+//            model.addAttribute("pjs", pjs);
 
         } catch (Exception e) {
 //
