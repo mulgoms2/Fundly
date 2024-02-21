@@ -12,15 +12,15 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Slf4j
 @SpringJUnitWebConfig(classes = {RootContext.class, ServletContext.class})
-class GiftItemControllerTest {
+class ItemControllerTest {
     private WebApplicationContext context;
     private MockMvc mockMvc;
     ItemServiceImpl itemService;
-    GiftItemController giftItemController;
+    ItemController itemController;
 
     @BeforeEach
     public void setUp(){
-        this.mockMvc = MockMvcBuilders.standaloneSetup(giftItemController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(itemController).build();
     }
 
 }
