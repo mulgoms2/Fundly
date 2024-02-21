@@ -36,11 +36,11 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
-    @GetMapping("/chat/test")
-//    테스트용
-    public String chatRoom() {
-        return "chat/asyncAwait";
-    }
+//    @GetMapping("/chat/test")
+////    테스트용
+//    public String chatRoom() {
+//        return "chat/asyncAwait";
+//    }
 
     @PostMapping("/chat/test")
     @ResponseBody

@@ -6,10 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,7 +89,7 @@ class ProjectMapperTest {
     @Test
     @DisplayName("널을 인서트 해보기")
     void nullInsert() {
-       assertThrows(NullPointerException.class ,()->projectMapper.insert(null));
+        assertThrows(DataAccessException.class, () -> projectMapper.insert(null));
     }
 
     @Test
@@ -94,7 +97,8 @@ class ProjectMapperTest {
     void duplicateTest() {
         projectMapper.insert(project1);
 //        같은 이름의 프로젝트 중복 삽입시 예외가 발생해야 한다.
-        assertThrows(DuplicateKeyException.class, () -> projectMapper.insert(project1));
+        assertThrowsExactly(DuplicateKeyException.class, () -> projectMapper.insert(project1));
+        assertThrows(DataAccessException.class, () -> projectMapper.insert(project1));
     }
 
     @Test
@@ -107,14 +111,24 @@ class ProjectMapperTest {
         projectMapper.insert(project3);
         assertEquals(2, projectMapper.count());
         String pj_id = project3.getPj_id();
-
 //        행위
 //        프로젝트 아이디로 프로젝트를 가져온다.
         ProjectDto resultProject = projectMapper.getByPjId(pj_id);
-
 //        결과
 //        셀렉트 결과로 나온 프로젝트가 삽입한 프로젝트와 일치해야한다.
         assertEquals(project3, resultProject);
+    }
+
+    @Test
+    @DisplayName("null값 대입 검사")
+    void getPjWithNull() {
+        assertDoesNotThrow(() -> projectMapper.getByPjId(null));
+        assertDoesNotThrow(() -> projectMapper.getListByUserId(null));
+        assertDoesNotThrow(() -> projectMapper.delete(null));
+        assertThrows(DataAccessException.class, () -> projectMapper.insert(null));
+        assertThrowsExactly(DataIntegrityViolationException.class, () -> projectMapper.insert(null));
+        assertDoesNotThrow(() -> projectMapper.update(null));
+        assertDoesNotThrow(() -> projectMapper.delete(null));
     }
 
     @Test
@@ -122,17 +136,13 @@ class ProjectMapperTest {
     void selectByUserId() {
 //        조건
 //        유저 아이디가 적힌 프로젝트 데이터가 존재할때
-
-
         projectMapper.insert(project1);
         projectMapper.insert(project3);
 
         assertEquals(2, projectMapper.count());
-
 //        행위
 //        유저아이디로 프로젝트를 식별하면 프로젝트 목록이 나온다.
         List<ProjectDto> resultPj = projectMapper.getListByUserId(user_id);
-
 //        결과
 //        리스트에 해당 프로젝트가 존재한다.
         assertNotEquals(-1, resultPj.indexOf(project1));
@@ -197,7 +207,6 @@ class ProjectMapperTest {
         assertEquals(afterRowCount, beforeRowCount - 1);
         assertEquals(null, projectMapper.getByPjId(pj_id));
 //        assertThrows(ClassNotFoundException.class, () -> projectMapper.getByPjId(pj_id));
-
     }
 
     @Test
@@ -219,4 +228,61 @@ class ProjectMapperTest {
         assertEquals(0, delete);
     }
 
+    @Test
+    @DisplayName("전체 프로젝트를 조회하는 기능 검사")
+    void selectAllProject() {
+//        조건
+        projectMapper.insert(project1);
+        projectMapper.insert(project2);
+        projectMapper.insert(project3);
+//        행위
+        List<ProjectDto> projectDtoList = projectMapper.selectAllPj();
+//        결과
+        assertEquals(3, projectDtoList.size());
+        assertEquals(true, projectDtoList.contains(project1));
+        assertEquals(true, projectDtoList.contains(project2));
+        assertEquals(true, projectDtoList.contains(project3));
+    }
+
+    @Test
+    @DisplayName("테이블이 비어있을경우 프로젝트 리스트 조회하기")
+    void emptyTableTest() {
+        projectMapper.deleteAll();
+        assertEquals(0, projectMapper.count());
+
+        List<ProjectDto> projectDtoList = projectMapper.selectAllPj();
+
+        assertEquals(true, projectDtoList.isEmpty());
+    }
+
+    @Test
+    @DisplayName("상태별 프로젝트 한개 조회하기")
+    void selectByStatus() {
+        String pj_id;
+        String status = "ing";
+
+//        조건
+        //프로젝트 테이블에 ing 상태인 프로젝트가 존재한다.
+        project1.setPj_status("ing");
+        project2.setPj_status("ing");
+        project3.setPj_status("end");
+        projectMapper.insert(project1);
+        projectMapper.insert(project2);
+        projectMapper.insert(project3);
+
+        List<ProjectDto> likedList = new ArrayList<>();
+
+        for (int i = 1; i <= 3; i++) {
+            ProjectDto likedPj = projectMapper.selectBySatus(String.valueOf(i), "ing");
+
+            if (likedPj != null) {
+                likedList.add(likedPj);
+            }
+        }
+
+
+        boolean result = likedList.stream().allMatch(pj -> pj.getPj_status().equals("ing"));
+
+        assertEquals(true, result);
+    }
 }

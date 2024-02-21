@@ -60,4 +60,10 @@
     <select id="getListByUserId" resultType="com.persistence.dto.ProjectDto">
         select * from pj where pj_sel_id = #{pj_sel_id}
     </select>
+    <select id="selectAllPj" resultType="com.persistence.dto.ProjectDto">
+        select * from pj
+    </select>
+    <select id="selectBySatus" resultType="com.persistence.dto.ProjectDto">
+        select * from PJ where pj_id = #{pj_id} and pj_status = #{pj_status}
+    </select>
 </mapper>
