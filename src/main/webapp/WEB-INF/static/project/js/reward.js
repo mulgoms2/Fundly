@@ -19,6 +19,9 @@ const giftName = document.querySelector('#giftName');
 const radioBtns = document.querySelector('.pjBox.gift').querySelectorAll('input[type=radio]');
 const maxInputs = document.querySelectorAll('.maxInput');
 const pjForm = document.querySelector('.pjBox.item').querySelector('.pjForm');
+const giftInitBtn = document.querySelector(".gift .pjForm .btnWrap .init"); //선물 초기화 버튼
+const giftSaveBtn = document.querySelector(".gift .pjForm .btnWrap .save"); //선물 저장버튼
+
 
 
 
@@ -177,6 +180,7 @@ window.onload = function () {
             url: '/project/item',
             headers: {"content-type": "application/json"},
             data: JSON.stringify({
+                //todo 입력창에 input이나 keyup이벤트로 client에게 올바른 입력을 유도하는 것 외에도 서버로 값을 넘기기 전에 유효성 체크를 하는 과정이 필요하다.
                 'item_name': itmName.value,
                 // 'item_name': '', 테스트용
                 'item_option_type': item_option_type.val(),
@@ -216,6 +220,8 @@ window.onload = function () {
             }
         });
     });
+
+
 
     //모든 라디오input에 이벤트 걸기
     // 라디오 input 선택이 바뀌면
@@ -294,6 +300,9 @@ window.onload = function () {
         }
     }//아이템 페이지에 거는 이벤트들
 
+
+
+
     //선물 페이지에 거는 이벤트들
     dropdown.addEventListener("click", function () {
         this.classList.toggle('border');
@@ -320,7 +329,7 @@ window.onload = function () {
                             //console.dir(result) 가져온 리스트를 확인한다.
                             const arr = result;
                             // const list = mkItmDrop(result) //List인 result를 바로 넣으면 작동 안함.
-                            // Java의 List는 어떻게 JS의 배열로 받아지는걸까............?
+                            // Java의 List는 어떻게 JS의 배열로 받아지는걸까?
                             const list = mkItmDrop(arr);
                             console.dir(list);
                             showList(list, itmDropdown); //드롭다운으로 선택한 아이템 보여주기
@@ -417,6 +426,37 @@ window.onload = function () {
     //         }
     //     })
     // }
+
+    giftSaveBtn.addEventListener("click", function(){ //선물 저장버튼 누르기
+        //입력 필드값에 대한 유효성 검사
+        const validForm = giftValidCheck();
+        if(!validForm) {
+            alert("입력값이 유효하지 않습니다. 양식에 맞게 제출해주세요.")
+            return;
+        }
+        //.ajax 요청으로 JSON.stringify로 데이터 보내기
+        fetch("/project/gift", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"}, //써줘야한다. 안써주면 에러남.
+            body: JSON.stringify(validForm), //giftForm에 해당하는 요소들을 서버에 보내기
+
+        })
+            .then((response) => {
+                if(!response.ok){
+                    throw new Error()
+                }
+                return response.json()
+            })
+            .then((data) => {
+                alert("check your console");
+                console.log("here check")
+                console.log(data)
+                console.log(data.dba_reg_dtm.toString())
+            }) // 서버로부터 등록된 gift 리스트를 받아서 문자열(<li>태그)로 변환해 DOM 요소를 추가해 화면에 뿌린다.
+            .catch((error) => console.log(error))
+    })
 
 
 
@@ -559,7 +599,7 @@ const mkCheckedItm = function(arr) { //체크된 아이템들을 아래에 출�
     let list = '<div>'
     for(itm of arr){
         // list += '<div style="display:flex;flex-direction: row; align-items: center">'
-        list += '<div>'
+        list += '<div class="giftItem">'
         list += '<div class="left">' //이 div는 왼쪽에 두고, 오른쪽에는 수량 조절기능을 넣음
         list += '<ul>'
         // list += '<li style="display:flex;flex-direction:column">'
@@ -652,7 +692,7 @@ const validRNum = function(elem,max){
     // console.log('limValue')
     // console.log(limValue);
     if(elem.closest('div').querySelector('input')){ //이렇게 조건을 안주면 이 요소가 없는 경우 에러가 나서 다음 코드가 안먹힘 ㅠㅠ
-        if(elem.closest('div').querySelector('input').id==='maxLim'){
+        if(elem.closest('div').querySelector('input').id==='maxLimPer'){
             if(num>limValue) {
                 alert('선물 수량을 초과할 수 없습니다.')
                 elem.value='';
@@ -735,7 +775,8 @@ const calcDate = function(elem){
     // console.dir(typeof to);
     // console.dir(to);
     // console.dir(new Date(to));
-    shipDate.querySelector('span').innerText = to.toLocaleDateString()+' ('+ dayNames[to.getDay()]+')'
+    // shipDate.querySelector('span').innerText = to.toLocaleDateString()+' ('+ dayNames[to.getDay()]+')'
+    shipDate.querySelector('span').innerHTML = "<span id='shipDay'>"+ to.toLocaleDateString()+"</span><span>   ("+ dayNames[to.getDay()]+") </span>";
 }
 
 const validDays = function(elem,max){
@@ -942,5 +983,118 @@ const init = function () {
     showList(mkOptList(optArr), multiResult);
 }
 
+
+//선물 등록을 하기 전에 1.입력필드를 가져와서 2.유효성 검사를 하는 함수
+const giftValidCheck =function(){
+    const validForm = {
+        item_id: [], //선물을 구성하는 아이템 리스트 (아이템 아이디 배열)
+        item_qty: [], //선물을 구성하는 각 아이템의 수량
+        gift_name: '',
+        //pj_id: '', //pj_id는 form에 담지 않고 pathVariable로 서버에서 set하는 것 고려
+        gift_qty_lim_yn: "",
+        // gift_total_qty: "",
+        // gift_max_qty_per_person: "", 해당 필드는 NotNull이 아니므로 해당시 동적으로 생성되도록 한다.
+        //gift_ship_due_date: "",
+        //gift_ship_need_yn: "",
+        gift_money: "",
+        //dba_reg_id: "",//dba_reg_id는 form에 담지 않고 session을 이용해 서버에서 set하는 것 고려
+       // pj_pay_due_dtm: "",
+    }; // 유효성 검사를 마친 필드들을 저장할 object
+
+    //gift를 구성할 item들에 대한 검증
+    const giftItemList = document.querySelectorAll(".giftItem");
+    for(let i=0; i<giftItemList.length; i++){
+        console.log(giftItemList[i])
+        validForm.item_id[i] = giftItemList[i].querySelector("button.cancel").getAttribute("data-item_id") //이 값은 서버에서 넘어온 값이니까 유효성 체크는 생략..
+        let itmQty = giftItemList[i].querySelector(".itmNum").value;
+        //console.log(typeof itmQty); //왜 input[type=number]인데 string으로 나오지?
+        itmQty = parseInt(itmQty);
+        if(!Number.isInteger(itmQty)||itmQty<1||itmQty>1000) {
+            return false; //아이템 수량이 정수가 아니거나, 1~1000사이의 수량이 아니면 유효성 검사 탈락
+        }
+        validForm.item_qty[i] = itmQty; //아이템 수량이 유효성 검사 통과하면, 배열에 담는다.
+    }
+
+
+    //giftName에 대한 검증
+    const giftName = document.querySelector('#giftName').value;
+    if(giftName.length<1 || giftName.length >50) {
+        return false;
+    }
+    validForm.gift_name = giftName;
+
+    //gift_qty_lim_yn 검증 (사실 radio버튼이지만, client의 script 조작이 발생할 수 있다 가정하고 유효성 검사.)
+    const giftLimQty = document.querySelector('input[name=limit]:checked').value; //
+    console.log(giftLimQty);
+    if(!["y","Y","n","N"].includes(giftLimQty)){
+        return false; // 입력값은 y 또는 n이어야 함
+    }
+    validForm.gift_qty_lim_yn = giftLimQty;
+    // console.log(validForm);
+
+    //gift_total_qty 검증
+    // const totalQty = document.querySelector('input[name=limit]:checked > .maxInput').value;
+    if(giftLimQty==="y"){ //제한 선물 수량은 선착순일 때만 존재하는 값
+        let totalQty = document.querySelector('#maxLimVal').value;
+        totalQty = parseInt(totalQty);
+        // console.log(totalQty);
+        if(totalQty<1||totalQty>1000) {
+            return false;
+        }
+        validForm.gift_total_qty = totalQty;
+    }
+
+    //gift_max_qty_per_person 검증
+    const maxLimit = document.querySelector('input[name=maxLimit]').value;
+    if(!["y","Y","n","N"].includes(maxLimit)){
+        return false; // 입력값은 y 또는 n이어야 함
+    }
+
+    if(maxLimit==="y"){ //1인당 제한 수량이 있을 경우,
+        let maxPer = document.querySelector('#maxLimPer').value;
+        maxPer = parseInt(maxPer)
+        if(giftLimQty==="y"){//선착순 선물이고
+            let totalQty = document.querySelector('#maxLimVal').value;
+            totalQty = parseInt(totalQty);
+            if(maxPer<1 || maxPer > totalQty) {
+                return false; //1이상의 정수가 아니거나, 선착순 총 수량 보다 많을경우
+            }
+        } else { //선착순 선물이 아닐 경우라도
+            if(maxPer<1 || maxPer > 1000) {
+                return false; //1~1000사이의 정수만 유효
+            }
+        }
+        validForm.gift_max_qty_per_person = maxPer;
+    }
+    //gift_ship_due_date 유효성 검사
+    //배송일은 최종 결제일로부터 1~1825일 사이어야 한다.
+    let shipCalc = document.querySelector('#shipCalc').value;
+    // console.log(shipCalc);
+    if(shipCalc<1 || shipCalc>1825){
+        return false;
+    }
+    let payDay = document.querySelector('#payDay').value;
+    payDay = new Date(payDay);
+    // console.log(payDay);
+    // console.log(typeof payDay);
+    validForm.pj_pay_due_dtm = payDay.toISOString().substring(0,19);
+
+    let shipDay = document.querySelector("#shipDay").innerHTML
+    shipDay = new Date(shipDay);
+    // console.log(shipDay);
+    validForm.gift_ship_due_date = shipDay.toISOString().substring(0,19);
+
+    //gift_money 유효성 검사
+    let giftMoney = document.querySelector('#giftMoney').value;
+    giftMoney = parseInt(uncomma(giftMoney))
+    if(giftMoney<1000 || giftMoney>10000000){
+        return false;
+    }
+    validForm.gift_money = giftMoney;
+
+    alert("check your console")
+    console.log(validForm);
+    return validForm; //모든 유효성 검사를 통과한, 유효한 값을 가진 객체를 반환
+}
 
 

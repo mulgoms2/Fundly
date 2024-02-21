@@ -20,6 +20,7 @@ public class GiftValidator implements Validator {
     public void validate(Object target, Errors errors) {
         log.error("\n\n GiftValidator is called \n\n");
         GiftForm giftForm = (GiftForm) target;
+        log.error("\n\n giftForm={}\n\n",giftForm);
 
         String gift_name = giftForm.getGift_name(); //0~50자 이하.
         String gift_qty_lim_yn = giftForm.getGift_qty_lim_yn(); //y또는 n이어야 함
@@ -63,7 +64,8 @@ public class GiftValidator implements Validator {
                 errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{""+gift_total_qty},null);
             }
         } else {
-            if(gift_max_qty_per_person > 1000){//선착순이 아니어도, 인당 최대 선택수량은 1000개
+            if(gift_max_qty_per_person!=null && gift_max_qty_per_person > 1000){
+                //선착순 선물이 아니어도, 인당 수량을 제한한 경우에는 인당 최대 선택수량은 1000개
                 errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{"1000"}, null);
             }
         }
@@ -77,25 +79,15 @@ public class GiftValidator implements Validator {
 
 
 
-        //6. 배송상품 유무 선택
-        if(!gift_ship_need_yn.equals("y")&&!gift_ship_need_yn.equals("n")){
-            errors.rejectValue("gift_ship_need_yn","invalidChoice",new String[]{"y","n"},null);
-        }
+//        //6. 배송상품 유무 선택 //이거는 없앨 column
+//        if(!gift_ship_need_yn.equals("y")&&!gift_ship_need_yn.equals("n")){
+//            errors.rejectValue("gift_ship_need_yn","invalidChoice",new String[]{"y","n"},null);
+//        }
 
         //7. 선물 금액(가격)
         if(gift_money <1000 || gift_money > 10000000) {
             errors.rejectValue("gift_money","invalidNumber", new String[]{"1000","10000000"},null);
         }
-
-
-
-
-
-
-
-
-
-
 
 
 

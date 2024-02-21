@@ -27,7 +27,7 @@
     </select>
 
     <!--  4. 해당 아이템을 포함하는 모든 선물 리스트를 가져오기 -->
-    <select id="selectGift" resultType="int">
+    <select id="selectGift" resultType="String">
         SELECT gift_id
         FROM pj_gift_item_detail
         WHERE item_id = #{item_id}

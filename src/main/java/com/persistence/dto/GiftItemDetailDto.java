@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class GiftItemDetailDto {
     private Integer gift_item_id;
-    private Integer gift_id;
+    private String gift_id;
     private Integer item_id;
     private Integer item_qty;
 }

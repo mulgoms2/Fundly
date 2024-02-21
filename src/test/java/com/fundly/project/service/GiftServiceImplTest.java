@@ -38,7 +38,7 @@ class GiftServiceImplTest {
     @BeforeEach
     void setUp(){
         giftDto = GiftDto.builder()
-                .gift_id(1)
+                .gift_id("1")
                 .pj_id("pj1")
                 .gift_name("선물A")
                 .build();
@@ -91,9 +91,9 @@ class GiftServiceImplTest {
     @DisplayName("해당 선물 가져오기")
     void getGift() {
         //given
-        given(giftMapper.select(1)).willReturn(giftDto);
+        given(giftMapper.select("1")).willReturn(giftDto);
         //when
-        GiftDto giftDto2 = giftService.getGift(1);
+        GiftDto giftDto2 = giftService.getGift("1");
         //then
         assertThat(giftDto2).isEqualTo(giftDto);
     }
@@ -170,9 +170,9 @@ class GiftServiceImplTest {
     @DisplayName("선물 삭제하기-성공")
     void removeGift() {
         //given
-        given(giftMapper.delete(1)).willReturn(1);
+        given(giftMapper.delete("1")).willReturn(1);
         //when
-        int rowCnt = giftService.removeGift(1);
+        int rowCnt = giftService.removeGift("1");
         //then
         assertThat(rowCnt).isEqualTo(1);
     }

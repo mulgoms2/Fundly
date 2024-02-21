@@ -143,15 +143,15 @@
                         </div>
                         <div class="limRadio check">
                             <div>
-                                <input name="limit" id="lim" type="radio" value="수량제한 있음">
+                                <input name="limit" id="lim" type="radio" value="y">  <!--수량제한 있음-->
                                 <label for="lim">있음</label>
                                 <span style="visibility:hidden;">
-                                        <input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
+                                        <input class='maxInput' id='maxLimVal' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
                                         <div>개</div>
                                     </span>
                             </div>
                             <div>
-                                <input name="limit" id="unlim" type="radio" value="수량제한 없음">
+                                <input name="limit" id="unlim" type="radio" value="n"> <!--수량제한 없음-->
                                 <label for="unlim">없음</label>
                             </div>
                         </div>
@@ -164,15 +164,15 @@
                         </div>
                         <div class="limRadio check">
                             <div>
-                                <input name="maxLimit" id="maxLim" type="radio" value="1인당 선택 제한 있음">
+                                <input name="maxLimit" id="maxLim" type="radio" value="y"> <!--1인당 수량 제한 있음-->
                                 <label for="maxLim">있음</label>
                                 <span style="visibility: hidden;">
-                                        <input class='maxInput' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
+                                        <input class='maxInput' id='maxLimPer' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
                                         <div>개</div>
                                     </span>
                             </div>
                             <div>
-                                <input name="maxLimit" id="maxUnlim" type="radio" value="1인당 선택 제한 없음">
+                                <input name="maxLimit" id="maxUnlim" type="radio" value="n"> <!--1인당 수량 제한 없음-->
                                 <label for="maxUnlim">없음</label>
                             </div>
                         </div>
@@ -190,8 +190,8 @@
                                 <p>결제 종료일(2024-03-01)로부터</p> <!--여기 나중에 고쳐야 함. 하드코딩 xx-->
                                 <div>
                                     <div>
-                                        <input type="hidden" value="2024-03-01"> <!--pj에서 넘어온 값을 넣어줘야함 <%--${pj.fund_end_dtm}--%> -->
-                                        <input type="number" onkeyup="validDays(this,1825);calcDate(this)">
+                                        <input id="payDay" type="hidden" value="2024-03-01T00:00:00"> <!--pj에서 넘어온 값을 넣어줘야함 <%--${pj.fund_end_dtm}--%> -->
+                                        <input id="shipCalc" type="number" onkeyup="validDays(this,1825);calcDate(this)">
                                         <div>일 뒤</div>
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@
                         </div>
                         <div>
                             <div class="inputBx money check">
-                                <input type="text" onkeyup="validRNum(this,10000000);inputNumberFormat(this);" placeholder="1000원 이상의 금액을 입력하세요.">
+                                <input id="giftMoney" type="text" onkeyup="validRNum(this,10000000);inputNumberFormat(this);" placeholder="1000원 이상의 금액을 입력하세요.">
                                 <div>원</div>
                             </div>
                             <p class="notice" style="display:none">10,000,000원 이하로 입력해주세요.</p>
@@ -216,7 +216,7 @@
                     </section>
                     <div class="btnWrap">
                         <button type="button" class="init">초기화</button>
-                        <button type="button" class="save" disabled>저장</button>
+                        <button type="button" class="save">저장</button>
                     </div>
                 </div>
             </div>

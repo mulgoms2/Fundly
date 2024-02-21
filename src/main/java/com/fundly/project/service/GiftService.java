@@ -20,7 +20,7 @@ public interface GiftService {
     GiftDto toGiftDto(GiftForm giftForm);
     List<GiftItemDetailDto> toGiftItemDetailDto(GiftForm giftForm);
 
-    GiftDto getGift(Integer gift_id) throws Exception// 특정 선물 하나 가져오기
+    GiftDto getGift(String gift_id) throws Exception// 특정 선물 하나 가져오기
     ;
 
     List<GiftDto> getAllGiftList(String pj_id) throws Exception// 특정 프로젝트의 모든 선물 리스트 가져오기
@@ -36,7 +36,7 @@ public interface GiftService {
 
     int modifyGiftQty(GiftDto giftDto) throws Exception;
 
-    int removeGift(Integer gift_id) throws Exception;
+    int removeGift(String gift_id) throws Exception;
 
 
 
