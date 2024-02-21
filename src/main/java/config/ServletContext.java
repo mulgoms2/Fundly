@@ -63,8 +63,8 @@ public class ServletContext implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-
         ms.setBasename("message.messages");
+        ms.addBasenames("message.project_message");
         ms.setDefaultEncoding("UTF-8");
         return ms;
     }

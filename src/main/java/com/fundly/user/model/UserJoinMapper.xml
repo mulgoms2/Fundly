@@ -10,7 +10,7 @@
         where user_email = #{user_email}
     </select>
     <!-- join insert -->
-    <insert id="insert" parameterType="UserDto">
+    <insert id="insert" parameterType="UserJoinDto">
         INSERT INTO user_info (user_id,
                                user_name,
                                user_pwd,
