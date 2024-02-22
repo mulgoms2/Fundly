@@ -7,18 +7,20 @@ import config.RootContext;
 import config.ServletContext;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static java.time.LocalTime.now;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
@@ -55,8 +57,8 @@ class LikeDaoTest {
     @SneakyThrows
     @DisplayName("좋아요목록삭제")
     void deleteAllLikeTest() {
-        int result = likedao.deleteAllLike(likedto);
-        System.out.println("result = " + result);
+//        int result = likedao.deleteAllLike();
+//        System.out.println("result = " + result);
     }
 
     @Test

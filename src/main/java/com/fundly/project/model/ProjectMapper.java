@@ -20,7 +20,6 @@ public interface ProjectMapper {
     int delete(String pjId) throws NonTransientDataAccessException;
     List<ProjectDto> selectAllPj() throws NonTransientDataAccessException;
 
-    ProjectDto selectByStatus(@Param("pj_id") String pjId, @Param("pj_status") String status);
-    ProjectDto selectByEntireStatus(@Param("pj_id") String pjId);
+    ProjectDto selectBySatus(@Param("pj_id") String pjId, @Param("pj_status") String status);
     int changeLikeCnt(ProjectDto pjdto) throws Exception;
 }

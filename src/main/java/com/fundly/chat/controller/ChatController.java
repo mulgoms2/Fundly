@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -36,16 +35,19 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
-//    @GetMapping("/chat/test")
-////    테스트용
-//    public String chatRoom() {
-//        return "chat/asyncAwait";
-//    }
+    @GetMapping("/chat/test")
+//    테스트용
+    public String chatRoom() {
+        return "chat/asyncAwait";
+    }
 
     @PostMapping("/chat/test")
     @ResponseBody
-    public ResponseEntity<Boolean> test() {
-        return new ResponseEntity<>( true ,HttpStatus.OK);
+    public ResponseEntity<SelBuyMsgDto> test(@RequestBody ChatRequest chatRequest) {
+
+        SelBuyMsgDto selBuyMsgDto = chatService.joinChatRoom(chatRequest);
+
+        return ResponseEntity.ok().body(selBuyMsgDto);
     }
 
     @GetMapping("/chatPop")

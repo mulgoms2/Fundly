@@ -2,31 +2,20 @@ package com.fundly.user.service;
 
 import com.fundly.project.model.ProjectMapper;
 import com.fundly.user.model.LikeDao;
-//import com.persistence.dto.ChatRoomDto;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
 import config.RootContext;
 import config.ServletContext;
-import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
@@ -34,12 +23,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class LikeServiceImplTest {
 
-//    @Mock
+    //    @Mock
     LikeDao likedao;
 
     ProjectMapper pjdao;
 
-//    @InjectMocks
+    //    @InjectMocks
     LikeService likeservice;
 
 
@@ -68,9 +57,9 @@ class LikeServiceImplTest {
     @SneakyThrows
     void getLikeListWithPjTest() {
 
-        LikeDto likedto = new LikeDto("yyy","P5040");
+        LikeDto likedto = new LikeDto("yyy", "P5040");
         likedao.insertLike(likedto);
-        LikeDto likedto2 = new LikeDto("yyy","P111");
+        LikeDto likedto2 = new LikeDto("yyy", "P111");
         likedao.insertLike(likedto2);
 
         log.error("\n\n 좋아요목록 널체크 = " + likedto + "\n\n");
@@ -83,8 +72,10 @@ class LikeServiceImplTest {
 
         // 좋아요 목록에 있는 프로젝트 이름 순서대로 프로젝트 정보를 리스트에 담기
         for (LikeDto like : likes) {
-//            ProjectDto projectdto = pjdao.getForLikes(like.getPj_id());
-//            projectList.add(projectdto);
+            ProjectDto projectdto = pjdao.selectBySatus(like.getPj_id(), "ing");
+            if (projectdto != null) {
+                projectList.add(projectdto);
+            }
         }
 
         log.error("\n\n 좋아요프로젝트리스트 = " + likes + "\n\n");
