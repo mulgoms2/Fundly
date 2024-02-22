@@ -1,5 +1,6 @@
 package com.fundly.pay.controller;
 
+import com.fundly.pay.dto.PayResponseDto;
 import com.fundly.pay.dto.billkey.BillKeyRequestDto;
 import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
@@ -9,9 +10,13 @@ import com.fundly.pay.service.PortOneService;
 import com.persistence.dto.PayMeansDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
@@ -39,8 +44,9 @@ public class PayController {
         this.portOneService = portOneService;
     }
 
+    @ResponseBody
     @PostMapping("/update")
-    public String updateDefaultMeans(PayMeansDto payMeansDto, RedirectAttributes rattr) {
+    public ResponseEntity<PayResponseDto> updateDefaultMeans(PayMeansDto payMeansDto) {
         // 1. 기본결제수단지정 버튼을 클릭한다.
         // 2. Y인 row가 있으면 N으로 바꾼다.
         // 3. 해당 결제수단을 Y로 바꾼다.
@@ -48,7 +54,6 @@ public class PayController {
         // 4. Y인 것은 태그를 붙이고 첫번째로 출력한다.
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
         try {
-//            log.info("payMeansDto ??? " + payMeansDto);
             // 1. session의 user Id와 payMeansDto user Id가 같은지 확인한다.
             if (!userCheck(payMeansDto.getUser_id())) {
                 throw new Exception("Update Failed. - userCheck Error");
@@ -86,17 +91,20 @@ public class PayController {
             }
             log.info("getDefaultPayMeansCount 성공");
 
-            rattr.addFlashAttribute("msg", "UPDATE_SUCCESS");
+            // TODO: 상태코드별 에러 처리 세분화 필요
+            PayResponseDto payResponseDto = new PayResponseDto("UPDATE_SUCCESS", payMeansDto);
+            return ResponseEntity.ok().body(payResponseDto);
         } catch (Exception e) {
             e.printStackTrace();
-            log.info("update 실패");
-            rattr.addFlashAttribute("msg", "UPDATE_ERROR");
+            // TODO: 상태코드별 에러 처리 세분화 필요
+            PayResponseDto payResponseDto = new PayResponseDto("UPDATE_ERROR", payMeansDto);
+            return ResponseEntity.ok().body(payResponseDto);
         }
-        return "redirect:/pay/list";
     }
 
+    @ResponseBody
     @PostMapping("/remove")
-    public String remove(PayMeansDto payMeansDto, long from, long to, RedirectAttributes rattr) {
+    public ResponseEntity<PayResponseDto> remove(PayMeansDto payMeansDto, long from, long to) {
         String payMeansId = payMeansDto.getPay_means_id();
         try {
             if (!userCheck(payMeansDto.getUser_id())) {
@@ -106,8 +114,6 @@ public class PayController {
 
             // 1. 예약된 결제 내역이 있는지 확인한다.
             ScheduledPayRequestDto scheduledPayRequestDto = new ScheduledPayRequestDto(payMeansId, "scheduled", from, to);
-            log.info("from: " + from);
-            log.info("to: " + to);
             ScheduledPayResponseDto scheduledPayResponseDto = portOneService.getScheduledPay(scheduledPayRequestDto, authToken);
             if (scheduledPayResponseDto.getCode() != 0) throw new Exception("Remove Failed. - getScheduledPay Error");
             if (scheduledPayResponseDto.getResponse().getTotal() != 0) throw new Exception("Remove Failed. - 예약된 결제가 있습니다.");
@@ -125,18 +131,20 @@ public class PayController {
             if (rowCnt != 1) throw new Exception("Remove Failed. - DB Delete Error");
             log.info("removePayMeans 성공");
 
-            rattr.addFlashAttribute("msg", "DEL_SUCCESS");
+            PayResponseDto payResponseDto = new PayResponseDto("DEL_SUCCESS", payMeansDto);
+            return ResponseEntity.ok().body(payResponseDto);
 
         } catch (Exception e) {
             e.printStackTrace();
-            rattr.addFlashAttribute("msg", "DEL_ERROR");
-        }
+            // TODO: 상태코드별 에러 처리 세분화 필요
+            PayResponseDto payResponseDto = new PayResponseDto("DEL_ERROR", payMeansDto);
+            return ResponseEntity.ok().body(payResponseDto);
 
-        return "redirect:/pay/list";
+        }
     }
 
     @GetMapping("/list")
-    public String list(Model m) {
+    public String list(Model m, RedirectAttributes rattr) {
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
 
         try {
@@ -145,19 +153,15 @@ public class PayController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            m.addAttribute("msg", "LIST_ERROR");
+            rattr.addFlashAttribute("msg", "LIST_ERROR");
         }
 
         return "pay/settingPayMeans";
     }
 
-    @GetMapping("/register")
-    public String register() {
-        return "pay/registerCardForm";
-    }
-
+    @ResponseBody
     @PostMapping("/register")
-    public String register(PayMeansDto payMeansDto, Model m, RedirectAttributes rattr) {
+    public ResponseEntity<PayResponseDto> register(PayMeansDto payMeansDto) {
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
         payMeansDto.setUser_id(userId);
         payMeansDto.setDba_reg_id(userId);
@@ -168,7 +172,6 @@ public class PayController {
             // userID 이용하여 결제수단테이블 id(pay_means_id) 생성
             String payMeansId = payMeansService.getPayMeansId(userId);
             payMeansDto.setPay_means_id(payMeansId);
-//            log.info("payMeansId = " + payMeansId);
 
             BillKeyRequestDto billKeyRequestDto = new BillKeyRequestDto(
                     payMeansDto.getCard_no(),payMeansDto.getCard_valid_date(), payMeansDto.getOwn_birth(),
@@ -177,7 +180,9 @@ public class PayController {
             String authToken = portOneService.getToken().getResponse().getAccess_token();
 
             BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
-            if (billKeyResponseDto.getCode() != 0) throw new Exception("Register Failed. - getBillKey Error");
+            if (billKeyResponseDto.getCode() != 0) {
+                throw new Exception("Register Failed. - getBillKey Error");
+            }
 
             payMeansDto.setBill_key(billKeyResponseDto.getResponse().getCustomer_id());
             payMeansDto.setCard_co_type(billKeyResponseDto.getResponse().getCard_publisher_name());
@@ -203,16 +208,14 @@ public class PayController {
             rowCnt = payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
             if (rowCnt != 1) throw new Exception("Register Failed. - registerPayMeans Error");
 
-            rattr.addFlashAttribute("msg", "REG_SUCCESS");
+            PayResponseDto payResponseDto = new PayResponseDto("REG_SUCCESS", payMeansDto);
+            return ResponseEntity.ok().body(payResponseDto);
         } catch (Exception e) {
             e.printStackTrace();
-//            rattr.addFlashAttribute("payMeansDto", payMeansDto);
-//            rattr.addFlashAttribute("msg", "REG_ERROR");
-            m.addAttribute("payMeansDto", payMeansDto);
-            m.addAttribute("result", "error");
-            return "pay/registerCardForm";
+            // TODO: 상태코드별 에러 처리 세분화 필요
+            PayResponseDto payResponseDto = new PayResponseDto("REG_ERROR", payMeansDto);
+            return ResponseEntity.badRequest().body(payResponseDto);
         }
-        return "redirect:/pay/list";
     }
 
     private boolean userCheck(String payMeansDtoUserId) {

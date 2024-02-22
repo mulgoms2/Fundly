@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="<c:url value='/static/user/css/Message.css'/>">
         <link rel="stylesheet" href="<c:url value='/static/user/css/MakeProject.css'/>">
         <link rel="stylesheet" href="<c:url value='/static/user/css/Setting.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/main/common.css'/>">
         <%-- script --%>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>

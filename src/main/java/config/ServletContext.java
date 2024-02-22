@@ -2,11 +2,12 @@ package config;
 
 import com.fundly.chat.validate.ChatInterceptor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
         includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class),
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Service.class, Repository.class, Mapper.class})
 )
-@PropertySource(value = "/WEB-INF/config/pay.properties")
-//@PropertySource(value = {"/WEB-INF/config/pay.properties", "/WEB-INF/config/payTest.properties"})
 public class ServletContext implements WebMvcConfigurer {
-
-    @Autowired
-    Environment env;
-
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         WebMvcConfigurer.super.configureViewResolvers(registry);
@@ -58,7 +53,6 @@ public class ServletContext implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(new ChatInterceptor()).addPathPatterns("/chat*");
     }
-
 
     @Bean
     public MessageSource messageSource() {
