@@ -9,7 +9,7 @@
                 <div class="ifImg"><span></span></div>
                 <div class="userInfo">
                     <div class="userInfoDetail">
-                        <div class="username">${user_name}</div>
+                        <div class="username">${userInfo.user_name}</div>
                         <a href="<c:url value='/mypage/setting'/>"><span class ="setting"></span></a>
                     </div>
                     <div class="userJoindate">0주 전 가입</div>
@@ -17,20 +17,21 @@
             </div>
             <div class="tapContainer">
                 <div class="tapContainerList" id="divtapContainer">
-                    <span class="tapItem fontcolor on"><a href="" id="itemProfile">프로필</a></span>
-                    <span class="tapItem fontcolor"><a href="" id="itemProjectReview">프로젝트 후기</a></span>
-                    <span class="tapItem fontcolor"><a href="" id="itemMakeProject">올린 프로젝트</a></span>
-                    <span class="tapItem fontcolor"><a href="" id="itemProjectOrder">후원한 프로젝트</a></span>
+                    <span class="tapItem fontcolor" data-tab="itemProfile">프로필</span>
+                    <span class="tapItem fontcolor" data-tab="itemProjectReview">프로젝트 후기</span>
+                    <span class="tapItem fontcolor" data-tab="itemMakeProject">올린 프로젝트</span>
+                    <span class="tapItem fontcolor" data-tab="itemProjectOrder">후원한 프로젝트</span>
                 </div>
             </div>
         </div>
     </div>
     <!-- 탭 값 -->
     <div class="container">
+        <div id="itemProfile" class="tabContent"><jsp:include page="profileDetail.jsp"/></div>
+        <div id="itemProjectReview" class="tabContent">프로젝트후기</div>
+        <div id="itemMakeProject" class="tabContent">올린 프로젝트</div>
+        <div id="itemProjectOrder" class="tabContent">후원한 프로젝트</div>
 
-        <div class="tap_itemProfile fontcolor" id="tap_itemProfile">
-            등록된 소개가 없습니다.
-        </div>
     </div>
     <!-- 프로젝트후기, 올린프로젝트, 후원한 프로젝트 -->
 </div>

@@ -36,9 +36,8 @@ public class JoinController {
     @GetMapping("/add")
     public String join(@ModelAttribute("userJoinDto")UserJoinDto userJoinDto){ return "user/join";}
 
-
     @PostMapping("/add")
-    public String joinsave(@Valid UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
+    public String joinsave(@Valid @RequestBody UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
 
         /*
         binding으로 value 값 확인

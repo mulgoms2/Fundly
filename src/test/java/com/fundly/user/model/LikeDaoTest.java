@@ -45,7 +45,7 @@ class LikeDaoTest {
     @DisplayName("DB에 데이터넣기")
     void start() {
 
-        userdto = new UserDto("user","바다","1234");
+//        userdto = new UserDto("user","바다","1234");
         pjdto = new ProjectDto("P5040",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
         log.error("\n\n\n" + likedto);

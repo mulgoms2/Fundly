@@ -9,4 +9,16 @@
         FROM USER_INFO
         WHERE user_email = #{user_email}
     </select>
+
+    <!-- userJoindate -->
+    <select id="userJoindate" resultType="String">
+        SELECT CASE WHEN TIMESTAMPDIFF(YEAR, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(YEAR, user_join_date, NOW()), '년 전 가입')
+                    WHEN TIMESTAMPDIFF(MONTH, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(MONTH, user_join_date, NOW()), '개월 전 가입')
+                    WHEN TIMESTAMPDIFF(WEEK, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(WEEK, user_join_date, NOW()), '주 전 가입')
+                    WHEN TIMESTAMPDIFF(DAY, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(DAY, user_join_date, NOW()), '일 전 가입')
+                    WHEN TIMESTAMPDIFF(HOUR, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(HOUR, user_join_date, NOW()), '시간 전 가입')
+                    WHEN TIMESTAMPDIFF(MINUTE, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(MINUTE, '2024-02-18 15:44:36', NOW()), '분 전 가입')
+                    ELSE CONCAT(TIMESTAMPDIFF(SECOND, user_join_date, NOW()), '방금 가입') END AS user_join_date
+        FROM user_info;
+    </select>
 </mapper>
