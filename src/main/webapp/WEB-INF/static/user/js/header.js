@@ -19,3 +19,4 @@ function toggleContent(toggle){
         content.style.display="none";
     }
 }
+

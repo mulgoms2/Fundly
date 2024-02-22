@@ -1,36 +1,16 @@
+/* tap */
+let tabId = "itemProfile";
+showTab(tabId);
 
-const tapContainer = document.getElementById('divtapContainer');
+function showTab(tabId) {
+    $('.tabContent').hide(); // 전체 숨김
+    $("#" + tabId).show(); // 선택된 탭만 보여줌
+}
 
-tapContainer.addEventListener("click",(e)=>{
-    const tapItems = document.querySelectorAll('.tapItem');
-
-    tapItems.forEach(item => {
-        // item.classList.add('on');
-        // item.classList.remove('on'); // 모든 탭의 활성화 클래스를 제거합니다.
-    });
-
-    if(e.target.id=="itemProfile"){
-        // e.target.parentElement.classList.add('on');
-        // tap_itemProfile.style.display = "block";
-
-        // tap_itemProfile.style.display = "block";
-        // // itemProjectReview.style.display = "none";
-        // // alert('프로필');
-
-    }
-    else if(e.target.id=="itemProjectReview"){
-        // tap_itemProfile.style.display = "none";
-        // // itemProjectReview.style.display = "block";
-        // alert('후기');
-
-    } else if(e.target.id=="itemMakeProject"){
-        // tap_itemProfile.style.display = "none";
-        // // itemProjectReview.style.display = "none";
-        // alert('올린');
-
-    } else if(e.target.id=="itemProjectOrder"){
-        // tap_itemProfile.style.display = "none";
-        // // itemProjectReview.style.display = "none";
-        // alert('후원');
-    }
+$(document).ready(function() {
+    // tab 클릭 이벤트 처리
+    $('.tapItem').click(function(){
+        tabId = $(this).attr('data-tab');
+        showTab(tabId);
+    })
 })

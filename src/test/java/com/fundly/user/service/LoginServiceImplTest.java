@@ -47,6 +47,7 @@ class LoginServiceImplTest {
                 .user_pwd("12345q!")
                 .user_email("ab12345@test.com")
                 .build();
+
         try {
             UserLoginDto userinfo = loginService.Login(userLoginDto,session,response);
 

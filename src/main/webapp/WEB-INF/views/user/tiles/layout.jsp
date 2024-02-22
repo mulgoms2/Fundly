@@ -32,6 +32,7 @@
         <script defer src="/static/user/js/header.js"></script>
         <!--Mypage js -->
         <script defer src="/static/user/js/likes.js"></script>
+        <script defer src="/static/user/js/profile.js"></script>
     </head>
 
     <body>
