@@ -1,5 +1,6 @@
 package com.fundly.project.service;
 
+import com.fundly.project.controller.GiftForm;
 import com.fundly.project.model.GiftItemDetailMapper;
 import com.fundly.project.model.GiftMapper;
 import com.persistence.dto.GiftDto;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,17 +29,31 @@ public class GiftServiceImpl implements GiftService {
     }// 특정 프로젝트의 모든 선물의 갯수 구하기
 
     @Override
+    public int registerGift(GiftForm giftForm) throws Exception {
+        GiftDto giftDto = toGiftDto(giftForm);
+        List<GiftItemDetailDto> itemList = toGiftItemDetailDto(giftForm);
+
+        return registerGift(giftDto, itemList);
+    }
+
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public int registerGift(GiftDto giftDto, List<GiftItemDetailDto> itemList) throws Exception{
+        int rowCnt = giftMapper.insert(giftDto);
+
         for(int i=0; i<itemList.size(); i++){
             giftItemDetailMapper.insert(itemList.get(i));
         }
 //        throw new Exception("for Tx test");
-        return giftMapper.insert(giftDto);
+        return rowCnt;
     }// 선물 등록하기 (선물 테이블에 insert + 선물 아이템 상세 테이블에도 insert)
 
+
+
+
     @Override
-    public GiftDto getGift(Integer gift_id) throws Exception {
+    public GiftDto getGift(String gift_id) throws Exception {
         return giftMapper.select(gift_id);
     }// 특정 선물 하나 가져오기
 
@@ -98,10 +114,48 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     @Transactional
-    public int removeGift(Integer gift_id) throws Exception {
+    public int removeGift(String gift_id) throws Exception {
         giftItemDetailMapper.deleteAllByGift(gift_id);
 //        throw new RuntimeException("Tx테스트"); //테스트용
         return giftMapper.delete(gift_id);
     }
+
+
+
+    // toDto 메서드
+    @Override
+    public GiftDto toGiftDto(GiftForm giftForm) {
+        GiftDto giftDto = GiftDto.builder()
+                .gift_id(giftForm.getGift_id())
+                .gift_name(giftForm.getGift_name())
+                .pj_id(giftForm.getPj_id())
+                .gift_qty_lim_yn(giftForm.getGift_qty_lim_yn())
+                .gift_total_qty(giftForm.getGift_total_qty())
+                .gift_max_qty_per_person(giftForm.getGift_max_qty_per_person())
+                .gift_ship_due_date(giftForm.getGift_ship_due_date())
+                .gift_money(giftForm.getGift_money())
+                .dba_reg_id(giftForm.getDba_reg_id()) //Controller에서 세션으로 부터 얻은 user_id
+                .build();
+
+        return giftDto;
+    }
+
+    @Override
+    public List<GiftItemDetailDto> toGiftItemDetailDto(GiftForm giftForm) {
+        List<GiftItemDetailDto> itemList = new ArrayList<>();
+        GiftItemDetailDto giftItemDetailDto;
+        int num = giftForm.getItem_qty().length;
+        for(int i=0; i<num; i++){
+            giftItemDetailDto = GiftItemDetailDto.builder()
+                    .gift_id(giftForm.getGift_id())
+                    .item_id(giftForm.getItem_id()[i])
+                    .item_qty(giftForm.getItem_qty()[i])
+                    .build();
+            itemList.add(giftItemDetailDto);
+        }
+
+        return itemList;
+    }
+
 
 }

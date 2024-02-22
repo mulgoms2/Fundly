@@ -5,6 +5,7 @@ import com.fundly.project.service.ItemService;
 import com.persistence.dto.ItemDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,14 +25,16 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/project")
-public class GiftItemController {
+public class ItemController {
     ItemService itemService;
     GiftService giftService;
 
+    MessageSource messageSource;
     @Autowired
-    GiftItemController(ItemService itemService, GiftService giftService){
+    ItemController(ItemService itemService, GiftService giftService, MessageSource messageSource){
         this.itemService = itemService;
         this.giftService = giftService;
+        this.messageSource = messageSource;
     }
 
 
@@ -69,7 +72,8 @@ public class GiftItemController {
     //아이템을 등록하기
     @PostMapping("/item")
     @ResponseBody
-    public ResponseEntity<List<?>> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result){ //아이템 등록
+    public ResponseEntity<?> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result){ //아이템 등록
+
 
         log.error("binding result={}",result);
         log.error("**** error codes ****");
@@ -77,12 +81,17 @@ public class GiftItemController {
                 error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
         ); //어떤 에러코드가 출력되는지
 
-        try {
-            if(result.hasErrors()){
-                log.error("result={}",result);
-                throw new Exception("validation failed"); //errorField마다 에러 메시지를 출력할 수 있도록 수정하기..
-            }
-//        log.info("itemDto",itemDto);
+        if(result.hasErrors()){ //유효성 검사에 실패할 경우
+            log.error("result={}",result);
+            log.error("**** result.getFieldError()={} ",result.getFieldError());
+
+            log.error("***************** messageSource={}",messageSource);
+            ErrorResult errorResult = new ErrorResult(result, messageSource);
+            return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+            // 에러 메시지를 담고 있는 객체를 보내 400번 에러로 응답한다.
+        }
+
+        try { // 유효성 검사에 통과한 경우
             itemDto.setPj_id("pj1"); //지금은 하드코딩이지만 나중에 현 프로젝트 아이디를 넣어줘야함.
             itemDto.setDba_reg_id("asdf"); //원래는 세션에서 얻어온 아이디를 넣어줘야한다.
             if(itemService.registerItem(itemDto)==1){
@@ -94,10 +103,7 @@ public class GiftItemController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            List<ItemDto> list = new ArrayList<>();
-            list.add(itemDto); //에러가 발생했을 경우 원래 사용자 입력값을 다시 보내줘서 사용자 화면에서 에러를 출력하기.
-            return new ResponseEntity<>(result.getAllErrors(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

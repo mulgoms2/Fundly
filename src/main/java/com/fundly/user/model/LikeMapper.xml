@@ -35,6 +35,13 @@
 
     <delete id="deleteAllLike">
         delete from LIKE_PJ
+        where user_id = #{user_id}
+    </delete>
+
+    <delete id="deleteLike">
+        delete from LIKE_PJ
+        where user_id = #{user_id}
+        and pj_id = #{pj_id}
     </delete>
 
 <!--    좋아요목록 전체-->

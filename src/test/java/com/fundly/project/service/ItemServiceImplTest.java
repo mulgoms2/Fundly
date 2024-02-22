@@ -54,7 +54,7 @@ class ItemServiceImplTest {
                 .build();
 
         giftDto = GiftDto.builder()
-                .gift_id(1)
+                .gift_id("1")
                 .pj_id("pj1")
                 .gift_name("선물A")
                 .build();

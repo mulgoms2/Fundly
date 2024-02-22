@@ -7,9 +7,10 @@ import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.SelBuyMsgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -23,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.UUID;
 
 import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
@@ -32,23 +32,29 @@ import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
 public class ChatController {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
+
     @Autowired
     ChatService chatService;
 
-//    @GetMapping("/chat")
+//    @GetMapping("/chat/test")
 ////    테스트용
-//    public String chatRoom(@Valid ChatRequest chatRequest, BindingResult result) {
-//
-//        if (result.hasErrors()) {
-//            return "chat/error";
-//        }
-//
-////        return chatRequest;
-//        return "chat/chat";
+//    public String chatRoom() {
+//        return "chat/asyncAwait";
 //    }
+
+    @PostMapping("/chat/test")
+    @ResponseBody
+    public ResponseEntity<Boolean> test() {
+        return new ResponseEntity<>( true ,HttpStatus.OK);
+    }
 
     @GetMapping("/chatPop")
     public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
+
+        if (result.hasErrors()) {
+//            로그인 정보를 담지 않은 사용자가 접속하려고 한다.
+            return "chat/error";
+        }
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
         SelBuyMsgDto chatRoom = chatService.joinChatRoom(chatRequest);
 
@@ -64,6 +70,7 @@ public class ChatController {
 //        httpsession 객체에 담긴 데이터를 이용할 수 있다.
 //        Object session = accessor.getSessionAttributes().get("session");
 //        System.out.println(((HttpSession) session).getAttribute("user_email"));
+
 //        채팅을 저장
         chatService.saveMessage(message);
 
@@ -73,12 +80,8 @@ public class ChatController {
 
     @PostMapping("/chat/file")
     @ResponseBody
-    public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message, BindingResult result) {
-        if (result.hasErrors()) {
-//            사용자가 올릴 수 없는 파일을 전송했을 때 에러메시지를 사용자에게 보여주어야 한다.
-            log.error("some one sent fake imgFile on chat. user_email = {}", message.getSend_user_id());
-            return;
-        }
+    public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message) {
+//        유효하지 않은 파일이 오면 브라우저에 400 에러가 응답으로 전송된다.
         try {
 //            이미지 파일을 서버에 저장한다.
             saveFileToDrive(file);

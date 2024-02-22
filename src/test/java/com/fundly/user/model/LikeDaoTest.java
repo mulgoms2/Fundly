@@ -46,7 +46,7 @@ class LikeDaoTest {
     void start() {
 
 //        userdto = new UserDto("user","바다","1234");
-        pjdto = new ProjectDto("P5040",0);
+//        pjdto = new ProjectDto("P5040",0);
         likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
         log.error("\n\n\n" + likedto);
 
@@ -55,7 +55,7 @@ class LikeDaoTest {
     @SneakyThrows
     @DisplayName("좋아요목록삭제")
     void deleteAllLikeTest() {
-        int result = likedao.deleteAllLike();
+        int result = likedao.deleteAllLike(likedto);
         System.out.println("result = " + result);
     }
 
@@ -147,8 +147,8 @@ class LikeDaoTest {
         assertTrue(likedao.cancelLike(likedto)==1);
         //likedao.reLike()
         assertTrue(likedao.reLike(likedto)==1);
-    }
-    
+    } 
+  
     @Test
     @SneakyThrows
     void selectPageTest() {
@@ -159,3 +159,6 @@ class LikeDaoTest {
         log.error("\n\n\n" + result);
     }
 }
+    // LocalDateTime -> String
+//    String nowtoString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+

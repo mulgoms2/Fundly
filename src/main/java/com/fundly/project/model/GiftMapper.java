@@ -15,7 +15,7 @@ public interface GiftMapper {
     // 특정 프로젝트의 모든 선물의 갯수 구하기
     int insert(GiftDto giftDto) throws Exception;
     // 선물 하나 등록하기
-    GiftDto select(@Param("gift_id") Integer gift_id) throws Exception;
+    GiftDto select(@Param("gift_id") String gift_id) throws Exception;
     // 선물 하나 가져오기(읽기)
     List<GiftDto> selectAllByPj(@Param("pj_id") String pj_id) throws Exception;
     // 특정 프로젝트의 모든 선물 가져오기(읽기)
@@ -27,7 +27,7 @@ public interface GiftMapper {
     // 해당 선물의 판매 상태 변경(판매중, 일시품절)
     int updateQty(GiftDto giftDto) throws Exception;
     // 해당 선물의 판매 수량 수정
-    int delete(@Param("gift_id") Integer gift_id) throws Exception;
+    int delete(@Param("gift_id") String gift_id) throws Exception;
 
     int deleteAll();
     // 해당 선물 삭제

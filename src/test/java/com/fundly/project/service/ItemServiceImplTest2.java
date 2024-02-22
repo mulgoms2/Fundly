@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
-import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -57,16 +57,15 @@ class ItemServiceImplTest2 {
                 .gift_qty_lim_yn("n")
                 .gift_total_qty(null)
                 .gift_max_qty_per_person(null)
-                .gift_ship_due_date("20240518")
-                .gift_ship_need_yn("y")
-                .gift_money(BigInteger.valueOf(30000))
+                .gift_ship_due_date(LocalDateTime.now())
+                .gift_money(30000)
                 .gift_curr_qty(null)
                 .build();
         giftMapper.insert(giftDto);
 
         dto = GiftItemDetailDto.builder()
                 .item_id(1)
-                .gift_id(1)
+                .gift_id("1")
                 .item_qty(3)
                 .build();
         mapper.insert(dto);
@@ -77,15 +76,15 @@ class ItemServiceImplTest2 {
                 .gift_qty_lim_yn("n")
                 .gift_total_qty(null)
                 .gift_max_qty_per_person(null)
-                .gift_ship_due_date("20240518")
-                .gift_ship_need_yn("y")
-                .gift_money(BigInteger.valueOf(30000))
+                .gift_ship_due_date(LocalDateTime.now())
+//                .gift_ship_need_yn("y")
+                .gift_money(30000)
                 .gift_curr_qty(null)
                 .build();
         giftMapper.insert(giftDto);
         dto = GiftItemDetailDto.builder()
                 .item_id(1)
-                .gift_id(2)
+                .gift_id("2")
                 .item_qty(2)
                 .build();
         mapper.insert(dto);
@@ -97,15 +96,15 @@ class ItemServiceImplTest2 {
                 .gift_qty_lim_yn("n")
                 .gift_total_qty(null)
                 .gift_max_qty_per_person(null)
-                .gift_ship_due_date("20240518")
-                .gift_ship_need_yn("y")
-                .gift_money(BigInteger.valueOf(30000))
+                .gift_ship_due_date(LocalDateTime.now())
+//                .gift_ship_need_yn("y")
+                .gift_money(30000)
                 .gift_curr_qty(null)
                 .build();
         giftMapper.insert(giftDto);
         dto = GiftItemDetailDto.builder()
                 .item_id(1)
-                .gift_id(3)
+                .gift_id("3")
                 .item_qty(1)
                 .build();
         mapper.insert(dto);
@@ -127,7 +126,7 @@ class ItemServiceImplTest2 {
         itemDto = itemService.getItem(1);
         assertEquals(itemDto,null);
         for(int i=1; i<=3; i++){
-            giftDto = giftMapper.select(1);
+            giftDto = giftMapper.select("1");
             assertEquals(giftDto, null);
         }
     }
