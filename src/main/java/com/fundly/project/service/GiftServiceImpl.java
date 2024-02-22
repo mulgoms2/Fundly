@@ -18,13 +18,13 @@ public class GiftServiceImpl implements GiftService {
     GiftItemDetailMapper giftItemDetailMapper;
 
     @Autowired
-    GiftServiceImpl (GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper){
+    GiftServiceImpl(GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper) {
         this.giftMapper = giftMapper;
         this.giftItemDetailMapper = giftItemDetailMapper;
     }
 
     @Override
-    public int getCount(String pj_id) throws Exception{
+    public int getCount(String pj_id) throws Exception {
         return giftMapper.count(pj_id);
     }// 특정 프로젝트의 모든 선물의 갯수 구하기
 
@@ -39,17 +39,15 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int registerGift(GiftDto giftDto, List<GiftItemDetailDto> itemList) throws Exception{
+    public int registerGift(GiftDto giftDto, List<GiftItemDetailDto> itemList) throws Exception {
         int rowCnt = giftMapper.insert(giftDto);
 
-        for(int i=0; i<itemList.size(); i++){
+        for (int i = 0; i < itemList.size(); i++) {
             giftItemDetailMapper.insert(itemList.get(i));
         }
 //        throw new Exception("for Tx test");
         return rowCnt;
     }// 선물 등록하기 (선물 테이블에 insert + 선물 아이템 상세 테이블에도 insert)
-
-
 
 
     @Override
@@ -81,19 +79,19 @@ public class GiftServiceImpl implements GiftService {
         List<GiftItemDetailDto> beforeList = giftItemDetailMapper.selectItemDetail(giftDto.getGift_id());
 
         //선물의 수정이 새로운 아이템을 포함(insert)하거나 기존 아이템의 수량을 변경(update)하는 경우
-        for(GiftItemDetailDto dtoA : afterList){
+        for (GiftItemDetailDto dtoA : afterList) {
             int index = beforeList.indexOf(dtoA);
-            if(index==-1){ //기존 리스트에 없는 아이템이면
+            if (index == -1) { //기존 리스트에 없는 아이템이면
                 giftItemDetailMapper.insert(dtoA); //새로운 아이템데이터를 아이템리스트에 insert
             } else { //기존 리스트에 있는 아이템이면
                 GiftItemDetailDto dtoB = beforeList.get(index);
-                if(dtoB.getItem_qty()!=dtoA.getItem_qty()){ //기존 수량과 입력 수량이 다르면
+                if (dtoB.getItem_qty() != dtoA.getItem_qty()) { //기존 수량과 입력 수량이 다르면
                     giftItemDetailMapper.update(dtoA); //수량 업데이트
                 }
             }
         }
-        for(GiftItemDetailDto dtoB : beforeList){
-            if(!afterList.contains(dtoB)){ //새로운 리스트에 기존 아이템이 없으면
+        for (GiftItemDetailDto dtoB : beforeList) {
+            if (!afterList.contains(dtoB)) { //새로운 리스트에 기존 아이템이 없으면
                 giftItemDetailMapper.delete(dtoB.getGift_item_id()); //기존 아이템 삭제
             }
         }
@@ -120,8 +118,6 @@ public class GiftServiceImpl implements GiftService {
         return giftMapper.delete(gift_id);
     }
 
-
-
     // toDto 메서드
     @Override
     public GiftDto toGiftDto(GiftForm giftForm) {
@@ -136,7 +132,6 @@ public class GiftServiceImpl implements GiftService {
                 .gift_money(giftForm.getGift_money())
                 .dba_reg_id(giftForm.getDba_reg_id()) //Controller에서 세션으로 부터 얻은 user_id
                 .build();
-
         return giftDto;
     }
 
@@ -145,7 +140,7 @@ public class GiftServiceImpl implements GiftService {
         List<GiftItemDetailDto> itemList = new ArrayList<>();
         GiftItemDetailDto giftItemDetailDto;
         int num = giftForm.getItem_qty().length;
-        for(int i=0; i<num; i++){
+        for (int i = 0; i < num; i++) {
             giftItemDetailDto = GiftItemDetailDto.builder()
                     .gift_id(giftForm.getGift_id())
                     .item_id(giftForm.getItem_id()[i])
