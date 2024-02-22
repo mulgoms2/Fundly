@@ -66,7 +66,6 @@ public class NewsServiceImpl implements NewsService{
     @Override
     public List<NewsDto> searchNews(String news_title) throws Exception {
         news_title = '%'+news_title+'%';
-        System.out.println("서비스에서뉴스타이틀"+news_title);
         return  newsDao.search(news_title);
     }
 }
