@@ -32,8 +32,8 @@ public class GiftValidator implements Validator {
         LocalDateTime pj_pay_due_dtm = giftForm.getPj_pay_due_dtm();
         // 현재 날짜 기준최대 1825일
 
-        String gift_ship_need_yn = giftForm.getGift_ship_need_yn();
-        //y또는 n
+        //String gift_ship_need_yn = giftForm.getGift_ship_need_yn();
+        //y또는 n. 없앨 column
 
         Integer gift_money = giftForm.getGift_money();
         //1000이상 10,000,000 이하

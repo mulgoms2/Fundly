@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GiftForm {
+public class GiftForm { //13개 field
     private String gift_id;
     private String gift_name;
     private String pj_id;
@@ -20,7 +20,7 @@ public class GiftForm {
     private Integer gift_max_qty_per_person;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime gift_ship_due_date;
-    private String gift_ship_need_yn;
+//    private String gift_ship_need_yn; 없앨 field
     private Integer gift_money;
     private String dba_reg_id;
     //여기까진 GiftDto의 필드와 일치

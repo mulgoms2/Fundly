@@ -36,7 +36,6 @@ public class GiftServiceImpl implements GiftService {
         return registerGift(giftDto, itemList);
     }
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int registerGift(GiftDto giftDto, List<GiftItemDetailDto> itemList) throws Exception{
@@ -51,15 +50,26 @@ public class GiftServiceImpl implements GiftService {
 
 
 
-
     @Override
     public GiftDto getGift(String gift_id) throws Exception {
         return giftMapper.select(gift_id);
     }// 특정 선물 하나 가져오기
 
-    @Override
-    public List<GiftDto> getAllGiftList(String pj_id) throws Exception {
-        return giftMapper.selectAllByPj(pj_id);
+//    @Override
+//    public List<GiftDto> getAllGiftList(String pj_id) throws Exception {
+//        return giftMapper.selectAllByPj(pj_id);
+//    }// 특정 프로젝트의 모든 선물 리스트 가져오기
+
+    @Override //반환타입을 List<GiftDto>에서 List<GiftForm>으로 바꿨다. 테스트 필요.
+    public List<GiftForm> getAllGiftList(String pj_id) throws Exception {
+        List<GiftForm> list = new ArrayList<>();
+        List<GiftDto> giftDtos = giftMapper.selectAllByPj(pj_id);
+        for(GiftDto giftDto : giftDtos){
+            List<GiftItemDetailDto> itemDetailDtos = giftItemDetailMapper.selectItemDetail(giftDto.getGift_id());
+            GiftForm giftForm = toGiftForm(giftDto,itemDetailDtos);
+            list.add(giftForm);
+        }
+        return list;
     }// 특정 프로젝트의 모든 선물 리스트 가져오기
 
     @Override
@@ -157,5 +167,22 @@ public class GiftServiceImpl implements GiftService {
         return itemList;
     }
 
+    //toGiftForm 메서드 (view로 전달할 객체)
+    public GiftForm toGiftForm(GiftDto giftDto, List<GiftItemDetailDto> list){
+        GiftForm giftForm = GiftForm.builder()
+                .gift_id(giftDto.getGift_id())
+                .gift_name(giftDto.getGift_name())
+                .pj_id(giftDto.getPj_id())
+                .gift_qty_lim_yn(giftDto.getGift_qty_lim_yn())
+                .gift_total_qty(giftDto.getGift_total_qty())
+                .gift_max_qty_per_person(giftDto.getGift_max_qty_per_person())
+                .gift_ship_due_date(giftDto.getGift_ship_due_date())
+                .gift_money(giftDto.getGift_money())
+                .dba_reg_id(giftDto.getDba_reg_id())
+                .item_id(list.stream().map(GiftItemDetailDto::getItem_id).toArray(Integer[]::new))
+                .item_qty(list.stream().map(GiftItemDetailDto::getItem_qty).toArray(Integer[]::new))
+                .build();
 
+        return giftForm;
+    }
 }

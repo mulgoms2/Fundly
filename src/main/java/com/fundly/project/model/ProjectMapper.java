@@ -2,9 +2,9 @@ package com.fundly.project.model;
 
 import com.persistence.dto.ProjectDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.NonTransientDataAccessException;
 
 import java.util.List;
 

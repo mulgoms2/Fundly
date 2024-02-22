@@ -1,123 +1,120 @@
-
-package com.fundly.user.controller;
-
-import com.fundly.user.service.LikeService;
-import com.fundly.user.service.UserInfoService;
-import com.persistence.dto.LikeDto;
-import com.persistence.dto.ProjectDto;
-import com.persistence.dto.UserDto;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@Slf4j
-@Controller
-@RequestMapping("/mypage")
-public class MyPageController {
-
-    private UserInfoService userInfoService;
-    private LikeService likeservice;
-
-    public MyPageController(){}
-    @Autowired
-    public MyPageController(UserInfoService userInfoService, LikeService likeservice) {
-        this.userInfoService = userInfoService;
-        this.likeservice = likeservice;
-    }
-
-    /* 프로필 */
-    @GetMapping("/profile")
-    public String mypageprofile(HttpSession session, Model model) {
-        return selViewPage("main.index","user.profile",session,model);
-    }
-
-    /* 응원권 */
-    @GetMapping("/coupon")
-    public String mypagecoupon(HttpSession session, Model model) {
-        return selViewPage("main.index","user.coupon",session,model);
-    }
-
-    /* 후원한 프로젝트 */
-    @GetMapping("/fundingProject")
-    public String mypageOrder(HttpSession session,Model model){
-        return selViewPage("main.index","user.fundingProject",session,model);
-    }
-
-    /* 관심 프로젝트 */
-    @GetMapping("/likes")
-    public String mypageLikes(HttpSession session,Model model){
-        return selViewPage("main.index","user.likes",session,model);
-    }
-
-    /* 알림 */
-    @GetMapping("/alarm")
-    public String mypageAlarm(HttpSession session,Model model){
-        return selViewPage("main.index","user.alarm",session,model);
-    }
-
-    /* 메시지 */
-    @GetMapping("/message")
-    public String mypageMessage(HttpSession session,Model model){
-        return selViewPage("main.index","user.message",session,model);
-    }
-
-    /* 내가 만든 프로젝트 */
-    @GetMapping("/makeProject")
-    public String mypageMakeProject(HttpSession session,Model model){
-        return selViewPage("main.index","user.makeProject",session,model);
-    }
-
-    /* 셋팅 */
-    @GetMapping("/setting")
-    public String mypageSetting(HttpSession session,Model model){
-        return selViewPage("main.index","user.setting",session,model);
-    }
-
-    public String selViewPage(String mainView, String moveView, HttpSession session, Model model){
-
-        try {
-            String user_email = (String)(session.getAttribute("user_email"));// "helloworld@abc.com";
-
-            log.error("\n\n user_email = " + user_email + "\n\n");
-
-            // 로그인 안되어있으면 메인??? -> 회원가입 페이지
-            if(user_email == null){
-                log.error("로그인되지 않았습니다");
-                return mainView;
-            }
-
-            // 유저아이디 = 유저이메일
-            UserDto dto = UserDto.builder().user_email(user_email).build();
-            UserDto userInfo = userInfoService.userInfo(dto);
-            String user_name = userInfo.getUser_name();
-            model.addAttribute("userInfo",userInfo);
-            model.addAttribute("user_name",user_name);
-            model.addAttribute("user_email",user_email);
-
-            // 유저 아이디 통해 좋아요 목록 불러오기
-            LikeDto likedto = new LikeDto(user_email);
-            List<ProjectDto> likes = likeservice.getLikeListWithPj(likedto);
-//            List<LikeDto> likes = likeservice.getLikeList(likedto);
-            model.addAttribute("likes", likes);
-
-            //좋아요 목록에 있는 프로젝트 정보 불러오기
-//            ProjectDto pjs = pjdao.get
-//            model.addAttribute("pjs", pjs);
-
-        } catch (Exception e) {
 //
-//            throw new RuntimeException(e);
-
-        }
-        return moveView;
-    }
-}
+//package com.fundly.user.controller;
+//
+//import com.fundly.user.service.LikeService;
+//import com.fundly.user.service.UserInfoService;
+//import com.persistence.dto.LikeDto;
+//import com.persistence.dto.ProjectDto;
+//import com.persistence.dto.UserDto;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//
+//import javax.servlet.http.HttpSession;
+//import java.util.List;
+//
+//@Slf4j
+//@Controller
+//@RequestMapping("/mypage")
+//public class MyPageController {
+//
+//    private UserInfoService userInfoService;
+//    private LikeService likeservice;
+//
+//    public MyPageController(){}
+//    @Autowired
+//    public MyPageController(UserInfoService userInfoService, LikeService likeservice) {
+//        this.userInfoService = userInfoService;
+//        this.likeservice = likeservice;
+//    }
+//
+//    /* 프로필 */
+//    @GetMapping("/profile")
+//    public String mypageprofile(HttpSession session, Model model) {
+//        return selViewPage("main.index","user.profile",session,model);
+//    }
+//
+//    /* 응원권 */
+//    @GetMapping("/coupon")
+//    public String mypagecoupon(HttpSession session, Model model) {
+//        return selViewPage("main.index","user.coupon",session,model);
+//    }
+//
+//    /* 후원한 프로젝트 */
+//    @GetMapping("/fundingProject")
+//    public String mypageOrder(HttpSession session,Model model){
+//        return selViewPage("main.index","user.fundingProject",session,model);
+//    }
+//
+//    /* 관심 프로젝트 */
+//    @GetMapping("/likes")
+//    public String mypageLikes(HttpSession session,Model model){
+//        return selViewPage("main.index","user.likes",session,model);
+//    }
+//
+//    /* 알림 */
+//    @GetMapping("/alarm")
+//    public String mypageAlarm(HttpSession session,Model model){
+//        return selViewPage("main.index","user.alarm",session,model);
+//    }
+//
+//    /* 메시지 */
+//    @GetMapping("/message")
+//    public String mypageMessage(HttpSession session,Model model){
+//        return selViewPage("main.index","user.message",session,model);
+//    }
+//
+//    /* 내가 만든 프로젝트 */
+//    @GetMapping("/makeProject")
+//    public String mypageMakeProject(HttpSession session,Model model){
+//        return selViewPage("main.index","user.makeProject",session,model);
+//    }
+//
+//    /* 셋팅 */
+//    @GetMapping("/setting")
+//    public String mypageSetting(HttpSession session,Model model){
+//        return selViewPage("main.index","user.setting",session,model);
+//    }
+//
+//    public String selViewPage(String mainView, String moveView, HttpSession session, Model model){
+//
+//        try {
+//            String user_email = (String)(session.getAttribute("user_email"));// "helloworld@abc.com";
+//
+//            log.error("\n\n user_email = " + user_email + "\n\n");
+//
+//            // 로그인 안되어있으면 메인??? -> 회원가입 페이지
+//            if(user_email == null){
+//                log.error("로그인되지 않았습니다");
+//                return mainView;
+//            }
+//
+//            // 유저아이디 = 유저이메일
+//            UserDto dto = UserDto.builder().user_email(user_email).build();
+//            UserDto userInfo = userInfoService.userInfo(dto);
+//            String user_name = userInfo.getUser_name();
+//            model.addAttribute("userInfo",userInfo);
+//            model.addAttribute("user_name",user_name);
+//            model.addAttribute("user_email",user_email);
+//
+//            // 유저 아이디 통해 좋아요 목록 불러오기
+//            LikeDto likedto = new LikeDto(user_email);
+//            List<ProjectDto> likes = likeservice.getLikeListWithPj(likedto);
+////            List<LikeDto> likes = likeservice.getLikeList(likedto);
+//            model.addAttribute("likes", likes);
+//
+//            //좋아요 목록에 있는 프로젝트 정보 불러오기
+////            ProjectDto pjs = pjdao.get
+////            model.addAttribute("pjs", pjs);
+//
+//        } catch (Exception e) {
+////
+////            throw new RuntimeException(e);
+//
+//        }
+//        return moveView;
+//    }
+//}

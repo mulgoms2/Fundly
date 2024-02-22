@@ -452,8 +452,11 @@ window.onload = function () {
             .then((data) => {
                 alert("check your console");
                 console.log("here check")
-                console.log(data)
-                console.log(data.dba_reg_dtm.toString())
+                const giftArr = data
+                for(gift of giftArr){
+                    console.log(gift)
+                }
+                //console.log(typeof data[0].dba_reg_dtm)
             }) // 서버로부터 등록된 gift 리스트를 받아서 문자열(<li>태그)로 변환해 DOM 요소를 추가해 화면에 뿌린다.
             .catch((error) => console.log(error))
     })

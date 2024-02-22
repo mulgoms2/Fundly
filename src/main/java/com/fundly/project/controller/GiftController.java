@@ -82,7 +82,8 @@ public class GiftController {
                 throw new Exception("gift register failed");
             }
             //insert 성공하면
-            List<GiftDto> list = giftService.getAllGiftList(pj_id);
+//            List<GiftDto> list = giftService.getAllGiftList(pj_id);
+            List<GiftForm> list = giftService.getAllGiftList(pj_id);
             log.error("\n\n list={}\n\n",list);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch(Exception e){
