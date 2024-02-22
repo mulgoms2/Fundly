@@ -3,6 +3,7 @@ package com.fundly.user.controller;
 import com.fundly.user.service.LikeService;
 import com.fundly.user.service.UserInfoService;
 import com.persistence.dto.LikeDto;
+import com.persistence.dto.ProjectDto;
 import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,14 +98,21 @@ public class MyPageController {
                 return mainView;
             }
 
-            LikeDto likedto = new LikeDto(user_email,"");
-            List<LikeDto> likes = likeservice.getLikeList(likedto);
-
             UserDto dto = UserDto.builder().user_email(user_email).build();
-
             UserDto userInfo = userInfoService.userInfo(dto);
-
             model.addAttribute("userInfo",userInfo);
+
+            // 유저 아이디 통해 좋아요 목록 불러오기 (디폴트 : 진행중인 프로젝트)
+            LikeDto likedto = new LikeDto(user_email);
+            List<ProjectDto> likes = likeservice.getListWithPjStatus(likedto,"ing");
+
+            // 종료된 프로젝트 좋아요 목록
+            // List<ProjectDto> likes = likeservice.getListWithPjStatus(likedto,"end");
+
+            // 전체 프로젝트 좋아요 목록
+            // List<ProjectDto> likes = likeservice.getListWithPjEntire(likedto);
+
+            log.error("\n\n\n likes=" + likes+ "\n\n\n");
             model.addAttribute("likes", likes);
 
         } catch (Exception e) {
