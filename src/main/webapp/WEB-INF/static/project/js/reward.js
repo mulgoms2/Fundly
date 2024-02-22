@@ -445,20 +445,30 @@ window.onload = function () {
         })
             .then((response) => {
                 if(!response.ok){
-                    throw new Error()
+                    throw response.text();
+                    //text도 promise를 반환한다. 서버에서 보낸 string은 왜 json으로 못바꾸지?
+                    //throw error만 가능한게 아니구나. throw 키워드 자체가 catch블럭으로 연결시키는 듯.
                 }
+                //console.log(response)
                 return response.json()
             })
             .then((data) => {
                 alert("check your console");
-                console.log("here check")
+                //console.log("here check")
+                //console.log(data);
                 const giftArr = data
                 for(gift of giftArr){
                     console.log(gift)
                 }
                 //console.log(typeof data[0].dba_reg_dtm)
             }) // 서버로부터 등록된 gift 리스트를 받아서 문자열(<li>태그)로 변환해 DOM 요소를 추가해 화면에 뿌린다.
-            .catch((error) => console.log(error))
+            // .catch(error =>
+            //     {error.then(error => alert(error))
+            //     })
+            .catch(error => error).then(error => alert(error))
+            .finally(
+                // 다음 입력을 위한 필드 초기화 함수 호출
+            )
     })
 
 
