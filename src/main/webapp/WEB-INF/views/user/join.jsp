@@ -146,6 +146,7 @@
             <button id="kakaBtn" class="kakaBtn" >
                 <div class="kakaImg"></div>
                 <div>카카오톡으로 로그인</div>
+                <button value="submit" onclick="kakaoLogout()">로그아웃</button>
             </button>
         </main>
         <div class="copyr">
@@ -155,6 +156,26 @@
         </div>
     </body>
     <script>
+
+        export const kakaoLogout = () => {
+            axios({
+                method: 'POST',
+                url: 'https://kapi.kakao.com/v1/user/logout',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization": `Bearer MF6FQLIUKK3KD4ikqjxHC8rWbnQultRkULAKPXSZAAABjcvb1frMISgqRbFCUQ`
+                },
+            }).then(() => {
+                window.location.href = '/'
+            }).catch((e) => {
+                console.log('e : ' , e)
+                // 이미 만료된 토큰일 경우
+                if (e.response.data.code === -401) {
+                    window.location.href = '/'
+                }
+            })
+        }
+
         /* input */
         const user_email = document.getElementById("user_email");
         const user_name = document.getElementById("user_name");
@@ -381,5 +402,6 @@
         if(validUserEmail!=='') {
             setMessage(validUserEmail, "user_email", "msgEmail", "red");
         }
+
     </script>
 </html>

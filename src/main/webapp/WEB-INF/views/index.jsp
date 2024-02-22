@@ -99,7 +99,7 @@
     <div class="lFt">
         <div class="bigBan">
             <a href="#">
-                <img src="static/img/mdban01.webp" alt="">
+                <img src="/static/img/mdban01.webp" alt="">
             </a>
         </div>
         <div class="txtInfo">
@@ -124,7 +124,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban01.webp" alt="">
+                            <img src="/static/img/mnban01.webp" alt="">
                         </a>
                     </div>
                     <div class="faLike">
@@ -153,7 +153,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban02.webp" alt="">
+                            <img src="/static/img/mnban02.webp" alt="">
                         </a>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban03.webp" alt="">
+                            <img src="/static/img/mnban03.webp" alt="">
                         </a>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban04.webp" alt="">
+                            <img src="/static/img/mnban04.webp" alt="">
                         </a>
                     </div>
                 </div>
@@ -234,7 +234,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban05.webp" alt="">
+                            <img src="/static/img/mnban05.webp" alt="">
                         </a>
                     </div>
                 </div>
@@ -261,7 +261,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban06.webp" alt="">
+                            <img src="/static/img/mnban06.webp" alt="">
                         </a>
                     </div>
                 </div>
@@ -288,7 +288,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban07.webp" alt="">
+                            <img src="/static/img/mnban07.webp" alt="">
                         </a>
                     </div>
                 </div>
@@ -315,7 +315,7 @@
                 <div class="mnBan">
                     <div class="banImg">
                         <a href="#">
-                            <img src="static/img/mnban08.webp" alt="">
+                            <img src="/static/img/mnban08.webp" alt="">
                         </a>
                     </div>
                 </div>
@@ -341,63 +341,9 @@
         </div>
     </div>
 </div>
-<%--</body>--%>
+<script>
 
-<%--<script>--%>
-
-<%--    // const MyPageList = document.getElementById('MyPageList');--%>
-<%--    //--%>
-<%--    // MyPageList.addEventListener("click",(e)=>{--%>
-<%--    //--%>
-<%--    //     if(e.target.id === "Profile"){--%>
-<%--    //         // 프로필 화면으로--%>
-<%--    //         return window.location.href = '/mypage/profile';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "Coupon") {--%>
-<%--    //         // 응원권 화면으로--%>
-<%--    //         return window.location.href = '/mypage/coupon';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "fundingProject") {--%>
-<%--    //         // 후원한 프로젝트 화면으로--%>
-<%--    //         return window.location.href = '/mypage/fundingProject';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "Likes") {--%>
-<%--    //         // 관심 프로젝트--%>
-<%--    //         return window.location.href = '/mypage/likes';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "Alarm") {--%>
-<%--    //         // 알림 화면으로--%>
-<%--    //         return window.location.href = '/mypage/alarm';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "Message") {--%>
-<%--    //         // 메시지 화면으로--%>
-<%--    //         return window.location.href = '/mypage/message';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "MakeProject") {--%>
-<%--    //         // 내가 만든 프로젝트 화면으로--%>
-<%--    //         return window.location.href = '/mypage/makeProject';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "Setting") {--%>
-<%--    //         // 설정 화면으로--%>
-<%--    //         return window.location.href = '/mypage/setting';--%>
-<%--    //--%>
-<%--    //     } else if(e.target.id === "LogOut") {--%>
-<%--    //--%>
-<%--    //         toggleContent("MyPageList");--%>
-<%--    //         return window.location.href = '/login/l ogout';--%>
-<%--    //     }--%>
-<%--    // })--%>
-
-<%--    function toggleContent(MyPageList){--%>
-
-<%--        var content = document.getElementById(MyPageList);--%>
-
-<%--        if(content.style.display==="none" || content.style.display === ""){--%>
-
-<%--            content.style.display="block";--%>
-<%--        } else{--%>
-<%--            content.style.display="none";--%>
-<%--        }--%>
-<%--    }--%>
-<%--</script>--%>
-<%--</html>--%>
+    /* errmsg redirect */
+    const errmsg = "${errmsg}";
+    if (errmsg === "USER_ERROR") alert("로그인 확인해 주세요.");
+</script>

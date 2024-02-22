@@ -12,7 +12,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     private final UserInfoDao userInfoDao;
 
-//    public UserInfoServiceImpl(){}
     @Autowired
     public UserInfoServiceImpl(UserInfoDao userInfoDao){
         this.userInfoDao = userInfoDao;
@@ -21,7 +20,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserDto userInfo(UserDto userdto){
         try {
-            UserDto userInfo = userInfoDao.userInfo(userdto);//, user_pwd);
+            UserDto userInfo = userInfoDao.userInfo(userdto);
 
             if(userInfo != null){
                 return userInfo;

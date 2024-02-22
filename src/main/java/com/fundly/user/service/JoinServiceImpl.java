@@ -63,6 +63,8 @@ public class JoinServiceImpl implements JoinService {
             userJoinDto.setUser_status(user_status);
             userJoinDto.setDba_reg_id(userJoinDto.getUser_email());
 
+            log.error("값은 뭘까 ? " + userJoinDto);
+
             return userJoinDao.insert(userJoinDto);
 
         }catch (Exception e){
