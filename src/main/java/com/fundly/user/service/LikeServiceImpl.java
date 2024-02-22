@@ -4,7 +4,6 @@ import com.fundly.project.model.ProjectMapper;
 import com.fundly.user.model.LikeDao;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,8 +103,8 @@ public class LikeServiceImpl implements LikeService {
         if (likes != null && !likes.isEmpty()) {
             for (LikeDto like : likes) {
                 String pj_id = like.getPj_id();
-                ProjectDto pjdto = pjdao.getForLikes(pj_id);
-                projectList.add(pjdto);
+//                ProjectDto pjdto = pjdao.getForLikes(pj_id);
+//                projectList.add(pjdto);
             }
         } return projectList;
 

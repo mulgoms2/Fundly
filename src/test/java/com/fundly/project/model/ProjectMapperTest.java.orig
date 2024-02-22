@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @SpringJUnitWebConfig(classes = RootContext.class)
 class ProjectMapperTest {
-    @Autowired
-    ApplicationContext ac;
     @Autowired
     ProjectMapper projectMapper;
     ProjectDto project1;
@@ -67,9 +64,6 @@ class ProjectMapperTest {
     @DisplayName("행 카운트하기")
     void count() {
         //조건
-        System.out.println("\n\n\n\n" + this);
-        System.out.println(ac);
-
         projectMapper.deleteAll();
         assertEquals(0, projectMapper.count());
 
@@ -117,11 +111,9 @@ class ProjectMapperTest {
         projectMapper.insert(project3);
         assertEquals(2, projectMapper.count());
         String pj_id = project3.getPj_id();
-
 //        행위
 //        프로젝트 아이디로 프로젝트를 가져온다.
         ProjectDto resultProject = projectMapper.getByPjId(pj_id);
-
 //        결과
 //        셀렉트 결과로 나온 프로젝트가 삽입한 프로젝트와 일치해야한다.
         assertEquals(project3, resultProject);
@@ -215,7 +207,6 @@ class ProjectMapperTest {
         assertEquals(afterRowCount, beforeRowCount - 1);
         assertEquals(null, projectMapper.getByPjId(pj_id));
 //        assertThrows(ClassNotFoundException.class, () -> projectMapper.getByPjId(pj_id));
-
     }
 
     @Test
@@ -236,6 +227,7 @@ class ProjectMapperTest {
         assertEquals(beforeDelete, afterCount);
         assertEquals(0, delete);
     }
+<<<<<<< HEAD
 
     @Test
     @DisplayName("전체 프로젝트를 조회하는 기능 검사")
@@ -265,7 +257,7 @@ class ProjectMapperTest {
     }
 
     @Test
-    @DisplayName("유저의 좋아요 프로젝트 목록중 진행중인 프로젝트 조회하기")
+    @DisplayName("상태별 프로젝트 한개 조회하기")
     void selectByStatus() {
         String pj_id;
         String status = "ing";
@@ -284,14 +276,16 @@ class ProjectMapperTest {
         for (int i = 1; i <= 3; i++) {
             ProjectDto likedPj = projectMapper.selectBySatus(String.valueOf(i), "ing");
 
-//            if (likedPj != null) {
+            if (likedPj != null) {
                 likedList.add(likedPj);
-//            }
+            }
         }
 
-//        boolean result = likedList.stream().allMatch(pj -> pj.getPj_status().equals("ing"));
-        assertEquals(true, likedList.contains(project1));
-        assertEquals(true, likedList.contains(project2));
-        assertEquals(false, likedList.contains(project3));
+
+        boolean result = likedList.stream().allMatch(pj -> pj.getPj_status().equals("ing"));
+
+        assertEquals(true, result);
     }
+=======
+>>>>>>> origin/dev
 }

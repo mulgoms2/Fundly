@@ -2,9 +2,9 @@ package com.fundly.project.model;
 
 import com.persistence.dto.ProjectDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.NonTransientDataAccessException;
 
 import java.util.List;
 
@@ -20,6 +20,6 @@ public interface ProjectMapper {
     int delete(String pjId) throws NonTransientDataAccessException;
     List<ProjectDto> selectAllPj() throws NonTransientDataAccessException;
 
-    ProjectDto selectBySatus(@Param("pj_id") String pjId,@Param("pj_status") String status);
+    ProjectDto selectBySatus(@Param("pj_id") String pjId, @Param("pj_status") String status);
     int changeLikeCnt(ProjectDto pjdto) throws Exception;
 }
