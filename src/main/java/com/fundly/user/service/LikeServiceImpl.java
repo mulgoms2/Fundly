@@ -127,8 +127,8 @@ public class LikeServiceImpl implements LikeService {
             for (LikeDto like : likes) {
                 String pj_id = like.getPj_id();
                 ProjectDto pjdto = pjdao.selectByEntireStatus(pj_id);
-
-                // 프로젝트 이름과 상태가 일치하지 않으면 null을 반환하는데 이것을 리스트에 담지 않게 한다.
+//
+//                 프로젝트 이름과 상태가 일치하지 않으면 null을 반환하는데 이것을 리스트에 담지 않게 한다.
                 if(pjdto != null) {
                     projectList.add(pjdto);
                 }

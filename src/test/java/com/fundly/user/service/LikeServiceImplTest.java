@@ -72,7 +72,7 @@ class LikeServiceImplTest {
 
         // 좋아요 목록에 있는 프로젝트 이름 순서대로 프로젝트 정보를 리스트에 담기
         for (LikeDto like : likes) {
-            ProjectDto projectdto = pjdao.selectBySatus(like.getPj_id(), "ing");
+            ProjectDto projectdto = pjdao.selectByStatus(like.getPj_id(), "ing");
             if (projectdto != null) {
                 projectList.add(projectdto);
             }
