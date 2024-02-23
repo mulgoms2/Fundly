@@ -459,14 +459,17 @@ window.onload = function () {
                 //console.log("here check")
                 //console.log(data);
                 const giftArr = data //서버로부터 giftList를 받아옴
-                for(gift of giftArr){
-                    console.log(gift)
-                    //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
-                }
+                const giftList = document.querySelector('#giftList')
+                //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
+                showList(mkGiftList(giftArr),giftList);
+
                 //다음 입력을 위해 입력 필드 초기화 함수 호출
                 giftInit();
             })
-            .catch(error => error).then(error => alert(error))
+            .catch(error => error).then(error => {
+                alert(error);
+                console.log(error);
+        })
             // 중복된 선물 이름을 입력한 경우에도, 다른 입력값을 보존하기 위해 입력 필드 초기화 함수는 호출하지 않는다.
     })
 
@@ -647,6 +650,40 @@ const mkCheckedItm = function(arr) { //체크된 아이템들을 아래에 출�
     return list;
 }
 
+const mkGiftList = function (giftArr) { //내가 만든 선물 리스트
+    let list = "<div><strong>1,000원+</strong><span>선물 없이 후원하기</span></div>"
+    for (gift of giftArr) {
+        console.log('here')
+        console.log(gift)
+        list += '<div style="cursor:pointer" onclick="modifyGift(this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '>'
+        list += '<div class="giftTit" style="border:none;">'
+        list += '<strong>'
+        list += comma(gift.gift_money) + '원+</strong>'
+        list += '<div><i class="far fa-regular fa-trash-can" onclick="removeGift(this)"></i></div>'
+        list += '</div>' //
+        list += '<p class="giftT">' + gift.gift_name + '</p>'
+        list += '<ul class="giftL">'
+        for(let i=0; i<gift.item_id.length; i++){
+            list += '<li>' + gift.item_name[i] + 'x' + gift.item_qty[i] + '</li>'
+        }
+        list += '</ul>'
+        const shipDate = new Date(gift.gift_ship_due_date);
+        list += '<span>예상전달일 : '+'<em>'+ shipDate.getFullYear()+'년 '+ (shipDate.getMonth()+1)+'월 '+shipDate.getDate()+'일</em></span>'
+        list += '<div class="check">'
+        list += '<div class="left"><i class="fas fa-solid fa-check"></i>'
+        list += gift.gift_sold_qty+' 개 선택</div>'
+        const currQty = gift.gift_curr_qty;
+        if(currQty!==null){
+            list += '<div class="right">'+currQty+'개 남음</div>'
+        }
+        list += '</div>'
+        list += '</div>'
+    }
+    return list;
+}
+
+
+
 const minus = function(elem){ //클릭했을 때
     const itmNum = elem.nextElementSibling;
     const value = parseInt(itmNum.value); //타입이 String이라서 int로 바꿔줌..
@@ -687,7 +724,7 @@ const validNum = function(elem){
         //type이 number라서 e는 눌린다..;;; 여기서 조건으로 차단을 하긴 하지만 아예 입력 자체가 안되게 하긴 어렵나보다.
         alert('1이상의 정수로만 입력해주세요.');
         // console.dir(elem);
-        elem.value=1;
+        elem.value='';
         return;
     }
     if(elem.value.trim()===''){
@@ -715,7 +752,10 @@ const validRNum = function(elem,max){ //선물 선착순 수량, 인당 수량, 
 
     console.log(elem.closest('section').className);
     if(elem.closest('section').className==='giftNum'){
+        console.log(elem===lim)
         if(lim.id==='lim') { //선착순 선물 수량이 정해져 있는 경우,
+            console.log(num);
+            console.log(limValue);
             if(num>limValue) {
                 notice.innerText = '선물 수량을 초과할 수 없습니다'
                 notice.style.display = 'block';
@@ -1032,32 +1072,34 @@ const init = function () {
     showList(mkOptList(optArr), multiResult);
 }
 
+
+
 //선물 입력 field의 초기화 함수
 const giftInit = function(){
     //checkbox 해제 및 selectItm 감추기
     const checkedElems = document.querySelectorAll('input[type=checkbox]:checked');
-    console.log("checkedElems")
-    console.log(checkedElems);
+    //console.log("checkedElems")
+    //console.log(checkedElems);
     for(elem of checkedElems){
         elem.checked = false;
     }
     const selectItm = document.querySelector("#selectItm");
     const div = selectItm.querySelector('div')
-    console.log(selectItm);  //selectItm을 none처리하면 안됨.
-    console.log(div);
+    //console.log(selectItm);  //selectItm을 none처리하면 안됨.
+    //console.log(div);
     if(div){ //div가 없을 때 div.style하면 에러나서 이후 코드 실행 안되므로 추가.
         div.style.display = 'none';
     }
     // 모든 input요소 초기화 (라디오 체크드 해제 포함)
     const inputs = document.querySelectorAll('.gift .pjForm input:not([type=radio]):not([type=hidden])')
-    console.log(inputs)
+    //console.log(inputs)
 
     for(input of inputs){
         input.value = ''
     }
     const radios = document.querySelectorAll('.gift .pjForm input[type=radio]:checked')
     for(radio of radios){
-        console.log(radio)
+        //console.log(radio)
         radio.checked = false;
         radio.parentElement.style.border = '.5px solid #ececec';
         console.log(radio.value)
@@ -1074,6 +1116,9 @@ const giftInit = function(){
 
 
 //선물 등록을 하기 전에 1.입력필드를 가져와서 2.유효성 검사를 하는 함수. 유효성에 통과한 경우에만 form을 반환.
+const hasValue = function(obj){ //널체크 함수
+    return !(typeof obj === 'undefined' || obj === null)
+}
 const giftValidCheck =function(){
     const validForm = {
         item_id: [], //선물을 구성하는 아이템 리스트 (아이템 아이디 배열)
@@ -1093,11 +1138,18 @@ const giftValidCheck =function(){
     //gift를 구성할 item들에 대한 검증
     const giftItemList = document.querySelectorAll(".giftItem");
     for(let i=0; i<giftItemList.length; i++){
-        console.log(giftItemList[i])
-        validForm.item_id[i] = giftItemList[i].querySelector("button.cancel").getAttribute("data-item_id") //이 값은 서버에서 넘어온 값이니까 유효성 체크는 생략..
+        //console.log(giftItemList[i])
+        validForm.item_id[i] = giftItemList[i].querySelector("button.cancel").getAttribute("data-item_id")
+        //이 값은 서버에서 넘어온 값이니까 유효성 체크는 생략..
+
         let itmQty = giftItemList[i].querySelector(".itmNum").value;
+        if(!hasValue(itmQty)) {
+            console.log(hasValue(itmQty))
+            return false;
+        }
         //console.log(typeof itmQty); //왜 input[type=number]인데 string으로 나오지?
-        itmQty = parseInt(itmQty);
+
+        itmQty = Number(itmQty);
         if(!Number.isInteger(itmQty)||itmQty<1||itmQty>1000) {
             return false; //아이템 수량이 정수가 아니거나, 1~1000사이의 수량이 아니면 유효성 검사 탈락
         }
@@ -1107,14 +1159,20 @@ const giftValidCheck =function(){
 
     //giftName에 대한 검증
     const giftName = document.querySelector('#giftName').value;
-    if(giftName.length<1 || giftName.length >50) {
+    if(!hasValue(giftName)||giftName.trim()==='') { //아예 입력을 하지 않은 경우 또는 공백을 입력했을 때
+        return false;
+    }
+    else if(giftName.length<1 || giftName.length >50) { //입력은 했지만 값이 유효범위가 아닐때
         return false;
     }
     validForm.gift_name = giftName;
 
     //gift_qty_lim_yn 검증 (사실 radio버튼이지만, client의 script 조작이 발생할 수 있다 가정하고 유효성 검사.)
-    const giftLimQty = document.querySelector('input[name=limit]:checked').value; //
-    console.log(giftLimQty);
+    const checked =  document.querySelector('input[name=limit]:checked');
+    if(!hasValue(checked)) return false; //라디오 버튼 체크 안하고 제출하면 반려
+
+    const giftLimQty = checked.value; //
+    //console.log(giftLimQty);
     if(!["y","Y","n","N"].includes(giftLimQty)){
         return false; // 입력값은 y 또는 n이어야 함
     }
@@ -1125,9 +1183,9 @@ const giftValidCheck =function(){
     // const totalQty = document.querySelector('input[name=limit]:checked > .maxInput').value;
     if(giftLimQty==="y"){ //제한 선물 수량은 선착순일 때만 존재하는 값
         let totalQty = document.querySelector('#maxLimVal').value;
-        totalQty = parseInt(totalQty);
+        totalQty = Number(totalQty);
         // console.log(totalQty);
-        if(totalQty<1||totalQty>1000) {
+        if(!Number.isInteger(totalQty)||totalQty<1||totalQty>1000) {
             return false;
         }
         validForm.gift_total_qty = totalQty;
@@ -1135,7 +1193,9 @@ const giftValidCheck =function(){
 
     //gift_max_qty_per_person 검증
     const maxLimit = document.querySelector('input[name=maxLimit]').value;
-    if(!["y","Y","n","N"].includes(maxLimit)){
+    if(!hasValue(maxLimit)){
+        return false;
+    } else if(!["y","Y","n","N"].includes(maxLimit)){
         return false; // 입력값은 y 또는 n이어야 함
     }
 
@@ -1159,7 +1219,9 @@ const giftValidCheck =function(){
     //배송일은 최종 결제일로부터 1~1825일 사이어야 한다.
     let shipCalc = document.querySelector('#shipCalc').value;
     // console.log(shipCalc);
-    if(shipCalc<1 || shipCalc>1825){
+    if(!hasValue(shipCalc)){
+        return false;
+    }else if(shipCalc<1 || shipCalc>1825){
         return false;
     }
     let payDay = document.querySelector('#payDay').value;
@@ -1175,8 +1237,8 @@ const giftValidCheck =function(){
 
     //gift_money 유효성 검사
     let giftMoney = document.querySelector('#giftMoney').value;
-    giftMoney = parseInt(uncomma(giftMoney))
-    if(giftMoney<1000 || giftMoney>10000000){
+    giftMoney = Number(uncomma(giftMoney))
+    if(!Number.isInteger(giftMoney)||giftMoney<1000 || giftMoney>10000000){
         return false;
     }
     validForm.gift_money = giftMoney;

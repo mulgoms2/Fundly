@@ -3,6 +3,7 @@ package com.fundly.project.service;
 import com.fundly.project.controller.GiftForm;
 import com.fundly.project.model.GiftItemDetailMapper;
 import com.fundly.project.model.GiftMapper;
+import com.fundly.project.model.ItemMapper;
 import com.persistence.dto.GiftDto;
 import com.persistence.dto.GiftItemDetailDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,13 @@ import java.util.List;
 public class GiftServiceImpl implements GiftService {
     GiftMapper giftMapper;
     GiftItemDetailMapper giftItemDetailMapper;
+    ItemMapper itemMapper;
 
     @Autowired
-    GiftServiceImpl (GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper){
+    GiftServiceImpl (GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper, ItemMapper itemMapper){
         this.giftMapper = giftMapper;
         this.giftItemDetailMapper = giftItemDetailMapper;
+        this.itemMapper = itemMapper;
     }
 
     @Override
@@ -175,11 +178,14 @@ public class GiftServiceImpl implements GiftService {
                 .pj_id(giftDto.getPj_id())
                 .gift_qty_lim_yn(giftDto.getGift_qty_lim_yn())
                 .gift_total_qty(giftDto.getGift_total_qty())
+                .gift_curr_qty(giftDto.getGift_curr_qty())
+                .gift_sold_qty(giftDto.getGift_sold_qty())
                 .gift_max_qty_per_person(giftDto.getGift_max_qty_per_person())
                 .gift_ship_due_date(giftDto.getGift_ship_due_date())
                 .gift_money(giftDto.getGift_money())
                 .dba_reg_id(giftDto.getDba_reg_id())
                 .item_id(list.stream().map(GiftItemDetailDto::getItem_id).toArray(Integer[]::new))
+                .item_name(list.stream().map(GiftItemDetailDto::getItem_name).toArray(String[]::new))
                 .item_qty(list.stream().map(GiftItemDetailDto::getItem_qty).toArray(Integer[]::new))
                 .build();
 

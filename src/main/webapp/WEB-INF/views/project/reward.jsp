@@ -85,7 +85,8 @@
         <div class="pjBox gift" id="gift">
             <div class="pjInfo">
                 <div>
-                    <div class="myList">내가 만든 선물 count</div>
+                    <div class="myList">내가 만든 선물 <span class="count"></span>
+                    </div>
                     <div id="giftList">
                         <div>
                             <strong>1,000원+</strong>
