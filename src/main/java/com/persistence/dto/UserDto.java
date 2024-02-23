@@ -6,10 +6,9 @@ import lombok.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
 
-@Setter
 @Getter
 @Builder
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {

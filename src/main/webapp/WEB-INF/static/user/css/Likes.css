@@ -7,7 +7,7 @@
 #likesMain{
     width: 100%;
     max-width: 1160px;
-    height: 1200px;
+    height:1600px;
 }
 
 .title{
@@ -20,47 +20,29 @@
 
 .projectListWithCard{
     width: 1160px;
-    /*margin: 0px auto;*/
     font-size: 14px;
     line-height: 24px;
 }
 
-.projectCardWrap{
+.projectCardWrap {
     max-width: 1160px;
-    /*width: 100%;*/
-    /*margin: 0px -18px;*/
-    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 60px 34px;
+}
+
+.projectCardWrap .cardWrap {
+    width: 100%; /* 한 줄에 4개씩 배치되므로 너비를 25%로 설정하고 간격빼기 */
     display: flex;
     position: relative;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.cardWrap:nth-last-child(1) {
-    /*margin-right: auto;*/
-}
-
-.cardWrap{
-    width: 264px;
-    height: 470px;
-    display: flex;
-    position: relative;
-    gap : 1em;
-}
-
-.banTxt {
-
 }
 
 .detailTxt {
-    height : 130px;
+    width: 264px;
+    height : 140px;
     display: flex;
     flex-direction: column;
     justify-content:  space-between;
-}
-
-.psTag {
-    margin-top : auto;
 }
 
 .mnBan .banImg.after {
@@ -73,12 +55,23 @@
 .mnBan .banImg.after img {
     width: 264px;
     height: 226px;
+    object-fit: cover;
 }
 
 .banTxt .subTit {
     /*height:40px;*/
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.subTxt > span {
+    font-size: 14px;
+}
+
+.subTit > a {
+    color: black;
+    font-size: 17px;
+    line-height: 24px;
 }
 
 .subDt > a {
@@ -97,6 +90,12 @@
 
 }
 
+.psTag {
+    margin-top : auto;
+    display: flex;
+    justify-content: space-between;
+}
+
 .per{
     font-size: 15px;
     font-weight: 700;
@@ -112,7 +111,7 @@
 }
 
 .day{
-    margin-left: 80px;
+    margin-left: auto;
     font-size: 12px;
     line-height: 19px;
     letter-spacing: -0.01em;
@@ -126,11 +125,6 @@
     height:  3px;
     background: rgb(255, 87, 87);
 }
-
-/*.banImg{*/
-/*    width: 264px;*/
-/*    height: 226px;*/
-/*}*/
 
 /* tap  */
 

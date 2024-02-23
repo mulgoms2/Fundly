@@ -1,5 +1,6 @@
 package com.fundly.main.controller;
 
+import com.fundly.user.model.OauthDao;
 import com.fundly.user.model.UserLoginDao;
 import com.fundly.user.service.LoginService;
 import com.fundly.user.service.UserInfoService;
@@ -23,30 +24,30 @@ public class MainController {
     @Autowired
     private UserInfoService userInfoService;
 
+
     @GetMapping({"/"})
     public String main(HttpSession session, Model model, HttpServletResponse response) {
 
         String user_email = (String)(session.getAttribute("user_email"));// "helloworld@abc.com";
-
-//        log.error("\n\n user_email = " + user_email + "\n\n");
-
+        String kat = (String)(session.getAttribute("kat"));// "helloworld@abc.com";
+        UserDto dto;
         if(user_email == null){
             return "main.index";
         }
 
-        UserDto dto = UserDto.builder().user_email(user_email).build();
+        if(kat != ""){
+
+
+
+
+            dto = UserDto.builder().user_email(user_email).build();
+
+        }else{
+            dto = UserDto.builder().user_email(user_email).build();
+        }
 
         UserDto userInfo = userInfoService.userInfo(dto);
-        String user_status = userInfo.getUser_status();
-        String user_name = userInfo.getUser_name();
-
-//        log.error("\n\n user_email = " + user_email + "\n\n");
-//        log.error("\n\n user_name = " + user_name + "\n\n");
-
         model.addAttribute("userInfo",userInfo);
-        model.addAttribute("user_status",user_status);
-        model.addAttribute("user_name",user_name);
-        model.addAttribute("user_email",user_email);
 
         return "main.index";
     }
