@@ -49,7 +49,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-//@SpringJUnitWebConfig(classes = {ServletContext.class, RootContext.class})
 class ChatControllerTest {
     StompSessionHandler sessionHandler;
     private MockMvc mockMvc;
@@ -138,27 +137,27 @@ class ChatControllerTest {
                 .andDo(print());
     }
 
-//    @Test
-//    @DisplayName("채팅 입력받기")
-//    void chat() throws Exception {
-//        WebSocketStompClient stompClient = new WebSocketStompClient(new SockJsClient(
-//                Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
-//
-//        String wsEndpoint = "ws://localhost:8080/endPoint"; // Your WebSocket endpoint
-//        ListenableFuture<StompSession> future = stompClient.connect(wsEndpoint, sessionHandler);
-//
-//        StompSession session = future.get(5, TimeUnit.SECONDS);
-//
-//        // Prepare your STOMP message here
-//        String message = "{\"msg_cont\":\"Hello, world!\"}";
-//
-//        // Send your STOMP message
-//        session.send("/chatPub/chat/1", message.getBytes());
-//
-//        // For example, if you expect HTTP status 200
-//        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/chatSub/1"))
-//                .andReturn();
-//        assertEquals(200, result.getResponse().getStatus());
-//    }
+    @Test
+    @DisplayName("채팅 입력받기")
+    void chat() throws Exception {
+        WebSocketStompClient stompClient = new WebSocketStompClient(new SockJsClient(
+                Collections.singletonList(new WebSocketTransport(new StandardWebSocketClient()))));
+
+        String wsEndpoint = "ws://localhost:8080/endPoint"; // Your WebSocket endpoint
+        ListenableFuture<StompSession> future = stompClient.connect(wsEndpoint, sessionHandler);
+
+        StompSession session = future.get(5, TimeUnit.SECONDS);
+
+        // Prepare your STOMP message here
+        String message = "{\"msg_cont\":\"Hello, world!\"}";
+
+        // Send your STOMP message
+        session.send("/chatPub/chat/1", message.getBytes());
+
+        // For example, if you expect HTTP status 200
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/chatSub/1"))
+                .andReturn();
+        assertEquals(200, result.getResponse().getStatus());
+    }
 
 }
