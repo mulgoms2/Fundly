@@ -444,7 +444,6 @@ window.onload = function () {
                 "content-type": "application/json",
                 "accept": "application/json"}, //써줘야한다. 안써주면 에러남.
             body: JSON.stringify(validForm), //giftForm에 해당하는 요소들을 서버에 보내기
-
         })
             .then((response) => {
                 if(!response.ok){
@@ -455,7 +454,7 @@ window.onload = function () {
                 return response.json() //200번 응답코드일때만.
             })
             .then((data) => {
-                alert("check your console");
+                alert("선물이 성공적으로 등록되었습니다.");
                 //console.log("here check")
                 //console.log(data);
                 const giftArr = data //서버로부터 giftList를 받아옴
@@ -659,7 +658,7 @@ const mkGiftList = function (giftArr) { //내가 만든 선물 리스트
         list += '<div class="giftTit" style="border:none;">'
         list += '<strong>'
         list += comma(gift.gift_money) + '원+</strong>'
-        list += '<div><i class="far fa-regular fa-trash-can" onclick="removeGift(this)"></i></div>'
+        list += '<div><i class="far fa-regular fa-trash-can" onclick="removeGift(this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '></i></div>'
         list += '</div>' //
         list += '<p class="giftT">' + gift.gift_name + '</p>'
         list += '<ul class="giftL">'
@@ -899,6 +898,8 @@ const removeBtn = function(elem){
     target.remove();
 }
 
+
+
 const changeFoot = function () { //체크박스의 체크 상태에 따라 footer에 찍히는 문자열을 바꾸는 메서드.
     const footer = document.querySelector('.footer');
     const detail = footer.querySelector('p')
@@ -928,7 +929,8 @@ const selectItem = function (elem) {
     for(itemId of itemIdArr){
         queryString += 'item_id='+itemId+'&'
     }
-    alert(queryString);
+    if(!queryString) return; //아무것도 선택하지 않으면 함수 종료
+
     const selectItm = document.querySelector('#selectItm');
     const detail = selectItm.querySelector('p')
 
@@ -978,7 +980,7 @@ const showList = function (list, elem) {
 //아이템 삭제 메서드
 const removeItm = function (itemArr, elem) {
     if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하면 해당 아이템이 포함된 *개의 선물에서도 삭제됩니다.")) return;
-    //ajax로 컨트롤러를 통해 db에서 아이템 삭제해야 후 리스트를 다시 불러와서 보여줘야함.
+    //ajax로 컨트롤러를 통해 db에서 아이템 삭제 후 리스트를 다시 불러와서 보여줘야함.
     // const item_id = elem.querySelector("input[type=hidden]").value;
     const item_id = elem.getAttribute('data-item_id');
     alert(item_id);
@@ -1004,6 +1006,52 @@ const removeItm = function (itemArr, elem) {
             alert('아이템 삭제에 실패했습니다.')
         }
     });
+}
+
+
+// todo 선물 리스트에서 선물을 삭제하는 함수(실제 DB에 delete호출해서 반영함)
+//  1.DB에서 삭제 후, 다시 Gift List를 불러와서 보여줄것인가
+//  2.아니면, DB에서 삭제 후 리스트를 새로 받아오진 않고, 응답코드가 200일때만 html요소만 삭제할것인가
+//  뭐가 더 좋은 방법일까?
+
+const removeGift = function(elem){
+    //비동기 방식으로 서버에서 해당 gift_id에 해당하는 선물 지우기 (+아이템 디테일 리스트도 같이 삭제Tx)
+    if(!confirm("선물을 삭제하시겠습니까?")) return;
+
+    fetch("/project/gift?gift_id="+elem.getAttribute("data-gift_id")+"&pj_id="+elem.getAttribute("data-pj_id"), {
+        method: "DELETE",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"}, //써줘야한다. 안써주면 에러남.
+        // body: elem.getAttribute("data-gift_id"), //giftForm에 해당하는 요소들을 서버에 보내기
+
+    })
+        .then((response) => {
+            if(!response.ok){
+                throw response.text();
+                //text도 promise를 반환한다. 서버에서 보낸 string은 왜 json으로 변환하지 못할까.
+                //throw error만 가능한게 아니구나. throw 키워드 자체가 catch블럭으로 연결시키는 듯.
+            }
+            return response.json() //200번 응답코드일때만.
+        })
+        .then((data) => {
+            alert("선물이 성공적으로 삭제되었습니다.");
+            //console.log("here check")
+            //console.log(data);
+            const giftArr = data //서버로부터 giftList를 받아옴
+            const giftList = document.querySelector('#giftList')
+            //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
+            showList(mkGiftList(giftArr),giftList);
+
+        })
+        .catch(error => error).then(error => {
+        alert(error);
+        console.log(error);
+    })
+    // 중복된 선물 이름을 입력한 경우에도, 다른 입력값을 보존하기 위해 입력 필드 초기화 함수는 호출하지 않는다.
+    //해당 태그를 지우기
+    //elem.remove();
+
 }
 
 //아이템 - 옵션 삭제 메서드

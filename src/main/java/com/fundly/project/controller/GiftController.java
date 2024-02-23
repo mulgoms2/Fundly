@@ -91,13 +91,33 @@ public class GiftController {
             String msg = "한 프로젝트 내에서 중복된 선물 이름을 지정할 수 없습니다.";
             System.out.println("Duplicate key");
             System.out.println("e = " + e);
-            return new ResponseEntity<>(msg,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(msg,HttpStatus.BAD_REQUEST);
         } catch(Exception e){
             log.error("\n\n e={} \n\n",e);
             return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @DeleteMapping("/gift")
+    @ResponseBody
+    public ResponseEntity<?> deleteGift(String gift_id, String pj_id) {
+        log.error("\n\n gift_id={}\n\n",gift_id);
+        log.error("\n\n pj_id={}\n\n",pj_id);
+
+        try{
+            int rowCnt = giftService.removeGift(gift_id); //해당 선물을 삭제한다(선물에 포함된 아이템 상세도 삭제 Tx)
+            if(rowCnt!=1) {
+                throw new Exception("remove gift failed");
+            }
+            List<GiftForm> list = giftService.getAllGiftList(pj_id);
+            log.error("\n\n deleteMapping - list = {}\n\n", list);
+            return new ResponseEntity<List<GiftForm>>(list, HttpStatus.OK);
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @InitBinder
     public void dataBind(WebDataBinder binder){

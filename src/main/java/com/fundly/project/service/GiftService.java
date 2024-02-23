@@ -40,6 +40,8 @@ public interface GiftService {
 
     int removeGift(String gift_id) throws Exception;
 
+    @Transactional(rollbackFor = Exception.class)
+    int test(String gift_id) throws Exception;
 
 
 }

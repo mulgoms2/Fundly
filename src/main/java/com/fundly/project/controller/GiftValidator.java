@@ -13,12 +13,13 @@ public class GiftValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
+        log.error("\n\n GiftValidator is called(supports)\n\n");
         return GiftForm.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        log.error("\n\n GiftValidator is called \n\n");
+        log.error("\n\n GiftValidator is called(validate)\n\n");
         GiftForm giftForm = (GiftForm) target;
         log.error("\n\n giftForm={}\n\n",giftForm);
 
