@@ -32,8 +32,8 @@ public class GiftValidator implements Validator {
         LocalDateTime pj_pay_due_dtm = giftForm.getPj_pay_due_dtm();
         // 현재 날짜 기준최대 1825일
 
-        String gift_ship_need_yn = giftForm.getGift_ship_need_yn();
-        //y또는 n
+        //String gift_ship_need_yn = giftForm.getGift_ship_need_yn();
+        //y또는 n. 없앨 column
 
         Integer gift_money = giftForm.getGift_money();
         //1000이상 10,000,000 이하
@@ -59,16 +59,20 @@ public class GiftValidator implements Validator {
         }
 
         //4. 인당 선물 최대 선택 수량
-        if(gift_qty_lim_yn.equals("y")){//선착순 선물의 경우
-            if(gift_max_qty_per_person > gift_total_qty) { //인당 최대 선택 수량은 총 선물 수량을 넘을 수 없다.
-                errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{""+gift_total_qty},null);
-            }
-        } else {
-            if(gift_max_qty_per_person!=null && gift_max_qty_per_person > 1000){
-                //선착순 선물이 아니어도, 인당 수량을 제한한 경우에는 인당 최대 선택수량은 1000개
-                errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{"1000"}, null);
+        if(gift_max_qty_per_person!=null) { //인당 선물 제한이 있는 경우,
+            if(gift_qty_lim_yn.equals("y")){//선착순 선물의 경우
+                if(gift_max_qty_per_person > gift_total_qty) { //인당 최대 선택 수량은 총 선물 수량을 넘을 수 없다.
+                    errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{""+gift_total_qty},null);
+                }
+            } else {
+                if(gift_max_qty_per_person > 1000){ //선착순 선물이 아닌 경우,
+                    //인당 수량을 제한한 경우에는 인당 최대 선택수량은 1000개
+                    errors.rejectValue("gift_max_qty_per_person","invalidNumber", new String[]{"1000"}, null);
+                }
             }
         }
+
+
 
         //5. 선물 예상 전달일 ( **결제 최종 종료일 : 펀딩 마감일 + 7일)
         // 결제 최종 종료일(pj테이블에 저장된 값)로부터 1일~1825일 내로 입력해야함

@@ -22,7 +22,7 @@
          gift_curr_qty, dba_reg_id)
         VALUES (#{gift_id}, #{gift_name},#{pj_id},#{gift_qty_lim_yn}, #{gift_total_qty},
                 #{gift_max_qty_per_person}, #{gift_ship_due_date}, #{gift_money},
-                #{gift_curr_qty}, #{dba_reg_id})
+                #{gift_total_qty}, #{dba_reg_id})
     </insert>
 
     <!--    선물 조회하기     -->
@@ -36,6 +36,7 @@
     <select id="selectAllByPj" resultType="GiftDto">
         <include refid="selectFromGiftTb"/>
         WHERE pj_id = #{pj_id}
+        ORDER BY gift_reg_dtm;
     </select>
 
     <!--   4. (특정 프로젝트에 속한 선물 중) 판매 상태에 따른 선물 조회 -->
