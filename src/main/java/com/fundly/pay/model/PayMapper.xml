@@ -83,5 +83,10 @@
           and o.pj_id = #{pj_id}
     </select>
 
+    <!-- 전체 삭제 (Test 용도) -->
+    <delete id="deleteAll">
+        delete from PAY_MEANS_REG;
+    </delete>
+
     <!-- TODO: 결제상태 업데이트될때마다 결제상태이력 테이블에 insert -->
 </mapper>

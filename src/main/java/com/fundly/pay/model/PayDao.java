@@ -17,4 +17,5 @@ public interface PayDao {
     int updatePayStatusToRetryFailed(PayDto payDto) throws Exception;
     PayDto selectPayForUser(String userId) throws Exception;
     PayDto selectPayForProject(String pjId) throws Exception;
+    int deleteAll() throws Exception;
 }
