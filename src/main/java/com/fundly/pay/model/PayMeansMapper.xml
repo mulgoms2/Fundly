@@ -8,7 +8,7 @@
     </select>
 
     <select id="selectPayMeansId" parameterType="String" resultType="String">
-        select concat('PAY_', #{user_id}, '_', (ifnull(Max(seq), 0) + 1)) from pay_means_reg
+        select concat('PAY-MEANS_', #{user_id}, '_', (ifnull(Max(seq), 0) + 1)) from pay_means_reg
     </select>
 
     <insert id="insert" parameterType="PayMeansDto">
