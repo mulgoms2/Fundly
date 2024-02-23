@@ -81,3 +81,4 @@ class LikeServiceImplTest {
         log.error("\n\n 좋아요프로젝트리스트 = " + likes + "\n\n");
     }
 }
+

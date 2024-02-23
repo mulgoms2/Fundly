@@ -85,7 +85,8 @@
         <div class="pjBox gift" id="gift">
             <div class="pjInfo">
                 <div>
-                    <div class="myList">내가 만든 선물 count</div>
+                    <div class="myList">내가 만든 선물 <span class="count"></span>
+                    </div>
                     <div id="giftList">
                         <div>
                             <strong>1,000원+</strong>
@@ -136,7 +137,7 @@
                         </div>
                         <div></div>
                     </section>
-                    <section>
+                    <section class="giftNum">
                         <div>
                             <p>수량제한</p>
                             <p>선착순으로 선물을 제공하는 경우 총 선물 수량을 설정해주세요.</p>
@@ -148,7 +149,7 @@
                                 <span style="visibility:hidden;">
                                         <input class='maxInput' id='maxLimVal' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
                                         <div>개</div>
-                                    </span>
+                                </span>
                             </div>
                             <div>
                                 <input name="limit" id="unlim" type="radio" value="n"> <!--수량제한 없음-->
@@ -157,7 +158,7 @@
                         </div>
                         <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
                     </section>
-                    <section>
+                    <section class="giftNum">
                         <div>
                             <p>1인당 최대 선택 제한</p>
                             <p>후원자 1명이 이 선물을 몇 개까지 선택할 수 있는지 설정해주세요.</p>
@@ -169,7 +170,7 @@
                                 <span style="visibility: hidden;">
                                         <input class='maxInput' id='maxLimPer' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
                                         <div>개</div>
-                                    </span>
+                                </span>
                             </div>
                             <div>
                                 <input name="maxLimit" id="maxUnlim" type="radio" value="n"> <!--1인당 수량 제한 없음-->

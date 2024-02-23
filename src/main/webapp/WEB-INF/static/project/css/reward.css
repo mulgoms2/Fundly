@@ -4,6 +4,7 @@
     text-decoration: none;
     list-style: none;
     box-sizing: border-box;
+    outline: none;
     /*border-radius :5px;*/
 }
 input {
@@ -522,11 +523,82 @@ div.subTab > div.rightBtn > div > a > i{
     font-weight: 700;
     margin: 0 0 8px;
 }
+
+.pjBox .pjInfo #giftList > div > div.giftTit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pjBox .pjInfo #giftList > div > div.giftTit > div{
+    width: 24px;
+    height: 24px;
+    border: .5px solid #ececec;
+    border-radius: 4px;
+    text-align: center;
+}
+.pjBox .pjInfo #giftList > div > p.giftT {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 24px;
+}
 .pjBox .pjInfo #giftList > div span {
     display: block;
     font-size: 12px;
     margin: 10px 0 0;
     color: #6d6d6d;
+}
+.pjBox .pjInfo #giftList > div ul {
+    color: #6d6d6d;
+}
+.pjBox .pjInfo #giftList > div li {
+    font-size: 12px;
+    padding-left: 5px;
+    position: relative;
+}
+.pjBox .pjInfo #giftList > div li::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+    background-color: #212121;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -7px;
+    /*left: -1px;*/
+    /* display: block; width, height을 적용하기 위해 block값을 주려했지만 position 값이 absolute, fixed이면 자동으로 block이 되니 생략 가능*/
+    margin: auto;
+
+}
+.pjBox .pjInfo #giftList > div span em {
+    font-size: 12px;
+    font-weight: 700;
+}
+.pjBox .pjInfo #giftList div.check {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+
+}
+.pjBox .pjInfo #giftList div.check .left{
+    font-size: 11px;
+    color: #9e9e9e;
+}
+.pjBox .pjInfo #giftList div.check .left i{
+    font-size: 10px;
+    padding-right: 3px;
+}
+.pjBox .pjInfo #giftList div.check .right{
+    font-size: 11px;
+    padding: 4px 8px;
+    color: #F86453;
+    border: .5px solid #ffdedb;
+    border-radius: 0;
+    background-color: #fdf4f3;
+
 }
 .pjBox .pjForm section div.dropdown {
     display: flex;
@@ -684,7 +756,7 @@ div.subTab > div.rightBtn > div > a > i{
     bottom: 0;
     left: -7px;
     /*left: -1px;*/
-    /* display: block; width, height을 적요하기 위해 block값을 주려했지만 position 값이 absolute, fixed이면 자동으로 block이 되니 생략 가능*/
+    /* display: block; width, height을 적용하기 위해 block값을 주려했지만 position 값이 absolute, fixed이면 자동으로 block이 되니 생략 가능*/
     margin: auto;
 }
 .pjBox .pjForm #selectItm div.right  {

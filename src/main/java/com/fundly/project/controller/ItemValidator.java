@@ -36,7 +36,7 @@ public class ItemValidator implements Validator {
         }
 
         //객관식, 주관식 옵션 공통 검증
-        if(item_option_type!="옵션 없음"){ //객관식 또는 주관식 옵션의 경우 옵션 내용을 필수 입력해야함.
+        if(!item_option_type.equals("옵션 없음")){ //객관식 또는 주관식 옵션의 경우 옵션 내용을 필수 입력해야함.
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "item_option", "required");
         }
 
@@ -56,7 +56,7 @@ public class ItemValidator implements Validator {
 
         //주관식 옵션 검증
         if(item_option_type.equals("주관식 옵션")){ //각 옵션의 길이는 100자를 넘지 않는다.
-            if(item_option == null || item_option.length() > 3){
+            if(item_option == null || item_option.length() > 100){
                 errors.rejectValue("item_option","invalidLength",new String[]{"1","100"},null);
             }
         }

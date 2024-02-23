@@ -12,5 +12,6 @@ public class GiftItemDetailDto {
     private Integer gift_item_id;
     private String gift_id;
     private Integer item_id;
+    private String item_name;
     private Integer item_qty;
 }

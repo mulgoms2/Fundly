@@ -2,11 +2,11 @@ package com.fundly.project.controller;
 
 import com.fundly.project.service.GiftService;
 import com.fundly.project.service.ItemService;
-import com.persistence.dto.GiftDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -72,21 +72,29 @@ public class GiftController {
         }
 
         //toDo
-        // 같은 프로젝트에 이미 같은 이름의 선물이 있는지도 검증해야함(사실 아이템도 마찬가지)
+        // 같은 프로젝트에 이미 같은 이름의 선물이 있는지도.. 검증해야함(사실 아이템도 마찬가지)
+        // -> 복합unique키로 테이블 수준에서 제한함: alter table pj_gift_tmp2 add unique (pj_id, gift_name);
 
-        //유효성 검사에 성공한 후의 코드 진행
-        try{
+        //Validator에 의한 유효성 검사에 성공한 후의 코드 진행
+        try {
             //DB에 gift 등록(insert)
             int rowCnt = giftService.registerGift(giftForm);
-            if(rowCnt!=1) { // insert 실패시
+            if (rowCnt != 1) { // insert 실패시
                 throw new Exception("gift register failed");
             }
             //insert 성공하면
-            List<GiftDto> list = giftService.getAllGiftList(pj_id);
-            log.error("\n\n list={}\n\n",list);
+//            List<GiftDto> list = giftService.getAllGiftList(pj_id);
+            List<GiftForm> list = giftService.getAllGiftList(pj_id);
+            log.error("\n\n list={}\n\n", list);
             return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch(DuplicateKeyException e){
+            String msg = "한 프로젝트 내에서 중복된 선물 이름을 지정할 수 없습니다.";
+            System.out.println("Duplicate key");
+            System.out.println("e = " + e);
+            return new ResponseEntity<>(msg,HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("\n\n e={} \n\n",e);
+            return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
