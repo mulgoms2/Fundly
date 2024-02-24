@@ -253,6 +253,7 @@
 <%--                            </div>--%>
 
 <%--                        </c:forEach>--%>
+<%--                        Controller에서 model에 이 값을 넘겨주지 않아도 됨. 비동기로 요청해서 데이터를 가져올거라서. --%>
                     </div>
                 </div>
             </div>
@@ -317,8 +318,10 @@
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button" id="optInit" class="init">초기화</button>
-                        <button type="button" id="optSave" class="save" disabled>저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
+                        <button type="button" id="itmInit" class="init">초기화</button>
+                        <button type="button" id="itmModCncl" class="cancel">수정 취소</button>
+                        <button type="button" id="itmSave" class="save" disabled>저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
+                        <button type="button" id="itmMod" class="mod">수정</button>
                     </div>
                 </div>
             </div>
