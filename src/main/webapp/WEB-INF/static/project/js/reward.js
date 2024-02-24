@@ -1,5 +1,5 @@
 let optArr = []; //window.onload 안에 있으면 함수에서 못 갖다 쓴다.
-let itemArr = [];
+//let itemArr = [];
 //아이템 페이지의 요소들
 //header.js에 옮김
 const itemPage = document.querySelector("#item"); //아이템 페이지 div단락
@@ -42,93 +42,80 @@ window.onscroll = function(){ //window.onscroll
 }
 
 window.onload = function () {
-    console.log(itmBtn);
-    console.log(gftBtn);
 
-    //window.onload시 #itemList에 있는 item수를 세고
-    const cnt = document.querySelectorAll("#itemList > div");
-    console.dir(cnt);
+    // reward.jsp 뷰에는 세가지 페이지가 존재(itemPage, giftPage, strPage)
+    // 상태에 따라 세가지 뷰를 css로 none / block 처리해서 보여주게 된다.
 
-    mkHidden([itemPage]);//이건 cnt와 상관없이
-    if (cnt.length === 0) {
-        mkHidden([giftPage]); //아이템이 하나도 없으면 선물시작페이지(strPage)가 뜨도록 giftPage는 숨김처리
-    } else {
-        mkHidden([strPage]);
-    }
-    // else {
-    //     mkHidden()
-    // }
+    // 처음 뷰를 요청시 디폴트 페이지는
+    // 선물 등록 페이지(giftPage) / 또는 선물-아이템 시작페이지(strPage)
+    mkHidden([itemPage]);//즉, 아이템 페이지는 처음엔 숨겨두었다가(디폴트x) 클릭하면 보여주게 됨.
+    loadPage("pj1"); //DB에서 해당 프로젝트에 등록된 아이템의 수를 조회해 giftPage 또는 strPage를 보여주는 함수
+    // todo 현재 프로젝트 아이디는 하드코딩 상태.
+    //  나중에 어떻게 프로젝트 아이디를 넘길지 생각하기.
+    //   1. tiles의 헤더부분에 hidden input으로 pj_id를 가지고 있기
+    //   2. url에 pathVariable로 달고 다니기
+    //   3. 세션정보로 부터 pj_id를 구하는 함수를 만들고 이를 이용하기 등..else?
 
-    //console.dir(${itemList.});//
-    //동작 안함. 이유를 생각하기!!!
+    //선물버튼 클릭시
+    gftBtn.addEventListener("click", async function () {
+        colorChange(this, itmBtn);
+        //서버에서 등록된 아이템 수를 가져와서 0인지 체크해야함.
+        const pj_id = "pj1" //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
+        const cnt = await fetchItemCnt(pj_id)
 
-    if (strBtn !== null) {
-        strBtn.addEventListener("click", function () {
-            // giftPage.style.display = "none";
-            itmBtn.querySelector('i').style.color = '#f86453';
-            itmBtn.querySelector('span').style.color = '#3d3d3d';
-            itmBtn.querySelector('span').style.fontWeight = '700';
-            gftBtn.querySelector('i').style.color = '#c4c4c4';
-            gftBtn.querySelector('span').style.color = '#c4c4c4';
-            gftBtn.querySelector('span').style.fontWeight = '600';
-            location.href = "#item";
-            window.scrollTo(0,0); //최상단으로 이동
-            mkHidden([giftPage, strPage]);
-            mkVisible(itemPage);
-        })
-    }
-    pjForm.addEventListener('change',function(){
-        if(!validCheck()){
-            saveBtn.disabled = true;
-        } else saveBtn.disabled = false;
-    })
-
-    gftBtn.addEventListener("click", function () {
-        const cnt = document.querySelectorAll("#itemList div");
-        // console.dir(cnt); //
-        this.querySelector('i').style.color = '#f86453';
-        this.querySelector('span').style.color = '#3d3d3d';
-        this.querySelector('span').style.fontWeight = '700';
-        itmBtn.querySelector('i').style.color = '#c4c4c4';
-        itmBtn.querySelector('span').style.color = '#c4c4c4';
-        itmBtn.querySelector('span').style.fontWeight = '600';
-        //alert(cnt.length);
-        // 원래는 ${itemList.size()}로 비교하려했는데 실시간 반영이 안되더라.
-        //비동기라서 화면 전환이 되는ㄱㅔ 아니다보니--%>
-        if (cnt.length === 0) { //등록된 아이템이 없으면 선물 페이지를 보여주지 않는다.
-            mkHidden([itemPage, giftPage])
-            location.href = "#str"
-            window.scrollTo(0,0); //최상단으로 이동
-            mkVisible(strPage);
+        if (cnt === 0) { //등록된 아이템이 없으면
+            mkHidden([itemPage, giftPage]) //선물 등록 페이지를 보여주지 않는다.
+            //window.scrollTo(0,0); //최상단으로 이동
+            mkVisible(strPage); //선물-아이템 시작페이지를 보여줌
         } else {
             mkHidden([itemPage, strPage])
-            location.href = "#gift"
-            window.scrollTo(0,0); //최상단으로 이동
+            //window.scrollTo(0,0); //최상단으로 이동
             mkVisible(giftPage);
+            //todo 다시 서버에 비동기 요청해서 리스트를 가져와야함.
+            // 그냥 mkVisible만하면 변동 사항이 view의 리스트에 반영되지 못함(ex.아이템 삭제시 해당 아이템을 포함하는 선물도 삭제)
+            loadGiftList(pj_id);
         }
     })
 
-
-
-    itmBtn.addEventListener("click", function () {
-        const cnt = document.querySelectorAll("#itemList > div");
-        console.dir(cnt); //
-
-        this.querySelector('i').style.color = '#f86453';
-        this.querySelector('span').style.color = '#3d3d3d';
-        this.querySelector('span').style.fontWeight = '700';
-        gftBtn.querySelector('i').style.color = '#c4c4c4';
-        gftBtn.querySelector('span').style.color = '#c4c4c4';
-        gftBtn.querySelector('span').style.fontWeight = '600';
-        location.href = "#item";
-        window.scrollTo(0,0); //최상단으로 이동
-        if (cnt.length === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
+    //아이템 버튼 클릭시
+    itmBtn.addEventListener("click", async function () {
+        colorChange(this, gftBtn); //활성, 비활성 버튼의 색을 바꿔준다.
+        // const cnt = document.querySelectorAll("#itemList > div");
+        const pj_id = "pj1" //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
+        const cnt = await fetchItemCnt(pj_id)
+        //window.scrollTo(0,0); //최상단으로 이동
+        if (cnt === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
             mkHidden([strPage])
         } else {
             mkHidden([giftPage])
         }
         mkVisible(itemPage);
+        loadItemList(pj_id); //아이템 리스트를 가져와서 뿌려준다.
     })
+
+    if (strBtn !== null) { //strPage가 보여지는 상황인 경우
+        strBtn.addEventListener("click", function () { //아이템 버튼 클릭과 같은 역할.
+            colorChange(itmBtn, gftBtn);
+            // giftPage.style.display = "none";
+            // itmBtn.querySelector('i').style.color = '#f86453';
+            // itmBtn.querySelector('span').style.color = '#3d3d3d';
+            // itmBtn.querySelector('span').style.fontWeight = '700';
+            // gftBtn.querySelector('i').style.color = '#c4c4c4';
+            // gftBtn.querySelector('span').style.color = '#c4c4c4';
+            // gftBtn.querySelector('span').style.fontWeight = '600';
+            // location.href = "#item";
+            // window.scrollTo(0,0); //최상단으로 이동
+            mkHidden([giftPage, strPage]);
+            mkVisible(itemPage);
+        })
+    }
+
+    pjForm.addEventListener('change',function(){
+        if(!validCheck()){
+            saveBtn.disabled = true;
+        } else saveBtn.disabled = false;
+    }) //todo 이 함수는.. 제대로 기능하는지 모르겠다. 나중에 고치든지 지우든지.
+
 
     itmName.addEventListener("input", function () {
         lengthCheck(this, 50, '아이템 이름');
@@ -193,7 +180,7 @@ window.onload = function () {
                 saveBtn.disabled = true;
                 // itemArr.push(result);
                 console.dir(result);
-                itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
+                const itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
                 console.dir(itemArr);
                 // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
                 const itemList = document.querySelector('#itemList');
@@ -480,6 +467,89 @@ window.onload = function () {
 }// window.onload
 
 
+
+const fetchItemCnt = function(pj_id){
+    return fetch("/project/itemCnt/"+pj_id,{
+        method: "GET",
+    })
+        .then(response => response.json())
+} // 서버로부터 현재 해당 프로젝트에 등록된 아이템의 수를 불러오는 함수
+
+const loadItemList = function(pj_id) {
+    fetch("/project/item/"+pj_id, {
+        method: "GET",
+        headers: {
+            "accept": "application/json"
+        }
+    })
+        .then(response => {
+            if(!response.ok){
+                throw response.text()
+            }
+            return response.json()
+        })
+        .then(data => {
+            alert("check")
+            const ItemArr = data
+            const itemList = document.querySelector('#itemList')
+            showList(mkItmList(ItemArr),itemList);
+        })
+        .catch(error => error)
+}
+
+const loadGiftList = function(pj_id) {
+    alert("loadGiftList called.");
+
+    fetch("/project/gift?pj_id="+pj_id, {
+        method: "GET",
+        headers: {
+            "accept": "application/json"
+        }
+    })
+    .then(response => {
+        if(!response.ok){
+            throw response.text()
+        }
+        return response.json()
+    })
+    .then(data => {
+        alert("check")
+        console.log(data)
+        const giftArr = data
+        const giftList = document.querySelector('#giftList')
+        showList(mkGiftList(giftArr),giftList);
+    })
+    .catch(error => error)
+} //todo : loadItemList와 loadGiftList는 로직이 같다. 하나의 함수로 만드는 것을 시도해보기
+
+async function loadPage(pj_id){
+
+    const cnt = await fetchItemCnt(pj_id); //서버로부터 해당 프로젝트에 등록된 아이템 수를 가져온다.
+    console.log("cnt here")
+    //console.log(cnt);
+    //console.log(typeof cnt); number
+
+    //등록된 아이템의 유무에 따라 보여줄 페이지(선물-아이템 시작페이지 / 선물 등록페이지) 나뉨
+    if (cnt==0) { //등록된 아이템이 없으면,
+        mkHidden([giftPage]); //선물-아이템 시작페이지(strPage)가 뜨도록 giftPage는 숨김처리
+    } else { //등록된 아이템이 있으면
+        alert("cnt!==0")
+        mkHidden([strPage]); //시작페이지를 감추고,
+        loadGiftList(pj_id) //서버로부터 등록된 "선물"리스트를 가져와서 뿌려주기
+    }
+}
+
+const colorChange = function(activeBtn, inactiveBtn){
+    //활성화된 버튼
+    activeBtn.querySelector('i').style.color = '#f86453';
+    activeBtn.querySelector('span').style.color = '#3d3d3d';
+    activeBtn.querySelector('span').style.fontWeight = '700';
+    //비활성화된 버튼
+    inactiveBtn.querySelector('i').style.color = '#c4c4c4';
+    inactiveBtn.querySelector('span').style.color = '#c4c4c4';
+    inactiveBtn.querySelector('span').style.fontWeight = '600';
+}
+
 const tglHidden = function (elements) {
     elements.forEach(element => {
         element.classList.toggle("hidden");
@@ -568,13 +638,13 @@ const mkOptList = function (optArr) {
 const mkItmList = function (itmArr) {
     let list = ''
     for (itm of itmArr) {
-        list += '<div style="cursor:pointer" onclick=removeItm(itemArr,this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '>'
+        list += '<div style="cursor:pointer" onclick=modifyItm(this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '>'
         //list += '<input type="hidden" value='+itm.item_id+'>' //item_id를 hidden으로 가져온다.
         //list += '<input type="hidden" value='+itm.pj_id+'>' //hidden으로 넣지 말고 data- attribute에 넣을까..? 굳이 input태그를 하나 더 쓰는게 맞을까?
         list += '<div class="itmTit" style="border:none;">'
         list += '<p style="font-weight: 600" >'
         list += itm.item_name + '</p>'
-        list += '<div><i class="far fa-regular fa-trash-can"></i></div>'
+        list += '<div><i class="far fa-regular fa-trash-can" onclick=removeItm(this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '></i></div>'
         list += '</div>'
         list += '<p class="itmT">' + itm.item_option_type + '</p>'
         list += '<ul class="itmL">'
@@ -978,7 +1048,7 @@ const showList = function (list, elem) {
 }
 
 //아이템 삭제 메서드
-const removeItm = function (itemArr, elem) {
+const removeItm = function (elem) {
     if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하면 해당 아이템이 포함된 *개의 선물에서도 삭제됩니다.")) return;
     //ajax로 컨트롤러를 통해 db에서 아이템 삭제 후 리스트를 다시 불러와서 보여줘야함.
     // const item_id = elem.querySelector("input[type=hidden]").value;
@@ -995,7 +1065,7 @@ const removeItm = function (itemArr, elem) {
             elem.remove(); //아이템 목록에서 삭제
             console.log("removeItm");
             console.dir(result);
-            itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
+            const itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
             console.dir(itemArr);
             // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
             const itemList = document.querySelector('#itemList');
@@ -1064,6 +1134,19 @@ const removeOpt = function (arr, elem) { //옵션이 담기거나, 아이템이 
     arr.splice(index, 1);
     //요소 삭제
     elem.remove();
+}
+
+const modifyItem = function(){
+    //입력 필드에 해당 값들을 뿌려준다
+    //저장하기 버튼을 -> 수정하기 버튼으로 바꾸기
+    //validation 체크
+    //비동기 요청보내기
+    //입력값 비우기
+
+}
+
+const modifyGift = function(){
+
 }
 
 const validCheck = function () {

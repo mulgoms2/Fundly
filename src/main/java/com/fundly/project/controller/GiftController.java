@@ -26,6 +26,7 @@ import java.util.UUID;
 @Slf4j
 @Controller
 @RequestMapping("/project")
+//@InitBinder메서드가 있어도 그냥 클래스에 @RestController붙여도 되나?
 public class GiftController {
     ItemService itemService;
     GiftService giftService;
@@ -40,6 +41,21 @@ public class GiftController {
 //        this.objectMapper = new ObjectMapper();
 //        this.objectMapper.registerModule(new JavaTimeModule());
     }
+
+    @GetMapping("/gift")
+    @ResponseBody
+    public ResponseEntity<?> getGiftList(String pj_id) {
+        log.error("\n\n pj_id={} \n\n",pj_id);
+        try{
+            List<GiftForm> list = giftService.getAllGiftList(pj_id);
+            log.error("\n\n list={} \n\n",list);
+            return new ResponseEntity<List<GiftForm>>(list, HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     //선물 등록하기
     @PostMapping("/gift")

@@ -60,6 +60,7 @@ public class ItemController {
     public String makeGift(Model m) throws Exception { //global catcher에서 예외처리
         //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
         //뷰단에서는 itemDtoList가 empty면 보여줄 화면과 empty가 아니면 보여줄 화면이 나뉨.
+
         List<ItemDto> itemList = itemService.getItemList("pj1");
         System.out.println("itemList = " + itemList);
         m.addAttribute("itemList",itemList);
@@ -159,6 +160,20 @@ public class ItemController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(list,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/itemCnt/{pj_id}")
+    @ResponseBody
+    public ResponseEntity<?> getItemCnt(@PathVariable String pj_id){
+        log.error("\n\n ***** itemCnt pj_id={}\n\n",pj_id);
+        try {
+            int itemCnt = itemService.getItemCount(pj_id);
+            log.error("\n\n ***itemCnt={}\n\n",itemCnt);
+            return new ResponseEntity<>(itemCnt, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
