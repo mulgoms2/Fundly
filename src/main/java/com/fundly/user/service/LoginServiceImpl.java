@@ -41,6 +41,7 @@ public class LoginServiceImpl implements LoginService {
             UserLoginDto userInfo = userLoginDao.selectUser(userLoginDto);
 
             String user_email = userInfo.getUser_email();
+            String user_name = userInfo.getUser_name();
             String user_status = userInfo.getUser_status();
 
             /* 암호화 체크 */
@@ -57,12 +58,13 @@ public class LoginServiceImpl implements LoginService {
                 }
 
                 session.setAttribute("user_email",user_email);
+//                session.setAttribute("user_name",user_name);
                 // 세션의 유효시간 (30분)
                 session.setMaxInactiveInterval(1800);
 
                 /* cookie add */
-                Cookie cookie = new Cookie("user_email",user_email);
-                response.addCookie(cookie);
+                    response.addCookie(setCookie("user_email",user_email,-1,"/"));
+//                    response.addCookie(setCookie("user_name",user_email,-1,"/"));
 
                 return userInfo;
             }
@@ -73,5 +75,15 @@ public class LoginServiceImpl implements LoginService {
             throw new RuntimeException(e);
 //            return null;
         }
+    }
+
+    // cookie key/value setting
+    public Cookie setCookie(String cookieKey, String cookieValue, int maxAge, String path){
+        log.info("coo = " + cookieKey + ", value = " + cookieValue + ", maxage = " + maxAge + ", path = " + path);
+        Cookie cookie = new Cookie(cookieKey,cookieValue);
+        cookie.setMaxAge(maxAge); // 쿠키를 삭제
+        cookie.setPath(path);
+
+        return cookie;
     }
 }

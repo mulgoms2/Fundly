@@ -134,9 +134,9 @@
                             <a href="<c:url value='/login/login'/>">기존 계정으로 로그인하기</a>
 
                             <div class="otherJoin">
-                                     <span>
-                                         또는
-                                     </span>
+                                 <span>
+                                     또는
+                                 </span>
                             </div>
                         </div>
                     </form>
@@ -146,7 +146,7 @@
             <button id="kakaBtn" class="kakaBtn" >
                 <div class="kakaImg"></div>
                 <div>카카오톡으로 로그인</div>
-                <button value="submit" onclick="kakaoLogout()">로그아웃</button>
+<%--                <button value="submit" onclick="location.href='/oauth/logout'">로그아웃</button>--%>
             </button>
         </main>
         <div class="copyr">
@@ -156,25 +156,6 @@
         </div>
     </body>
     <script>
-
-        export const kakaoLogout = () => {
-            axios({
-                method: 'POST',
-                url: 'https://kapi.kakao.com/v1/user/logout',
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "Authorization": `Bearer MF6FQLIUKK3KD4ikqjxHC8rWbnQultRkULAKPXSZAAABjcvb1frMISgqRbFCUQ`
-                },
-            }).then(() => {
-                window.location.href = '/'
-            }).catch((e) => {
-                console.log('e : ' , e)
-                // 이미 만료된 토큰일 경우
-                if (e.response.data.code === -401) {
-                    window.location.href = '/'
-                }
-            })
-        }
 
         /* input */
         const user_email = document.getElementById("user_email");
@@ -203,7 +184,7 @@
         const togglePwd = document.getElementById('togglePwd');
         const togglePwdConfirm = document.getElementById('togglePwdConfirm');
 
-        /* Oauth2 */
+        /* Oauth2 kakao */
         const kakaBtn = document.getElementById('kakaBtn');
 
         kakaBtn.addEventListener('click',()=>{
@@ -235,7 +216,6 @@
                 togglePwdConfirm.style.backgroundImage = 'url("/static/img/Icon-eye.png")';
             }
         });
-
 
         /* 정규식 */
         // 이메일 정규식
