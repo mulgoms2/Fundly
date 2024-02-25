@@ -238,6 +238,7 @@ div.subTab > div.rightBtn > div > a > i{
     padding: 24px 28px 24px;
     margin: 0 0 12px;
 }
+
 .pjBox .pjInfo #itemList .itmTit {
     font-size: 16px;
     color: #3d3d3d;
@@ -479,16 +480,21 @@ div.subTab > div.rightBtn > div > a > i{
 .pjBox .pjForm div.btnWrap button:hover{
     cursor:pointer;
 }
-.pjBox .pjForm div.btnWrap button.init{
+.pjBox .pjForm div.btnWrap button.init, .pjBox .pjForm div.btnWrap button.cancel {
     width: 170px;
     margin: 0 10px 0 0;
     color: #3d3d3d;
 }
-.pjBox .pjForm div.btnWrap button.init:hover{
+.pjBox .pjForm div.btnWrap button.cancel {
+    display: none;
+}
+
+.pjBox .pjForm div.btnWrap button.init:hover,
+.pjBox .pjForm div.btnWrap button.cancel:hover{
     border : .5px solid #aca0a4;
     transition-duration: .5s;
 }
-.pjBox .pjForm div.btnWrap button.save{
+.pjBox .pjForm div.btnWrap button.save, .pjBox .pjForm div.btnWrap button.mod{
     width: 353px;
     background-color: #f86453;
     color:#ffffff;
@@ -498,6 +504,10 @@ div.subTab > div.rightBtn > div > a > i{
     background-color: #e4e4e4;
     color: #aca0a4;
     cursor: inherit;
+}
+
+.pjBox .pjForm div.btnWrap button.mod{
+    display: none;
 }
 /*.pjBox .pjForm div.btnWrap button.save:enabled{*/
 /*    background-color: #f86453;*/

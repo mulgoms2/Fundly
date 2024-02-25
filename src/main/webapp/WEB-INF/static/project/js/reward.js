@@ -1,5 +1,5 @@
 let optArr = []; //window.onload 안에 있으면 함수에서 못 갖다 쓴다.
-let itemArr = [];
+//let itemArr = [];
 //아이템 페이지의 요소들
 //header.js에 옮김
 const itemPage = document.querySelector("#item"); //아이템 페이지 div단락
@@ -10,8 +10,10 @@ const gftBtn = document.querySelector("#gftBtn"); //상단 선물페이지 이�
 const itmBtn = document.querySelector("#itmBtn"); //상단 아이템페이지 이동 버튼
 const itmName = document.querySelector("#itmName"); //아이템 이름 input
 const radioElems = document.querySelector('.pjBox.item').querySelectorAll("input[type=radio]"); //라디오버튼
-const initBtn = document.querySelector("#optInit");//초기화버튼
-const saveBtn = document.querySelector("#optSave");//저장버튼
+const itmInitBtn = document.querySelector("#itmInit");//초기화버튼
+const itmSaveBtn = document.querySelector("#itmSave");//저장버튼
+const itmModBtn = document.querySelector("#itmMod");//수정버튼
+const itmCnclBtn = document.querySelector("#itmModCncl");//수정 취소버튼
 
 //선물 페이지의 요소들
 const dropdown = document.querySelector(".dropdown");
@@ -42,93 +44,73 @@ window.onscroll = function(){ //window.onscroll
 }
 
 window.onload = function () {
-    console.log(itmBtn);
-    console.log(gftBtn);
 
-    //window.onload시 #itemList에 있는 item수를 세고
-    const cnt = document.querySelectorAll("#itemList > div");
-    console.dir(cnt);
+    // reward.jsp 뷰에는 세가지 페이지가 존재(itemPage, giftPage, strPage)
+    // 상태에 따라 세가지 뷰를 css로 none / block 처리해서 보여주게 된다.
 
-    mkHidden([itemPage]);//이건 cnt와 상관없이
-    if (cnt.length === 0) {
-        mkHidden([giftPage]); //아이템이 하나도 없으면 선물시작페이지(strPage)가 뜨도록 giftPage는 숨김처리
-    } else {
-        mkHidden([strPage]);
-    }
-    // else {
-    //     mkHidden()
-    // }
+    // 처음 뷰를 요청시 디폴트 페이지는
+    // 선물 등록 페이지(giftPage) / 또는 선물-아이템 시작페이지(strPage)
+    mkHidden([itemPage]);//즉, 아이템 페이지는 처음엔 숨겨두었다가(디폴트x) 클릭하면 보여주게 됨.
+    loadPage("pj1"); //DB에서 해당 프로젝트에 등록된 아이템의 수를 조회해 giftPage 또는 strPage를 보여주는 함수
+    // todo 현재 프로젝트 아이디는 하드코딩 상태.
+    //  나중에 어떻게 프로젝트 아이디를 넘길지 생각하기.
+    //   1. tiles의 헤더부분에 hidden input으로 pj_id를 가지고 있기
+    //   2. url에 pathVariable로 달고 다니기
+    //   3. 세션정보로 부터 pj_id를 구하는 함수를 만들고 이를 이용하기 등..else?
 
-    //console.dir(${itemList.});//
-    //동작 안함. 이유를 생각하기!!!
+    //선물버튼 클릭시
+    gftBtn.addEventListener("click", async function () {
+        colorChange(this, itmBtn);
+        //서버에서 등록된 아이템 수를 가져와서 0인지 체크해야함.
+        const pj_id = "pj1" //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
+        const cnt = await fetchItemCnt(pj_id)
 
-    if (strBtn !== null) {
-        strBtn.addEventListener("click", function () {
-            // giftPage.style.display = "none";
-            itmBtn.querySelector('i').style.color = '#f86453';
-            itmBtn.querySelector('span').style.color = '#3d3d3d';
-            itmBtn.querySelector('span').style.fontWeight = '700';
-            gftBtn.querySelector('i').style.color = '#c4c4c4';
-            gftBtn.querySelector('span').style.color = '#c4c4c4';
-            gftBtn.querySelector('span').style.fontWeight = '600';
-            location.href = "#item";
-            window.scrollTo(0,0); //최상단으로 이동
-            mkHidden([giftPage, strPage]);
-            mkVisible(itemPage);
-        })
-    }
-    pjForm.addEventListener('change',function(){
-        if(!validCheck()){
-            saveBtn.disabled = true;
-        } else saveBtn.disabled = false;
-    })
-
-    gftBtn.addEventListener("click", function () {
-        const cnt = document.querySelectorAll("#itemList div");
-        // console.dir(cnt); //
-        this.querySelector('i').style.color = '#f86453';
-        this.querySelector('span').style.color = '#3d3d3d';
-        this.querySelector('span').style.fontWeight = '700';
-        itmBtn.querySelector('i').style.color = '#c4c4c4';
-        itmBtn.querySelector('span').style.color = '#c4c4c4';
-        itmBtn.querySelector('span').style.fontWeight = '600';
-        //alert(cnt.length);
-        // 원래는 ${itemList.size()}로 비교하려했는데 실시간 반영이 안되더라.
-        //비동기라서 화면 전환이 되는ㄱㅔ 아니다보니--%>
-        if (cnt.length === 0) { //등록된 아이템이 없으면 선물 페이지를 보여주지 않는다.
-            mkHidden([itemPage, giftPage])
-            location.href = "#str"
-            window.scrollTo(0,0); //최상단으로 이동
-            mkVisible(strPage);
+        if (cnt === 0) { //등록된 아이템이 없으면
+            mkHidden([itemPage, giftPage]) //선물 등록 페이지를 보여주지 않는다.
+            //window.scrollTo(0,0); //최상단으로 이동
+            mkVisible(strPage); //선물-아이템 시작페이지를 보여줌
         } else {
             mkHidden([itemPage, strPage])
-            location.href = "#gift"
-            window.scrollTo(0,0); //최상단으로 이동
+            //window.scrollTo(0,0); //최상단으로 이동
             mkVisible(giftPage);
+            //todo 다시 서버에 비동기 요청해서 리스트를 가져와야함.
+            // 그냥 mkVisible만하면 변동 사항이 view의 리스트에 반영되지 못함(ex.아이템 삭제시 해당 아이템을 포함하는 선물도 삭제)
+            loadGiftList(pj_id);
         }
     })
 
-
-
-    itmBtn.addEventListener("click", function () {
-        const cnt = document.querySelectorAll("#itemList > div");
-        console.dir(cnt); //
-
-        this.querySelector('i').style.color = '#f86453';
-        this.querySelector('span').style.color = '#3d3d3d';
-        this.querySelector('span').style.fontWeight = '700';
-        gftBtn.querySelector('i').style.color = '#c4c4c4';
-        gftBtn.querySelector('span').style.color = '#c4c4c4';
-        gftBtn.querySelector('span').style.fontWeight = '600';
-        location.href = "#item";
-        window.scrollTo(0,0); //최상단으로 이동
-        if (cnt.length === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
+    //아이템 버튼 클릭시
+    itmBtn.addEventListener("click", async function () {
+        colorChange(this, gftBtn); //활성, 비활성 버튼의 색을 바꿔준다.
+        // const cnt = document.querySelectorAll("#itemList > div");
+        const pj_id = "pj1" //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
+        const cnt = await fetchItemCnt(pj_id)
+        //window.scrollTo(0,0); //최상단으로 이동
+        if (cnt === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
             mkHidden([strPage])
         } else {
             mkHidden([giftPage])
         }
         mkVisible(itemPage);
+        loadItemList(pj_id); //아이템 리스트를 가져와서 뿌려준다.
     })
+
+    if (strBtn !== null) { //strPage가 보여지는 상황인 경우
+        strBtn.addEventListener("click", function () { //아이템 버튼 클릭과 같은 역할.
+            colorChange(itmBtn, gftBtn);
+            // location.href = "#item";
+            // window.scrollTo(0,0); //최상단으로 이동
+            mkHidden([giftPage, strPage]);
+            mkVisible(itemPage);
+        })
+    }
+
+    pjForm.addEventListener('change',function(){
+        if(!validCheck()){
+            itmSaveBtn.disabled = true;
+        } else itmSaveBtn.disabled = false;
+    }) //todo 이 함수는.. 제대로 기능하는지 모르겠다. 나중에 고치든지 지우든지.
+
 
     itmName.addEventListener("input", function () {
         lengthCheck(this, 50, '아이템 이름');
@@ -152,9 +134,11 @@ window.onload = function () {
     //     showList(mkOptList(optArr));
     // })
 
-    initBtn.addEventListener("click", init);
+    //아이템 페이지의 초기화 버튼
+    itmInitBtn.addEventListener("click", init);
 
-    saveBtn.addEventListener("click", function () {
+    //아이템 페이지의 아이템 저장 버튼
+    itmSaveBtn.addEventListener("click", function () {
         // $(".save").click(function(){
         // alert(this);
         // if (!validCheck()) {
@@ -190,10 +174,10 @@ window.onload = function () {
             success: function (result) {
                 alert('아이템이 성공적으로 등록되었습니다.');
                 init(); //기존 입력창을 초기화한다.
-                saveBtn.disabled = true;
+                itmSaveBtn.disabled = true;
                 // itemArr.push(result);
                 console.dir(result);
-                itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
+                const itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
                 console.dir(itemArr);
                 // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
                 const itemList = document.querySelector('#itemList');
@@ -220,6 +204,50 @@ window.onload = function () {
             }
         });
     });
+
+    itmModBtn.addEventListener("click",function(){
+        let validForm = itemValidCheck(); //const면..item_id와 pj_id를 추가할 수 없다.
+        if(!validForm){
+            alert("아이템 양식에 맞춰서 다시 작성해주세요")
+            return;
+        }
+
+        validForm.item_id = this.getAttribute('data-item_id'); //버튼에 정보를 저장해둠.
+        validForm.pj_id = this.getAttribute('data-pj_id');
+        console.log('validForm')
+        console.log(validForm);
+        fetch("/project/item",{
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json" //써줘야한다. 안써주면 에러남.
+            },
+            body: JSON.stringify(validForm)
+        })
+            .then( response => {
+                if(!response.ok) {
+                    throw response.text()
+                }
+                return response.json()
+            })
+            .then(data => {
+                alert('아이템이 성공적으로 수정되었습니다.')
+                init(); //입력창 초기화
+                //다시 아이템 등록모드로 전환
+                itmSaveBtn.style.display = 'block';
+                itmModBtn.style.display = 'none';
+                itmInitBtn.style.display = 'block';
+                itmCnclBtn.style.display = 'none';
+                const tit = document.querySelector('div.item div.first > p.tit')
+                tit.innerHTML = '아이템 등록하기';
+                //수정된 리스트를 다시 뿌려주기
+                const ItemArr = data
+                const itemList = document.querySelector('#itemList')
+                showList(mkItmList(ItemArr),itemList);
+
+            })
+            .catch(error=> error).then(error => console.log(error))
+    })
 
 
 
@@ -279,7 +307,7 @@ window.onload = function () {
                     optArr.push(textarea.value.trim());
                     optArr.splice(0,optArr.length-1); //항상 배열의 길이가 1이되도록 유지.
                     if(itmName.value.trim()!==''){
-                        saveBtn.disabled = false; //아이템 이름까지 입력한 상태여야 저장버튼 활성화됨.
+                        itmSaveBtn.disabled = false; //아이템 이름까지 입력한 상태여야 저장버튼 활성화됨.
                     }
                 }
             })
@@ -427,7 +455,8 @@ window.onload = function () {
     //     })
     // }
 
-    giftSaveBtn.addEventListener("click", function(){ //선물 저장버튼 누르기
+    //선물 저장버튼 누르기
+    giftSaveBtn.addEventListener("click", function(){
         //입력 필드값에 대한 유효성 검사
         //giftValidCheck()는 유효성을 통과하면 form객체를 반환 / 유효성을 통과하지 않으면 false반환.
         const validForm = giftValidCheck(); //
@@ -444,7 +473,6 @@ window.onload = function () {
                 "content-type": "application/json",
                 "accept": "application/json"}, //써줘야한다. 안써주면 에러남.
             body: JSON.stringify(validForm), //giftForm에 해당하는 요소들을 서버에 보내기
-
         })
             .then((response) => {
                 if(!response.ok){
@@ -455,7 +483,7 @@ window.onload = function () {
                 return response.json() //200번 응답코드일때만.
             })
             .then((data) => {
-                alert("check your console");
+                alert("선물이 성공적으로 등록되었습니다.");
                 //console.log("here check")
                 //console.log(data);
                 const giftArr = data //서버로부터 giftList를 받아옴
@@ -473,13 +501,94 @@ window.onload = function () {
             // 중복된 선물 이름을 입력한 경우에도, 다른 입력값을 보존하기 위해 입력 필드 초기화 함수는 호출하지 않는다.
     })
 
-    //초기화 버튼 - 모든 입력필드 초기화.
+    //선물페이지의 초기화 버튼 - 모든 입력필드 초기화.
     giftInitBtn.addEventListener("click",giftInit);
 
 
 
 }// window.onload
 
+
+
+const fetchItemCnt = function(pj_id){
+    return fetch("/project/itemCnt/"+pj_id,{
+        method: "GET",
+    })
+        .then(response => response.json())
+} // 서버로부터 현재 해당 프로젝트에 등록된 아이템의 수를 불러오는 함수
+
+const loadItemList = function(pj_id) {
+    fetch("/project/item/"+pj_id, {
+        method: "GET",
+        headers: {
+            "accept": "application/json"
+        }
+    })
+        .then(response => {
+            if(!response.ok){
+                throw response.text()
+            }
+            return response.json()
+        })
+        .then(data => {
+            const ItemArr = data
+            const itemList = document.querySelector('#itemList')
+            showList(mkItmList(ItemArr),itemList);
+        })
+        .catch(error => error)
+}
+
+const loadGiftList = function(pj_id) {
+    //alert("loadGiftList called.");
+
+    fetch("/project/gift?pj_id="+pj_id, {
+        method: "GET",
+        headers: {
+            "accept": "application/json"
+        }
+    })
+    .then(response => {
+        if(!response.ok){
+            throw response.text()
+        }
+        return response.json()
+    })
+    .then(data => {
+        console.log(data)
+        const giftArr = data
+        const giftList = document.querySelector('#giftList')
+        showList(mkGiftList(giftArr),giftList);
+    })
+    .catch(error => error)
+} //todo : loadItemList와 loadGiftList는 로직이 같다. 하나의 함수로 만드는 것을 시도해보기
+
+async function loadPage(pj_id){
+
+    const cnt = await fetchItemCnt(pj_id); //서버로부터 해당 프로젝트에 등록된 아이템 수를 가져온다.
+    console.log("cnt here")
+    //console.log(cnt);
+    //console.log(typeof cnt); number
+
+    //등록된 아이템의 유무에 따라 보여줄 페이지(선물-아이템 시작페이지 / 선물 등록페이지) 나뉨
+    if (cnt==0) { //등록된 아이템이 없으면,
+        mkHidden([giftPage]); //선물-아이템 시작페이지(strPage)가 뜨도록 giftPage는 숨김처리
+    } else { //등록된 아이템이 있으면
+        //alert("cnt!==0")
+        mkHidden([strPage]); //시작페이지를 감추고,
+        loadGiftList(pj_id) //서버로부터 등록된 "선물"리스트를 가져와서 뿌려주기
+    }
+}
+
+const colorChange = function(activeBtn, inactiveBtn){
+    //활성화된 버튼
+    activeBtn.querySelector('i').style.color = '#f86453';
+    activeBtn.querySelector('span').style.color = '#3d3d3d';
+    activeBtn.querySelector('span').style.fontWeight = '700';
+    //비활성화된 버튼
+    inactiveBtn.querySelector('i').style.color = '#c4c4c4';
+    inactiveBtn.querySelector('span').style.color = '#c4c4c4';
+    inactiveBtn.querySelector('span').style.fontWeight = '600';
+}
 
 const tglHidden = function (elements) {
     elements.forEach(element => {
@@ -549,7 +658,7 @@ const enterEvent = function (elem, optArr) {
         elem.value = "";
         elem.parentElement.nextElementSibling.innerHTML = '<p>0/100</p>'
         if(optArr.length>=2 && itmName.value.trim()!==''){ //객관식 옵션을 두개 이상 입력했고, 아이템 이름도 입력했으면-
-            saveBtn.disabled = false;
+            itmSaveBtn.disabled = false;
         }
 
     }
@@ -568,14 +677,14 @@ const mkOptList = function (optArr) {
 }
 const mkItmList = function (itmArr) {
     let list = ''
-    for (itm of itmArr) {
-        list += '<div style="cursor:pointer" onclick=removeItm(itemArr,this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '>'
+    for (itm of itmArr) { //필요없는 data- attribute들은 나중에 정리하자.
+        list += '<div style="cursor:pointer" onclick=modifyItem(this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '>'
         //list += '<input type="hidden" value='+itm.item_id+'>' //item_id를 hidden으로 가져온다.
         //list += '<input type="hidden" value='+itm.pj_id+'>' //hidden으로 넣지 말고 data- attribute에 넣을까..? 굳이 input태그를 하나 더 쓰는게 맞을까?
         list += '<div class="itmTit" style="border:none;">'
         list += '<p style="font-weight: 600" >'
         list += itm.item_name + '</p>'
-        list += '<div><i class="far fa-regular fa-trash-can"></i></div>'
+        list += '<div><i class="far fa-regular fa-trash-can" onclick=removeItm(this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '></i></div>'
         list += '</div>'
         list += '<p class="itmT">' + itm.item_option_type + '</p>'
         list += '<ul class="itmL">'
@@ -588,6 +697,7 @@ const mkItmList = function (itmArr) {
         list += '</ul>'
         list += '</div>'
     }
+
     return list;
 }
 
@@ -653,13 +763,13 @@ const mkCheckedItm = function(arr) { //체크된 아이템들을 아래에 출�
 const mkGiftList = function (giftArr) { //내가 만든 선물 리스트
     let list = "<div><strong>1,000원+</strong><span>선물 없이 후원하기</span></div>"
     for (gift of giftArr) {
-        console.log('here')
-        console.log(gift)
+        //console.log('here')
+        //console.log(gift)
         list += '<div style="cursor:pointer" onclick="modifyGift(this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '>'
         list += '<div class="giftTit" style="border:none;">'
         list += '<strong>'
         list += comma(gift.gift_money) + '원+</strong>'
-        list += '<div><i class="far fa-regular fa-trash-can" onclick="removeGift(this)"></i></div>'
+        list += '<div><i class="far fa-regular fa-trash-can" onclick="removeGift(this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '></i></div>'
         list += '</div>' //
         list += '<p class="giftT">' + gift.gift_name + '</p>'
         list += '<ul class="giftL">'
@@ -899,6 +1009,8 @@ const removeBtn = function(elem){
     target.remove();
 }
 
+
+
 const changeFoot = function () { //체크박스의 체크 상태에 따라 footer에 찍히는 문자열을 바꾸는 메서드.
     const footer = document.querySelector('.footer');
     const detail = footer.querySelector('p')
@@ -913,8 +1025,8 @@ const selectItem = function (elem) {
     const itemIdArr = []; //checked된 item_id들을 담을 배열
 
     const div = elem.parentElement.parentElement;
-    console.log('here');
-    console.log(div);
+    //console.log('here');
+    //console.log(div);
     // div.classList.add('optChecked');
     //div.parentElement.classList.add('optChecked');
     itmDropdown.classList.add('optChecked');
@@ -928,7 +1040,8 @@ const selectItem = function (elem) {
     for(itemId of itemIdArr){
         queryString += 'item_id='+itemId+'&'
     }
-    alert(queryString);
+    if(!queryString) return; //아무것도 선택하지 않으면 함수 종료
+
     const selectItm = document.querySelector('#selectItm');
     const detail = selectItm.querySelector('p')
 
@@ -976,9 +1089,9 @@ const showList = function (list, elem) {
 }
 
 //아이템 삭제 메서드
-const removeItm = function (itemArr, elem) {
+const removeItm = function (elem) {
     if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하면 해당 아이템이 포함된 *개의 선물에서도 삭제됩니다.")) return;
-    //ajax로 컨트롤러를 통해 db에서 아이템 삭제해야 후 리스트를 다시 불러와서 보여줘야함.
+    //ajax로 컨트롤러를 통해 db에서 아이템 삭제 후 리스트를 다시 불러와서 보여줘야함.
     // const item_id = elem.querySelector("input[type=hidden]").value;
     const item_id = elem.getAttribute('data-item_id');
     alert(item_id);
@@ -993,7 +1106,7 @@ const removeItm = function (itemArr, elem) {
             elem.remove(); //아이템 목록에서 삭제
             console.log("removeItm");
             console.dir(result);
-            itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
+            const itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
             console.dir(itemArr);
             // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
             const itemList = document.querySelector('#itemList');
@@ -1006,6 +1119,52 @@ const removeItm = function (itemArr, elem) {
     });
 }
 
+
+// todo 선물 리스트에서 선물을 삭제하는 함수(실제 DB에 delete호출해서 반영함)
+//  1.DB에서 삭제 후, 다시 Gift List를 불러와서 보여줄것인가
+//  2.아니면, DB에서 삭제 후 리스트를 새로 받아오진 않고, 응답코드가 200일때만 html요소만 삭제할것인가
+//  뭐가 더 좋은 방법일까?
+
+const removeGift = function(elem){
+    //비동기 방식으로 서버에서 해당 gift_id에 해당하는 선물 지우기 (+아이템 디테일 리스트도 같이 삭제Tx)
+    if(!confirm("선물을 삭제하시겠습니까?")) return;
+
+    fetch("/project/gift?gift_id="+elem.getAttribute("data-gift_id")+"&pj_id="+elem.getAttribute("data-pj_id"), {
+        method: "DELETE",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"}, //써줘야한다. 안써주면 에러남.
+        // body: elem.getAttribute("data-gift_id"), //giftForm에 해당하는 요소들을 서버에 보내기
+
+    })
+        .then((response) => {
+            if(!response.ok){
+                throw response.text();
+                //text도 promise를 반환한다. 서버에서 보낸 string은 왜 json으로 변환하지 못할까.
+                //throw error만 가능한게 아니구나. throw 키워드 자체가 catch블럭으로 연결시키는 듯.
+            }
+            return response.json() //200번 응답코드일때만.
+        })
+        .then((data) => {
+            alert("선물이 성공적으로 삭제되었습니다.");
+            //console.log("here check")
+            //console.log(data);
+            const giftArr = data //서버로부터 giftList를 받아옴
+            const giftList = document.querySelector('#giftList')
+            //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
+            showList(mkGiftList(giftArr),giftList);
+
+        })
+        .catch(error => error).then(error => {
+        alert(error);
+        console.log(error);
+    })
+    // 중복된 선물 이름을 입력한 경우에도, 다른 입력값을 보존하기 위해 입력 필드 초기화 함수는 호출하지 않는다.
+    //해당 태그를 지우기
+    //elem.remove();
+
+}
+
 //아이템 - 옵션 삭제 메서드
 const removeOpt = function (arr, elem) { //옵션이 담기거나, 아이템이 담긴 배열
     if (!confirm('옵션을 삭제하시겠습니까?')) return;
@@ -1016,6 +1175,88 @@ const removeOpt = function (arr, elem) { //옵션이 담기거나, 아이템이 
     arr.splice(index, 1);
     //요소 삭제
     elem.remove();
+}
+
+const modifyItem = async function(elem){
+    if(!confirm('아이템을 수정하시겠습니까?')) return;
+    //1. 해당 div border 색 변경
+    const divs = document.querySelectorAll('#itemList > div')
+    for(div of divs){
+        if(div === elem){ //해당 버튼만 색이 바뀌고
+            div.style.border = '.5px solid #F86453';
+        } else { //나머지는 원래 색으로
+            div.style.border = '.5px solid #ececec';
+        }
+    }
+
+    //2. 제목과 버튼 수정 (만들기 -> 수정하기 / 저장하기 -> 수정하기)
+    const tit = document.querySelector('div.item div.first > p.tit')
+
+    //console.log('here')
+    //console.log(tit);
+    tit.innerHTML = '아이템 수정하기';
+
+    itmModBtn.style.display = 'block'; //수정버튼을 block
+    itmSaveBtn.style.display = 'none'; //저장버튼은 none
+    itmCnclBtn.style.display = 'block'; //수정취소버튼을 block
+    itmInitBtn.style.display = 'none'; //초기화버튼을 none
+
+
+
+    //3. 입력 필드에 해당 값들을 뿌려준다.
+    //서버를 한번 들렀다오는게 과연 현명한 일일까?
+    //그냥 innerText를 바로 입력 필드에 옮길 수도 있을텐데.. 뭔가 귀찮다.
+    const itmName = document.querySelector('#itmName');
+    const optTypes = document.querySelectorAll('input[name=optType]');
+    const item = await (function (item_id){
+        return fetch("/project/item/select/"+item_id,{
+            method: "GET",
+            headers: {
+                "accept": "application/json"
+            }
+        }).then(response => response.json())
+    })(elem.getAttribute("data-item_id")) //아이템id로 서버에서 해당 아이템 조회
+
+    //console.log(item);
+
+    //3-1.mod버튼에 item_id를 넣어준다. 수정버튼이 일체형(?)이 아니라 나뉘어 있으므로.
+    // (나중에 수정버튼 눌렀을 때 item_id를 전달해주어야 하므로)
+    itmModBtn.setAttribute("data-item_id",item.item_id)
+    itmModBtn.setAttribute("data-pj_id",item.pj_id)
+
+    //3-2.아이템 이름
+    //itmName.input(); input은 click(),blur(),focus() 처럼 메서드가 있진 않은듯.
+    itmName.value = item.item_name;
+    lengthCheck(itmName,50,'아이템');
+
+    //3-3.아이템 옵션 타입(객관식, 주관식, 옵션없음)
+    for(optType of optTypes) {
+        if(optType.value === item.item_option_type){
+            optType.click(); //클릭이벤트를 발생시킨다.
+        }
+    }
+    //3-4.아이템 옵션 상세
+    if(item.item_option_type === '객관식 옵션'){ //객관식 옵션의 경우
+        console.log(optArr);
+        const multiResult = document.querySelector('#multiResult');
+        const options = item.item_option.split(',');
+        for(option of options){
+            optArr.push(option)
+        }
+        console.log(optArr);
+        showList(mkOptList(optArr), multiResult);
+    }
+
+    if(item.item_option_type === '주관식 옵션'){
+        const textarea = document.querySelector('div.singleOpt > div.txtCont > textarea.input');
+        console.log("check");
+        console.log(textarea);
+        textarea.value = item.item_option;
+    }
+}
+
+const modifyGift = function(){
+
 }
 
 const validCheck = function () {
@@ -1052,7 +1293,7 @@ const validCheck = function () {
 }
 
 const init = function () {
-    saveBtn.disabled = true;
+    itmSaveBtn.disabled = true;
     itmName.value = "";
     itmName.parentElement.nextElementSibling.innerHTML = ''
     // itmName.parentElement.nextElementSibling.remove();
@@ -1119,7 +1360,56 @@ const giftInit = function(){
 const hasValue = function(obj){ //널체크 함수
     return !(typeof obj === 'undefined' || obj === null)
 }
-const giftValidCheck =function(){
+
+const itemValidCheck = function(){
+    //유효성이 검증된 아이템 데이터들을 가진 객체
+    const validForm={};
+
+    //아이템 이름 검증
+    const item_name = document.querySelector('#itmName').value.trim();
+    if(!hasValue(item_name)){ //이름이 없거나
+        return false;
+    } else if(item_name.length < 1 || item_name.length > 50 ) {
+        return false; //유효 글자수가 아니면
+    } else { //유효성 검사 통과
+        validForm.item_name = item_name;
+    }
+
+    //옵션조건 검증
+    const item_option_type = document.querySelector('input[name=optType]:checked').value;
+    if(!['옵션 없음','객관식 옵션','주관식 옵션'].includes(item_option_type)){
+        return false; //해당 옵션이 아닌 경우 return false;
+    } else {
+        validForm.item_option_type = item_option_type;
+    }
+
+    //옵션 상세 검증(객관식, 주관식 옵션에 따라 내용이 다름)
+    if(item_option_type === '객관식 옵션'){
+        console.log(optArr)
+        if(optArr.length<2) { //옵션은 2개 이상이어야 한다.
+            return false;
+        } else {
+            for(opt of optArr){
+                if(opt.length<1 || opt.length>100){
+                    return false;
+                } //각 옵션에 대해서도 글자수 제한을 벗어나면 유효성 통과x
+            }
+            validForm.item_option = optArr.toString();
+        }
+    } else if(item_option_type === '주관식 옵션'){
+        if(optArr[0].length<1 || optArr[0].length>100){
+            return false;
+        } else {
+            validForm.item_option = optArr.toString();
+        }
+    } else { //옵션없음의 경우
+        validForm.item_option = null;
+    }
+
+    console.log(validForm);
+    return validForm;
+}
+const giftValidCheck = function(){
     const validForm = {
         item_id: [], //선물을 구성하는 아이템 리스트 (아이템 아이디 배열)
         item_qty: [], //선물을 구성하는 각 아이템의 수량

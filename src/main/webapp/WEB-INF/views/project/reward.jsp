@@ -229,30 +229,31 @@
                 <div>
                     <div class="myList">내가 만든 아이템 count</div>
                     <div id="itemList">
-                        <c:forEach var="itemDto" items="${itemList}">
-                            <%--                        <div style="cursor:pointer" onclick=removeItm(itemArr,this)>--%>
+<%--                        <c:forEach var="itemDto" items="${itemList}">--%>
+<%--                            &lt;%&ndash;                        <div style="cursor:pointer" onclick=removeItm(itemArr,this)>&ndash;%&gt;--%>
 
-                            <div style="cursor:pointer" onclick=removeItm(itemArr,this) data-item_id='${itemDto.item_id}' data-pj_id='${itemDto.pj_id}'>
-                                    <%--                        <input type="hidden" value="${itemDto.item_id}"/>--%>
-                                    <%--                        <input type="hidden" value="${itemDto.pj_id}"/>--%>
-                                <div class="itmTit" style="border:none;">
-                                    <p style="font-weight: 600">${itemDto.item_name}</p>
-                                    <div>
-                                        <i class="far fa-regular fa-trash-can"></i>
-                                    </div>
-                                </div>
+<%--                            <div style="cursor:pointer" onclick=modiftyItm(this) data-item_id='${itemDto.item_id}' data-pj_id='${itemDto.pj_id}'>--%>
+<%--                                    &lt;%&ndash;                        <input type="hidden" value="${itemDto.item_id}"/>&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                        <input type="hidden" value="${itemDto.pj_id}"/>&ndash;%&gt;--%>
+<%--                                <div class="itmTit" style="border:none;">--%>
+<%--                                    <p style="font-weight: 600">${itemDto.item_name}</p>--%>
+<%--                                    <div>--%>
+<%--                                        <i class="far fa-regular fa-trash-can" onclick=removeItm(this) data-item_id='${itemDto.item_id}' data-pj_id='${itemDto.pj_id}'></i>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
 
-                                <p class="itmT">${itemDto.item_option_type}</p>
-                                <c:if test="${not empty itemDto.item_option}">
-                                    <ul class="itmL">
-                                        <c:forEach var="item_option" items="${itemDto.item_option}">
-                                            <li>${item_option}</li>
-                                        </c:forEach>
-                                    </ul>
-                                </c:if>
-                            </div>
+<%--                                <p class="itmT">${itemDto.item_option_type}</p>--%>
+<%--                                <c:if test="${not empty itemDto.item_option}">--%>
+<%--                                    <ul class="itmL">--%>
+<%--                                        <c:forEach var="item_option" items="${itemDto.item_option}">--%>
+<%--                                            <li>${item_option}</li>--%>
+<%--                                        </c:forEach>--%>
+<%--                                    </ul>--%>
+<%--                                </c:if>--%>
+<%--                            </div>--%>
 
-                        </c:forEach>
+<%--                        </c:forEach>--%>
+<%--                        Controller에서 model에 이 값을 넘겨주지 않아도 됨. 비동기로 요청해서 데이터를 가져올거라서. --%>
                     </div>
                 </div>
             </div>
@@ -317,8 +318,10 @@
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button" id="optInit" class="init">초기화</button>
-                        <button type="button" id="optSave" class="save" disabled>저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
+                        <button type="button" id="itmInit" class="init">초기화</button>
+                        <button type="button" id="itmModCncl" class="cancel">수정 취소</button>
+                        <button type="button" id="itmSave" class="save" disabled>저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
+                        <button type="button" id="itmMod" class="mod">수정</button>
                     </div>
                 </div>
             </div>

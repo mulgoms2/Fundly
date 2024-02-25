@@ -6,6 +6,7 @@ import com.fundly.project.model.GiftMapper;
 import com.fundly.project.model.ItemMapper;
 import com.persistence.dto.GiftDto;
 import com.persistence.dto.GiftItemDetailDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class GiftServiceImpl implements GiftService {
     GiftMapper giftMapper;
@@ -32,6 +34,7 @@ public class GiftServiceImpl implements GiftService {
     }// 특정 프로젝트의 모든 선물의 갯수 구하기
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int registerGift(GiftForm giftForm) throws Exception {
         GiftDto giftDto = toGiftDto(giftForm);
         List<GiftItemDetailDto> itemList = toGiftItemDetailDto(giftForm);
@@ -47,7 +50,22 @@ public class GiftServiceImpl implements GiftService {
         for(int i=0; i<itemList.size(); i++){
             giftItemDetailMapper.insert(itemList.get(i));
         }
-//        throw new Exception("for Tx test");
+        //Todo 문제 상황 :
+        // giftItemDetail 테이블의 column이 타입이 맞지 않을 경우 데이터 insert가 안되어 SQLException 발생
+        // gift테이블에만 insert가 된다. 즉 Tx 적용이 안됨.
+        // rollbackFor로 Exception.class를 적어주었음에도 하위 타입인 SQLException에 대하여
+        // rollback이 발생하지 않았다. 왜지?
+        // ** giftMapper.insert를 giftItemDetailMapper 뒷 순서로 바꾸니 Tx 적용이 된다.
+        // (rollback이 작용한게 아니라 Exception발생에 따라 뒤의 코드가 아예 실행이 안된것)
+        // n개의 giftItemDetailMapper의 insert메서드가 하나의 클래스에 속한 메서드라서
+        // 프록시 방식의 @Transactional이 작동하지 않는걸까?
+        // 여기 확실히 짚고 넘어가야 할 것 같다.
+
+        //todo 엥 이상하게 이제는 Tx가 먹힌다. 아까는 왜 안됐지...ㅡㅡ
+        // 아무튼 Tx는 적용되는걸 꼭 확인하고 넘어가자.
+
+
+        //throw new Exception();
         return rowCnt;
     }// 선물 등록하기 (선물 테이블에 insert + 선물 아이템 상세 테이블에도 insert)
 
@@ -134,7 +152,6 @@ public class GiftServiceImpl implements GiftService {
     }
 
 
-
     // toDto 메서드
     @Override
     public GiftDto toGiftDto(GiftForm giftForm) {
@@ -190,5 +207,15 @@ public class GiftServiceImpl implements GiftService {
                 .build();
 
         return giftForm;
+    }
+
+    @Override //Tx테스트용 메서드
+    @Transactional(rollbackFor = Exception.class)
+    public int test(String gift_id) throws Exception {
+        GiftDto giftDto = giftMapper.select(gift_id);
+        log.error("GiftDto={}",giftDto);
+        int cnt = giftItemDetailMapper.countItemByGift(gift_id);
+        log.error("cnt={}",cnt);
+        throw new Exception();
     }
 }
