@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
+<link rel="stylesheet" href="/static/user/css/Setting.css">
 <%--설정--%>
 <div class="main">
     <div class="userSetting">

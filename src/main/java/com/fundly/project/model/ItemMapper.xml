@@ -45,7 +45,9 @@
         UPDATE pj_item_tmp
         SET item_name = #{item_name},
             item_option_type = #{item_option_type},
-            item_option = #{item_option}
+            item_option = #{item_option},
+            dba_mod_id = #{dba_mod_id},
+            dba_mod_dtm = now()
         WHERE item_id = #{item_id}
     </update>
 

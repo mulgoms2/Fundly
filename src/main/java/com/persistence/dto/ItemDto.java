@@ -3,7 +3,7 @@ package com.persistence.dto;
 
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,10 +16,10 @@ public class ItemDto {
     private String item_name;
     private String item_option_type;
     private String item_option;
-    private Timestamp item_reg_dtm;
-    private Timestamp dba_reg_dtm;
+    private LocalDateTime item_reg_dtm;
+    private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
-    private Timestamp dba_mod_dtm;
+    private LocalDateTime dba_mod_dtm;
     private String dba_mod_id;
 
     public ItemDto(String pj_id, String item_name, String item_option_type, String item_option){
