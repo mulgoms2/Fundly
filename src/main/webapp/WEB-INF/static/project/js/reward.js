@@ -678,13 +678,13 @@ const mkOptList = function (optArr) {
 const mkItmList = function (itmArr) {
     let list = ''
     for (itm of itmArr) { //필요없는 data- attribute들은 나중에 정리하자.
-        list += '<div style="cursor:pointer" onclick=modifyItem(this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '>'
+        list += '<div class="modi" style="cursor:pointer" onclick="modifyItem(event,this);" data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '>'
         //list += '<input type="hidden" value='+itm.item_id+'>' //item_id를 hidden으로 가져온다.
         //list += '<input type="hidden" value='+itm.pj_id+'>' //hidden으로 넣지 말고 data- attribute에 넣을까..? 굳이 input태그를 하나 더 쓰는게 맞을까?
         list += '<div class="itmTit" style="border:none;">'
         list += '<p style="font-weight: 600" >'
         list += itm.item_name + '</p>'
-        list += '<div><i class="far fa-regular fa-trash-can" onclick=removeItm(this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '></i></div>'
+        list += '<div class="trash"><i class="far fa-regular fa-trash-can trash" onclick=removeItm(this) data-item_id=' + itm.item_id + ' data-pj_id=' + itm.pj_id + '></i></div>'
         list += '</div>'
         list += '<p class="itmT">' + itm.item_option_type + '</p>'
         list += '<ul class="itmL">'
@@ -697,6 +697,7 @@ const mkItmList = function (itmArr) {
         list += '</ul>'
         list += '</div>'
     }
+
 
     return list;
 }
@@ -1103,12 +1104,13 @@ const removeItm = function (elem) {
         // data: JSON.stringify({'item_id':item_id}),
         success: function (result) {
             alert('아이템이 성공적으로 삭제되었습니다.');
-            elem.remove(); //아이템 목록에서 삭제
+
+            //elem.remove(); //아이템 목록에서 삭제 //이거 없어도 될듯. 어차피 새로운 리스트를 다시 가져올거니까.
+
             console.log("removeItm");
             console.dir(result);
-            const itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
+            const itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있나보다..
             console.dir(itemArr);
-            // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
             const itemList = document.querySelector('#itemList');
             const list = mkItmList(itemArr);
             showList(list, itemList);
@@ -1177,7 +1179,9 @@ const removeOpt = function (arr, elem) { //옵션이 담기거나, 아이템이 
     elem.remove();
 }
 
-const modifyItem = async function(elem){
+const modifyItem = async function(event, elem){
+    if(event.target.classList.contains('trash')) return; //삭제버튼이면 이벤트 걸리지 않게.
+
     if(!confirm('아이템을 수정하시겠습니까?')) return;
     //1. 해당 div border 색 변경
     const divs = document.querySelectorAll('#itemList > div')
