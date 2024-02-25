@@ -239,6 +239,10 @@ div.subTab > div.rightBtn > div > a > i{
     margin: 0 0 12px;
 }
 
+.pjBox .pjInfo #itemList > div.orange {
+    border: .5px solid #F86453;
+}
+
 .pjBox .pjInfo #itemList .itmTit {
     font-size: 16px;
     color: #3d3d3d;

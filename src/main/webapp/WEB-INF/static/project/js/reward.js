@@ -240,6 +240,21 @@ window.onload = function () {
             .catch(error=> error).then(error => console.log(error))
     })
 
+    itmCnclBtn.addEventListener('click', function(){ //수정 취소 버튼
+        // border 색 원상복귀
+        const orange = document.querySelector('#itemList > div.orange');
+        orange.classList.remove('orange');
+        //입력창 초기화
+        init();
+        //버튼 초기화
+        itmSaveBtn.style.display = 'block';
+        itmModBtn.style.display = 'none';
+        itmInitBtn.style.display = 'block';
+        itmCnclBtn.style.display = 'none';
+        const tit = document.querySelector('div.item div.first > p.tit')
+        tit.innerHTML = '아이템 등록하기';
+    })
+
 
 
     //모든 라디오input에 이벤트 걸기
@@ -331,6 +346,8 @@ window.onload = function () {
     dropdown.addEventListener("click", function () {
         this.classList.toggle('border');
 
+        //todo reward.jsp 처음 로딩되었을 때, item버튼을 누르지 않으면, pj_id를 읽어올 수 없는 상황이다.
+        // pj_id를 읽어오는 방법을 바꿔야함***
         const pj_id = document.querySelector('#itemList').querySelector('div').getAttribute('data-pj_id');
         const itmDropdown = document.querySelector('#itmDropdown');
         const div = itmDropdown.querySelector('div');
@@ -685,9 +702,13 @@ const mkItmList = function (itmArr) {
         list += '<p class="itmT">' + itm.item_option_type + '</p>'
         list += '<ul class="itmL">'
         if (itm.item_option != null) { //옵션없음이 아닌 경우(객관식, 주관식 옵션)
-            const opts = toArray(itm.item_option);
-            for (opt of opts) {
-                list += '<li>' + opt + '</li>'
+            if(itm.item_option_type === '객관식 옵션'){
+                const opts = toArray(itm.item_option); //todo toArray함수 수정하기
+                for (opt of opts) {
+                    list += '<li>' + opt + '</li>'
+                }
+            } else { //주관식 옵션일 경우
+                list += '<li>' + itm.item_option + '</li>'
             }
         }
         list += '</ul>'
@@ -732,10 +753,15 @@ const mkCheckedItm = function(arr) { //체크된 아이템들을 아래에 출�
         list += '<p>'+itm.item_name+'</p>'
         list += '<p>'+itm.item_option_type+'</p>'
         if(itm.item_option!=null) {
-            let temp = toArray(itm.item_option);
             list += '<ul>'
-            for(opt of temp){
-                list += '<li class="opt">' + opt + '</li>'
+            if(itm.item_option_type === '객관식 옵션'){
+                let temp = toArray(itm.item_option);
+
+                for(opt of temp){
+                    list += '<li class="opt">' + opt + '</li>'
+                }
+            } else { //주관식 옵션일 경우
+                list += '<li class="opt">' + itm.item_option + '</li>'
             }
             list += '</ul>'
         }
@@ -1071,13 +1097,15 @@ const selectItem = function (elem) {
 
 
 const toArray = function (string) {
-    let arr = [];//아이템 옵션을 담을 배열
-    if (!string.includes(',')) {
-        arr.push(string); //주관식의 경우에는 단순히 문자열을 넣기만
-    } else {
-        arr = string.split(','); //객관식인 경우는 쉼표로 나누어서 넣기
-    }
-    return arr;
+    // let arr = [];//아이템 옵션을 담을 배열
+    // if (!string.includes(',')) {
+    //     arr.push(string); //주관식의 경우에는 단순히 문자열을 넣기만xxx 그건 의도한 결과인거지..
+    // } else {
+    //     arr = string.split(','); //객관식인 경우는 쉼표로 나누어서 넣기
+    // }
+    // return arr;
+    return arr = string.split(',');
+
 }
 
 const showList = function (list, elem) {
@@ -1178,16 +1206,21 @@ const removeOpt = function (arr, elem) { //옵션이 담기거나, 아이템이 
 const modifyItem = async function(event, elem){
     if(event.target.classList.contains('trash')) return; //삭제버튼이면 이벤트 걸리지 않게.
 
-    if(!confirm('아이템을 수정하시겠습니까?')) return;
+    //if(!confirm('아이템을 수정하시겠습니까?')) return;
+
     //1. 해당 div border 색 변경
     const divs = document.querySelectorAll('#itemList > div')
     for(div of divs){
         if(div === elem){ //해당 버튼만 색이 바뀌고
-            div.style.border = '.5px solid #F86453';
+            div.classList.add("orange");
+            console.log(div.classList)
+            //div.style.border = '.5px solid #F86453';
         } else { //나머지는 원래 색으로
-            div.style.border = '.5px solid #ececec';
+            div.classList.remove("orange");
+            //div.style.border = '.5px solid #ececec';
         }
     }
+
 
     //2. 제목과 버튼 수정 (만들기 -> 수정하기 / 저장하기 -> 수정하기)
     const tit = document.querySelector('div.item div.first > p.tit')
