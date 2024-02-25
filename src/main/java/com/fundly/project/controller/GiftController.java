@@ -55,6 +55,19 @@ public class GiftController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/gift/select/{gift_id}")
+    @ResponseBody
+    public ResponseEntity<?> getSelectedGift(@PathVariable String gift_id){
+        log.error("\n\n gift_id={} \n\n",gift_id);
+        try{
+            GiftForm giftForm = giftService.getGift(gift_id);
+            log.error("\n\n giftForm={}\n\n",giftForm);
+            return new ResponseEntity<>(giftForm, HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     //선물 등록하기

@@ -20,7 +20,7 @@ public interface GiftService {
     GiftDto toGiftDto(GiftForm giftForm);
     List<GiftItemDetailDto> toGiftItemDetailDto(GiftForm giftForm);
 
-    GiftDto getGift(String gift_id) throws Exception// 특정 선물 하나 가져오기
+    GiftForm getGift(String gift_id) throws Exception// 특정 선물 하나 가져오기
     ;
 
     //List<GiftDto> getAllGiftList(String pj_id) throws Exception;

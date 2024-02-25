@@ -21,8 +21,10 @@ const giftName = document.querySelector('#giftName');
 const radioBtns = document.querySelector('.pjBox.gift').querySelectorAll('input[type=radio]');
 const maxInputs = document.querySelectorAll('.maxInput');
 const pjForm = document.querySelector('.pjBox.item').querySelector('.pjForm');
-const giftInitBtn = document.querySelector(".gift .pjForm .btnWrap .init"); //선물 초기화 버튼
-const giftSaveBtn = document.querySelector(".gift .pjForm .btnWrap .save"); //선물 저장버튼
+const giftInitBtn = document.querySelector("#gftInit"); //선물 초기화 버튼
+const giftCnclBtn = document.querySelector("#gftModCncl"); //선물 초기화 버튼
+const giftSaveBtn = document.querySelector("#gftSave"); //선물 저장버튼
+const giftModBtn = document.querySelector("#gftMod"); //선물 수정버튼
 
 
 
@@ -348,7 +350,8 @@ window.onload = function () {
 
         //todo reward.jsp 처음 로딩되었을 때, item버튼을 누르지 않으면, pj_id를 읽어올 수 없는 상황이다.
         // pj_id를 읽어오는 방법을 바꿔야함***
-        const pj_id = document.querySelector('#itemList').querySelector('div').getAttribute('data-pj_id');
+        //const pj_id = document.querySelector('#itemList').querySelector('div').getAttribute('data-pj_id');
+        const pj_id = "pj1"
         const itmDropdown = document.querySelector('#itmDropdown');
         const div = itmDropdown.querySelector('div');
         console.log('div');
@@ -517,6 +520,14 @@ window.onload = function () {
     //선물페이지의 초기화 버튼 - 모든 입력필드 초기화.
     giftInitBtn.addEventListener("click",giftInit);
 
+    //선물페이지의 선물 수정버튼
+    giftModBtn.addEventListener('click',function (){
+        let validForm = giftValidCheck();
+        if(!validForm){
+            alert("아이템 양식에 맞춰서 다시 작성해주세요")
+            return;
+        }
+    })
 
 
 }// window.onload
@@ -734,7 +745,7 @@ const mkItmDrop = function (arr) {
     list += '</ul>'
     list += '<div class="footer">'
     list += '<p>0개의 아이템 선택</p>'
-    list += '<button type="button" onclick="selectItem(this)"><p>선택완료</p></button>'
+    list += '<button id="selected" type="button" onclick="selectItem(this)"><p>선택완료</p></button>'
     list += '</div>'
     list += '</div>'
     return list;
@@ -788,7 +799,7 @@ const mkGiftList = function (giftArr) { //내가 만든 선물 리스트
     for (gift of giftArr) {
         //console.log('here')
         //console.log(gift)
-        list += '<div style="cursor:pointer" onclick="modifyGift(this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '>'
+        list += '<div style="cursor:pointer" onclick="modifyGift(event,this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '>'
         list += '<div class="giftTit" style="border:none;">'
         list += '<strong>'
         list += comma(gift.gift_money) + '원+</strong>'
@@ -980,18 +991,30 @@ function uncomma(str) {
     str = String(str);
     return str.replace(/[^\d]+/g, '');
 }
+const noOffset = function(date){
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset);
+}
 
 const calcDate = function(elem){
     const hidden = elem.parentElement.querySelector('input[type=hidden]')
     console.log(hidden);
-    const from = new Date(hidden.value);
+    let from = new Date(hidden.value);
+    console.log("before from")
+    console.log(from)
     const shipDate = document.querySelector('#shipDate');
     if(elem.value > 1825){
         shipDate.querySelector('span').innerText = '예상전달일이 유효하지 않습니다.'
         return;
     }
-    const temp = from.getTime()+elem.value*24*60*60*1000;
-    const to = new Date(temp);
+    const tmp = from.getTime()+elem.value*24*60*60*1000;
+    let to = new Date(tmp);
+    console.log(to)
+    // console.log("to")
+    // console.log(typeof to)
+    // console.log(to)
+
+    //const to = new Date(temp);
     const dayNames = ['일','월','화','수','목','금','토']
     // console.dir(from);
     // console.dir(typeof to);
@@ -1288,7 +1311,105 @@ const modifyItem = async function(event, elem){
     }
 }
 
-const modifyGift = function(){
+const modifyGift = async function(event, elem){
+    if(event.target.classList.contains('trash')) return; //삭제버튼이면 이벤트 걸리지 않게.
+
+    //1. 해당 div border 색 변경
+    const divs = document.querySelectorAll('#giftList > div')
+    console.log(divs);
+    for(div of divs){
+        if(div === elem){ //해당 버튼만 색이 바뀌고
+            div.classList.add("orange");
+            console.log(div.classList)
+        } else { //나머지는 원래 색으로
+            div.classList.remove("orange");
+        }
+    }
+
+    //2. 제목과 버튼 수정 (만들기 -> 수정하기 / 저장하기 -> 수정하기)
+    const tit = document.querySelector('div.gift div.first > p.tit')
+    const shipDate = document.querySelector('#shipDate')
+    const days = document.querySelector('#shipCalc');
+    const payDay = document.querySelector('#payDay').value;
+    const giftMoney = document.querySelector('#giftMoney');
+    const limits = document.querySelectorAll('input[name=limit]')
+    const maxLimits = document.querySelectorAll('input[name=maxLimit]')
+
+    tit.innerHTML = '선물 수정하기';
+
+    giftModBtn.style.display = 'block'; //수정버튼을 block
+    giftSaveBtn.style.display = 'none'; //저장버튼은 none
+    giftCnclBtn.style.display = 'block'; //수정취소버튼을 block
+    giftInitBtn.style.display = 'none'; //초기화버튼을 none
+
+    //3. 입력필드에 해당 값들을 뿌려준다.
+    const giftName = document.querySelector('#giftName');
+    const gift = await (function (gift_id){
+        return fetch("/project/gift/select/"+gift_id,{
+            method: "GET",
+            headers: {
+                "accept": "application/json"
+            }
+        }).then(response => response.json())
+    })(elem.getAttribute("data-gift_id")) //선물id로 서버에서 해당 아이템 조회
+    //console.log("gift selected")
+    //console.log(gift);
+
+    //3-1.mod버튼에 gift_id를 넣어준다. 수정버튼이 일체형(?)이 아니라 나뉘어 있으므로.
+    // (나중에 수정버튼 눌렀을 때 gift_id를 전달해주어야 하므로)
+    giftModBtn.setAttribute("data-item_id",item.item_id)
+    giftModBtn.setAttribute("data-pj_id",item.pj_id)
+
+    //3-2.선물 이름
+    giftName.value = gift.gift_name;
+    lengthCheck(giftName,50,'선물');
+
+    //3-3.선택한 아이템
+    //dropdown.click();
+    //todo 아이템 수만큼 요청을 보내야 하는거...?
+
+    // console.log("here");
+    // console.log(document.querySelector('#selected'))
+
+
+
+
+    //3-4.수량제한여부 및 수량
+    for(lim of limits){ // 선물 수량 제한 여부
+        if(lim.value === gift.gift_qty_lim_yn){
+            lim.click();
+        }
+    }
+    if(gift.gift_total_qty){
+        document.querySelector('#maxLimVal').value = gift.gift_total_qty;
+    }
+
+
+    if(!gift.gift_max_qty_per_person){ //인당 수량 제한 여부
+        document.querySelector('#maxUnlim').click();
+    } else {
+        document.querySelector('#maxLim').click();
+        document.querySelector('#maxLimPer').value = gift.gift_max_qty_per_person;
+    }
+
+    //3-5.예상전달일
+    const shipDay = new Date(gift.gift_ship_due_date);
+    const year = shipDay.getFullYear();
+    const month = shipDay.getMonth() + 1;
+    const date = shipDay.getDate();
+    const week  = ['일','월','화','수','목','금','토']
+    const day = shipDay.getDay();
+    shipDate.querySelector('span').innerHTML = "<span id='shipDay'>"+ year+"-"+month+"-"+date+"</span><span>   ("+ week[day]+") </span>";
+    days.value = (shipDay - new Date(payDay))/(1000*60*60*24);
+    //todo 날짜 계산이 오류가 있다. 간혹 하루 차이가 남.
+
+
+
+    //3-6.선물금액
+    giftMoney.value = comma(gift.gift_money);
+
+
+
 
 }
 
@@ -1548,15 +1669,21 @@ const giftValidCheck = function(){
         return false;
     }
     let payDay = document.querySelector('#payDay').value;
-    payDay = new Date(payDay);
+    payDay = noOffset(new Date(payDay));
     // console.log(payDay);
     // console.log(typeof payDay);
     validForm.pj_pay_due_dtm = payDay.toISOString().substring(0,19);
+    //사실 이 모든게 datepicker에서 iso String형식으로 날짜를 넘기길래 따라한건데..
+    //offset은 내가 생각못한 변수였다. 이렇게까지 불편하게 iso String을 써야하는 근본적인 이유가 있나?
 
     let shipDay = document.querySelector("#shipDay").innerHTML
-    shipDay = new Date(shipDay);
-    // console.log(shipDay);
+    shipDay = noOffset(new Date(shipDay)); //toISOString을 쓰면 offset때문에 시간차이가 생김.
+
+    console.log("shipDay")
+    console.log(shipDay);
+    console.log(shipDay.toString());
     validForm.gift_ship_due_date = shipDay.toISOString().substring(0,19);
+    console.log(validForm.gift_ship_due_date)
 
     //gift_money 유효성 검사
     let giftMoney = document.querySelector('#giftMoney').value;

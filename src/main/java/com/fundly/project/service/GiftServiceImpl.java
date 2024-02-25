@@ -34,7 +34,7 @@ public class GiftServiceImpl implements GiftService {
     }// 특정 프로젝트의 모든 선물의 갯수 구하기
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class) //여기 Tx는 없어야 되는거 같은데.
     public int registerGift(GiftForm giftForm) throws Exception {
         GiftDto giftDto = toGiftDto(giftForm);
         List<GiftItemDetailDto> itemList = toGiftItemDetailDto(giftForm);
@@ -72,8 +72,13 @@ public class GiftServiceImpl implements GiftService {
 
 
     @Override
-    public GiftDto getGift(String gift_id) throws Exception {
-        return giftMapper.select(gift_id);
+    @Transactional(rollbackFor = Exception.class)
+    public GiftForm getGift(String gift_id) throws Exception {
+        GiftDto giftDto = giftMapper.select(gift_id);
+        List<GiftItemDetailDto> list = giftItemDetailMapper.selectItemDetail(gift_id);
+
+        GiftForm giftForm = toGiftForm(giftDto, list);
+        return giftForm;
     }// 특정 선물 하나 가져오기
 
 //    @Override
