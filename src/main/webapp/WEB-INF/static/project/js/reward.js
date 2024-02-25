@@ -139,71 +139,62 @@ window.onload = function () {
 
     //아이템 페이지의 아이템 저장 버튼
     itmSaveBtn.addEventListener("click", function () {
-        // $(".save").click(function(){
-        // alert(this);
-        // if (!validCheck()) {
-        //     alert('필수 입력 항목을 전부 입력해주세요');
-        //     return;
-        // }
-        //그냥 전체 Form에서 입력이벤트를 감지해서 saveBtn의 활성/비활성을 조절한다.
-
-        const item_option_type = $('input[type=radio]:checked');
-        let item_option;
-        if (item_option_type.val() !== '옵션 없음') {
-            item_option = optArr.toString()
+        let validForm = itemValidCheck(); //const면..item_id와 pj_id를 추가할 수 없다.
+        if(!validForm){
+            alert("아이템 양식에 맞춰서 다시 작성해주세요")
+            return;
         }
-        // } else if (item_option_type.val() === '주관식') {
-        //     item_option = $('.'+item_option_type.id+" textarea").val();
-        // }
-        // console.dir('---save---')
-        // console.dir(item_option_type.val());
-        // console.dir(item_option);
-        // console.dir(itmName.value);
-        $.ajax({
-            type: 'POST',
-            url: '/project/item',
-            headers: {"content-type": "application/json"},
-            data: JSON.stringify({
-                //todo 입력창에 input이나 keyup이벤트로 client에게 올바른 입력을 유도하는 것 외에도 서버로 값을 넘기기 전에 유효성 체크를 하는 과정이 필요하다.
-                'item_name': itmName.value,
-                // 'item_name': '', 테스트용
-                'item_option_type': item_option_type.val(),
-                'item_option': item_option
-            }),
-            dataType: "json",
-            success: function (result) {
-                alert('아이템이 성공적으로 등록되었습니다.');
-                init(); //기존 입력창을 초기화한다.
-                itmSaveBtn.disabled = true;
-                // itemArr.push(result);
-                console.dir(result);
-                const itemArr = result; //Java List타입 객체를 JS 배열에 넣을 수 있는건가?! 이게 되네.
-                console.dir(itemArr);
-                // const itemList = $('#itemList'); //여기에 오타있나? 제이쿼리로 가져오면 왜 못읽지.
-                const itemList = document.querySelector('#itemList');
-                console.dir(itemList)
-                const list = mkItmList(itemArr);
-                console.dir(list);
-                showList(list, itemList);
-                console.dir(result);
+
+        fetch("/project/item",{
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
             },
-            error: function (result) {
-                alert('아이템 등록에 실패했습니다.')
-                // const parseResult = JSON.parse(result);
-                // console.dir(parseResult);
-                console.dir(result); //상태코드 400을 가지고 있는, errorResult를 포함한 어떤(?) 객체..
-                console.dir(result.errorDetails); //이거는 undefined
-                console.dir(result.responseJSON.errorDetails); //이렇게 접근해야 에러메시지를 읽을 수가 있었다...
-                const errArr = result.responseJSON.errorDetails;
-                let errorMessage = ''
-                for(err of errArr){
-                    errorMessage += err.errorMessage+"\n";
+            body: JSON.stringify(validForm)
+        })
+            .then( response => {
+                if(!response.ok) {
+                    throw response
                 }
-                // 왜 이렇게까지 꺼내야 하는걸까?
-                alert(errorMessage); //각 필드에 에러메시지를 뜨게 하는게 목표인데, 일단은 alert까지라도.
-            }
+                return response.json()
+            })
+            .then(data => {
+                alert('아이템이 성공적으로 등록되었습니다.')
+                init(); //입력창 초기화
+                itmSaveBtn.disabled = true;
+
+                //갱신된 아이템리스트를 가져와서 다시 뿌려주기
+                const ItemArr = data
+                const itemList = document.querySelector('#itemList')
+                showList(mkItmList(ItemArr),itemList);
+
+            })
+            .catch(error => error)
+            // .then(error => {
+            //     alert('아이템 등록에 실패했습니다.')
+            //     console.log(error)
+            // })
         });
-    });
+
+    //todo 여기 다시 체크해서 back에서 에러 메시지 잘 전송되는지 체크하기
+            // error: function (result) {
+            //     alert('아이템 등록에 실패했습니다.')
+            //     // const parseResult = JSON.parse(result);
+            //     // console.dir(parseResult);
+            //     console.dir(result); //상태코드 400을 가지고 있는, errorResult를 포함한 어떤(?) 객체..
+            //     console.dir(result.errorDetails); //이거는 undefined
+            //     console.dir(result.responseJSON.errorDetails); //이렇게 접근해야 에러메시지를 읽을 수가 있었다...
+            //     const errArr = result.responseJSON.errorDetails;
+            //     let errorMessage = ''
+            //     for(err of errArr){
+            //         errorMessage += err.errorMessage+"\n";
+            //     }
+            //     // 왜 이렇게까지 꺼내야 하는걸까?
+            //     alert(errorMessage); //각 필드에 에러메시지를 뜨게 하는게 목표인데, 일단은 alert까지라도.
+            // }
+
+    // });
 
     itmModBtn.addEventListener("click",function(){
         let validForm = itemValidCheck(); //const면..item_id와 pj_id를 추가할 수 없다.
@@ -323,6 +314,11 @@ window.onload = function () {
                 // const resultList = document.querySelector("#multiResult>div");
                 // showList(mkOptList(optArr),resultList);
                 // alert(this);
+                if(window.event.keyCode === 188) { //쉼표를 구분자로 자를 예정이라 쉼표는 들어갈 수 없게 한다.
+                    alert('콤마(,)는 입력하실 수 없습니다.')
+                    // this.value = this.value.substring(0,this.value.length-1);
+                    // return; //todo 나중에 서버로 값을 넘기기 전에도 쉼표가 있는지 다시 한번 체크해야할듯.
+                }
                 enterEvent(this, optArr);
             })
         }
@@ -1394,9 +1390,9 @@ const itemValidCheck = function(){
             return false;
         } else {
             for(opt of optArr){
-                if(opt.length<1 || opt.length>100){
+                if(opt.length<1 || opt.length>100 || opt.includes(',')){
                     return false;
-                } //각 옵션에 대해서도 글자수 제한을 벗어나면 유효성 통과x
+                } //각 옵션에 대해서도 글자수 제한을 벗어나거나 쉼표를 포함하면 유효성 통과x (쉼표는 구분자로 쓰여서)
             }
             validForm.item_option = optArr.toString();
         }
