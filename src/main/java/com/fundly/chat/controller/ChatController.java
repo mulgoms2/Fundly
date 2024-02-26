@@ -16,6 +16,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,7 +55,7 @@ public class ChatController {
     public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
 
         if (result.hasErrors()) {
-//            로그인 정보를 담지 않은 사용자가 접속하려고 한다.
+//            로그인 정보를 담지 않은 사용자가 접속시. 로그인후 이용하라는 오류 메시지를 띄운 페이지로 이동한다.
             return "chat/error";
         }
 //        user_id, pj_id를 통해 식별되는 채팅방을 불러온다.
@@ -69,12 +70,12 @@ public class ChatController {
     @MessageMapping("/chat/{roomNum}")
     @SendTo("/chatSub/{roomNum}")
     public SelBuyMsgDetailsDto publishMessage(@DestinationVariable String roomNum, SelBuyMsgDetailsDto message, SimpMessageHeaderAccessor accessor) {
-//        httpsession 객체에 담긴 데이터를 이용할 수 있다.
-//        Object session = accessor.getSessionAttributes().get("session");
-//        System.out.println(((HttpSession) session).getAttribute("user_email"));
+//        채팅방에 권한이 없는 유저가 메시지를 보내면 예외를 발생시켜 에러페이지로 이동시킨다.
 
-//        채팅을 저장
-        chatService.saveMessage(message);
+//        채팅 저장 실패시 유저에게 메시지로 알린다.
+        boolean isSucceed = chatService.saveMessage(message);
+//            dto에 에러를 담아서 전달한다.
+//            message.setError();
 
 //        메시지를 토픽에 발행한다. sendTo /chatSup/{}
         return message;
@@ -101,6 +102,7 @@ public class ChatController {
     @ResponseBody
 //    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
     public Resource getImageResource(@PathVariable("fileName") String fileName) {
+
         try {
             return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
         } catch (Exception e) {
@@ -128,7 +130,7 @@ public class ChatController {
 
     @ExceptionHandler(RuntimeException.class)
     public String handleException() {
-        log.error("채팅 컨트롤러 수행 도중 예외가 발생하였습니다.");
+        log.error("ChatController.handleException() 채팅 컨트롤러 수행중 예외발생 캐치됨. 에러페이지로 이동. .\n");
         return "chat/error";
     }
 }

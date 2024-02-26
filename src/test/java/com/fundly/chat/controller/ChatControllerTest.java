@@ -42,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -118,6 +119,8 @@ class ChatControllerTest {
                 .andExpect(model().attributeExists())
                 .andExpect(model().attribute("chatRequest", chatRequest))
                 .andDo(print());
+
+        verify(chatService).joinChatRoom(any());
     }
 
     @Test
