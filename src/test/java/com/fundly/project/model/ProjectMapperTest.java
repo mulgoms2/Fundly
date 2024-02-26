@@ -2,6 +2,7 @@ package com.fundly.project.model;
 
 import com.persistence.dto.ProjectDto;
 import config.RootContext;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -293,5 +294,37 @@ class ProjectMapperTest {
         assertEquals(true, likedList.contains(project1));
         assertEquals(true, likedList.contains(project2));
         assertEquals(false, likedList.contains(project3));
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("좋아요수증가테스트")
+    void upLikeCnt() {
+        this.project1 = ProjectDto.builder()
+                .pj_id("1")
+                .pj_sel_id(user_id)
+                .curr_pj_like_cnt(1)
+                .build();
+        int insertCount = projectMapper.insert(project1);
+
+        assertEquals(1, insertCount);
+        projectMapper.upLikeCnt(project1);
+        assertEquals(1, projectMapper.upLikeCnt(project1));
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("좋아요수감소테스트") void downLikeCnt() {
+        this.project1 = ProjectDto.builder()
+                .pj_id("1")
+                .pj_sel_id(user_id)
+                .curr_pj_like_cnt(1)
+                .build();
+        int insertCount = projectMapper.insert(project1);
+
+        assertEquals(1, insertCount);
+        projectMapper.downLikeCnt(project1);
+        assertEquals(1, projectMapper.upLikeCnt(project1));
+
     }
 }

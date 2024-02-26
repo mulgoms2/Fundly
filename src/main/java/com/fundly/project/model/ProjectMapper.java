@@ -22,5 +22,6 @@ public interface ProjectMapper {
     ProjectDto selectByEntireStatus(@Param("pj_id") String pjId);
 
     ProjectDto selectByStatus(@Param("pj_id") String pjId, @Param("pj_status") String status);
-    int changeLikeCnt(ProjectDto pjdto) throws Exception;
+    int upLikeCnt(ProjectDto pjdto) throws Exception;
+    int downLikeCnt(ProjectDto pjdto) throws Exception;
 }

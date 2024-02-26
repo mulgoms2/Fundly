@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +45,8 @@ public class LoginController {
     public String login(@ModelAttribute("userLoginDto")UserLoginDto userLoginDto){ return "user/login";}
 
     @PostMapping("/login")
-    public String login(@Valid UserLoginDto userLoginDto, BindingResult bindingResult, HttpSession session, HttpServletResponse response, RedirectAttributes rattr) throws Exception {
+    public String login(@Valid UserLoginDto userLoginDto, BindingResult bindingResult, HttpSession session,
+                        HttpServletResponse response, RedirectAttributes rattr) throws Exception {
         /*
             1. 기존 로그인 정보가 있는가? 있다면 자동으로 로그인 된 값을 가져 와서 화면에 보여준다.
                 - 추후 소셜로그인 정보와 함께 고민
@@ -50,6 +54,7 @@ public class LoginController {
              2-1 가입된 정보를 확인 후 정보가 있으면 로그인
              2-2 가입된 정보가 없다면 id/pwd 확인 요청
         * */
+
 
         /* userLoginDto valid */
         if(bindingResult.hasErrors()) {
@@ -93,28 +98,53 @@ public class LoginController {
     }
 
     @RequestMapping("/logout")
-    public String logout(HttpSession session, HttpServletResponse response) throws Exception {
+    public String logout(HttpSession session, HttpServletResponse response, HttpServletRequest request, RedirectAttributes rattr) throws Exception {
 
         try {
             String user_email = (String)(session.getAttribute("user_email"));
+            String access_token = getCookieValue(request,"kat");
 
-            session.invalidate();
+            log.error(user_email);
+            log.error(access_token);
 
-            // 1. 쿠키를 삭제
-            Cookie cookie = new Cookie("user_email", user_email); // ctrl+shift+o 자동 import
-            cookie.setMaxAge(0); // 쿠키를 삭제
-//		  2. 응답에 저장
-            response.addCookie(cookie);
+            log.info("user_email = " + user_email);
+            if(user_email!="") {
+                session.invalidate();
 
-//        profile img
-//        Cookie user_profile_img_url_cookie = new Cookie("user_profile_img_url", null);
-//        user_profile_img_url_cookie.setPath("/");
-//        user_profile_img_url_cookie.setMaxAge(0);
-//        response.addCookie(user_profile_img_url_cookie);
+                response.addCookie(setCookie("user_email","",0,"/"));
+                response.addCookie(setCookie("user_name","",0,"/"));
+            }
+    //        profile img
+//            response.addCookie(setCookie("user_profile_img_url","null",0,"/"));
+
+            if(access_token!=null){
+
+                response.addCookie(setCookie("kat","",0,"/"));
+                return "redirect:/oauth/logout";
+            }
+
+//            rattr.addFlashAttribute("errmsg", "LOGOUT");
+            response.getWriter().println("<script>alert('로그 아웃되었습니다.');</script>");
             return "redirect:/";
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // 쿠키 값
+    public String getCookieValue(HttpServletRequest request, String cookieName) {
+        Cookie[] cookies = request.getCookies();
+
+        // 쿠키 배열이 null이 아니고, 각 쿠키를 확인하여 원하는 쿠키의 값을 찾음
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieName)) {
+                    return cookie.getValue();
+                }
+            }
+        }
+
+        return null;
     }
 
     // 유효성 체크
@@ -126,6 +156,15 @@ public class LoginController {
             validatorResult.put(validKeyName, error.getDefaultMessage());
         }
         return validatorResult;
+    }
+
+    // cookie key/value setting
+    public Cookie setCookie(String cookieKey, String cookieValue, int maxAge, String path){
+        Cookie cookie = new Cookie(cookieKey,cookieValue);
+        cookie.setMaxAge(maxAge); // 쿠키를 삭제
+        cookie.setPath(path);
+
+        return cookie;
     }
 
     /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */

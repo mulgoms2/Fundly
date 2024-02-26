@@ -27,14 +27,14 @@ public class JoinServiceImpl implements JoinService {
     }
 
     @Override
-    public int emailCheck(UserJoinDto userJoinDto) throws Exception {
+    public Integer emailCheck(UserJoinDto userJoinDto) throws Exception {
         return userJoinDao.emailCheck(userJoinDto);
     }
 
     @Override
 //    @Transactional(rollbackFor = SQLException.class)
     @Transactional(rollbackFor = Exception.class)
-    public int userJoin(UserJoinDto userJoinDto) throws Exception {
+    public Integer userJoin(UserJoinDto userJoinDto) throws Exception {
 
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)
 
@@ -63,7 +63,7 @@ public class JoinServiceImpl implements JoinService {
             userJoinDto.setUser_status(user_status);
             userJoinDto.setDba_reg_id(userJoinDto.getUser_email());
 
-            log.error("값은 뭘까 ? " + userJoinDto);
+//            log.error("값은 뭘까 ? " + userJoinDto);
 
             return userJoinDao.insert(userJoinDto);
 
