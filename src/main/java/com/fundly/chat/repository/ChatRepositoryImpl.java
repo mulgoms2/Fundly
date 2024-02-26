@@ -85,6 +85,7 @@ public class ChatRepositoryImpl implements ChatRepository {
         return selBuyMsgDetailsDto;
     }
 
+
     private SelBuyMsgDetailsDto mappingImgUrl(SelBuyMsgDetailsDto selBuyMsgDetailsDto) {
 //        파일이 첨부되어있는 메시지에 첨부파일 url 을 매핑
         if (!isFileAttached(selBuyMsgDetailsDto)) {

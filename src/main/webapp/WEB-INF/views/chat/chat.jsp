@@ -129,7 +129,6 @@
 
         const files = document.querySelector("#img").files;
 
-
         // 멀티파트 전송시에도 메시지를 함께 첨부할 수 있으며, 컨트롤러에서 하나 이상의 dto에 나누어 담을 수 있다.
         formData.append("file", files[0]);
         formData.append("buy_id", "${chatRequest.selBuyMsgDto.buy_id}");
