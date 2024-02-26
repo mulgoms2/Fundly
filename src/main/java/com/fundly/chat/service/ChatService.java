@@ -1,5 +1,7 @@
 package com.fundly.chat.service;
 
+import com.fundly.chat.model.ChatRoomRequest;
+import com.fundly.chat.model.ChatRoomResponse;
 import com.persistence.dto.ChatRequest;
 import com.persistence.dto.SelBuyMsgDto;
 import com.persistence.dto.FileDto;
