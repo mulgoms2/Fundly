@@ -541,6 +541,13 @@ const fetchItemCnt = function(pj_id){
         .then(response => response.json())
 } // 서버로부터 현재 해당 프로젝트에 등록된 아이템의 수를 불러오는 함수
 
+const fetchItems = function(pj_id){
+    return fetch("/project/item/"+pj_id,{
+        method: "GET",
+    })
+        .then(response => response.json())
+} // 현재 프로젝트에 등록된 모든 아이템을 불러오기
+
 const loadItemList = function(pj_id) {
     fetch("/project/item/"+pj_id, {
         method: "GET",
@@ -731,11 +738,11 @@ const mkItmList = function (itmArr) {
 }
 
 const mkItmDrop = function (arr) {
-    let list = '<div>'
+    let list = '<div id="drop">'
     list += '<ul>'
     for (itm of arr) {
         list += '<li>'
-        list += '<input type="checkbox" onchange="changeFoot()" data-item_id=' + itm.item_id + '>'
+        list += '<input type="checkbox" class="checkedItem" onchange="changeFoot()" data-item_id=' + itm.item_id + '>'
         list += '<div>'
         list += '<span>' + itm.item_name + ' (' + itm.item_option_type + ') </span>'
         list += '<em>0개의 선물에 포함됨</em>'
@@ -782,7 +789,7 @@ const mkCheckedItm = function(arr) { //체크된 아이템들을 아래에 출�
         list += '<div class="right">'
         list += '<div class="qty" style="display:inline-block">'
         list += '<button type="button" class="minus" onclick="minus(this)" disabled><i class="fas fa-regular fa-minus"></i></button>'
-        list += '<input class="itmNum" type="number" value="1" onkeyup="numCheck(this)">'
+        list += '<input data-item_id = ' + itm.item_id + ' class="itmNum" type="number" value="1" onkeyup="numCheck(this)">'
         list += '<button type="button" class="plus" onclick="plus(this)"><i class="fas fa-regular fa-plus"></i></button>'
         list += '</div>' //div close
         list += '<button class="cancel" type="button" onclick="removeBtn(this)" data-item_id='+itm.item_id+'>삭제</button>'
@@ -1366,12 +1373,44 @@ const modifyGift = async function(event, elem){
 
     //3-3.선택한 아이템
     //dropdown.click();
-    //todo 아이템 수만큼 요청을 보내야 하는거...?
+    //아이템 테이블로부터 프로젝트의 모든 아이템 데이터를 가져온다 (마음에 안든다)
+    const itemArr = await fetchItems(gift.pj_id)
+    let arr = []; //가져온 아이템들을 담을 배열
+    for(item of itemArr){
+        for(itmId of gift.item_id){
+            if(item.item_id === itmId){ //해당 아이템이 선물에 포함된 아이템이면
+                arr.push(item)
+            }
+        }
+    }
+    console.log(arr)
 
-    // console.log("here");
-    // console.log(document.querySelector('#selected'))
+    const list = mkCheckedItm(arr);
+    const selectItm = document.querySelector("#selectItm");
+    showList(list, selectItm); //선택된 아이템 목록을 만들기
 
+    const itmNums = document.querySelectorAll('input.itmNum')
 
+    for(itmNum of itmNums){
+        for(i=0; i<gift.item_id.length; i++){
+            if(itmNum.getAttribute('data-item_id') == gift.item_id[i]){ //타입이 하나는 String이라 ==로 비교
+                itmNum.value = gift.item_qty[i] //아이템 수량도 매칭해서 넣어주기
+            }
+        }
+    }
+
+    const itmDropdown = document.querySelector('#itmDropdown');
+    showList(mkItmDrop(itemArr), itmDropdown);
+    const checkedItmArr = document.querySelectorAll('input[type=checkbox].checkedItem');
+    for(checkedItm of checkedItmArr){
+        for(itmId of gift.item_id){
+            if(checkedItm.getAttribute('data-item_id') == itmId)
+                checkedItm.checked = true;
+        }
+    }
+    itmDropdown.classList.add('optChecked');
+    const drop = itmDropdown.querySelector('#drop')
+    drop.style.display = 'none'
 
 
     //3-4.수량제한여부 및 수량
@@ -1401,13 +1440,10 @@ const modifyGift = async function(event, elem){
     const day = shipDay.getDay();
     shipDate.querySelector('span').innerHTML = "<span id='shipDay'>"+ year+"-"+month+"-"+date+"</span><span>   ("+ week[day]+") </span>";
     days.value = (shipDay - new Date(payDay))/(1000*60*60*24);
-    //todo 날짜 계산이 오류가 있다. 간혹 하루 차이가 남.
-
 
 
     //3-6.선물금액
     giftMoney.value = comma(gift.gift_money);
-
 
 
 
