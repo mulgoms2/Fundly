@@ -98,7 +98,7 @@ public class MyPageController {
                 return mainView;
             }
 
-            UserDto dto = UserDto.builder().user_email(user_email).build();
+            UserDto dto = UserDto.builder().user_email(user_email).user_id(user_email).build();
             UserDto userInfo = userInfoService.userInfo(dto);
             model.addAttribute("userInfo",userInfo);
 
@@ -106,23 +106,42 @@ public class MyPageController {
             LikeDto likedto = new LikeDto(user_email);
             List<ProjectDto> likes = likeservice.getListWithPjStatus(likedto,"ing");
 
-            // 종료된 프로젝트 좋아요 목록
-            // List<ProjectDto> likes = likeservice.getListWithPjStatus(likedto,"end");
-
-            // 전체 프로젝트 좋아요 목록
-            // List<ProjectDto> likes = likeservice.getListWithPjEntire(likedto);
-
             log.error("\n\n\n likes=" + likes+ "\n\n\n");
             model.addAttribute("likes", likes);
 
         } catch (Exception e) {
 
+            log.error(""+ e.getStackTrace());
             /* exception 가능 ? */
 //            throw new RuntimeException(e);
 
         }
         return moveView;
     }
+//
+//    public List<ProjectDto> getListWithPjEntire(LikeDto likedto) {
+//        try {
+//            return likeservice.getListWithPjEntire(likedto);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    public List<ProjectDto> getListWithPjIng(LikeDto likedto) {
+//        try {
+//            return likeservice.getListWithPjStatus(likedto,"ing");
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    public List<ProjectDto> getListWithPjEnd(LikeDto likedto) {
+//        try {
+//            return likeservice.getListWithPjStatus(likedto,"end");
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */
     @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class})

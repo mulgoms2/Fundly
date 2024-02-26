@@ -6,7 +6,7 @@
 
 <!--    상태별로 좋아요 목록 불러올 목적-->
     <select id="selectByStatus" resultType="ProjectDto">
-        select sub_ctg,pj_id,pj_sel_name,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
+        select curr_pj_like_cnt,sub_ctg,pj_id,pj_sel_name,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
                fund_goal_money,curr_fund_money,fund_str_dtm,fund_end_dtm
         from PJ
         where pj_id = #{pj_id}
@@ -21,9 +21,15 @@
         where pj_id = #{pj_id}
     </select>
 
-    <update id="changeLikeCnt">
+    <update id="upLikeCnt">
         update PJ
-        set pj_like_cnt = #{pj_like_cnt} + 1
+        set curr_pj_like_cnt = #{curr_pj_like_cnt} + 1
+        where pj_id = #{pj_id}
+    </update>
+
+    <update id="downLikeCnt">
+        update PJ
+        set curr_pj_like_cnt = #{curr_pj_like_cnt} -1
         where pj_id = #{pj_id}
     </update>
 
