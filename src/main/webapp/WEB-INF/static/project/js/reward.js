@@ -226,11 +226,6 @@ window.onload = function () {
             .then(data => {
                 alert('아이템이 성공적으로 수정되었습니다.')
                 init(); //입력창 초기화
-                //다시 아이템 등록모드로 전환
-                itmSaveBtn.style.display = 'block';
-                itmModBtn.style.display = 'none';
-                itmInitBtn.style.display = 'block';
-                itmCnclBtn.style.display = 'none';
                 const tit = document.querySelector('div.item div.first > p.tit')
                 tit.innerHTML = '아이템 등록하기';
                 //수정된 리스트를 다시 뿌려주기
@@ -333,8 +328,8 @@ window.onload = function () {
                 // alert(this);
                 if(window.event.keyCode === 188) { //쉼표를 구분자로 자를 예정이라 쉼표는 들어갈 수 없게 한다.
                     alert('콤마(,)는 입력하실 수 없습니다.')
-                    // this.value = this.value.substring(0,this.value.length-1);
-                    // return; //todo 나중에 서버로 값을 넘기기 전에도 쉼표가 있는지 다시 한번 체크해야할듯.
+                    this.value = this.value.substring(0,this.value.length-1);
+                    return; //todo 나중에 서버로 값을 넘기기 전에도 쉼표가 있는지 다시 한번 체크해야할듯.
                 }
                 enterEvent(this, optArr);
             })
@@ -519,14 +514,59 @@ window.onload = function () {
 
     //선물페이지의 초기화 버튼 - 모든 입력필드 초기화.
     giftInitBtn.addEventListener("click",giftInit);
+    giftCnclBtn.addEventListener("click",function(){
+        // border 색 원상복귀
+        const orange = document.querySelector('#giftList > div.orange');
+        orange.classList.remove('orange');
+        //입력창 초기화
+        giftInit();
+        //버튼 초기화
+        giftSaveBtn.style.display = 'block';
+        giftModBtn.style.display = 'none';
+        giftInitBtn.style.display = 'block';
+        giftCnclBtn.style.display = 'none';
+        const tit = document.querySelector('div.gift div.first > p.tit')
+        tit.innerHTML = '선물 등록하기';
+    })
 
     //선물페이지의 선물 수정버튼
     giftModBtn.addEventListener('click',function (){
-        let validForm = giftValidCheck();
+        let validForm = giftValidCheck(); //const면..item_id와 pj_id를 추가할 수 없다.
         if(!validForm){
-            alert("아이템 양식에 맞춰서 다시 작성해주세요")
+            alert("선물 양식에 맞춰서 다시 작성해주세요")
             return;
         }
+
+        validForm.gift_id = this.getAttribute('data-gift_id'); //버튼에 정보를 저장해둠.
+        validForm.pj_id = this.getAttribute('data-pj_id');
+        console.log('validForm')
+        console.log(validForm);
+        fetch("/project/gift",{
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json" //써줘야한다. 안써주면 에러남.
+            },
+            body: JSON.stringify(validForm)
+        })
+            .then( response => {
+                if(!response.ok) {
+                    throw response.text()
+                }
+                return response.json()
+            })
+            .then(data => {
+                alert('선물이 성공적으로 수정되었습니다.')
+                giftInit(); //입력창 초기화
+                const tit = document.querySelector('div.gift div.first > p.tit')
+                tit.innerHTML = '선물 등록하기';
+                //수정된 리스트를 다시 뿌려주기
+                const giftArr = data
+                const giftList = document.querySelector('#giftList')
+                showList(mkGiftList(giftArr),giftList);
+
+            })
+            .catch(error=> error).then(error => console.log(error))
     })
 
 
@@ -806,7 +846,7 @@ const mkGiftList = function (giftArr) { //내가 만든 선물 리스트
     for (gift of giftArr) {
         //console.log('here')
         //console.log(gift)
-        list += '<div style="cursor:pointer" onclick="modifyGift(event,this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '>'
+        list += '<div class="modi" style="cursor:pointer" onclick="modifyGift(event,this)" data-gift_id=' + gift.gift_id + ' data-pj_id=' + gift.pj_id + '>'
         list += '<div class="giftTit" style="border:none;">'
         list += '<strong>'
         list += comma(gift.gift_money) + '원+</strong>'
@@ -1036,10 +1076,9 @@ const validDays = function(elem,max){
     const val = elem.value.trim();
     const cal = document.querySelector('div.cal');
     console.log(shipDate);
-    if (val < 1) {
-        alert('1이상의 숫자를 입력해주세요');
-        elem.value = 1;
-    }
+    // if (val < 1) {
+    //     alert('1이상의 숫자를 입력해주세요');
+    // }
     if(val > max){
         cal.parentElement.querySelector('p.notice').style.display = 'block';
     } else {
@@ -1145,6 +1184,12 @@ const showList = function (list, elem) {
 
 //아이템 삭제 메서드
 const removeItm = function (elem) {
+    const div = elem.closest('div.modi')
+    if(div.classList.contains("orange")){ //현재 수정상태라면,
+        if(!confirm("아이템 수정을 취소하고 삭제하시겠습니까?")){
+            return;
+        }
+    }
     if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하면 해당 아이템이 포함된 *개의 선물에서도 삭제됩니다.")) return;
     //ajax로 컨트롤러를 통해 db에서 아이템 삭제 후 리스트를 다시 불러와서 보여줘야함.
     // const item_id = elem.querySelector("input[type=hidden]").value;
@@ -1168,6 +1213,7 @@ const removeItm = function (elem) {
             const itemList = document.querySelector('#itemList');
             const list = mkItmList(itemArr);
             showList(list, itemList);
+            init();
         },
         error: function (result) {
             alert('아이템 삭제에 실패했습니다.')
@@ -1183,6 +1229,13 @@ const removeItm = function (elem) {
 
 const removeGift = function(elem){
     //비동기 방식으로 서버에서 해당 gift_id에 해당하는 선물 지우기 (+아이템 디테일 리스트도 같이 삭제Tx)
+
+    const div = elem.closest('div.modi')
+    if(div.classList.contains("orange")){ //현재 수정상태라면,
+        if(!confirm("선물 수정을 취소하고 삭제하시겠습니까?")){
+            return;
+        }
+    }
     if(!confirm("선물을 삭제하시겠습니까?")) return;
 
     fetch("/project/gift?gift_id="+elem.getAttribute("data-gift_id")+"&pj_id="+elem.getAttribute("data-pj_id"), {
@@ -1209,6 +1262,7 @@ const removeGift = function(elem){
             const giftList = document.querySelector('#giftList')
             //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
             showList(mkGiftList(giftArr),giftList);
+            giftInit();
 
         })
         .catch(error => error).then(error => {
@@ -1364,8 +1418,8 @@ const modifyGift = async function(event, elem){
 
     //3-1.mod버튼에 gift_id를 넣어준다. 수정버튼이 일체형(?)이 아니라 나뉘어 있으므로.
     // (나중에 수정버튼 눌렀을 때 gift_id를 전달해주어야 하므로)
-    giftModBtn.setAttribute("data-item_id",item.item_id)
-    giftModBtn.setAttribute("data-pj_id",item.pj_id)
+    giftModBtn.setAttribute("data-gift_id",gift.gift_id)
+    giftModBtn.setAttribute("data-pj_id",gift.pj_id)
 
     //3-2.선물 이름
     giftName.value = gift.gift_name;
@@ -1395,9 +1449,12 @@ const modifyGift = async function(event, elem){
         for(i=0; i<gift.item_id.length; i++){
             if(itmNum.getAttribute('data-item_id') == gift.item_id[i]){ //타입이 하나는 String이라 ==로 비교
                 itmNum.value = gift.item_qty[i] //아이템 수량도 매칭해서 넣어주기
+                const minus = itmNum.previousElementSibling;
+                if(itmNum.value>2) minus.disabled = false;
             }
         }
     }
+
 
     const itmDropdown = document.querySelector('#itmDropdown');
     showList(mkItmDrop(itemArr), itmDropdown);
@@ -1501,6 +1558,12 @@ const init = function () {
     optArr.length = 0; //배열도 초기화
     const multiResult = document.querySelector("#multiResult");
     showList(mkOptList(optArr), multiResult);
+
+    //버튼도 초기화
+    itmSaveBtn.style.display = 'block';
+    itmInitBtn.style.display = 'block';
+    itmModBtn.style.display = 'none';
+    itmCnclBtn.style.display = 'none';
 }
 
 
@@ -1542,6 +1605,12 @@ const giftInit = function(){
 
     const shipDate = document.querySelector('#shipDate');
     shipDate.querySelector('span').innerHTML = '';
+
+    //버튼도 초기화
+    giftSaveBtn.style.display = 'block';
+    giftModBtn.style.display = 'none';
+    giftInitBtn.style.display = 'block';
+    giftCnclBtn.style.display = 'none';
 }
 
 
@@ -1729,7 +1798,7 @@ const giftValidCheck = function(){
     }
     validForm.gift_money = giftMoney;
 
-    alert("check your console")
+    //alert("check your console")
     console.log(validForm);
     return validForm; //모든 유효성 검사를 통과한, 유효한 값을 가진 객체를 반환
 }

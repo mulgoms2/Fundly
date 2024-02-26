@@ -31,6 +31,7 @@ public interface GiftService {
     List<GiftDto> getGiftByStatus(GiftDto giftDto) throws Exception //특정 프로젝트의, 판매 상태에 따른 선물 리스트 가져오기
     ;
 
+    int modifyGiftContent(GiftForm giftForm) throws Exception;
     @Transactional(rollbackFor = Exception.class)
     int modifyGiftContent(GiftDto giftDto, List<GiftItemDetailDto> afterList) throws Exception;
 
