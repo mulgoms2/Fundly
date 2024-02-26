@@ -60,9 +60,10 @@ public class ItemController {
     public String makeGift(Model m) throws Exception { //global catcher에서 예외처리
         //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
         //뷰단에서는 itemDtoList가 empty면 보여줄 화면과 empty가 아니면 보여줄 화면이 나뉨.
-        List<ItemDto> itemList = itemService.getItemList("pj1");
-        System.out.println("itemList = " + itemList);
-        m.addAttribute("itemList",itemList);
+
+//        List<ItemDto> itemList = itemService.getItemList("pj1");
+//        System.out.println("itemList = " + itemList);
+//        m.addAttribute("itemList",itemList); //비동기로 서버로 데이터를 요청할거라 처음 뷰에 데이터를 넘겨주지도 않아도 됨.
 
 //        throw new Exception("global catcher test");
         return "project.reward";
@@ -107,6 +108,42 @@ public class ItemController {
         }
     }
 
+    @PatchMapping("/item")
+    @ResponseBody
+    public ResponseEntity<?> modifyItem(@RequestBody @Valid ItemDto itemDto, BindingResult result){
+        log.error("\n\n itemDto={} \n\n",itemDto);
+        log.error("binding result={}",result);
+        log.error("**** error codes ****");
+        result.getAllErrors().stream().forEach(
+                error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
+        ); //어떤 에러코드가 출력되는지
+
+        if(result.hasErrors()){ //유효성 검사에 실패할 경우
+            log.error("result={}",result);
+            log.error("**** result.getFieldError()={} ",result.getFieldError());
+
+            log.error("***************** messageSource={}",messageSource);
+            ErrorResult errorResult = new ErrorResult(result, messageSource);
+            return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+            // 에러 메시지를 담고 있는 객체를 보내 400번 에러로 응답한다.
+        }
+        String id = "asdf"; //원래는 세션에서 얻어와야 하는 값.
+        itemDto.setDba_mod_id(id); //수정자 정보를 업데이트
+
+        try{
+            int rowCnt = itemService.modifyItem(itemDto);
+            if(rowCnt!=1){
+                throw new Exception("modify item failed");
+            }
+            List<ItemDto> itemList = itemService.getItemList(itemDto.getPj_id());
+            log.error("\n\n itemList={}\n\n", itemList);
+            return new ResponseEntity<List<ItemDto>>(itemList, HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/item")
     @ResponseBody
     public ResponseEntity<List<ItemDto>> removeItem(Integer item_id, HttpSession session){
@@ -142,6 +179,20 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/item/select/{item_id}")
+    @ResponseBody
+    public ResponseEntity<ItemDto> getSelectedItem(@PathVariable Integer item_id){
+        log.error("\n\n item_id={}\n\n",item_id);
+        try{
+            ItemDto itemDto = itemService.getItem(item_id);
+            log.error("\n\n itemDto={}\n\n",itemDto);
+            return new ResponseEntity<>(itemDto, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/items")
     @ResponseBody
     public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){ //Dto로 넘겨주도록 수정
@@ -159,6 +210,20 @@ public class ItemController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(list,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/itemCnt/{pj_id}")
+    @ResponseBody
+    public ResponseEntity<?> getItemCnt(@PathVariable String pj_id){
+        log.error("\n\n ***** itemCnt pj_id={}\n\n",pj_id);
+        try {
+            int itemCnt = itemService.getItemCount(pj_id);
+            log.error("\n\n ***itemCnt={}\n\n",itemCnt);
+            return new ResponseEntity<>(itemCnt, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

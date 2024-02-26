@@ -36,8 +36,8 @@
     <!--  5. (선물 수정/등록시) 해당 선물을 구성하는 아이템의 종류와 해당 아이템의 갯수를 등록하기-->
     <insert id="insert" parameterType="GiftItemDetailDto">
         INSERT INTO pj_gift_item_detail
-            (gift_id, item_id, item_qty)
-        VALUES (#{gift_id},#{item_id},#{item_qty})
+            (gift_id, item_id, item_qty, item_name)
+        VALUES (#{gift_id},#{item_id},#{item_qty},(select item_name from pj_item_tmp where item_id = #{item_id}))
     </insert>
 
 
