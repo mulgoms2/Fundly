@@ -215,7 +215,7 @@ class PayDaoTest {
 
     @Test
     @SneakyThrows
-    @DisplayName("결제상태 update ('미결제' -> '결제실패')")
+    @DisplayName("결제상태 update ('미결제' -> '결제실패') || ('결제실패' -> '재결제실패')")
     void updatePayStatusToFailed() {
         String payId = "";
 
@@ -223,25 +223,35 @@ class PayDaoTest {
         for (PayDto dto : payDao.selectPayTarget()) {
             payId = dto.getPay_id();
             assertEquals(dto.getPay_status(), "미결제"); // before
+            dto.setPay_status("결제실패");
             assertEquals(payDao.updatePayStatusToFailed(dto), 1, "[updatePayStatusToFailed] updatePayStatusToFailed Error");
             assertEquals(payDao.selectByPayId(payId).getPay_status(), "결제실패"); // after
         }
-    }
-
-    @Test
-    @SneakyThrows
-    @DisplayName("결제상태 update ('결제실패' -> '재결제실패')")
-    void updatePayStatusToRetryFailed() {
-        String payId = "";
 
         // '결제실패' 데이터 조회 (재결제대상)
         for (PayDto dto : payDao.selectPayRetryTarget()) {
             payId = dto.getPay_id();
             assertEquals(dto.getPay_status(), "결제실패"); // before
-            assertEquals(payDao.updatePayStatusToRetryFailed(dto), 1, "[updatePayStatusToRetryFailed] updatePayStatusToRetryFailed Error");
+            dto.setPay_status("재결제실패");
+            assertEquals(payDao.updatePayStatusToFailed(dto), 1, "[updatePayStatusToFailed] updatePayStatusToFailed Error");
             assertEquals(payDao.selectByPayId(payId).getPay_status(), "재결제실패"); // after
         }
     }
+
+//    @Test
+//    @SneakyThrows
+//    @DisplayName("결제상태 update ('결제실패' -> '재결제실패')")
+//    void updatePayStatusToRetryFailed() {
+//        String payId = "";
+//
+//        // '결제실패' 데이터 조회 (재결제대상)
+//        for (PayDto dto : payDao.selectPayRetryTarget()) {
+//            payId = dto.getPay_id();
+//            assertEquals(dto.getPay_status(), "결제실패"); // before
+//            assertEquals(payDao.updatePayStatusToRetryFailed(dto), 1, "[updatePayStatusToRetryFailed] updatePayStatusToRetryFailed Error");
+//            assertEquals(payDao.selectByPayId(payId).getPay_status(), "재결제실패"); // after
+//        }
+//    }
 
     @Test
     @SneakyThrows
