@@ -17,7 +17,7 @@ public interface PayDao {
     List<PayDto> selectPayRetryTarget() throws Exception;
     int updatePayStatusToCompleted(PayDto payDto) throws Exception;
     int updatePayStatusToFailed(PayDto payDto) throws Exception;
-    int updatePayStatusToRetryFailed(PayDto payDto) throws Exception;
+//    int updatePayStatusToRetryFailed(PayDto payDto) throws Exception;
     List<PayDto> selectPayForUser(String userId) throws Exception;
     List<PayDto> selectPayForProject(String pjId) throws Exception;
     List<PayDto> selectAll() throws Exception;
