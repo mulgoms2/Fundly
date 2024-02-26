@@ -34,7 +34,7 @@ public class GiftServiceImpl implements GiftService {
     }// 특정 프로젝트의 모든 선물의 갯수 구하기
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class) //여기 Tx는 없어야 되는거 같은데.
     public int registerGift(GiftForm giftForm) throws Exception {
         GiftDto giftDto = toGiftDto(giftForm);
         List<GiftItemDetailDto> itemList = toGiftItemDetailDto(giftForm);
@@ -72,8 +72,13 @@ public class GiftServiceImpl implements GiftService {
 
 
     @Override
-    public GiftDto getGift(String gift_id) throws Exception {
-        return giftMapper.select(gift_id);
+    @Transactional(rollbackFor = Exception.class)
+    public GiftForm getGift(String gift_id) throws Exception {
+        GiftDto giftDto = giftMapper.select(gift_id);
+        List<GiftItemDetailDto> list = giftItemDetailMapper.selectItemDetail(gift_id);
+
+        GiftForm giftForm = toGiftForm(giftDto, list);
+        return giftForm;
     }// 특정 선물 하나 가져오기
 
 //    @Override
@@ -98,6 +103,15 @@ public class GiftServiceImpl implements GiftService {
         return giftMapper.selectByStatus(giftDto);
     } //특정 프로젝트의, 판매 상태에 따른 선물 리스트 가져오기
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int modifyGiftContent(GiftForm giftForm) throws Exception {
+        GiftDto giftDto = toGiftDto(giftForm);
+        List<GiftItemDetailDto> itemList = toGiftItemDetailDto(giftForm);
+
+        return modifyGiftContent(giftDto, itemList);
+    }
+
 
     @Override
     @Transactional
@@ -114,6 +128,8 @@ public class GiftServiceImpl implements GiftService {
         //선물의 수정이 새로운 아이템을 포함(insert)하거나 기존 아이템의 수량을 변경(update)하는 경우
         for(GiftItemDetailDto dtoA : afterList){
             int index = beforeList.indexOf(dtoA);
+            //GiftItemDetailDto의 비교를 gift_id와 item_id로 했다(Equals&HashCode)
+            //DB에서 gift_id와 item_name이 Unique로 묶여있어서 이 두개가 같으면 같은 row로 볼 수 있다.
             if(index==-1){ //기존 리스트에 없는 아이템이면
                 giftItemDetailMapper.insert(dtoA); //새로운 아이템데이터를 아이템리스트에 insert
             } else { //기존 리스트에 있는 아이템이면
@@ -165,6 +181,7 @@ public class GiftServiceImpl implements GiftService {
                 .gift_ship_due_date(giftForm.getGift_ship_due_date())
                 .gift_money(giftForm.getGift_money())
                 .dba_reg_id(giftForm.getDba_reg_id()) //Controller에서 세션으로 부터 얻은 user_id
+                .dba_mod_id(giftForm.getDba_mod_id())
                 .build();
 
         return giftDto;

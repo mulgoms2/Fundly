@@ -45,8 +45,9 @@
     <update id="update" parameterType="GiftItemDetailDto">
         UPDATE pj_gift_item_detail
         SET item_qty = #{item_qty}
-        WHERE gift_item_id = #{gift_item_id}
-    </update>
+        WHERE gift_id = #{gift_id} and item_id = #{item_id}
+    </update> <!-- gift_id와 item_id가 unique키로 묶여있어서 가능-->
+<!--    WHERE gift_item_id = #{gift_item_id} 원래는 이걸 쓰려했으나... -->
 
     <!--  7.  (선물 수정시) 해당 선물을 구성하는 개별 아이템의 삭제 -->
     <delete id="delete">

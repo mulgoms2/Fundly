@@ -56,7 +56,9 @@
         gift_max_qty_per_person = #{gift_max_qty_per_person},
         gift_ship_due_date = #{gift_ship_due_date},
         gift_money = #{gift_money},
-        gift_curr_qty = #{gift_curr_qty}
+        gift_curr_qty = #{gift_curr_qty},
+        dba_mod_dtm = now(),
+        dba_mod_id = #{dba_mod_id}
         WHERE gift_id = #{gift_id}
         <!-- 아직 프로젝트 승인 이전이므로
         최초 등록시 입력된 값 중 변경이 일어나지 않는 초기값(ex.판매량, 선물등록자 등)은
@@ -67,7 +69,9 @@
     <!--    6. (프로젝트 진행 중) 특정 선물의 판매 상태 변경 (ex. 판매중 -> 일시품절)  -->
     <update id="updateStatus" parameterType="GiftDto">
         UPDATE pj_gift_tmp2
-        SET gift_status = #{gift_status}
+        SET gift_status = #{gift_status},
+            dba_mod_dtm = now(),
+            dba_mod_id = #{dba_mod_id}
         WHERE gift_id = #{gift_id}
     </update>
 
@@ -76,7 +80,9 @@
         UPDATE pj_gift_tmp2
         SET  gift_qty_lim_yn = #{gift_qty_lim_yn},
              gift_total_qty = #{gift_total_qty},
-             gift_max_qty_per_person = #{gift_max_qty_per_person}
+             gift_max_qty_per_person = #{gift_max_qty_per_person},
+             dba_mod_dtm = now(),
+             dba_mod_id = #{dba_mod_id}
         WHERE gift_id = #{gift_id}
     </update>
 

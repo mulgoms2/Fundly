@@ -55,6 +55,19 @@ public class GiftController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/gift/select/{gift_id}")
+    @ResponseBody
+    public ResponseEntity<?> getSelectedGift(@PathVariable String gift_id){
+        log.error("\n\n gift_id={} \n\n",gift_id);
+        try{
+            GiftForm giftForm = giftService.getGift(gift_id);
+            log.error("\n\n giftForm={}\n\n",giftForm);
+            return new ResponseEntity<>(giftForm, HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     //선물 등록하기
@@ -114,6 +127,38 @@ public class GiftController {
         }
     }
 
+    @PatchMapping("/gift")
+    @ResponseBody
+    public ResponseEntity<?> modifyGift(@RequestBody @Valid GiftForm giftForm, BindingResult result){
+        giftForm.setDba_mod_id("asdf"); //원래는 세션에서 얻어서 넣어준다.
+        log.error("\n\n giftForm={}\n\n",giftForm);
+
+
+        log.error("binding result={}",result);
+        log.error("**** error codes ****");
+        result.getAllErrors().stream().forEach(
+                error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
+        ); //어떤 에러코드가 출력되는지
+
+        if(result.hasErrors()){
+            //유효성 검사에 실패하면
+            ErrorResult errorResult = new ErrorResult(result, messageSource);
+            //에러메시지와 함께 400번 에러를 전달
+            return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+        }
+
+        try{
+            int rowCnt = giftService.modifyGiftContent(giftForm);
+            if(rowCnt!=1){
+                throw new Exception("modify gift failed");
+            }
+            List<GiftForm> list = giftService.getAllGiftList(giftForm.getPj_id());
+            log.error("\n\n patchMapping - list = {}\n\n", list);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch(Exception e){
+            return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @DeleteMapping("/gift")
     @ResponseBody
     public ResponseEntity<?> deleteGift(String gift_id, String pj_id) {

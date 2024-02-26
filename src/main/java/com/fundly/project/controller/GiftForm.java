@@ -25,6 +25,7 @@ public class GiftForm { //13개 field
 //    private String gift_ship_need_yn; 없앨 field
     private Integer gift_money;
     private String dba_reg_id;
+    private String dba_mod_id;
     //여기까진 GiftDto의 필드와 일치
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")

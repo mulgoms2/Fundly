@@ -216,8 +216,10 @@
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button" class="init">초기화</button>
-                        <button type="button" class="save">저장</button>
+                        <button type="button" id="gftInit" class="init">초기화</button>
+                        <button type="button" id="gftModCncl" class="cancel">수정 취소</button>
+                        <button type="button"id="gftSave" class="save">저장</button>
+                        <button type="button"id="gftMod" class="mod">수정</button>
                     </div>
                 </div>
             </div>

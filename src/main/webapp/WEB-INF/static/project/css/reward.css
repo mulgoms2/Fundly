@@ -239,6 +239,10 @@ div.subTab > div.rightBtn > div > a > i{
     margin: 0 0 12px;
 }
 
+.pjBox .pjInfo #itemList > div.orange, .pjBox .pjInfo #giftList > div.orange  {
+    border: .5px solid #F86453;
+}
+
 .pjBox .pjInfo #itemList .itmTit {
     font-size: 16px;
     color: #3d3d3d;
@@ -923,11 +927,11 @@ div.subTab > div.rightBtn > div > a > i{
     align-items: center;
     padding: 11px 0;
 }
-.pjBox .pjForm section > div.cal #shipDate > span{
+.pjBox .pjForm section > div.cal #shipDate span{
     font-size: 14px;
     color: #ff5757;
     line-height: 22px;
-    font-weight: bold;
+    font-weight: 700;
 }
 .pjBox .pjForm section > div.cal > div:last-child{
     height: 60px;
