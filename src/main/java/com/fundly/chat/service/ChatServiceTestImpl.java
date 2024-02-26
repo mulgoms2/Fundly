@@ -39,6 +39,7 @@ public class ChatServiceTestImpl implements ChatServiceTest {
 //    기존의 채팅방 혹은 새로만든 채팅방을 가져온다.
     @Override
     public ChatRoom getChatRoom(ChatRoomRequest request) {
+//       Dao에 chatRoomEntity를 넘겨서 채팅방을
         Long roomNum = chatRoomDao.findRoomNum(request.getUser_id(), request.getTo_user_id());
 //        리퀘스트 정보로 호출되는 채팅방이 없을 때 makeChatRoom() 수행
 
