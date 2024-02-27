@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
@@ -22,8 +24,8 @@ public class PayDto {
     private BigInteger order_pay_money; // 결제 금액
     private String pay_status; // 결제 상태
     private Timestamp pay_dtm; // 실제 결제일시
-    private Timestamp pay_ddln_dtm; // 결제마감일시
     private Timestamp pay_due_dtm; // 결제예정일시
+    private Timestamp pay_ddln_dtm; // 결제마감일시 (결제예정일시 + 7일)
     private Timestamp gift_ship_due_date; // 상품전달예정일
     private String pay_co_resp_json; // PortOne 결제요청에 대한 응답 데이터
 

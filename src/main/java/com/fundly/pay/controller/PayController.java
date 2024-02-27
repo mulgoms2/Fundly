@@ -35,8 +35,8 @@ public class PayController {
     // 5. 결제 조회 (내역, 상태):  getPayList() -> DB 결제 상태 업데이트
     // 6. 결제 재시도: retryFailedPay() -> DB 결제 상태 업데이트
 
-    private PayMeansService payMeansService;
-    private PortOneService portOneService;
+    private final PayMeansService payMeansService;
+    private final PortOneService portOneService;
 
     @Autowired
     public PayController(PayMeansService payMeansService, PortOneService portOneService) {
