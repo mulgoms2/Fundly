@@ -85,7 +85,8 @@
         <div class="pjBox gift" id="gift">
             <div class="pjInfo">
                 <div>
-                    <div class="myList">내가 만든 선물 count</div>
+                    <div class="myList">내가 만든 선물 <span class="count"></span>
+                    </div>
                     <div id="giftList">
                         <div>
                             <strong>1,000원+</strong>
@@ -136,7 +137,7 @@
                         </div>
                         <div></div>
                     </section>
-                    <section>
+                    <section class="giftNum">
                         <div>
                             <p>수량제한</p>
                             <p>선착순으로 선물을 제공하는 경우 총 선물 수량을 설정해주세요.</p>
@@ -148,7 +149,7 @@
                                 <span style="visibility:hidden;">
                                         <input class='maxInput' id='maxLimVal' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
                                         <div>개</div>
-                                    </span>
+                                </span>
                             </div>
                             <div>
                                 <input name="limit" id="unlim" type="radio" value="n"> <!--수량제한 없음-->
@@ -157,7 +158,7 @@
                         </div>
                         <p class="notice" style="display:none">1000이하의 숫자를 입력하세요</p>
                     </section>
-                    <section>
+                    <section class="giftNum">
                         <div>
                             <p>1인당 최대 선택 제한</p>
                             <p>후원자 1명이 이 선물을 몇 개까지 선택할 수 있는지 설정해주세요.</p>
@@ -169,7 +170,7 @@
                                 <span style="visibility: hidden;">
                                         <input class='maxInput' id='maxLimPer' type="number" onkeyup="validRNum(this,1000)" value="1" max="1000">
                                         <div>개</div>
-                                    </span>
+                                </span>
                             </div>
                             <div>
                                 <input name="maxLimit" id="maxUnlim" type="radio" value="n"> <!--1인당 수량 제한 없음-->
@@ -215,8 +216,10 @@
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button" class="init">초기화</button>
-                        <button type="button" class="save">저장</button>
+                        <button type="button" id="gftInit" class="init">초기화</button>
+                        <button type="button" id="gftModCncl" class="cancel">수정 취소</button>
+                        <button type="button"id="gftSave" class="save">저장</button>
+                        <button type="button"id="gftMod" class="mod">수정</button>
                     </div>
                 </div>
             </div>
@@ -228,30 +231,31 @@
                 <div>
                     <div class="myList">내가 만든 아이템 count</div>
                     <div id="itemList">
-                        <c:forEach var="itemDto" items="${itemList}">
-                            <%--                        <div style="cursor:pointer" onclick=removeItm(itemArr,this)>--%>
+<%--                        <c:forEach var="itemDto" items="${itemList}">--%>
+<%--                            &lt;%&ndash;                        <div style="cursor:pointer" onclick=removeItm(itemArr,this)>&ndash;%&gt;--%>
 
-                            <div style="cursor:pointer" onclick=removeItm(itemArr,this) data-item_id='${itemDto.item_id}' data-pj_id='${itemDto.pj_id}'>
-                                    <%--                        <input type="hidden" value="${itemDto.item_id}"/>--%>
-                                    <%--                        <input type="hidden" value="${itemDto.pj_id}"/>--%>
-                                <div class="itmTit" style="border:none;">
-                                    <p style="font-weight: 600">${itemDto.item_name}</p>
-                                    <div>
-                                        <i class="far fa-regular fa-trash-can"></i>
-                                    </div>
-                                </div>
+<%--                            <div style="cursor:pointer" onclick=modiftyItm(this) data-item_id='${itemDto.item_id}' data-pj_id='${itemDto.pj_id}'>--%>
+<%--                                    &lt;%&ndash;                        <input type="hidden" value="${itemDto.item_id}"/>&ndash;%&gt;--%>
+<%--                                    &lt;%&ndash;                        <input type="hidden" value="${itemDto.pj_id}"/>&ndash;%&gt;--%>
+<%--                                <div class="itmTit" style="border:none;">--%>
+<%--                                    <p style="font-weight: 600">${itemDto.item_name}</p>--%>
+<%--                                    <div>--%>
+<%--                                        <i class="far fa-regular fa-trash-can" onclick=removeItm(this) data-item_id='${itemDto.item_id}' data-pj_id='${itemDto.pj_id}'></i>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
 
-                                <p class="itmT">${itemDto.item_option_type}</p>
-                                <c:if test="${not empty itemDto.item_option}">
-                                    <ul class="itmL">
-                                        <c:forEach var="item_option" items="${itemDto.item_option}">
-                                            <li>${item_option}</li>
-                                        </c:forEach>
-                                    </ul>
-                                </c:if>
-                            </div>
+<%--                                <p class="itmT">${itemDto.item_option_type}</p>--%>
+<%--                                <c:if test="${not empty itemDto.item_option}">--%>
+<%--                                    <ul class="itmL">--%>
+<%--                                        <c:forEach var="item_option" items="${itemDto.item_option}">--%>
+<%--                                            <li>${item_option}</li>--%>
+<%--                                        </c:forEach>--%>
+<%--                                    </ul>--%>
+<%--                                </c:if>--%>
+<%--                            </div>--%>
 
-                        </c:forEach>
+<%--                        </c:forEach>--%>
+<%--                        Controller에서 model에 이 값을 넘겨주지 않아도 됨. 비동기로 요청해서 데이터를 가져올거라서. --%>
                     </div>
                 </div>
             </div>
@@ -316,8 +320,10 @@
                         </div>
                     </section>
                     <div class="btnWrap">
-                        <button type="button" id="optInit" class="init">초기화</button>
-                        <button type="button" id="optSave" class="save" disabled>저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
+                        <button type="button" id="itmInit" class="init">초기화</button>
+                        <button type="button" id="itmModCncl" class="cancel">수정 취소</button>
+                        <button type="button" id="itmSave" class="save" disabled>저장</button> <!-- input과 textarea가 모두 입력되어야 활성화되게 -->
+                        <button type="button" id="itmMod" class="mod">수정</button>
                     </div>
                 </div>
             </div>

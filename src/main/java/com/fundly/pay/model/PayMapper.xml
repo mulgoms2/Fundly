@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.fundly.pay.model.PayDao">
+    <!-- 주문테이블에서 아직 결제테이블에 insert 되지 않았고(pay_inserted_yn == 'N') &&  (주문상태 == ’주문완료’)인 행 조회 (시점: 주문마감일시 이후) -->
+    <select id="selectCompletedOrder" resultType="PayDto">
+        <![CDATA[
+        select * from `ORDER`
+        where pay_inserted_yn = 'N'
+          and order_status = '주문완료'
+          and order_ddln_dtm < now();
+        ]]>
+    </select>
+
+    <!-- 결제테이블 PK 생성 -->
+    <select id="selectPayId" parameterType="String" resultType="String">
+        select concat('PAY_', #{user_id}, '_', (ifnull(Max(seq), 0) + 1)) from PAY
+    </select>
+
+    <!-- 결제테이블 insert (default: 결제상태 == '미결제') -->
+    <insert id="insert" parameterType="PayDto">
+        insert into PAY(pay_id, order_list_id, pay_means_id, pj_id, user_id, pay_money, pay_status, pay_due_dtm, pay_ddln_dtm, gift_ship_due_date, dba_reg_id)
+        values (#{pay_id}, #{order_list_id}, #{pay_means_id}, #{pj_id}, #{user_id}, #{order_pay_money}, #{pay_status}, #{pay_due_dtm}, DATE_ADD(#{pay_due_dtm}, INTERVAL 7 DAY), #{gift_ship_due_date}, #{dba_reg_id})
+    </insert>
+
+    <!-- 주문테이블의 pay_inserted_yn(결제테이블에 insert 되었는지 여부) update ('N' -> 'Y') -->
+    <!-- insert 쿼리 성공 시 수행된다. -->
+    <update id="updatePayInsertedToY" parameterType="String">
+        update `ORDER`
+        set pay_inserted_yn = 'Y'
+        where order_list_id = #{order_list_id}
+          and pay_inserted_yn = 'N'
+    </update>
+
+    <!-- 결제 대상 조회 : (결제예정일시 == 현재 날짜) && (결제상태 == '미결제')인 행 조회  -->
+    <select id="selectPayTarget" resultType="PayDto">
+        select * from PAY
+        where DATE(pay_due_dtm) = DATE(now()) and pay_status = '미결제'
+    </select>
+
+    <!-- 재결제 대상 조회: (결제예정일시+1일 == 현재날짜) && (결제상태 == '결제실패') && 재결제예정일시(결제예정일시+1일)가 결제마감일시 이전 -->
+    <select id="selectPayRetryTarget" resultType="PayDto">
+        <![CDATA[
+        select * from PAY
+        where DATE(DATE_ADD(pay_due_dtm, INTERVAL 1 DAY)) = DATE(now())
+          and pay_status = '결제실패'
+          and DATE(DATE_ADD(pay_due_dtm, INTERVAL 1 DAY)) < DATE(pay_ddln_dtm)
+        ]]>
+    </select>
+
+    <!-- PortOne 결제/재결제 성공 시, 1) 결제상태 update ('미결제'||'결제실패' -> '결제완료') && 2) 결제일시 update -->
+    <update id="updatePayStatusToCompleted" parameterType="PayDto">
+        update PAY
+        set pay_status = '결제완료',
+            pay_dtm = #{pay_dtm},
+            pay_co_resp_json = #{pay_co_resp_json},
+            dba_mod_dtm = now(),
+            dba_mod_id = 'admin' -- 관리자 ID
+        where pay_id = #{pay_id}
+    </update>
+
+    <!-- PortOne 결제 실패 시, 결제상태 update (('미결제' -> '결제실패') || ('결제실패' -> '재결제실패')) -->
+    <update id="updatePayStatusToFailed" parameterType="PayDto">
+        update PAY
+        set pay_status = #{pay_status},
+            pay_co_resp_json = #{pay_co_resp_json},
+            dba_mod_dtm = now(),
+            dba_mod_id = 'admin' -- 관리자 ID
+        where pay_id = #{pay_id}
+    </update>
+
+<!--    &lt;!&ndash; PortOne 재결제 실패 시, 결제상태 update ('결제실패' -> '재결제실패') &ndash;&gt;-->
+<!--    <update id="updatePayStatusToRetryFailed" parameterType="PayDto">-->
+<!--        update PAY-->
+<!--        set pay_status = '재결제실패',-->
+<!--            pay_co_resp_json = #{pay_co_resp_json},-->
+<!--            dba_mod_dtm = now(),-->
+<!--            dba_mod_id = 'admin' &#45;&#45; 관리자 ID-->
+<!--        where pay_id = #{pay_id}-->
+<!--    </update>-->
+
+    <!-- 회원별 결제 목록 조회 -->
+    <!-- parameter: 회원 ID(user_id) -->
+    <select id="selectPayForUser" parameterType="String" resultType="PayDto">
+        select * from PAY
+        where user_id = #{user_id}
+    </select>
+
+    <!-- 프로젝트별 결제 목록 조회 -->
+    <!-- parameter: 프로젝트 ID(pj_id) -->
+    <select id="selectPayForProject" parameterType="String" resultType="PayDto">
+        select * from PAY
+        where pj_id = #{pj_id}
+    </select>
+
+    <!-- 전체 조회 (Test 용도) -->
+    <select id="selectAll" resultType="PayDto">
+        select * from PAY
+    </select>
+
+    <!-- 특정 데이터 조회 by pay_id (Test 용도) -->
+    <select id="selectByPayId" parameterType="String" resultType="PayDto">
+        select * from PAY
+        where pay_id = #{pay_id}
+    </select>
+
+    <!-- 전체 삭제 (Test 용도) -->
+    <delete id="deleteAll">
+        delete from PAY
+    </delete>
+
+    <!-- 결제테이블 전체 row 개수 조회 (Test 용도) -->
+    <select id="countAll" resultType="int">
+        select count(*) from PAY
+    </select>
+
+    <!-- 주문테이블의 pay_inserted_yn(결제테이블에 insert 되었는지 여부) update ('Y' -> 'N') (Test 용도) -->
+    <update id="updatePayInsertedToN">
+        update `ORDER`
+        set pay_inserted_yn = 'N'
+        where pay_inserted_yn = 'Y'
+    </update>
+
+    <!-- 주문테이블 insert (Test 용도) -->
+    <insert id="insertIntoOrder" parameterType="PayDto">
+        insert into `ORDER`(order_list_id, adr_id, user_id, pj_id, cpn_seq, order_pay_money, order_money, order_dtm, pay_means_id, order_ddln_dtm, pay_due_dtm, dba_reg_id)
+        values (#{order_list_id}, 'ADR_test_1', #{user_id}, #{pj_id}, '9999', #{order_pay_money}, 1, '2024-01-01 00:00:00', #{pay_means_id}, '2024-02-01 00:00:00', #{pay_due_dtm}, #{dba_reg_id});
+    </insert>
+
+    <!-- 주문테이블 delete (Test 용도)-->
+    <delete id="deleteOrder" parameterType="String">
+        delete from `ORDER`
+        where order_list_id = #{orderListId}
+    </delete>
+
+    <!-- TODO: 결제상태 업데이트될때마다 결제상태이력 테이블에 insert -->
+</mapper>

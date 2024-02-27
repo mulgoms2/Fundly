@@ -25,13 +25,14 @@
         <link rel="stylesheet" href="<c:url value='/static/user/css/Message.css'/>">
         <link rel="stylesheet" href="<c:url value='/static/user/css/MakeProject.css'/>">
         <link rel="stylesheet" href="<c:url value='/static/user/css/Setting.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/main/common.css'/>">
         <%-- script --%>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
         <!-- header -->
         <script defer src="/static/user/js/header.js"></script>
         <!--Mypage js -->
-        <script defer src="/static/user/js/likes.js"></script>
+        <script type="text/javascript" src="/static/product/likeDetail.js"></script>
         <script defer src="/static/user/js/profile.js"></script>
     </head>
 

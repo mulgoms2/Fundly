@@ -23,7 +23,7 @@
                     <div class="ifImg">
                         <span></span>
                     </div>
-                    <div class="ifTxt" >${loginInfo}</div>
+                    <div class="ifTxt"id="ifTxt">${loginInfo}</div>
                     <div class="MyPageList" id = "MyPageList">
                         <a href="<c:url value='/mypage/profile'/>"><div class="pageItem" id = "Profile">프로필</div></a>
                         <a href="<c:url value='/mypage/coupon'/>"><div class="pageItem" id = "Coupon">응원권</div></a>

@@ -17,47 +17,86 @@
 }
 
 /* main */
-
 .projectListWithCard{
     width: 1160px;
     font-size: 14px;
     line-height: 24px;
 }
-
 .projectCardWrap {
     max-width: 1160px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 60px 34px;
 }
-
 .projectCardWrap .cardWrap {
     width: 100%; /* 한 줄에 4개씩 배치되므로 너비를 25%로 설정하고 간격빼기 */
     display: flex;
     position: relative;
 }
-
-.detailTxt {
-    width: 264px;
-    height : 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content:  space-between;
+.pjId {
+    display : none;
+}
+.userId {
+    display : none;
 }
 
+/* 프로젝트 이미지 */
 .mnBan .banImg.after {
     width: 264px;
     height: 226px;
     position: relative;
-
 }
-
 .mnBan .banImg.after img {
     width: 264px;
     height: 226px;
     object-fit: cover;
 }
+.banBax {
+    position: relative;
+}
 
+/* 하트버튼 */
+.likeCnt {
+    /*display:none;*/
+}
+.likeBtn {
+    position: absolute;
+    width: 0;
+    height: 0;
+    display: flex;
+    left: 88%;
+    top: 48%;
+    background: #fff;
+    border: 0;
+    cursor: pointer;
+}
+.likeBtn .btnIco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+/* default 상태 */
+.likeBtn .btnIco .icoImg.on {
+    display: none;
+}
+.likeBtn .btnIco .icoImg {
+    display: block;
+}
+.likeBtn .btnIco svg {
+    width: 22px;
+    height: 22px;
+}
+.likeBtn .btnIco span {
+    margin-top: 5px;
+    font-size: 10px;
+    line-height: 10px;
+    text-align: center;
+    display: block;
+}
+
+/* 프로젝트 텍스트 */
 .banTxt .subTit {
     /*height:40px;*/
     overflow: hidden;
@@ -87,7 +126,14 @@
     color: rgb(158, 158, 158);
     font-size: 13px;
     line-height: 21px;
+}
 
+.detailTxt {
+    width: 264px;
+    height : 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content:  space-between;
 }
 
 .psTag {

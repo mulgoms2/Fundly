@@ -4,11 +4,12 @@
 
 <mapper namespace="com.fundly.user.model.UserJoinDao">
     <!-- email check -->
-    <select id="emailCheck" resultType="int">
+    <select id="emailCheck" resultType="INTEGER">
         SELECT COUNT(*)
         FROM user_info
         where user_email = #{user_email}
     </select>
+
     <!-- join insert -->
     <insert id="insert" parameterType="UserJoinDto">
         INSERT INTO user_info (user_id,

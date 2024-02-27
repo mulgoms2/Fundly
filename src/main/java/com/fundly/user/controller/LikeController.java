@@ -2,6 +2,7 @@ package com.fundly.user.controller;
 
 import com.fundly.user.service.LikeService;
 import com.persistence.dto.LikeDto;
+import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/like")
 public class LikeController {
 
-    private final LikeService likeservice;
+   LikeService likeservice;
 
     @Autowired
     public LikeController(LikeService likeservice) {
@@ -20,12 +21,12 @@ public class LikeController {
     }
 
     @PostMapping
-    public ResponseEntity<LikeDto> clickLike(@RequestBody LikeDto likedto) {
+    public ResponseEntity<LikeDto> clickLike(@RequestBody LikeDto likedto, ProjectDto pjdto) {
 
         // 좋아요 상태 바꾸고 가져오기
         try {
 
-            likeservice.changeLike(likedto);
+            likeservice.changeLike(likedto,pjdto);
 
             return ResponseEntity.ok(likeservice.getLike(likedto));
 
