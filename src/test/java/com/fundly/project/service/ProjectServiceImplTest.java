@@ -23,6 +23,13 @@ class ProjectServiceImplTest {
     }
 
     @Test
+    @DisplayName("프로젝트 추가")
+    public void add() {
+
+        projectServiceImpl.add()
+    }
+
+    @Test
     @DisplayName("프로젝트 템플릿 가져오기")
     void test() {
 //        프로젝트 뷰에 뿌려줄 템플릿을 만든다.
