@@ -1,9 +1,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
-<link rel="stylesheet" href="/static/user/css/Setting.css">
+
 <%--설정--%>
-<div class="main">
+<div class="main setting">
     <div class="userSetting">
         <div class="title">설정</div>
         <div class="tapContainer">
@@ -18,8 +18,8 @@
     </div>
     <!-- 탭 값 -->
     <div class="tapContainerMain">
-        <div id="tab1" class="tabContent"><jsp:include page="settingProfile.jsp"/></div>
-        <div id="tab2" class="tabContent">계정페이지</div>
+        <div id="tab1" class="tabContent"><jsp:include page="/user/profileBasic"/></div>
+        <div id="tab2" class="tabContent"><jsp:include page="/user/account"/></div>
         <div id="tab3" class="tabContent"><jsp:include page="/pay/list"/></div>
         <div id="tab4" class="tabContent">배송지페이지</div>
         <div id="tab5" class="tabContent">알림페이지</div>

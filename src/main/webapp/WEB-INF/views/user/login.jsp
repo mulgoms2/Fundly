@@ -14,8 +14,6 @@
         <title>로그인</title>
         <link rel="stylesheet" href="<c:url value='/static/user/css/Login.css?after'/>">
         <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-        <%-- login js --%>
-        <script defer src="/static/user/js/login.js"></script>
     </head>
 
     <body>
@@ -59,7 +57,7 @@
                         <div class="otherLogin">
                             <span>다른 방법으로 로그인</span>
                         </div>
-                        <button id="kakaBtn" class="kakaBtn" >
+                        <button id="kakaBtn" class="kakaBtn" onclick="window" >
                             <div class="kakaImg"></div>
                             <div>카카오톡으로 로그인</div>
                         </button>
@@ -80,97 +78,109 @@
             </div>
         </div>
     </body>
-<script>
-    /* input */
-    const user_email = document.getElementById("user_email");
-    const user_pwd = document.getElementById("user_pwd");
 
-    /* pwd toggle */
-    const togglePwd = document.getElementById('togglePwd');
+    <script>
+        /* input */
+        const user_email = document.getElementById("user_email");
+        const user_pwd = document.getElementById("user_pwd");
 
-    /* form */
-    let usLoginForm = document.querySelector("#usLoginForm");
+        /* pwd toggle */
+        const togglePwd = document.getElementById('togglePwd');
 
-    /* 이메일, 비밀번호에 대한 정규식 */
-    const email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        /* form */
+        let usLoginForm = document.querySelector("#usLoginForm");
 
-    // 이메일 정규식
-    user_email.addEventListener("keydown", () => {
-        if(!email.test(user_email.value) && user_email.value.length!==0) {
-            setMessage('유효하지 않은 이메일 형식입니다.', "user_email", "msgEmail", "red");
-            setMessage('', "user_pwd", "msgPwd", "black");
-        } else{
-            setMessage('', "user_email", "msgEmail", "black");
-            user_email.focus();
+        /* 이메일, 비밀번호에 대한 정규식 */
+        const email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+        // 이메일 정규식
+        user_email.addEventListener("keydown", () => {
+            if(!email.test(user_email.value) && user_email.value.length!==0) {
+                setMessage('유효하지 않은 이메일 형식입니다.', "user_email", "msgEmail", "red");
+                setMessage('', "user_pwd", "msgPwd", "black");
+            } else{
+                setMessage('', "user_email", "msgEmail", "black");
+                user_email.focus();
+            }
+        })
+
+        let msg = "${msg}";
+        if(msg!==""){ setMessage(msg, "", "msgPwd", "red");}
+
+        /* 유효성(입력된 값에 따른 변화 style,value) */
+        function setMessage(msg, elementid, msgid, color){
+            document.getElementById(msgid).innerHTML = `${'${msg}'}`;
+            document.getElementById(elementid).style.border = "1px solid " + color;
         }
-    })
 
-    let msg = "${msg}";
-    if(msg!==""){ setMessage(msg, "", "msgPwd", "red");}
+        /* usLoginForm submit */
+        usLoginForm.addEventListener("submit",function(e) {
+            e.preventDefault();
 
-    /* 유효성(입력된 값에 따른 변화 style,value) */
-    function setMessage(msg, elementid, msgid, color){
-        document.getElementById(msgid).innerHTML = `${'${msg}'}`;
-        document.getElementById(elementid).style.border = "1px solid " + color;
-    }
+            // if(user_email.value.length === 0) {
+            //     setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
+            //     user_email.focus();
+            //     return false;
+            // }
+            //
+            // if(user_pwd.value.length === 0){
+            //     setMessage('비밀번호를 입력하세요.', "user_pwd", "msgPwd", "red");
+            //     user_pwd.focus();
+            //     return false;
+            // }
+            usLoginForm.action = '<c:url value="/login/login"/>';
+            usLoginForm.method = 'POST';
+            usLoginForm.submit();
+        })
 
-    /* usLoginForm submit */
-    usLoginForm.addEventListener("submit",function(e) {
-        e.preventDefault();
+        /* pwd */
+        user_pwd.addEventListener("keyup", () => {
+            if(user_pwd.value.length > 0) {
+                setMessage('', "user_email", "msgEmail", "black");
+            }
+        })
 
-        // if(user_email.value.length === 0) {
-        //     setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
-        //     user_email.focus();
-        //     return false;
-        // }
-        //
-        // if(user_pwd.value.length === 0){
-        //     setMessage('비밀번호를 입력하세요.', "user_pwd", "msgPwd", "red");
-        //     user_pwd.focus();
-        //     return false;
-        // }
-        usLoginForm.action = '<c:url value="/login/login"/>';
-        usLoginForm.method = 'POST';
-        usLoginForm.submit();
-    })
+        togglePwd.addEventListener('click', function () {
+            if (user_pwd.type === 'password') {
+                user_pwd.type = 'text';
+                togglePwd.style.backgroundImage = 'url("/static/img/Icon-private.png")';
+            } else {
+                user_pwd.type = 'password';
+                togglePwd.style.backgroundImage = 'url("/static/img/Icon-eye.png")';
+            }
+        });
 
-    /* pwd */
-    user_pwd.addEventListener("keyup", () => {
-        if(user_pwd.value.length > 0) {
-            setMessage('', "user_email", "msgEmail", "black");
+        /* errmsg redirect */
+        const errmsg = "${errmsg}";
+        if (errmsg === "LOGIN_PWD_ERROR") alert("비밀번호를 확인해주세요.");
+        if (errmsg === "LOGIN_STATUS_ERROR") alert("비활성 유저입니다.");
+        if (errmsg === "LOGIN_EMAIL_ERROR") alert("가입 정보가 없습니다.");
+
+        /* valid errorMsg */
+        const validUserEmail = '${valid_user_email}';
+        const validUserPwd = '${valid_user_pwd}';
+
+        // alert("validUserEmail =" + validUserEmail+ " ,validUserName = "
+        //     + validUserName+", validUserPwd =" + validUserPwd+ " ,validUserPwdConfirm = " + validUserPwdConfirm)
+
+        if(validUserEmail!=='') {
+            setMessage(validUserEmail, "user_email", "msgEmail", "red");
         }
-    })
 
-    togglePwd.addEventListener('click', function () {
-        if (user_pwd.type === 'password') {
-            user_pwd.type = 'text';
-            togglePwd.style.backgroundImage = 'url("/static/img/Icon-private.png")';
-        } else {
-            user_pwd.type = 'password';
-            togglePwd.style.backgroundImage = 'url("/static/img/Icon-eye.png")';
+        if(validUserPwd!=='') {
+            setMessage(validUserPwd, "user_pwd", "msgPwd", "red");
         }
-    });
 
-    /* errmsg redirect */
-    const errmsg = "${errmsg}";
-    if (errmsg === "LOGIN_PWD_ERROR") alert("비밀번호를 확인해주세요.");
-    if (errmsg === "LOGIN_STATUS_ERROR") alert("비활성 유저입니다.");
-    if (errmsg === "LOGIN_EMAIL_ERROR") alert("가입 정보가 없습니다.");
+        /* Oauth2 kakao login */
+        const kakaBtn = document.getElementById('kakaBtn');
 
-    /* valid errorMsg */
-    const validUserEmail = '${valid_user_email}';
-    const validUserPwd = '${valid_user_pwd}';
+        kakaBtn.addEventListener('click',()=>{
+            const kakao = document.createElement('form');
+            kakao.action = '<c:url value="/oauth/kakaologin"/>';
+            kakao.method = 'post';
+            document.body.appendChild(kakao);
+            kakao.submit();
+        });
 
-    // alert("validUserEmail =" + validUserEmail+ " ,validUserName = "
-    //     + validUserName+", validUserPwd =" + validUserPwd+ " ,validUserPwdConfirm = " + validUserPwdConfirm)
-
-    if(validUserEmail!=='') {
-        setMessage(validUserEmail, "user_email", "msgEmail", "red");
-    }
-
-    if(validUserPwd!=='') {
-        setMessage(validUserPwd, "user_pwd", "msgPwd", "red");
-    }
-
-</script>
+    </script>
 </html>

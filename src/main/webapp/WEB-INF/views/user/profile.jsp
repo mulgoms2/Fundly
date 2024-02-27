@@ -12,7 +12,7 @@
                         <div class="username">${userInfo.user_name}</div>
                         <a href="<c:url value='/mypage/setting'/>"><span class ="setting"></span></a>
                     </div>
-                    <div class="userJoindate">0주 전 가입</div>
+                    <div class="userJoindate">${userjoindateView}</div>
                 </div>
             </div>
             <div class="tapContainer">

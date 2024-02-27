@@ -100,7 +100,10 @@ public class MyPageController {
 
             UserDto dto = UserDto.builder().user_email(user_email).user_id(user_email).build();
             UserDto userInfo = userInfoService.userInfo(dto);
+            String userjoindateView = userInfoService.userJoindate(dto);
+
             model.addAttribute("userInfo",userInfo);
+            model.addAttribute("userjoindateView",userjoindateView);
 
             // 유저 아이디 통해 좋아요 목록 불러오기 (디폴트 : 진행중인 프로젝트)
             LikeDto likedto = new LikeDto(user_email);

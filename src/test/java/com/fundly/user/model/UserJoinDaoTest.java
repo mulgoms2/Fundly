@@ -22,6 +22,7 @@ class UserJoinDaoTest {
 
     private final UserJoinDao userJoinDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     public UserJoinDaoTest(UserJoinDao userJoinDao, BCryptPasswordEncoder bCryptPasswordEncoder){
         this.userJoinDao = userJoinDao;
@@ -33,11 +34,13 @@ class UserJoinDaoTest {
     @DisplayName("회원 이메일 중복 체크")
     void emailCheck() {
         try {
-            UserJoinDto userJoinDto = UserJoinDto.builder().user_email("111@111.com").build();
+//            UserJoinDto userJoinDto = UserJoinDto.builder().user_email("111@111.com").build();
+            UserJoinDto userJoinDto = UserJoinDto.builder().user_email(null).build();
 
             int cnt = userJoinDao.emailCheck(userJoinDto);
 
-            assertEquals(1,cnt);
+//            assertEquals(1,cnt);
+            assertEquals(0,cnt);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

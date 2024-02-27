@@ -91,7 +91,8 @@ public class JoinController {
     }
 
     /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */
-    @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class,Exception.class})
+//    @ExceptionHandler({RuntimeException.class, SQLException.class, IllegalArgumentException.class, Exception.class})
+    @ExceptionHandler({Exception.class}) // 우선 전체 적인 Exception 확인, null 은 어떤가 ?
     public String handleException()
     {
         return "user/error";
