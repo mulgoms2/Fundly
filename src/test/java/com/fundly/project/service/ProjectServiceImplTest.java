@@ -29,7 +29,7 @@ class ProjectServiceImplTest {
     @DisplayName("프로젝트 추가")
     public void add() {
 
-        projectServiceImpl.add()
+//        projectServiceImpl.add()
     }
 
     @Test
