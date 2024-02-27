@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 
@@ -24,8 +23,9 @@
         <link rel="stylesheet" href="<c:url value='/static/user/css/Alarm.css'/>">
         <link rel="stylesheet" href="<c:url value='/static/user/css/Message.css'/>">
         <link rel="stylesheet" href="<c:url value='/static/user/css/MakeProject.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/user/css/Setting.css'/>">
-        <link rel="stylesheet" href="<c:url value='/static/main/common.css'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/css/Setting.css?after'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/css/SettingProfile.css?after'/>">
+        <link rel="stylesheet" href="<c:url value='/static/user/css/SettingAccount.css?after'/>">
         <%-- script --%>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
@@ -34,12 +34,16 @@
         <!--Mypage js -->
         <script defer src="/static/user/js/likes.js"></script>
         <script defer src="/static/user/js/profile.js"></script>
+        <script defer src="/static/user/js/setting.js"></script>
+        <script defer src="/static/user/js/settingProfile.js"></script>
+        <script defer src="/static/user/js/settingAccount.js"></script>
     </head>
 
     <body>
         <tiles:insertAttribute name="header"/>
 
-        <tiles:insertAttribute name="body"/>
+<%--        <tiles:insertAttribute name="body" ignore="true"/>--%>
+        <tiles:insertAttribute name="body" />
 
         <tiles:insertAttribute name="footer"/>
     </body>

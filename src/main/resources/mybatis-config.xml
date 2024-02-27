@@ -23,8 +23,10 @@
         <typeAlias type="com.persistence.dto.SelBuyMsgDto" alias="SelBuyMsgDto"/>
         <typeAlias type="com.persistence.dto.SelBuyMsgDetailsDto" alias="SelBuyMsgDetailsDto"/>
         <typeAlias alias="UserDto" type="com.persistence.dto.UserDto"/>
+        <typeAlias alias="UserHistDto" type="com.persistence.dto.UserHistDto"/>
         <typeAlias alias="UserJoinDto" type="com.fundly.user.dto.UserJoinDto"/>
         <typeAlias alias="UserLoginDto" type="com.fundly.user.dto.UserLoginDto"/>
+        <typeAlias alias="UserProfileDto" type="com.fundly.user.dto.UserProfileDto"/>
         <typeAlias alias="OauthDto" type="com.fundly.user.dto.OauthDto"/>
         <typeAlias alias="PayMeansDto" type="com.persistence.dto.PayMeansDto"/>
         <typeAlias alias="PayDto" type="com.persistence.dto.PayDto"/>
