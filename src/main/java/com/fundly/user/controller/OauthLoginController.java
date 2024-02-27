@@ -47,52 +47,6 @@ public class OauthLoginController {
         this.oauthJoinService = oauthJoinService;
     }
 
-    @GetMapping("/logout")
-    public String logout (HttpSession session,HttpServletRequest request ) throws Exception {
-
-        String access_token = getCookieValue(request,"kat");
-        String user_email = getCookieValue(request,"user_email");
-
-        log.info("access_token = " +access_token + " \n\n");
-        log.info("user_email = " +user_email + " \n\n");
-
-        try {
-//            Map<String, Object>  expires_in = kakaoService.getTokenTime(access_token);//("xr6YurVklja1riJkUyg_CB_spKvJSHp2irYKPXVbAAABjdoxWzCi-KZYUq23DA");
-            Map<String, Object>  expires_in = null;
-            try {
-                expires_in = kakaoService.getTokenTime(access_token);
-            } catch (IOException e) {
-                if(e.getMessage()=="401"){
-                    log.error("401 에러, 해당 토큰의 값이 없습니다.");
-                }
-            }
-
-            log.info(expires_in.get("expires_in").toString());
-            int tokenTime = Integer.parseInt(expires_in.get("expires_in").toString());
-
-            // 연결 끊기 (원래는 로그아웃만 하면 된다)
-            if(tokenTime >=0){
-                log.info("연결 끊기 시작한다.");
-//               String test = kakaoService.unlink(access_token);
-                /* 로그 아웃
-                *  oauth 에서 로그 아웃시 테이블의 acc,ref 값은 어떻게 처리할 것인가 ?
-                * */
-               String test = kakaoService.logout(access_token);
-
-               log.info("test =  " + test);
-                log.info("연결 끊기 종료한다.");
-            }else{
-
-                log.info("시간이 적거나 안맞다");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "redirect:/";
-    }
-
     @PostMapping("/kakao")
     public String loginUrlKakao() {
 
@@ -105,23 +59,44 @@ public class OauthLoginController {
                 + kakaoRestAPI_Key
                 + "&redirect_uri="
                 + kakaoRedirect_uri
+//                + "&prompt=none";
 //                + "&prompt=login";
                 + "&prompt=select_account" ;
 
-        log.error("reqUrl = "  +reqUrl);
+//        log.error("reqUrl = "  +reqUrl);
+
+        return "redirect:" + reqUrl;
+    }
+
+    @PostMapping("/kakaologin")
+    public String loginKakao() {
+
+        /* 카카오 계정 로그인 하기 위해서 카카오 url로 간다 .
+         *  하지만 그전에 해당 자료가 있는지 확인 하고
+         *  해당 자료에 따른 acc,ref 토큰 값을 확인하고
+         *  해당 토큰 값이 있다면 update 로 처리 해준다.*/
+
+        String reqUrl = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="
+                + kakaoRestAPI_Key
+                + "&redirect_uri="
+                + kakaoRedirect_uri
+//                + "&prompt=none";
+                + "&prompt=login";
+//                + "&prompt=select_account" ;
+
+//        log.error("reqUrl = "  +reqUrl);
 
         return "redirect:" + reqUrl;
     }
 
     @GetMapping("/kakao-login")
-    public String getCI(@RequestParam String code, HttpSession session,
+    public String getInfosave(@RequestParam String code, HttpSession session,
                         HttpServletResponse response, RedirectAttributes rattr) throws IOException {
 
 //        System.out.println("code = " + code);
 //        System.out.println(kakaoService.getAccessToken(code));
 
         String[] getToken = kakaoService.getToken(code);
-        log.info("ttt \n\n = " +getToken.toString());
 
         String access_token = getToken[0];
         String refresh_token = getToken[1];
@@ -132,19 +107,14 @@ public class OauthLoginController {
         String snsId = (String)userInfo.get("id");
         String user_email = (String)userInfo.get("email");
         String user_name = (String)userInfo.get("name");
+        // 비밀번호 암호화 할것인가 ?
         String user_pwd = snsId;
-
-        System.out.println("ddd = " + service_terms.get("user_age_check"));
 
         String user_age_check = (boolean)service_terms.get("user_age_check") ? "on" : "";
         String site_term_agree_yn = (boolean)service_terms.get("site_term_agree_yn") ? "on" : "";
         String p_Info_agree_yn = (boolean)service_terms.get("p_Info_agree_yn") ? "on" : "";
         String p_info_oth_agree_yn = (boolean)service_terms.get("p_info_oth_agree_yn") ? "on" : "";
         String m_info_rcv_agree_yn = (boolean)service_terms.get("m_info_rcv_agree_yn") ? "on" : "";
-//        String user_age_check = service_terms.get("user_age_check") =="true" ? "on" : "";
-//        String site_term_agree_yn = service_terms.get("site_term_agree_yn") =="true" ? "on" : "";
-//        String p_Info_agree_yn = service_terms.get("p_Info_agree_yn") =="true" ? "on" : "";
-//        String m_info_rcv_agree_yn = service_terms.get("m_info_rcv_agree_yn") =="true" ? "on" : "";
 
         UserJoinDto userJoinDto = UserJoinDto.builder()
                                              .user_email(user_email)
@@ -158,7 +128,7 @@ public class OauthLoginController {
                                              .m_info_rcv_agree_yn(m_info_rcv_agree_yn)
                                              .build();
 
-        log.error("유저 정보 ========\n" + userJoinDto);
+//        log.error("유저 정보 ========\n" + userJoinDto);
 
         OauthDto oauthDto = OauthDto.builder()
                 .snsId(snsId)
@@ -168,7 +138,7 @@ public class OauthLoginController {
                 .user_name(user_name)
                 .build();
 
-        log.error("OauthDto 정보 ========\n" + oauthDto);
+//        log.error("OauthDto 정보 ========\n" + oauthDto);
 
         try {
 
@@ -184,7 +154,6 @@ public class OauthLoginController {
             if(joincnt == 0 && oauthcnt == 0){
                 joinService.userJoin(userJoinDto);
                 oauthJoinService.userOauthJoin(oauthDto, session, response);
-
             }
             // user 정보가 있고, oauth 정보가 없는 경우
             else if(joincnt == 1 && oauthcnt == 0) {
@@ -204,6 +173,53 @@ public class OauthLoginController {
 //            throw new RuntimeException(e);
         }
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout (HttpSession session,HttpServletRequest request ) throws Exception {
+
+        String access_token = getCookieValue(request,"kat");
+        String user_email = getCookieValue(request,"user_email");
+
+        log.info("access_token = " +access_token + " \n\n");
+        log.info("user_email = " +user_email + " \n\n");
+
+        try {
+//            Map<String, Object>  expires_in = kakaoService.getTokenTime(access_token);//("xr6YurVklja1riJkUyg_CB_spKvJSHp2irYKPXVbAAABjdoxWzCi-KZYUq23DA");
+            Map<String, Object>  expires_in = null;
+
+            expires_in = kakaoService.getTokenTime(access_token);
+
+            log.info(expires_in.get("expires_in").toString());
+            int tokenTime = Integer.parseInt(expires_in.get("expires_in").toString());
+
+            // 연결 끊기 (원래는 로그아웃만 하면 된다)
+            if(tokenTime >=0){
+                log.info("연결 끊기 시작한다.");
+//               String test = kakaoService.unlink(access_token);
+                /* 로그 아웃
+                 *  oauth 에서 로그 아웃시 테이블의 acc,ref 값은 어떻게 처리할 것인가 ?
+                 * */
+                String test = kakaoService.logout(access_token);
+
+                log.info("test =  " + test);
+                log.info("연결 끊기 종료한다.");
+            }else{
+
+                log.info("시간이 적거나 안맞다");
+            }
+
+//        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if(e.getMessage()=="401"){
+                log.error("401 에러, 해당 토큰의 값이 없습니다.");
+                throw new Exception("401 에러, 해당 토큰의 값이 없습니다.");
+            }
+            throw new Exception("401 에러, 해당 토큰의 값이 없습니다.");
+        }
         return "redirect:/";
     }
 

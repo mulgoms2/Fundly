@@ -31,4 +31,18 @@ public class UserInfoServiceImpl implements UserInfoService {
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public String userJoindate(UserDto userdto){
+        try {
+            String userjoinDate = userInfoDao.userJoindate(userdto);
+
+            if(userjoinDate != null){
+                return userjoinDate;
+            }else{
+                return null;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
