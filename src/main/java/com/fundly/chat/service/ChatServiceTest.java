@@ -7,6 +7,4 @@ import org.apache.coyote.BadRequestException;
 
 public interface ChatServiceTest {
     ChatRoomResponse enter(ChatRoomRequest chatRoomRequest) throws BadRequestException;
-
-    ChatRoom getChatRoom(ChatRoomRequest request);
 }

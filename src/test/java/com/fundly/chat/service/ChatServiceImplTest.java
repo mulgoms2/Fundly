@@ -40,7 +40,7 @@ class ChatServiceImplTest {
 
     @Test
     @DisplayName("기존 채팅방이 존재하면 기존 채팅방을 리턴한다.")
-    void getExistChatRoom() {
+    void getChatRoom2() {
         Long room_num = 1L;
 
         //given
@@ -66,14 +66,18 @@ class ChatServiceImplTest {
 
     @Test
     @DisplayName("채팅방이 없는 요청에 대해 새로운 채팅방을 리턴한다.")
-    void makeChatRoom() {
- //     조건:   getChatRoom()이 호출될 때 dao가 채팅방 요청에 대해 null 을 리턴
+    void getChatRoom1() {
+        //     조건:   getChatRoom()이 호출될 때 dao가 채팅방 요청에 대해 null 을 리턴
         String fromUser = "mulgom";
         String toUser = "dbswo";
+        ChatRoom savedChatRoom = ChatRoom.builder().room_num(1L).from_user_id(fromUser).to_user_id(toUser).build();
         chatRoomRequest.setUser_id(fromUser);
         chatRoomRequest.setTo_user_id(toUser);
 
+//        채팅 방 번호가 없을때 getChatRoom 내부적으로 makeChatRoom 이 호출된다.
+//        makeChatRoom 은 요청을 통해 새로운 채팅방을 만들고 db에 저장 후 반환한다.
         given(chatRoomDao.findRoomNum(any(), any())).willReturn(null);
+        given(chatRoomDao.save(chatRoomRequest.toEntity())).willReturn(savedChatRoom);
         ChatRoom chatRoom = chatServiceTest.getChatRoom(chatRoomRequest);
 
 //        새로운 채팅방은 항상 리턴되어야 하며 null 이어서는 안된다.
@@ -93,12 +97,13 @@ class ChatServiceImplTest {
 
     @Test
     @DisplayName("새롭게 만들어진 채팅방의 번호는 기존의 채팅방과 겹치지 않는다.")
-    void newChatRoom() {
+    void getChatRoomTest() {
         //     조건:   getChatRoom()이 호출될 때 dao가 채팅방 요청에 대해 null 을 리턴할때 makeChatRoom() 이 내부적으로 호출된다.
         Long maxRoomNum = 4L;
         given(chatRoomDao.findRoomNum(any(), any())).willReturn(null);
 //        makeChatRoom()가 호출될 때 기존의 채팅방 번호를 조회해 가장 큰 채팅방 번호를 리턴한다.
-        given(chatRoomDao.maxRoomNum()).willReturn(maxRoomNum);
+//        given(chatRoomDao.maxRoomNum()).willReturn(maxRoomNum);
+        given(chatRoomDao.save(chatRoomRequest.toEntity())).willReturn(ChatRoom.builder().room_num(maxRoomNum + 1L).build());
 
         ChatRoom chatRoom = chatServiceTest.getChatRoom(chatRoomRequest);
 
@@ -131,8 +136,20 @@ class ChatServiceImplTest {
 //        요청으로 받은 받는이의 아이디와, 채팅방 응답객체의 to_user_id가 같아야한다.
         assertThat(chatRoomResponse.getTo_user_id()).isEqualTo(chatRoomRequest.getTo_user_id());
 
-        verify(chatRoomDao).findRoomNum(chatRoomRequest.getUser_id(),chatRoomRequest.getTo_user_id());
+        verify(chatRoomDao).findRoomNum(chatRoomRequest.getUser_id(), chatRoomRequest.getTo_user_id());
         verify(chatRoomDao).getRoom(room_num);
     }
 
+    @Test
+    @DisplayName("makeChatRoom entity 테스트")
+    public void entity() {
+        ChatRoomRequest chatRoomRequest = ChatRoomRequest.builder().user_id("mulgom").to_user_id("dbswo").build();
+        ChatRoom chatRoom = ChatRoom.builder().room_num(2L).from_user_id(chatRoomRequest.getUser_id()).to_user_id(chatRoomRequest.getTo_user_id()).build();
+
+        given(chatRoomDao.save(chatRoomRequest.toEntity())).willReturn(chatRoom);
+//        채팅방 요청을 전달받아 db에 채팅방을 insert하고 저장된 채팅방을 돌려준다.
+        ChatRoom resultChatRoom = chatServiceTest.makeChatRoom(chatRoomRequest);
+
+        assertThat(resultChatRoom).isEqualTo(chatRoom);
+    }
 }

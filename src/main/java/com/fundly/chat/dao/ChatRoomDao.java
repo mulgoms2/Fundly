@@ -8,4 +8,6 @@ public interface ChatRoomDao {
     ChatRoom getRoom(Long roomNum);
 
     Long maxRoomNum();
+
+    ChatRoom save(ChatRoom chatRoom);
 }
