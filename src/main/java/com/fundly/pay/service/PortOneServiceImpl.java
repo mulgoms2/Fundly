@@ -17,6 +17,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Objects;
+
 @Service
 @Slf4j
 public class PortOneServiceImpl implements PortOneService {
@@ -29,7 +31,7 @@ public class PortOneServiceImpl implements PortOneService {
     @Value("${PORTONE_API_SECRET}")
     private String PORTONE_API_SECRET;
 
-    public ResponseEntity<PaymentResponseDto> cancelPay(PaymentRequestDto paymentRequestDto, String authToken) throws Exception {
+    public ResponseEntity<PaymentResponseDto> cancelPay(PaymentRequestDto paymentRequestDto, String authToken) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("merchant_uid", paymentRequestDto.getMerchant_uid());
 
@@ -41,18 +43,21 @@ public class PortOneServiceImpl implements PortOneService {
                 .body(BodyInserters.fromFormData(map))
                 .retrieve()
                 .toEntity(PaymentResponseDto.class)
-                .doOnSuccess(res -> {
+                .doOnSuccess(res -> { // 200 OK
                     log.info("cancelPay 요청 성공");
-                    log.info("cancelPay res.getStatusCode() : " + res.getStatusCode());
+                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
+                    if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
+                        throw new RuntimeException("PortOneService cancelPay() ERROR");
+                    }
                 })
-                .doOnError(err -> {
-                    log.info("cancelPay 요청 실패");
-                    log.info("cancelPay err : " + err);
+                .doOnError(e -> { // ERROR
+                    log.error("ResponseEntity<PaymentResponseDto> cancelPay(PaymentRequestDto paymentRequestDto, String authToken) : {}\n {}\n", e.getMessage(), e.getStackTrace());
+                    throw new RuntimeException("PortOneService cancelPay() ERROR");
                 })
                 .block();
     }
 
-    public ResponseEntity<PaymentResponseDto> requestPay(PaymentRequestDto paymentRequestDto, String authToken) throws Exception {
+    public ResponseEntity<PaymentResponseDto> requestPay(PaymentRequestDto paymentRequestDto, String authToken) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("customer_uid", paymentRequestDto.getCustomer_uid());
         map.add("merchant_uid", paymentRequestDto.getMerchant_uid());
@@ -67,18 +72,21 @@ public class PortOneServiceImpl implements PortOneService {
                 .body(BodyInserters.fromFormData(map))
                 .retrieve()
                 .toEntity(PaymentResponseDto.class)
-                .doOnSuccess(res -> {
+                .doOnSuccess(res -> { // 200 OK
                     log.info("requestPay 요청 성공");
-                    log.info("requestPay res.getStatusCode() : " + res.getStatusCode());
+                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
+                    if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
+                        throw new RuntimeException("PortOneService requestPay() ERROR");
+                    }
                 })
-                .doOnError(err -> {
-                    log.info("requestPay 요청 실패");
-                    log.info("requestPay err : " + err);
+                .doOnError(e -> { // ERROR
+                    log.error("ResponseEntity<PaymentResponseDto> requestPay(PaymentRequestDto paymentRequestDto, String authToken) : {}\n {}\n", e.getMessage(), e.getStackTrace());
+                    throw new RuntimeException("PortOneService requestPay() ERROR");
                 })
                 .block();
     }
 
-    public BillKeyResponseDto removeBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception {
+    public ResponseEntity<BillKeyResponseDto> removeBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) {
         String requestUrl = "/subscribe/customers/";
 
         return webClient.delete()
@@ -87,13 +95,22 @@ public class PortOneServiceImpl implements PortOneService {
                         .build(billKeyRequestDto.getCustomer_uid()))
                 .header("Authorization", "Bearer " + authToken)
                 .retrieve()
-                .bodyToMono(BillKeyResponseDto.class)
-                .doOnSuccess(res -> log.info("removeBillKey 요청 성공"))
-                .doOnError(res -> log.info("removeBillKey 요청 실패"))
+                .toEntity(BillKeyResponseDto.class)
+                .doOnSuccess(res -> { // 200 OK
+                    log.info("removeBillKey 요청 성공");
+                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
+                    if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
+                        throw new RuntimeException("PortOneService removeBillKey() ERROR");
+                    }
+                })
+                .doOnError(e -> { // ERROR
+                    log.error("ResponseEntity<BillKeyResponseDto> removeBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) : {}\n {}\n", e.getMessage(), e.getStackTrace());
+                    throw new RuntimeException("PortOneService removeBillKey() ERROR");
+                })
                 .block();
     }
 
-    public ScheduledPayResponseDto getScheduledPay(ScheduledPayRequestDto scheduledPayRequestDto, String authToken) throws Exception {
+    public ResponseEntity<ScheduledPayResponseDto> getScheduledPay(ScheduledPayRequestDto scheduledPayRequestDto, String authToken) {
         String requestUrl = "/subscribe/customers/";
 
         return webClient.get()
@@ -105,14 +122,23 @@ public class PortOneServiceImpl implements PortOneService {
                         .build(scheduledPayRequestDto.getCustomer_uid()))
                 .header("Authorization", "Bearer " + authToken)
                 .retrieve()
-                .bodyToMono(ScheduledPayResponseDto.class)
-                .doOnSuccess(res -> log.info("getScheduledPay 요청 성공"))
-                .doOnError(res -> log.info("getScheduledPay 요청 실패"))
+                .toEntity(ScheduledPayResponseDto.class)
+                .doOnSuccess(res -> { // 200 OK
+                    log.info("getScheduledPay 요청 성공");
+                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
+                    if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
+                        throw new RuntimeException("PortOneService getScheduledPay() ERROR");
+                    }
+                })
+                .doOnError(e -> { // ERROR
+                    log.error("ResponseEntity<ScheduledPayResponseDto> getScheduledPay(ScheduledPayRequestDto scheduledPayRequestDto, String authToken) : {}\n {}\n", e.getMessage(), e.getStackTrace());
+                    throw new RuntimeException("PortOneService getScheduledPay() ERROR");
+                })
                 .block();
     }
 
     // 2. 결제사에 카드 등록: getBillKey() -> registerPayMeans()
-    public BillKeyResponseDto getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception {
+    public ResponseEntity<BillKeyResponseDto> getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("card_number", billKeyRequestDto.getCardNo());
         map.add("expiry", billKeyRequestDto.getExpiry());
@@ -129,26 +155,45 @@ public class PortOneServiceImpl implements PortOneService {
                 .header("Authorization", "Bearer " + authToken)
                 .body(BodyInserters.fromFormData(map))
                 .retrieve()
-                .bodyToMono(BillKeyResponseDto.class)
-                .doOnSuccess(res -> log.info("getBillKey 요청 성공"))
-                .doOnError(res -> log.info("getBillKey 요청 실패"))
+                .toEntity(BillKeyResponseDto.class)
+                .doOnSuccess(res -> { // 200 OK
+                    log.info("getBillKey 요청 성공");
+                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
+                    if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
+                        throw new RuntimeException("PortOneService getBillKey() ERROR");
+                    }
+                })
+                .doOnError(e -> { // ERROR
+                    log.error("ResponseEntity<BillKeyResponseDto> getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) : {}\n {}\n", e.getMessage(), e.getStackTrace());
+                    throw new RuntimeException("PortOneService getBillKey() ERROR");
+                })
                 .block();
     }
 
     // 1. 포트원 API 호출 전, 모든 함수 공통 호출: getToken()
-    public TokenResponseDto getToken() throws Exception {
+    public ResponseEntity<TokenResponseDto> getToken() {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("imp_key", PORTONE_API_KEY);
         map.add("imp_secret", PORTONE_API_SECRET);
+
         String requestUrl = "/users/getToken";
 
         return webClient.post()
-                .uri(requestUrl)
-                .body(BodyInserters.fromFormData(map)) // set body value
+            .uri(requestUrl)
+            .body(BodyInserters.fromFormData(map)) // set body value
                 .retrieve() // 요청 전송
-                .bodyToMono(TokenResponseDto.class) // response를 Mono로 변환
-                .doOnSuccess(res -> log.info("getToken 요청 성공"))
-                .doOnError(res -> log.info("getToken 요청 실패"))
-                .block();
+                .toEntity(TokenResponseDto.class)
+                .doOnSuccess(res -> { // 200 OK
+                    log.info("getToken 요청 성공");
+                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
+                    if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
+                        throw new RuntimeException("PortOneService getToken() ERROR");
+                    }
+                })
+                .doOnError(e -> { // ERROR
+                    log.error("ResponseEntity<TokenResponseDto> getToken() : {}\n {}\n", e.getMessage(), e.getStackTrace());
+                    throw new RuntimeException("PortOneService getToken() ERROR");
+                })
+                .block(); // 동기
     }
 }
