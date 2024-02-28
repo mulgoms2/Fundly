@@ -31,6 +31,8 @@ public class ProjectDto {
     private String pj_id; //uuid만들어서 그대로 집어넣으면?? // PK를 노출하는 것은 좋지 않다고....하는데..
     private String pj_sel_id; //로그인 세션에서 가져오기.
 
+    private LocalDateTime pj_reg_dtm;
+
 //    private PJ_STAUS status;
 
     //프로젝트 기획 - 기본 정보
@@ -77,16 +79,15 @@ public class ProjectDto {
     private BigInteger curr_fund_money;//펀딩 모금액 현재 집계
     private Integer curr_buy_cnt; //후원자 수 현재 집계
 
-    @EqualsAndHashCode.Exclude
-    private LocalDateTime dba_reg_dtm;
-    @EqualsAndHashCode.Exclude
-    private String dba_reg_id;
-    @EqualsAndHashCode.Exclude
-    private LocalDateTime dba_mod_dtm;
-    @EqualsAndHashCode.Exclude
-    private String dba_mod_id;
-
     //이미지들에 대한 관리
     // 프로젝트 대표이미지, 프로필 이미지 -> 한개씩이니까 접근성 좋게 pj테이블에 column으로 관리?
     // t.e에서 첨부하는 이미지들은.... 파일 테이블 이용??
+
+    public static ProjectAddResponse toResponseDto(ProjectDto projectDto) {
+        return ProjectAddResponse.builder().pj_id(projectDto.getPj_id()).sel_id(projectDto.getPj_sel_id()).build();
+    }
+
+    public static ProjectTemplate toTemplate(ProjectDto pj) {
+        return ProjectTemplate.builder().build();
+    }
 }

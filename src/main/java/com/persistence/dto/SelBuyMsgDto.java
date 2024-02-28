@@ -21,8 +21,8 @@ public class SelBuyMsgDto {
     private List<SelBuyMsgDetailsDto> message_list;
     private String buy_id;
     private String pj_id;
-    private LocalDateTime dba_reg_dtm;
-    private String dba_reg_id;
-    private LocalDateTime dba_mod_dtm;
-    private String dba_mod_id;
+//    private LocalDateTime dba_reg_dtm;
+//    private String dba_reg_id;
+//    private LocalDateTime dba_mod_dtm;
+//    private String dba_mod_id;
 }
