@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.user.model.UserHistDao">
+    <!-- user_hist insert -->
+    <insert id="insert" parameterType="UserHistDto">
+        INSERT INTO user_hist (user_hist_id,
+                               seq,
+                               user_id,
+                               user_status,
+                               change_date,
+                               adr,
+                               zip_code,
+                               adr_detail,
+                               phone_no,
+                               name,
+                               email,
+                               pwd_mod_yn,
+                               comments,
+                               dba_reg_dtm,
+                               dba_reg_id,
+                               dba_mod_dtm,
+                               dba_mod_id)
+        VALUES(#{user_id},
+               #{user_name},
+               #{user_pwd},
+               #{user_email},
+               #{user_join_date},
+               #{site_term_agree_yn},
+               #{p_Info_agree_yn},
+               #{age_agree_yn},
+               #{p_info_oth_agree_yn},
+               #{m_info_rcv_agree_yn},
+               #{user_status},
+               #{dba_reg_id});
+    </insert>
+</mapper>

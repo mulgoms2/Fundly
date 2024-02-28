@@ -1,35 +1,31 @@
-const tapContainer = document.getElementById('divtapContainer');
+function changeBtn(btnName,before,detail){
 
-tapContainer.addEventListener("click",(e)=>{
-    const tapItems = document.querySelectorAll('.tapItem');
+    if(btnName.innerHTML==="변경"){
 
-    tapItems.forEach(item => {
-        // item.classList.add('on');
-        // item.classList.remove('on'); // 모든 탭의 활성화 클래스를 제거합니다.
-    });
+        before.style.display="none";
+        detail.style.display="block";
 
-    if(e.target.id=="itemProfile"){
-        // e.target.parentElement.classList.add('on');
-        // tap_itemProfile.style.display = "block";
+        btnName.innerHTML="취소";
+        btnName.style.background= "rgb(252, 252, 252)";
+        btnName.style.border = "1px solid rgb(228, 228, 228)";
+    }else{
+        before.style.display="block";
+        detail.style.display="none";
 
-        // tap_itemProfile.style.display = "block";
-        // // itemProjectReview.style.display = "none";
-        // // alert('프로필');
-
+        btnName.innerHTML="변경";
+        btnName.style.background= "rgb(208, 208, 208)";
+        btnName.style.border= "none";
     }
-    else if(e.target.id=="itemProjectReview"){
-        // tap_itemProfile.style.display = "none";
-        // // itemProjectReview.style.display = "block";
-        // alert('후기');
+}
 
-    } else if(e.target.id=="itemMakeProject"){
-        // tap_itemProfile.style.display = "none";
-        // // itemProjectReview.style.display = "none";
-        // alert('올린');
-
-    } else if(e.target.id=="itemProjectOrder"){
-        // tap_itemProfile.style.display = "none";
-        // // itemProjectReview.style.display = "none";
-        // alert('후원');
+// 특정 쿠키의 값을 가져오기
+function getCookie(name) {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
     }
-})
+    return null;
+}

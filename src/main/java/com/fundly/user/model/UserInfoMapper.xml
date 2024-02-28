@@ -19,6 +19,7 @@
                     WHEN TIMESTAMPDIFF(HOUR, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(HOUR, user_join_date, NOW()), '시간 전 가입')
                     WHEN TIMESTAMPDIFF(MINUTE, user_join_date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(MINUTE, '2024-02-18 15:44:36', NOW()), '분 전 가입')
                     ELSE CONCAT(TIMESTAMPDIFF(SECOND, user_join_date, NOW()), '방금 가입') END AS user_join_date
-        FROM user_info;
+        FROM user_info
+        WHERE user_email = #{user_email};
     </select>
 </mapper>

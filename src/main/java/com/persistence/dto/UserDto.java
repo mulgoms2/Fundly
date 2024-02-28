@@ -7,8 +7,9 @@ import javax.validation.constraints.*;
 import java.sql.Date;
 
 @Getter
+//@Setter
 @Builder
-//@ToString
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
@@ -20,7 +21,7 @@ public class UserDto {
     @NotEmpty
     private String user_pwd;
     private String user_prev_pwd;
-    private String user_home_no;
+    private String user_phone_no;
     @Email @NotBlank
     private String user_email;
     private String pay_means;
@@ -31,7 +32,7 @@ public class UserDto {
     private String user_intro;
     private String sel_intro;
     private String msg_rcv_yn;
-    private String pj_udt_ntf_yn;
+    private String pj_upd_ntf_yn;
     private String like_pj_ntf_yn;
     private String m_ntf_yn;
     private String iv_yn;
@@ -49,7 +50,7 @@ public class UserDto {
     @NotBlank
     private String dba_reg_id;
 //    @EqualsAndHashCode.Exclude
-    private Date dba_mod_dtm;
+    private String dba_mod_dtm;
     private String dba_mod_id;
 }
 

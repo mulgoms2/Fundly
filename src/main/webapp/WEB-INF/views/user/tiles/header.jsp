@@ -6,7 +6,8 @@
 <div class="header">
     <div class="hd">
         <a href="<c:url value='/'/>">
-            <h1 class="logo">Fundly</h1>
+<%--            <h1 class="logo">Fundly</h1>--%>
+            <img class="logo" src="/static/img/fundly-logo.svg">
         </a>
         <div class="lftSmn">
             <div class="pjtUp">

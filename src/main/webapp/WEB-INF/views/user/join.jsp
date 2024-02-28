@@ -198,7 +198,7 @@
         togglePwd.addEventListener('click', function () {
 
             if (pwdInput.type === 'password') {
-                pwdInput.type = 'text';
+                   pwdInput.type = 'text';
                 togglePwd.style.backgroundImage = 'url("/static/img/Icon-private.png")';
             } else {
                 pwdInput.type = 'password';

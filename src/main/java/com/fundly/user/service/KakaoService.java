@@ -192,7 +192,7 @@ public class KakaoService {
     }
 
     // 유효시간 확인
-    public Map<String, Object> getTokenTime(String access_token) throws IOException {
+    public Map<String, Object> getTokenTime(String access_token) throws Exception {
 
         // 토큰값 유효 시간
         Map<String, Object> result = new HashMap<>();
@@ -223,8 +223,13 @@ public class KakaoService {
 
             br.close();
 
-        } catch (IOException | ParseException e) {
+        } catch (IOException | ParseException  e) {
             e.printStackTrace();
+            log.info("e msg = "+e.getMessage()) ;
+            throw new IOException(e);
+        } catch (Exception e){
+            log.info("exception msg = " + e.getMessage());
+            throw new Exception(e);
         }
 
         return result;
