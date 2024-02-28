@@ -31,7 +31,7 @@ class ProjectServiceImplTest {
 
     ProjectAddRequest 프로젝트생성요청;
 
-    @BeforeEach.
+    @BeforeEach
     void setUp() {
         프로젝트생성요청 = ProjectAddRequest.builder().user_id("dbswoi123").build();
     }
