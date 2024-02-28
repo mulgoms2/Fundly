@@ -31,9 +31,19 @@ class ProjectServiceImplTest {
 
     ProjectAddRequest 프로젝트생성요청;
 
-    @BeforeEach
+    @BeforeEach.
     void setUp() {
         프로젝트생성요청 = ProjectAddRequest.builder().user_id("dbswoi123").build();
+    }
+
+    @Test
+    @DisplayName("정말 정말 최소한의 테스트")
+    public void addPj() {
+//        테스트 대상 메서드 실행
+        ProjectAddResponse result = projectServiceImpl.add(프로젝트생성요청);
+
+//        테스트 결과 확인
+        assertNotNull(result);
     }
 
     @Test
@@ -60,7 +70,7 @@ class ProjectServiceImplTest {
 //        그러면 프로젝트 객체에게 새로운 키를 만들 것을 요청한다? 아니면 프로젝트 요청을 통해 새로운 프로젝트 객체를 생성한다?
 
 //        둘다 가능함
-        verify(projectMapper,times(2)).insert(any());
+        verify(projectMapper, times(2)).insert(any());
     }
 
     @Test
@@ -84,4 +94,9 @@ class ProjectServiceImplTest {
         assertThatExceptionOfType(ProjectDoesntExistsException.class).isThrownBy(() -> projectServiceImpl.getById("hello"));
     }
 
+    @Test
+    @DisplayName("카테고리별로 프로젝트를 불러올 수 있다.")
+    void getByCategory() {
+//        프로젝트를 카테고리별로 불러온 뒤 템플릿 배열로 반환한다?
+    }
 }

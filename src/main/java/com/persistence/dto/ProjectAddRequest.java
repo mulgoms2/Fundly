@@ -13,6 +13,7 @@ public class ProjectAddRequest {
     private String user_id;
     public ProjectDto toProject() {
         String pj_id = String.valueOf(UUID.randomUUID());
+
         return ProjectDto.builder().pj_id(pj_id).pj_sel_id(user_id).build();
     }
 }

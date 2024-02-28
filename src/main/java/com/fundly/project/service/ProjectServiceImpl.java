@@ -18,27 +18,31 @@ import java.util.UUID;
 @Service
 @Transactional
 public class ProjectServiceImpl implements ProjectService {
-    private  ProjectMapper projectMapper;
+    private ProjectMapper projectMapper;
+
     @Autowired
     public ProjectServiceImpl(ProjectMapper projectMapper) {
         this.projectMapper = projectMapper;
     }
 
+
+    // todo project.toTemplate() 프로젝트 템플릿을 뷰에 맞게 커스텀 할 필요가 있다.
     @Override
     @Transactional(readOnly = true)
-    public ProjectTemplate getById(String pj_id){
+    public ProjectTemplate getById(String pj_id) throws ProjectDoesntExistsException {
 //        프로젝트를 아이디로 조회한다.
         ProjectDto pj = projectMapper.getByPjId(pj_id);
         if (pj == null) {
             ProjectDoesntExistsException ex = new ProjectDoesntExistsException("해당 아이디로 조회되는 프로젝트가 없습니다.");
-            log.error("ProjectServiceImpl.getById(String pj_id) : {}\n {}\n" , ex.getMessage(),ex.getStackTrace());
+            log.error("ProjectServiceImpl.getById(String pj_id) : {}\n {}\n", ex.getMessage(), ex.getStackTrace());
             throw ex;
         }
 //        프로젝트를 뷰에 맞는 템플릿으로 반환해준다.
         return ProjectDto.toTemplate(pj);
     }
 
-//    todo 아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.
+
+    //    todo 아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.
     @Override
     public ProjectAddResponse add(ProjectAddRequest pjAddReq) {
 //        프로젝트 추가 요청을 통해 프로젝트를 생성한다.(프로젝트 키는 프로젝트 객체로 변환 될때 자동으로 생성)
@@ -52,6 +56,4 @@ public class ProjectServiceImpl implements ProjectService {
 //        저장된 프로젝트를 가져와 응답객체로 반환한다.
         return ProjectDto.toResponseDto(projectDto);
     }
-
-
 }
