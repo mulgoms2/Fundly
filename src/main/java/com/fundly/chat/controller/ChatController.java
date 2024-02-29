@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.UUID;
 
 import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
@@ -98,13 +97,33 @@ public class ChatController {
         simpMessagingTemplate.convertAndSend("/chatSub/" + message.getRoom_num(), message);
     }
 
+//    @GetMapping(value = "**/file/{fileName}")
+//    @ResponseBody
+////    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
+//    public byte[] getImageResource(@PathVariable("fileName") String fileName) {
+//
+//        String savedImageLocation =  "/Users/dobigulbi/chat/file/" + fileName;
+//
+//        try (FileInputStream fis = new FileInputStream(new File(savedImageLocation));
+//             BufferedInputStream bis = new BufferedInputStream(fis))
+//        {
+//            byte[] bytes = bis.readAllBytes();
+//
+//            return bytes;
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
     @GetMapping(value = "**/file/{fileName}")
     @ResponseBody
 //    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
     public Resource getImageResource(@PathVariable("fileName") String fileName) {
 
+        String savedImageLocation = "file:/" + IMG_SAVE_LOCATION + fileName;
+
         try {
-            return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
+            return new UrlResource(savedImageLocation);
+//            return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
         } catch (Exception e) {
             log.error("error with getImageResouce = {}", fileName);
             throw new RuntimeException("유효하지 않은 파일명 입니다.", e);
