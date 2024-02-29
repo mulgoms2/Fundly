@@ -193,10 +193,11 @@ class PayDaoTest {
 
     @Test
     @SneakyThrows
-    @DisplayName("결제상태 update ('미결제'||'결제실패' -> '결제완료') 및 결제일시 update")
-    void updatePayStatusToCompleted() {
+    @DisplayName("결제상태 UPDATE")
+    void updatePayStatus() {
         String payId = "";
 
+        // 1. '결제완료'로 update
         // '미결제' + '결제실패' 상태인 객체 리스트 구하기 (결제대상조회 + 재결제대상조회)
         List<PayDto> targetList = Stream.concat(payDao.selectPayTarget().stream(), payDao.selectPayRetryTarget().stream())
                 .collect(Collectors.toList());
@@ -205,53 +206,36 @@ class PayDaoTest {
             payId = dto.getPay_id();
             log.info("[updatePayStatusToCompleted] dto.getPay_id() = " + dto.getPay_id());
 
-            dto.setPay_dtm(new Timestamp(System.currentTimeMillis())); // 결제일시를 현재 시간으로 update (test)
-            assertEquals(payDao.updatePayStatusToCompleted(dto), 1, "[updatePayStatusToCompleted] updatePayStatusToCompleted Error");
-
             assertTrue(dto.getPay_status().equals("미결제") || dto.getPay_status().equals("결제실패")); // before
+
+            dto.setPay_status("결제완료");
+            dto.setPay_dtm(new Timestamp(System.currentTimeMillis())); // 결제일시를 현재 시간으로 update (test)
+            assertEquals(payDao.updatePayStatus(dto), 1, "[updatePayStatus] updatePayStatus Error");
+
             assertEquals(payDao.selectByPayId(payId).getPay_status(), "결제완료"); // after
         }
-    }
 
-    @Test
-    @SneakyThrows
-    @DisplayName("결제상태 update ('미결제' -> '결제실패') || ('결제실패' -> '재결제실패')")
-    void updatePayStatusToFailed() {
-        String payId = "";
-
+        // 2. '결제실패'로 update (미결제 -> 결제실패)
         // '미결제' 데이터 조회 (결제대상)
         for (PayDto dto : payDao.selectPayTarget()) {
             payId = dto.getPay_id();
             assertEquals(dto.getPay_status(), "미결제"); // before
             dto.setPay_status("결제실패");
-            assertEquals(payDao.updatePayStatusToFailed(dto), 1, "[updatePayStatusToFailed] updatePayStatusToFailed Error");
+            assertEquals(payDao.updatePayStatus(dto), 1, "[updatePayStatus] updatePayStatus Error");
             assertEquals(payDao.selectByPayId(payId).getPay_status(), "결제실패"); // after
         }
 
+        // 3. '재결제실패'로 update (결제실패 -> 재결제실패)
         // '결제실패' 데이터 조회 (재결제대상)
         for (PayDto dto : payDao.selectPayRetryTarget()) {
             payId = dto.getPay_id();
             assertEquals(dto.getPay_status(), "결제실패"); // before
             dto.setPay_status("재결제실패");
-            assertEquals(payDao.updatePayStatusToFailed(dto), 1, "[updatePayStatusToFailed] updatePayStatusToFailed Error");
+            assertEquals(payDao.updatePayStatus(dto), 1, "[updatePayStatus] updatePayStatus Error");
             assertEquals(payDao.selectByPayId(payId).getPay_status(), "재결제실패"); // after
         }
-    }
 
-//    @Test
-//    @SneakyThrows
-//    @DisplayName("결제상태 update ('결제실패' -> '재결제실패')")
-//    void updatePayStatusToRetryFailed() {
-//        String payId = "";
-//
-//        // '결제실패' 데이터 조회 (재결제대상)
-//        for (PayDto dto : payDao.selectPayRetryTarget()) {
-//            payId = dto.getPay_id();
-//            assertEquals(dto.getPay_status(), "결제실패"); // before
-//            assertEquals(payDao.updatePayStatusToRetryFailed(dto), 1, "[updatePayStatusToRetryFailed] updatePayStatusToRetryFailed Error");
-//            assertEquals(payDao.selectByPayId(payId).getPay_status(), "재결제실패"); // after
-//        }
-//    }
+    }
 
     @Test
     @SneakyThrows
