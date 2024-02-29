@@ -65,7 +65,7 @@
                         </div>
                         <div class="pjInputWrap">
                             <div>
-                                <input type="text" class="pjInput" placeholder="긴 제목을 입력해주세요."/>
+                                <input type="text" id="longTitle" class="pjInput" placeholder="긴 제목을 입력해주세요."/>
                             </div>
                             <p>0/32</p>
                         </div>
@@ -181,6 +181,10 @@
         </div>
     </div>
 </div>
+<script src="/static/project/js/reward.js">
+
+
+</script>
 
 <%--</body>--%>
 <%--</html>--%>

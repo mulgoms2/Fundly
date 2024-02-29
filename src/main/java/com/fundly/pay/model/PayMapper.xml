@@ -48,21 +48,11 @@
         ]]>
     </select>
 
-    <!-- PortOne 결제/재결제 성공 시, 1) 결제상태 update ('미결제'||'결제실패' -> '결제완료') && 2) 결제일시 update -->
-    <update id="updatePayStatusToCompleted" parameterType="PayDto">
-        update PAY
-        set pay_status = '결제완료',
-            pay_dtm = #{pay_dtm},
-            pay_co_resp_json = #{pay_co_resp_json},
-            dba_mod_dtm = now(),
-            dba_mod_id = 'admin' -- 관리자 ID
-        where pay_id = #{pay_id}
-    </update>
-
-    <!-- PortOne 결제 실패 시, 결제상태 update (('미결제' -> '결제실패') || ('결제실패' -> '재결제실패')) -->
-    <update id="updatePayStatusToFailed" parameterType="PayDto">
+    <!-- PortOne 결제요청 결과에 따른 결제상태 update ('결제완료' 시 결제일시 update -->
+    <update id="updatePayStatus" parameterType="PayDto">
         update PAY
         set pay_status = #{pay_status},
+            pay_dtm = #{pay_dtm},
             pay_co_resp_json = #{pay_co_resp_json},
             dba_mod_dtm = now(),
             dba_mod_id = 'admin' -- 관리자 ID

@@ -27,7 +27,6 @@
     <!--별개의 JS파일은 각 main에 따로 두는 것 고려 -->
     <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <%--    <script defer src="/static/project/js/reward.js"></script>--%>
-
 </head>
 <body>
 <div class="projectEditorWrap">
