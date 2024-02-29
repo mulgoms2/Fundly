@@ -1,8 +1,10 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.service.ProjectService;
 import com.persistence.dto.FileDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,12 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 @Slf4j
 @Controller
 @RequestMapping("/project")
 public class StoryController {
+
+    @Autowired
+    ProjectService projectService;
 
     //프로젝트 계획
     @GetMapping("/story")
@@ -32,14 +36,14 @@ public class StoryController {
         return ResponseEntity.ok().body(storyForm);
     }
 
-    @PostMapping("/story/image")
+    @PostMapping("/story/image") //TinyMCE는 하나의 이미지 당 하나의 요청을 보냄.
     @ResponseBody
     public ResponseEntity<?> saveStoryImage(FileDto uploadFile) throws ParseException {
+        //업로드된 이미지를 서버에 저장하고 이미지의 원격 주소를 반환하는 메서드
         log.error("\n\n beforeImg={} \n\n", uploadFile);
         MultipartFile uploadImg = uploadFile.getFile();
         String originFileName = uploadImg.getOriginalFilename();
-        String uuid = UUID.randomUUID().toString();
-        String savedImgUrl = "/Users/lemon/fundly/img/" + uuid + "-" + originFileName;
+        String savedImgUrl = "/Users/lemon/fundly/img/" + originFileName;
 
         try {
             uploadImg.transferTo(new File(savedImgUrl));
@@ -48,13 +52,16 @@ public class StoryController {
         }
         uploadFile.setFile_saved_url(savedImgUrl);
         uploadFile.setFile_origin_url(originFileName);
+        uploadFile.setTable_name("project");
 
-        String location = "/story/img/"+uuid+"-"+originFileName;
+
+        String location = "/project/img/"+originFileName;
 
         log.error("\n\n afterImg={} \n\n", uploadFile);
         String locStr = "{\"location\": \""+location+"\"}";
         return ResponseEntity.ok().headers(new HttpHeaders()).body(locStr);
     }
+
 
     @GetMapping("/test")
     public String test(){

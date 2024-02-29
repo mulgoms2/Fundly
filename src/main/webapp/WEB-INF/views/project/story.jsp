@@ -116,27 +116,19 @@
         toolbar_mode: 'sliding',
         /* enable title field in the Image dialog*/
         image_title: true,
-        // image_upload_handler: storyImgUpHandler,
         images_upload_url: '/project/story/image',
         // URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
-        //images_reuse_filename: true, //업로드 되어 리턴된 새로운 이미지 주소를 현재 에디터에 바로 반영해주는 옵션
+        // images_reuse_filename: true, //이걸 true로 주면 ? 물음표가 뒤에 붙는다. 왜지?
         /* enable automatic uploads of images represented by blob or data URIs*/
         automatic_uploads: true,
 
         file_picker_types: 'image',
         /* and here's our custom image picker*/
+
         file_picker_callback: function (cb, value, meta) {
-            var input = document.createElement('input');
+            const input = document.createElement('input');
             input.setAttribute('type', 'file');
             input.setAttribute('accept', 'image/*');
-
-            /*
-Note: In modern browsers input[type="file"] is functional without
-even adding it to the DOM, but that might not be the case in some older
-or quirky browsers like IE, so you might want to add it to the DOM
-just in case, and visually hide it. And do not forget do remove it
-once you do not need it anymore.
-*/
 
             input.onchange = function () {
                 var file = this.files[0];
@@ -155,8 +147,12 @@ once you do not need it anymore.
                     var blobInfo = blobCache.create(id, file, base64);
                     blobCache.add(blobInfo);
 
+                    console.log("blobCache")
+                    console.log(blobCache)
+
                     /* call the callback and populate the Title field with the file name */
                     cb(blobInfo.blobUri(), { title: file.name });
+
                 };
                 reader.readAsDataURL(file);
             };
@@ -165,20 +161,12 @@ once you do not need it anymore.
         },
         content_style:
             'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-
-
     });
 
 
 
     window.onload = function(){
-        const saveBtn = document.querySelector('button.save');
-        console.log("saveBtn");
-        console.log(saveBtn)
-        saveBtn.classList.add('story');
-        const storySaveBtn = document.querySelector('button.story');
-        console.log(storySaveBtn);
-
+        const storySaveBtn = document.querySelector('button.save');
 
         storySaveBtn.addEventListener('click', function(){
             const pj_intro = tinymce.get('intro') //에디터에 입력한 value
@@ -201,7 +189,10 @@ once you do not need it anymore.
             console.log(storyForm);
             fetch("/project/story",{
                 method: "POST",
-                headers: {},
+                headers: {
+                    "content-type": "application/json",
+                    "accept": "application/json"
+                },
                 body: JSON.stringify(storyForm),
             })
                 .then(response => {
@@ -215,11 +206,11 @@ once you do not need it anymore.
                     console.log("data received")
                     console.log(data)
 
-                    pj_intro.setContent('abcbabc')
+                    pj_intro.setContent(data.pj_intro)
                     pj_budget.setContent(data.pj_budget)
                     pj_sched.setContent(data.pj_sched)
                     pj_sel_intro.setContent(data.pj_sel_intro)
-                    pj_gift_intro.setContent('abcabcabcabc')
+                    pj_gift_intro.setContent(data.pj_gift_intro)
                 })
                 .catch(error => error)
 
