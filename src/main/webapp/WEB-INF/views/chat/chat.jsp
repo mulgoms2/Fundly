@@ -54,7 +54,8 @@
             </div>
         </form>
         <label class="labelImgFileIpt" for="img"><i class="fa-solid fa-upload"></i></label>
-        <input id="img" class="imgFileIpt" name="file_img" type="file" accept="image/*" formenctype="multipart/form-data"/>
+        <input id="img" class="imgFileIpt" name="file_img" type="file" accept="image/*"
+               formenctype="multipart/form-data"/>
     </div>
 </div>
 <script>
@@ -120,7 +121,7 @@
         }, 1);
     };
 
-    const sendImg = async() => {
+    const sendImg = async () => {
 
         if (document.querySelector("#img").value === "") {
             return;
@@ -154,6 +155,11 @@
             headers: {},
             body: formData
         });
+
+        user = await result.json();
+
+        document.querySelector(".body").innerHtml = '<h1>${user.name } 반갑습니다. </h14>'
+
 
         if (!result.ok) {
             alert("전송할 수 없는 파일입니다");

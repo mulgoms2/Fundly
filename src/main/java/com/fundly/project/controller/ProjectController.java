@@ -1,9 +1,16 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.service.ProjectService;
+import com.fundly.project.service.ProjectServiceImpl;
+import com.persistence.dto.ProjectTemplate;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -17,6 +24,9 @@ public class ProjectController {
 //        this.itemService = itemService;
 //        this.giftService = giftService;
 //    }
+
+    @Autowired
+    ProjectService projectService;
 
     //기본정보 작성 페이지
     @GetMapping("/default")
@@ -38,6 +48,12 @@ public class ProjectController {
         return "project.creator";
     }
 
+    @GetMapping("/template")
+    public ResponseEntity<List<ProjectTemplate>> getPjTemplate() {
+        //todo pj template메서드
+//        projectService.getPjTemplateList();
+        return null;
+    }
 //
 //    // 아이템+선물 페이지
 //    @GetMapping("/reward")

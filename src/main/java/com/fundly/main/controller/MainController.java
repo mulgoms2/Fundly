@@ -1,5 +1,7 @@
 package com.fundly.main.controller;
 
+import com.fundly.project.service.ProjectService;
+import com.fundly.project.service.ProjectServiceImpl;
 import com.fundly.user.dto.UserLoginDto;
 import com.fundly.user.service.UserInfoService;
 import com.persistence.dto.UserDto;
@@ -22,8 +24,8 @@ public class MainController {
 
     @Autowired
     private UserInfoService userInfoService;
-
-
+    @Autowired
+    private ProjectService projectService;
     @GetMapping({"/"})
     public String main(HttpSession session, Model model, HttpServletRequest request) {
 

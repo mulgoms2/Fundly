@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -289,15 +290,16 @@ class ProjectMapperTest {
         for (int i = 1; i <= 3; i++) {
             ProjectDto likedPj = projectMapper.selectByStatus(String.valueOf(i), "ing");
 
-//            if (likedPj != null) {
+            if (likedPj != null) {
                 likedList.add(likedPj);
-//            }
+            }
         }
-
 //        boolean result = likedList.stream().allMatch(pj -> pj.getPj_status().equals("ing"));
         assertEquals(true, likedList.contains(project1));
         assertEquals(true, likedList.contains(project2));
         assertEquals(false, likedList.contains(project3));
+        System.out.println("\n\n\n" + likedList);
+
     }
 
     @Test
@@ -312,8 +314,10 @@ class ProjectMapperTest {
         int insertCount = projectMapper.insert(project1);
 
         assertEquals(1, insertCount);
+
         projectMapper.upLikeCnt(project1);
-        assertEquals(1, projectMapper.upLikeCnt(project1));
+
+        assertEquals(2, project1.getCurr_pj_like_cnt());
     }
 
     @Test
@@ -329,7 +333,6 @@ class ProjectMapperTest {
         assertEquals(1, insertCount);
         projectMapper.downLikeCnt(project1);
         assertEquals(1, projectMapper.upLikeCnt(project1));
-
     }
 
     @Test
@@ -341,7 +344,25 @@ class ProjectMapperTest {
 
         System.out.println("\n\n"+project1);
         System.out.println("\n\n"+savedDto);
+    }
 
+    @Test
+    @DisplayName("랜덤으로 프로젝트 9개 가져오기")
+    void getRand() {
+//        저걸 호출하면 랜덤한 프로젝트 9개가 가져와져요.
+        testSetUp();
+
+        List<ProjectDto> randomList = projectMapper.getRandPjList();
+
+        assertThat(randomList.size()).isEqualTo(9);
+    }
+
+    private void testSetUp() {
+        for (int i = 0; i < 1000; i++) {
+//            String uuid = String.valueOf(UUID.randomUUID());
+            ProjectDto pj = ProjectDto.builder().pj_id(String.valueOf(i)).build();
+            projectMapper.insert(pj);
+        }
     }
 
     @Test

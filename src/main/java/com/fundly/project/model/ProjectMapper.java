@@ -23,4 +23,5 @@ public interface ProjectMapper {
     ProjectDto selectByStatus(@Param("pj_id") String pjId, @Param("pj_status") String status);
     int upLikeCnt(ProjectDto pjdto) throws Exception;
     int downLikeCnt(ProjectDto pjdto) throws Exception;
+    List<ProjectDto> getRandPjList();
 }

@@ -28,6 +28,7 @@ public class ProjectDto {
     private String pj_id; //uuid만들어서 그대로 집어넣으면?? // PK를 노출하는 것은 좋지 않다고....하는데..
     private String pj_sel_id; //로그인 세션에서 가져오기.
 
+    @EqualsAndHashCode.Exclude
     private LocalDateTime pj_reg_dtm;
 
 //    private PJ_STAUS status;
@@ -80,11 +81,32 @@ public class ProjectDto {
     // 프로젝트 대표이미지, 프로필 이미지 -> 한개씩이니까 접근성 좋게 pj테이블에 column으로 관리?
     // t.e에서 첨부하는 이미지들은.... 파일 테이블 이용??
 
-    public static ProjectAddResponse toResponseDto(ProjectDto projectDto) {
-        return ProjectAddResponse.builder().pj_id(projectDto.getPj_id()).sel_id(projectDto.getPj_sel_id()).build();
+    public static ProjectAddResponse toResponseDto(ProjectDto pj) {
+        return ProjectAddResponse.builder().pj_id(pj.getPj_id()).sel_id(pj.getPj_sel_id()).build();
     }
 
     public static ProjectTemplate toTemplate(ProjectDto pj) {
         return ProjectTemplate.builder().build();
+    }
+
+    public static ProjectInfoUpdateResponse toInfoUpdateResponse(ProjectDto project) {
+        return ProjectInfoUpdateResponse
+                .builder()
+                .pj_id(project.getPj_id())
+                .ctg(project.getCtg())
+                .sub_ctg(project.getSub_ctg())
+                .pj_long_title(project.getPj_long_title())
+                .pj_short_title(project.getPj_short_title())
+                .pj_thumbnail_url(project.getPj_thumbnail_url())
+                .build();
+    }
+
+    public void updateInfo(ProjectInfoUpdateRequest request) {
+        this.ctg = request.getCtg();
+        this.sub_ctg = request.getSub_ctg();
+        this.pj_long_title = request.getPj_long_title();
+        this.pj_short_title = request.getPj_short_title();
+        this.pj_thumbnail_url = request.getPj_thumbnail_url();
+        this.pj_tag = request.getPj_tag();
     }
 }

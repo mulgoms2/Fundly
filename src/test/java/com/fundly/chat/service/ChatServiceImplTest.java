@@ -109,8 +109,6 @@ class ChatServiceImplTest {
 
 //        dao.maxRoomNum(); 을 호출해서 + 1L 을 하면 새로운 방 번호가 만들어 질 것이다.
         assertEquals(maxRoomNum + 1L, chatRoom.getRoom_num());
-//
-
     }
 
     @Test

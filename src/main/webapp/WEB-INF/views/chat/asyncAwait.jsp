@@ -15,10 +15,44 @@
 <script>
     document.querySelector("#as").addEventListener("click", myFunction);
 
-    function myFunction() {
-        const promise = fetch("/chat/test", {
-            method: "POST"
-        });
+
+    async function myFunction() {
+
+        const myObj = {
+            name: "한윤재",
+            age: 30,
+            region: "부천"
+        };
+
+        const jsonObj = JSON.stringify(myObj);
+
+        console.log(jsonObj);
+
+        const response = await fetch("/chat/test", {
+            method: "POST",
+            body: jsonObj
+        }); // Q1: resul1 = Promise<Response> -> await -> Response -> await response.json()
+
+        const response1 = fetch("/chat/test", {
+            method: "POST",
+            body: jsonObj
+        }).then((hi)=>{
+            return hi.json();
+        }).then((hi)=>{
+            return "hi";
+        }).then((hi)=> hi);
+
+        new Promise((resolve, reject) => {resolve() , reject(new Error()) }).then((value)=>value).then().then().catch(hi=>console.log(hi)).finally()
+
+        const result2 = await result1; // Q2: result2 = Response
+
+        const result3 = new Promise((resolve, reject)=>{ setTimeout(1000000, resolve) });
+
+        const result4 = await (await fetch("/chat/file", {
+            method: "POST",
+            headers: {},
+            body: JSON.stringify(myObj)
+        })).json();
 
         // await 은  promise.then(prev) 에서 prev의 값을 가져온다.
         // const wait = await promise;
@@ -46,7 +80,6 @@
         console.log(testPromise);
 
         // const me = meee().then(console.log);
-
     }
 
     async function meee() {
