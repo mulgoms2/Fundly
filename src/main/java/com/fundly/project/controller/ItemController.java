@@ -6,6 +6,7 @@ import com.persistence.dto.ItemDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -102,6 +103,12 @@ public class ItemController {
             } else {
                 throw new Exception("item register FAIL");
             }
+
+        } catch(DuplicateKeyException e) {
+            String msg = "한 프로젝트 내에서 중복된 아이템 이름을 지정할 수 없습니다.";
+            System.out.println("Duplicate key");
+            System.out.println("e = " + e);
+            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -157,7 +157,7 @@ window.onload = function () {
         })
             .then( response => {
                 if(!response.ok) {
-                    throw response
+                    throw response.text()
                 }
                 return response.json()
             })
@@ -172,7 +172,10 @@ window.onload = function () {
                 showList(mkItmList(ItemArr),itemList);
 
             })
-            .catch(error => error)
+            .catch(error => error).then(error => {
+                alert("[등록 실패] " + error);
+                console.log(error);
+        })
             // .then(error => {
             //     alert('아이템 등록에 실패했습니다.')
             //     console.log(error)
@@ -506,7 +509,7 @@ window.onload = function () {
                 giftInit();
             })
             .catch(error => error).then(error => {
-                alert(error);
+                alert("[등록 실패] "+error);
                 console.log(error);
         })
             // 중복된 선물 이름을 입력한 경우에도, 다른 입력값을 보존하기 위해 입력 필드 초기화 함수는 호출하지 않는다.
