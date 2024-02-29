@@ -181,10 +181,7 @@
         </div>
     </div>
 </div>
-<script src="/static/project/js/reward.js">
-
-
-</script>
+<script src="/static/project/js/projectInfo.js"></script>
 
 <%--</body>--%>
 <%--</html>--%>
