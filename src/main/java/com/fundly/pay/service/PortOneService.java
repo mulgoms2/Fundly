@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 public interface PortOneService {
     // 결제수단 삭제
-    BillKeyResponseDto removeBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception;
+    ResponseEntity<BillKeyResponseDto> removeBillKey(BillKeyRequestDto billKeyRequestDto, String authToken);
     // 예약된 결제 조회
-    ScheduledPayResponseDto getScheduledPay(ScheduledPayRequestDto scheduledPayRequestDto, String authToken) throws Exception;
+    ResponseEntity<ScheduledPayResponseDto> getScheduledPay(ScheduledPayRequestDto scheduledPayRequestDto, String authToken);
     // 결제수단 등록
-    BillKeyResponseDto getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken) throws Exception;
+    ResponseEntity<BillKeyResponseDto> getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken);
     // 공통: 인증토큰 발급
-    TokenResponseDto getToken() throws Exception;
+    ResponseEntity<TokenResponseDto> getToken();
     // 결제 요청
-    ResponseEntity<PaymentResponseDto> requestPay(PaymentRequestDto paymentRequestDto, String authToken) throws Exception;
+    ResponseEntity<PaymentResponseDto> requestPay(PaymentRequestDto paymentRequestDto, String authToken);
     // 결제 취소
-    ResponseEntity<PaymentResponseDto> cancelPay(PaymentRequestDto paymentRequestDto, String authToken) throws Exception;
+    ResponseEntity<PaymentResponseDto> cancelPay(PaymentRequestDto paymentRequestDto, String authToken);
 }
