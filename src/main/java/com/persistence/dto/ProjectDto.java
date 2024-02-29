@@ -92,4 +92,24 @@ public class ProjectDto {
         return ProjectTemplate.builder().build();
     }
 
+    public static ProjectInfoUpdateResponse toInfoUpdateResponse(ProjectDto project) {
+        return ProjectInfoUpdateResponse
+                .builder()
+                .pj_id(project.getPj_id())
+                .ctg(project.getCtg())
+                .sub_ctg(project.getSub_ctg())
+                .pj_long_title(project.getPj_long_title())
+                .pj_short_title(project.getPj_short_title())
+                .pj_thumbnail_url(project.getPj_thumbnail_url())
+                .build();
+    }
+
+    public void updateInfo(ProjectInfoUpdateRequest request) {
+        this.ctg = request.getCtg();
+        this.sub_ctg = request.getSub_ctg();
+        this.pj_long_title = request.getPj_long_title();
+        this.pj_short_title = request.getPj_short_title();
+        this.pj_thumbnail_url = request.getPj_thumbnail_url();
+        this.pj_tag = request.getPj_tag();
+    }
 }

@@ -2,10 +2,7 @@ package com.fundly.project.service;
 
 import com.fundly.project.exception.ProjectDoesntExistsException;
 import com.fundly.project.model.ProjectMapper;
-import com.persistence.dto.ProjectAddRequest;
-import com.persistence.dto.ProjectAddResponse;
-import com.persistence.dto.ProjectDto;
-import com.persistence.dto.ProjectTemplate;
+import com.persistence.dto.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -95,8 +92,34 @@ class ProjectServiceImplTest {
     }
 
     @Test
-    @DisplayName("카테고리별로 프로젝트를 불러올 수 있다.")
-    void getByCategory() {
-//        프로젝트를 카테고리별로 불러온 뒤 템플릿 배열로 반환한다?
+    @DisplayName("프로젝트를 업데이트 한다.")
+    void updateProject() {
+        String pj_id = "01";
+        ProjectDto pj = ProjectDto
+                .builder()
+                .pj_id(pj_id)
+                .ctg("가전제품")
+                .sub_ctg("밥솥")
+                .pj_short_title("맛있는밥")
+                .pj_long_title("매일 매일 만들어먹는 집밥")
+                .build();
+        ProjectInfoUpdateRequest pjInfoUpdate = ProjectInfoUpdateRequest
+                .builder()
+                .pj_id(pj_id)
+                .ctg("반려동물")
+                .sub_ctg("사료")
+                .pj_short_intro("맛있는 츄르")
+                .pj_long_title("우리집 고양이 츄르를 좋아해")
+                .build();
+
+        given(projectMapper.getByPjId(pjInfoUpdate.getPj_id())).willReturn(pj);
+
+        ProjectInfoUpdateResponse resp =  projectServiceImpl.updatePjInfo(pjInfoUpdate);
+
+        assertThat(resp).isNotNull();
+        assertThat(resp.getCtg()).isEqualTo(pjInfoUpdate.getCtg());
+        assertThat(resp.getSub_ctg()).isEqualTo(pjInfoUpdate.getSub_ctg());
+        assertThat(resp.getPj_short_title()).isEqualTo(pjInfoUpdate.getPj_short_title());
+        assertThat(resp.getPj_long_title()).isEqualTo(pjInfoUpdate.getPj_long_title());
     }
 }

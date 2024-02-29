@@ -2,10 +2,7 @@ package com.fundly.project.service;
 
 import com.fundly.project.exception.ProjectDoesntExistsException;
 import com.fundly.project.model.ProjectMapper;
-import com.persistence.dto.ProjectAddRequest;
-import com.persistence.dto.ProjectAddResponse;
-import com.persistence.dto.ProjectDto;
-import com.persistence.dto.ProjectTemplate;
+import com.persistence.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -33,6 +30,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectTemplate getById(String pj_id) throws ProjectDoesntExistsException {
 //        프로젝트를 아이디로 조회한다.
         ProjectDto pj = projectMapper.getByPjId(pj_id);
+
         if (pj == null) {
             ProjectDoesntExistsException ex = new ProjectDoesntExistsException("해당 아이디로 조회되는 프로젝트가 없습니다.");
             log.error("ProjectServiceImpl.getById(String pj_id) : {}\n {}\n", ex.getMessage(), ex.getStackTrace());
@@ -42,13 +40,18 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectDto.toTemplate(pj);
     }
 
-//    public List<ProjectTemplate> getRandomPj() {
-//        projectMapper.
-//
-//    }
+    @Override
+    public ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest request) {
+        ProjectDto project = projectMapper.getByPjId(request.getPj_id());
 
+        project.updateInfo(request);
 
-    //    todo 아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.
+        projectMapper.update(project);
+
+        return ProjectDto.toInfoUpdateResponse(project);
+    }
+
+    //    //    todo 아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.
     @Override
     public ProjectAddResponse add(ProjectAddRequest pjAddReq) {
 //        프로젝트 추가 요청을 통해 프로젝트를 생성한다.(프로젝트 키는 프로젝트 객체로 변환 될때 자동으로 생성)
