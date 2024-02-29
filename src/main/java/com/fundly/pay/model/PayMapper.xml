@@ -59,25 +59,25 @@
         where pay_id = #{pay_id}
     </update>
 
-    <!-- PortOne 결제 실패 시, 결제상태 update ('미결제' -> '결제실패') -->
+    <!-- PortOne 결제 실패 시, 결제상태 update (('미결제' -> '결제실패') || ('결제실패' -> '재결제실패')) -->
     <update id="updatePayStatusToFailed" parameterType="PayDto">
         update PAY
-        set pay_status = '결제실패',
+        set pay_status = #{pay_status},
             pay_co_resp_json = #{pay_co_resp_json},
             dba_mod_dtm = now(),
             dba_mod_id = 'admin' -- 관리자 ID
         where pay_id = #{pay_id}
     </update>
 
-    <!-- PortOne 재결제 실패 시, 결제상태 update ('결제실패' -> '재결제실패') -->
-    <update id="updatePayStatusToRetryFailed" parameterType="PayDto">
-        update PAY
-        set pay_status = '재결제실패',
-            pay_co_resp_json = #{pay_co_resp_json},
-            dba_mod_dtm = now(),
-            dba_mod_id = 'admin' -- 관리자 ID
-        where pay_id = #{pay_id}
-    </update>
+<!--    &lt;!&ndash; PortOne 재결제 실패 시, 결제상태 update ('결제실패' -> '재결제실패') &ndash;&gt;-->
+<!--    <update id="updatePayStatusToRetryFailed" parameterType="PayDto">-->
+<!--        update PAY-->
+<!--        set pay_status = '재결제실패',-->
+<!--            pay_co_resp_json = #{pay_co_resp_json},-->
+<!--            dba_mod_dtm = now(),-->
+<!--            dba_mod_id = 'admin' &#45;&#45; 관리자 ID-->
+<!--        where pay_id = #{pay_id}-->
+<!--    </update>-->
 
     <!-- 회원별 결제 목록 조회 -->
     <!-- parameter: 회원 ID(user_id) -->

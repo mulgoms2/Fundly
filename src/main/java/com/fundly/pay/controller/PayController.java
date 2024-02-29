@@ -35,8 +35,8 @@ public class PayController {
     // 5. 결제 조회 (내역, 상태):  getPayList() -> DB 결제 상태 업데이트
     // 6. 결제 재시도: retryFailedPay() -> DB 결제 상태 업데이트
 
-    private PayMeansService payMeansService;
-    private PortOneService portOneService;
+    private final PayMeansService payMeansService;
+    private final PortOneService portOneService;
 
     @Autowired
     public PayController(PayMeansService payMeansService, PortOneService portOneService) {
@@ -110,20 +110,20 @@ public class PayController {
             if (!userCheck(payMeansDto.getUser_id())) {
                 throw new Exception("Remove Failed. - userCheck Error");
             }
-            String authToken = portOneService.getToken().getResponse().getAccess_token();
+            String authToken = portOneService.getToken().getBody().getResponse().getAccess_token();
 
             // 1. 예약된 결제 내역이 있는지 확인한다.
             ScheduledPayRequestDto scheduledPayRequestDto = new ScheduledPayRequestDto(payMeansId, "scheduled", from, to);
-            ScheduledPayResponseDto scheduledPayResponseDto = portOneService.getScheduledPay(scheduledPayRequestDto, authToken);
-            if (scheduledPayResponseDto.getCode() != 0) throw new Exception("Remove Failed. - getScheduledPay Error");
-            if (scheduledPayResponseDto.getResponse().getTotal() != 0) throw new Exception("Remove Failed. - 예약된 결제가 있습니다.");
+            ResponseEntity<ScheduledPayResponseDto> scheduledPayResponseDto = portOneService.getScheduledPay(scheduledPayRequestDto, authToken);
+            if (scheduledPayResponseDto.getBody().getCode() != 0) throw new Exception("Remove Failed. - getScheduledPay Error");
+            if (scheduledPayResponseDto.getBody().getResponse().getTotal() != 0) throw new Exception("Remove Failed. - 예약된 결제가 있습니다.");
             log.info("getScheduledPay 성공");
 
             // 2. 예약된 결제 내역이 없으면 PortOne에서 삭제한다.
             BillKeyRequestDto billKeyRequestDto = new BillKeyRequestDto();
             billKeyRequestDto.setCustomer_uid(payMeansId);
-            BillKeyResponseDto billKeyResponseDto = portOneService.removeBillKey(billKeyRequestDto, authToken);
-            if (billKeyResponseDto.getCode() != 0) throw new Exception("Remove Failed. - removeBillKey Error");
+            ResponseEntity<BillKeyResponseDto> billKeyResponseDto = portOneService.removeBillKey(billKeyRequestDto, authToken);
+            if (billKeyResponseDto.getBody().getCode() != 0) throw new Exception("Remove Failed. - removeBillKey Error");
             log.info("removeBillKey 성공");
 
             // 3. PortOne에서 삭제되면 DB에서 삭제한다.
@@ -177,18 +177,18 @@ public class PayController {
                     payMeansDto.getCard_no(),payMeansDto.getCard_valid_date(), payMeansDto.getOwn_birth(),
                     payMeansDto.getCard_pwd(), payMeansDto.getPay_means_id());
 
-            String authToken = portOneService.getToken().getResponse().getAccess_token();
+            String authToken = portOneService.getToken().getBody().getResponse().getAccess_token();
 
-            BillKeyResponseDto billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
-            if (billKeyResponseDto.getCode() != 0) {
+            ResponseEntity<BillKeyResponseDto> billKeyResponseDto = portOneService.getBillKey(billKeyRequestDto, authToken);
+            if (billKeyResponseDto.getBody().getCode() != 0) {
                 throw new Exception("Register Failed. - getBillKey Error");
             }
 
-            payMeansDto.setBill_key(billKeyResponseDto.getResponse().getCustomer_id());
-            payMeansDto.setCard_co_type(billKeyResponseDto.getResponse().getCard_publisher_name());
+            payMeansDto.setBill_key(billKeyResponseDto.getBody().getResponse().getCustomer_id());
+            payMeansDto.setCard_co_type(billKeyResponseDto.getBody().getResponse().getCard_publisher_name());
 
             // 카드번호 뒤 4자리
-            String cardNumber =billKeyResponseDto.getResponse().getCard_number();
+            String cardNumber =billKeyResponseDto.getBody().getResponse().getCard_number();
             cardNumber = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
             payMeansDto.setCard_no(cardNumber);
 

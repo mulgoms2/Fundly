@@ -6,7 +6,7 @@
 
 <!--    상태별로 좋아요 목록 불러올 목적-->
     <select id="selectByStatus" resultType="ProjectDto">
-        select curr_pj_like_cnt,sub_ctg,pj_id,pj_sel_name,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
+        select pj_sel_id, curr_pj_like_cnt,sub_ctg,pj_id,pj_sel_name,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
                fund_goal_money,curr_fund_money,fund_str_dtm,fund_end_dtm
         from PJ
         where pj_id = #{pj_id}
@@ -15,7 +15,7 @@
 
 <!--    모든 상태의 좋아요 목록 불러올 목적-->
     <select id="selectByEntireStatus" resultType="ProjectDto">
-        select sub_ctg,pj_id,pj_sel_name,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
+        select pj_sel_id, sub_ctg,pj_id,pj_sel_name,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
                fund_goal_money,curr_fund_money,fund_str_dtm,fund_end_dtm
         from PJ
         where pj_id = #{pj_id}
@@ -37,11 +37,11 @@
         INSERT INTO PJ (pj_id, pj_sel_id, ctg, sub_ctg,  pj_long_title, pj_short_title, pj_intro, pj_short_intro, pj_tag,
                          pj_pay_due_dtm, pj_sel_intro, pj_gift_intro, fund_goal_money, fund_str_dtm,
                         fund_end_dtm, fund_calc_due_dtm, gift_ship_due_date, pj_status, fund_result_status, curr_pj_like_cnt,
-                        curr_fund_money, curr_buy_cnt, dba_reg_dtm, dba_reg_id, dba_mod_dtm, dba_mod_id)
+                        curr_fund_money, curr_buy_cnt, dba_reg_id)
         VALUES (#{pj_id}, #{pj_sel_id}, #{ctg}, #{sub_ctg}, #{pj_long_title}, #{pj_short_title}, #{pj_intro}, #{pj_short_intro}, #{pj_tag},
                 #{pj_pay_due_dtm}, #{pj_sel_intro}, #{pj_gift_intro}, #{fund_goal_money}, #{fund_str_dtm},
                 #{fund_end_dtm}, #{fund_calc_due_dtm}, #{gift_ship_due_date}, #{pj_status}, #{fund_result_status}, #{curr_pj_like_cnt},
-                #{curr_fund_money}, #{curr_buy_cnt}, #{dba_reg_dtm}, #{dba_reg_id}, #{dba_mod_dtm}, #{dba_mod_id})
+                #{curr_fund_money}, #{curr_buy_cnt}, #{pj_sel_id})
     </insert>
     <update id="update">
         UPDATE PJ
@@ -67,10 +67,8 @@
             curr_pj_like_cnt = #{curr_pj_like_cnt},
             curr_fund_money = #{curr_fund_money},
             curr_buy_cnt = #{curr_buy_cnt},
-            dba_reg_dtm = #{dba_reg_dtm},
-            dba_reg_id = #{dba_reg_id},
-            dba_mod_dtm = #{dba_mod_dtm},
-            dba_mod_id = #{dba_mod_id}
+            dba_mod_dtm = now(),
+            dba_mod_id = #{pj_sel_id}
         WHERE
             pj_id = #{pj_id}
     </update>

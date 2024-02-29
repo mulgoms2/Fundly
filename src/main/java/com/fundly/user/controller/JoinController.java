@@ -37,7 +37,7 @@ public class JoinController {
     public String join(@ModelAttribute("userJoinDto")UserJoinDto userJoinDto){ return "user/join";}
 
     @PostMapping("/add")
-    public String joinsave(@Valid @RequestBody UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
+    public String joinsave(@Valid UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
 
         /*
         binding으로 value 값 확인
@@ -91,7 +91,8 @@ public class JoinController {
     }
 
     /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */
-    @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class,Exception.class})
+//    @ExceptionHandler({RuntimeException.class, SQLException.class, IllegalArgumentException.class, Exception.class})
+    @ExceptionHandler({Exception.class}) // 우선 전체 적인 Exception 확인, null 은 어떤가 ?
     public String handleException()
     {
         return "user/error";

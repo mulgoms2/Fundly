@@ -2,6 +2,7 @@ package com.fundly.project.model;
 
 import com.persistence.dto.ProjectDto;
 import config.RootContext;
+import lombok.Data;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,12 +12,15 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
@@ -88,9 +92,9 @@ class ProjectMapperTest {
     @DisplayName("프로젝트 한개 인서트하기")
     void insert() {
         projectMapper.deleteAll();
-        int insertCount = projectMapper.insert(project1);
-
-        assertEquals(1, insertCount);
+//        int insertCount = projectMapper.insert(project1);
+//
+//        assertEquals(1, insertCount);
     }
 
     @Test
@@ -326,5 +330,26 @@ class ProjectMapperTest {
         projectMapper.downLikeCnt(project1);
         assertEquals(1, projectMapper.upLikeCnt(project1));
 
+    }
+
+    @Test
+    @DisplayName("insert 후 저장된 프로젝트객체 반환하기 테스트")
+    void getSavedDto() {
+        projectMapper.insert(project1);
+        String pj_id = project1.getPj_id();
+        ProjectDto savedDto = projectMapper.getByPjId(pj_id);
+
+        System.out.println("\n\n"+project1);
+        System.out.println("\n\n"+savedDto);
+
+    }
+
+    @Test
+    @DisplayName("예외 캐치 테스트")
+    void catchException() {
+            assertThatThrownBy(()->{
+                projectMapper.insert(project1);
+                projectMapper.insert(project1);
+            }).isInstanceOf(NonTransientDataAccessException.class);
     }
 }

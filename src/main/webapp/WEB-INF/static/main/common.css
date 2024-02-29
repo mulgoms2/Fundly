@@ -22,7 +22,9 @@
     background: url(../img/logo.png) no-repeat;
     background-size: cover;
 }
-
+.logo {
+    width: 100px;
+}
 /* a 태그 */
 .header .hd a:visited, .header .hd a:link {
     color: black;

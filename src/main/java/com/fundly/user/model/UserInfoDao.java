@@ -7,6 +7,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserInfoDao {
     UserDto userInfo(UserDto userdto) throws Exception ;
-
     String userJoindate(UserDto userDto) throws Exception;
 }

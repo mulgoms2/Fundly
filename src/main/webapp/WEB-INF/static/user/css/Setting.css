@@ -3,53 +3,20 @@
     color: rgba(0, 0, 0, 0.87);
 }
 
+/* fontsize */
+.fontDetail {
+    font-size: 14px;
 
-/*!* line *!*/
-/*.line{*/
-/*    width: 100%;*/
-/*    !* width: 5000px; *!*/
-/*    height: 1px;*/
-/*    background: rgb(240, 240, 240);*/
-/*    !* background: #555353; *!*/
-/*    content: " ";*/
-/*}*/
+}
 
 .userSetting{
     border-bottom: 1px solid rgb(240, 240, 240);
 }
 
-/*공통*/
-* {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-decoration: none;
+.main.setting{
+    height: 100% !important;
+    overflow-y : auto !important;
 }
-
-.main{
-    margin-top: 2.5%;
-    height: 760px;
-}
-
-.title{
-    font-size: 30px;
-    font-weight: bold;
-    padding: 48px 0 28px 0;
-}
-
-/* font */
-.fontcolor{
-    color: rgb(160, 155, 155);
-    font-size: 18px;
-}
-
-/* main */
-.main-container {
-    display: flex;
-    justify-content: center;
-}
-
-
 
 .tapContainerList{
     display: inline-flex;
@@ -99,108 +66,14 @@
     box-sizing: border-box;
 }
 
-.containerSet > div{
-    border-bottom: 1px solid rgb(230, 230, 230);
-    margin: 10px 0px 16px;
-}
-
 .container div{
-    padding: 0px 0px 10px;
+    /*padding: 0px 0px 10px;*/
 }
 
-.profileimg{
-    font-size: 16px;
-    line-height: 27px;
-    letter-spacing: -0.020em;
-    /*display: flex;*/
-    margin: 0px 0px 12px;
-}
 
 .flexOnly{
     display: flex;
 }
-
-.tapContainerMain{
-    padding: 24px 0px;
-}
-
-.pTag{
-    display: flex;
-    flex-wrap: wrap;
-    -webkit-box-align: center;
-    align-items: center;
-    font-weight: bold;
-    -webkit-box-flex: 1;
-    flex-grow: 1;
-
-    margin: 0;
-    padding: 0;
-}
-
-.ButtonTag{
-    display: inline-flex;
-    -webkit-box-align: center;
-    align-items: center;
-    height: 32px;
-    padding: 0px 16px;
-    background: rgb(240, 240, 240);
-    border: none;
-    border-radius: 60px;
-    font-weight: 500;
-    color: rgb(61, 61, 61);
-    font-size: 12px ;
-    line-height: 20px ;
-    font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif ;
-    cursor: pointer;
-}
-
-.proImg{
-    font-family: 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, 'NotoSansKR', sans-serif;
-    font-weight: normal;
-    width: 64px;
-    height: 64px;
-    font-size: 26px;
-    letter-spacing: -1.56px;
-    position: relative;
-}
-
-.proImgWrap{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    box-shadow: rgb(208, 208, 208) 0px 0px 1px 0px inset, rgb(208, 208, 208) 0px 0px 1px 0px;
-}
-
-.proImgFile{
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 2;
-    background: url(../../img/avatar.webp) 50% 37% / cover no-repeat;
-}
-
-.userName{
-    font-family: 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, 'NotoSansKR', sans-serif;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: -0.015em;
-    font-weight: 400;
-    background: #FFF;
-    color: #3d3d3d;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 /* 오른쪽 컨테이너 값 */
 .userInfoComment{
@@ -241,72 +114,154 @@
     text-decoration: underline;
 }
 
-/*.pageComponent{*/
-/*    margin: 0 auto;*/
-/*}*/
+/* 프로필 - 사진*/
+.detailTitle{
+    display: flex;
+    justify-content: space-between;
+}
 
-/*.ifImg > span {*/
-/*    width: 80px;*/
-/*    height: 80px;*/
-/*    display: inline-block;*/
-/*    background: url(../img/avatar.webp) no-repeat center center;*/
-/*    background-size: cover;*/
-/*    border-radius: 50%;*/
-/*    box-shadow: rgb(208, 208, 208) 0px 0px 1px 0px inset,*/
-/*    rgb(208, 208, 208) 0px 0px 1px 0px;*/
-/*}*/
+.pTag{
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: bold;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
 
+.ButtonTag{
+    /*display: inline-flex;*/
+    /*align-items: flex-end;*/
+    height: 32px;
+    padding: 0px 16px;
+    background: rgb(240, 240, 240);
+    border: none;
+    border-radius: 60px;
+    font-weight: 500;
+    color: rgb(61, 61, 61);
+    font-size: 12px ;
+    line-height: 20px ;
+    font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif ;
+    cursor: pointer;
+}
 
-/*.profileInfo{*/
-/*    display: flex;*/
-/*    padding: 40px 0 0 ;*/
-/*}*/
+.pTagChaDetailImg{
+    display: flex;
+}
 
-/*.userInfoDetail{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*}*/
+.pTagImgDetail {
+    padding: 10px 0px 0px 16px;
+}
 
-/*.userInfo{*/
-/*    display: flex;*/
-/*    margin-left: 25px;*/
-/*    flex-direction: column;*/
-/*    justify-content: center;*/
-/*}*/
+.pTagImg{
+    font-family: 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, 'NotoSansKR', sans-serif;
+    font-weight: normal;
+    width: 80px;
+    height: 80px;
+    font-size: 26px;
+    letter-spacing: -1.56px;
+    position: relative;
+}
 
-/*.username{*/
-/*    font-weight: bold;*/
-/*    font-size: 20px;*/
-/*}*/
+.pTagImgWrap{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    box-shadow: rgb(208, 208, 208) 0px 0px 1px 0px inset, rgb(208, 208, 208) 0px 0px 1px 0px;
+}
 
-/*.userInfoDetail > span {*/
-/*    width: 18px;*/
-/*    height: 18px;*/
-/*    display: inline-block;*/
-/*    background: url(../img/Icon-settings.png) no-repeat center center;*/
-/*    background-size: cover;*/
-/*    border-radius: 50%;*/
-/*    margin: 5px 5px;*/
-/*}*/
+.pTagImgFile{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    background: url(../../img/avatar.webp) 50% 37% / cover no-repeat;
+}
 
-/*.userJoindate{*/
-/*    font-size: 12px;*/
-/*    color: rgb(109, 109, 109);*/
-/*}*/
+.filein{
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 32px;
+    border-radius: 4px;
+    margin: 0px;
+    outline: none;
+    font-weight: normal;
+    box-sizing: border-box;
+    padding: 0px 12px;
+    border: 1px solid rgb(230, 230, 230);
+    background-color: rgb(255, 255, 255);
+    color: rgb(109, 109, 109);
+}
 
+.fileDetail{
+    margin: 8px 0px 0px;
+    color: rgb(109, 109, 109);
+    font-size: 13px;
+    line-height: 20px;
+    /*letter-spacing: -0.015em;*/
+}
 
-/*!* container *!*/
-/*.container{*/
-/*    height: 150px;*/
-/*    margin-top: 30px;*/
-/*}*/
+.filesave{
+    cursor: pointer;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 40px;
+    width: 98px;
+    white-space: nowrap;
+    border-radius: 1px;
+    outline: none;
+    font-weight: normal;
+    box-sizing: border-box;
+    padding: 0px 16px;
+    background-color: rgb(61, 61, 61);
+    color: rgb(255, 255, 255);
+}
 
-/*.on::after {*/
-/*    content: "";*/
-/*    width: 100%;*/
-/*    height: 3px;*/
-/*    !* position: absolute; *!*/
-/*    left: 0;*/
-/*    bottom: 0;*/
-/*    background: #000;*/
-/*}*/
+.pTagChaBtn{
+    margin : 20px 0px 0px;
+    padding: 0px 16px;
+}
+
+.pTagDetail{
+    display: none;
+}
+
+/* 프로필 - 이름 */
+.pTagDetailName{
+    display: none;
+}
+
+#userNameValue{
+    height: 42px;
+    border: 1px solid rgb(230, 230, 230);
+}
+
+/* 프로필 - 자기소개 */
+.pTagDetailIntro{
+    display: none;
+}
+
+.userIntroDetail{
+    height: 182px;
+    width: 646px;
+    padding: 12px;
+}
+
+/* rows="4" cols="50"*/
+
+.userIntroDetail #introValue{
+    resize: none;
+    border: 1px solid rgb(230, 230, 230);
+    width: 100%;
+    height: 100%;
+}

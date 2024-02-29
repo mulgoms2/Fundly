@@ -1,0 +1,243 @@
+/*공통*/
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+li {
+    list-style-position: inside;
+    padding-top: 3px;
+}
+a {
+    display: block;
+}
+i {
+    font-style: normal;
+}
+
+/* 헤더 */
+.headerContainer {
+    border-bottom: 1px solid rgb(240, 240, 240);
+    box-shadow: 0 0.1px 1px 0 rgb(222, 222, 222);
+}
+.header {
+    width: 100%;
+    height : 65px;
+    /*margin-top: 10px;*/
+    display: flex;
+    align-items: center;
+    max-width: 1160px;
+    margin: 0 auto;
+}
+.orderTitle {
+    padding : 20px;
+    font-family: "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, NotoSansKR, sans-serif;
+    font-size: 16px;
+    /*font-weight: bold;*/
+    letter-spacing: -0.32px;
+}
+.logo {
+    width: 90px;
+}
+
+/* main */
+
+/* pj */
+.main {
+    max-width: 1160px;
+    margin: 0 auto;
+}
+.pjContainer {
+    height: 114px;
+    display: flex;
+    column-gap: 1.5em;
+    padding-top:25px;
+}
+.pjTit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap : 0.2em;
+}
+.thum img {
+    width:152px;
+}
+.ctg {
+    color: gray;
+    font-size: small;
+}
+.pjTitle {
+    font-size: x-large;
+}
+.fundNum {
+    display: flex;
+    gap: 1em;
+    font-size: small;
+}
+.fundMoney {
+    font-weight: bold;
+}
+.per {
+    color: red;
+    font-weight: lighter;
+}
+
+/* order */
+
+.Info {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+.orderWrap {
+    height: 1360px;
+    display: flex;
+    padding-top: 25px;
+}
+.orderLeft {
+    width:1160px;
+}
+.orderContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5em;
+}
+
+/* gift */
+.giftPack, .giftMoney {
+    display: flex;
+    gap: 4em;
+}
+.giftPackCont {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+.giftDeliver {
+    display: flex;
+    gap: 0.5em;
+    padding: 3px;
+    border-radius: 3px;
+    background-color: rgb(241, 239, 239);
+    width: 160px;
+    justify-content: center;
+    font-size: 0.9em;
+}
+
+/* 공통Box 스타일 */
+.Box {
+    width: 670px;
+    box-sizing: border-box;
+    border: 1px solid rgb(225, 225, 225);
+    border-radius: 3px;
+}
+.boxConts {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+/* 라디오버튼 */
+.rdoBox label{
+    padding-left: 20px;
+    line-height: 30px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.rdoBox{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.rdoBox>input.ipt{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 8px);
+    background: none;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+.rdoBox:before{
+    content: "";
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 8px);
+    display: block;
+    background-position: 0px 0px;
+}
+.chkBox.on:before{
+    background-position: 0px -16px;
+}
+.rdoBox:before{
+    background-position: 0px -32px;
+}
+.rdoBox.on:before{
+    background-position: 0px -48px;
+}
+
+form>div.rdoWrap{
+    margin-bottom: 20px;
+}
+form>div.rdoWrap>div,
+form>div.chkWrap>div{
+    margin-right: 50px;
+    color: #000;
+    font-size: 1rem;
+}
+form>div.rdoWrap input,
+form>div.chkWrap input{
+    margin-right: 5px;
+}
+
+/* total */
+
+.totalContainer {
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+.totalBox {
+    /*width: 670px;*/
+    box-sizing: border-box;
+    border: 1px solid rgb(225, 225, 225);
+    border-radius: 3px;
+}
+.totalBoxConts {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+}
+.totalName {
+    color: #ff4f4f;
+    font-weight: bold;
+}
+.totalMoney {
+    margin-left: auto;
+}
+.totalNotice {
+    font-size: small;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.agree1, .agree2 {
+    display: flex;
+    gap: 10px;
+}
+.agreeLast {
+    margin-left: auto;
+}
+.orderBtn {
+    padding: 15px;
+    width: 469px;
+    background-color: #ff4f4f;
+    color: #fff;
+    border:none;
+    font-size: 1.1em;
+}

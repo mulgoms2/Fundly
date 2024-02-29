@@ -4,7 +4,7 @@
 
 <mapper namespace="com.fundly.user.model.UserJoinDao">
     <!-- email check -->
-    <select id="emailCheck" resultType="INTEGER">
+    <select id="emailCheck" resultType="int">
         SELECT COUNT(*)
         FROM user_info
         where user_email = #{user_email}
