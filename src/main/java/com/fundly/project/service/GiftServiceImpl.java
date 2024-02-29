@@ -114,7 +114,7 @@ public class GiftServiceImpl implements GiftService {
 
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int modifyGiftContent(GiftDto giftDto, List<GiftItemDetailDto> afterList) throws Exception {
         //1. 선물 테이블의 정보 변경
         //2. 아이템 상세 테이블의 변경 (insert, update, delete)
@@ -129,9 +129,9 @@ public class GiftServiceImpl implements GiftService {
         for(GiftItemDetailDto dtoA : afterList){
             int index = beforeList.indexOf(dtoA);
             //GiftItemDetailDto의 비교를 gift_id와 item_id로 했다(Equals&HashCode)
-            //DB에서 gift_id와 item_name이 Unique로 묶여있어서 이 두개가 같으면 같은 row로 볼 수 있다.
+            //DB에서 gift_id와 item_id가 Unique로 묶여있어서 이 두개가 같으면 같은 row로 볼 수 있다.
             if(index==-1){ //기존 리스트에 없는 아이템이면
-                giftItemDetailMapper.insert(dtoA); //새로운 아이템데이터를 아이템리스트에 insert
+                giftItemDetailMapper.insert(dtoA); //새로운 아이템 데이터를 아이템리스트에 insert
             } else { //기존 리스트에 있는 아이템이면
                 GiftItemDetailDto dtoB = beforeList.get(index);
                 if(dtoB.getItem_qty()!=dtoA.getItem_qty()){ //기존 수량과 입력 수량이 다르면
@@ -160,7 +160,7 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int removeGift(String gift_id) throws Exception {
         giftItemDetailMapper.deleteAllByGift(gift_id);
 //        throw new RuntimeException("Tx테스트"); //테스트용
