@@ -30,11 +30,7 @@ public class ProjectController {
         return "project.funding";
     }
 
-    //프로젝트 계획
-    @GetMapping("/story")
-    public String makeStory(){
-        return "project.story";
-    }
+
 
     //창작자 정보 입력
     @GetMapping("/creator")

@@ -1,12 +1,9 @@
 package com.persistence.dto;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -44,7 +41,7 @@ public class ProjectDto {
     private String pj_tag; // 검색 태그
 
     //프로젝트 기획 - 펀딩 계획
-    private BigInteger fund_goal_money; //펀딩 목표금액
+    private BigInteger fund_goal_money; //펀딩 목표금액 10
 //    @DateTimeFormat()
     private LocalDateTime fund_str_dtm;// 펀딩시작일시
     private LocalDateTime fund_end_dtm; //펀딩 종료일시
@@ -61,7 +58,7 @@ public class ProjectDto {
 
 
     //프로젝트 기획 - 창작자 정보
-    private String pj_sel_name; //창작자 정보 탭
+    private String pj_sel_name; //창작자 정보 탭 20
     private String pj_sel_short_intro; //창작자 정보 탭
     private String pj_prof_image_url; //창작자 프로필 이미지
     // 입금계좌는 입금계좌 테이블에서 진행
@@ -75,7 +72,7 @@ public class ProjectDto {
 //    @NonNull
     private Integer curr_pj_like_cnt; //프로젝트 좋아요 현재 집계
     private BigInteger curr_fund_money;//펀딩 모금액 현재 집계
-    private Integer curr_buy_cnt; //후원자 수 현재 집계
+    private Integer curr_buy_cnt; //후원자 수 현재 집계 8
 
     @EqualsAndHashCode.Exclude
     private LocalDateTime dba_reg_dtm;
