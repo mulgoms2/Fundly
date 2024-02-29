@@ -12,6 +12,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -40,6 +41,11 @@ public class ProjectServiceImpl implements ProjectService {
 //        프로젝트를 뷰에 맞는 템플릿으로 반환해준다.
         return ProjectDto.toTemplate(pj);
     }
+
+//    public List<ProjectTemplate> getRandomPj() {
+//        projectMapper.
+//
+//    }
 
 
     //    todo 아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.

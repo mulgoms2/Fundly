@@ -1238,6 +1238,8 @@ const removeGift = function(elem){
     }
     if(!confirm("선물을 삭제하시겠습니까?")) return;
 
+    //  /project/gift ? gift_id=102 & pj_id=pj120
+
     fetch("/project/gift?gift_id="+elem.getAttribute("data-gift_id")+"&pj_id="+elem.getAttribute("data-pj_id"), {
         method: "DELETE",
         headers: {
@@ -1262,7 +1264,6 @@ const removeGift = function(elem){
             const giftList = document.querySelector('#giftList')
             //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
             showList(mkGiftList(giftArr),giftList);
-            giftInit();
 
         })
         .catch(error => error).then(error => {

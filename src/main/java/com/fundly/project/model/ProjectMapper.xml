@@ -6,7 +6,7 @@
 
 <!--    상태별로 좋아요 목록 불러올 목적-->
     <select id="selectByStatus" resultType="ProjectDto">
-        select curr_pj_like_cnt,sub_ctg,pj_id,pj_sel_name,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
+        select curr_pj_like_cnt,sub_ctg,pj_id,pj_sel_name, pj_sel_id ,pj_url,pj_long_title,pj_intro,pj_status,fund_result_status,
                fund_goal_money,curr_fund_money,fund_str_dtm,fund_end_dtm
         from PJ
         where pj_id = #{pj_id}
@@ -25,6 +25,9 @@
         update PJ
         set curr_pj_like_cnt = #{curr_pj_like_cnt} + 1
         where pj_id = #{pj_id}
+        <selectKey keyProperty="curr_pj_like_cnt" resultType="ProjectDto" order="AFTER">
+            select curr_pj_like_cnt from pj where pj_id = #{pj_id}
+        </selectKey>
     </update>
 
     <update id="downLikeCnt">
@@ -34,11 +37,11 @@
     </update>
 
     <insert id="insert" parameterType="ProjectDto">
-        INSERT INTO PJ (pj_id, pj_sel_id, ctg, sub_ctg,  pj_long_title, pj_short_title, pj_intro, pj_short_intro, pj_tag,
+        INSERT INTO PJ (pj_id,pj_sel_name, pj_sel_id, ctg, sub_ctg,  pj_long_title, pj_short_title, pj_intro, pj_short_intro, pj_tag,
                          pj_pay_due_dtm, pj_sel_intro, pj_gift_intro, fund_goal_money, fund_str_dtm,
                         fund_end_dtm, fund_calc_due_dtm, gift_ship_due_date, pj_status, fund_result_status, curr_pj_like_cnt,
                         curr_fund_money, curr_buy_cnt, dba_reg_id)
-        VALUES (#{pj_id}, #{pj_sel_id}, #{ctg}, #{sub_ctg}, #{pj_long_title}, #{pj_short_title}, #{pj_intro}, #{pj_short_intro}, #{pj_tag},
+        VALUES (#{pj_id},#{pj_sel_name}, #{pj_sel_id}, #{ctg}, #{sub_ctg}, #{pj_long_title}, #{pj_short_title}, #{pj_intro}, #{pj_short_intro}, #{pj_tag},
                 #{pj_pay_due_dtm}, #{pj_sel_intro}, #{pj_gift_intro}, #{fund_goal_money}, #{fund_str_dtm},
                 #{fund_end_dtm}, #{fund_calc_due_dtm}, #{gift_ship_due_date}, #{pj_status}, #{fund_result_status}, #{curr_pj_like_cnt},
                 #{curr_fund_money}, #{curr_buy_cnt}, #{pj_sel_id})
@@ -90,5 +93,8 @@
     </select>
     <select id="selectAllPj" resultType="com.persistence.dto.ProjectDto">
         select * from pj
+    </select>
+    <select id="getRandPjList" resultType="com.persistence.dto.ProjectDto">
+        select * from pj order by rand() limit 9
     </select>
 </mapper>
