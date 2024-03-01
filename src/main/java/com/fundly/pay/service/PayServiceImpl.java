@@ -14,6 +14,8 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
 
+import static com.fundly.pay.util.ExceptionHandlerUtil.handleException;
+
 @Service
 @Slf4j
 public class PayServiceImpl implements PayService {
@@ -192,12 +194,6 @@ public class PayServiceImpl implements PayService {
         } catch (Exception e) {
             handleException("updatePayStatus(PayDto payDto, String payStatus)", e);
         }
-    }
-
-    // 예외 처리
-    private void handleException(String methodName, Exception e) {
-        log.error("{} : {}\n {}\n", methodName, e.getMessage(), e.getStackTrace());
-        throw new RuntimeException(e);
     }
 
     // 결제금액 검증 메서드 : 결제되어야 하는 금액과 실제 결제된 금액이 일치하는지 검증
