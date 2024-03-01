@@ -8,4 +8,6 @@ public interface ProjectService {
     ProjectAddResponse add(ProjectAddRequest pjAddReq);
 
     ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
+
+    ProjectInfo getProjectInfo(String userId);
 }

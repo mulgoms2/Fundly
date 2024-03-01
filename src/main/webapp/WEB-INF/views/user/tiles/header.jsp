@@ -11,7 +11,7 @@
         </a>
         <div class="lftSmn">
             <div class="pjtUp">
-                <a href="#">프로젝트 올리기</a>
+                <a href="<c:url value="/editor/info?user_id=${user_email}"/>">프로젝트 올리기</a>
             </div>
             <div class="like">
                 <i class="fa-regular fa-heart"></i>
@@ -74,3 +74,7 @@
         </div>
     </div>
 </div>
+<script>
+<%--    작성자 한윤재  --%>
+
+</script>

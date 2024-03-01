@@ -51,6 +51,12 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectDto.toInfoUpdateResponse(project);
     }
 
+    @Override
+    public ProjectInfo getProjectInfo(String userId) {
+
+        return null;
+    }
+
     //    //    todo 아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.
     @Override
     public ProjectAddResponse add(ProjectAddRequest pjAddReq) {

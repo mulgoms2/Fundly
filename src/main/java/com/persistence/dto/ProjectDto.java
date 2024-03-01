@@ -109,4 +109,8 @@ public class ProjectDto {
         this.pj_thumbnail_url = request.getPj_thumbnail_url();
         this.pj_tag = request.getPj_tag();
     }
+
+    public static ProjectInfo getInfo(ProjectInfo project) {
+        return ProjectInfo.builder().build();
+    }
 }
