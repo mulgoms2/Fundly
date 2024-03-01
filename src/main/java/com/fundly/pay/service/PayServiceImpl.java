@@ -99,7 +99,7 @@ public class PayServiceImpl implements PayService {
                 // 결제 성공
                 if (isPaymentSucessful(requestPayResponseDto)) {
                     // 결제금액 검증: 요청한 금액과 실제 결제된 금액이 같은지 비교
-                    if (isValidPaymentAmount(payDto.getOrder_pay_money(), requestPayResponseDto.getBody().getResponse().getAmount())) {
+                    if (isValidPaymentAmount(payDto.getOrder_pay_money(), requestPayResponseDto.getBody().getResponse().getCancel_amount())) {
                         // 결제금액 검증에 성공한 경우, 결제상태 == '결제완료'로 update
                         payDto.setPay_dtm(new Timestamp(requestPayResponseDto.getBody().getResponse().getPaid_at())); // 결제일시 setting TODO: 타입체크
                         updatePayStatus(payDto, "결제완료");
