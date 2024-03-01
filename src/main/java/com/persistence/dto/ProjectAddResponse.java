@@ -8,4 +8,5 @@ import lombok.Data;
 public class ProjectAddResponse {
     private String pj_id;
     private String sel_id;
+    private int curr_pj_like_cnt;
 }
