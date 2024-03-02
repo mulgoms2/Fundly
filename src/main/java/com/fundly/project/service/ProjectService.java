@@ -10,6 +10,11 @@ public interface ProjectService {
 
     ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
 
+
     StoryForm updatePjStory(StoryForm storyForm);
     StoryForm getStoryFormByPjId(String pj_id);
+
+    ProjectBasicInfo getProjectBasicInfo(String pj_id);
+    String getEditingProjectId(String user_email);
+
 }

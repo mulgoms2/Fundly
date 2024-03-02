@@ -131,4 +131,12 @@ public class ProjectDto {
                 .pj_gift_intro(project.getPj_gift_intro())
                 .build();
     }
+
+    public static ProjectBasicInfo getInfo(ProjectDto project) {
+        return ProjectBasicInfo.builder().pj_id(project.getPj_id()).sel_name(project.getPj_sel_name()).build();
+    }
+
+    public static ProjectStarter getStarter(ProjectDto projectDto) {
+        return ProjectStarter.builder().pj_id(projectDto.getPj_id()).build();
+    }
 }
