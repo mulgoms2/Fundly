@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.fundly.pay.util.ExceptionHandlerUtil.handleException;
@@ -102,8 +104,12 @@ public class PayServiceImpl implements PayService {
                 if (isPaymentSucessful(requestPayResponseDto)) {
                     // 결제금액 검증: 요청한 금액과 실제 결제된 금액이 같은지 비교
                     if (isValidPaymentAmount(payDto.getOrder_pay_money(), requestPayResponseDto.getBody().getResponse().getCancel_amount())) {
-                        // 결제금액 검증에 성공한 경우, 결제상태 == '결제완료'로 update
-                        payDto.setPay_dtm(new Timestamp(requestPayResponseDto.getBody().getResponse().getPaid_at())); // 결제일시 setting TODO: 타입체크
+                        // 결제금액 검증에 성공한 경우,
+                        Instant instant = Instant.ofEpochSecond(requestPayResponseDto.getBody().getResponse().getPaid_at()); // Unix Epoch Time을 Instant 객체로 변환
+                        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("UTC")); // Instant를 LocalDateTime으로 변환
+                        // 1) 결제일시 setting
+                        payDto.setPay_dtm(localDateTime);
+                        // 2) 결제상태 == '결제완료'로 update
                         updatePayStatus(payDto, "결제완료");
                     } else { // 결제금액 검증에 실패한 경우, 포트원에 결제 취소 요청을 한다.
                         cancelPayment(payDto, flag);

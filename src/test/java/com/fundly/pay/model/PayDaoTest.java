@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,18 +54,14 @@ class PayDaoTest {
                 .pj_id("PJ_test_1")
                 .user_id(userId)
                 .order_pay_money(new BigInteger("1"))
-                .pay_due_dtm(new Timestamp(System.currentTimeMillis())) // 현재 날짜
-                .gift_ship_due_date(new Timestamp(System.currentTimeMillis()))
+                .pay_due_dtm(LocalDateTime.now()) // 현재 날짜
+                .gift_ship_due_date(LocalDateTime.now())
                 .dba_reg_id(userId)
                 .pay_inserted_yn('N')
                 .build();
         // -> 2-2. 결제예정일시가 어제 날짜이면서 && 결제상태가 '결제실패'인 PayDto 준비
-        // 어제 날짜 계산
-        LocalDate localDate = LocalDate.now().minusDays(1);
-        // LocalDate를 LocalDateTime으로 변환 (시간 부분은 00:00:00으로 설정)
-        LocalDateTime localDateTime = localDate.atStartOfDay();
-        // LocalDateTime을 Timestamp로 변환
-        Timestamp yesterday = Timestamp.valueOf(localDateTime);
+        // 어제 날짜를 LocalDateTime으로 변환 (시간 부분은 00:00:00으로 설정)
+        LocalDateTime yesterday = LocalDate.now().minusDays(1).atStartOfDay();;
 
         PayDto payDto2 = PayDto.builder()
                 .order_list_id(orderListId2)
@@ -75,7 +70,7 @@ class PayDaoTest {
                 .user_id(userId)
                 .order_pay_money(new BigInteger("1"))
                 .pay_due_dtm(yesterday) // 어제 날짜
-                .gift_ship_due_date(new Timestamp(System.currentTimeMillis()))
+                .gift_ship_due_date(LocalDateTime.now())
                 .dba_reg_id(userId)
                 .pay_status("결제실패")
                 .build();
@@ -170,9 +165,9 @@ class PayDaoTest {
         for (PayDto dto : payDao.selectPayTarget()) {
             log.info("[결제대상] dto.getPay_id() = " + dto.getPay_id());
             assertEquals(dto.getPay_status(), "미결제", "[selectPayTarget] pay_status 검증 Error");
-//            log.info("dto.getPay_due_dtm().toLocalDateTime().toLocalDate() = " + dto.getPay_due_dtm().toLocalDateTime().toLocalDate());
+//            log.info("dto.getPay_due_dtm().toLocalDate() = " + dto.getPay_due_dtm().toLocalDate());
 //            log.info("LocalDate.now() = " + LocalDate.now());
-            assertEquals(dto.getPay_due_dtm().toLocalDateTime().toLocalDate(), LocalDate.now(), "[selectPayTarget] pay_due_dtm 검증 Error");
+            assertEquals(dto.getPay_due_dtm().toLocalDate(), LocalDate.now(), "[selectPayTarget] pay_due_dtm 검증 Error");
         }
     }
 
@@ -184,9 +179,9 @@ class PayDaoTest {
         for (PayDto dto : payDao.selectPayRetryTarget()) {
             log.info("[재결제대상] dto.getPay_id() = " + dto.getPay_id());
             assertEquals(dto.getPay_status(), "결제실패", "[selectPayTarget] pay_status 검증 Error");
-            log.info("dto.getPay_due_dtm().toLocalDateTime().toLocalDate() = " + dto.getPay_due_dtm().toLocalDateTime().toLocalDate());
-            log.info("LocalDate.now().minusDays(1) = " + LocalDate.now().minusDays(1));
-            assertEquals(dto.getPay_due_dtm().toLocalDateTime().toLocalDate(), LocalDate.now().minusDays(1), "[selectPayTarget] pay_due_dtm 검증 Error");
+//            log.info("dto.getPay_due_dtm().toLocalDate() = " + dto.getPay_due_dtm().toLocalDate());
+//            log.info("LocalDate.now().minusDays(1) = " + LocalDate.now().minusDays(1));
+            assertEquals(dto.getPay_due_dtm().toLocalDate(), LocalDate.now().minusDays(1), "[selectPayTarget] pay_due_dtm 검증 Error");
         }
 
     }
@@ -209,7 +204,7 @@ class PayDaoTest {
             assertTrue(dto.getPay_status().equals("미결제") || dto.getPay_status().equals("결제실패")); // before
 
             dto.setPay_status("결제완료");
-            dto.setPay_dtm(new Timestamp(System.currentTimeMillis())); // 결제일시를 현재 시간으로 update (test)
+            dto.setPay_dtm(LocalDateTime.now()); // 결제일시를 현재 시간으로 update (test)
             assertEquals(payDao.updatePayStatus(dto), 1, "[updatePayStatus] updatePayStatus Error");
 
             assertEquals(payDao.selectByPayId(payId).getPay_status(), "결제완료"); // after
@@ -304,8 +299,8 @@ class PayDaoTest {
                 .pj_id("PJ_test_1")
                 .user_id(userId)
                 .order_pay_money(new BigInteger("1"))
-                .pay_due_dtm(new Timestamp(System.currentTimeMillis())) // 현재 날짜
-                .gift_ship_due_date(new Timestamp(System.currentTimeMillis()))
+                .pay_due_dtm(LocalDateTime.now()) // 현재 날짜
+                .gift_ship_due_date(LocalDateTime.now())
                 .dba_reg_id(userId)
                 .build();
 
