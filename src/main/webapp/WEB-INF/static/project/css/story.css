@@ -1,5 +1,4 @@
 
-
 .story dl.pjInfo  {
     width: 302px;
 }
@@ -37,7 +36,7 @@
     flex-direction: column;
     width: 722px;
     border-radius: 0;
-    padding: 0 36px 32px;
+    padding: 0 30px 32px;
 
 }
 .pjWrap .pjCont .pjBox .pjForm.story > div {
@@ -47,6 +46,7 @@
 .pjWrap .pjCont .pjBox .pjForm.story > div.reward {
     border-bottom: none;
 }
+
 .pjWrap .pjCont .pjBox .pjForm.story .tit > p {
     font-size: 18px;
     font-weight: 700;
@@ -60,4 +60,26 @@
 }
 .pjWrap .pjCont .pjBox .story .textWrp {
     margin-top: 16px;
+}
+
+
+/*tinyMCE로 만들고 다시 불러온 텍스트들에 적용할 스타일*/
+.pjWrap .pjCont .pjBox .story .saved {
+    font-family:Helvetica,Arial,sans-serif;
+    font-size:14px;
+    line-height: 2;
+    margin: 20px auto;
+}
+.pjWrap .pjCont .pjBox .story hr {
+    border: .5px solid #ececec;
+    margin : 10px 0;
+}
+
+.pjWrap .pjCont .pjBox .story .saved img{
+    width: 620px;
+    height: auto;
+    margin: 0 auto;
+}
+.pjWrap .pjCont .pjBox .story .hidden {
+    display: none;
 }

@@ -1,5 +1,6 @@
 package com.fundly.project.service;
 
+import com.fundly.project.controller.StoryForm;
 import com.persistence.dto.*;
 
 public interface ProjectService {
@@ -10,7 +11,10 @@ public interface ProjectService {
     ProjectBasicInfo updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
 
 
-    ProjectBasicInfo getProjectBasicInfo(String pj_id);
+    StoryForm updatePjStory(StoryForm storyForm);
+    StoryForm getStoryFormByPjId(String pj_id);
 
+    ProjectBasicInfo getProjectBasicInfo(String pj_id);
     String getEditingProjectId(String user_email);
+
 }

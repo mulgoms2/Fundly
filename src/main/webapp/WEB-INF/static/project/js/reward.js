@@ -174,6 +174,7 @@ window.onload = function () {
             })
             .catch(error => error).then(error => {
                 alert("[등록 실패] " + error);
+                console.log("item등록 실패");
                 console.log(error);
         })
             // .then(error => {
