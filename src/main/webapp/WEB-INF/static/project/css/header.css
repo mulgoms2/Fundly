@@ -1,4 +1,4 @@
-* {
+.topContents {
     margin: 0;
     padding: 0;
     text-decoration: none;
@@ -11,6 +11,8 @@
     font-size: 14px;
     font-style: normal;
 }
+/*위 스타일이 헤더의 상단 오른쪽 버튼에 적용이 안되네*/
+
 a {
     text-decoration: none;
     color: #3d3d3d;
@@ -75,6 +77,12 @@ body {
 .topContents .header div.hBtnWrap > button.save {
     background-color: #f86453;
     border: 1px solid #f86453;
+    color: #ffffff;
+}
+.topContents .header div.hBtnWrap > button.modify {
+    display: none;
+    background-color: #74b6a5;
+    border: 1px solid #74b6a5;
     color: #ffffff;
 }
 .topContents .topContentsWrapper{

@@ -1,5 +1,6 @@
 package com.fundly.project.service;
 
+import com.fundly.project.controller.StoryForm;
 import com.fundly.project.exception.ProjectDoesntExistsException;
 import com.fundly.project.model.ProjectMapper;
 import com.persistence.dto.*;
@@ -8,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -41,7 +39,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest request) {
+      public ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest request) {
         ProjectDto project = projectMapper.getByPjId(request.getPj_id());
 
         project.updateInfo(request);
@@ -50,6 +48,25 @@ public class ProjectServiceImpl implements ProjectService {
 
         return ProjectDto.toInfoUpdateResponse(project);
     }
+
+    @Override
+    // Tx에 해당하지 않는듯. 쿼리 두번 호출하지만, 어차피 select에서 에러나면 dto를 꺼내올 수도 없으니 두번째 쿼리도 에러남.
+    public StoryForm updatePjStory(StoryForm storyForm) { //프로젝트 계획 부분 업데이트
+        ProjectDto project = projectMapper.getByPjId(storyForm.getPj_id());
+        project.updateStory(storyForm); // projectDto의 해당 필드값을 초기화한다
+        projectMapper.update(project); //DB값 update
+
+        ProjectDto updatedProject = projectMapper.getByPjId(project.getPj_id());//DB에서 업데이트된 데이터를 꺼내옴
+
+        return ProjectDto.toStoryForm(updatedProject); //반환값이 dto니까 테스트할때는 requestForm과 update된 dto의 필드값을 비교.
+    }
+
+    @Override
+    public StoryForm getStoryFormByPjId(String pj_id) {
+        ProjectDto projectDto = projectMapper.getByPjId(pj_id);
+        return ProjectDto.toStoryForm(projectDto);
+    }
+
 
     //    //    todo 아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.
     @Override
