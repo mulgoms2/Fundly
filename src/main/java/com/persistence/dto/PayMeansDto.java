@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @ToString
 @EqualsAndHashCode
@@ -39,9 +39,9 @@ public class PayMeansDto {
 //    private String acc_own_eng_name; // 예금주 영문이름
 
     // 4. dba
-    private Timestamp dba_reg_dtm;
+    private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
-    private Timestamp dba_mod_dtm;
+    private LocalDateTime dba_mod_dtm;
     private String dba_mod_id;
 
     public PayMeansDto(String user_id, String own_type, String bill_key, String default_pay_means_yn, String card_no, String dba_reg_id) {
@@ -161,11 +161,11 @@ public class PayMeansDto {
         this.card_co_type = card_co_type;
     }
 
-    public Timestamp getDba_reg_dtm() {
+    public LocalDateTime getDba_reg_dtm() {
         return dba_reg_dtm;
     }
 
-    public void setDba_reg_dtm(Timestamp dba_reg_dtm) {
+    public void setDba_reg_dtm(LocalDateTime dba_reg_dtm) {
         this.dba_reg_dtm = dba_reg_dtm;
     }
 
@@ -177,11 +177,11 @@ public class PayMeansDto {
         this.dba_reg_id = dba_reg_id;
     }
 
-    public Timestamp getDba_mod_dtm() {
+    public LocalDateTime getDba_mod_dtm() {
         return dba_mod_dtm;
     }
 
-    public void setDba_mod_dtm(Timestamp dba_mod_dtm) {
+    public void setDba_mod_dtm(LocalDateTime dba_mod_dtm) {
         this.dba_mod_dtm = dba_mod_dtm;
     }
 
