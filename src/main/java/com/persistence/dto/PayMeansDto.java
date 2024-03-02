@@ -39,8 +39,10 @@ public class PayMeansDto {
 //    private String acc_own_eng_name; // 예금주 영문이름
 
     // 4. dba
+    @EqualsAndHashCode.Exclude
     private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
+    @EqualsAndHashCode.Exclude
     private LocalDateTime dba_mod_dtm;
     private String dba_mod_id;
 

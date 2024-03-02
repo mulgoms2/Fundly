@@ -23,9 +23,13 @@ public class PayDto {
     private String pay_means_id; // 결제 수단
     private BigInteger order_pay_money; // 결제 금액
     private String pay_status; // 결제 상태
+    @EqualsAndHashCode.Exclude
     private LocalDateTime pay_dtm; // 실제 결제일시
+    @EqualsAndHashCode.Exclude
     private LocalDateTime pay_due_dtm; // 결제예정일시
+    @EqualsAndHashCode.Exclude
     private LocalDateTime pay_ddln_dtm; // 결제마감일시 (결제예정일시 + 7일)
+    @EqualsAndHashCode.Exclude
     private LocalDateTime gift_ship_due_date; // 상품전달예정일
     private String pay_co_resp_json; // PortOne 결제요청에 대한 응답 데이터
 
@@ -34,8 +38,10 @@ public class PayDto {
     private char pay_inserted_yn; // 결제테이블에 insert 된 주문인지 여부
 
     // dba
+    @EqualsAndHashCode.Exclude
     private LocalDateTime dba_reg_dtm; // 최초등록일시
     private String dba_reg_id; // 최초등록자식별번호
+    @EqualsAndHashCode.Exclude
     private LocalDateTime dba_mod_dtm; // 최종수정일시
     private String dba_mod_id; // 최종수정자식별번호
 }
