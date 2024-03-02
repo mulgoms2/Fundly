@@ -39,7 +39,7 @@ public class ProjectEditorController {
     }
 
     @GetMapping("/info")
-    public String getInfo(@RequestParam(required = false) String pj_id, Model model) {
+    public String getBasicInfo(@RequestParam(required = false) String pj_id, Model model) {
 //        현재 진행중인 프로젝트가 존재하는 유저가 이어서 작성하기 버튼을 눌렀을 때 실행된다.
         String errPage = "project/clientError";
         String errorMsg = "errorMsg";
@@ -82,11 +82,19 @@ public class ProjectEditorController {
     }
 
     @PatchMapping("/info")
-    public String updateInfo(@Valid @RequestBody ProjectInfoUpdateRequest request, BindingResult result) {
+    @ResponseBody
+    public ResponseEntity<Boolean> updateBasicInfo(@Valid @RequestBody ProjectInfoUpdateRequest request, Model model, BindingResult result) {
         if (result.hasErrors()) {
-
+//            프로젝트 아이디가 없으면 에러가 발생한다. 나머지 정보들은 null 이어도 무관하다.
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         }
-//        프로젝트 업데이트 요청을 반영한 후. 업데이트 된 정보를 뷰로 내려보낸다.
-        ProjectInfoUpdateResponse projectInfoUpdateResponse = projectService.updatePjInfo(request);
+
+        try {
+            projectService.updatePjInfo(request);
+        } catch (ProjectNofFoundException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
+
+        return ResponseEntity.ok(true);
     }
 }

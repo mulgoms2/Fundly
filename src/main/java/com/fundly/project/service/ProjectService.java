@@ -7,7 +7,7 @@ public interface ProjectService {
 
     ProjectAddResponse add(ProjectAddRequest pjAddReq);
 
-    ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
+    ProjectBasicInfo updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
 
 
     ProjectBasicInfo getProjectBasicInfo(String pj_id);

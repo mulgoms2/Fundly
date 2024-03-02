@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -101,25 +103,6 @@ class ProjectEditorControllerTest {
 
         verify(service).getEditingProjectId(user_id);
     }
-
-//    @Test
-//    @DisplayName("updateInfo() 브라우저로부터 info update 요청받기")
-//    void info() throws Exception {
-//
-//        given(service.updatePjInfo(any())).willReturn(response);
-//        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(requestJson)).andExpect(status().isOk()).andExpect(jsonPath("$.pj_id").value(pj_id)).andDo(print());
-//    }
-
-//    @Test
-//    @DisplayName("updateInfo() 업데이트 요청에 프로젝트 아이디가 포함되어있지 않다")
-//    void validationNull() throws Exception {
-//        request.setPj_id(null);
-//        requestJson = objectMapper.writeValueAsBytes(request);
-//
-//        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(requestJson)).andExpect(status().isBadRequest()).andDo(print());
-//    }
-
-
     @Test
     @DisplayName("getInfo(pj_id) 프로젝트 아이디가 공백일때")
     void getInfoInputEmpty() throws Exception {
@@ -200,6 +183,46 @@ class ProjectEditorControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("project.basicInfo"))
                 .andExpect(model().attributeExists("basicInfo"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("updateBasicInfo() 업데이트 요청에 프로젝트아이디가 없다.")
+    void 업데이트요청에프로젝트아이디가없다() throws Exception {
+        ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id(null).build();
+        byte[] json = objectMapper.writeValueAsBytes(updateRequest);
+        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("updateBasicInfo() 정상적으로 업데이트가 수행됐을경우")
+    void 업데이트성공() throws Exception {
+        ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id("01").build();
+        byte[] json = objectMapper.writeValueAsBytes(updateRequest);
+
+        given(service.updatePjInfo(updateRequest)).willReturn(any());
+
+        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("true"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("updateBasicInfo() 업데이트 대상 프로젝트를 찾지 못했다.")
+    void 업데이트실패() throws Exception {
+        given(service.updatePjInfo(any())).willThrow(ProjectNofFoundException.class);
+
+        ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id("01").build();
+        byte[] json = objectMapper.writeValueAsBytes(updateRequest);
+
+        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(status().is5xxServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("false"))
                 .andDo(print());
     }
 }
