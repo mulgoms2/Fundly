@@ -10,6 +10,8 @@
 <%--</head>--%>
 <%--<!-- 모든 input에 같은 클래스 적용 (outline, required 등 속성 적용 위해) ex. pjInput-->--%>
 <%--<body>--%>
+
+<%-- basicInfo 라는 이름으로 작성중인 프로젝트 기본 정보를 내려받는다.--%>
 <div class="pjWrap">
     <div class="pjCont">
         <!-- 카테고리 -->

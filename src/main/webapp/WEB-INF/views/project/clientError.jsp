@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dobigulbi
@@ -11,6 +12,9 @@
     <title>Title</title>
 </head>
 <body>
-${error}
+<script>
+    alert("${errorMsg}");
+    window.location = "<c:url value="/" />";
+</script>
 </body>
 </html>

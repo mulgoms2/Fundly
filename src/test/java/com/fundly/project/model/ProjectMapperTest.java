@@ -321,6 +321,15 @@ class ProjectMapperTest {
     }
 
     @Test
+    @DisplayName("getListByUserId() 조회되는 프로젝트가 없을때 빈 리스트를 반환한다")
+    void get_empty_list() {
+        List<ProjectDto> listByUserId = projectMapper.getListByUserId(user_id);
+
+        assertThat(listByUserId).isNotNull();
+        assertThat(listByUserId.size()).isEqualTo(0);
+    }
+
+    @Test
     @SneakyThrows
     @DisplayName("좋아요수감소테스트") void downLikeCnt() {
         this.project1 = ProjectDto.builder()

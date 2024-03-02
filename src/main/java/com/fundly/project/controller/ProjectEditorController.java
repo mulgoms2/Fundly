@@ -1,13 +1,10 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.exception.ProjectAddFailureException;
+import com.fundly.project.exception.ProjectNofFoundException;
 import com.fundly.project.service.ProjectService;
-import com.fundly.project.service.ProjectServiceImpl;
-import com.persistence.dto.ProjectDto;
-import com.persistence.dto.ProjectInfo;
-import com.persistence.dto.ProjectInfoUpdateRequest;
-import com.persistence.dto.ProjectInfoUpdateResponse;
+import com.persistence.dto.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Controller
 @RequestMapping("/editor")
@@ -27,41 +22,71 @@ public class ProjectEditorController {
     @Autowired
     ProjectService projectService;
 
-//    @GetMapping("/info")
-//    public ResponseEntity<ProjectInfo> getInfo(@RequestParam String user_id) {
-//        if (user_id == null || user_id.isEmpty()) {
-//            log.debug("ProjectEditorController.getInfo(String user_id) 유저아이디가 널이거나 빈 값이 전달되어왔습니다.");
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-////        유저아이디로 식별된 프로젝트의 정보를 리턴한다.
-//        ProjectInfo projectInfo = projectService.getProjectInfo(user_id);
-//
-//        return ResponseEntity.ok().body(projectInfo);
-//    }
-@GetMapping("/info")
-public String getInfo(@RequestParam(required = false) String user_id, Model model) {
-//    user_id 가 필수값이기 때문에 빈칸이나 널값이 들어오면 에러페이지로 이동한다.
-    if (user_id == null || user_id.isEmpty()) {
-        log.debug("ProjectEditorController.getInfo(String user_id) 유저아이디가 널이거나 빈 값이 전달되어왔습니다.");
-        model.addAttribute("error", "로그인 후 이용해주세요");
-        return "project/clientError";
+    @GetMapping("/start")
+    public String startPage(@SessionAttribute(required = false) String user_email, Model model) {
+        if (user_email == null || user_email.isEmpty()) {
+            return "user/login";
+        }
+//        작성중인 프로젝트가 존재하는지 확인한다.
+        try {
+            String pj_id = projectService.getEditingProjectId(user_email);
+            model.addAttribute("pj_id", pj_id);
+        } catch (ProjectNofFoundException e) {
+//            편집중인 프로젝트가 존재하지 않으면. 모델이 비어있어 뷰에서 새로 시작하기 버튼이 나온다.
+            return "project/start";
+        }
+        return "project/start";
     }
-//        유저아이디로 식별된 프로젝트의 정보를 리턴한다.
-    ProjectInfo projectInfo = projectService.getProjectInfo(user_id);
 
-    return "project.basicInfo";
-}
+    @GetMapping("/info")
+    public String getInfo(@RequestParam(required = false) String pj_id, Model model) {
+//        현재 진행중인 프로젝트가 존재하는 유저가 이어서 작성하기 버튼을 눌렀을 때 실행된다.
+        String errPage = "project/clientError";
+        String errorMsg = "errorMsg";
+        if (pj_id == null || pj_id.isEmpty()) {
+            model.addAttribute(errorMsg, "서버에 일시적인 장애가 발생하였습니다. 다시 시도해주세요.");
+            return errPage;
+        }
+//        작성중인 프로젝트의 기본정보 탭에 필요한 데이터를 불러온다.
+        try {
+            ProjectBasicInfo projectInfo = projectService.getProjectBasicInfo(pj_id);
+            model.addAttribute("basicInfo", projectInfo);
+        } catch (ProjectNofFoundException e) {
+//            이어서 작성하려는 프로젝트가 조회되지 않는 예외적인 상황
+            model.addAttribute(errorMsg, "작성하려는 프로젝트가 존재하지 않습니다. 다시 시도해주세요");
+            return errPage;
+        }
+        return "project.basicInfo";
+    }
 
+    @PostMapping("/info")
+    public String makeProject(@SessionAttribute(required = false) String user_email, Model model) {
+        if (user_email == null || user_email.isEmpty()) {
+            model.addAttribute("errorMsg", "로그인 후 이용해주세요.");
+            return "project/clientError";
+        }
+//        이곳에서 새로운 프로젝트를 만든다.
+        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_email).build();
+
+        try {
+//            프로젝트 추가 후 응답객체를 info 객체로 바꿔 뷰로 보낸다.
+            ProjectAddResponse addResponse = projectService.add(addRequest);
+            ProjectBasicInfo basicInfo = addResponse.toInfoDto();
+
+            model.addAttribute("basicInfo", basicInfo);
+        } catch (ProjectAddFailureException e) {
+            return "project/error";
+        }
+
+        return "project.basicInfo";
+    }
 
     @PatchMapping("/info")
-    @ResponseBody
-    public ResponseEntity<ProjectInfoUpdateResponse> updateInfo(@Valid @RequestBody ProjectInfoUpdateRequest request, BindingResult result) {
+    public String updateInfo(@Valid @RequestBody ProjectInfoUpdateRequest request, BindingResult result) {
         if (result.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-//        프로젝트 업데이트 요청이 들어오면 서비스에 업데이트를 요청한 후 받은 응답을 리턴한다.
-        ProjectInfoUpdateResponse projectInfoUpdateResponse = projectService.updatePjInfo(request);
 
-        return ResponseEntity.ok().body(projectInfoUpdateResponse);
+        }
+//        프로젝트 업데이트 요청을 반영한 후. 업데이트 된 정보를 뷰로 내려보낸다.
+        ProjectInfoUpdateResponse projectInfoUpdateResponse = projectService.updatePjInfo(request);
     }
 }

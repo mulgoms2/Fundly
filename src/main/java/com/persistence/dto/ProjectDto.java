@@ -110,7 +110,11 @@ public class ProjectDto {
         this.pj_tag = request.getPj_tag();
     }
 
-    public static ProjectInfo getInfo(ProjectInfo project) {
-        return ProjectInfo.builder().build();
+    public static ProjectBasicInfo getInfo(ProjectDto project) {
+        return ProjectBasicInfo.builder().pj_id(project.getPj_id()).sel_name(project.getPj_sel_name()).build();
+    }
+
+    public static ProjectStarter getStarter(ProjectDto projectDto) {
+        return ProjectStarter.builder().pj_id(projectDto.getPj_id()).build();
     }
 }

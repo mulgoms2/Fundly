@@ -44,7 +44,6 @@ public class ChatServiceTestImpl implements ChatServiceTest {
 
 //    새로운 채팅방을 만든다.
     public ChatRoom makeChatRoom(ChatRoomRequest chatRoomRequest) {
-        //todo chatRoomDao.save() 가 새로운 채팅방을 반환할때 채팅방 번호는 기존의 방번호의 +1 이어야 한다.
         ChatRoom savedChatRoom = chatRoomDao.save(chatRoomRequest.toEntity());
 
         return savedChatRoom;

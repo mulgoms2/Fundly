@@ -9,5 +9,8 @@ public interface ProjectService {
 
     ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
 
-    ProjectInfo getProjectInfo(String userId);
+
+    ProjectBasicInfo getProjectBasicInfo(String pj_id);
+
+    String getEditingProjectId(String user_email);
 }
