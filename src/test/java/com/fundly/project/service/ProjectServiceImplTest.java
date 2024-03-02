@@ -172,7 +172,7 @@ class ProjectServiceImplTest {
 
         given(projectMapper.getByPjId(pjInfoUpdate.getPj_id())).willReturn(pj);
 
-        ProjectInfoUpdateResponse resp =  projectServiceImpl.updatePjInfo(pjInfoUpdate);
+        ProjectBasicInfo resp =  projectServiceImpl.updatePjInfo(pjInfoUpdate);
 
         assertThat(resp).isNotNull();
         assertThat(resp.getCtg()).isEqualTo(pjInfoUpdate.getCtg());

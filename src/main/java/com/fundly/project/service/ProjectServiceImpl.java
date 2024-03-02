@@ -1,7 +1,6 @@
 package com.fundly.project.service;
 
 import com.fundly.project.controller.StoryForm;
-import com.fundly.project.exception.ProjectDoesntExistsException;
 import com.fundly.project.exception.ProjectNofFoundException;
 import com.fundly.project.model.ProjectMapper;
 import com.persistence.dto.*;
@@ -42,17 +41,23 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectInfoUpdateResponse updatePjInfo(ProjectInfoUpdateRequest request) {
+    public ProjectBasicInfo updatePjInfo(ProjectInfoUpdateRequest request) {
 //        업데이트 대상 프로젝트 가져오기
         String pjId = request.getPj_id();
         ProjectDto project = projectMapper.getByPjId(pjId);
+        if (project == null) {
+            String errMsg = "업데이트 대상 프로젝트를 찾을 수 없습니다.";
+            log.error(errMsg);
+            throw new ProjectNofFoundException(errMsg);
+        }
+
 //        상태변경하기
         project.updateInfo(request);
 //        db에 상태 반영하기
         projectMapper.update(project);
         ProjectDto savedPj = projectMapper.getByPjId(pjId);
 
-        return ProjectDto.toInfoUpdateResponse(savedPj);
+        return ProjectDto.toBasicInfo(savedPj);
     }
 
     @Override
@@ -83,7 +88,7 @@ public class ProjectServiceImpl implements ProjectService {
             log.error("getProjectBasicInfo(String pj_id) : {}\n{}", ex.getMessage(), ex.getStackTrace());
             throw ex;
         }
-        return ProjectDto.getInfo(project);
+        return ProjectDto.toBasicInfo(project);
     }
 
     @Override
