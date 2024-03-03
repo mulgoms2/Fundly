@@ -11,6 +11,5 @@
                 user_status
         FROM USER_INFO
         WHERE user_email = #{user_email};
-<!--          AND user_pwd = #{user_pwd};-->
     </select>
 </mapper>

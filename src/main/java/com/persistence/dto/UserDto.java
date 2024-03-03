@@ -46,11 +46,11 @@ public class UserDto {
     private String p_info_oth_agree_yn; // 개인정보 제3자 제공 동의 여부
     private String m_info_rcv_agree_yn; // 마케팅정보수신 여부(선택)
 //    @EqualsAndHashCode.Exclude
-    private String dba_reg_dtm;
-    @NotBlank
-    private String dba_reg_id;
-//    @EqualsAndHashCode.Exclude
-    private String dba_mod_dtm;
-    private String dba_mod_id;
+//    private String dba_reg_dtm;
+//    @NotBlank
+//    private String dba_reg_id;
+////    @EqualsAndHashCode.Exclude
+//    private String dba_mod_dtm;
+//    private String dba_mod_id;
 }
 

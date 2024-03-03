@@ -7,13 +7,16 @@ function changeBtn(btnName,before,detail){
 
         btnName.innerHTML="취소";
         btnName.style.background= "rgb(252, 252, 252)";
+        // btnName.style.background= "rgb(240, 240, 240)";
+
         btnName.style.border = "1px solid rgb(228, 228, 228)";
     }else{
         before.style.display="block";
         detail.style.display="none";
 
         btnName.innerHTML="변경";
-        btnName.style.background= "rgb(208, 208, 208)";
+        btnName.style.background= "rgb(240, 240, 240)";
+        // btnName.style.background= "rgb(208, 208, 208)";
         btnName.style.border= "none";
     }
 }

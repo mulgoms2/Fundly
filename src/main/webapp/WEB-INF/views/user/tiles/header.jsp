@@ -22,7 +22,7 @@
             <div class="userIf" >
                 <div class="infoGr"  id = "loginInfo">
                     <div class="ifImg">
-                        <span></span>
+                        <span id="profileImg" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></span>
                     </div>
                     <div class="ifTxt"id="ifTxt">${loginInfo}</div>
                     <div class="MyPageList" id = "MyPageList">

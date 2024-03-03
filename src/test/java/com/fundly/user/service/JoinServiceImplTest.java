@@ -112,7 +112,7 @@ class JoinServiceImplTest {
                 .p_info_oth_agree_yn("Y")
                 .m_info_rcv_agree_yn("Y")
                 .user_status("A")
-                .dba_reg_id("a12345@test.com")
+//                .dba_reg_id("a12345@test.com")
                 .build();
 
         try {
