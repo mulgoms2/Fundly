@@ -41,6 +41,7 @@ public class ProjectEditorController {
     @GetMapping("/info")
     public String getBasicInfo(@RequestParam(required = false) String pj_id, Model model) {
 //        현재 진행중인 프로젝트가 존재하는 유저가 이어서 작성하기 버튼을 눌렀을 때 실행된다.
+//        log.error("\n\n pj_id={} \n\n", pj_id);
         String errPage = "project/clientError";
         String errorMsg = "errorMsg";
         if (pj_id == null || pj_id.isEmpty()) {

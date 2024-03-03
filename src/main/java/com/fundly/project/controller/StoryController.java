@@ -19,24 +19,48 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/project")
 public class StoryController {
-    String pj_id = "pj1";
 
     @Autowired
     ProjectService projectService;
 
     //프로젝트 계획
     @GetMapping("/story")//pj_id는 session에서 가져오는 것으로 수정할 예정
-    public String makeStory(@RequestParam(required = false) String pj_id, Model m){
-        if(pj_id!=null){
-            log.error("\n\n pj_id={}\n\n",pj_id);
-            StoryForm storyForm = projectService.getStoryFormByPjId(pj_id);
-            log.error("\n\n storyForm={} \n\n",storyForm);
-            m.addAttribute(storyForm);
+    public String makeStory(@SessionAttribute String pj_id, Model m, @RequestParam(required = false) boolean edit){
+        //작성한 내용이 아무것도 없으면 프로젝트 에디터를 띄우고
+        //작성한 항목이 하나라도 있으면, 작성한 내용을 먼저 보여주고 수정버튼을 누르면 에디터를 띄워주도록 하기
+        log.error("\n\n pj_id={}\n\n",pj_id);
+        log.error("\n\n edit={}\n\n",edit);
+        StoryForm storyForm = projectService.getStoryFormByPjId(pj_id);
+        if(edit){
+            storyForm.setEdit();
         }
+        log.error("\n\n storyForm={} \n\n",storyForm);
+        log.error("\n\n storyForm.getIsEmpty()",storyForm.getIsEmpty()+"");
+        m.addAttribute(storyForm);
+
         return "project.story";
     }
 
 
+//    @PostMapping("/story") fetch로 온 요청에 대해서는 view를 반환하지 못하는듯.
+//    public String saveStory(@RequestBody StoryForm storyForm, Model m){
+//        // todo 근데 작성 중에 임시로 올린 파일인 경우 나중에 서버에서 어떻게 삭제하지?
+//        //  최종적으로 form을 제출할 때 포함되지 않은 이미지는 서버에서 지워야 메모리가 낭비가 안될것 같은데.
+//        //
+//        log.error("\n\n received storyForm={} \n\n", storyForm);
+//        try {
+//            storyForm = projectService.updatePjStory(storyForm);
+//            log.error("\n\n after storyForm={} \n\n", storyForm);
+//            throw new Exception("test");
+//            //m.addAttribute(storyForm);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            String msg = "FAIL";
+//            m.addAttribute(msg);
+//        }
+//        return "project.reward";
+//    }
     @PostMapping("/story")
     @ResponseBody
     public ResponseEntity<?> saveStory(@RequestBody StoryForm storyForm){

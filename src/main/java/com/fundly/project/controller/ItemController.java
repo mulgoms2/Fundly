@@ -58,7 +58,7 @@ public class ItemController {
 
     // 아이템+선물 페이지
     @GetMapping("/reward")
-    public String makeGift(Model m) throws Exception { //global catcher에서 예외처리
+    public String makeGift(Model m, HttpSession session) throws Exception { //global catcher에서 예외처리
         //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
         //뷰단에서는 itemDtoList가 empty면 보여줄 화면과 empty가 아니면 보여줄 화면이 나뉨.
 
@@ -67,6 +67,7 @@ public class ItemController {
 //        m.addAttribute("itemList",itemList); //비동기로 서버로 데이터를 요청할거라 처음 뷰에 데이터를 넘겨주지도 않아도 됨.
 
 //        throw new Exception("global catcher test");
+        session.setAttribute("pj_id","90d85c31-cfe0-4410-b148-e0f9d2abcd3c"); //임시로..
         return "project.reward";
     }
 

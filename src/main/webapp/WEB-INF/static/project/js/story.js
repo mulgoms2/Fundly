@@ -10,6 +10,8 @@ const reward = document.querySelector('div.reward');
 const rewardTit = document.querySelector('div.reward div.tit');
 const storySaveBtn = document.querySelector('button.save');
 const storyModifyBtn = document.querySelector('button.modify');
+const storyCancelBtn = document.querySelector('button.cancel');
+const storyPreviewBtn = document.querySelector('button.preview');
 
 const divs = document.querySelectorAll('div.sub:not(.tit)');
 
@@ -80,12 +82,20 @@ necessary, as we are looking to handle it internally.
 
 
 window.onload = function(){
-    console.log(divs);
-    console.log(storyModifyBtn);
+    let msg = "${msg}"
+    console.log("msg="+msg)
+    if(msg == "FAIL") alert('저장에 실패했습니다.')
+
+    const saved = document.querySelector('div.saved');
+    console.log(saved); //div class='saved'가 있다는 것은 작성된 내용이 있다는 뜻.
+    if(saved!=null){
+        storySaveBtn.style.display = 'none';
+        storyModifyBtn.style.display = 'block';
+
+    }
 
     storySaveBtn.addEventListener('click', function(){
-        // console.log("pj_intro")
-        // console.log(pj_intro)
+
         const pj_intro = tinymce.get('intro') //에디터에 입력한 value
         const pj_budget = tinymce.get('budget')
         const pj_sched = tinymce.get('sched');
@@ -94,20 +104,21 @@ window.onload = function(){
 
 
         const storyForm = {
-            "pj_id": "pj1", //지금은 하드코딩인데.. 어디서 가져올지 생각하기
+            "pj_id": "90d85c31-cfe0-4410-b148-e0f9d2abcd3c", //지금은 하드코딩인데.. 어디서 가져올지 생각하기
             "pj_intro": pj_intro.getContent(),
             "pj_budget": pj_budget.getContent(),
             "pj_sched": pj_sched.getContent(),
             "pj_sel_intro": pj_sel_intro.getContent(),
-            "pj_gift_intro": pj_gift_intro.getContent()
+            "pj_gift_intro": pj_gift_intro.getContent(),
+            "edit": false
         }
 
-        console.log(storyForm);
+        //console.log(storyForm);
         fetch("/project/story",{
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "accept": "application/json"
+                //"accept": "application/json"
             },
             body: JSON.stringify(storyForm),
         })
@@ -140,6 +151,7 @@ window.onload = function(){
 
 
 
+
                 // pj_intro.setContent(data.pj_intro)
                 // pj_budget.setContent(data.pj_budget)
                 // pj_sched.setContent((data.pj_sched == null)? "" : data.pj_sched);
@@ -156,22 +168,11 @@ window.onload = function(){
             .catch(error => error)
     })
 
-    storyModifyBtn.addEventListener('click',function(){
-        console.log(this)
-        //수정버튼을 누르면 다시 텍스트에디터에 data가 담긴 form이 나타난다. display:none인 상태의 요소는 가져올 수가 없구나..
-        for(div of divs){
-            div.classList.remove('hidden');
-        }
-        // const savedDiv = document.querySelectorAll('div.saved');
-        // for(saved of savedDiv){
-        //     saved.remove();
-        // }
-        const pj_id = "pj1"
-        location.href = "/project/story?pj_id="+pj_id
-        // fetch("/project/story?pj_id="+pj_id,{
-        //     method: "GET"
-        // })
+    storyModifyBtn.addEventListener('click',function(){ //수정 form을 서버로부터 받아온다.
+        if(!confirm('프로젝트 계획을 수정하시겠습니까?')) return;
+        location.href = "/project/story?edit="+true
     })
+
 
 
 }
