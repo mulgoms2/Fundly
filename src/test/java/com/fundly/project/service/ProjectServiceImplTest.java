@@ -205,4 +205,29 @@ class ProjectServiceImplTest {
         log.debug(""+projectBasicInfo);
 
     }
+
+    @Test
+    @DisplayName("update() 업데이트 대상 프로젝트가 존재하지 않는다.")
+    void updateFaileur() {
+//        업데이트를 시도했으나 영향받은 행이 없다.
+        given(projectMapper.update(any())).willReturn(0);
+
+        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.update(projectDto));
+    }
+
+    @Test
+    @DisplayName("update(ProjectDto) 프로젝트 전체를 업데이트한다")
+    void update() {
+        projectDto.setPj_id("01");
+        projectDto.setPj_status("작성중");
+
+        given(projectMapper.update(any())).willReturn(1);
+        given(projectMapper.getByPjId(projectDto.getPj_id())).willReturn(projectDto);
+
+
+        ProjectDto savedProject = projectServiceImpl.update(projectDto);
+
+        assertThat(savedProject.getPj_id()).isEqualTo(projectDto.getPj_id());
+        log.debug(""+savedProject);
+    }
 }

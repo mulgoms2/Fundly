@@ -17,4 +17,5 @@ public interface ProjectService {
     ProjectBasicInfo getProjectBasicInfo(String pj_id);
     String getEditingProjectId(String user_email);
 
+    ProjectDto update(ProjectDto projectDto);
 }
