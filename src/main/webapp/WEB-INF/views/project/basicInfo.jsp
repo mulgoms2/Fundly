@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--<!DOCTYPE html>--%>
 <%--<html lang="en">--%>
 <%--<head>--%>
@@ -33,6 +34,7 @@
                         <p>카테고리</p>
                         <div>
                             <input readonly type="text" placeholder="카테고리를 선택해주세요.">
+                            <input type="text" value="${projectDto.ctg}">
                             <i class="fas fa-solid fa-chevron-down"></i>
                             <%--                            <i class="fas fa-solid fa-chevron-up"></i> 클릭시 transition--%>
                         </div>
@@ -67,7 +69,7 @@
                         </div>
                         <div class="pjInputWrap">
                             <div>
-                                <input type="text" id="longTitle" class="pjInput" placeholder="긴 제목을 입력해주세요."/>
+                                <input type="text" id="longTitle" class="pjInput" value="${projectDto.pj_long_title}" placeholder="긴 제목을 입력해주세요."/>
                             </div>
                             <p>0/32</p>
                         </div>
@@ -80,7 +82,7 @@
                         </div>
                         <div class="pjInputWrap">
                             <div>
-                                <input type="text" class="pjInput" placeholder="짧은 제목을 입력해주세요.">
+                                <input type="text" id="shortTitle" class="pjInput" value="${projectDto.pj_short_title}" placeholder="짧은 제목을 입력해주세요.">
                             </div>
                             <p>0/7</p>
                         </div>
@@ -108,7 +110,7 @@
                 </div>
                 <div class="pjInputWrap">
                     <div class="pjInputBx">
-                        <textarea class="pjTxt"></textarea>
+                        <textarea id="pjIntro" content="${projectDto.pj_short_intro}" class="pjTxt"></textarea>
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
@@ -183,7 +185,41 @@
         </div>
     </div>
 </div>
-<script src="/static/project/js/projectInfo.js"></script>
+<script>
+    window.onload = ()=>{
+        const saveBtn = document.querySelector(".save");
+        saveBtn.addEventListener("click", updateProjectInfo);
+    };
+
+
+    async function updateProjectInfo(){
+        const longTitle = document.querySelector("#longTitle").value;
+        const shotTitle = document.querySelector("#shortTitle").value;
+        const pjIntro = document.querySelector("#pjIntro").textContent;
+
+        const formData = new FormData();
+        formData.append("pj_id", "${projectDto.pj_id}");
+        // formData.append("ctg", "반려동물");
+        // formData.append("sub_ctg");
+        formData.append("pj_long_title", longTitle);
+        formData.append("pj_short_title", shotTitle);
+        formData.append("pj_short_intro", pjIntro);
+        // formData.append("pj_thumbnail_img");
+        // formData.append("pj_tag");
+
+        const response = await fetch("/editor/infoTest",{
+            method: "post",
+            headers:{},
+            body: formData
+        });
+
+        const result = await response.json();
+        if (result) {
+            alert("저장이 완료되었습니다.");
+        }
+    }
+</script>
+<%--<script src="/static/project/js/projectInfo.js"></script>--%>
 
 <%--</body>--%>
 <%--</html>--%>

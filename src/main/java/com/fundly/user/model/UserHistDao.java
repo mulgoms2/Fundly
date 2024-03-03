@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserHistDao {
-    Integer insert(UserHistDto userHistDto) throws Exception;
+    int insert(UserHistDto userHistDto) throws Exception;
 }

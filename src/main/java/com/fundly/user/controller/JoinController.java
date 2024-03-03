@@ -4,6 +4,7 @@ import com.fundly.user.dto.UserJoinDto;
 import com.fundly.user.service.JoinService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -34,10 +35,12 @@ public class JoinController {
     }
 
     @GetMapping("/add")
-    public String join(@ModelAttribute("userJoinDto")UserJoinDto userJoinDto){ return "user/join";}
+    public String join(@ModelAttribute("userJoinDto")UserJoinDto userJoinDto){  log.info("dddddddddddddddd"); return "user/join";}
 
-    @PostMapping("/add")
-    public String joinsave(@Valid UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
+    @PostMapping( "/add")
+//    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+
+    public String joinsave(@Valid  UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
 
         /*
         binding으로 value 값 확인
@@ -63,7 +66,6 @@ public class JoinController {
             joinService.userJoin(userJoinDto);
 
         } catch (Exception e) {
-
             rattr.addFlashAttribute("errmsg", e.getMessage().split(" ",2)[1]);
             // 이미 가입되어 있을 때 기존 값을 보여줄것인가 ? 그냥 초기화 할것인가 ? : 초기화
 //            rattr.addFlashAttribute(userJoinDto);
@@ -74,7 +76,6 @@ public class JoinController {
             //서버에서도 각 dto에서 , valid 에 따른 입력값 재 확인 요구(화면 유지하면서 해당 vaild 체크 하기)
             // 화면간의 이동에 따른 주석
         }
-
 //        회원가입 후 로그인 화면으로 갈것인가 ? 메인으로 갈것인가 ? :  로그인 화면
         return "/user/login";
     }
@@ -93,10 +94,7 @@ public class JoinController {
     /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */
 //    @ExceptionHandler({RuntimeException.class, SQLException.class, IllegalArgumentException.class, Exception.class})
     @ExceptionHandler({Exception.class}) // 우선 전체 적인 Exception 확인, null 은 어떤가 ?
-    public String handleException()
-    {
-        return "user/error";
-    }
+    public String handleException() { return "user/error"; }
 
 //    public String Exception(){
 //    }

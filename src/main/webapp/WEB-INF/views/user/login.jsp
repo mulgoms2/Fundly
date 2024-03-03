@@ -17,7 +17,7 @@
     </head>
 
     <body>
-        <header id="header"><a href="<c:url value='/'/>">Fundly</a></header>
+        <header id="header"><a href="<c:url value='/'/>"><img class="logo" src="/static/img/fundly-logo.svg"></a></header>
 
         <main id="main">
             <div class="mainWrap">
