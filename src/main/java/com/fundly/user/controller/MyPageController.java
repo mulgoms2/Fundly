@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
@@ -38,53 +40,53 @@ public class MyPageController {
 
     /* 프로필 */
     @GetMapping("/profile")
-    public String mypageprofile(HttpSession session, Model model) {
-        return selViewPage("main.index","user.profile",session,model);
+    public String mypageprofile(HttpSession session, HttpServletRequest request, Model model) {
+        return selViewPage("main.index","user.profile", session, request, model);
     }
 
     /* 응원권 */
     @GetMapping("/coupon")
-    public String mypagecoupon(HttpSession session, Model model) {
-        return selViewPage("main.index","user.coupon",session,model);
+    public String mypagecoupon(HttpSession session, HttpServletRequest request, Model model) {
+        return selViewPage("main.index","user.coupon", session, request, model);
     }
 
     /* 후원한 프로젝트 */
     @GetMapping("/fundingProject")
-    public String mypageOrder(HttpSession session,Model model){
-        return selViewPage("main.index","user.fundingProject",session,model);
+    public String mypageOrder(HttpSession session, HttpServletRequest request,Model model){
+        return selViewPage("main.index","user.fundingProject", session, request, model);
     }
 
     /* 관심 프로젝트 */
     @GetMapping("/likes")
-    public String mypageLikes(HttpSession session,Model model){
-        return selViewPage("main.index","user.likes",session,model);
+    public String mypageLikes(HttpSession session, HttpServletRequest request,Model model){
+        return selViewPage("main.index","user.likes", session, request, model);
     }
 
     /* 알림 */
     @GetMapping("/alarm")
-    public String mypageAlarm(HttpSession session,Model model){
-        return selViewPage("main.index","user.alarm",session,model);
+    public String mypageAlarm(HttpSession session, HttpServletRequest request,Model model){
+        return selViewPage("main.index","user.alarm", session, request, model);
     }
 
     /* 메시지 */
     @GetMapping("/message")
-    public String mypageMessage(HttpSession session,Model model){
-        return selViewPage("main.index","user.message",session,model);
+    public String mypageMessage(HttpSession session, HttpServletRequest request, Model model){
+        return selViewPage("main.index","user.message", session, request, model);
     }
 
     /* 내가 만든 프로젝트 */
     @GetMapping("/makeProject")
-    public String mypageMakeProject(HttpSession session,Model model){
-        return selViewPage("main.index","user.makeProject",session,model);
+    public String mypageMakeProject(HttpSession session, HttpServletRequest request, Model model){
+        return selViewPage("main.index","user.makeProject", session, request, model);
     }
 
     /* 셋팅 */
     @GetMapping("/setting")
-    public String mypageSetting(HttpSession session,Model model){
-        return selViewPage("main.index","user.setting",session,model);
+    public String mypageSetting(HttpSession session, HttpServletRequest request, Model model){
+        return selViewPage("main.index","user.setting", session, request, model);
     }
 
-    public String selViewPage(String mainView, String moveView, HttpSession session, Model model){
+    public String selViewPage(String mainView, String moveView, HttpSession session, HttpServletRequest request, Model model){
 
         try {
             String user_email = (String)(session.getAttribute("user_email"));// "helloworld@abc.com";
@@ -101,9 +103,11 @@ public class MyPageController {
             UserDto dto = UserDto.builder().user_email(user_email).user_id(user_email).build();
             UserDto userInfo = userInfoService.userInfo(dto);
             String userjoindateView = userInfoService.userJoindate(dto);
+            String user_profileImg = getCookieValue(request,"user_profileImg");
 
             model.addAttribute("userInfo",userInfo);
             model.addAttribute("userjoindateView",userjoindateView);
+            model.addAttribute("user_profileImg",user_profileImg);
 
             // 유저 아이디 통해 좋아요 목록 불러오기 (디폴트 : 진행중인 프로젝트)
             LikeDto likedto = new LikeDto(user_email);
@@ -145,6 +149,21 @@ public class MyPageController {
 //            throw new RuntimeException(e);
 //        }
 //    }
+
+    public String getCookieValue(HttpServletRequest request, String cookieName) {
+        Cookie[] cookies = request.getCookies();
+
+        // 쿠키 배열이 null이 아니고, 각 쿠키를 확인하여 원하는 쿠키의 값을 찾음
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieName)) {
+                    return cookie.getValue();
+                }
+            }
+        }
+
+        return null;
+    }
 
     /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */
     @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class})

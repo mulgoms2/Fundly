@@ -24,7 +24,7 @@
     </select>
 
     <!-- user_info update -->
-    <update id="update" parameterType="UserProfileDto">
+    <update id="update" parameterType="UserDto">
         UPDATE user_info
         SET user_name = #{user_name},
             user_pwd = #{user_pwd},
@@ -36,10 +36,28 @@
             pj_upd_ntf_yn = #{pj_upd_ntf_yn},
             like_pj_ntf_yn = #{like_pj_ntf_yn},
             m_ntf_yn = #{m_ntf_yn},
-            dba_mod_dtm = #{dba_mod_dtm},
-            dba_mod_id = #{dba_mod_id}
+            dba_mod_dtm = now(),
+            dba_mod_id = #{user_email}
         WHERE user_email = #{user_email}
     </update>
 
+    <select id="getUserProfileImg" parameterType="FileDto" resultType="java.lang.String">
+        SELECT file_origin_url
+        FROM FILE
+        where table_name = #{table_name}
+        AND table_key = #{table_key}
+    </select>
 
+    <insert id="saveFile" parameterType="FileDto">
+        insert into FILE (table_name, file_origin_url, file_saved_url, table_key)
+        values (#{table_name}, #{file_origin_url}, #{file_saved_url}, #{table_key})
+    </insert>
+
+    <update id="updateFile" parameterType="FileDto" >
+        UPDATE FILE
+        SET file_origin_url = #{file_origin_url}
+            file_saved_url = #{file_saved_url}
+        where table_name = #{table_name}
+          AND table_key = #{table_key}
+    </update>
 </mapper>

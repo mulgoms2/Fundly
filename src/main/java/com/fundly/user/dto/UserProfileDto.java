@@ -37,8 +37,6 @@ public class UserProfileDto {
     private String user_phone_no ;
 
 //    // 카카오 계정 연동
-//    private
-
     // 회원 탈퇴 E?
     @Nullable
     private String user_status; // 회원상태
@@ -54,9 +52,5 @@ public class UserProfileDto {
 
     // 마케팅 알림여부
     private String m_ntf_yn;
-
-// 수정일시 수정자
-    private String dba_mod_dtm;
-    private String dba_mod_id;
 }
 

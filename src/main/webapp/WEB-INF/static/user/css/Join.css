@@ -10,6 +10,10 @@
     text-decoration: none;
 }
 
+.logo {
+    width: 100px;
+}
+
 #header {
     text-align: center;
     padding: 15px ;
@@ -26,7 +30,6 @@
 
 #main{
     margin-top: 2.5%;
-    /*margin: 0 auto;*/
 }
 
 .line > span::before {

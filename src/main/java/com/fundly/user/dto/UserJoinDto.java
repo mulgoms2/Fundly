@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 @Setter
 @Getter
 @Builder
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserJoinDto {
@@ -56,10 +56,10 @@ public class UserJoinDto {
 
     private String m_info_rcv_agree_yn; // 마케팅정보수신 여부(선택)
 
-    @Nullable
-    private String dba_reg_dtm;
-
-    @Nullable
-    private String dba_reg_id;
+//    @Nullable
+//    private String dba_reg_dtm;
+//
+//    @Nullable
+//    private String dba_reg_id;
 }
 

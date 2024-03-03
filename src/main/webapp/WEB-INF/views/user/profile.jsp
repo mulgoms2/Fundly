@@ -6,7 +6,7 @@
     <div class="pageComponent">
         <div class="profilerHeader">
             <div class="profileInfo">
-                <div class="ifImg"><span></span></div>
+                <div class="ifImg"><span id="profileImg" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></span></div>
                 <div class="userInfo">
                     <div class="userInfoDetail">
                         <div class="username">${userInfo.user_name}</div>

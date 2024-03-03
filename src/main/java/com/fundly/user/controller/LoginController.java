@@ -3,6 +3,8 @@ package com.fundly.user.controller;
 import com.fundly.user.dto.UserLoginDto;
 import com.fundly.user.model.UserLoginDao;
 import com.fundly.user.service.LoginService;
+import com.fundly.user.service.UserProfileService;
+import com.persistence.dto.FileDto;
 import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import java.util.Map;
 @RequestMapping("/login")
 public class LoginController {
     private final LoginService loginService;
+    private final UserProfileService userProfileService;
 
     /*
     * 1. 로그인 get , post
@@ -37,8 +40,9 @@ public class LoginController {
     * */
 
     @Autowired
-    public LoginController(LoginService loginService){
+    public LoginController(LoginService loginService,UserProfileService userProfileService){
         this.loginService = loginService;
+        this.userProfileService = userProfileService;
     }
 
     @GetMapping("/login")
@@ -54,7 +58,6 @@ public class LoginController {
              2-1 가입된 정보를 확인 후 정보가 있으면 로그인
              2-2 가입된 정보가 없다면 id/pwd 확인 요청
         * */
-
 
         /* userLoginDto valid */
         if(bindingResult.hasErrors()) {
@@ -74,13 +77,16 @@ public class LoginController {
 
         try {
             loginService.Login(userLoginDto, session, response);
-//            String user_email
 
-            // 2-2
-//            if(userInfo == null){
-//                rattr.addFlashAttribute("msg", "Fundly에 등록되지 않은 이메일주소 또는 비밀번호가 일치 하지 않습니다. ");
-//                return "redirect:/login/login";
-//            }
+            String profileImg =userProfileService.getUserProfileImg(FileDto.builder().table_name("user_info").table_key(userLoginDto.getUser_email()).build());
+
+            if(profileImg !=null){
+
+                /* cookie add */
+                response.addCookie(setCookie("user_profileImg",profileImg,-1,"/"));
+
+                log.error("프로필 이미지 저장 로그 : " + profileImg);
+            }
 
         } catch (Exception e) {
 //            throw new RuntimeException(e);
@@ -104,26 +110,19 @@ public class LoginController {
             String user_email = (String)(session.getAttribute("user_email"));
             String access_token = getCookieValue(request,"kat");
 
-            log.error(user_email);
-            log.error(access_token);
-
-            log.info("user_email = " + user_email);
             if(user_email!="") {
                 session.invalidate();
 
                 response.addCookie(setCookie("user_email","",0,"/"));
                 response.addCookie(setCookie("user_name","",0,"/"));
+                response.addCookie(setCookie("user_profileImg","",0,"/"));
             }
-    //        profile img
-//            response.addCookie(setCookie("user_profile_img_url","null",0,"/"));
 
             if(access_token!=null){
-
                 response.addCookie(setCookie("kat","",0,"/"));
                 return "redirect:/oauth/logout";
             }
 
-//            rattr.addFlashAttribute("errmsg", "LOGOUT");
             response.getWriter().println("<script>alert('로그 아웃되었습니다.');</script>");
             return "redirect:/";
         } catch (Exception e) {

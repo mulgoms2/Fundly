@@ -65,7 +65,7 @@ class UserJoinDaoTest {
                     .p_info_oth_agree_yn("Y")
                     .m_info_rcv_agree_yn("Y")
                     .user_status("A")
-                    .dba_reg_id("abc123@test.com")
+//                    .dba_reg_id("abc123@test.com")
                     .build();
 
             String userInPwd = userJoinDto.getUser_pwd();
