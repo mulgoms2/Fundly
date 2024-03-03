@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--<!DOCTYPE html>--%>
 <%--<html lang="en">--%>
 <%--<head>--%>
@@ -12,6 +13,9 @@
 <%--<body>--%>
 
 <%-- basicInfo 라는 이름으로 작성중인 프로젝트 기본 정보를 내려받는다.--%>
+<%--<form:form modelAttribute="projectDto">--%>
+
+<%--</form:form>--%>
 <div class="pjWrap">
     <div class="pjCont">
         <!-- 카테고리 -->

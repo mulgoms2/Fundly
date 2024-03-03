@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequestMapping("/editor")
-@Slf4j
 @SessionAttributes("projectDto")
 public class ProjectEditorController {
     @Autowired
@@ -48,6 +48,7 @@ public class ProjectEditorController {
 
     @PostMapping("/info")
     public String makeProject(@SessionAttribute String user_email, HttpSession session, Model model) {
+//        public String makeProject(ProjectAddRequest addRequest, HttpSession session, Model model) {
 //        이곳에서 새로운 프로젝트를 만든다.
         ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_email).build();
 
