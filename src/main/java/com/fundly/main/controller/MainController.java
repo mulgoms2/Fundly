@@ -31,9 +31,7 @@ public class MainController {
 
         String user_email = getCookieValue(request,"user_email");
         String sessionemail = (String)(session.getAttribute("user_email"));
-
-//        log.info("user_email = " + user_email);
-//        log.info("sessionemail = " + sessionemail);
+        String user_profileImg = getCookieValue(request,"user_profileImg");
 
         if(sessionemail== null && user_email != null){
             session.setAttribute("user_email",user_email);
@@ -41,9 +39,10 @@ public class MainController {
             session.setMaxInactiveInterval(1800);
         }
 
-        UserDto dto = UserDto.builder().user_email(user_email).build();
-        UserDto userInfo = userInfoService.userInfo(dto);
+        UserDto userInfo = userInfoService.userInfo(UserDto.builder().user_email(user_email).build());
+
         model.addAttribute("userInfo",userInfo);
+        model.addAttribute("user_profileImg",user_profileImg);
         return "main.index";
     }
 
