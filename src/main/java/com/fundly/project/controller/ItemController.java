@@ -67,7 +67,10 @@ public class ItemController {
 //        m.addAttribute("itemList",itemList); //비동기로 서버로 데이터를 요청할거라 처음 뷰에 데이터를 넘겨주지도 않아도 됨.
 
 //        throw new Exception("global catcher test");
-        session.setAttribute("pj_id","90d85c31-cfe0-4410-b148-e0f9d2abcd3c"); //임시로..
+
+        //session.setAttribute("pj_id","90d85c31-cfe0-4410-b148-e0f9d2abcd3c");
+        //프로젝트 계획 컨트롤러에서 pj_id를 꺼내 쓰기 위해 임시로 하드코딩 담아둔것.
+
         return "project.reward";
     }
 

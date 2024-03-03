@@ -113,16 +113,13 @@ window.onload = function(){
             for(img of imgs){
                 let idx = img.src.lastIndexOf('/')
                 let imgName = img.src.substring(idx+1);
-                console.log(imgName)
                 imgArr.push(imgName);
-                console.log(imgArr);
             }
-
+            //console.log(imgArr);
         }
 
 
         const storyForm = {
-            "pj_id": "90d85c31-cfe0-4410-b148-e0f9d2abcd3c", //지금은 하드코딩인데.. 어디서 가져올지 생각하기
             "pj_intro": pj_intro.getContent(),
             "pj_budget": pj_budget.getContent(),
             "pj_sched": pj_sched.getContent(),
@@ -150,8 +147,8 @@ window.onload = function(){
             .then(data => {
                 // 미리보기처럼 작성한 텍스트를 div에 넣어 보여준다.
                 alert("프로젝트 계획이 성공적으로 저장되었습니다.")
-                console.log("data received")
-                console.log(data)
+                //console.log("data received")
+                //console.log(data)
 
                 for(div of divs){
                     //div.style.display = 'none';
@@ -167,8 +164,6 @@ window.onload = function(){
                 //수정버튼이 보이게한다.
                 storySaveBtn.style.display = 'none';
                 storyModifyBtn.style.display = 'block';
-
-
 
 
                 // pj_intro.setContent(data.pj_intro)
