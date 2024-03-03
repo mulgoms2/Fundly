@@ -1,7 +1,7 @@
 package config;
 
 import com.fundly.chat.validate.ChatInterceptor;
-//import com.fundly.project.validate.LoginInterceptor;
+import com.fundly.project.validate.LoginInterceptor;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +55,7 @@ public class ServletContext implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(new ChatInterceptor()).addPathPatterns("/chat*");
-//        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/editor/*");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/editor/*");
     }
 
     @Bean
