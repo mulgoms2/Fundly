@@ -1,7 +1,7 @@
 package config;
 
 import com.fundly.chat.validate.ChatInterceptor;
-import com.fundly.project.validate.LoginInterceptor;
+//import com.fundly.project.validate.LoginInterceptor;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
