@@ -6,8 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="js_c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="js_c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="application/x-www-form-urlencoded;charset=UTF-8" language="java" %>--%>
 <html>
     <head>
         <title>회원가입</title>
@@ -17,7 +18,9 @@
     </head>
 
     <body>
-        <header id="header"><a href="<c:url value='/'/>">Fundly</a></header>
+<%--        <header id="header"><a href="<c:url value='/'/>">Fundly</a></header>--%>
+        <header id="header"><a href="<c:url value='/'/>"><img class="logo" src="/static/img/fundly-logo.svg"></a></header>
+
         <main id="main">
             <div class="mainWrap">
 
@@ -314,7 +317,6 @@
             }
 
             joinForm.action = '<c:url value="/join/add"/>';
-            // joinForm.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8")
             joinForm.method = 'POST';
             joinForm.submit();
         })

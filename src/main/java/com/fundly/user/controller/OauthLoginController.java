@@ -63,8 +63,6 @@ public class OauthLoginController {
 //                + "&prompt=login";
                 + "&prompt=select_account" ;
 
-//        log.error("reqUrl = "  +reqUrl);
-
         return "redirect:" + reqUrl;
     }
 
@@ -83,8 +81,6 @@ public class OauthLoginController {
 //                + "&prompt=none";
                 + "&prompt=login";
 //                + "&prompt=select_account" ;
-
-//        log.error("reqUrl = "  +reqUrl);
 
         return "redirect:" + reqUrl;
     }
@@ -107,6 +103,7 @@ public class OauthLoginController {
         String snsId = (String)userInfo.get("id");
         String user_email = (String)userInfo.get("email");
         String user_name = (String)userInfo.get("name");
+
         // 비밀번호 암호화 할것인가 ?
         String user_pwd = snsId;
 
@@ -186,7 +183,6 @@ public class OauthLoginController {
         log.info("user_email = " +user_email + " \n\n");
 
         try {
-//            Map<String, Object>  expires_in = kakaoService.getTokenTime(access_token);//("xr6YurVklja1riJkUyg_CB_spKvJSHp2irYKPXVbAAABjdoxWzCi-KZYUq23DA");
             Map<String, Object>  expires_in = null;
 
             expires_in = kakaoService.getTokenTime(access_token);

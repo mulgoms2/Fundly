@@ -18,7 +18,6 @@ public class JoinServiceImpl implements JoinService {
     private final UserJoinDao userJoinDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    public JoinServiceImpl () {}
     public JoinServiceImpl (UserJoinDao userJoinDao) {this.userJoinDao = userJoinDao;}
     @Autowired
     public JoinServiceImpl(UserJoinDao userJoinDao, BCryptPasswordEncoder bCryptPasswordEncoder){
@@ -27,14 +26,14 @@ public class JoinServiceImpl implements JoinService {
     }
 
     @Override
-    public Integer emailCheck(UserJoinDto userJoinDto) throws Exception {
+    public int emailCheck(UserJoinDto userJoinDto) throws Exception {
         return userJoinDao.emailCheck(userJoinDto);
     }
 
     @Override
 //    @Transactional(rollbackFor = SQLException.class)
     @Transactional(rollbackFor = Exception.class)
-    public Integer userJoin(UserJoinDto userJoinDto) throws Exception {
+    public int userJoin(UserJoinDto userJoinDto) throws Exception {
 
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)
 
@@ -61,7 +60,7 @@ public class JoinServiceImpl implements JoinService {
             if("on".equals((userJoinDto.getP_info_oth_agree_yn()))) userJoinDto.setP_info_oth_agree_yn("Y");
             if("on".equals((userJoinDto.getM_info_rcv_agree_yn()))) userJoinDto.setM_info_rcv_agree_yn("Y");
             userJoinDto.setUser_status(user_status);
-            userJoinDto.setDba_reg_id(userJoinDto.getUser_email());
+//            userJoinDto.setDba_reg_id(userJoinDto.getUser_email());
 
 //            log.error("값은 뭘까 ? " + userJoinDto);
 

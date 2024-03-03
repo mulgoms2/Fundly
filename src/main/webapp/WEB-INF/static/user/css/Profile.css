@@ -43,7 +43,7 @@
     width: 80px;
     height: 80px;
     display: inline-block;
-    background: url(../../img/avatar.webp) no-repeat center center;
+    /*background: url(../../img/avatar.webp) no-repeat center center;*/
     background-size: cover;
     border-radius: 50%;
     box-shadow: rgb(208, 208, 208) 0px 0px 1px 0px inset,
