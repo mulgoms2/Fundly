@@ -104,7 +104,7 @@ public class ProjectDto {
 
 
 
-    public void updateInfo(ProjectInfoUpdateRequest request) {
+    public void updateBasicInfo(ProjectInfoUpdateRequest request) {
         this.ctg = request.getCtg();
         this.sub_ctg = request.getSub_ctg();
         this.pj_long_title = request.getPj_long_title();

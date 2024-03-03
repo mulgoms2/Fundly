@@ -2,6 +2,7 @@ package com.fundly.project.service;
 
 import com.fundly.project.controller.StoryForm;
 import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.model.ProjectMapper;
 import com.persistence.dto.*;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +26,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
 
-    // project.toTemplate() 프로젝트 템플릿을 뷰에 맞게 커스텀 할 필요가 있다.
     @Override
     @Transactional(readOnly = true)
-    public ProjectTemplate getById(String pj_id) {
+    public ProjectDto get(String pj_id) {
 //        프로젝트를 아이디로 조회한다.
         ProjectDto pj = projectMapper.getByPjId(pj_id);
 
@@ -37,8 +37,7 @@ public class ProjectServiceImpl implements ProjectService {
             log.error("ProjectServiceImpl.getById(String pj_id) : {}\n {}\n", ex.getMessage(), ex.getStackTrace());
             throw ex;
         }
-//        프로젝트를 뷰에 맞는 템플릿으로 반환해준다.
-        return ProjectDto.toTemplate(pj);
+        return pj;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
 //        상태변경하기
-        project.updateInfo(request);
+        project.updateBasicInfo(request);
 //        db에 상태 반영하기
         projectMapper.update(project);
         ProjectDto savedPj = projectMapper.getByPjId(pjId);
@@ -93,13 +92,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public String getEditingProjectId(String user_email) {
+    public ProjectDto getEditingProject(String user_email) {
         List<ProjectDto> pjList = projectMapper.getListByUserId(user_email);
 
         if (!pjList.isEmpty()) {
-            for (ProjectDto pj : pjList) {
-                if (pj.getPj_status().equals("작성중")) {
-                    return pj.getPj_id();
+            for (ProjectDto project : pjList) {
+                if (project.getPj_status().equals("작성중")) {
+                    return project;
                 }
             }
         }
@@ -108,7 +107,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     //    //    아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.
     @Override
-    public ProjectAddResponse add(ProjectAddRequest pjAddReq) {
+    public ProjectDto add(ProjectAddRequest pjAddReq) {
 //        프로젝트 추가 요청을 통해 프로젝트를 생성한다.(프로젝트 키는 프로젝트 객체로 변환 될때 자동으로 생성)
         ProjectDto projectDto = pjAddReq.toProject();
         try {
@@ -118,8 +117,8 @@ public class ProjectServiceImpl implements ProjectService {
             add(pjAddReq);
         }
         ProjectDto savedProject = projectMapper.getByPjId(projectDto.getPj_id());
-//        저장된 프로젝트를 가져와 응답객체로 반환한다.
-        return ProjectDto.toResponseDto(savedProject);
+
+        return savedProject;
     }
 
     @Override
@@ -127,7 +126,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDto update(ProjectDto projectDto) {
         int update = projectMapper.update(projectDto);
         if (update == 0) {
-            ProjectNofFoundException ex = new ProjectNofFoundException("업데이트 대상 프로젝트를 찾을 수 없습니다.");
+            ProjectUpdateFailureException ex = new ProjectUpdateFailureException("업데이트 대상 프로젝트를 찾을 수 없습니다.");
             log.debug("update(ProjectDto) : {}\n{}", ex.getMessage(), ex.getStackTrace());
             throw ex;
         }

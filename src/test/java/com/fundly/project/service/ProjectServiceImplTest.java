@@ -1,6 +1,7 @@
 package com.fundly.project.service;
 
 import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.model.ProjectMapper;
 import com.persistence.dto.*;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -52,7 +51,7 @@ class ProjectServiceImplTest {
     public void addPj() {
 //        테스트 대상 메서드 실행
         given(projectMapper.getByPjId(any())).willReturn(projectDto);
-        ProjectAddResponse result = projectServiceImpl.add(프로젝트생성요청);
+        ProjectDto result = projectServiceImpl.add(프로젝트생성요청);
 //        테스트 결과 확인
         assertNotNull(result);
     }
@@ -64,12 +63,12 @@ class ProjectServiceImplTest {
         ProjectDto 프로젝트 = 프로젝트생성요청.toProject();
 //        프로젝트 추가요청을 받아 응답객체를 돌려준다.
         given(projectMapper.getByPjId(any())).willReturn(프로젝트);
-        ProjectAddResponse 응답 = projectServiceImpl.add(프로젝트생성요청);
+        ProjectDto projectDto = projectServiceImpl.add(프로젝트생성요청);
 
 
 //        프로젝트 응답객체에는 판매자 아이디, 프로젝트번호, 및 유저 정보가 들어있어야 한다.
-        assertThat(응답).isNotNull();
-        assertThat(응답.getSel_id()).isEqualTo(프로젝트생성요청.getUser_id());
+        assertThat(projectDto).isNotNull();
+        assertThat(projectDto.getPj_sel_id()).isEqualTo(프로젝트생성요청.getUser_id());
         assertThat(프로젝트.getPj_id()).isNotEmpty();
     }
 
@@ -80,7 +79,7 @@ class ProjectServiceImplTest {
         given(projectMapper.insert(any())).willThrow(DuplicateKeyException.class).willReturn(1);
         given(projectMapper.getByPjId(any())).willReturn(projectDto);
 //        프로젝트를 추가하려는데. 생성된 프로젝트의 키가 데이터베이스에 이미 존재한다.
-        ProjectAddResponse projectAddResponse = assertDoesNotThrow(() -> projectServiceImpl.add(프로젝트생성요청));
+        ProjectDto projectAddResponse = assertDoesNotThrow(() -> projectServiceImpl.add(프로젝트생성요청));
 
 //        그러면 프로젝트 객체에게 새로운 키를 만들 것을 요청한다? 아니면 프로젝트 요청을 통해 새로운 프로젝트 객체를 생성한다?
 
@@ -95,7 +94,7 @@ class ProjectServiceImplTest {
         ProjectDto pj = ProjectDto.builder().pj_id(pj_id).pj_sel_id("mulgom").pj_short_title("한윤재의 프로젝트").build();
         given(projectMapper.getByPjId(pj_id)).willReturn(pj);
 
-        ProjectTemplate pjTemplate = projectServiceImpl.getById(pj_id);
+        ProjectDto pjTemplate = projectServiceImpl.get(pj_id);
         assertThat(pjTemplate).isNotNull();
 
         verify(projectMapper).getByPjId(pj_id);
@@ -106,11 +105,11 @@ class ProjectServiceImplTest {
     void getByNonExistId() {
         given(projectMapper.getByPjId(any())).willReturn(null);
 
-        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.getById("hello"));
+        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.get("hello"));
     }
 
     @Test
-    @DisplayName("getProjectStater() 편집중인 프로젝트가 없다.")
+    @DisplayName("getEditingProject() 편집중인 프로젝트가 없다.")
     void get_editing_project_dosent_exists() {
 //        특정 유저가 편집중인 프로젝트를 가져오려는데, 편집중인 프로젝트가 존재하지 않는다.
         String user_email = "dbswoi123@naver.com";
@@ -118,14 +117,14 @@ class ProjectServiceImplTest {
         List<ProjectDto> emptyList = new ArrayList<>();
         given(projectMapper.getListByUserId(any())).willReturn(emptyList);
 
-        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.getEditingProjectId(user_email));
+        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.getEditingProject(user_email));
 
 //        작성중인 상태의 프로젝트가 존재하지 않으면 예외를 발생시킨다.
 //        assertThat(pj_id).isNull();
     }
 
     @Test
-    @DisplayName("getProjectStater() 편집중인 프로젝트를 반환한다.")
+    @DisplayName("getEditingProject() 편집중인 프로젝트를 반환한다.")
     void get_editing_project() {
         List<ProjectDto> pjList = new ArrayList<>();
         String user_email = "dbwswoi123@naver.com";
@@ -143,10 +142,10 @@ class ProjectServiceImplTest {
 
         given(projectMapper.getListByUserId(user_email)).willReturn(pjList);
 
-        String pj_id = projectServiceImpl.getEditingProjectId(user_email);
+        ProjectDto project = projectServiceImpl.getEditingProject(user_email);
 
-        assertThat(pj_id).isNotNull();
-        assertThat(pj_id).isEqualTo(result_pj_id);
+        assertThat(project).isNotNull();
+        assertThat(project.getPj_id()).isEqualTo(result_pj_id);
     }
 
     @Test
@@ -212,7 +211,7 @@ class ProjectServiceImplTest {
 //        업데이트를 시도했으나 영향받은 행이 없다.
         given(projectMapper.update(any())).willReturn(0);
 
-        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.update(projectDto));
+        assertThatExceptionOfType(ProjectUpdateFailureException.class).isThrownBy(() -> projectServiceImpl.update(projectDto));
     }
 
     @Test

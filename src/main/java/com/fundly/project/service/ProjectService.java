@@ -4,9 +4,9 @@ import com.fundly.project.controller.StoryForm;
 import com.persistence.dto.*;
 
 public interface ProjectService {
-    ProjectTemplate getById(String pjId);
+    ProjectDto get(String pjId);
 
-    ProjectAddResponse add(ProjectAddRequest pjAddReq);
+    ProjectDto add(ProjectAddRequest pjAddReq);
 
     ProjectBasicInfo updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
 
@@ -15,7 +15,7 @@ public interface ProjectService {
     StoryForm getStoryFormByPjId(String pj_id);
 
     ProjectBasicInfo getProjectBasicInfo(String pj_id);
-    String getEditingProjectId(String user_email);
+    ProjectDto getEditingProject(String user_email);
 
     ProjectDto update(ProjectDto projectDto);
 }
