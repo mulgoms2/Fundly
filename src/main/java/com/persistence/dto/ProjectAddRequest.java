@@ -12,11 +12,11 @@ import java.util.UUID;
 @Builder
 public class ProjectAddRequest {
 //    private String user_name;
-    private String user_id;
+    private String user_email;
 
     public ProjectDto toProject() {
         String pj_id = String.valueOf(UUID.randomUUID());
 
-        return ProjectDto.builder().pj_id(pj_id).pj_status("작성중").pj_sel_id(user_id).build();
+        return ProjectDto.builder().pj_id(pj_id).pj_status("작성중").pj_sel_id(user_email).build();
     }
 }

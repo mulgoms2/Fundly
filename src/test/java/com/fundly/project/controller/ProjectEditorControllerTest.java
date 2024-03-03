@@ -62,7 +62,7 @@ class ProjectEditorControllerTest {
         requestJson = objectMapper.writeValueAsBytes(request);
         editingProject = "editingProject";
 
-        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
+//        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
     }
 
 
@@ -171,9 +171,10 @@ class ProjectEditorControllerTest {
     @Test
     @DisplayName("getInfo() 유저가 편집중인 프로젝트를 가져온다.")
     void getEditingProject() throws Exception {
-        ProjectBasicInfo pjInfo = ProjectBasicInfo.builder().pj_id(pj_id).build();
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
-        mockMvc.perform(get("/editor/info").sessionAttr("pj_id", pj_id))
+
+        mockMvc.perform(get("/editor/info").sessionAttr("user_email","dbswoi"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("basicInfo"))
                 .andExpect(forwardedUrl("project.basicInfo"))
@@ -193,9 +194,10 @@ class ProjectEditorControllerTest {
     @Test
     @DisplayName("makeProject() 새로운 프로젝트 생성을 실패했다.")
     void makeProject() throws Exception {
-        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_id).build();
+        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_email(user_id).build();
 
         given(service.add(addRequest)).willThrow(ProjectAddFailureException.class);
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
         mockMvc.perform(post("/editor/info").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
@@ -208,12 +210,13 @@ class ProjectEditorControllerTest {
     @Test
     @DisplayName("makeProject() 새로운 프로젝트 생성 성공")
     void new_project_success() throws Exception {
-        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_id).build();
+        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_email(user_id).build();
 
         projectDto = ProjectDto.builder().pj_id(pj_id).build();
         given(service.add(addRequest)).willReturn(projectDto);
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
-        mockMvc.perform(post("/editor/info").sessionAttr("user_email", user_id))
+        mockMvc.perform(post("/editor/info").param("user_email", user_id).sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("project.basicInfo"))
                 .andExpect(model().attributeExists("basicInfo"))
@@ -224,14 +227,14 @@ class ProjectEditorControllerTest {
     @DisplayName("makeProject() 프로젝트 생성 후 세션에 pj_id가 저장된다.")
     void sessionCheck() throws Exception {
 
-        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_id).build();
         projectDto = ProjectDto.builder().pj_id("01").build();
 
-        given(service.add(addRequest)).willReturn(projectDto);
+        given(service.add(any())).willReturn(projectDto);
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
         ResultMatcher rm = getSessionChecker("pj_id", pj_id);
 
-        mockMvc.perform(post("/editor/info").sessionAttr("user_email", user_id))
+        mockMvc.perform(post("/editor/info").param("user_email", "dbswo").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("project.basicInfo"))
                 .andExpect(model().attributeExists("basicInfo"))
@@ -270,10 +273,10 @@ class ProjectEditorControllerTest {
     void 업데이트성공() throws Exception {
         ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id("01").build();
         byte[] json = objectMapper.writeValueAsBytes(updateRequest);
-
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
         given(service.update(any())).willReturn(ProjectDto.builder().build());
 
-        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(patch("/editor/info").sessionAttr("user_email", "dbswo").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("true"))
@@ -287,8 +290,9 @@ class ProjectEditorControllerTest {
 
         ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id("01").build();
         byte[] json = objectMapper.writeValueAsBytes(updateRequest);
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
-        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(patch("/editor/info").sessionAttr("user_email", "dbswo").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("false"))

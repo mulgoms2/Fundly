@@ -47,25 +47,19 @@ public class ProjectEditorController {
     }
 
     @PostMapping("/info")
-    public String makeProject(@SessionAttribute String user_email, HttpSession session, Model model) {
-//        public String makeProject(ProjectAddRequest addRequest, HttpSession session, Model model) {
-//        이곳에서 새로운 프로젝트를 만든다.
-        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_email).build();
+        public String makeProject(@ModelAttribute ProjectAddRequest addRequest, HttpSession session, Model model) {
+        ProjectDto pj = projectService.add(addRequest);
 
-        ProjectDto addedProject = projectService.add(addRequest);
+        model.addAttribute("basicInfo", ProjectDto.toBasicInfo(pj));
+        model.addAttribute("projectDto", pj);
 
-        ProjectBasicInfo basicInfo = ProjectDto.toBasicInfo(addedProject);
-
-        model.addAttribute("basicInfo", basicInfo);
-        model.addAttribute("projectDto", addedProject);
-
-        session.setAttribute("pj_id", basicInfo.getPj_id());
+        session.setAttribute("pj_id", pj.getPj_id());
 
         return "project.basicInfo";
     }
 
-    @PatchMapping("/info")
-    public ResponseEntity<Boolean> updateBasicInfo(@Valid @RequestBody ProjectInfoUpdateRequest updateRequest, ProjectDto project) {
+    @PostMapping("/infoUpdate")
+    public ResponseEntity<Boolean> updateBasicInfo(@Valid ProjectInfoUpdateRequest updateRequest, ProjectDto project) {
 //        프로젝트 객체를 업데이트한다.
         project.updateBasicInfo(updateRequest);
 //        프로젝트 업데이트 정보를 db에 반영한다.

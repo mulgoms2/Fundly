@@ -42,7 +42,7 @@ class ProjectServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        프로젝트생성요청 = ProjectAddRequest.builder().user_id("dbswoi123").build();
+        프로젝트생성요청 = ProjectAddRequest.builder().user_email("dbswoi123").build();
         projectDto = ProjectDto.builder().build();
     }
 
@@ -68,7 +68,7 @@ class ProjectServiceImplTest {
 
 //        프로젝트 응답객체에는 판매자 아이디, 프로젝트번호, 및 유저 정보가 들어있어야 한다.
         assertThat(projectDto).isNotNull();
-        assertThat(projectDto.getPj_sel_id()).isEqualTo(프로젝트생성요청.getUser_id());
+        assertThat(projectDto.getPj_sel_id()).isEqualTo(프로젝트생성요청.getUser_email());
         assertThat(프로젝트.getPj_id()).isNotEmpty();
     }
 
