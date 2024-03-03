@@ -15,10 +15,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.servlet.http.HttpSession;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -90,6 +94,22 @@ class ProjectEditorControllerTest {
     }
 
     @Test
+    @DisplayName("startPage() 이어서 작성하기시 pj_id를 세션에 저장한다.")
+    void save_pjId_onSession() throws Exception {
+        given(service.getEditingProjectId(user_id)).willReturn(pj_id);
+
+        ResultMatcher sessionChecker = getSessionChecker("pj_id", pj_id);
+        mockMvc.perform(get("/editor/start").sessionAttr("user_email", user_id))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("pj_id"))
+                .andExpect(forwardedUrl("project/start"))
+                .andExpect(sessionChecker)
+                .andDo(print());
+
+        verify(service).getEditingProjectId(user_id);
+    }
+
+    @Test
     @DisplayName("getStart() 프로젝트 올리기 페이지에 작성중인 프로젝트가 존재하지 않는다.")
     void get_start_with_project() throws Exception {
         ProjectStarter pjStarter = ProjectStarter.builder().build();
@@ -150,7 +170,7 @@ class ProjectEditorControllerTest {
     }
 
     @Test
-    @DisplayName("editNewProject() 비로그인 유저가 지금 시작하기 버튼 클릭")
+    @DisplayName("makeProject() 비로그인 유저가 지금 시작하기 버튼 클릭")
     void unLogined_new_project() throws Exception {
         mockMvc.perform(post("/editor/info"))
                 .andExpect(status().isOk())
@@ -159,8 +179,8 @@ class ProjectEditorControllerTest {
                 .andDo(print());
     }
     @Test
-    @DisplayName("editNewProject() 새로운 프로젝트 생성을 실패했다.")
-    void editNewProject() throws Exception {
+    @DisplayName("makeProject() 새로운 프로젝트 생성을 실패했다.")
+    void makeProject() throws Exception {
         ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_id).build();
 
         given(service.add(addRequest)).willThrow(ProjectAddFailureException.class);
@@ -173,7 +193,7 @@ class ProjectEditorControllerTest {
     }
 
     @Test
-    @DisplayName("editNewProject() 새로운 프로젝트 생성 성공")
+    @DisplayName("makeProject() 새로운 프로젝트 생성 성공")
     void new_project_success() throws Exception {
         ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_id).build();
         ProjectAddResponse addResponse = ProjectAddResponse.builder().pj_id(pj_id).sel_id(user_id).sel_name("한윤재").build();
@@ -184,6 +204,36 @@ class ProjectEditorControllerTest {
                 .andExpect(forwardedUrl("project.basicInfo"))
                 .andExpect(model().attributeExists("basicInfo"))
                 .andDo(print());
+    }
+
+    @Test
+    @DisplayName("makeProject() 프로젝트 생성 후 세션에 pj_id가 저장된다.")
+    void sessionCheck() throws Exception {
+
+        ProjectAddRequest addRequest = ProjectAddRequest.builder().user_id(user_id).build();
+        ProjectAddResponse addResponse = ProjectAddResponse.builder().pj_id(pj_id).sel_id(user_id).sel_name("한윤재").build();
+        given(service.add(addRequest)).willReturn(addResponse);
+
+        ResultMatcher rm = getSessionChecker("pj_id", pj_id);
+
+        mockMvc.perform(post("/editor/info").sessionAttr("user_email", user_id))
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("project.basicInfo"))
+                .andExpect(model().attributeExists("basicInfo"))
+                .andExpect(rm)
+                .andDo(print());
+    }
+
+    private ResultMatcher getSessionChecker(String key, String value) {
+        ResultMatcher rm = new ResultMatcher() {
+            @Override
+            public void match(MvcResult result) throws Exception {
+                HttpSession session = result.getRequest().getSession(false);
+                String value = (String) session.getAttribute(key);
+                // 세션에 있는 값 검증
+                assertThat(value).isEqualTo(value);
+            }};
+        return rm;
     }
 
     @Test

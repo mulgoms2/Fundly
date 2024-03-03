@@ -331,7 +331,8 @@ class ProjectMapperTest {
 
     @Test
     @SneakyThrows
-    @DisplayName("좋아요수감소테스트") void downLikeCnt() {
+    @DisplayName("좋아요수감소테스트")
+    void downLikeCnt() {
         this.project1 = ProjectDto.builder()
                 .pj_id("1")
                 .pj_sel_id(user_id)
@@ -351,8 +352,8 @@ class ProjectMapperTest {
         String pj_id = project1.getPj_id();
         ProjectDto savedDto = projectMapper.getByPjId(pj_id);
 
-        System.out.println("\n\n"+project1);
-        System.out.println("\n\n"+savedDto);
+        System.out.println("\n\n" + project1);
+        System.out.println("\n\n" + savedDto);
     }
 
     @Test
@@ -377,9 +378,29 @@ class ProjectMapperTest {
     @Test
     @DisplayName("예외 캐치 테스트")
     void catchException() {
-            assertThatThrownBy(()->{
-                projectMapper.insert(project1);
-                projectMapper.insert(project1);
-            }).isInstanceOf(NonTransientDataAccessException.class);
+        assertThatThrownBy(() -> {
+            projectMapper.insert(project1);
+            projectMapper.insert(project1);
+        }).isInstanceOf(NonTransientDataAccessException.class);
+    }
+
+    @Test
+    @DisplayName("업데이트 대상 프로젝트가 없을때")
+    void updateFailuer() {
+
+        int update = projectMapper.update(project1);
+
+        assertThat(update).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("업데이트 대상 프로젝트가 있으나. 변경된 내용이 없어도 1을 반환")
+    void hasNonUpdatedField() {
+        int insert = projectMapper.insert(project1);
+        assertThat(insert).isEqualTo(1);
+
+        int update = projectMapper.update(project1);
+
+        assertThat(update).isEqualTo(1);
     }
 }

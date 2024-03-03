@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -23,7 +24,7 @@ public class ProjectEditorController {
     ProjectService projectService;
 
     @GetMapping("/start")
-    public String startPage(@SessionAttribute(required = false) String user_email, Model model) {
+    public String startPage(@SessionAttribute(required = false) String user_email, HttpSession session, Model model) {
         if (user_email == null || user_email.isEmpty()) {
             return "user/login";
         }
@@ -31,6 +32,8 @@ public class ProjectEditorController {
         try {
             String pj_id = projectService.getEditingProjectId(user_email);
             model.addAttribute("pj_id", pj_id);
+
+            session.setAttribute("pj_id", pj_id);
         } catch (ProjectNofFoundException e) {
 //            편집중인 프로젝트가 존재하지 않으면. 모델이 비어있어 뷰에서 새로 시작하기 버튼이 나온다.
             return "project/start";
@@ -39,7 +42,8 @@ public class ProjectEditorController {
     }
 
     @GetMapping("/info")
-    public String getBasicInfo(@RequestParam(required = false) String pj_id, Model model) {
+//    public String getBasicInfo(@RequestParam(required = false) String pj_id, Model model) {
+        public String getBasicInfo(@SessionAttribute(required = false) String pj_id, Model model) {
 //        현재 진행중인 프로젝트가 존재하는 유저가 이어서 작성하기 버튼을 눌렀을 때 실행된다.
 //        log.error("\n\n pj_id={} \n\n", pj_id);
         String errPage = "project/clientError";
@@ -61,7 +65,7 @@ public class ProjectEditorController {
     }
 
     @PostMapping("/info")
-    public String makeProject(@SessionAttribute(required = false) String user_email, Model model) {
+    public String makeProject(@SessionAttribute(required = false) String user_email, HttpSession session, Model model) {
         if (user_email == null || user_email.isEmpty()) {
             model.addAttribute("errorMsg", "로그인 후 이용해주세요.");
             return "project/clientError";
@@ -75,6 +79,8 @@ public class ProjectEditorController {
             ProjectBasicInfo basicInfo = addResponse.toInfoDto();
 
             model.addAttribute("basicInfo", basicInfo);
+
+            session.setAttribute("pj_id", basicInfo.getPj_id());
         } catch (ProjectAddFailureException e) {
             return "project/error";
         }

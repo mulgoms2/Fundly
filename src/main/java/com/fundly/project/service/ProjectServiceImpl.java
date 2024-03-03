@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 
@@ -119,5 +120,18 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectDto savedProject = projectMapper.getByPjId(projectDto.getPj_id());
 //        저장된 프로젝트를 가져와 응답객체로 반환한다.
         return ProjectDto.toResponseDto(savedProject);
+    }
+
+    @Override
+//    가장 범용적인 프로젝트 업데이트 메서드. 전체 필드를 업데이트 한다. 주의사항 dto에 null이 담겨온 필드는 null로 업데이트된다.
+    public ProjectDto update(ProjectDto projectDto) {
+        int update = projectMapper.update(projectDto);
+        if (update == 0) {
+            ProjectNofFoundException ex = new ProjectNofFoundException("업데이트 대상 프로젝트를 찾을 수 없습니다.");
+            log.debug("update(ProjectDto) : {}\n{}", ex.getMessage(), ex.getStackTrace());
+            throw ex;
+        }
+        ProjectDto savedPj = projectMapper.getByPjId(projectDto.getPj_id());
+        return savedPj;
     }
 }

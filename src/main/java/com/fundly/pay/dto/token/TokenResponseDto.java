@@ -1,12 +1,12 @@
 package com.fundly.pay.dto.token;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
 @ToString
+@AllArgsConstructor
+@Builder
 public class TokenResponseDto {
     private Integer code;
     private String message;

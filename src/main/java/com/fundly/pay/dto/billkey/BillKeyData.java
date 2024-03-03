@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.sql.Timestamp;
-
 @Getter
 @NoArgsConstructor
 @ToString
@@ -25,8 +23,8 @@ public class BillKeyData {
     private String customer_postcode;
     private String customer_tel;
     private String customer_uid;
-    private Timestamp inserted;
+    private long inserted;
     private String pg_id;
     private String pg_provider;
-    private Timestamp updated;
+    private long updated;
 }
