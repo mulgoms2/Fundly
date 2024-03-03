@@ -6,11 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectInfoUpdateRequest {
+    @NotEmpty
     private String pj_id;
     private String ctg; //카테고리
     private String sub_ctg; //세부 카테고리

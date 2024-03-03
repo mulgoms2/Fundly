@@ -52,10 +52,10 @@ public class PaymentData {
     private String custom_data; // 결제 요청시 가맹점에서 전달한 추가정보 (JSON string으로 전달)
     private String user_agent; // 단말기의 UserAgent 문자열
     private String status; // 결제상태
-    private Integer started_at; // 결제 요청시각. unix timestamp
-    private Integer paid_at; // 결제 시각. 결제상태가 결제완료(paid)가 아닌 경우 0으로 표시
-    private Integer failed_at; // 결제 실패시각. 결제상태가 결제실패(failed)가 아닌경우 0으로 표시
-    private Integer cancelled_at; // 결제 취소시각. 결제상태가 결제취소(cancelled)가 아닐 경우 0으로 표시
+    private long started_at; // 결제 요청시각. unix timestamp
+    private long paid_at; // 결제 시각. 결제상태가 결제완료(paid)가 아닌 경우 0으로 표시
+    private long failed_at; // 결제 실패시각. 결제상태가 결제실패(failed)가 아닌경우 0으로 표시
+    private long cancelled_at; // 결제 취소시각. 결제상태가 결제취소(cancelled)가 아닐 경우 0으로 표시
     private String fail_reason; // 결제실패 사유
     private String cancel_reason; // 결제취소 사유
     private String receipt_url; // 매출전표 url

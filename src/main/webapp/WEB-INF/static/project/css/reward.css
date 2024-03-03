@@ -6,6 +6,11 @@
     box-sizing: border-box;
     outline: none;
     /*border-radius :5px;*/
+    /*font-family: "Noto Sans KR", sans-serif;*/
+    /*font-optical-sizing: auto;*/
+    /*font-weight: 400;*/
+    /*font-size: 14px;*/
+
 }
 input {
     outline:none;
@@ -34,6 +39,7 @@ div.subHead {
     border-top: .5px solid #ececec;
     border-bottom: .5px solid #ececec;
     background-color: #ffffff;
+
 }
 /*헤더의 일부*/
 div.subHead.fixed {
@@ -59,6 +65,7 @@ div.subTab > div.leftTab{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
 }
 div.subTab > div.leftTab > button {
     height: 24px;
@@ -69,6 +76,10 @@ div.subTab > div.leftTab > button {
     display: flex;
     flex-direction: row;
     align-items: center;
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 div.subTab > div.leftTab > button > div {

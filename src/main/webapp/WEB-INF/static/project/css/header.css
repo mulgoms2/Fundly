@@ -4,16 +4,25 @@
     text-decoration: none;
     list-style: none;
     box-sizing: border-box;
-    /*border-radius :5px;*/
+    border-radius :5px;
+    /*font-family: "Noto Sans KR", sans-serif;*/
+    /*font-optical-sizing: auto;*/
+    /*font-weight: 400;*/
+    /*font-size: 14px;*/
+    /*font-style: normal;*/
+}
+
+
+a {
+    text-decoration: none;
+    color: #3d3d3d;
+}
+button {
     font-family: "Noto Sans KR", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-size: 14px;
     font-style: normal;
-}
-a {
-    text-decoration: none;
-    color: #3d3d3d;
 }
 button:hover {
     cursor: pointer;
@@ -75,6 +84,12 @@ body {
 .topContents .header div.hBtnWrap > button.save {
     background-color: #f86453;
     border: 1px solid #f86453;
+    color: #ffffff;
+}
+.topContents .header div.hBtnWrap > button.modify {
+    display: none;
+    background-color: #74b6a5;
+    border: 1px solid #74b6a5;
     color: #ffffff;
 }
 .topContents .topContentsWrapper{
