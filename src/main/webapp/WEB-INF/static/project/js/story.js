@@ -102,6 +102,24 @@ window.onload = function(){
         const pj_sel_intro =  tinymce.get('selIntro');
         const pj_gift_intro =  tinymce.get('reward');
 
+        let imgArr = []; //저장이 확정된 이미지 이름을 담을 배열
+        const iframes = document.querySelectorAll('iframe')
+        console.log(iframes)
+        for(iframe of iframes){
+            const imgs = iframe.contentWindow.document.querySelectorAll('img');
+            //iframe내의 요소는 document.querySelector등으로 한번에 읽어올 수가 없다...
+            //iframe이 별개의 페이지(?)라고 인식한다고..
+            //console.log(imgs);
+            for(img of imgs){
+                let idx = img.src.lastIndexOf('/')
+                let imgName = img.src.substring(idx+1);
+                console.log(imgName)
+                imgArr.push(imgName);
+                console.log(imgArr);
+            }
+
+        }
+
 
         const storyForm = {
             "pj_id": "90d85c31-cfe0-4410-b148-e0f9d2abcd3c", //지금은 하드코딩인데.. 어디서 가져올지 생각하기
@@ -110,7 +128,8 @@ window.onload = function(){
             "pj_sched": pj_sched.getContent(),
             "pj_sel_intro": pj_sel_intro.getContent(),
             "pj_gift_intro": pj_gift_intro.getContent(),
-            "edit": false
+            "edit": false,
+            "imgArr": imgArr
         }
 
         //console.log(storyForm);
