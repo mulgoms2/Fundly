@@ -46,14 +46,11 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfileDto userUpdate(UserProfileDto userProfileDto){
         try {
-//            log.info("userProfileDto = \n" + userProfileDto + "\n");
             int cnt = userProfileDao.update(userProfileDto);
 
             if(cnt!=1){
                 log.error("에러다!!!!!!!!");
             }
-
-//            log.info("cnt = \n" + cnt + "\n");
 
             return userProfileDao.userProfileinfo(UserDto.builder().user_email(userProfileDto.getUser_email()).build());
 
@@ -74,15 +71,28 @@ public class UserProfileServiceImpl implements UserProfileService {
             /* 프로필 정보가 있으면 update
             * 프로필 정보가 없으면 insert
             * */
-            userProfileDao.saveFile(fileDto);
 
+            String fileinfo = userProfileDao.getUserProfileImg(fileDto);
+
+            if(fileinfo==null){
+//                log.error("프로필 사진 등록중 ... ");
+                userProfileDao.saveFile(fileDto);
+            }else{
+//                log.error("프로필 사진 업데이트중");
+                userProfileDao.updateFile(fileDto);
+            }
         } catch (Exception e) {
             log.error("error ChatServiceImpl.saveImageFile()");
+            log.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     public String getUserProfileImg(FileDto fileDto) throws Exception {
         return userProfileDao.getUserProfileImg(fileDto);
+    }
+
+    public String getlastPwdDate(String user_email) throws Exception {
+        return userProfileDao.lastPwdDate(user_email);
     }
 }

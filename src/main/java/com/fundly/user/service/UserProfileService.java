@@ -14,4 +14,5 @@ public interface UserProfileService {
     UserProfileDto userUpdate(UserProfileDto userProfileDto);
     void saveImg(FileDto fileDto, String user_email, HttpServletResponse response);
     String getUserProfileImg(FileDto fileDto) throws Exception;
+    String getlastPwdDate(String user_email) throws Exception;
 }

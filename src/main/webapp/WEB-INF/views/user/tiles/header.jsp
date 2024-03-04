@@ -3,6 +3,7 @@
 
 <%-- LoginInfo --%>
 <c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : userInfo.user_name}"/>
+<c:set var="userprofileImg" value="${user_profileImg=='' || user_profileImg == null ? '/static/img/avatar.webp' : '/user/img/'}"/>
 <div class="header">
     <div class="hd">
         <a href="<c:url value='/'/>">
@@ -19,10 +20,11 @@
             <div class="alm">
                 <i class="fa-regular fa-bell"></i>
             </div>
+
             <div class="userIf" >
                 <div class="infoGr"  id = "loginInfo">
                     <div class="ifImg">
-                        <span id="profileImg" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></span>
+                        <span id="profileImg" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></span>
                     </div>
                     <div class="ifTxt"id="ifTxt">${loginInfo}</div>
                     <div class="MyPageList" id = "MyPageList">

@@ -11,7 +11,12 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserProfileDao {
     UserProfileDto userProfileinfo(UserDto userDto) throws Exception ;
     int update(UserProfileDto userProfileDto) throws Exception ;
+
+    /* profile IMG */
     String getUserProfileImg(FileDto fileDto) throws Exception ;
     int saveFile(FileDto fileDto) throws Exception;
     int updateFile(FileDto fileDto) throws Exception;
+
+    /* Pwd */
+    String lastPwdDate(String user_email) throws Exception;
 }
