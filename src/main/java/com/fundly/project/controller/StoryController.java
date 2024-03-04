@@ -101,14 +101,17 @@ public class StoryController {
 
         log.error("\n\n beforeImg={} \n\n", uploadFile);
         MultipartFile uploadImg = uploadFile.getFile();
+        uploadFile.setMetaData();
+        log.error("\n\n afterImg={} \n\n", uploadFile);
+
         log.error("\n\n img size={}\n\n",uploadImg.getSize());
         String contentType = uploadImg.getContentType();
         log.error("\n\n img type={}\n\n", uploadImg.getContentType());
+//        uploadFile.setDimension();
+//        log.error("\n\n width={}\n\n", uploadFile.getWidth());
+//        log.error("\n\n height={}\n\n", uploadFile.getHeight());
         String originFileName = uploadImg.getOriginalFilename();
         log.error("\n\n originFileName={}\n\n",originFileName);
-        uploadFile.setDimension();
-        log.error("\n\n width={}\n\n", uploadFile.getWidth());
-        log.error("\n\n height={}\n\n", uploadFile.getHeight());
         String savedImgUrl = IMG_SAVE_SERVER_LOC + originFileName;
         //이미지가 저장될 서버의 물리적 주소, 나중에 이미지 서버 주소로 대체
 

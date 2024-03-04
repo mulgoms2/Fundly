@@ -1,8 +1,10 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.exception.ImageValidationException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.io.IOException;
 import java.util.List;
 
 public class StoryImageValidator implements Validator {
@@ -19,8 +21,16 @@ public class StoryImageValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         StoryImage storyImage = (StoryImage)target;
-
-
+        try {
+            storyImage.setMetaData();
+        } catch (IOException e) {
+            //IOException이 발생하면 검증할 필드를 set할 수 없으므로 validation이 실패
+            //errors.reject()를 호출해야 하나 고민했지만, 검증 자체가 이루어지지 못한 것이라 그냥 예외를 던짐.
+            e.printStackTrace();
+            ImageValidationException ex = new ImageValidationException("image validation failed");
+            ex.initCause(e);
+            throw ex;
+        }
 
 
         //content-type 체크 (확장자 jpeg, png, gif)
@@ -28,15 +38,16 @@ public class StoryImageValidator implements Validator {
             errors.rejectValue("contentType","invalidContentType", POSSIBLE_CONTENT_TYPE.toArray(String[]::new), null );
 
 
-
         //빈 파일인지 체크
         if(storyImage.getFile().isEmpty())
             errors.rejectValue("fileSize","emptyFile");
         //5MB이하의 크기
         if(storyImage.getFileSize()> MAX_SIZE)
-            errors.rejectValue("fileSize","tooBigFileSize", new String[]{MAX_SIZE+""},null);
+            errors.rejectValue("fileSize","tooBigFileSize", new String[]{MAX_SIZE+"MB"},null);
 
-//파일 사이즈 width 1240px height 1600px
+        //파일 사이즈 width 1240px height 1600px
+        if(storyImage.dimension.width > MAX_WIDTH || storyImage.dimension.height > MAX_HEIGHT)
+            errors.rejectValue("dimension","invalidDimension",new String[]{"1240px", "1600px"}, null);
 
     }
 }
