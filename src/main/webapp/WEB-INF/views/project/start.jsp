@@ -22,6 +22,7 @@
 </c:if>
 <c:if test="${projectDto eq null}">
     <form action="/editor/info" method="post">
+        <input type="hidden" name="user_email" value="${user_email}">
         <button>지금 시작하기</button>
     </form>
 </c:if>
