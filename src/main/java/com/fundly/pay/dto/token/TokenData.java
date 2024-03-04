@@ -1,15 +1,14 @@
 package com.fundly.pay.dto.token;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor
 @ToString
+@Builder
+@AllArgsConstructor
 public class TokenData {
     private String access_token;
-    private Timestamp now;
-    private Timestamp expired_at;
+    private long now;
+    private long expired_at;
 }

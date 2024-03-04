@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.sql.Date;
 
 @Setter
-//@Getter
+@Getter
 @Builder
 //@ToString
 @NoArgsConstructor
@@ -17,7 +17,6 @@ import java.sql.Date;
 public class UserHistDto {
     // 회원 이력 코드는 ? 20240225
     private String user_hist_id; // 회원이력코드
-    private Integer seq; // ai
     private String user_id; // 회원아이디 (user_email)
     @Nullable
     private String user_status; // 회원상태
@@ -30,9 +29,9 @@ public class UserHistDto {
     private String email; //이메일
     private String pwd_mod_yn; // 비밀번호변경여부
     private String comments; // 비고
-    private String dba_reg_dtm; // 최초등록일시
-    private String dba_reg_id; // 최초등록자식별번호
-    private String dba_mod_dtm; // 최종수정일시
-    private String dba_mod_id; // 최종수정자식별번호
+//    private String dba_reg_dtm; // 최초등록일시
+//    private String dba_reg_id; // 최초등록자식별번호
+//    private String dba_mod_dtm; // 최종수정일시
+//    private String dba_mod_id; // 최종수정자식별번호
 }
 

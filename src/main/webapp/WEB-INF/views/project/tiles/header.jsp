@@ -15,6 +15,7 @@
         <div class="hBtnWrap">
             <button type="button" class="preview"><i class="fas fa-solid fa-eye"></i> &nbsp;&nbsp;미리 보기</button>
             <button type="button" class="save">저장</button>
+            <button type="button" class="modify">수정</button>
         </div>
     </div>
     <div class="topContentsWrapper">

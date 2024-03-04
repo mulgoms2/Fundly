@@ -1,7 +1,6 @@
 package com.fundly.project.controller;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -16,6 +15,5 @@ public class StoryForm {
     String pj_sched;
     String pj_sel_intro;
     String pj_gift_intro;
-    MultipartFile image;
 
 }

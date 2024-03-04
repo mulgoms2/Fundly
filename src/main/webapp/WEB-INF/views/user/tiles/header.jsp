@@ -11,7 +11,7 @@
         </a>
         <div class="lftSmn">
             <div class="pjtUp">
-                <a href="#">프로젝트 올리기</a>
+                <a href="<c:url value="/editor/start" />">프로젝트 올리기</a>
             </div>
             <div class="like">
                 <i class="fa-regular fa-heart"></i>
@@ -22,7 +22,7 @@
             <div class="userIf" >
                 <div class="infoGr"  id = "loginInfo">
                     <div class="ifImg">
-                        <span></span>
+                        <span id="profileImg" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></span>
                     </div>
                     <div class="ifTxt"id="ifTxt">${loginInfo}</div>
                     <div class="MyPageList" id = "MyPageList">
@@ -74,3 +74,7 @@
         </div>
     </div>
 </div>
+<script>
+<%--    작성자 한윤재  --%>
+
+</script>

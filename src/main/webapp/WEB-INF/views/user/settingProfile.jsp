@@ -1,20 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<div>
+<%--  <h1>${user_profileImg}</h1>--%>
+</div>
     <div class="flexOnly">
       <div class="container">
 
         <div class="profileSetting">
           <div class="profileimgFormHeader ">
             <div class="detailTitle">
-              <span class="pTag">프로필 사진</span>
+
+              <span class="pTag" >프로필 사진</span>
               <button class="ButtonTag" id="changeImg" >변경</button>
             </div>
 
+<%--              <img src="/user/img/154.png"/>--%>
             <div class="pTagbefore">
               <div class="pTagChaDetailImg">
                 <div class="pTagImg">
                   <div class="pTagImgWrap">
-                    <div class="pTagImgFile" src=""></div>
+                          <div class="pTagImgFile" src="" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></div>
                   </div>
                 </div>
               </div>
@@ -22,15 +27,21 @@
 
             <div class="pTagDetail">
               <div class="pTagChaDetail">
+
                 <div class="pTagChaDetailImg">
                   <div class="pTagImg">
                     <div class="pTagImgWrap">
-                      <div class="pTagImgFile" src=""></div>
+                      <div class="pTagImgFile" src="" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></div>
                     </div>
                   </div>
 
                   <div class="pTagImgDetail">
-                    <button class="filein"><span>파일업로드</span></button><br>
+
+                  <label for="fileimg" >
+                    <span class="filein">파일 업로드</span>
+                    <input id="fileimg" accept=".jpg, .jpeg, .png, .gif" type="file" formenctype="multipart/form-data"/>
+                  </label><br>
+
                     <span class="fileDetail">250 x 250 픽셀에 최적화되어 있으며, 10Mb 이하의 JPG, GIF, PNG 파일을 지원합니다.</span>
                   </div>
                 </div>
@@ -38,7 +49,6 @@
 
               <div class="pTagChaBtn"><Button class="filesave" id="imgsave" ><span>저장</span></Button></div>
             </div>
-
           </div>
         </div>
 
@@ -63,7 +73,6 @@
               <div class="pTagChaBtn"><Button class="filesave" id="namesave"><span>저장</span></Button></div>
 
             </div>
-
           </div>
         </div>
 
@@ -75,21 +84,22 @@
               <button class="ButtonTag" id ="changeIntro">변경</button>
             </div>
 
-            <div class="pTagbeforeIntro fontDetail">
-              <pre>${userInfo.user_intro}</pre>
+              <div class="pTagbeforeIntro fontDetail">
+                <pre>${userInfo.user_intro}</pre>
+              </div>
+
+              <div class="pTagDetailIntro">
+                  <div class="userIntroDetail">
+                    <textarea id="introValue">${userInfo.user_intro}</textarea>
+                  </div>
+
+                  <div class="pTagChaBtn">
+                    <Button class="filesave" id="introsave">
+                      <span>저장</span>
+                    </Button>
+                  </div>
+              </div>
             </div>
-
-            <div class="pTagDetailIntro">
-                <div class="userIntroDetail">
-                  <textarea id="introValue">${userInfo.user_intro}</textarea>
-                </div>
-
-                <div class="pTagChaBtn"><Button class="filesave" id="introsave"><span>저장</span></Button></div>
-
-            </div>
-
-            </div>
-
           </div>
       </div>
 

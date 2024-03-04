@@ -50,7 +50,6 @@ public class ProjectController {
 
     @GetMapping("/template")
     public ResponseEntity<List<ProjectTemplate>> getPjTemplate() {
-        //todo pj template메서드
 //        projectService.getPjTemplateList();
         return null;
     }

@@ -1,6 +1,7 @@
 package config;
 
 import com.fundly.chat.validate.ChatInterceptor;
+import com.fundly.project.validate.LoginInterceptor;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +41,9 @@ public class ServletContext implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**","/story/img/**").addResourceLocations("/WEB-INF/static/","file:///C:/Users/lemon/fundly/img/");
-//        registry.addResourceHandler("/story/img").addResourceLocations("file:///C:/Users/lemon/fundly/img/");
+        registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
+        registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/lemon/fundly/img/");
+        registry.addResourceHandler("/user/img/*").addResourceLocations("file:///C:/Users/USER/fundly/img/");
     }
 
     @Bean
@@ -53,6 +55,7 @@ public class ServletContext implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(new ChatInterceptor()).addPathPatterns("/chat*");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/editor/*");
     }
 
     @Bean

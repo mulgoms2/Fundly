@@ -64,7 +64,7 @@ public class LoginServiceImpl implements LoginService {
 
                 /* cookie add */
                     response.addCookie(setCookie("user_email",user_email,-1,"/"));
-//                    response.addCookie(setCookie("user_name",user_email,-1,"/"));
+//                    response.addCookie(setCookie("user_name",user_name,-1,"/"));
 
                 return userInfo;
             }

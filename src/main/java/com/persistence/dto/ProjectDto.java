@@ -1,5 +1,6 @@
 package com.persistence.dto;
 
+import com.fundly.project.controller.StoryForm;
 import lombok.*;
 
 import java.math.BigInteger;
@@ -101,7 +102,9 @@ public class ProjectDto {
                 .build();
     }
 
-    public void updateInfo(ProjectInfoUpdateRequest request) {
+
+
+    public void updateBasicInfo(ProjectInfoUpdateRequest request) {
         this.ctg = request.getCtg();
         this.sub_ctg = request.getSub_ctg();
         this.pj_long_title = request.getPj_long_title();
@@ -109,4 +112,35 @@ public class ProjectDto {
         this.pj_thumbnail_url = request.getPj_thumbnail_url();
         this.pj_tag = request.getPj_tag();
     }
+
+    public void updateStory(StoryForm storyForm) {
+        this.pj_intro = storyForm.getPj_intro();
+        this.pj_budget = storyForm.getPj_budget();
+        this.pj_sched = storyForm.getPj_sched();
+        this.pj_sel_intro = storyForm.getPj_sel_intro();
+        this.pj_gift_intro = storyForm.getPj_gift_intro();
+    }
+
+    public static StoryForm toStoryForm(ProjectDto project) {
+        return StoryForm.builder()
+                .pj_id(project.getPj_id())
+                .pj_intro(project.getPj_intro())
+                .pj_budget(project.getPj_budget())
+                .pj_sched(project.getPj_sched())
+                .pj_sel_intro(project.getPj_sel_intro())
+                .pj_gift_intro(project.getPj_gift_intro())
+                .build();
+    }
+
+    public static ProjectBasicInfo toBasicInfo(ProjectDto project) {
+        return ProjectBasicInfo.builder()
+                .pj_id(project.getPj_id())
+                .sel_name(project.getPj_sel_name())
+                .ctg(project.getCtg())
+                .sub_ctg(project.getSub_ctg())
+                .pj_short_title(project.getPj_short_title())
+                .pj_long_title(project.getPj_long_title())
+                .build();
+    }
+
 }
