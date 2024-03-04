@@ -40,7 +40,6 @@ public class MainController {
         }
 
         UserDto userInfo = userInfoService.userInfo(UserDto.builder().user_email(user_email).build());
-
         model.addAttribute("userInfo",userInfo);
         model.addAttribute("user_profileImg",user_profileImg);
         return "main.index";
