@@ -311,6 +311,8 @@
         });
 
         $("#submitBtn").click(function () {
+            $('#card_no').val($('#card_no_1').val() + $('#card_no_2').val() + $('#card_no_3').val() + $('#card_no_4').val());
+
             let formData = {
                 own_type: $('input[name="own_type"]:checked').val(),
                 card_no: $('#card_no').val(),
@@ -362,13 +364,22 @@
 
             // 선택된 값에 따라 다르게 출력
             if (selectedValue === 'personal') {
-                outputElem.html('<label for="own_birth">소유주 생년월일</label>' +
-                    '<input id="own_birth" type="text" name="own_birth" maxlength="6" placeholder="예) 920101" ' +
-                    'onKeyup="this.value=this.value.replace(/[^0-9]/g,\'\');">');
-            } else if (selectedValue === 'corporate') {
-                outputElem.html('<label for="own_birth">사업자등록번호</label>' +
-                    '<input id="own_birth" type="text" name="own_birth" maxlength="6" placeholder="예) 1078783297" ' +
-                    'onKeyup="this.value=this.value.replace(/[^0-9]/g,\'\');">');
+                outputElem.html(
+                    '<div class="formOptionTitle" id="own_type_output">소유주 생년월일</div>'
+                    + '<div class="formOptionContent"><span>'
+                    + '<input class="formInput" id="own_birth" type="text" name="own_birth" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocapitalize="off" autocomplete="new-password"'
+                    + 'placeholder="예) 920101" onKeyup="this.value=this.value.replace(/[^0-9]/g,\'\');">'
+                    + '</span></div>'
+                )
+            }
+            else if (selectedValue === 'corporate') {
+                outputElem.html(
+                    '<div class="formOptionTitle" id="own_type_output">사업자등록번호</div>'
+                    + '<div class="formOptionContent"><span>'
+                    + '<input class="formInput" id="own_birth" type="text" name="own_birth" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocapitalize="off" autocomplete="new-password"'
+                    + 'placeholder="예) 920101" onKeyup="this.value=this.value.replace(/[^0-9]/g,\'\');">'
+                    + '</span></div>'
+                )
             }
         })
 })
