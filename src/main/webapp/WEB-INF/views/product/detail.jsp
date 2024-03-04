@@ -84,7 +84,8 @@
                     <a href="#">
                         <span class="gftCate">향수</span>
                     </a>
-                    <h1 class="gftTit">다가오는 봄을 위한 라일락 생화향수 &lt;블로썸&gt; </h1>
+<%--                    <h1 class="gftTit">다가오는 봄을 위한 라일락 생화향수 &lt;블로썸&gt; </h1>--%>
+                    <h1 class="gftTit">${pj.pj_long_title}</h1>
                 </div>
             </div>
             <div class="itrGr">

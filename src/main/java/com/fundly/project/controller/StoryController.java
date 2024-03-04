@@ -85,8 +85,4 @@ public class StoryController {
         String locStr = "{\"location\": \""+location+"\"}";
         return ResponseEntity.ok().headers(new HttpHeaders()).body(locStr);
     }
-
-
-
-
 }

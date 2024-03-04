@@ -44,6 +44,7 @@ public class ServletContext implements WebMvcConfigurer {
         registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
         registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/lemon/fundly/img/");
         registry.addResourceHandler("/user/img/*").addResourceLocations("file:///C:/Users/USER/fundly/img/");
+        registry.addResourceHandler("**/chat/*").addResourceLocations("file:/");
     }
 
     @Bean

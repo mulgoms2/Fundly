@@ -29,11 +29,13 @@ public class ProjectController {
     ProjectService projectService;
 
     //기본정보 작성 페이지
+/*
     @GetMapping("/default")
     public String defaultPage() {
         return "project.basicInfo";
     }
 
+*/
     //펀딩 계획
     @GetMapping("/funding")
     public String fundingPlan(){

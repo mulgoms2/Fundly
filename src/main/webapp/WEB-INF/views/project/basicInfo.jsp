@@ -148,8 +148,8 @@
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
 
-                    <input accept=".jpg, .jpeg, .png" type="file" multiple="">
                 </label>
+                    <input accept=".jpg, .jpeg, .png" type="file" multiple />
             </div>
         </div>
         <!-- 프로젝트 해시태그 -->
@@ -207,7 +207,7 @@
         // formData.append("pj_thumbnail_img");
         // formData.append("pj_tag");
 
-        const response = await fetch("/editor/infoTest",{
+        const response = await fetch("/editor/infoUpdate",{
             method: "post",
             headers:{},
             body: formData

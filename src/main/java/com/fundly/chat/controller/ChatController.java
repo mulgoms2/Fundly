@@ -21,6 +21,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.UUID;
@@ -82,11 +84,11 @@ public class ChatController {
 
     @PostMapping("/chat/file")
     @ResponseBody
-    public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message) {
+    public void uploadFile(@Valid FileDto file, SelBuyMsgDetailsDto message, HttpServletRequest request) {
 //        유효하지 않은 파일이 오면 브라우저에 400 에러가 응답으로 전송된다.
         try {
 //            이미지 파일을 서버에 저장한다.
-            saveFileToDrive(file);
+            saveFileToDrive(file, request);
 //            파일 url을 저장한다.
             chatService.saveFileMessage(file, message);
         } catch (Exception e) {
@@ -114,26 +116,27 @@ public class ChatController {
 //            throw new RuntimeException(e);
 //        }
 //    }
-    @GetMapping(value = "**/file/{fileName}")
-    @ResponseBody
-//    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
-    public Resource getImageResource(@PathVariable("fileName") String fileName) {
+//    @GetMapping(value = "**/file/{fileName}")
+//    @ResponseBody
+////    이미지 태그가 파싱될때 src 주소에 의한 get 요청이 들어온다. Resource로 이미지를 응답한다.
+//    public Resource getImageResource(@PathVariable("fileName") String fileName) {
+//
+//        String savedImageLocation = "file:/" + IMG_SAVE_LOCATION + fileName;
+//
+//        try {
+//            return new UrlResource(savedImageLocation);
+////            return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
+//        } catch (Exception e) {
+//            log.error("error with getImageResouce = {}", fileName);
+//            throw new RuntimeException("유효하지 않은 파일명 입니다.", e);
+//        }
+//    }
 
-        String savedImageLocation = "file:/" + IMG_SAVE_LOCATION + fileName;
-
-        try {
-            return new UrlResource(savedImageLocation);
-//            return new UrlResource(String.format("file:%s%s", IMG_SAVE_LOCATION, fileName));
-        } catch (Exception e) {
-            log.error("error with getImageResouce = {}", fileName);
-            throw new RuntimeException("유효하지 않은 파일명 입니다.", e);
-        }
-    }
-
-    private void saveFileToDrive(FileDto uploadFile) {
+    private void saveFileToDrive(FileDto uploadFile, HttpServletRequest request) {
         String originFileName = uploadFile.getFile().getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
-        String savedImgUrl = IMG_SAVE_LOCATION + uuid + originFileName;
+        String savedImgUrl = request.getContextPath() + IMG_SAVE_LOCATION + uuid + originFileName;
+
         MultipartFile file = uploadFile.getFile();
 
         try {
