@@ -43,7 +43,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/user")
 public class UserProfileController {
-    String IMG_SAVE_LOCATION = "/Users/USER/fundly/img/";
+//    String IMG_SAVE_LOCATION = "/Users/USER/fundly/img/";
+    String IMG_SAVE_LOCATION = "/fundly/img/";
 
     private final UserInfoService userInfoService;
     private final UserProfileService userProfileService;
@@ -90,21 +91,24 @@ public class UserProfileController {
     public String settingAccount(HttpSession session, Model model){
 
         String user_email = (String)(session.getAttribute("user_email"));
-
+        String lastPwdDate = "";
         UserDto userInfo = null;
+
         try {
             userInfo = userInfoService.userInfo(UserDto.builder().user_email(user_email).build());
+            lastPwdDate = userProfileService.getlastPwdDate(user_email);
         } catch (Exception e) {
             log.info(e.getMessage());
         }
 
         model.addAttribute("userInfo",userInfo);
+        model.addAttribute("lastPwdDate",lastPwdDate);
         return "user/settingAccount";
     }
 
     @PostMapping("/imgupdate")
     @ResponseBody
-    public ResponseEntity<?>  imgFile(@RequestParam("file") MultipartFile file, @SessionAttribute String user_email, HttpServletResponse response){
+    public ResponseEntity<?> imgFile(@RequestParam("file") MultipartFile file, @SessionAttribute String user_email, HttpServletResponse response){
 
         String originFileName = file.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();

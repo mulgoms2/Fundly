@@ -4,7 +4,11 @@ import com.fundly.project.controller.StoryForm;
 import com.fundly.project.exception.ProjectNofFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.model.ProjectMapper;
-import com.persistence.dto.*;
+import com.persistence.dao.FileDao;
+import com.persistence.dto.ProjectAddRequest;
+import com.persistence.dto.ProjectBasicInfo;
+import com.persistence.dto.ProjectDto;
+import com.persistence.dto.ProjectInfoUpdateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectMapper projectMapper) {
+    public ProjectServiceImpl(ProjectMapper projectMapper, FileDao fileDao) {
         this.projectMapper = projectMapper;
     }
 
@@ -59,6 +63,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         return ProjectDto.toBasicInfo(savedPj);
     }
+
 
     @Override
     // Tx에 해당하지 않는듯. 쿼리 두번 호출하지만, 어차피 select에서 에러나면 dto를 꺼내올 수도 없으니 두번째 쿼리도 에러남.

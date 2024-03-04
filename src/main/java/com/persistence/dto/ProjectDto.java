@@ -122,7 +122,7 @@ public class ProjectDto {
     }
 
     public static StoryForm toStoryForm(ProjectDto project) {
-        return StoryForm.builder()
+        StoryForm storyForm = StoryForm.builder()
                 .pj_id(project.getPj_id())
                 .pj_intro(project.getPj_intro())
                 .pj_budget(project.getPj_budget())
@@ -130,6 +130,9 @@ public class ProjectDto {
                 .pj_sel_intro(project.getPj_sel_intro())
                 .pj_gift_intro(project.getPj_gift_intro())
                 .build();
+
+        storyForm.isEmpty();
+        return storyForm;
     }
 
     public static ProjectBasicInfo toBasicInfo(ProjectDto project) {
