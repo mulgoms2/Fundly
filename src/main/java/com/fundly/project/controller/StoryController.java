@@ -1,7 +1,6 @@
 package com.fundly.project.controller;
 
 import com.fundly.project.service.ProjectService;
-import com.persistence.dto.FileDto;
 import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
@@ -13,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ import java.util.List;
 public class StoryController {
 
     ProjectService projectService;
+//    String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
     String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
     String REMOTE_URL = "/project/img/";
     @Autowired
@@ -51,27 +52,10 @@ public class StoryController {
     }
 
 
-//    @PostMapping("/story") fetch로 온 요청에 대해서는 view를 반환하지 못하는듯.
-//    public String saveStory(@RequestBody StoryForm storyForm, Model m){
-//        //  최종적으로 form을 제출할 때 포함되지 않은 이미지는 서버에서 지워야 메모리가 낭비가 안될것 같은데.
-//        //
-//        log.error("\n\n received storyForm={} \n\n", storyForm);
-//        try {
-//            storyForm = projectService.updatePjStory(storyForm);
-//            log.error("\n\n after storyForm={} \n\n", storyForm);
-//            throw new Exception("test");
-//            //m.addAttribute(storyForm);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            String msg = "FAIL";
-//            m.addAttribute(msg);
-//        }
-//        return "project.reward";
-//    }
     @PostMapping("/story")
     @ResponseBody
-    public ResponseEntity<?> saveStory(@RequestBody StoryForm storyForm, @SessionAttribute ProjectDto projectDto){
+//    public ResponseEntity<?> saveStory(@RequestBody StoryForm storyForm, @SessionAttribute ProjectDto projectDto){
+    public ResponseEntity<Boolean> saveStory(@RequestBody StoryForm storyForm, @SessionAttribute ProjectDto projectDto){
         // 수정된 내용을 받아와서
         // 1. 그중 최종 저장하는 이미지 파일만 남기고 서버에 임시 저장된 파일은 삭제
         // 2. 최종 저장할 이미지 경로를 File테이블에 insert
@@ -87,7 +71,7 @@ public class StoryController {
             deleteTempFile(delArr); //지우기 실패하면 에러를 던지게 해둠.
 
             //2.최종 저장할 이미지 DB File테이블에 insert 또는 update
-            // 근데 DB에서 내가 이 경로를 꺼내 쓸 일이 없는데 저장의 이유가 있을까?
+            // 근데 DB에서 내가 이 경로를 꺼내 쓸 일이 없는데 저장의 이유가 있을까? 좀 회의적이다.
 
             //3. Pj테이블 업데이트
             //storyForm = projectService.updatePjStory(storyForm); //범용update 이전 코드
@@ -97,7 +81,8 @@ public class StoryController {
 
             log.error("\n\n after storyForm={}\n\n", storyForm);
             log.error("\n\n after projectDto={} \n\n", projectDto);
-            return ResponseEntity.ok().body(ResponseStoryForm);
+            //return ResponseEntity.ok().body(ResponseStoryForm);
+            return ResponseEntity.ok().body(true);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -108,15 +93,22 @@ public class StoryController {
     //이미지 자동업로드 설정이라, 텍스트 에디터에 추가되는 이미지마다 이 요청을 보내는 것
     @PostMapping("/story/image")
     @ResponseBody
-    public ResponseEntity<?> saveStoryImage(FileDto uploadFile) throws ParseException {
+    public ResponseEntity<?> saveStoryImage(StoryImage uploadFile, HttpServletRequest request) throws ParseException, IOException {
         //Multipart를 file로 가진 FileDto로 받지 않고 MultipartFile로 바로 받으면 아무것도 받을 수가 없다.(null) 왜지?
         //@RequestBody를 붙여도 안되더라.
         //업로드된 이미지를 서버에 저장하고 이미지의 원격 주소를 반환하는 메서드
         //DB에 경로 저장은 아직 안함. (view에서 saveBtn을 누를때 file테이블에 저장 예정)
 
-//        log.error("\n\n beforeImg={} \n\n", uploadFile);
+        log.error("\n\n beforeImg={} \n\n", uploadFile);
         MultipartFile uploadImg = uploadFile.getFile();
+        log.error("\n\n img size={}\n\n",uploadImg.getSize());
+        String contentType = uploadImg.getContentType();
+        log.error("\n\n img type={}\n\n", uploadImg.getContentType());
         String originFileName = uploadImg.getOriginalFilename();
+        log.error("\n\n originFileName={}\n\n",originFileName);
+        uploadFile.setDimension();
+        log.error("\n\n width={}\n\n", uploadFile.getWidth());
+        log.error("\n\n height={}\n\n", uploadFile.getHeight());
         String savedImgUrl = IMG_SAVE_SERVER_LOC + originFileName;
         //이미지가 저장될 서버의 물리적 주소, 나중에 이미지 서버 주소로 대체
 
@@ -130,7 +122,7 @@ public class StoryController {
 //        uploadFile.setTable_name("project");
 
 
-        String location = REMOTE_URL+originFileName;
+        String location = request.getContextPath()+REMOTE_URL+originFileName;
         //textEditor에 전달하는 이미지의 remote 주소
         //resource handler가 이 주소로 온 resource에 대한 요청을 서버의 물리적 주소로 해석해준다.
 

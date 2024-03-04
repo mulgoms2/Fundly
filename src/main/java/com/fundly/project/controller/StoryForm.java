@@ -2,6 +2,8 @@ package com.fundly.project.controller;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -9,6 +11,7 @@ import lombok.*;
 @Builder
 @ToString
 public class StoryForm {
+    @NotNull
     private String pj_id;
     private String pj_intro;
     private String pj_budget;
