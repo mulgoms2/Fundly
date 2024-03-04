@@ -36,7 +36,6 @@ public class LoginController {
     /*
     * 1. 로그인 get , post
     * 2. 쿠키, 세션
-    *
     * */
 
     @Autowired
@@ -79,13 +78,10 @@ public class LoginController {
             loginService.Login(userLoginDto, session, response);
 
             String profileImg =userProfileService.getUserProfileImg(FileDto.builder().table_name("user_info").table_key(userLoginDto.getUser_email()).build());
-
+//            log.error(profileImg.split("/")[5]);
             if(profileImg !=null){
-
-                /* cookie add */
-                response.addCookie(setCookie("user_profileImg",profileImg,-1,"/"));
-
-                log.error("프로필 이미지 저장 로그 : " + profileImg);
+                /* cookie add , profile img split... */
+                response.addCookie(setCookie("user_profileImg",profileImg.split("/")[5],-1,"/"));
             }
 
         } catch (Exception e) {

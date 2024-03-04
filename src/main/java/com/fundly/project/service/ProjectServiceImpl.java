@@ -60,6 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectDto.toBasicInfo(savedPj);
     }
 
+
     @Override
     // Tx에 해당하지 않는듯. 쿼리 두번 호출하지만, 어차피 select에서 에러나면 dto를 꺼내올 수도 없으니 두번째 쿼리도 에러남.
     public StoryForm updatePjStory(StoryForm storyForm) { //프로젝트 계획 부분 업데이트

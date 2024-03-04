@@ -42,7 +42,8 @@
     </update>
 
     <select id="getUserProfileImg" parameterType="FileDto" resultType="java.lang.String">
-        SELECT file_origin_url
+<!--        SELECT file_origin_url-->
+        SELECT file_saved_url
         FROM FILE
         where table_name = #{table_name}
         AND table_key = #{table_key}
@@ -55,9 +56,29 @@
 
     <update id="updateFile" parameterType="FileDto" >
         UPDATE FILE
-        SET file_origin_url = #{file_origin_url}
+        SET file_origin_url = #{file_origin_url},
             file_saved_url = #{file_saved_url}
         where table_name = #{table_name}
           AND table_key = #{table_key}
     </update>
+
+    <!-- get pwd date -->
+    <select id="lastPwdDate" resultType="java.lang.String">
+        SELECT CASE WHEN TIMESTAMPDIFF(YEAR, tmp.date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(YEAR, tmp.date, NOW()), '년 전 갱신됨')
+                    WHEN TIMESTAMPDIFF(MONTH, tmp.date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(MONTH, tmp.date, NOW()), '개월 전 갱신됨')
+                    WHEN TIMESTAMPDIFF(WEEK, tmp.date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(WEEK, tmp.date, NOW()), '주 전 갱신됨')
+                    WHEN TIMESTAMPDIFF(DAY, tmp.date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(DAY, tmp.date, NOW()), '일 전 갱신됨')
+                    WHEN TIMESTAMPDIFF(HOUR, tmp.date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(HOUR, tmp.date, NOW()), '시간 전 갱신됨')
+                    WHEN TIMESTAMPDIFF(MINUTE, tmp.date, NOW()) > 0 THEN CONCAT(TIMESTAMPDIFF(MINUTE, tmp.date, NOW()), '분 전 갱신됨')
+                    ELSE '방금 갱신됨' END AS user_join_date
+        FROM (select case when a.user_prev_pwd is null then DATE_SUB(a.user_join_date, INTERVAL 1 DAY)
+                     else (select DATE_SUB(max(change_date), INTERVAL 1 DAY) from user_hist where user_id = a.user_id) end date
+              FROM USER_INFO a
+              WHERE a.user_email = #{user_email}) tmp;
+    </select>
+
+
+
+
+
 </mapper>

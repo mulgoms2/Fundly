@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
+<c:set var="userprofileImg" value="${user_profileImg=='' || user_profileImg == null ? '/static/img/avatar.webp' : '/user/img/'}"/>
 <div>
 <%--  <h1>${user_profileImg}</h1>--%>
 </div>
@@ -19,7 +21,7 @@
               <div class="pTagChaDetailImg">
                 <div class="pTagImg">
                   <div class="pTagImgWrap">
-                          <div class="pTagImgFile" src="" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></div>
+                    <div class="pTagImgFile" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></div>
                   </div>
                 </div>
               </div>
@@ -31,7 +33,7 @@
                 <div class="pTagChaDetailImg">
                   <div class="pTagImg">
                     <div class="pTagImgWrap">
-                      <div class="pTagImgFile" src="" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></div>
+                      <div class="pTagImgFile pTagChangeImgFile" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></div>
                     </div>
                   </div>
 
