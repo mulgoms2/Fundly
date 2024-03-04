@@ -1,12 +1,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session ="false"%>
+<c:set var="userprofileImg" value="${user_profileImg=='' || user_profileImg == null ? '/static/img/avatar.webp' : '/user/img/'}"/>
 <div class="main">
     <!-- 프로필 & 탭 -->
     <div class="pageComponent">
         <div class="profilerHeader">
             <div class="profileInfo">
-                <div class="ifImg"><span id="profileImg" style="background: url('/user/img/${user_profileImg}') 50% 37% / cover no-repeat"></span></div>
+                <div class="ifImg"><span id="profileImg" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></span></div>
                 <div class="userInfo">
                     <div class="userInfoDetail">
                         <div class="username">${userInfo.user_name}</div>
