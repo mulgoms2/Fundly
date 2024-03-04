@@ -24,13 +24,9 @@
 
             <div class="pTagDetail">
               <div class="pTagChaDetail">
-
-
               </div>
-
 <%--              <div class="pTagChaBtn"><Button class="filesave" id="saveEmail" ><span>저장</span></Button></div>--%>
             </div>
-
           </div>
         </div>
 
@@ -44,9 +40,7 @@
 
             <div class="pTagbeforePwd">
               <div class="pTagChaDetailPwd fontDetail">
-<%--                  ${userInfo.user_pwd}--%>
-                  <p>2주 전 갱신됨</p>
-
+                  <p>${lastPwdDate}</p>
               </div>
             </div>
 
@@ -59,6 +53,7 @@
                           <input type="text" inputmode="text" placeholder="현재 비밀번호" autocapitalize="off"
                                  autocomplete="off" class="txtInput" id="userNowPwdValue" name ="NowPwdName">
                       </div>
+                      <div id="msgCheckPwd" class="msgPwd" >변경해보자</div>
                   </div>
                   <div class="pwdInit">비밀번호가 기억나지 않나요?
                       <a href="#">비밀번호 초기화</a>
@@ -76,11 +71,8 @@
                                        <div class="password-toggle" id="togglePwd"></div>
                                    </div>
                               </div>
-                              <div class = >dddd</div>
-<%--                              <div id="msgPwd1" class="msg1"/>--%>
+                              <div id="msgChangePwd" class="msgPwd" >변경해보자</div>
                           </div>
-
-<%--                          <div id="msgPwd" class="msg"/>--%>
 
                           <div class="chaPwdMargin">
                             <div class ="chaPwdMarginWrap">
@@ -90,6 +82,7 @@
                                     <div class="password-toggle" id="togglePwdConfirm"></div>
                                 </div>
                               </div>
+                              <div id="msgChangeConfirmPwd" class="msgPwd" >변경해보자</div>
                           </div>
                       </div>
                   </div>

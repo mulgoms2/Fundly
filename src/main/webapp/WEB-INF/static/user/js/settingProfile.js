@@ -40,6 +40,7 @@ const url = "/user/update";
 /* imgsave*/
 imgsave.addEventListener("click",()=> {
     const pTagImgFile = document.querySelector('.pTagImgFile');
+    const pTagChangeImgFile = document.querySelector('.pTagChangeImgFile');
     const profileImg = document.getElementById('profileImg');
 
     // 파일 객체 가져오기
@@ -67,6 +68,7 @@ imgsave.addEventListener("click",()=> {
 
             // 새로운 이미지 경로로 배경을 설정합니다.
             pTagImgFile.style.background = `url('/user/img/${data[1]}') 50% 37% / cover no-repeat`;
+            pTagChangeImgFile.style.background = `url('/user/img/${data[1]}') 50% 37% / cover no-repeat`;
             profileImg.style.background = `url('/user/img/${data[1]}') 50% 37% / cover no-repeat`;
             changeImg.click();
 
