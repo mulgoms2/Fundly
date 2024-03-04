@@ -10,6 +10,8 @@ const reward = document.querySelector('div.reward');
 const rewardTit = document.querySelector('div.reward div.tit');
 const storySaveBtn = document.querySelector('button.save');
 const storyModifyBtn = document.querySelector('button.modify');
+const storyCancelBtn = document.querySelector('button.cancel');
+const storyPreviewBtn = document.querySelector('button.preview');
 
 const divs = document.querySelectorAll('div.sub:not(.tit)');
 
@@ -34,8 +36,8 @@ tinymce.init({
     // URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
     // images_reuse_filename: true, //이걸 true로 주면 ? 물음표가 뒤에 붙는다. 왜지?
     /* enable automatic uploads of images represented by blob or data URIs*/
-    automatic_uploads: true,
-
+    automatic_uploads: true, //false로 주면 blobURL로 대체됨.
+    images_file_types: 'jpg,jpeg,png,webp',
     file_picker_types: 'image',
     /* and here's our custom image picker*/
 
@@ -80,34 +82,59 @@ necessary, as we are looking to handle it internally.
 
 
 window.onload = function(){
-    console.log(divs);
-    console.log(storyModifyBtn);
+    let msg = "${msg}"
+    console.log("msg="+msg)
+    if(msg == "FAIL") alert('저장에 실패했습니다.')
+
+    const saved = document.querySelector('div.saved');
+    console.log(saved); //div class='saved'가 있다는 것은 작성된 내용이 있다는 뜻.
+    if(saved!=null){
+        storySaveBtn.style.display = 'none';
+        storyModifyBtn.style.display = 'block';
+
+    }
 
     storySaveBtn.addEventListener('click', function(){
-        // console.log("pj_intro")
-        // console.log(pj_intro)
+
         const pj_intro = tinymce.get('intro') //에디터에 입력한 value
         const pj_budget = tinymce.get('budget')
         const pj_sched = tinymce.get('sched');
         const pj_sel_intro =  tinymce.get('selIntro');
         const pj_gift_intro =  tinymce.get('reward');
 
+        let imgArr = []; //저장이 확정된 이미지 이름을 담을 배열
+        const iframes = document.querySelectorAll('iframe')
+        console.log(iframes)
+        for(iframe of iframes){
+            const imgs = iframe.contentWindow.document.querySelectorAll('img');
+            //iframe내의 요소는 document.querySelector등으로 한번에 읽어올 수가 없다...
+            //iframe이 별개의 페이지(?)라고 인식한다고..
+            //console.log(imgs);
+            for(img of imgs){
+                let idx = img.src.lastIndexOf('/')
+                let imgName = img.src.substring(idx+1);
+                imgArr.push(imgName);
+            }
+            //console.log(imgArr);
+        }
+
 
         const storyForm = {
-            "pj_id": "pj1", //지금은 하드코딩인데.. 어디서 가져올지 생각하기
             "pj_intro": pj_intro.getContent(),
             "pj_budget": pj_budget.getContent(),
             "pj_sched": pj_sched.getContent(),
             "pj_sel_intro": pj_sel_intro.getContent(),
-            "pj_gift_intro": pj_gift_intro.getContent()
+            "pj_gift_intro": pj_gift_intro.getContent(),
+            "edit": false,
+            "imgArr": imgArr
         }
 
-        console.log(storyForm);
+        //console.log(storyForm);
         fetch("/project/story",{
             method: "POST",
             headers: {
                 "content-type": "application/json",
-                "accept": "application/json"
+                //"accept": "application/json"
             },
             body: JSON.stringify(storyForm),
         })
@@ -115,63 +142,58 @@ window.onload = function(){
                 if(!response.ok){
                     throw response
                 }
-                return response.json()
+                alert('성공적으로 저장되었습니다.')
+                location.href="/project/story"; //직접 데이터를 뷰에 뿌려주지 말고 get요청을 보내기
             })
-            .then(data => {
-                // 미리보기처럼 작성한 텍스트를 div에 넣어 보여준다.
-                alert("프로젝트 계획이 성공적으로 저장되었습니다.")
-                console.log("data received")
-                console.log(data)
+            .catch(error => error); //에러처리 부분은 더 공부해서 적절하게 처리하기.
 
-                for(div of divs){
-                    //div.style.display = 'none';
-                    div.classList.add('hidden')
-                }
-
-                purpose.innerHTML = purposeTit.outerHTML+'<div class="saved"><hr>'+data.pj_intro+'</div>';
-                budget.innerHTML = budgetTit.outerHTML+'<div class="saved"><hr>'+data.pj_budget+'</div>';
-                sched.innerHTML = schedTit.outerHTML+'<div class="saved"><hr>'+data.pj_sched+'</div>';
-                intro.innerHTML = introTit.outerHTML+'<div class="saved"><hr>'+data.pj_sel_intro+'</div>';
-                reward.innerHTML = rewardTit.outerHTML+'<div class="saved"><hr>'+data.pj_gift_intro+'</div>';
-
-                //수정버튼이 보이게한다.
-                storySaveBtn.style.display = 'none';
-                storyModifyBtn.style.display = 'block';
-
-
-
-                // pj_intro.setContent(data.pj_intro)
-                // pj_budget.setContent(data.pj_budget)
-                // pj_sched.setContent((data.pj_sched == null)? "" : data.pj_sched);
-                // //setContent 함수는 매개변수가 null이면 return하는 것 같다. null이 반영이 안돼서 이렇게 해줘야 반영이 됨.
-                // //(그냥 테스트용으로 반영하는 것)
-                //
-                // // console.log("here")
-                // // console.log(data.pj_sched)
-                // // console.log(pj_sched.getContent()) //왜 여기 세개 console.log는 실행이 안되지?
-                // pj_sel_intro.setContent(data.pj_sel_intro)
-                // pj_gift_intro.setContent(data.pj_gift_intro)
-
-            })
-            .catch(error => error)
+            // .then(response => {
+            //     if(!response.ok){
+            //         throw response
+            //     }
+            //     return response.json()
+            // })
+            // .then(data => {
+            //     // 미리보기처럼 작성한 텍스트를 div에 넣어 보여준다.
+            //     alert("프로젝트 계획이 성공적으로 저장되었습니다.")
+            //     //console.log("data received")
+            //     //console.log(data)
+            //
+            //     for(div of divs){
+            //         //div.style.display = 'none';
+            //         div.classList.add('hidden')
+            //     }
+            //
+            //     purpose.innerHTML = purposeTit.outerHTML+'<div class="saved"><hr>'+data.pj_intro+'</div>';
+            //     budget.innerHTML = budgetTit.outerHTML+'<div class="saved"><hr>'+data.pj_budget+'</div>';
+            //     sched.innerHTML = schedTit.outerHTML+'<div class="saved"><hr>'+data.pj_sched+'</div>';
+            //     intro.innerHTML = introTit.outerHTML+'<div class="saved"><hr>'+data.pj_sel_intro+'</div>';
+            //     reward.innerHTML = rewardTit.outerHTML+'<div class="saved"><hr>'+data.pj_gift_intro+'</div>';
+            //
+            //     //수정버튼이 보이게한다.
+            //     storySaveBtn.style.display = 'none';
+            //     storyModifyBtn.style.display = 'block';
+            //
+            //
+            //     // pj_intro.setContent(data.pj_intro)
+            //     // pj_budget.setContent(data.pj_budget)
+            //     // pj_sched.setContent((data.pj_sched == null)? "" : data.pj_sched);
+            //     // //setContent 함수는 매개변수가 null이면 return하는 것 같다. null이 반영이 안돼서 이렇게 해줘야 반영이 됨.
+            //     // //(그냥 테스트용으로 반영하는 것)
+            //     //
+            //     // // console.log("here")
+            //     // // console.log(data.pj_sched)
+            //     // // console.log(pj_sched.getContent()) //왜 여기 세개 console.log는 실행이 안되지?
+            //     // pj_sel_intro.setContent(data.pj_sel_intro)
+            //     // pj_gift_intro.setContent(data.pj_gift_intro)
+            //
+            // })
+            // .catch(error => error)
     })
 
-    storyModifyBtn.addEventListener('click',function(){
-        console.log(this)
-        //수정버튼을 누르면 다시 텍스트에디터에 data가 담긴 form이 나타난다. display:none인 상태의 요소는 가져올 수가 없구나..
-        for(div of divs){
-            div.classList.remove('hidden');
-        }
-        // const savedDiv = document.querySelectorAll('div.saved');
-        // for(saved of savedDiv){
-        //     saved.remove();
-        // }
-        const pj_id = "pj1"
-        location.href = "/project/story?pj_id="+pj_id
-        // fetch("/project/story?pj_id="+pj_id,{
-        //     method: "GET"
-        // })
+    storyModifyBtn.addEventListener('click',function(){ //수정 form을 서버로부터 받아온다.
+        if(!confirm('프로젝트 계획을 수정하시겠습니까?')) return;
+        location.href = "/project/story?edit="+true
     })
-
 
 }

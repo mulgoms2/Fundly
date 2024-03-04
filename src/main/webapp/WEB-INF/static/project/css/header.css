@@ -77,6 +77,13 @@ body {
     border: 1px solid #ececec;
     color: #0d0d0d;
 }
+.topContents .header div.hBtnWrap > button.cancel {
+    display: none;
+    margin: 0 12px 0 0;
+    background-color: #ffffff;
+    border: 1px solid #ececec;
+    color: #0d0d0d;
+}
 .topContents .header div.hBtnWrap > button.preview i{
     font-size: 10px;
     color: #0d0d0d;
@@ -91,6 +98,9 @@ body {
     background-color: #74b6a5;
     border: 1px solid #74b6a5;
     color: #ffffff;
+}
+.topContents .header div.hBtnWrap > button.hidden {
+    display: none;
 }
 .topContents .topContentsWrapper{
     margin-top: 64px;

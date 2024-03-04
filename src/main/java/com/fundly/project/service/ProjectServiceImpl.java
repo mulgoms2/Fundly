@@ -4,7 +4,11 @@ import com.fundly.project.controller.StoryForm;
 import com.fundly.project.exception.ProjectNofFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.model.ProjectMapper;
-import com.persistence.dto.*;
+import com.persistence.dao.FileDao;
+import com.persistence.dto.ProjectAddRequest;
+import com.persistence.dto.ProjectBasicInfo;
+import com.persistence.dto.ProjectDto;
+import com.persistence.dto.ProjectInfoUpdateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectMapper projectMapper) {
+    public ProjectServiceImpl(ProjectMapper projectMapper, FileDao fileDao) {
         this.projectMapper = projectMapper;
     }
 
