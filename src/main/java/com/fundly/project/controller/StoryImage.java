@@ -1,7 +1,9 @@
 package com.fundly.project.controller;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,18 +14,28 @@ import java.io.InputStream;
 
 
 @Slf4j
-@Data
+@Getter
 @NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class StoryImage { //커맨드 객체
-    MultipartFile file;
-    Dimension dimension;
+    private MultipartFile file;
+    private Dimension dimension; //접근제어자를 설정하는 문제..
+    private long fileSize;
+    private String contentType;
+
+    @ToString
+    @Getter
     class Dimension {
         int width;
         int height;
     }
 
-    long fileSize;
-    String contentType;
+
+
+    public void setFile(MultipartFile file){
+        this.file = file;
+    }
 
     public void setMetaData() throws IOException {
         Dimension dimension = new Dimension();
@@ -36,20 +48,22 @@ public class StoryImage { //커맨드 객체
         this.dimension = dimension;
         this.fileSize = this.file.getSize();
         this.contentType = this.file.getContentType();
+        log.error("\n\n size={} \n\n", fileSize);
+        log.error("\n\n contentType={} \n\n", contentType);
+
 
         is.close(); //닫아주지 않으면 fail to delete original file after copy ~ IOException 터짐
     }
 
-    public void setFileSize(){
-        this.fileSize = this.file.getSize();
-    }
 
-    public void setDimension() throws IOException {
-    }
 
-    public void setContentType(){
-        this.contentType = this.file.getContentType();
-    }
+    //    public void setFileSize(){
+//        this.fileSize = this.file.getSize();
+//    }
+//
+//    public void setContentType(){
+//        this.contentType = this.file.getContentType();
+//    }
 
 }
 

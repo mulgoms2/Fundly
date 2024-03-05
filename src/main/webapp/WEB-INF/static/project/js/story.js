@@ -81,6 +81,58 @@ necessary, as we are looking to handle it internally.
 
 });
 
+// custom image upload handler 나중에 구현해보기..
+
+// function custom_image_upload_handler (blobInfo, success, failure, progress) {
+//     // var xhr, formData;
+//     //
+//     // xhr = new XMLHttpRequest();
+//     // xhr.withCredentials = false;
+//     fetch("/project/story/image",{
+//         method: "POST",
+//         headers: {
+//             "accept": "application/json"
+//         }
+//     })
+//     xhr.open('POST', 'postAcceptor.php');
+//
+//     xhr.upload.onprogress = function (e) {
+//         progress(e.loaded / e.total * 100);
+//     };
+//
+//     xhr.onload = function() {
+//         var json;
+//
+//         if (xhr.status === 403) {
+//             failure('HTTP Error: ' + xhr.status, { remove: true });
+//             return;
+//         }
+//
+//         if (xhr.status < 200 || xhr.status >= 300) {
+//             failure('HTTP Error: ' + xhr.status);
+//             return;
+//         }
+//
+//         json = JSON.parse(xhr.responseText);
+//
+//         if (!json || typeof json.location != 'string') {
+//             failure('Invalid JSON: ' + xhr.responseText);
+//             return;
+//         }
+//
+//         success(json.location);
+//     };
+//
+//     xhr.onerror = function () {
+//         failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+//     };
+//
+//     formData = new FormData();
+//     formData.append('file', blobInfo.blob(), blobInfo.filename());
+//
+//     xhr.send(formData);
+// };
+
 
 window.onload = function(){
     let msg = "${msg}"
@@ -148,48 +200,6 @@ window.onload = function(){
             })
             .catch(error => error); //에러처리 부분은 더 공부해서 적절하게 처리하기.
 
-            // .then(response => {
-            //     if(!response.ok){
-            //         throw response
-            //     }
-            //     return response.json()
-            // })
-            // .then(data => {
-            //     // 미리보기처럼 작성한 텍스트를 div에 넣어 보여준다.
-            //     alert("프로젝트 계획이 성공적으로 저장되었습니다.")
-            //     //console.log("data received")
-            //     //console.log(data)
-            //
-            //     for(div of divs){
-            //         //div.style.display = 'none';
-            //         div.classList.add('hidden')
-            //     }
-            //
-            //     purpose.innerHTML = purposeTit.outerHTML+'<div class="saved"><hr>'+data.pj_intro+'</div>';
-            //     budget.innerHTML = budgetTit.outerHTML+'<div class="saved"><hr>'+data.pj_budget+'</div>';
-            //     sched.innerHTML = schedTit.outerHTML+'<div class="saved"><hr>'+data.pj_sched+'</div>';
-            //     intro.innerHTML = introTit.outerHTML+'<div class="saved"><hr>'+data.pj_sel_intro+'</div>';
-            //     reward.innerHTML = rewardTit.outerHTML+'<div class="saved"><hr>'+data.pj_gift_intro+'</div>';
-            //
-            //     //수정버튼이 보이게한다.
-            //     storySaveBtn.style.display = 'none';
-            //     storyModifyBtn.style.display = 'block';
-            //
-            //
-            //     // pj_intro.setContent(data.pj_intro)
-            //     // pj_budget.setContent(data.pj_budget)
-            //     // pj_sched.setContent((data.pj_sched == null)? "" : data.pj_sched);
-            //     // //setContent 함수는 매개변수가 null이면 return하는 것 같다. null이 반영이 안돼서 이렇게 해줘야 반영이 됨.
-            //     // //(그냥 테스트용으로 반영하는 것)
-            //     //
-            //     // // console.log("here")
-            //     // // console.log(data.pj_sched)
-            //     // // console.log(pj_sched.getContent()) //왜 여기 세개 console.log는 실행이 안되지?
-            //     // pj_sel_intro.setContent(data.pj_sel_intro)
-            //     // pj_gift_intro.setContent(data.pj_gift_intro)
-            //
-            // })
-            // .catch(error => error)
     })
 
     storyModifyBtn.addEventListener('click',function(){ //수정 form을 서버로부터 받아온다.
