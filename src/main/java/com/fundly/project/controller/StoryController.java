@@ -5,10 +5,13 @@ import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,14 +28,18 @@ import java.util.List;
 public class StoryController {
 
     ProjectService projectService;
-    //    String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
+    StoryImageValidator imageValidator;
+    MessageSource messageSource;
+  
 //    String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
-    String IMG_SAVE_SERVER_LOC = "/Users/dobigulbi/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
-    String REMOTE_URL = "/project/img/";
-
+    static final String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
+    static final String REMOTE_URL = "/project/img/";
+  
     @Autowired
-    StoryController(ProjectService projectService) {
+    StoryController(ProjectService projectService, StoryImageValidator imageValidator, MessageSource messageSource){
         this.projectService = projectService;
+        this.imageValidator = imageValidator;
+        this.messageSource = messageSource;
     }
 
     //프로젝트 계획
@@ -95,22 +102,50 @@ public class StoryController {
     //이미지 자동업로드 설정이라, 텍스트 에디터에 추가되는 이미지마다 이 요청을 보내는 것
     @PostMapping("/story/image")
     @ResponseBody
-    public ResponseEntity<?> saveStoryImage(StoryImage uploadFile, HttpServletRequest request) throws ParseException, IOException {
+    public ResponseEntity<?> saveStoryImage(StoryImage uploadFile, BindingResult result, HttpServletRequest request) throws ParseException, IOException {
         //Multipart를 file로 가진 FileDto로 받지 않고 MultipartFile로 바로 받으면 아무것도 받을 수가 없다.(null) 왜지?
         //@RequestBody를 붙여도 안되더라.
         //업로드된 이미지를 서버에 저장하고 이미지의 원격 주소를 반환하는 메서드
         //DB에 경로 저장은 아직 안함. (view에서 saveBtn을 누를때 file테이블에 저장 예정)
 
+        this.imageValidator.validate(uploadFile, result); //이미지 파일 검증
+
+        log.error("binding result={}",result);
+        log.error("**** error codes ****");
+        result.getAllErrors().stream().forEach(
+                error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
+        ); //어떤 에러코드가 출력되는지
+
+        if(result.hasErrors()){
+            //유효성 검사에 실패하면
+            ErrorResult errorResult = new ErrorResult(result, messageSource);
+            //에러메시지와 함께 400번 에러를 전달
+            log.error("\n\n errorResult = {} \n\n", errorResult);
+            return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+            //errorResult를 js에서 출력하고 싶은데, tinyMCE의 image upload handler를 직접 구현한게 아니라 구체적으로 메세지 출력까진 힘들다.
+            //image upload handler를 직접 구현할 수 있으면 제일 좋을 것 같은데..
+        }
+
         log.error("\n\n beforeImg={} \n\n", uploadFile);
+      
         MultipartFile uploadImg = uploadFile.getFile();
-        log.error("\n\n img size={}\n\n", uploadImg.getSize());
+        uploadFile.setMetaData();
+      
+        log.error("\n\n afterImg={} \n\n", uploadFile);
+        log.error("\n\n img size={}\n\n",uploadImg.getSize());
+      
         String contentType = uploadImg.getContentType();
         log.error("\n\n img type={}\n\n", uploadImg.getContentType());
+      
+//        uploadFile.setDimension();
+      
+//        log.error("\n\n width={}\n\n", uploadFile.getWidth());
+//        log.error("\n\n height={}\n\n", uploadFile.getHeight());
+      
         String originFileName = uploadImg.getOriginalFilename();
-        log.error("\n\n originFileName={}\n\n", originFileName);
-        uploadFile.setDimension();
-        log.error("\n\n width={}\n\n", uploadFile.getWidth());
-        log.error("\n\n height={}\n\n", uploadFile.getHeight());
+      
+        log.error("\n\n originFileName={}\n\n",originFileName);
+
         String savedImgUrl = IMG_SAVE_SERVER_LOC + originFileName;
         //이미지가 저장될 서버의 물리적 주소, 나중에 이미지 서버 주소로 대체
 
@@ -167,4 +202,5 @@ public class StoryController {
             }
         }
     }
+
 }
