@@ -1,82 +1,192 @@
-// alert(userinfo.user_email);
-// const id = document.querySelector(".userEmail")
-// alert(id);
 
-// window.onload = function() {currLike();}
-//
-// // 현재 좋아요 상태 정보 가져오기
-// const currLike = () => {
-//
-//     // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
-//     fetch("/like/status", {
-//         method: "POST",
-//         headers: {
-//             "content-type": "application/json"
-//         },
-//         body: JSON.stringify(obj)
-//     }).then(res => res.json()).then(handleLike).catch(error=>console.log(error));
-// };
-//
-// // 좋아요 버튼 클릭시 정보 전송하고 상태값 변경 시킨 후 가져오기
-// const clickLikeBtn = () => {
-//
-//     // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
-//     fetch("/like", {
-//         method: "POST",
-//         headers: {
-//             "content-type": "application/json"
-//         },
-//         body: JSON.stringify(obj)
-//     }).then(res => res.json()).then(handleLike).catch(error=>console.log(error));
-// };
-//
-// const handleLike = (likes) => {
-//
-//     if(likes.like_status === 0) {
-//
-//         // 3. 상태0일 때 좋아요 - 카운트
-//         // countLike('minus');
-//
-//         // 4. 좋아요 버튼 하양
-//         colorLike('white');
-//
-//     } else if(likes.like_status === 1) {
-//
-//         // 5. 상태1일 때 좋아요 + 카운트
-//         // countLike('plus');
-//
-//         // 6. 좋아요 버튼 빨강
-//         colorLike('red');
-//
-//     }
-//     console.log(likes.like_status);
-// }
-//
-// //요청보낼 데이터
-// const obj = {
-//     pj_id : "P5040",
-//     user_id : "user"
-// };
-//
-// // 1. 좋아요 상태에 따라 버튼이미지 전환
-// function colorLike(type) {
-//
-//     const heartRed = document.querySelector(".icoImg.on")
-//     const heartWhite = document.querySelector(".icoImg")
-//
-//     // 2. 상태0이면 하양하트로 고정
-//     if(type === 'white') {
-//         heartRed.style.display = 'none';
-//         heartWhite.style.display = 'block';
-//
-//         // 3. 상태1이면 빨강하트로 고정
-//     } else if(type === 'red') {
-//         heartRed.style.display = 'block';
-//         heartWhite.style.display = 'none';
-//     }
-// }
+window.onload = function() {loadLike();};
 
-// 1. 좋아요 버튼 클릭 시 좋아요 수 변화
+// 현재 좋아요 상태 정보 가져오기
+const loadLike = () => {
+
+    // 모든 좋아요 버튼이 포함된 요소를 가져옵니다.
+    const likeButtons = document.querySelectorAll(".likeBtn");
+
+    likeButtons.forEach((likeButton) => {
+        console.log(likeButton);
+        // 각 좋아요 버튼의 부모 요소에서 pj_id와 user_id를 가져옵니다.
+        const pjId = likeButton.closest(".cardWrap").querySelector(".pjId").innerText;
+        const userId = likeButton.closest(".cardWrap").querySelector(".userId").innerText;
+        let curr_pj_like_cnt = document.getElementById("like_cnt").innerText;
+        console.log(pjId);
+        console.log(userId);
+
+        // 요청 보낼 데이터
+        const obj = {
+            pj_id: pjId,
+            user_id: userId,
+            curr_pj_like_cnt : curr_pj_like_cnt
+        };
+
+        // 서버로 좋아요 정보 전송 및 서버 응답 받기
+        fetch("/like/status", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(obj)
+        })
+        .then(res => res.json())
+        .then((response) => {
+            console.log(response.like_status);
+            // 서버 응답에 따라 좋아요 버튼 스타일 변경
+            if (response.like_status === 1) {
+                colorLike('red');
+            } else {
+                colorLike('white');
+            }
+        });
+    });
+};
+
+// 좋아요 버튼 클릭시 정보 전송하고 상태값 변경 시킨 후 가져오기
+const clickLikeBtn = () => {
+
+    let user_id = document.getElementById("userId").innerText;
+    let pj_id = document.getElementById("pjId").innerText;
+    let curr_pj_like_cnt = document.getElementById("like_cnt").innerText;
+
+    //요청보낼 데이터
+    let obj = {
+        pj_id : pj_id,
+        user_id : user_id,
+        curr_pj_like_cnt : curr_pj_like_cnt
+    };
+
+    // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
+    fetch("/like", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+        },
+        body: JSON.stringify(obj)
+    }).then(res => res.json()).then(updateLikes,checkHeart);
+};
+
+const checkHeart = (response) => {
+
+    if(response.like_status === 0) {
+
+        // 4. 좋아요 버튼 하양
+        colorLike('white');
+
+    } else if(response.like_status === 1) {
+
+        // 6. 좋아요 버튼 빨강
+        colorLike('red');
+
+    }
+    console.log(response.like_status);
+}
+
+// 업데이트된 좋아요 리스트 view로 보내기
+function updateLikes(response) {
+
+    // 응답받은 객체
+    const updatedLikes = response;
+    const likesContainer = document.getElementById('projectCardWrap');
+
+    // 기존 내용 지우기
+    likesContainer.innerHTML = '';
+
+    // 업데이트된 데이터를 기반으로 새로운 HTML 생성 및 추가
+    for (const i in updatedLikes) {
+        if (updatedLikes.hasOwnProperty(i)) {
+            const likes = updatedLikes[i];
+            console.log(i)
+            console.log(likes)
+            console.log(likes.pj_id)
+            console.log(likes.curr_pj_like_cnt)
+            console.log(likes.sub_ctg)
+            const likeList = document.createElement('div');
+            likeList.className = 'cardWrap';
+            likeList.innerHTML = `
+                <span class="pjId" id="pjId">${likes.pj_id}</span>
+                <span class="userId" id="userId">${likes.user_id}</span>
+                <div class="banBox">
+                    <div class="mnBan">
+                        <div class="banImg after">
+                            <a href="#">
+                                <img src="/static/testimg/item2.webp" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <button class="likeBtn">
+                        <div class="likeCnt" id="like_cnt">${likes.curr_pj_like_cnt}</div>
+                        <div class="btnIco">
+                            <div class="icoImg" id="heartWhite" onclick="clickLikeBtn()">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/>
+                                </svg>
+                            </div>
+                            <div class="icoImg on" id="heartRed" onclick="clickLikeBtn()">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path fill="#fa6462" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </button>
+                    <div class="banTxt">
+                        <div class="txtGr">
+                            <div class="subTxt">
+                                 <span>
+                                    <a href="#">${likes.sub_ctg}</a>
+                                </span>
+                                <span class="bar">
+                                    <a href="#">${likes.pj_sel_name}</a>
+                                </span>
+                            </div>
+                            <div class="detailTxt">
+                                <div class="subTit">
+                                    <a href="#">${likes.pj_long_title}</a>
+                                </div>
+                                <div class="subDt">
+                                    <a href="#">${likes.pj_intro}</a>
+                                </div>
+                                <div class="psTag">
+                                    <span class="per">100%</span>
+                                    <span class="won"><em>${likes.curr_fund_money}</em> 원</span>
+                                    <span class="day">20일 남음</span>
+                                </div>
+                                <div class="percentBar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            console.log(likeList)
+            likesContainer.appendChild(likeList);
+            console.log(likesContainer)
+        }
+    }
+}
+
+// 1. 좋아요 상태에 따라 버튼이미지 전환
+function colorLike(type) {
+
+    const heartRed = document.querySelector(".icoImg.on")
+    const heartWhite = document.querySelector(".icoImg")
+
+    // 2. 상태0이면 하양하트로 고정
+    if(type === 'white') {
+        heartRed.style.display = 'none';
+        heartWhite.style.display = 'block';
+
+        // 3. 상태1이면 빨강하트로 고정
+    } else if(type === 'red') {
+        heartRed.style.display = 'block';
+        heartWhite.style.display = 'none';
+    }
+}
+
+// // 1. 좋아요 버튼 클릭 시 좋아요 수 변화
 // function countLike(type) {
 //
 //     const like_cnt = document.getElementById("like_cnt")
@@ -92,47 +202,3 @@
 //     }
 //     like_cnt.innerText = curr_cnt;
 // }
-
-
-const likestate = document.getElementById("likestate");
-const stateOrderby = document.getElementById("stateOrderby");
-
-const stateList = document.querySelector('.stateList');
-const orderList = document.querySelector('.orderList');
-
-stateList.addEventListener("click",()=> {
-    toggleContent("likestate");
-    if(stateOrderby.style.display==="block"){ toggleContent("stateOrderby");}
-    if(MyPageList.style.display==="block"){ toggleContent("MyPageList");}
-},{capture:true});
-
-orderList.addEventListener('click', () => {
-    toggleContent("stateOrderby");
-    if(likestate.style.display==="block"){ toggleContent("likestate");}
-    if(MyPageList.style.display==="block"){ toggleContent("MyPageList");}
-},{capture:true});
-
-// userIf.removeEvent("click");
-// userIf.addEventListener("click",()=> {
-//     if(loginInfo.outerText !== '로그인/회원가입' ){
-//         toggleContent("MyPageList");
-//         if(likestate.style.display==="block"){ toggleContent("likestate");}
-//         if(stateOrderby.style.display==="block"){ toggleContent("stateOrderby");}
-//     }else{
-//         return window.location.href='/login/login';
-//     }
-// },{capture:true});
-
-window.addEventListener("click",(e)=> {
-    // if (e.target.classList !== 'likestate' ||e.target.classList!=='stateOrderby') {\
-    if(e.target.id ===''){
-        if (likestate.style.display === "block") {
-            toggleContent("likestate");
-        } else if (stateOrderby.style.display === "block") {
-            toggleContent("stateOrderby");
-        }
-        else if (document.getElementById('MyPageList').style.display === "block") {
-            toggleContent("MyPageList");
-        }
-    }
-})

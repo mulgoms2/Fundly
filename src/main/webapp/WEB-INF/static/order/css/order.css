@@ -2,7 +2,6 @@
 * {
     margin: 0;
     padding: 0;
-    text-decoration: none;
 }
 li {
     list-style-position: inside;
@@ -10,6 +9,7 @@ li {
 }
 a {
     display: block;
+    color: deepskyblue;
 }
 i {
     font-style: normal;
@@ -99,11 +99,11 @@ i {
 .orderContainer {
     display: flex;
     flex-direction: column;
-    gap: 5em;
+    gap: 3em;
 }
 
 /* gift */
-.giftPack, .giftMoney {
+.giftPack, .giftMoney, .phoneNo, .email {
     display: flex;
     gap: 4em;
 }
@@ -122,8 +122,44 @@ i {
     justify-content: center;
     font-size: 0.9em;
 }
+/* 후원 */
+.buyerNotice {
+    color: gray;
+    font-size: small;
+    margin-top: 15px;
+}
+/* 배송지 */
+.adrBoxConts {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.adrDetailConts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.adr, .adrPhoneNo {
+    color: gray;
+    font-size: 14px;
+}
+.buyerBasic {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.basicMark {
+    background-color: #ff4f4f;
+    color: #fff;
+    padding: 2px 7px;
+    width: 20px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
 
-/* 공통Box 스타일 */
+/* 공통 Box,Btn */
 .Box {
     width: 670px;
     box-sizing: border-box;
@@ -135,66 +171,121 @@ i {
     display: flex;
     flex-direction: column;
     gap: 10px;
-
 }
-
-/* 라디오버튼 */
-.rdoBox label{
-    padding-left: 20px;
-    line-height: 30px;
-    vertical-align: middle;
+.payBox {
+    width: 670px;
+    box-sizing: border-box;
+    border-top: none;
+    border-left: 1px solid rgb(225, 225, 225);
+    border-right: 1px solid rgb(225, 225, 225);
+    border-bottom: 1px solid rgb(225, 225, 225);
+    border-radius: 3px;
+}
+.adrBtn, .payBtn {
+    margin-left: auto;
+}
+.ChangeBtn {
+    font-size: small;
+    border: 1px solid rgb(225, 225, 225);
+    border-radius: 25px;
+    outline: none;
+    background-color: inherit ;
+    padding:7px 12px;
     cursor: pointer;
 }
-.rdoBox{
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    cursor: pointer;
-}
-.rdoBox>input.ipt{
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    left: 0;
-    top: calc(50% - 8px);
-    background: none;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 1;
-}
-.rdoBox:before{
-    content: "";
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    left: 0;
-    top: calc(50% - 8px);
-    display: block;
-    background-position: 0px 0px;
-}
-.chkBox.on:before{
-    background-position: 0px -16px;
-}
-.rdoBox:before{
-    background-position: 0px -32px;
-}
-.rdoBox.on:before{
-    background-position: 0px -48px;
+div .ChangeBtn:hover {
+    background-color: rgb(225, 225, 225);
 }
 
-form>div.rdoWrap{
-    margin-bottom: 20px;
+/* pay */
+.rdoWrap {
+    display: flex;
+    gap: 40px;
 }
-form>div.rdoWrap>div,
-form>div.chkWrap>div{
-    margin-right: 50px;
-    color: #000;
-    font-size: 1rem;
+.payIcon {
+    width: 14px;
 }
-form>div.rdoWrap input,
-form>div.chkWrap input{
-    margin-right: 5px;
+.payTopNotice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+.basicPayMark {
+    background-color: #f3f3f3;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 10px;
+    text-align: center;
+    line-height: 20px;
+    margin-left: -35px;
+}
+.creditImg img {
+    width: 200px;
+}
+.payCredit {
+    display: flex;
+    gap: 20px;
+}
+.payBtn {
+    margin-right: auto;
+}
+
+/*!*.rdoBox label{*!*/
+/*    padding-left: 20px;*/
+/*    line-height: 30px;*/
+/*    vertical-align: middle;*/
+/*    cursor: pointer;*/
+/*}*/
+/*.rdoBox{*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    vertical-align: middle;*/
+/*    cursor: pointer;*/
+/*}*/
+/*.rdoBox>input.ipt{*/
+/*    width: 16px;*/
+/*    height: 16px;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: calc(50% - 8px);*/
+/*    background: none;*/
+/*    opacity: 0;*/
+/*    cursor: pointer;*/
+/*    z-index: 1;*/
+/*}*/
+/*.rdoBox:before{*/
+/*    content: "";*/
+/*    width: 16px;*/
+/*    height: 16px;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: calc(50% - 8px);*/
+/*    display: block;*/
+/*    background-position: 0px 0px;*/
+/*}*/
+/*.chkBox.on:before{*/
+/*    background-position: 0px -16px;*/
+/*}*/
+/*.rdoBox:before{*/
+/*    background-position: 0px -32px;*/
+/*}*/
+/*.rdoBox.on:before{*/
+/*    background-position: 0px -48px;*/
+/*}*/
+
+/*form>div.rdoWrap{*/
+/*    margin-bottom: 20px;*/
+/*}*/
+/*form>div.rdoWrap>div,*/
+/*form>div.chkWrap>div{*/
+/*    margin-right: 50px;*/
+/*    color: #000;*/
+/*    font-size: 1rem;*/
+/*}*/
+/*form>div.rdoWrap input,*/
+/*form>div.chkWrap input{*/
+/*    margin-right: 5px;*/
+/*}*/
 
 /* total */
 

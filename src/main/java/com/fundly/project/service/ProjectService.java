@@ -8,9 +8,6 @@ public interface ProjectService {
 
     ProjectDto add(ProjectAddRequest pjAddReq);
 
-    ProjectBasicInfo updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
-
-
     StoryForm updatePjStory(StoryForm storyForm);
     StoryForm getStoryFormByPjId(String pj_id);
 
@@ -18,4 +15,7 @@ public interface ProjectService {
     ProjectDto getEditingProject(String user_email);
 
     ProjectDto update(ProjectDto projectDto);
+    ProjectBasicInfo updatePjInfo(ProjectInfoUpdateRequest pjInfoUpdate);
+
+    int selectLikeCnt(ProjectDto pjdto) throws Exception;
 }
