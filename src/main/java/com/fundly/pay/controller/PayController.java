@@ -1,5 +1,6 @@
 package com.fundly.pay.controller;
 
+import com.fundly.pay.dto.PayPageHandler;
 import com.fundly.pay.dto.PayResponseDto;
 import com.fundly.pay.dto.billkey.BillKeyRequestDto;
 import com.fundly.pay.dto.billkey.BillKeyResponseDto;
@@ -12,11 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
@@ -86,6 +83,7 @@ public class PayController {
             log.info("setDefaultPayMeans 성공");
 
             // 4. Y인 row가 1개인지 검증한다.
+            defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
             if (defaultPayMeansCnt != 1) {
                 throw new Exception("Update Failed. - getDefaultPayMeansCount Error");
             }
@@ -98,7 +96,7 @@ public class PayController {
             e.printStackTrace();
             // TODO: 상태코드별 에러 처리 세분화 필요
             PayResponseDto payResponseDto = new PayResponseDto("UPDATE_ERROR", payMeansDto);
-            return ResponseEntity.ok().body(payResponseDto);
+            return ResponseEntity.badRequest().body(payResponseDto);
         }
     }
 
@@ -138,25 +136,34 @@ public class PayController {
             e.printStackTrace();
             // TODO: 상태코드별 에러 처리 세분화 필요
             PayResponseDto payResponseDto = new PayResponseDto("DEL_ERROR", payMeansDto);
-            return ResponseEntity.ok().body(payResponseDto);
+            return ResponseEntity.badRequest().body(payResponseDto);
 
         }
     }
 
+    @ResponseBody
     @GetMapping("/list")
-    public String list(Model m, RedirectAttributes rattr) {
+    public ResponseEntity<PayResponseDto> list(@RequestParam(defaultValue = "1") Integer page, RedirectAttributes rattr) {
         String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
 
         try {
-            List<PayMeansDto> list = payMeansService.getAllPayMeans(userId);
-            m.addAttribute("list", list);
+            int totalCnt = payMeansService.getPayMeansCountForUser(userId);
+            PayPageHandler pageHandler = new PayPageHandler(totalCnt, page);
 
+            Map map = new HashMap();
+            map.put("pay_means_id", userId);
+            map.put("offset", pageHandler.getOffset());
+            map.put("dummySize", pageHandler.getDummySize());
+
+            List<PayMeansDto> list = payMeansService.getAllPayMeans(map);
+
+            PayResponseDto payResponseDto = new PayResponseDto("LIST_SUCCESS", list, pageHandler);
+            return ResponseEntity.ok().body(payResponseDto);
         } catch (Exception e) {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "LIST_ERROR");
+            return ResponseEntity.badRequest().build();
         }
-
-        return "pay/settingPayMeans";
     }
 
     @ResponseBody
