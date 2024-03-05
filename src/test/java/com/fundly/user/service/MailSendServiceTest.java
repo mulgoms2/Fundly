@@ -24,8 +24,8 @@ class MailSendServiceTest {
     @Test
     void joinEmail() {
         try {
-
-            log.error(mailSendService.joinEmail("initsave@gmail.com"));
+            mailSendService.joinEmail("initsave@gmail.com");
+//            log.error(mailSendService.joinEmail("initsave@gmail.com"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,5 +33,7 @@ class MailSendServiceTest {
 
     @Test
     void mailSend() {
+
+//        mailSendService.mailSend();
     }
 }

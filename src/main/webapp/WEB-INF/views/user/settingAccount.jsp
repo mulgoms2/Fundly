@@ -49,11 +49,14 @@
 
                   <div class="pwdFont">현재 비밀번호</div>
                   <div class="userNowPwdDetail">
-                      <div class ="chaPwdMarginWrap">
-                          <input type="text" inputmode="text" placeholder="현재 비밀번호" autocapitalize="off"
-                                 autocomplete="off" class="txtInput" id="userNowPwdValue" name ="NowPwdName">
+                      <div class ="nowNowPwdWrap" id="nowNowPwdWrap">
+                          <input type="password" placeholder="현재 비밀번호" autocapitalize="off"
+                                 autocomplete="off" class="txtInput" id="userNowPwdValue">
+                          <div class="eyes">
+                              <div class="password-toggle" id="toggleNowPwd"></div>
+                          </div>
                       </div>
-                      <div id="msgCheckPwd" class="msgPwd" >변경해보자</div>
+                      <div id="msgCheckPwd" class="msgPwd" ></div>
                   </div>
                   <div class="pwdInit">비밀번호가 기억나지 않나요?
                       <a href="#">비밀번호 초기화</a>
@@ -62,33 +65,32 @@
                       <div class="pwdFont">변경할 비밀번호</div>
 
                       <div class="userChaPwdDetail">
-
-                          <div class="chaPwdMargin">
-                              <div class ="chaPwdMarginWrap">
-                                  <input type="text" inputmode="text" placeholder="변경할 비밀번호" autocapitalize="off"
-                                         autocomplete="off" class="txtInput" id="userChaPwdValue" name ="ChaPwdName">
+                          <div class="chaPwd">
+                              <div class ="chaPwdMainWrap" id ="chaPwdMainWrap">
+                                  <input type="password" placeholder="변경할 비밀번호" autocapitalize="off"
+                                         autocomplete="new-password" class="txtInput" id="userChaPwdValue">
                                    <div class="eyes">
                                        <div class="password-toggle" id="togglePwd"></div>
                                    </div>
                               </div>
-                              <div id="msgChangePwd" class="msgPwd" >변경해보자</div>
+                              <div id="msgChangePwd" class="msgPwd" ></div>
                           </div>
 
-                          <div class="chaPwdMargin">
-                            <div class ="chaPwdMarginWrap">
-                                  <input type="text" inputmode="text" placeholder="변경할 비밀번호 확인" autocapitalize="off"
-                                         autocomplete="off" class="txtInput" id="userChaPwdConfirmValue" name ="ChaPwdConfirmName">
-                                <div class="eyes">
-                                    <div class="password-toggle" id="togglePwdConfirm"></div>
-                                </div>
+                          <div class="chaPwdConfirm">
+                            <div class ="chaPwdConfirmWrap" id = "chaPwdConfirmWrap">
+                                  <input type="password" placeholder="변경할 비밀번호 확인" autocapitalize="off"
+                                         autocomplete="new-password" class="txtInput" id="userChaPwdConfirmValue">
+                                    <div class="eyes">
+                                        <div class="password-toggle" id="togglePwdConfirm"></div>
+                                    </div>
                               </div>
-                              <div id="msgChangeConfirmPwd" class="msgPwd" >변경해보자</div>
+                              <div id="msgChangeConfirmPwd" class="msgPwd" ></div>
                           </div>
                       </div>
                   </div>
               </div>
 
-              <div class="pTagChaBtn"><Button class="filesave" id="savePwd" ><span>저장</span></Button></div>
+              <div class="pTagChaBtn"><Button class="filesave" id="pwdsave" ><span>저장</span></Button></div>
             </div>
           </div>
         </div>
@@ -116,8 +118,10 @@
 
             <div class="pTagDetailPhoneNo">
               <div class="pTagChaDetail">
+                  <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="20" placeholder="휴대 번호를 입력해주세요." autocapitalize="off"
+                         autocomplete="off" id="userPhoneValue" value = "${userInfo.user_phone_no}">
               </div>
-              <div class="pTagChaBtn"><Button class="filesave" id="savehoneNo" ><span>저장</span></Button></div>
+              <div class="pTagChaBtn"><Button class="filesave" id="phonenosave" ><span>저장</span></Button></div>
             </div>
           </div>
         </div>

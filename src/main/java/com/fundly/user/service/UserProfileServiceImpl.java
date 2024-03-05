@@ -8,6 +8,7 @@ import com.persistence.dto.FileDto;
 import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -19,11 +20,16 @@ import java.util.Objects;
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
     private final UserProfileDao userProfileDao;
-//    private final FileDao fileDao;
+    private final UserHistService userHistService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //    private final FileDao fileDao;
 
     @Autowired
-    public UserProfileServiceImpl(UserProfileDao userProfileDao){
+    public UserProfileServiceImpl(UserProfileDao userProfileDao,UserHistService userHistService, BCryptPasswordEncoder bCryptPasswordEncoder){
         this.userProfileDao = userProfileDao;
+        this.userHistService = userHistService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -44,15 +50,44 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfileDto userUpdate(UserProfileDto userProfileDto){
+    public UserProfileDto userUpdate(UserDto userDto){
         try {
-            int cnt = userProfileDao.update(userProfileDto);
 
-            if(cnt!=1){
-                log.error("에러다!!!!!!!!");
+//            log.error("\n\n"  + userDto + "\n\n");
+
+            log.error("====1====");
+            UserProfileDto userProfileInfo = userProfileDao.userProfileinfo(userDto);
+
+//            log.error("\n\n"  + userProfileInfo + "\n\n");
+            if(userDto.getUser_name()!=null) userProfileInfo.setUser_name(userDto.getUser_name());
+            if(userDto.getUser_intro()!=null) userProfileInfo.setUser_intro(userDto.getUser_intro());
+            /* pwd 변경 시 기존 번호 가져오고 수정 할 값 입력 */
+            if(userDto.getUser_prev_pwd()!=null){
+                /* 암호화 체크 */
+                if(!bCryptPasswordEncoder.matches(userDto.getUser_prev_pwd(),userProfileInfo.getUser_pwd())){
+                    throw new RuntimeException("LOGIN_PWD_ERROR");
+                    //   throw new RuntimeException("비밀번호를 확인해 주세요.");
+                }
+                userProfileInfo.setUser_prev_pwd(userProfileInfo.getUser_pwd());
             }
 
-            return userProfileDao.userProfileinfo(UserDto.builder().user_email(userProfileDto.getUser_email()).build());
+            if(userDto.getUser_pwd()!=null){
+                String userInPwd = userDto.getUser_pwd();
+                String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
+                userProfileInfo.setUser_pwd(encoderPwd);
+            }
+//            log.info("userProfileInfo ===== " + userProfileInfo + "\n\n");
+
+            if(userDto.getUser_phone_no()!=null) userProfileInfo.setUser_phone_no(userDto.getUser_phone_no());
+
+            if(userProfileDao.update(userProfileInfo)!=1){
+                log.error("유저정보 업데이트 에러 ");
+            }
+
+            if (userHistService.userHistinsert(userProfileInfo) != 1) {
+                log.error("유저정보 저장 에러");
+            }
+            return userProfileDao.userProfileinfo(UserDto.builder().user_email(userProfileInfo.getUser_email()).build());
 
         } catch (Exception e) {
             log.error("error == " + e.getMessage());

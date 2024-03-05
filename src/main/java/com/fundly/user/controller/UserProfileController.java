@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -36,6 +37,9 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -43,19 +47,17 @@ import java.util.*;
 @Controller
 @RequestMapping("/user")
 public class UserProfileController {
-//    String IMG_SAVE_LOCATION = "/Users/USER/fundly/img/";
-    String IMG_SAVE_LOCATION = "/fundly/img/";
+    String IMG_SAVE_LOCATION = "/Users/USER/fundly/img/";
+//    String IMG_SAVE_LOCATION = "/fundly/img/";
+//    String IMG_SAVE_LOCATION = "/static/";
 
     private final UserInfoService userInfoService;
     private final UserProfileService userProfileService;
-    private final UserHistService userHistService;
 
     @Autowired
-    public UserProfileController(UserInfoService userInfoService,UserProfileService userProfileService,
-                                 UserHistService userHistService){
+    public UserProfileController(UserInfoService userInfoService,UserProfileService userProfileService){
         this.userInfoService = userInfoService;
         this.userProfileService = userProfileService;
-        this.userHistService = userHistService;
     }
 
     /* 설정 - 프로필 */
@@ -82,6 +84,9 @@ public class UserProfileController {
 
         model.addAttribute("userInfo",userInfo);
         model.addAttribute("user_profileImg",user_profileImg);
+
+        log.error("유저 정보는 ? " + userInfo);
+
         log.error(" 이미지 주소 값은 ? : "+user_profileImg);
         return "user/settingProfile";
     }
@@ -116,7 +121,14 @@ public class UserProfileController {
         String imgname = uuid + originFileName;
         MultipartFile imgFile = file;
 
+        System.out.println("saveImgUrl = " + saveImgUrl);
+//        Path root = Paths.get(System.getProperty("user.home"),"upload");
+//        Path target = root.resolve(saveImgUrl);
+//        Files.copy(inputStream,target);
+//        String projectPath = System.getProperty("user.dir") + "/src/main/webapp/WEB-INF/static/img";
+
         try{
+//            imgFile.transferTo(new File(projectPath,saveImgUrl));
             imgFile.transferTo(new File(saveImgUrl));
             FileDto uploadFile = FileDto.builder().file(file).file_saved_url(saveImgUrl).file_origin_url(originFileName).build();
             userProfileService.saveImg(uploadFile,user_email,response);
@@ -131,23 +143,14 @@ public class UserProfileController {
         }
     }
 
-    public Cookie setCookie(String cookieKey, String cookieValue, int maxAge, String path){
-        log.info("coo = " + cookieKey + ", value = " + cookieValue + ", maxage = " + maxAge + ", path = " + path);
-        Cookie cookie = new Cookie(cookieKey,cookieValue);
-        cookie.setMaxAge(maxAge); // 쿠키를 삭제
-        cookie.setPath(path);
-
-        return cookie;
-    }
-
     @PostMapping("/update")
     @ResponseBody
     public ResponseEntity<?> updateSave(@RequestBody @Valid UserDto userDto, BindingResult result) {
 
-        // dto binding error
-        result.getAllErrors().stream().forEach(
-                error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
-        );
+//        // dto binding error msg view
+//        result.getAllErrors().stream().forEach(
+//                error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
+//        );
 
         int cnt = 0;
 
@@ -158,27 +161,23 @@ public class UserProfileController {
              * 2. user 프로필 사진
              * */
 
-            UserProfileDto userProfileInfo = userProfileService.userProfileInfo(userDto);
-            if(userDto.getUser_name()!=null) userProfileInfo.setUser_name(userDto.getUser_name());
-            if(userDto.getUser_intro()!=null) userProfileInfo.setUser_intro(userDto.getUser_intro());
-
-//            log.info("userProfileInfo ===== " + userProfileInfo + "\n\n");
-
-            UserProfileDto userProfileDto = userProfileService.userUpdate(userProfileInfo);
-            cnt = userHistService.userHistinsert(userProfileDto);
-
+            UserProfileDto userProfileDto = userProfileService.userUpdate(userDto);
 //            log.info("cnt = " + cnt);
-
-            if (cnt != 1) {
-                throw new Exception("update userinfo failed");
-            }
-
-            UserDto userList = userInfoService.userInfo(userDto);
+            UserDto userList = userInfoService.userInfo(UserDto.builder().user_email(userProfileDto.getUser_email()).build());
             return new ResponseEntity<UserDto>(userList, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("ddd");
+            log.error(e.getMessage());
             return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public Cookie setCookie(String cookieKey, String cookieValue, int maxAge, String path){
+        log.info("coo = " + cookieKey + ", value = " + cookieValue + ", maxage = " + maxAge + ", path = " + path);
+        Cookie cookie = new Cookie(cookieKey,cookieValue);
+        cookie.setMaxAge(maxAge); // 쿠키를 삭제
+        cookie.setPath(path);
+
+        return cookie;
     }
 
     public String getCookieValue(HttpServletRequest request, String cookieName) {

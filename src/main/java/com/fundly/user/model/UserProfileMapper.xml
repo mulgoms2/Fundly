@@ -76,9 +76,4 @@
               FROM USER_INFO a
               WHERE a.user_email = #{user_email}) tmp;
     </select>
-
-
-
-
-
 </mapper>
