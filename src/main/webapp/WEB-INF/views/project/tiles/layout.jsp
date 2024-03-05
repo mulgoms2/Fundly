@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/static/project/css/basicInfo.css">
     <link rel="stylesheet" href="/static/project/css/creator.css">
     <link rel="stylesheet" href="/static/project/css/story.css">
+    <script src="https://kit.fontawesome.com/99823c8069.js" crossorigin="anonymous"></script>
 
     <%--    <link rel="stylesheet" href="/static/project/css/basicInfo.css">--%>
 

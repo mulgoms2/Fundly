@@ -129,8 +129,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
 //    가장 범용적인 프로젝트 업데이트 메서드. 전체 필드를 업데이트 한다. 주의사항 dto에 null이 담겨온 필드는 null로 업데이트된다.
     public ProjectDto update(ProjectDto projectDto) {
-        int update = projectMapper.update(projectDto);
-        if (update == 0) {
+        int rowCount = projectMapper.update(projectDto);
+
+        if (rowCount == 0) {
             ProjectUpdateFailureException ex = new ProjectUpdateFailureException("업데이트 대상 프로젝트를 찾을 수 없습니다.");
             log.debug("update(ProjectDto) : {}\n{}", ex.getMessage(), ex.getStackTrace());
             throw ex;
