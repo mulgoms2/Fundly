@@ -1,64 +1,54 @@
 
-// fetch("/like/status", {
-//     method: "POST",
-//     headers: {
-//         "content-type": "application/json"
-//     },
-//     body: JSON.stringify(obj)
-// }).then(res => {
-//     if(res.status === 200) {
-//         handleLike;
-//     } else if(res.status === 400) {
-//         alert("error");
-//     }
-// })
-
 window.onload = function() {currLike();};
 
 // 현재 좋아요 상태 정보 가져오기
-const currLike = (pj_id,user_id,curr_pj_like_cnt) => {
+const currLike = () => {
 
     // let user_id = document.getElementById("userId").innerText;
     // let pj_id = document.getElementById("pjId").innerText;
+    // let curr_pj_like_cnt = document.getElementById("like_cnt").innerText;
 
     //요청보낼 데이터
-    const obj = {
-        pj_id : pj_id,
-        user_id : user_id,
-        curr_pj_like_cnt : curr_pj_like_cnt
+    let obj = {
+        pj_id : "P5040",
+        user_id : "bada",
+        // curr_pj_like_cnt : 10
     };
 
     // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
     fetch("/like/status", {
         method: "POST",
         headers: {
-            "content-type": "application/json"
+            "content-type": "application/json",
+            "accept": "application/json"
         },
         body: JSON.stringify(obj)
-    }).then(res => res.json()).then(handleLike).catch(error=>console.log(error));
+    }).then(res => res.json()).then(handleLike);
 };
 
 // 좋아요 버튼 클릭시 정보 전송하고 상태값 변경 시킨 후 가져오기
-const clickLikeBtn = (pj_id,user_id,curr_pj_like_cnt) => {
+const clickLikeBtn = () => {
 
     // let user_id = document.getElementById("userId").innerText;
     // let pj_id = document.getElementById("pjId").innerText;
+    // let curr_pj_like_cnt = document.getElementById("like_cnt").innerText;
 
     //요청보낼 데이터
-    const obj = {
-        pj_id : pj_id,
-        user_id : user_id,
-        curr_pj_like_cnt : curr_pj_like_cnt
+    let obj = {
+        pj_id : "P5040",
+        user_id : "bada",
+        // curr_pj_like_cnt : 10
     };
 
     // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
     fetch("/like", {
         method: "POST",
         headers: {
-            "content-type": "application/json"
+            "content-type": "application/json",
+            "accept": "application/json"
         },
         body: JSON.stringify(obj)
-    }).then(res => res.json()).then(handleLike).catch(error=>console.log(error));
+    }).then(res => res.json()).then(handleLike);
 };
 
 const handleLike = (likes) => {
