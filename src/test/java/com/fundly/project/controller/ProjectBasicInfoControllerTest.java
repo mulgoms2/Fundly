@@ -6,7 +6,6 @@ import com.fundly.project.exception.ProjectAddFailureException;
 import com.fundly.project.exception.ProjectNofFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
-import com.fundly.project.validate.LoginInterceptor;
 import com.persistence.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.servlet.http.HttpSession;
@@ -37,11 +33,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-class ProjectEditorControllerTest {
+class ProjectBasicInfoControllerTest {
     @Mock
     ProjectService service;
     @InjectMocks
-    ProjectEditorController projectEditorController;
+    ProjectBasicInfoController projectBasicInfoController;
     MockMvc mockMvc;
     ObjectMapper objectMapper;
     private ProjectInfoUpdateRequest request;
@@ -58,7 +54,7 @@ class ProjectEditorControllerTest {
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        mockMvc = MockMvcBuilders.standaloneSetup(projectEditorController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(projectBasicInfoController).build();
         objectMapper = new ObjectMapper();
 
         pj_id = "01";

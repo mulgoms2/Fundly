@@ -21,11 +21,12 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/project/editor")
 @SessionAttributes("projectDto")
-public class ProjectEditorController {
+public class ProjectBasicInfoController {
     @Autowired
     ProjectService projectService;
 
     @ModelAttribute("projectDto")
+//    비로그인시 로그인페이지. 로그인시 기존 프로젝트 확인 후 존재하면 세션에 저장. 없으면 저장 x
     ProjectDto initProjectEditor(@SessionAttribute String user_email, HttpSession session) {
         try {
             ProjectDto projectDto = projectService.getEditingProject(user_email);
