@@ -47,9 +47,9 @@ class LikeDaoTest {
     @DisplayName("DB에 데이터넣기")
     void start() {
 
-//        userdto = new UserDto("user","바다","1234");
-//        pjdto = new ProjectDto("P5040",0);
-        likedto = new LikeDto(userdto.getUser_id(),pjdto.getPj_id());
+        userdto = UserDto.builder().user_id("bada").build();
+        pjdto = ProjectDto.builder().pj_id("P1010").build();
+        likedto = LikeDto.builder().user_id(userdto.getUser_id()).pj_id(pjdto.getPj_id()).build();
         log.error("\n\n\n" + likedto);
 
     }
@@ -84,7 +84,7 @@ class LikeDaoTest {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime strtoDatetime2 = LocalDateTime.parse(str2,format);
 
-        LikeDto likedto2 = new LikeDto (userdto.getUser_id(),"P1010");
+        LikeDto likedto2 = LikeDto.builder().user_id(userdto.getUser_id()).pj_id("P2020").build();
         assertTrue(likedao.insertLike(likedto2)==1);
 
         List<LikeDto> likes = likedao.AllLikeList(likedto);
@@ -161,6 +161,3 @@ class LikeDaoTest {
         log.error("\n\n\n" + result);
     }
 }
-    // LocalDateTime -> String
-//    String nowtoString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-

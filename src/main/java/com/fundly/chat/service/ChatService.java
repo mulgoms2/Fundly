@@ -9,7 +9,6 @@ import com.persistence.dto.SelBuyMsgDetailsDto;
 
 public interface ChatService {
     String SEL_BUY_MSG_DETAILS = "SEL_BUY_MSG_DETAILS";
-    String IMG_SAVE_LOCATION = "/Users/dobigulbi/chat/file/";
     boolean saveMessage(SelBuyMsgDetailsDto message);
     SelBuyMsgDto joinChatRoom(ChatRequest chatRequest);
     void saveFileMessage(FileDto img_file, SelBuyMsgDetailsDto selBuyMsgDetailsDto);

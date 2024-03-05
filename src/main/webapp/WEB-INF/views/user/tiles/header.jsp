@@ -12,7 +12,7 @@
         </a>
         <div class="lftSmn">
             <div class="pjtUp">
-                <a href="<c:url value="/editor/start" />">프로젝트 올리기</a>
+                <a href="<c:url value="/project/editor/start" />">프로젝트 올리기</a>
             </div>
             <div class="like">
                 <i class="fa-regular fa-heart"></i>

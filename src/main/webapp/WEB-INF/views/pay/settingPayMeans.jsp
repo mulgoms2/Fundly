@@ -9,367 +9,52 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
-<style>
-    button {
-        cursor: pointer;
-    }
-
-    .removeBtn:hover, .defaultSetBtn:hover {
-        background-color: rgb(230, 230, 230);
-    }
-
-    .default_tag {
-        margin-left: 2px;
-        position: relative;
-        z-index: 1;
-        top: -0.3em;
-        min-height: 18px;
-        padding: 0px 6px;
-        font-size: 10px;
-        line-height: 16px;
-        letter-spacing: -0.005em;
-        display: inline-flex;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        border-radius: 2px;
-        font-weight: bold;
-        color: white;
-        background: rgb(255, 87, 87);
-    }
-
-    .imgBox {
-        display: block;
-        border-radius: 4px;
-        overflow: hidden;
-        width: 80px;
-        height: 54px;
-        border: 1px solid rgb(230, 230, 230);
-    }
-
-    .listBox {
-        border-radius: 4px;
-        border: 1px solid rgb(230, 230, 230);
-    }
-
-    .listBoxElement {
-        display: flex;
-        margin-top: 28px;
-        border-bottom: 1px solid rgb(230, 230, 230);
-    }
-
-    .listBoxElement:last-child {
-        border-bottom: none;
-    }
-
-    .cardImg {
-        width: 85px;
-        height: 54px;
-        border-radius: 4px;
-        overflow: hidden;
-        display: block;
-    }
-
-    .content {
-        flex-grow: 1;
-        display: inline-flex;
-        flex-flow: column;
-        justify-content: center;
-    }
-
-    .companyName {
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 27px;
-        letter-spacing: -0.020em;
-    }
-
-    .cardNumber {
-        font-size: 13px;
-        line-height: 20px;
-        letter-spacing: -0.015em;
-        color: #3D3D3D;
-    }
-
-    .func {
-        display: flex;
-        align-items: center;
-    }
-
-    .meatballBtn {
-        position: relative;
-        border: 1px solid rgb(230, 230, 230);
-        background: rgb(255, 255, 255);
-        border-radius: 100%;
-        width: 26px;
-        height: 26px;
-        min-height: 26px;
-    }
-
-    .btnIconDiv img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .thumbnail, .func {
-        margin: 0 20px;
-    }
-
-    .clickBtnContent {
-        min-width: 153px;
-        margin-top: 9px;
-        position: absolute;
-        border: 1px solid rgb(230, 230, 230);
-        border-radius: 4px;
-        box-shadow: rgba(0, 0, 0, 0.15) 0 2px 4px 0;
-        background: rgb(255, 255, 255);
-        padding: 4px 0;
-        z-index: 1;
-        display: none;
-    }
-
-    .clickBtnContent button {
-        background: rgb(255, 255, 255);
-        width: 100%;
-        border: 0;
-        padding: 0 12px;
-        height: 40px;
-        display: flex;
-        text-align: left;
-        align-items: center;
-    }
-</style>
-<div class="flexOnly">
-    <div class="container">
-        <div class="profileimg">
-            <div class="profileimgFormHeader flexOnly">
-                <p class="pTag">등록된 결제수단</p>
-                <button type="button" id="regBtn" class="ButtonTag">+ 추가</button>
+<script type="text/javascript" src="/static/pay/js/payMeans.js"></script>
+<link rel="stylesheet" href="/static/pay/css/pay-means-list.css">
+<link rel="stylesheet" href="/static/pay/css/pay-means-popup.css">
+<link rel="stylesheet" href="/static/main/common.css">
+<div class="containerWrapper fontStyle">
+    <div class="leftContainer">
+        <div class="settingFormWrapper">
+            <div class="settingFormHeader">
+                <p class="settingFormTitle">등록된 결제수단</p>
+                <button class="settingFormButton" type="button" id="regBtn">+ 추가</button>
             </div>
-            <div class="listBox" id="pay_means_data">
-                <c:forEach var="payMeansDto" items="${list}">
-                    <div class="listBoxElement">
-                        <div class="thumbnail">
-                            <div class="cardImg">
-                                <img class="imgBox" src="<c:url value='${payMeansDto.file_path}${payMeansDto.file_name}${payMeansDto.file_extension}'/>" alt="결제수단 이미지">
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="companyName">${payMeansDto.card_co_type}
-                                <c:if test="${payMeansDto.default_pay_means_yn == 'Y'}">
-                                    <span class="default_tag">기본</span>
-                                </c:if>
-                            </div>
-                            <div class="cardNumber">************${payMeansDto.card_no}</div>
-                        </div>
-                        <div class="func">
-                            <button type="button" class="meatballBtn">
-                                    <img src="/static/img/meatball.svg" alt="btn" />
-                            </button>
-                            <div class="clickBtnContent">
-                                <button type="button" class="defaultSetBtn" data-user-id="${payMeansDto.user_id}" data-pay-means-id="${payMeansDto.pay_means_id}">기본 결제수단 지정</button>
-                                <button type="button" class="removeBtn" data-user-id="${payMeansDto.user_id}" data-pay-means-id="${payMeansDto.pay_means_id}">삭제</button>
-                            </div>
-                        </div>
+            <div class="emptyList">
+                <div class="emptyListErrorMsg">
+                    <div class="ErrorMsgIcon">
+                        <svg viewBox="0 0 48 48">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 43.8C13 43.8 4.2 35 4.2 24C4.2 13 13 4.2 24 4.2C35 4.2 43.8 13 43.8 24C43.8 35 35 43.8 24 43.8ZM24 2C11.9 2 2 11.9 2 24C2 36.1 11.9 46 24 46C36.1 46 46 36.1 46 24C46 11.9 36.1 2 24 2ZM24 32.3C22.7 32.3 21.8 33.401 21.8 34.6C21.8 35.8 22.9 36.8 24.1 36.8C25.4 36.8 26.3 35.7 26.3 34.5C26.3 33.3 25.3 32.3 24 32.3ZM24.1 29.0998H24C23.3 28.9998 22.7 28.4008 22.9 27.7008C22.8825 27.1051 22.8619 26.3713 22.8388 25.5474C22.7299 21.6673 22.565 15.7867 22.4 12.8998V12.7998C22.3 11.8998 23.1 11.2998 24.2 11.2998C25.3 11.2998 26 11.8998 26 12.7998V12.9998C25.8994 14.7101 25.8241 17.5591 25.7486 20.414C25.6741 23.2344 25.5994 26.0604 25.5 27.7998V27.9008C25.4 28.5998 24.8 29.0998 24.1 29.0998Z"></path>
+                        </svg>
                     </div>
-                </c:forEach>
+                    등록된 결제수단이 없습니다.
+                    <br>
+                    결제수단을 추가해주세요.
+                </div>
+            </div>
+            <div class="listBox">
+                <div id="pay_means_data"></div>
+                <div class="boxViewMoreWrapper">
+                    <button id="viewMoreBtn" type="button">
+                        <span>더보기
+                            <div class="arrowDown">
+                                <svg viewBox="0 0 48 48">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2 14.4065C2 13.1363 3.09843 12.0615 4.39657 12.0615C4.99571 12.0615 5.59485 12.257 6.09414 12.7455L23.9685 29.4526L41.843 12.6478C42.8415 11.7684 44.3394 11.7684 45.338 12.7455C46.2367 13.7226 46.2367 15.1882 45.2381 16.0676L23.9685 36L2.79886 16.0676C2.29957 15.6767 2 14.9928 2 14.4065Z"></path>
+                                </svg>
+                            </div>
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="userSettingContainer">
-        <div class="userInfoMod"></div>
-        <div class="userInfoComment">
-            <p>결제수단을 등록/삭제하면 현재 후원에 등록한 결제수단이 변경/삭제되나요?</p>
-            <div class="userInfoCommentContent">
-                아닙니다. 이곳에서 결제수단을 등록/삭제하더라도 이미 후원에 등록한 결제수단이 변경/삭제되지 않습니다. 이를 변경하시려면 후원현황에서 변경해주세요.
-                <span><a href="<c:url value='/mypage/fundingProject'/>">후원현황 바로가기</a></span>
-            </div>
+    <div class="rightContainer">
+        <p class="faqTitle">결제수단을 등록/삭제하면 현재 후원에 등록한 결제수단이 변경/삭제되나요?</p>
+        <div class="faqContent">
+            아닙니다. 이곳에서 결제수단을 등록/삭제하더라도 이미 후원에 등록한 결제수단이 변경/삭제되지 않습니다. 이를 변경하시려면 후원현황에서 변경해주세요.
+            <span class="faqContentLink"><a href="<c:url value='/mypage/fundingProject'/>">후원현황 바로가기</a></span>
         </div>
     </div>
 </div>
 <%--register popup--%>
 <jsp:include page="registerCardFormPop.jsp" />
-<script>
-    let msg = "";
-    if (msg === "LIST_ERROR")  alert("결제수단 조회에 실패했습니다. 다시 시도해 주세요.");
-
-    $(document).ready(function () {
-        // 추가 버튼 클릭 시 팝업창 open
-        $("#regBtn").click(function (e) {
-            e.preventDefault();
-            $('#popRegister').bPopup();
-
-        })
-
-        // esc 버튼 클릭 시 form 초기화
-        $(document).keydown(function(event) {
-            if ( event.keyCode == 27 || event.which == 27 ) {
-                $('#form')[0].reset();
-            }
-        });
-
-        // 팝업창 닫기 버튼 클릭 시 form 초기화
-        $('.b-close').click(function () {
-            $('#form')[0].reset();
-        })
-
-        // 팝업창 열린 상태에서 ESC 버튼 누르면 form 초기화
-
-        $(".meatballBtn").click(function () {
-            let clickBtnContent = $(this).siblings('.clickBtnContent');
-            clickBtnContent.toggle();
-        });
-
-        // 다른 영역 클릭 시, 요소 숨기기
-        $(document).click(function (event) {
-            if (!$(event.target).closest('.meatballBtn').length) {
-                $('.clickBtnContent').hide();
-            }
-        });
-
-        $(".removeBtn").click(function () {
-            if (!confirm("정말로 삭제하시겠습니까?")) return; // '취소' 클릭 시
-            let userId = $(this).data('user-id');
-            let payMeansId = $(this).data('pay-means-id');
-
-            let currentUnixTime = Math.floor((new Date()).getTime() / 1000); // 현재시간 unix time
-            let threeMonthsAgoUnixTime = currentUnixTime - (3 * 30 * 24 * 60 * 60); // 현재 시간으로부터 3개월 전 unix time
-
-            $.ajax({
-                type: "POST",
-                url: "/pay/remove",
-                data: {
-                    user_id: userId, pay_means_id: payMeansId,
-                    from: threeMonthsAgoUnixTime, to: currentUnixTime
-                },
-                success: function () {
-                    alert("결제수단 삭제에 성공했습니다.");
-                    location.reload();
-                },
-                error: function () {
-                    alert("결제수단 삭제에 실패했습니다. 다시 시도해주세요.");
-                }
-            })
-        })
-
-        $(".defaultSetBtn").click(function () {
-            let userId = $(this).data('user-id');
-            let payMeansId = $(this).data('pay-means-id');
-
-            $.ajax({
-                type: "POST",
-                url: "/pay/update",
-                data: {user_id: userId, pay_means_id: payMeansId},
-                success: function () {
-                    alert("기본 결제수단 지정에 성공했습니다.");
-                    location.reload();
-                },
-                error: function () {
-                    alert("기본 결제수단 지정에 실패했습니다.");
-                }
-            })
-        })
-
-        // Register pop-up form
-        let currentYear = new Date().getFullYear();
-        let selectedYear = currentYear;
-        let selectedMonth = '01';
-
-        // years select
-        for (let i = currentYear; i <= currentYear + 10; i++) {
-            let yearsSelectedOption = '';
-            if (i == selectedYear) {
-                yearsSelectedOption = 'selected';
-            }
-            let yearsOption = '<option value=' + i + ' ' + yearsSelectedOption + '>' + i + '</option>';
-            $('#years').append(yearsOption);
-        }
-
-        // months select
-        for (let i = 1; i <= 12; i++) {
-            let monthsSelectedOption = '';
-            let monthValue = i < 10 ? '0' + i : '' + i; // 일의 자리 숫자면 앞에 0붙이기
-            let monthName = i + '월';
-            if (monthValue === selectedMonth) {
-                monthsSelectedOption = 'selected';
-            }
-            let monthsOption = '<option value=' + monthValue + ' ' + monthsSelectedOption + '>' + monthName + '</option>';
-            $('#months').append(monthsOption);
-        }
-
-        $('#card_valid_date').val($('#years').val() + '-' + $('#months').val());
-
-        $('#months, #years').change(function () {
-            $('#card_valid_date').val($('#years').val() + '-' + $('#months').val());
-        })
-
-        $('#card_co_info_agree_yn').change(function () {
-             $('#card_co_info_agree_yn_err_msg').text(
-                 !$(this).prop("checked") ? '결제사 정보제공에 동의하셔야 합니다.': ''
-             );
-        });
-
-        $("#submitBtn").click(function () {
-            let formData = {
-                own_type: $('input[name="own_type"]:checked').val(),
-                card_no: $('#card_no').val(),
-                card_valid_date: $('#card_valid_date').val(),
-                own_birth: $('#own_birth').val(),
-                card_pwd: $('#card_pwd').val(),
-                card_co_info_agree_yn: $('#card_co_info_agree_yn').val(),
-                default_pay_means_yn: $('#default_pay_means_yn').val()
-            };
-
-            if (!$("#card_co_info_agree_yn").prop("checked")) {
-                $('#card_co_info_agree_yn_err_msg').text('결제사 정보제공에 동의하셔야 합니다.');
-            } else {
-                $.ajax({
-                    type: "POST",
-                    url: "/pay/register",
-                    data: formData,
-                    success: function () {
-                        $('#popRegister').bPopup().close(); // 팝업창 닫기
-                        alert("결제수단 등록에 성공했습니다.");
-                        location.reload();
-                    },
-                    error: function (e) {
-                        alert("결제수단 등록에 실패했습니다. 다시 시도해주세요.");
-                        // console.log(e)
-                        // let payMeansDto = e.responseJSON.payMeansDto;
-
-                        // TODO: 유효성 검증 메시지
-                        // 카드 비밀번호 앞 2자리: 비밀번호를 입력하셔야 합니다.
-                        // 소유주 생년월일: 생년월일을 입력하셔야 합니다.
-                        // 카드번호: 카드번호를 입력하셔야 합니다.
-                        // 카드번호: 카드번호가 유효하지 않습니다.
-                        // 카드 유효기간: 유효기간이 일치하지 않습니다.
-                        // 카드 비밀번호 앞 2자리: 유효하지 않은 형식입니다.
-                        // 소유주 생년월일: 입력값이 유효하지 않습니다.
-                        // (완료) 결제사 정보제공에 동의하셔야 합니다.
-                    }
-                })
-            }
-        })
-
-        // 라디오 버튼의 변경 이벤트 감지
-        $('input[name="own_type"]').change(function () {
-            // 선택된 라디오 버튼의 값 가져오기
-            let selectedValue = $('input[name="own_type"]:checked').val();
-
-            // 결과를 출력할 엘리먼트 선택
-            let outputElem = $('#own_type_output');
-
-            // 선택된 값에 따라 다르게 출력
-            if (selectedValue === 'personal') {
-                outputElem.html('<label for="own_birth">소유주 생년월일</label>' +
-                    '<input id="own_birth" type="text" name="own_birth" maxlength="6" placeholder="예) 920101" ' +
-                    'onKeyup="this.value=this.value.replace(/[^0-9]/g,\'\');">');
-            } else if (selectedValue === 'corporate') {
-                outputElem.html('<label for="own_birth">사업자등록번호</label>' +
-                    '<input id="own_birth" type="text" name="own_birth" maxlength="6" placeholder="예) 1078783297" ' +
-                    'onKeyup="this.value=this.value.replace(/[^0-9]/g,\'\');">');
-            }
-        })
-})
-</script>

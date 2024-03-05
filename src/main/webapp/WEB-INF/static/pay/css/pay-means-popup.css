@@ -1,0 +1,176 @@
+.bPopWrap {
+    padding: 50px 32px;
+}
+.pTit {
+    padding-left: 40px;
+    min-height: 36px;
+    margin: 0px 0px 24px;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 30px;
+    letter-spacing: -0.025em;
+    color: #3d3d3d;
+}
+.popScr {
+    font-family: 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+}
+.ownType {
+    display: flex;
+    padding: 12px 0px 0px;
+    margin: 0px 0px 32px;
+}
+.ownTypeRadio {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 117px;
+    height: 24px;
+}
+.ownTypeRadio span {
+    margin-left: 8px;
+}
+.formOptionWrapper {
+    margin-bottom: 32px;
+}
+.formOptionTitle {
+    color: rgb(61, 61, 61);
+    margin: 0px 0px 10px;
+}
+.formOptionContent {
+    height: 40px;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 4px;
+    display: flex;
+    padding: 0px 12px;
+    align-items: center;
+    max-height: 44px;
+    min-width: 100px;
+    display: flex;
+    font-size: 14px;
+    line-height: 24px;
+}
+.formOptionContent:focus {
+    border: 1px solid rgb(61, 61, 61);
+}
+.cardNoBoxContent {
+    padding: 0px 12px;
+    align-items: center;
+}
+.cardNoInput {
+    max-width: 45px;
+    border: 0px;
+    outline: none;
+}
+.formInput {
+    border: 0px;
+    outline: none;
+}
+.cardNoInput:focus, .formInput:focus {
+    caret-color: rgb(255, 87, 87);
+}
+.cardNoBoxDivider {
+    margin: 0px 10px 0px 0px;
+}
+.cardValidDateInputWrapper {
+    margin: 20px 0px 0px;
+}
+.cardValidDateMonths {
+    margin-right: 12px;
+    display: inline-flex;
+    position: relative;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 4px;
+    background: rgb(255, 255, 255);
+    color: rgb(13, 13, 13);
+    height: 44px;
+}
+.cardValidDateYears {
+    display: inline-flex;
+    position: relative;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 4px;
+    background: rgb(255, 255, 255);
+    color: rgb(13, 13, 13);
+    height: 44px;
+}
+.cardValidDateSelect {
+    display: flex;
+    align-items: center;
+    padding: 0px 36px 0px 12px;
+    border: 0px;
+    margin-right: 12px;
+}
+.formOptionsWrapper {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+}
+.cardPwdWrapperFirst {
+    margin-right: 6px;
+    width: 50%;
+}
+.cardPwdWrapperSecond {
+    width: 50%;
+}
+.checkboxWrapper {
+    margin: 20px 0px 0px;
+    display: flex;
+    flex-flow: column;
+}
+.checkboxFirst {
+    position: relative;
+    margin-bottom: 12px;
+}
+.checkboxFirstSpan {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    cursor: pointer;
+    font-weight: normal;
+}
+.checkboxFirstSpan > a {
+    color: rgb(39, 163, 255);
+    text-decoration: underline;
+}
+.checkboxInputWrapper {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    color: rgb(61, 61, 61);
+    display: inline-flex;
+}
+.checkboxInput {
+    margin-right: 6px;
+}
+.errorMsg {
+    margin: 8px 0px 0px;
+    color: rgb(255, 87, 87);
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+}
+.popBottom {
+    margin: 40px 0px 0px;
+}
+.taskBtn {
+    width: 100%;
+    height: 52px;
+    padding: 0 24px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(255, 87, 87);
+    border-radius: 4px;
+    border: 0;
+    font-size: 16px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+}
+.taskBtn:hover {
+    background-color: #fc7573;
+}

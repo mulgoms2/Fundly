@@ -69,7 +69,8 @@
                         </div>
                         <div class="pjInputWrap">
                             <div>
-                                <input type="text" id="longTitle" class="pjInput" value="${projectDto.pj_long_title}" placeholder="긴 제목을 입력해주세요."/>
+                                <input type="text" id="longTitle" class="pjInput" value="${projectDto.pj_long_title}"
+                                       placeholder="긴 제목을 입력해주세요."/>
                             </div>
                             <p>0/32</p>
                         </div>
@@ -82,7 +83,8 @@
                         </div>
                         <div class="pjInputWrap">
                             <div>
-                                <input type="text" id="shortTitle" class="pjInput" value="${projectDto.pj_short_title}" placeholder="짧은 제목을 입력해주세요.">
+                                <input type="text" id="shortTitle" class="pjInput" value="${projectDto.pj_short_title}"
+                                       placeholder="짧은 제목을 입력해주세요.">
                             </div>
                             <p>0/7</p>
                         </div>
@@ -110,7 +112,7 @@
                 </div>
                 <div class="pjInputWrap">
                     <div class="pjInputBx">
-                        <textarea id="pjIntro" content="${projectDto.pj_short_intro}" class="pjTxt"></textarea>
+                        <textarea id="pjIntro" class="pjTxt">${projectDto.pj_short_intro}</textarea>
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
@@ -148,8 +150,8 @@
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
 
-                    <input accept=".jpg, .jpeg, .png" type="file" multiple="">
                 </label>
+                <input accept=".jpg, .jpeg, .png" type="file" multiple/>
             </div>
         </div>
         <!-- 프로젝트 해시태그 -->
@@ -168,34 +170,69 @@
                     <i class="fas fa-solid fa-circle-info"></i>
                     <p class="pjNoticeTit">
                         무관한 태그는 후원자의 불편을 초래합니다!</p>
-                    <p class="pjNoticeCont">반드시 프로젝트에 관련된 태그만 사용해 주세요. 프로젝트와 무관한 태그 설정으로 후원자 신고가 누적될 시 프로젝트에 제재가 가해질 수 있습니다.</p>
+                    <p class="pjNoticeCont">반드시 프로젝트에 관련된 태그만 사용해 주세요. 프로젝트와 무관한 태그 설정으로 후원자 신고가 누적될 시 프로젝트에 제재가 가해질 수
+                        있습니다.</p>
                 </div>
             </dl>
             <div class="pjForm none">
                 <div class="pjInputWrap">
                     <div>
-                        <input type="text" class="pjInput" placeholder="Enter를 눌러서 핵심 키워드를 등록해주세요.(최대 5개)">
+                        <input type="text" id="searchTag" class="pjInput"
+                               placeholder="Enter를 눌러서 핵심 키워드를 등록해주세요.(최대 5개)">
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
                         <p>0/10개</p>
                     </div>
+                    <div id="tagContainer" class="tagContainer"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    window.onload = ()=>{
+    window.onload = () => {
         const saveBtn = document.querySelector(".save");
         saveBtn.addEventListener("click", updateProjectInfo);
+
+        document.querySelector("#searchTag").addEventListener("keypress", handleTagInput)
     };
 
+    const handleTagInput = (e) => {
+        if (e.code === "Enter") {
+            if (checkTagCount(e) > 5) {
+                alert("태그는 최대 5개 까지만 저장할 수 있습니다.")
+                clearInput(e);
+                return;
+            }
+            const tagString = e.target.value;
+            const searchTag = makeTag(tagString);
 
-    async function updateProjectInfo(){
+            printTag(searchTag);
+            clearInput(e);
+        }
+    }
+    const printTag = (tag) => {
+        document.querySelector("#tagContainer").innerHTML += tag;
+    }
+
+    const checkTagCount = (e) => {
+        return false;
+    }
+
+    const clearInput = (e) => {
+        e.target.value = "";
+    }
+
+    const makeTag = (content) => {
+        return `<span class="searchTag">${'${content}'}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
+    }
+
+    async function updateProjectInfo() {
         const longTitle = document.querySelector("#longTitle").value;
         const shotTitle = document.querySelector("#shortTitle").value;
-        const pjIntro = document.querySelector("#pjIntro").textContent;
+        const pjIntro = document.querySelector("#pjIntro").value;
+        // const searchTags = concatSearchTags();
 
         const formData = new FormData();
         formData.append("pj_id", "${projectDto.pj_id}");
@@ -207,9 +244,9 @@
         // formData.append("pj_thumbnail_img");
         // formData.append("pj_tag");
 
-        const response = await fetch("/editor/infoTest",{
+        const response = await fetch("<c:url value="/project/editor/infoUpdate"/>", {
             method: "post",
-            headers:{},
+            headers: {},
             body: formData
         });
 

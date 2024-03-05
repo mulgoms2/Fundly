@@ -37,22 +37,31 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void changeLike(LikeDto likedto, ProjectDto pjdto) throws Exception {
+    public void changeLike(LikeDto likedto, ProjectDto pjdto) {
         try {
 
             // 찜한 목록 조회
             LikeDto likes = likedao.getLike(likedto);
 
+            // 처음 좋아요
             if(likes == null) {
+
                 likedao.insertLike(likedto);
                 pjdao.upLikeCnt(pjdto);
+
             } else {
+
+                // 좋아요 취소
                 if (likes.getLike_status() == 1) {
                     likedao.cancelLike(likedto);
                     pjdao.downLikeCnt(pjdto);
+
+                // 다시 좋아요
                 } else {
+
                     likedao.reLike(likedto);
                     pjdao.upLikeCnt(pjdto);
+
                 }
             }
 
@@ -63,34 +72,24 @@ public class LikeServiceImpl implements LikeService {
         }
     }
 
-//    @Override
-//    public void changeLike(LikeDto likedto) {
+    public ProjectDto getupdatedPj(ProjectDto pjdto) {
+
+        try {
 //
-//        try {
-//
-//            // 찜한 목록 조회
-//            LikeDto likes = likedao.getLike(likedto);
-//
-//            if(likes == null) {
-//                likedao.insertLike(likedto);
-//            } else {
-//                if (likes.getLike_status() == 1) {
-//                    likedao.cancelLike(likedto);
-//                } else {
-//                    likedao.reLike(likedto);
-//                }
-//            }
-//
-//        } catch (Exception e) {
-//
-//            throw new RuntimeException(e);
-//
-//        }
-//
-//    }
+//            int updatedCnt = pjdao.selectLikeCnt(pjdto);
+//            pjdto.setCurr_pj_like_cnt(updatedCnt);
+            return pjdao.getByPjId(pjdto.getPj_id());
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
 
     @Override
-    public LikeDto getLike(LikeDto likedto) {
+    public LikeDto  getupdatedLike(LikeDto likedto) {
 
         try {
 

@@ -1,0 +1,257 @@
+button {
+    cursor: pointer;
+}
+.containerWrapper {
+    min-height: 460px;
+    padding: 24px 0px;
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 1160px;
+    margin: 0px auto;
+    width: 100%;
+    display: flex;
+}
+.fontStyle {
+    font-family: 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    background: #fff;
+    color: #3d3d3d;
+}
+.leftContainer {
+    width: 672px;
+    margin: 0px 32px 0px 0px;
+    flex: 0 0 auto;
+}
+.settingFormWrapper {
+    border-bottom: 0px;
+    margin: 0px;
+    padding: 0px 0px 20px;
+}
+.settingFormHeader {
+    font-size: 16px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+    display: flex;
+    margin: 0px 0px 12px;
+}
+.settingFormTitle {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-weight: bold;
+    flex-grow: 1;
+}
+.settingFormButton {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    padding: 0px 16px;
+    background: rgb(240, 240, 240);
+    border: none;
+    border-radius: 60px;
+    font-weight: 500;
+    color: rgb(61, 61, 61);
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-family: "Noto Sans KR", "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+}
+.emptyList {
+    border-radius: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    border: 1px solid rgb(230, 230, 230);
+    min-height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(189, 189, 189);
+    font-size: 16px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+}
+.emptyListErrorMsg {
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}
+.ErrorMsgIcon {
+    display: inline-flex;
+    align-self: center;
+}
+.ErrorMsgIcon > svg {
+    fill: rgb(189, 189, 189);
+    font-size: 58px;
+    margin: 0px 0px 12px;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+}
+.listBox {
+    border-radius: 4px;
+    border: 1px solid rgb(230, 230, 230);
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.listBoxElement {
+    display: flex;
+    padding: 18px 16px 18px 20px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+.cardImg {
+    width: 85px;
+    height: 54px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+}
+.imgBox {
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 80px;
+    height: 95%;
+    border: 1px solid rgb(230, 230, 230);
+}
+.content {
+    flex-grow: 1;
+    display: inline-flex;
+    flex-flow: column;
+    justify-content: center;
+    margin: 0px 20px;
+}
+.companyName {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: -0.020em;
+}
+.default_tag {
+    margin-left: 2px;
+    position: relative;
+    z-index: 1;
+    top: -0.3em;
+    min-height: 18px;
+    padding: 0px 6px;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: -0.005em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    background: rgb(255, 87, 87);
+}
+.cardNumber {
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+    color: #3D3D3D;
+}
+.func {
+    display: flex;
+    align-items: center;
+}
+.meatballBtn {
+    position: relative;
+    border: 1px solid rgb(230, 230, 230);
+    background: rgb(255, 255, 255);
+    border-radius: 100%;
+    width: 26px;
+    height: 26px;
+    min-height: 26px;
+}
+.clickBtnContent {
+    min-width: 153px;
+    margin-top: 9px;
+    position: absolute;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 2px 4px 0;
+    background: rgb(255, 255, 255);
+    padding: 4px 0;
+    z-index: 1;
+    display: none;
+}
+.clickBtnContent button {
+    background: rgb(255, 255, 255);
+    width: 100%;
+    border: 0;
+    padding: 0 12px;
+    height: 40px;
+    display: flex;
+    text-align: left;
+    align-items: center;
+}
+.removeBtn:hover, .defaultSetBtn:hover {
+    background-color: rgb(230, 230, 230);
+}
+.boxViewMoreWrapper {
+    font-size: 16px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+    color: rgb(109, 109, 109);
+}
+.boxViewMoreWrapper button {
+    width: 100%;
+    height: 56px;
+    padding: 13px 0px 16px;
+    box-sizing: border-box;
+    background: rgb(255, 255, 255);
+    outline: 0px;
+    border: 0px;
+}
+.boxViewMoreWrapper button:hover {
+    text-decoration: underline;
+}
+.arrowDown {
+    margin: 0px 0px 0px 3px;
+    width: 12px;
+    display: inline-flex;
+}
+.arrowDown > svg {
+    fill: rgb(109, 109, 109);
+    top: 0.125em;
+    position: relative;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+}
+.rightContainer {
+    margin: 0px;
+    padding: 20px 24px;
+    border-radius: 4px;
+    border: 1px solid rgb(230, 230, 230);
+    width: 100%;
+}
+.faqTitle {
+    font-size: 16px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+    font-weight: bold;
+    color: #3d3d3d;
+    margin: 0px 0px 8px;
+}
+.faqContent {
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+    color: #6d6d6d;
+}
+.faqContentLink {
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+    color: #6d6d6d;
+}
+.faqContentLink > a {
+    color: rgb(39, 163, 255);
+    text-decoration: underline;
+}
