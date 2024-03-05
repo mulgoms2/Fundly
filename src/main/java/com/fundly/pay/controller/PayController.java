@@ -83,6 +83,7 @@ public class PayController {
             log.info("setDefaultPayMeans 성공");
 
             // 4. Y인 row가 1개인지 검증한다.
+            defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
             if (defaultPayMeansCnt != 1) {
                 throw new Exception("Update Failed. - getDefaultPayMeansCount Error");
             }
@@ -95,7 +96,7 @@ public class PayController {
             e.printStackTrace();
             // TODO: 상태코드별 에러 처리 세분화 필요
             PayResponseDto payResponseDto = new PayResponseDto("UPDATE_ERROR", payMeansDto);
-            return ResponseEntity.ok().body(payResponseDto);
+            return ResponseEntity.badRequest().body(payResponseDto);
         }
     }
 
@@ -135,7 +136,7 @@ public class PayController {
             e.printStackTrace();
             // TODO: 상태코드별 에러 처리 세분화 필요
             PayResponseDto payResponseDto = new PayResponseDto("DEL_ERROR", payMeansDto);
-            return ResponseEntity.ok().body(payResponseDto);
+            return ResponseEntity.badRequest().body(payResponseDto);
 
         }
     }
