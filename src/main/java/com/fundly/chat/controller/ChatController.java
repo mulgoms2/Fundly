@@ -27,7 +27,6 @@ import javax.validation.Valid;
 import java.io.*;
 import java.util.UUID;
 
-import static com.fundly.chat.service.ChatService.IMG_SAVE_LOCATION;
 @Controller
 @Slf4j
 public class ChatController {
@@ -36,6 +35,7 @@ public class ChatController {
 
     @Autowired
     ChatService chatService;
+    String IMG_SAVE_LOCATION = "/Users/dobigulbi/fundly/chat/img/";
 
     @GetMapping("/chat/test")
 //    테스트용
@@ -135,18 +135,19 @@ public class ChatController {
     private void saveFileToDrive(FileDto uploadFile, HttpServletRequest request) {
         String originFileName = uploadFile.getFile().getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
-        String savedImgUrl = request.getContextPath() + IMG_SAVE_LOCATION + uuid + originFileName;
+        String local_storage_url = request.getContextPath() + IMG_SAVE_LOCATION + uuid + originFileName;
+        String db_saved_img_url = "/chat/img/" + uuid + originFileName;
 
         MultipartFile file = uploadFile.getFile();
 
         try {
-            file.transferTo(new File(savedImgUrl));
+            file.transferTo(new File(local_storage_url));
         } catch (IOException e) {
             log.error("ChatController.saveFileToDrive(). 파일 저장중 예외가 발생하였습니다.");
             throw new RuntimeException(e);
         }
 //        저장된 파일 이름을 담는다.
-        uploadFile.setFile_saved_url(savedImgUrl);
+        uploadFile.setFile_saved_url(db_saved_img_url);
         uploadFile.setFile_origin_url(originFileName);
     }
 

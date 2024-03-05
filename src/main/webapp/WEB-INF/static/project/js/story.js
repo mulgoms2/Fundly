@@ -33,6 +33,7 @@ tinymce.init({
     /* enable title field in the Image dialog*/
     image_title: true,
     images_upload_url: '/project/story/image',
+    relative_urls: false,
     // URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
     // images_reuse_filename: true, //이걸 true로 주면 ? 물음표가 뒤에 붙는다. 왜지?
     /* enable automatic uploads of images represented by blob or data URIs*/

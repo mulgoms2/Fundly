@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @Controller
-@RequestMapping("/editor")
+@RequestMapping("/project/editor")
 @SessionAttributes("projectDto")
 public class ProjectEditorController {
     @Autowired
@@ -37,11 +37,13 @@ public class ProjectEditorController {
     }
 
     @GetMapping("/start")
+//   프로젝트 에디터 시작페이지. 이어작성, 새로작성 구분
     public String getStartPage(@ModelAttribute ProjectDto projectDto) {
         return "project/start";
     }
 
     @GetMapping("/info")
+//    프로젝트 기본정보 탭을 불러온다.
      public String getBasicInfo(@ModelAttribute ProjectDto projectDto, Model model) {
 
         model.addAttribute("basicInfo", ProjectDto.toBasicInfo(projectDto));
@@ -50,7 +52,9 @@ public class ProjectEditorController {
     }
 
     @PostMapping("/info")
+//    프로젝트를 생성한다.
         public String makeProject(@ModelAttribute ProjectAddRequest addRequest, HttpSession session, Model model) {
+
         ProjectDto pj = projectService.add(addRequest);
 
         model.addAttribute("basicInfo", ProjectDto.toBasicInfo(pj));
@@ -62,12 +66,11 @@ public class ProjectEditorController {
     }
 
     @PostMapping("/infoUpdate")
+//    프로젝트 정보를 업데이트한다.
     public ResponseEntity<Boolean> updateBasicInfo(@Valid ProjectInfoUpdateRequest updateRequest, ProjectDto project) {
-//        프로젝트 객체를 업데이트한다.
         project.updateBasicInfo(updateRequest);
-//        프로젝트 업데이트 정보를 db에 반영한다.
         projectService.update(project);
-//        성공여부를 응답한다.
+
         return ResponseEntity.ok(true);
     }
 
@@ -87,5 +90,4 @@ public class ProjectEditorController {
         model.addAttribute("errorMsg", "잘못 된 접근입니다. 다시 시도해주세요.");
         return "project/clientError";
     }
-
 }

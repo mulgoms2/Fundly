@@ -205,110 +205,111 @@
                         <div class="scrMain">
                             <div class="strCard" id="section1">
                                 <div class="strIntro">
-                                    <div class="strTit">프로젝트 소개</div>
-                                    <h2 class="strSub">
-                                        펀딩 오픈 1분 만에 👀<br>
-                                        목표금액 100% 달성 🎉 <br>
-                                        오픈 2일 차 1,500% 달성 🎉 <br>
-                                        성원에 감사드립니다.
-                                    </h2>
-                                    <p>
-                                        블로썸을 펀딩해 주시는<strong> </strong>
-                                        <u><strong>모든 후원자분들께 본품 수만큼 미니퍼퓸(3ml)</strong></u>을 드립니다 🎁 <br>
-                                        *자세한 사항은 하단의 "선물설명"을 참고해주세요 :)
-                                    </p>
-                                    <p>&nbsp;</p>
-                                    <h2>
-                                        💐 물기 어린 라일락 생화 향기, 블로썸 BLOSSOM<br>
-                                        <img style="color: #0d0d0d; font-size: 20px; font-weight: bold;" src="https://img.tumblbug.com/story/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/004b7747-e0d9-499c-8196-2118ed60d16f.gif">
-                                    </h2>
-                                    <p>
-                                        <br>안개가 자욱한 봄날 아침,&nbsp;<br>
-                                        <strong><u>밤새 촉촉하게 내려 앉은 이슬에 젖은 라일락이 가득한 아름다운 정원</u></strong>
-                                        한 가운데 서 있는 풍경을 떠올려 보세요.
-                                    </p>
-                                    <p>
-                                        이슬 덕분에 더욱 짙게 느껴지는 라일락 향기의 깊이는 살랑이는 작은 바람결에도 더 풍성하게 느껴지는 듯합니다.&nbsp;<br>
-                                        시야를 가득 채우는 은은한 보랏빛 물결.&nbsp;<br>
-                                        그 속에서 라일락과 더불어 사방에서 느껴지는 봄꽃의 향기가 코끝을 간질입니다.&nbsp;
-                                    </p>
-                                    <h2>
-                                        <img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvNTk3ODNiMzItZDdmZS00OTAwLTljYTktYjA0ZTk5NDBiMDc2LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                        <br><br>
-                                    </h2>
-                                    <p>
-                                        탁 트인 정원이라 그런지 작은 바람으로도 계속해서 환기되는 신선한 라일락의 첫 향이 상쾌하게 느껴집니다.&nbsp;<br>이내 시간이 지날수록 공기마저 포근해지고, 조용히 구름이 정원을 안아주는 것 같은 새하얀 비누향이 이어지죠.&nbsp;<br>여러 색감의 레이어가 겹쳐지며 완성되는 부드럽고 포근한 유화 작품처럼, 섬세한 그림이 연상되는 풍경입니다.<br><br>
-                                    </p>
-                                    <p>
-                                        <img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvMjllOWJiZWItMWRmYS00NzRhLWIxNzEtMjQ1NmQ4ZWZhMzRhLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                    </p>
-                                    <p>
-                                        <br>이번에 세이리가 선보이는 <u><strong>"블로썸"은 촉촉한 라일락 나무가 가득한 정원을 떠올리며 조향</strong></u>했습니다.<br>가장 세이리다운 라일락 향기를 담고자, 기존 라일락 향기를 표현한 향수들에서 개인적으로 아쉬웠던 점들을 보완하고자 노력했어요. <br>특히 라일락의 미묘한 향기들 중에서도 <u>생화에서만 느낄 수 있는 날것의 촉촉함을 표현하는 것</u>을 이번 향수의 큰 목표로 잡았죠. <br>그렇게 탄생한 블로썸은 뿌리는 순간 <u>정원에서 바람을 타고 자연스럽게 느껴지는 생화 라일락 향기</u>가 느껴집니다. <br>바람결에 흩날려 찾아온 물기 어린 라일락의 아름답고 은은한 향기, 세이리만의 독특한 감성으로 표현한 블로썸을 만나 보세요!&nbsp;<br><br><br>
-                                    </p>
-                                    <h2>
-                                        📝 블로썸, 어떤 향기인가요?&nbsp;<br><img id="ab08c7a4-3da6-4f27-ab77-eb720dea34b0" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvMTlkMzc2NzAtYzIxMy00MDAwLTg5MmUtODAxOWNmODNjNjgyLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                    </h2>
-                                    <p>
-                                        <strong>TOP NOTE : 그린노트&nbsp;</strong>
-                                    </p>
-                                    <p>
-                                        첫 느낌으로는 <u>초록빛으로 물든 잎새들이 눈 앞에 펼쳐지는 듯 싱그러운 향</u>이 느껴집니다. 상쾌함을 넘어 풋풋하고 시원한 느낌까지 전해지는 탑노트는 뿌리는 순간 기분 전환을 빠르게 도와줍니다. <br>하루의 에너지를 채우는 아침 순간에도, 편안한 하루의 마무리를 준비하는 저녁 시간에도 언제나 잘 어울릴 수 있는 편안하고 자연스러운, 그리너리한 향기로 채웠습니다.
-                                    </p>
-                                    <p>
-                                        <br><strong>MIDDLE NOTE : 라일락, 워터리노트, 프리지어, 릴리, 산사나무&nbsp;</strong>
-                                    </p>
-                                    <p>
-                                        그 다음 순간엔 아름드리 편 <u>라일락 나무 아래 서 있는 듯 생생한 라일락 향기</u>가 전달됩니다. <br>신선한 라일락 향기에서 <u>생화의 느낌을 가장 담고 싶었기 때문에 워터리 노트</u>를 더했는데요. <br>작은 보석과 같은 이슬들이 가득 맺힌 라일락 꽃잎이 흔들릴 때 어떤 향이 날까 고민하며 촉촉한 향기를 더했어요. <br>여기에 라일락 뿐만 아니라 다양한 봄꽃이 어우러지는 느낌을 선사하고자 프리지아와 릴리, 산사나무 향까지 복합적인 레이어를 만들었습니다. <br>라일락을 모티프로 꾸민 아름다운 연보랏빛 정원에서 날 법한 섬세하고도 부드러운 미들 노트이죠.&nbsp;
-                                    </p>
-                                    <p>
-                                        <br><strong>BASE NOTE : 머스크&nbsp;</strong>
-                                    </p>
-                                    <p>
-                                        아름다운 라일락 정원을 지나 온 당신에게 이 향이 은은하게 남기를 바랐습니다. <br>그래서<u> 베이스 노트에는 머스크를 담아 앞선 향들이 더 오래 지속될 수 있는 포근함</u>을 더했죠. <br>신선한 라일락 향기에서부터 시작되어 포근한 머스크 향으로 남는 블로썸은 모든 계절에 잘 어울리는 유니크한 데일리 향수랍니다.&nbsp;<br><br><br><img id="d915d4df-dcd6-40f8-9411-4573ef645af3" style="width: 620px;" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvMzRlMTY0ZDYtMWEwOC00OWNkLWFjM2QtYzk4NmQ4ZDBjYzIxLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                    </p>
-                                    <h2>
-                                        <br>
-                                        <br>
-                                        ✔️ 블로썸 퍼퓸 디퓨저 (120ML)
-                                    </h2>
-                                    <p>
-                                        블로썸 향기를 디퓨저로도 만나보실 수 있는 구성을 마련했습니다. 오드퍼퓸과 같은 향조이며 공간에 사용함에 걸맞도록 연구하여 탄생한 디퓨저입니다.&nbsp; 퍼퓸 디퓨저로 이름처럼 높은 부향률로 풍부하고 효과적인 발향을 담았습니다.<br>삶의 다양한 공간에 라일락의 행복한 향기를 물들여보세요!<br>(디퓨저 디자인의 사진이며, 라벨 디자인은 동일한 형태로 제작됩니다.)<br><br><img id="51abdee7-783a-48bd-b830-023fac5a9fd9" style="font-weight: bold;" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvOWZhNmNhMDAtMDRmNC00MjQ1LWFiOTYtYzUxZmYxYjM5NDNkLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19"><br>구성 : 세이리 퍼퓸 디퓨저(블로썸) 120ML + 리드스틱 5ea 포함<br><br><img id="cf95af68-92cd-431c-b2a4-795768326347" style="color: #0d0d0d; font-size: 20px; font-weight: bold;" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvZmM5NTZhOWQtOGMwNy00YTFlLThiYmItZDA3ODYwZGZjOTc4LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                    </p>
-                                    <h2>
-                                        <br>✔️ 다양한 리워드 혜택&nbsp;
-                                    </h2>
-                                    <p>
-                                        <u>퍼퓸 3개 구성 리워드부터 "블로썸" 오드퍼퓸 이외에 기존에 출시된 향수도 선택</u> 가능하십니다. 블로썸 향기를 디퓨저로도 만나보실 수 있는 <u>퍼퓸+디퓨저 듀오 구성도 특별한 혜택</u>으로 마련했습니다.
-                                    </p>
-                                    <h2>
-                                        <br>
-                                        ✔️ 오 드 퍼퓸 향 소개<br>
-                                        <img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvNjhmZWExYmItM2NlNC00ZDQzLTk1YWQtYjc5NjJkOGIwNjU4LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                        <br>
-                                        <br>
-                                    </h2>
-                                    <h2>
-                                        <strong>✔️ 사용방법</strong><strong style="color: #3d3d3d; font-size: 14px;">&nbsp;</strong>
-                                    </h2>
-                                    <p>
-                                        손목, 귀 등 맥박이 뛰는 곳에 사용해주세요. 시간이 흐르면서 체온과 만나 자연스럽게 피부에 밀착됩니다.
-                                    </p>
-                                    <p>
-                                        <img src="https://img.tumblbug.com/story/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/338ca013-ba20-49cf-aab9-0bf080506796.gif">
-                                        <br>
-                                        <br>
-                                    </p>
-                                    <h2>🙋🏼&zwj;♀️ 자주 하시는 질문</h2>
-                                    <p>
-                                        <strong>&nbsp;Q1. 향수 보관은 어떻게 하나요?</strong><br>뚜껑을 닫아 직사광선을 피해 서늘하고 건조한 곳에 보관하는 것이 가장 좋습니다.<br><br>Q2. 용량은?<br>블로썸 오드 퍼퓸의 용량은 50ml 입니다. &nbsp;<br><br>Q3. 사용할 수 있는 기간은?<br>제조 예정일은 2월 중순이며<br>개봉 전 60개월, 개봉 후 36개월 이내 사용을 권장합니다.<br><br>Q4. 블로썸의 부향률은 어떻게 되나요?<br>약 15% 부향률의 오드퍼퓸입니다. 환경에 따라 차이가 있지만 3~5시간 향기가 지속됩니다.&nbsp;
-                                    </p>
-                                    <p>&nbsp;</p>
-                                    <h2>
-                                        🎁 PACKAGE<br><img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvYzVmZmUyZGEtYTkwZC00ZTc5LWIwZDgtZmIzNzFhZWIyOWQ2LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                    </h2>
-                                    <p>
-                                        감사의 표시, 사랑의 마음을 표현하실 수&nbsp; 있도록 리본으로 마무리한 세이리 리본 패키지를 선택하실 수 있습니다. 리워드 선택 후 <strong><u>추가후원금(+1,000)원을 더해주시면 기본패키지+리본 포장</u></strong>을 해드립니다.<br>기존에 포장에 불필요하다는 후원자님들의 의견으로 필요하신 후원자님들께만 적용해 드리도록 구성하였으니 원하시는 후원자님들께서는 꼭 추가 후원을 부탁드립니다 :)
-                                    </p>
+                                    ${pj.pj_intro}
+<%--                                    <div class="strTit">프로젝트 소개</div>--%>
+<%--                                    <h2 class="strSub">--%>
+<%--                                        펀딩 오픈 1분 만에 👀<br>--%>
+<%--                                        목표금액 100% 달성 🎉 <br>--%>
+<%--                                        오픈 2일 차 1,500% 달성 🎉 <br>--%>
+<%--                                        성원에 감사드립니다.--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        블로썸을 펀딩해 주시는<strong> </strong>--%>
+<%--                                        <u><strong>모든 후원자분들께 본품 수만큼 미니퍼퓸(3ml)</strong></u>을 드립니다 🎁 <br>--%>
+<%--                                        *자세한 사항은 하단의 "선물설명"을 참고해주세요 :)--%>
+<%--                                    </p>--%>
+<%--                                    <p>&nbsp;</p>--%>
+<%--                                    <h2>--%>
+<%--                                        💐 물기 어린 라일락 생화 향기, 블로썸 BLOSSOM<br>--%>
+<%--                                        <img style="color: #0d0d0d; font-size: 20px; font-weight: bold;" src="https://img.tumblbug.com/story/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/004b7747-e0d9-499c-8196-2118ed60d16f.gif">--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        <br>안개가 자욱한 봄날 아침,&nbsp;<br>--%>
+<%--                                        <strong><u>밤새 촉촉하게 내려 앉은 이슬에 젖은 라일락이 가득한 아름다운 정원</u></strong>--%>
+<%--                                        한 가운데 서 있는 풍경을 떠올려 보세요.--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        이슬 덕분에 더욱 짙게 느껴지는 라일락 향기의 깊이는 살랑이는 작은 바람결에도 더 풍성하게 느껴지는 듯합니다.&nbsp;<br>--%>
+<%--                                        시야를 가득 채우는 은은한 보랏빛 물결.&nbsp;<br>--%>
+<%--                                        그 속에서 라일락과 더불어 사방에서 느껴지는 봄꽃의 향기가 코끝을 간질입니다.&nbsp;--%>
+<%--                                    </p>--%>
+<%--                                    <h2>--%>
+<%--                                        <img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvNTk3ODNiMzItZDdmZS00OTAwLTljYTktYjA0ZTk5NDBiMDc2LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                        <br><br>--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        탁 트인 정원이라 그런지 작은 바람으로도 계속해서 환기되는 신선한 라일락의 첫 향이 상쾌하게 느껴집니다.&nbsp;<br>이내 시간이 지날수록 공기마저 포근해지고, 조용히 구름이 정원을 안아주는 것 같은 새하얀 비누향이 이어지죠.&nbsp;<br>여러 색감의 레이어가 겹쳐지며 완성되는 부드럽고 포근한 유화 작품처럼, 섬세한 그림이 연상되는 풍경입니다.<br><br>--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        <img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvMjllOWJiZWItMWRmYS00NzRhLWIxNzEtMjQ1NmQ4ZWZhMzRhLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        <br>이번에 세이리가 선보이는 <u><strong>"블로썸"은 촉촉한 라일락 나무가 가득한 정원을 떠올리며 조향</strong></u>했습니다.<br>가장 세이리다운 라일락 향기를 담고자, 기존 라일락 향기를 표현한 향수들에서 개인적으로 아쉬웠던 점들을 보완하고자 노력했어요. <br>특히 라일락의 미묘한 향기들 중에서도 <u>생화에서만 느낄 수 있는 날것의 촉촉함을 표현하는 것</u>을 이번 향수의 큰 목표로 잡았죠. <br>그렇게 탄생한 블로썸은 뿌리는 순간 <u>정원에서 바람을 타고 자연스럽게 느껴지는 생화 라일락 향기</u>가 느껴집니다. <br>바람결에 흩날려 찾아온 물기 어린 라일락의 아름답고 은은한 향기, 세이리만의 독특한 감성으로 표현한 블로썸을 만나 보세요!&nbsp;<br><br><br>--%>
+<%--                                    </p>--%>
+<%--                                    <h2>--%>
+<%--                                        📝 블로썸, 어떤 향기인가요?&nbsp;<br><img id="ab08c7a4-3da6-4f27-ab77-eb720dea34b0" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvMTlkMzc2NzAtYzIxMy00MDAwLTg5MmUtODAxOWNmODNjNjgyLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        <strong>TOP NOTE : 그린노트&nbsp;</strong>--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        첫 느낌으로는 <u>초록빛으로 물든 잎새들이 눈 앞에 펼쳐지는 듯 싱그러운 향</u>이 느껴집니다. 상쾌함을 넘어 풋풋하고 시원한 느낌까지 전해지는 탑노트는 뿌리는 순간 기분 전환을 빠르게 도와줍니다. <br>하루의 에너지를 채우는 아침 순간에도, 편안한 하루의 마무리를 준비하는 저녁 시간에도 언제나 잘 어울릴 수 있는 편안하고 자연스러운, 그리너리한 향기로 채웠습니다.--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        <br><strong>MIDDLE NOTE : 라일락, 워터리노트, 프리지어, 릴리, 산사나무&nbsp;</strong>--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        그 다음 순간엔 아름드리 편 <u>라일락 나무 아래 서 있는 듯 생생한 라일락 향기</u>가 전달됩니다. <br>신선한 라일락 향기에서 <u>생화의 느낌을 가장 담고 싶었기 때문에 워터리 노트</u>를 더했는데요. <br>작은 보석과 같은 이슬들이 가득 맺힌 라일락 꽃잎이 흔들릴 때 어떤 향이 날까 고민하며 촉촉한 향기를 더했어요. <br>여기에 라일락 뿐만 아니라 다양한 봄꽃이 어우러지는 느낌을 선사하고자 프리지아와 릴리, 산사나무 향까지 복합적인 레이어를 만들었습니다. <br>라일락을 모티프로 꾸민 아름다운 연보랏빛 정원에서 날 법한 섬세하고도 부드러운 미들 노트이죠.&nbsp;--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        <br><strong>BASE NOTE : 머스크&nbsp;</strong>--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        아름다운 라일락 정원을 지나 온 당신에게 이 향이 은은하게 남기를 바랐습니다. <br>그래서<u> 베이스 노트에는 머스크를 담아 앞선 향들이 더 오래 지속될 수 있는 포근함</u>을 더했죠. <br>신선한 라일락 향기에서부터 시작되어 포근한 머스크 향으로 남는 블로썸은 모든 계절에 잘 어울리는 유니크한 데일리 향수랍니다.&nbsp;<br><br><br><img id="d915d4df-dcd6-40f8-9411-4573ef645af3" style="width: 620px;" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvMzRlMTY0ZDYtMWEwOC00OWNkLWFjM2QtYzk4NmQ4ZDBjYzIxLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                    </p>--%>
+<%--                                    <h2>--%>
+<%--                                        <br>--%>
+<%--                                        <br>--%>
+<%--                                        ✔️ 블로썸 퍼퓸 디퓨저 (120ML)--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        블로썸 향기를 디퓨저로도 만나보실 수 있는 구성을 마련했습니다. 오드퍼퓸과 같은 향조이며 공간에 사용함에 걸맞도록 연구하여 탄생한 디퓨저입니다.&nbsp; 퍼퓸 디퓨저로 이름처럼 높은 부향률로 풍부하고 효과적인 발향을 담았습니다.<br>삶의 다양한 공간에 라일락의 행복한 향기를 물들여보세요!<br>(디퓨저 디자인의 사진이며, 라벨 디자인은 동일한 형태로 제작됩니다.)<br><br><img id="51abdee7-783a-48bd-b830-023fac5a9fd9" style="font-weight: bold;" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvOWZhNmNhMDAtMDRmNC00MjQ1LWFiOTYtYzUxZmYxYjM5NDNkLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19"><br>구성 : 세이리 퍼퓸 디퓨저(블로썸) 120ML + 리드스틱 5ea 포함<br><br><img id="cf95af68-92cd-431c-b2a4-795768326347" style="color: #0d0d0d; font-size: 20px; font-weight: bold;" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvZmM5NTZhOWQtOGMwNy00YTFlLThiYmItZDA3ODYwZGZjOTc4LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                    </p>--%>
+<%--                                    <h2>--%>
+<%--                                        <br>✔️ 다양한 리워드 혜택&nbsp;--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        <u>퍼퓸 3개 구성 리워드부터 "블로썸" 오드퍼퓸 이외에 기존에 출시된 향수도 선택</u> 가능하십니다. 블로썸 향기를 디퓨저로도 만나보실 수 있는 <u>퍼퓸+디퓨저 듀오 구성도 특별한 혜택</u>으로 마련했습니다.--%>
+<%--                                    </p>--%>
+<%--                                    <h2>--%>
+<%--                                        <br>--%>
+<%--                                        ✔️ 오 드 퍼퓸 향 소개<br>--%>
+<%--                                        <img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvNjhmZWExYmItM2NlNC00ZDQzLTk1YWQtYjc5NjJkOGIwNjU4LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                        <br>--%>
+<%--                                        <br>--%>
+<%--                                    </h2>--%>
+<%--                                    <h2>--%>
+<%--                                        <strong>✔️ 사용방법</strong><strong style="color: #3d3d3d; font-size: 14px;">&nbsp;</strong>--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        손목, 귀 등 맥박이 뛰는 곳에 사용해주세요. 시간이 흐르면서 체온과 만나 자연스럽게 피부에 밀착됩니다.--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        <img src="https://img.tumblbug.com/story/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/338ca013-ba20-49cf-aab9-0bf080506796.gif">--%>
+<%--                                        <br>--%>
+<%--                                        <br>--%>
+<%--                                    </p>--%>
+<%--                                    <h2>🙋🏼&zwj;♀️ 자주 하시는 질문</h2>--%>
+<%--                                    <p>--%>
+<%--                                        <strong>&nbsp;Q1. 향수 보관은 어떻게 하나요?</strong><br>뚜껑을 닫아 직사광선을 피해 서늘하고 건조한 곳에 보관하는 것이 가장 좋습니다.<br><br>Q2. 용량은?<br>블로썸 오드 퍼퓸의 용량은 50ml 입니다. &nbsp;<br><br>Q3. 사용할 수 있는 기간은?<br>제조 예정일은 2월 중순이며<br>개봉 전 60개월, 개봉 후 36개월 이내 사용을 권장합니다.<br><br>Q4. 블로썸의 부향률은 어떻게 되나요?<br>약 15% 부향률의 오드퍼퓸입니다. 환경에 따라 차이가 있지만 3~5시간 향기가 지속됩니다.&nbsp;--%>
+<%--                                    </p>--%>
+<%--                                    <p>&nbsp;</p>--%>
+<%--                                    <h2>--%>
+<%--                                        🎁 PACKAGE<br><img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvYzVmZmUyZGEtYTkwZC00ZTc5LWIwZDgtZmIzNzFhZWIyOWQ2LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                    </h2>--%>
+<%--                                    <p>--%>
+<%--                                        감사의 표시, 사랑의 마음을 표현하실 수&nbsp; 있도록 리본으로 마무리한 세이리 리본 패키지를 선택하실 수 있습니다. 리워드 선택 후 <strong><u>추가후원금(+1,000)원을 더해주시면 기본패키지+리본 포장</u></strong>을 해드립니다.<br>기존에 포장에 불필요하다는 후원자님들의 의견으로 필요하신 후원자님들께만 적용해 드리도록 구성하였으니 원하시는 후원자님들께서는 꼭 추가 후원을 부탁드립니다 :)--%>
+<%--                                    </p>--%>
                                 </div>
                                 <div class="strBud" id="section2">
                                     <div class="strTit">프로젝트 소개</div>
