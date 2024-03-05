@@ -1,0 +1,129 @@
+button {
+    cursor: pointer;
+}
+
+.removeBtn:hover, .defaultSetBtn:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.default_tag {
+    margin-left: 2px;
+    position: relative;
+    z-index: 1;
+    top: -0.3em;
+    min-height: 18px;
+    padding: 0px 6px;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: -0.005em;
+    display: inline-flex;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    background: rgb(255, 87, 87);
+}
+
+.imgBox {
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 80px;
+    height: 54px;
+    border: 1px solid rgb(230, 230, 230);
+}
+
+.listBox {
+    border-radius: 4px;
+    border: 1px solid rgb(230, 230, 230);
+}
+
+.listBoxElement {
+    display: flex;
+    margin-top: 28px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.listBoxElement:last-child {
+    border-bottom: none;
+}
+
+.cardImg {
+    width: 85px;
+    height: 54px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+}
+
+.content {
+    flex-grow: 1;
+    display: inline-flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.companyName {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: -0.020em;
+}
+
+.cardNumber {
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+    color: #3D3D3D;
+}
+
+.func {
+    display: flex;
+    align-items: center;
+}
+
+.meatballBtn {
+    position: relative;
+    border: 1px solid rgb(230, 230, 230);
+    background: rgb(255, 255, 255);
+    border-radius: 100%;
+    width: 26px;
+    height: 26px;
+    min-height: 26px;
+}
+
+.btnIconDiv img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.thumbnail, .func {
+    margin: 0 20px;
+}
+
+.clickBtnContent {
+    min-width: 153px;
+    margin-top: 9px;
+    position: absolute;
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 2px 4px 0;
+    background: rgb(255, 255, 255);
+    padding: 4px 0;
+    z-index: 1;
+    display: none;
+}
+
+.clickBtnContent button {
+    background: rgb(255, 255, 255);
+    width: 100%;
+    border: 0;
+    padding: 0 12px;
+    height: 40px;
+    display: flex;
+    text-align: left;
+    align-items: center;
+}
