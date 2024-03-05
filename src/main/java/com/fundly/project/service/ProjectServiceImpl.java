@@ -134,4 +134,8 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectDto savedPj = projectMapper.getByPjId(projectDto.getPj_id());
         return savedPj;
     }
+
+    public int selectLikeCnt(ProjectDto pjdto) throws Exception {
+        return projectMapper.selectLikeCnt(pjdto);
+    }
 }
