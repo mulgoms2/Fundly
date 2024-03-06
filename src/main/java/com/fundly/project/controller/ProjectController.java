@@ -1,7 +1,6 @@
 package com.fundly.project.controller;
 
 import com.fundly.project.service.ProjectService;
-import com.fundly.project.service.ProjectServiceImpl;
 import com.persistence.dto.ProjectTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/project")
+@RequestMapping("/project/editor")
 public class ProjectController {
 //    ItemService itemService;
 //    GiftService giftService;

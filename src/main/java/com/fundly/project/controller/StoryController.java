@@ -41,7 +41,7 @@ public class StoryController {
     }
 
     //프로젝트 계획
-    @GetMapping("/story")//pj_id는 session에서 가져오는 것으로 수정할 예정
+    @GetMapping("/editor/story")//pj_id는 session에서 가져오는 것으로 수정할 예정
     public String makeStory(@SessionAttribute ProjectDto projectDto, Model m, @RequestParam(required = false) boolean edit){
         //작성한 내용이 아무것도 없으면 프로젝트 에디터를 띄우고
         //작성한 항목이 하나라도 있으면, 작성한 내용을 먼저 보여주고 수정버튼을 누르면 에디터를 띄워주도록 하기
@@ -157,6 +157,8 @@ public class StoryController {
        // log.error("\n\n afterImg={} \n\n", uploadFile);
         String locStr = "{\"location\": \""+location+"\"}";
         return ResponseEntity.ok().headers(new HttpHeaders()).body(locStr);
+
+
     }
 
     public String[] mkDeleteArray(String[] imgArr){

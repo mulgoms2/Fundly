@@ -57,7 +57,7 @@ public class ItemController {
 
 
     // 아이템+선물 페이지
-    @GetMapping("/reward")
+    @GetMapping("/editor/reward")
     public String makeGift(Model m, HttpSession session) throws Exception { //global catcher에서 예외처리
         //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
         //뷰단에서는 itemDtoList가 empty면 보여줄 화면과 empty가 아니면 보여줄 화면이 나뉨.
