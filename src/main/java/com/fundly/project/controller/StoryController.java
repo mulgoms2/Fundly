@@ -30,9 +30,11 @@ public class StoryController {
     ProjectService projectService;
     StoryImageValidator imageValidator;
     MessageSource messageSource;
+  
 //    String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
     static final String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
     static final String REMOTE_URL = "/project/img/";
+  
     @Autowired
     StoryController(ProjectService projectService, StoryImageValidator imageValidator, MessageSource messageSource){
         this.projectService = projectService;
@@ -46,10 +48,10 @@ public class StoryController {
         //작성한 내용이 아무것도 없으면 프로젝트 에디터를 띄우고
         //작성한 항목이 하나라도 있으면, 작성한 내용을 먼저 보여주고 수정버튼을 누르면 에디터를 띄워주도록 하기
         //해당 상태에 대한 정보를 storyForm이 변수로 갖고 있어서 jsp에서 그에 따라 맞는 코드를 보여준다.
-        log.error("\n\n projectDto={}\n\n",projectDto);
+        log.error("\n\n projectDto={}\n\n", projectDto);
 //        log.error("\n\n edit={}\n\n",edit);
         StoryForm storyForm = projectService.getStoryFormByPjId(projectDto.getPj_id());
-        if(edit){
+        if (edit) {
             storyForm.setEdit();
         }
 //        log.error("\n\n storyForm={} \n\n",storyForm);
@@ -62,7 +64,7 @@ public class StoryController {
     @PostMapping("/story")
     @ResponseBody
 //    public ResponseEntity<?> saveStory(@RequestBody StoryForm storyForm, @SessionAttribute ProjectDto projectDto){
-    public ResponseEntity<Boolean> saveStory(@RequestBody StoryForm storyForm, @SessionAttribute ProjectDto projectDto){
+    public ResponseEntity<Boolean> saveStory(@RequestBody StoryForm storyForm, @SessionAttribute ProjectDto projectDto) {
         // 수정된 내용을 받아와서
         // 1. 그중 최종 저장하는 이미지 파일만 남기고 서버에 임시 저장된 파일은 삭제
         // 2. 최종 저장할 이미지 경로를 File테이블에 insert
@@ -125,18 +127,25 @@ public class StoryController {
         }
 
         log.error("\n\n beforeImg={} \n\n", uploadFile);
+      
         MultipartFile uploadImg = uploadFile.getFile();
         uploadFile.setMetaData();
+      
         log.error("\n\n afterImg={} \n\n", uploadFile);
-
         log.error("\n\n img size={}\n\n",uploadImg.getSize());
+      
         String contentType = uploadImg.getContentType();
         log.error("\n\n img type={}\n\n", uploadImg.getContentType());
+      
 //        uploadFile.setDimension();
+      
 //        log.error("\n\n width={}\n\n", uploadFile.getWidth());
 //        log.error("\n\n height={}\n\n", uploadFile.getHeight());
+      
         String originFileName = uploadImg.getOriginalFilename();
+      
         log.error("\n\n originFileName={}\n\n",originFileName);
+
         String savedImgUrl = IMG_SAVE_SERVER_LOC + originFileName;
         //이미지가 저장될 서버의 물리적 주소, 나중에 이미지 서버 주소로 대체
 
@@ -150,18 +159,18 @@ public class StoryController {
 //        uploadFile.setTable_name("project");
 
 
-        String location = request.getContextPath()+REMOTE_URL+originFileName;
+        String location = request.getContextPath() + REMOTE_URL + originFileName;
         //textEditor에 전달하는 이미지의 remote 주소
         //resource handler가 이 주소로 온 resource에 대한 요청을 서버의 물리적 주소로 해석해준다.
 
-       // log.error("\n\n afterImg={} \n\n", uploadFile);
-        String locStr = "{\"location\": \""+location+"\"}";
+        // log.error("\n\n afterImg={} \n\n", uploadFile);
+        String locStr = "{\"location\": \"" + location + "\"}";
         return ResponseEntity.ok().headers(new HttpHeaders()).body(locStr);
 
 
     }
 
-    public String[] mkDeleteArray(String[] imgArr){
+    public String[] mkDeleteArray(String[] imgArr) {
         //삭제할 이미지 이름을 담을 리스트
         List<String> list = new ArrayList();
 
@@ -175,22 +184,22 @@ public class StoryController {
         log.error("\n\n tempArr={} \n\n", Arrays.toString(tempArr));
 
         //js와 달리 java는 Arrays에 contains가 없네..List로 바꿔서 처리.
-        for(int i=0; i<tempArr.length; i++){
-            if(!imgList.contains(tempArr[i])){
+        for (int i = 0; i < tempArr.length; i++) {
+            if (!imgList.contains(tempArr[i])) {
                 list.add(tempArr[i]); //확정된 이미지 파일 리스트에 포함되어 있지 않은 임시파일을 리스트에 담는다.
             }
         }
         //삭제할 파일 이름 배열을 반환한다. (리스트로 그냥 반환할까? 꼭 배열로 할 이유는 없긴한데)
-        log.error("\n\n delList={}\n\n",list);
+        log.error("\n\n delList={}\n\n", list);
         return list.toArray(String[]::new);
     }
 
-    public void deleteTempFile(String[] delArr) throws Exception{
+    public void deleteTempFile(String[] delArr) throws Exception {
         //삭제할 파일목록을 주면 파일 서버에서 임시파일 삭제.
         File file;
-        for(int i=0; i<delArr.length; i++){
-            file = new File(IMG_SAVE_SERVER_LOC+delArr[i]);
-            if(!file.delete()){ //삭제 성공하면 true를 반환함.
+        for (int i = 0; i < delArr.length; i++) {
+            file = new File(IMG_SAVE_SERVER_LOC + delArr[i]);
+            if (!file.delete()) { //삭제 성공하면 true를 반환함.
                 throw new Exception("파일 삭제 실패");
             }
         }

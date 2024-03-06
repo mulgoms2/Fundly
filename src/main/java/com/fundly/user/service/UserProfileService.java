@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserProfileService {
     UserProfileDto userProfileInfo(UserDto userDto);
-    UserProfileDto userUpdate(UserProfileDto userProfileDto);
+    UserProfileDto userUpdate(UserDto userDto);
     void saveImg(FileDto fileDto, String user_email, HttpServletResponse response);
     String getUserProfileImg(FileDto fileDto) throws Exception;
     String getlastPwdDate(String user_email) throws Exception;

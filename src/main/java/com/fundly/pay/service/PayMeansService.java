@@ -16,7 +16,8 @@ public interface PayMeansService {
     int removePayMeans(String pay_means_id) throws Exception;
     int removeAllPayMeansForAdmin() throws Exception;
     PayMeansDto getPayMeans(String pay_means_id) throws Exception;
-    List<PayMeansDto> getAllPayMeans(String user_id) throws Exception;
+    List<PayMeansDto> getAllPayMeans(Map map) throws Exception;
+    int getPayMeansCountForUser(String user_id) throws Exception;
     List<PayMeansDto> getAllPayMeansForAdmin() throws Exception;
     PayMeansDto getDefaultPayMeans(String user_id) throws Exception;
     int getDefaultPayMeansCount(String user_id) throws Exception;

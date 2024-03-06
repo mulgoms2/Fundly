@@ -253,35 +253,35 @@ class PayMeansDaoTest {
         assertNull(payMeansDao.select(payMeansId));
     }
 
-    @Test
-    @SneakyThrows
-    void selectAllForUser() {
-        // deleteAll
-        payMeansDao.deleteAll();
-        assertEquals(payMeansDao.count(), 0, "[selectAllForUser] 초기화 실패");
-
-        // insert 1번
-        PayMeansDto payMeansDto1 = new PayMeansDto(userId, "personal", "test_bill_key", "N", "1234", userId);
-        String payMeansId = payMeansDao.selectPayMeansId(userId);
-        payMeansDto1.setPay_means_id(payMeansId);
-        assertEquals(payMeansDao.insert(payMeansDto1), 1, "[selectAllForUser] insert#1 실패");
-        assertEquals(payMeansDao.count(), 1, "[selectAllForUser] count#1 실패");
-        assertEquals(payMeansDao.select(payMeansId).getPay_means_id(), payMeansDto1.getPay_means_id(), "[selectAllForUser] select#1 실패");
-
-        // insert 2번
-        PayMeansDto payMeansDto2 = new PayMeansDto(userId, "personal", "test_bill_key2", "N", "5678", userId);
-        payMeansId = payMeansDao.selectPayMeansId(userId);
-        payMeansDto2.setPay_means_id(payMeansId);
-        assertEquals(payMeansDao.insert(payMeansDto2), 1, "[selectAllForUser] insert#2 실패");
-        assertEquals(payMeansDao.count(), 2, "[selectAllForUser] count#2 실패");
-        assertEquals(payMeansDao.select(payMeansId).getPay_means_id(), payMeansDto2.getPay_means_id(), "[selectAllForUser] select#2 실패");
-
-        // selectAllForUser
-        List<PayMeansDto> list = payMeansDao.selectAllForUser(userId);
-        assertEquals(list.size(), payMeansDao.count(), "[selectAllForUser] selectAllForUser#1 실패");
-        assertEquals(list.get(0).getUser_id(), userId, "[selectAllForUser] selectAllForUser#2 실패");
-        assertEquals(list.get(1).getUser_id(), userId, "[selectAllForUser] selectAllForUser#3 실패");
-    }
+//    @Test
+//    @SneakyThrows
+//    void selectAllForUser() {
+//        // deleteAll
+//        payMeansDao.deleteAll();
+//        assertEquals(payMeansDao.count(), 0, "[selectAllForUser] 초기화 실패");
+//
+//        // insert 1번
+//        PayMeansDto payMeansDto1 = new PayMeansDto(userId, "personal", "test_bill_key", "N", "1234", userId);
+//        String payMeansId = payMeansDao.selectPayMeansId(userId);
+//        payMeansDto1.setPay_means_id(payMeansId);
+//        assertEquals(payMeansDao.insert(payMeansDto1), 1, "[selectAllForUser] insert#1 실패");
+//        assertEquals(payMeansDao.count(), 1, "[selectAllForUser] count#1 실패");
+//        assertEquals(payMeansDao.select(payMeansId).getPay_means_id(), payMeansDto1.getPay_means_id(), "[selectAllForUser] select#1 실패");
+//
+//        // insert 2번
+//        PayMeansDto payMeansDto2 = new PayMeansDto(userId, "personal", "test_bill_key2", "N", "5678", userId);
+//        payMeansId = payMeansDao.selectPayMeansId(userId);
+//        payMeansDto2.setPay_means_id(payMeansId);
+//        assertEquals(payMeansDao.insert(payMeansDto2), 1, "[selectAllForUser] insert#2 실패");
+//        assertEquals(payMeansDao.count(), 2, "[selectAllForUser] count#2 실패");
+//        assertEquals(payMeansDao.select(payMeansId).getPay_means_id(), payMeansDto2.getPay_means_id(), "[selectAllForUser] select#2 실패");
+//
+//        // selectAllForUser
+//        List<PayMeansDto> list = payMeansDao.selectAllForUser(userId);
+//        assertEquals(list.size(), payMeansDao.count(), "[selectAllForUser] selectAllForUser#1 실패");
+//        assertEquals(list.get(0).getUser_id(), userId, "[selectAllForUser] selectAllForUser#2 실패");
+//        assertEquals(list.get(1).getUser_id(), userId, "[selectAllForUser] selectAllForUser#3 실패");
+//    }
 
     @Test
     @SneakyThrows

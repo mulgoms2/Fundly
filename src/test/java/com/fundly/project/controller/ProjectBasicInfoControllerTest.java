@@ -6,7 +6,6 @@ import com.fundly.project.exception.ProjectAddFailureException;
 import com.fundly.project.exception.ProjectNofFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
-import com.fundly.project.validate.LoginInterceptor;
 import com.persistence.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -35,11 +33,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-class ProjectEditorControllerTest {
+class ProjectBasicInfoControllerTest {
     @Mock
     ProjectService service;
     @InjectMocks
-    ProjectEditorController projectEditorController;
+    ProjectBasicInfoController projectBasicInfoController;
     MockMvc mockMvc;
     ObjectMapper objectMapper;
     private ProjectInfoUpdateRequest request;
@@ -50,9 +48,13 @@ class ProjectEditorControllerTest {
     private String editingProject;
     private ProjectDto projectDto;
 
+    public static final String BASE_URL = "/project/editor/";
+
+
+
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        mockMvc = MockMvcBuilders.standaloneSetup(projectEditorController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(projectBasicInfoController).build();
         objectMapper = new ObjectMapper();
 
         pj_id = "01";
@@ -89,7 +91,7 @@ class ProjectEditorControllerTest {
 
         given(service.getEditingProject(user_id)).willReturn(projectDto);
 
-        mockMvc.perform(get("/editor/start").sessionAttr("user_email", user_id))
+        mockMvc.perform(get( BASE_URL + "/start").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("projectDto"))
                 .andExpect(forwardedUrl("project/start"))
@@ -122,7 +124,7 @@ class ProjectEditorControllerTest {
         ProjectStarter pjStarter = ProjectStarter.builder().build();
         given(service.getEditingProject(user_id)).willThrow(ProjectNofFoundException.class);
 
-        mockMvc.perform(get("/editor/start").sessionAttr("user_email", user_id))
+        mockMvc.perform(get(BASE_URL + "/start").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeDoesNotExist("pj_id"))
                 .andExpect(forwardedUrl("project/start"))
@@ -174,7 +176,7 @@ class ProjectEditorControllerTest {
         given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
 
-        mockMvc.perform(get("/editor/info").sessionAttr("user_email","dbswoi"))
+        mockMvc.perform(get(BASE_URL+ "/info").sessionAttr("user_email", "dbswoi"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("basicInfo"))
                 .andExpect(forwardedUrl("project.basicInfo"))
@@ -184,7 +186,7 @@ class ProjectEditorControllerTest {
     @Test
     @DisplayName("makeProject() 비로그인 유저가 지금 시작하기 버튼 클릭")
     void unLogined_new_project() throws Exception {
-        mockMvc.perform(post("/editor/info"))
+        mockMvc.perform(post(BASE_URL + "/info"))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("project/clientError"))
                 .andExpect(model().attributeExists("errorMsg"))
@@ -199,7 +201,7 @@ class ProjectEditorControllerTest {
         given(service.add(addRequest)).willThrow(ProjectAddFailureException.class);
         given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
-        mockMvc.perform(post("/editor/info").sessionAttr("user_email", user_id))
+        mockMvc.perform(post(BASE_URL + "/info").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("errorMsg"))
                 .andExpect(forwardedUrl("project/clientError"))
@@ -216,7 +218,7 @@ class ProjectEditorControllerTest {
         given(service.add(addRequest)).willReturn(projectDto);
         given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
-        mockMvc.perform(post("/editor/info").param("user_email", user_id).sessionAttr("user_email", user_id))
+        mockMvc.perform(post(BASE_URL + "/info").param("user_email", user_id).sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("project.basicInfo"))
                 .andExpect(model().attributeExists("basicInfo"))
@@ -234,7 +236,7 @@ class ProjectEditorControllerTest {
 
         ResultMatcher rm = getSessionChecker("pj_id", pj_id);
 
-        mockMvc.perform(post("/editor/info").param("user_email", "dbswo").sessionAttr("user_email", user_id))
+        mockMvc.perform(post(BASE_URL + "/info").param("user_email", "dbswo").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("project.basicInfo"))
                 .andExpect(model().attributeExists("basicInfo"))
@@ -258,10 +260,9 @@ class ProjectEditorControllerTest {
     @Test
     @DisplayName("updateBasicInfo() 업데이트 요청에 프로젝트아이디가 없다.")
     void 업데이트요청에프로젝트아이디가없다() throws Exception {
-        ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id("").build();
-        byte[] json = objectMapper.writeValueAsBytes(updateRequest);
-
-        mockMvc.perform(patch("/editor/info").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(multipart(BASE_URL + "/infoUpdate")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .param("pj_id", ""))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("errorMsg"))
                 .andExpect(view().name("project/clientError"))
@@ -271,14 +272,16 @@ class ProjectEditorControllerTest {
     @Test
     @DisplayName("updateBasicInfo() 정상적으로 업데이트가 수행됐을경우")
     void 업데이트성공() throws Exception {
-        ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id("01").build();
-        byte[] json = objectMapper.writeValueAsBytes(updateRequest);
-        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
-        given(service.update(any())).willReturn(ProjectDto.builder().build());
 
-        mockMvc.perform(patch("/editor/info").sessionAttr("user_email", "dbswo").contentType(MediaType.APPLICATION_JSON).content(json))
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
+
+        given(service.update(any())).willReturn(any());
+
+        mockMvc.perform(multipart(BASE_URL + "/infoUpdate")
+                        .sessionAttr("user_email", "dbswo")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .param("pj_id", "01"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("true"))
                 .andDo(print());
     }
@@ -286,13 +289,17 @@ class ProjectEditorControllerTest {
     @Test
     @DisplayName("updateBasicInfo() 업데이트 대상 프로젝트를 찾지 못했다.")
     void 업데이트실패() throws Exception {
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
         given(service.update(any())).willThrow(ProjectUpdateFailureException.class);
 
         ProjectInfoUpdateRequest updateRequest = ProjectInfoUpdateRequest.builder().pj_id("01").build();
         byte[] json = objectMapper.writeValueAsBytes(updateRequest);
-        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
-        mockMvc.perform(patch("/editor/info").sessionAttr("user_email", "dbswo").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(multipart(BASE_URL + "/infoUpdate")
+                        .sessionAttr("user_email", "dbswo")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .param("pj_id", pj_id)
+                )
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("false"))

@@ -31,8 +31,6 @@ public class PayServiceImpl implements PayService {
         this.portOneService = portOneService;
     }
 
-    String userId = "test"; // TODO: 하드코딩, 세션에서 가져오기
-
     // 결제테이블 데이터 생성: 주문테이블에서 결제테이블로 데이터 insert
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -84,7 +82,7 @@ public class PayServiceImpl implements PayService {
     private void setUpAndInsertPayRecord(PayDto payDto) {
         try {
             // 1. 결제테이블의 PK인 payId를 세팅한다.
-            payDto.setPay_id(payDao.selectPayId(userId));
+            payDto.setPay_id(payDao.selectPayId(payDto.getUser_id()));
             // 2. 결제테이블에 insert 한다.
             payDao.insert(payDto);
             // 3. 주문테이블의 pay_inserted_yn 컬럼의 값을 'Y'로 바꾼다.

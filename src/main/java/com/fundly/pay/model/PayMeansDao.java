@@ -18,7 +18,8 @@ public interface PayMeansDao {
     int delete(String pay_means_id) throws Exception;
     int deleteAll() throws Exception;
     PayMeansDto select(String pay_means_id) throws Exception;
-    List<PayMeansDto> selectAllForUser(String user_id) throws Exception;
+    List<PayMeansDto> selectAllForUser(Map map) throws Exception;
+    int countForUser(String user_id) throws Exception;
     List<PayMeansDto> selectAll() throws Exception;
     PayMeansDto selectDefaultMeans(String user_id) throws Exception;
     int countDefaultMeans(String user_id) throws Exception;

@@ -25,7 +25,7 @@
     <div class="fixedContentWrapper">
         <div class="planWrap">
             <ul>
-                <li><a id="default" class="active" href="<c:url value='/project/editor/default'/>">기본 정보</a></li>
+                <li><a id="default" class="active" href="<c:url value='/project/editor/info'/>">기본 정보</a></li>
                 <li><a id="funding" href="<c:url value='/project/editor/funding'/>">펀딩 계획</a></li>
                 <li><a id="reward" href="<c:url value='/project/editor/reward'/>">선물 구성</a></li>
                 <li><a id="story" href="<c:url value='/project/editor/story'/>">프로젝트 계획</a></li>

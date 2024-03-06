@@ -294,6 +294,7 @@ class ProjectMapperTest {
                 likedList.add(likedPj);
             }
         }
+
 //        boolean result = likedList.stream().allMatch(pj -> pj.getPj_status().equals("ing"));
         assertEquals(true, likedList.contains(project1));
         assertEquals(true, likedList.contains(project2));
@@ -304,8 +305,25 @@ class ProjectMapperTest {
 
     @Test
     @SneakyThrows
-    @DisplayName("좋아요수증가테스트")
+    @DisplayName("좋아요수증가 업데이트 테스트")
     void upLikeCnt() {
+        this.project1 = ProjectDto.builder()
+                .pj_id("1")
+                .pj_sel_id(user_id)
+                .curr_pj_like_cnt(10)
+                .build();
+        int insertCount = projectMapper.insert(project1);
+
+        assertEquals(1, insertCount);
+
+        assertEquals(1, projectMapper.upLikeCnt(project1));
+        assertEquals(11,project1.getCurr_pj_like_cnt());
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("좋아요수감소 업데이트 테스트")
+    void downLikeCnt() {
         this.project1 = ProjectDto.builder()
                 .pj_id("1")
                 .pj_sel_id(user_id)
@@ -315,9 +333,8 @@ class ProjectMapperTest {
 
         assertEquals(1, insertCount);
 
-        projectMapper.upLikeCnt(project1);
-
-        assertEquals(2, project1.getCurr_pj_like_cnt());
+        assertEquals(1, projectMapper.downLikeCnt(project1));
+        assertEquals(0, project1.getCurr_pj_like_cnt());
     }
 
     @Test
@@ -331,8 +348,8 @@ class ProjectMapperTest {
 
     @Test
     @SneakyThrows
-    @DisplayName("좋아요수감소테스트")
-    void downLikeCnt() {
+    @DisplayName("증가된 좋아요수 가져오는테스트")
+    void selectLikeCntTest1() {
         this.project1 = ProjectDto.builder()
                 .pj_id("1")
                 .pj_sel_id(user_id)
@@ -341,8 +358,26 @@ class ProjectMapperTest {
         int insertCount = projectMapper.insert(project1);
 
         assertEquals(1, insertCount);
-        projectMapper.downLikeCnt(project1);
+
         assertEquals(1, projectMapper.upLikeCnt(project1));
+        assertEquals(2,projectMapper.selectLikeCnt(project1));
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("감소된 좋아요수 가져오는테스트")
+    void selectLikeCntTest2() {
+        this.project1 = ProjectDto.builder()
+                .pj_id("1")
+                .pj_sel_id(user_id)
+                .curr_pj_like_cnt(11)
+                .build();
+        int insertCount = projectMapper.insert(project1);
+
+        assertEquals(1, insertCount);
+
+        assertEquals(1, projectMapper.downLikeCnt(project1));
+        assertEquals(10,projectMapper.selectLikeCnt(project1));
     }
 
     @Test

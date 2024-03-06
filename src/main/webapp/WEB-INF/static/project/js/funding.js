@@ -46,22 +46,6 @@ window.onload = function(){
         "drops": "auto"
     });
 
-    //
-    // $('#dateInput').on('hide.daterangepicker', function(ev, picker) {
-    //     $('.datepicker.str span').text(picker.startDate.format('YYYY-MM-DD'))
-    //     $('.datepicker.end span').text(picker.endDate.format('YYYY-MM-DD'))
-    //     //$(this).addClass('hidden');
-    //     // $(this).hide();
-    //     // $(this).appendTo('body');
-    // });
-
-    // $('#dateInput').on('show.daterangepicker', function(){
-    //     $(this).val('');
-    // })
-
-    //console.log(dateInput);
-    //console.log(datepickers);
-
 
 
     //시간 선택
@@ -76,16 +60,14 @@ window.onload = function(){
             this.querySelector('span').innerHTML = ''
             this.querySelector('span').appendChild(dateInput);
             $('#dateInput').show()
-            // dateInput.click();
+            dateInput.click();
 
         })
     }
+    dateInput.addEventListener('click',function(){
+        dateInput.classList.toggle('hidden');
+    })
 
-    // dateInput.addEventListener('click', function(e){
-    //     // e.preventDefault();
-    //     $(this).daterangepicker();
-    //     // this.classList.toggle('hidden');
-    // })
 }
 
 

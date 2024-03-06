@@ -20,11 +20,11 @@
 
     <link rel="stylesheet" href="/static/order/css/order.css">
 <%--    <script type="text/javascript" src="../js/common.js"></script>--%>
-    <script type="text/javascript" src="../js/vendor/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="../js/vendor/jquery-ui.js"></script>
-    <script type="text/javascript" src="../js/vendor/jquery.bpopup.min.js"></script>
-    <script type="text/javascript" src="../js/vendor/moment.min.js"></script>
-    <script type="text/javascript" src="../js/vendor/daterangepicker.js"></script>
+<%--    <script type="text/javascript" src="../js/vendor/jquery-2.2.4.min.js"></script>--%>
+<%--    <script type="text/javascript" src="../js/vendor/jquery-ui.js"></script>--%>
+<%--    <script type="text/javascript" src="../js/vendor/jquery.bpopup.min.js"></script>--%>
+<%--    <script type="text/javascript" src="../js/vendor/moment.min.js"></script>--%>
+<%--    <script type="text/javascript" src="../js/vendor/daterangepicker.js"></script>--%>
 </head>
 <body>
     <div class="headerContainer">
@@ -87,15 +87,17 @@
                         <div class="Box">
                             <div class="boxConts">
                                 <div class="phoneNo">
-                                    연락처
-                                    010-3615-5607
+                                    <div class="phoneNoTit">연락처</div>
+                                    <div class="phoneNoCont">010-3615-5607</div>
                                 </div>
                                 <div class="email">
-                                    이메일
-                                    silverzoo030@gmail.com
+                                    <div class="emailTit">이메일</div>
+                                    <div class="emailCont">silverzoo030@gmail.com</div>
                                 </div>
-                                <div class="buyerNotice" id="section1">* 위 연락처와 이메일로 후원 관련 소식이 전달됩니다.</div>
-                                <div class="buyerNotice" id="section2">* 연락처 및 이메일 변경은 설정 > 계정 설정에서 가능합니다.</div>
+                                <div class="buyerNotice">
+                                    <div id="section1">* 위 연락처와 이메일로 후원 관련 소식이 전달됩니다.</div>
+                                    <div id="section2">* 연락처 및 이메일 변경은 설정 > 계정 설정에서 가능합니다.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,13 +105,19 @@
                         <div class="Info">배송지</div>
                         <div class="Box">
                             <div class="boxConts">
-                                <div class="adrDetailConts">
-                                    <div class="buyerName">이은주</div>
-                                    <div class="basicTit">기본</div>
-                                    <div class="adr">[06241] 서울 강남구 강남대로 364 (미왕빌딩, 역삼동) 10층</div>
-                                    <div class="adrPhoneNo">010-3615-5607</div>
+                                <div class="adrBoxConts">
+                                    <div class="adrDetailConts">
+                                        <div class="buyerBasic">
+                                            <div class="buyerName">이은주</div>
+                                            <div class="basicMark">기본</div>
+                                        </div>
+                                        <div class="adr">[06241] 서울 강남구 강남대로 364 (미왕빌딩, 역삼동) 10층</div>
+                                        <div class="adrPhoneNo">010-3615-5607</div>
+                                    </div>
+                                    <div class="adrBtn">
+                                        <button type="button" class="ChangeBtn">변경</button>
+                                    </div>
                                 </div>
-                                <input type="button" class="adrBtn" value="변경"/>
                             </div>
                         </div>
                     </div>
@@ -123,6 +131,7 @@
                                             <input type="radio" id="rdo1" class="ipt" name="radioGroup" value="체크됨" checked>
                                             <label for="rdo1">카드 간편결제</label>
                                         </div>
+                                        <div class="basicPayMark">할부 가능</div>
                                         <div class="rdoBox">
                                             <input type="radio" id="rdo2" class="ipt" name="radioGroup" value="체크안됨">
                                             <label for="rdo2">네이버페이</label>
@@ -133,6 +142,45 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                        <div class="payBox">
+                            <div class="boxConts">
+                                <div class="payTopNotice">
+                                    <div class="payIcon">
+                                        <svg viewBox="0 0 48 48">
+                                            <path d="M21.5 23.1C21.5 23.0448 21.5448 23 21.6 23H26.4C26.4552 23 26.5 23.0448 26.5 23.1V33.9C26.5 33.9552 26.4552 34 26.4 34H21.6C21.5448 34 21.5 33.9552 21.5 33.9V23.1Z"></path>
+                                            <path d="M21 17C21 15.3431 22.3431 14 24 14C25.6569 14 27 15.3431 27 17C27 18.6569 25.6569 20 24 20C22.3431 20 21 18.6569 21 17Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 40C32.8366 40 40 32.8366 40 24C40 15.1634 32.8366 8 24 8C15.1634 8 8 15.1634 8 24C8 32.8366 15.1634 40 24 40ZM24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>할부로 후원하려면 카드를 재등록 해주세요. 신용카드만 할부 가능합니다.</div>
+                                    <div class="payBtn">
+                                        <button type="button" class="ChangeBtn">등록</button>
+                                    </div>
+                                </div>
+                                <div class="payCredit">
+                                    <div class="creditImg">
+                                        <img src="/static/pay/img/pay_means_file/kakaobank.png" alt="" class>
+                                    </div>
+                                    <div class="creditCardInfo">
+                                        <div class="creditCo">신한카드</div>
+                                        <div class="basicMark">기본</div>
+                                        <div class="creditNo">************ 7223</div>
+                                    </div>
+                                    <div class="payBtn">
+                                        <button type="button" class="ChangeBtn">변경</button>
+                                    </div>
+                                </div>
+                                <div class="payInstall">
+                                    <div class="installTit">할부 개월</div>
+                                    <div class="installOption"></div>
+                                    <div class="installNoticeBtn">
+                                        <a href="#" class="installNoticeBtnDetail">무이자 할부 안내</a>
+                                    </div>
+                                    <div class="installNotice">* 무이자 할부 기간은 카드사에 따라 결제 시점에 변동될 수 있습니다.</div>
+                                    <div class="installNotice">* 5만원 미만 후원은 할부가 불가합니다.</div>
+                                    <div class="installNotice">* 체크카드, 법인카드는 할부가 불가합니다.</div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -32,7 +32,7 @@
         <!-- header -->
         <script defer src="/static/user/js/header.js"></script>
         <!--Mypage js -->
-        <script type="text/javascript" src="/static/product/likeDetail.js"></script>
+        <script type="text/javascript" src="/static/user/js/likes.js"></script>
         <script defer src="/static/user/js/profile.js"></script>
         <script defer src="/static/user/js/setting.js"></script>
         <script defer src="/static/user/js/settingProfile.js"></script>

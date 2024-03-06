@@ -11,12 +11,9 @@
         <div class="profileSetting">
           <div class="profileimgFormHeader ">
             <div class="detailTitle">
-
               <span class="pTag" >프로필 사진</span>
               <button class="ButtonTag" id="changeImg" >변경</button>
             </div>
-
-<%--              <img src="/user/img/154.png"/>--%>
             <div class="pTagbefore">
               <div class="pTagChaDetailImg">
                 <div class="pTagImg">
@@ -29,26 +26,21 @@
 
             <div class="pTagDetail">
               <div class="pTagChaDetail">
-
                 <div class="pTagChaDetailImg">
                   <div class="pTagImg">
                     <div class="pTagImgWrap">
                       <div class="pTagImgFile pTagChangeImgFile" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></div>
                     </div>
                   </div>
-
                   <div class="pTagImgDetail">
-
                   <label for="fileimg" >
                     <span class="filein">파일 업로드</span>
                     <input id="fileimg" accept=".jpg, .jpeg, .png, .gif" type="file" formenctype="multipart/form-data"/>
                   </label><br>
-
                     <span class="fileDetail">250 x 250 픽셀에 최적화되어 있으며, 10Mb 이하의 JPG, GIF, PNG 파일을 지원합니다.</span>
                   </div>
                 </div>
               </div>
-
               <div class="pTagChaBtn"><Button class="filesave" id="imgsave" ><span>저장</span></Button></div>
             </div>
           </div>
@@ -56,7 +48,6 @@
 
         <div class="profileSetting">
           <div class="userNameFormHeader">
-
             <div class="detailTitle">
               <span class="pTag">이름</span>
               <button class="ButtonTag" id="changeName">변경</button>
@@ -65,7 +56,6 @@
             <div class="pTagbeforeName fontDetail">
               ${userInfo.user_name}
             </div>
-
             <div class="pTagDetailName">
               <div class="userNameDetail">
                 <input type="text" inputmode="text" placeholder="이름을 입력해주세요." autocapitalize="off"

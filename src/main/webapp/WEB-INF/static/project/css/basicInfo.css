@@ -212,6 +212,7 @@ div {
     color: #929292;
     text-align: right;
     margin-top: 8px;
+    margin-bottom: 14px;
 }
 
 .pjBox .pjForm .pjImgUp {
@@ -250,4 +251,22 @@ div {
 }
 .pjBox .pjForm .pjImgUp input[type=file] {
     display: none;
+}
+
+.tagContainer {
+    line-height: 30px;
+}
+
+.tagContainer > span {
+    border-radius: 10px;
+    background-color: #eaeaea;
+    padding : 5px 10px 5px 16px;
+    margin-right: 5px;
+    color: #333;
+    position: relative;
+}
+
+.eraseBtn{
+    border: 0;
+    margin-left: 11px;
 }
