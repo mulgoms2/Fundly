@@ -13,4 +13,5 @@ public class ProjectAddResponse {
     public ProjectBasicInfo toInfoDto() {
         return ProjectBasicInfo.builder().pj_id(pj_id).sel_name(sel_name).build();
     }
+    private int curr_pj_like_cnt;
 }

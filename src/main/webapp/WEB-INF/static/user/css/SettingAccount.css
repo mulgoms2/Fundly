@@ -11,7 +11,6 @@
     border-bottom: 1px solid rgb(240, 240, 240);
 }
 
-
 .checkIcon{
     margin: auto 0;
 }
@@ -34,16 +33,32 @@
     display: none;
     gap: 10px;
 }
+
 .userNowPwdDetail{
     /*display: flex;*/
+}
+.msgPwd {
+    color: red;
+    font-size: 14px;
+}
+
+.password-toggle {
+    width: 20px;
+    height: 20px;
+    /*position: absolute;*/
+    right: 12px;
+    top: 9px;
+    background: url(../../img/Icon-eye.png) no-repeat center center;
+
+    /*background: url(/static/img/Icon-private.png) no-repeat center center;*/
+    background-size: cover;
 }
 
 .pwdFont{
     margin : 0px 0px 10px
 }
 
-.chaPwdMarginWrap {
-
+.nowNowPwdWrap, .chaPwdMainWrap, .chaPwdConfirmWrap {
     width: 328px;
     border: 1px solid rgb(230, 230, 230);
     color: rgb(13, 13, 13);
@@ -58,6 +73,10 @@
     -webkit-box-align: center;
     align-items: center;
     border-radius: 1px;
+}
+
+.chaPwdMainWrap {
+    margin-bottom: 10px;
 }
 
 .txtInput {
@@ -85,10 +104,8 @@
 }
 
 .chaPwdmargin{
-
     margin-top: 12px;
 }
-
 
 .userNowPwdDetail{
     font-family: 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;

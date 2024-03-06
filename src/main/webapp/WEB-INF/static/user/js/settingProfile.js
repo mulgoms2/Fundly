@@ -14,6 +14,7 @@ changeName.addEventListener("click",()=> {
     const pTagbeforeName = document.querySelector('.pTagbeforeName');
     const pTagDetailName = document.querySelector('.pTagDetailName');
     const userNameValue = document.getElementById('userNameValue');
+    document.getElementById('userNameValue').value= pTagbeforeName.textContent.trim();
 
     changeBtn(changeName,pTagbeforeName,pTagDetailName);
     userNameValue.style.border = "1px solid rgb(230, 230, 230)";
@@ -23,6 +24,7 @@ changeIntro.addEventListener("click",()=> {
     const pTagbeforeIntro = document.querySelector('.pTagbeforeIntro');
     const pTagDetailIntro = document.querySelector('.pTagDetailIntro');
     const introValue = document.getElementById('introValue');
+    document.getElementById('introValue').value= document.querySelector('pre').textContent.trim();
 
     changeBtn(changeIntro,pTagbeforeIntro,pTagDetailIntro);
 
@@ -53,6 +55,9 @@ imgsave.addEventListener("click",()=> {
     // POST 요청 보내기
     fetch("/user/imgupdate", {
         method: 'POST',
+        // headers: {
+        //     "content-type": "application/json"
+        // },
         body: formData
     })
         .then(response => {
@@ -62,15 +67,11 @@ imgsave.addEventListener("click",()=> {
             return response.json();
         })
         .then(data => {
-            // 이미지 업데이트 후에 새로고침 효과 클래스를 제거합니다.
-            pTagImgFile.classList.remove('refreshing');
-            profileImg.classList.remove('refreshing');
-
-            // 새로운 이미지 경로로 배경을 설정합니다.
             pTagImgFile.style.background = `url('/user/img/${data[1]}') 50% 37% / cover no-repeat`;
             pTagChangeImgFile.style.background = `url('/user/img/${data[1]}') 50% 37% / cover no-repeat`;
             profileImg.style.background = `url('/user/img/${data[1]}') 50% 37% / cover no-repeat`;
             changeImg.click();
+            alert('프로필 이미지가 성공적으로 수정되었습니다.');
 
         })
         .catch(error => {
@@ -106,11 +107,11 @@ namesave.addEventListener("click",()=> {
         .then((userInfo) => {
 
             let info = userInfo;
-
-            // alert('이름이 성공적으로 수정되었습니다.');
             pTagbeforeName.innerText = info.user_name;
             document.getElementById('ifTxt').innerText =info.user_name;
             changeName.click();
+
+            alert('이름이 성공적으로 수정되었습니다.');
 
         })
         .catch(error => error).then(error=>{
@@ -145,9 +146,9 @@ introsave.addEventListener("click",()=> {
         .then((userInfo) => {
 
             let info = userInfo;
-
             pTagbeforeIntro.innerText = info.user_intro;
             changeIntro.click();
+            alert('소개가 성공적으로 수정되었습니다.');
 
         })
         .catch(error => error).then(error=>{
@@ -159,7 +160,6 @@ introsave.addEventListener("click",()=> {
 });
 
 /* enter key focus */
-
 const userNameValue = document.getElementById('userNameValue');
 const introValue = document.getElementById('introValue');
 

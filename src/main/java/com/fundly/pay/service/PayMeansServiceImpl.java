@@ -55,8 +55,13 @@ public class PayMeansServiceImpl implements PayMeansService {
     }
 
     @Override
-    public List<PayMeansDto> getAllPayMeans(String user_id) throws Exception {
-        return payMeansDao.selectAllForUser(user_id);
+    public List<PayMeansDto> getAllPayMeans(Map map) throws Exception {
+        return payMeansDao.selectAllForUser(map);
+    }
+
+    @Override
+    public int getPayMeansCountForUser(String user_id) throws Exception {
+        return payMeansDao.countForUser(user_id);
     }
 
     @Override

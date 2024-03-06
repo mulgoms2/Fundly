@@ -1,9 +1,6 @@
 package com.fundly.project.controller;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.Errors;
 
@@ -12,6 +9,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class ErrorResult {
     private List<ErrorDetail> errorDetails;
 
