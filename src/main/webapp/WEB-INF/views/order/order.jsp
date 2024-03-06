@@ -25,6 +25,13 @@
 <%--    <script type="text/javascript" src="../js/vendor/jquery.bpopup.min.js"></script>--%>
 <%--    <script type="text/javascript" src="../js/vendor/moment.min.js"></script>--%>
 <%--    <script type="text/javascript" src="../js/vendor/daterangepicker.js"></script>--%>
+
+    <%-- pay module --%>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <%-- jquery --%>
+    <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
+    <script type="text/javascript" src="/static/pay/js/payMeans.js"></script>
+    <link rel="stylesheet" href="/static/pay/css/pay-means-popup.css">
+    <link rel="stylesheet" href="/static/main/common.css">
 </head>
 <body>
     <div class="headerContainer">
@@ -35,7 +42,7 @@
             <div class="orderTitle">프로젝트 후원하기</div>
         </div>
     </div>
-    <div class="main">
+    <div class="main orderPageFontStyle">
         <div class="pjContainer">
             <div class="thum">
                 <a href="#">
@@ -115,71 +122,124 @@
                                         <div class="adrPhoneNo">010-3615-5607</div>
                                     </div>
                                     <div class="adrBtn">
-                                        <button type="button" class="ChangeBtn">변경</button>
+                                        <button type="button" class="popupBtn">변경</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="payContainer">
-                        <div class="Info">결제수단</div>
-                        <div class="Box">
-                            <div class="boxConts">
-                                <form class="rdochk">
-                                    <div class="rdoWrap">
-                                        <div class="rdoBox on">
-                                            <input type="radio" id="rdo1" class="ipt" name="radioGroup" value="체크됨" checked>
-                                            <label for="rdo1">카드 간편결제</label>
-                                        </div>
-                                        <div class="basicPayMark">할부 가능</div>
-                                        <div class="rdoBox">
-                                            <input type="radio" id="rdo2" class="ipt" name="radioGroup" value="체크안됨">
-                                            <label for="rdo2">네이버페이</label>
-                                        </div>
-                                        <div class="rdoBox">
-                                            <input type="radio" id="rdo3" class="ipt" name="radioGroup" value="체크안됨">
-                                            <label for="rdo3">계좌이체</label>
-                                        </div>
-                                    </div>
-                                </form>
+                    <div class="payContainerWrapper">
+                        <div class="payContainer">
+                            <div class="payFormHeader">
+                                <p class="Info">결제수단</p>
                             </div>
-                        </div>
-                        <div class="payBox">
-                            <div class="boxConts">
-                                <div class="payTopNotice">
-                                    <div class="payIcon">
-                                        <svg viewBox="0 0 48 48">
-                                            <path d="M21.5 23.1C21.5 23.0448 21.5448 23 21.6 23H26.4C26.4552 23 26.5 23.0448 26.5 23.1V33.9C26.5 33.9552 26.4552 34 26.4 34H21.6C21.5448 34 21.5 33.9552 21.5 33.9V23.1Z"></path>
-                                            <path d="M21 17C21 15.3431 22.3431 14 24 14C25.6569 14 27 15.3431 27 17C27 18.6569 25.6569 20 24 20C22.3431 20 21 18.6569 21 17Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 40C32.8366 40 40 32.8366 40 24C40 15.1634 32.8366 8 24 8C15.1634 8 8 15.1634 8 24C8 32.8366 15.1634 40 24 40ZM24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"></path>
-                                        </svg>
-                                    </div>
-                                    <div>할부로 후원하려면 카드를 재등록 해주세요. 신용카드만 할부 가능합니다.</div>
-                                    <div class="payBtn">
-                                        <button type="button" class="ChangeBtn">등록</button>
+                            <div class="Box">
+                                <div>
+                                    <div class="rdoSelectorWrapper">
+                                        <div class="rdoListElemWrapper">
+                                            <div class="rdoListElem">
+                                                <label class="rdoListElemLabel">
+                                                    <div>
+                                                        <input name="parameterType" type="radio" value="" checked>
+                                                    </div>
+                                                    <div class="rdoSelectorOption">
+                                                        카드 간편결제
+                                                        <span class="rdoSelectorOptionTag">할부 가능</span>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="rdoListElemWrapper">
+                                            <div class="rdoListElem">
+                                                <label class="rdoListElemLabel">
+                                                    <div>
+                                                        <input name="parameterType" type="radio" value="" disabled>
+                                                    </div>
+                                                    <div class="rdoSelectorOption">
+                                                        네이버페이
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="rdoListElemWrapper">
+                                            <div class="rdoListElem">
+                                                <label class="rdoListElemLabel">
+                                                    <div>
+                                                        <input name="parameterType" type="radio" value="" disabled>
+                                                    </div>
+                                                    <div class="rdoSelectorOption">
+                                                        계좌이체
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="payCredit">
-                                    <div class="creditImg">
-                                        <img src="/static/pay/img/pay_means_file/kakaobank.png" alt="" class>
+                                <div class="cardListElemContainer">
+                                <div class="cardListElemWrapper">
+                                    <div class="cardListElem">
+                                        <div class="payNoticeBannerWrapper">
+                                            <div class="payNoticeBanner">
+                                                <div class="payNoticeBannerIcon">
+                                                    <svg viewBox="0 0 48 48">
+                                                        <path d="M21.5 23.1C21.5 23.0448 21.5448 23 21.6 23H26.4C26.4552 23 26.5 23.0448 26.5 23.1V33.9C26.5 33.9552 26.4552 34 26.4 34H21.6C21.5448 34 21.5 33.9552 21.5 33.9V23.1Z"></path>
+                                                        <path d="M21 17C21 15.3431 22.3431 14 24 14C25.6569 14 27 15.3431 27 17C27 18.6569 25.6569 20 24 20C22.3431 20 21 18.6569 21 17Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 40C32.8366 40 40 32.8366 40 24C40 15.1634 32.8366 8 24 8C15.1634 8 8 15.1634 8 24C8 32.8366 15.1634 40 24 40ZM24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"></path>
+                                                    </svg>
+                                                </div>
+                                                <span>할부로 후원하려면 카드를 재등록 해주세요. 신용카드만 할부 가능합니다.</span>
+                                            </div>
+                                            <button type="button" class="popupBtn payRegBtn">등록</button>
+                                        </div>
+                                        <div class="cardInfoWrapper">
+                                            <div>
+                                                <div class="cardImg"></div>
+                                            </div>
+                                            <div class="cardContentWrapper">
+                                                <div class="cardContent">
+                                                    <div class="cardContentTitle">
+                                                        국민카드
+                                                        <span class="basicMark cardDefaultTag">기본</span>
+                                                    </div>
+                                                    <div class="cardContentNumber">
+                                                        ************ 3392
+                                                    </div>
+                                                    <button type="button" class="popupBtn payChangeBtn">변경</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="creditCardInfo">
-                                        <div class="creditCo">신한카드</div>
-                                        <div class="basicMark">기본</div>
-                                        <div class="creditNo">************ 7223</div>
-                                    </div>
-                                    <div class="payBtn">
-                                        <button type="button" class="ChangeBtn">변경</button>
+                                    <div class="cardInstallWrapper">
+                                        <div class="cardInstall">
+                                            <div>
+                                                <div class="cardInstallMonthTitle">할부 개월</div>
+                                                <div class="cardInstallMonthSelection">
+                                                    <div class="monthContentSelectWrapper">
+                                                        <div class="monthContentSelect">
+                                                            <span class="monthSelectInputWrapper">
+                                                                <input disabled="" readonly="" type="text" inputmode="text" autocapitalize="off" autocomplete="off" class="inputInner" value="일시불">
+                                                                <div class="arrowDownIcon">
+                                                                    <svg viewBox="0 0 48 48">
+                                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 14.4065C2 13.1363 3.09843 12.0615 4.39657 12.0615C4.99571 12.0615 5.59485 12.257 6.09414 12.7455L23.9685 29.4526L41.843 12.6478C42.8415 11.7684 44.3394 11.7684 45.338 12.7455C46.2367 13.7226 46.2367 15.1882 45.2381 16.0676L23.9685 36L2.79886 16.0676C2.29957 15.6767 2 14.9928 2 14.4065Z"></path>
+                                                                    </svg>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cardInstallGuide">
+                                                        <button class="guideBtn" type="button">
+                                                            <span>무이자 할부 안내</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="cardInstallDescription">* 무이자 할부 기간은 카드사에 따라 결제 시점에 변동될 수 있습니다.</div>
+                                                <div>* 5만원 미만 후원은 할부가 불가합니다.</div>
+                                                <div>* 체크카드, 법인카드는 할부가 불가합니다.</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="payInstall">
-                                    <div class="installTit">할부 개월</div>
-                                    <div class="installOption"></div>
-                                    <div class="installNoticeBtn">
-                                        <a href="#" class="installNoticeBtnDetail">무이자 할부 안내</a>
-                                    </div>
-                                    <div class="installNotice">* 무이자 할부 기간은 카드사에 따라 결제 시점에 변동될 수 있습니다.</div>
-                                    <div class="installNotice">* 5만원 미만 후원은 할부가 불가합니다.</div>
-                                    <div class="installNotice">* 체크카드, 법인카드는 할부가 불가합니다.</div>
                                 </div>
                             </div>
                         </div>
@@ -217,5 +277,7 @@
             </div>
         </div>
     </div>
+    <%--register popup--%>
+    <jsp:include page="../pay/registerCardFormPop.jsp" />
 </body>
 </html>
