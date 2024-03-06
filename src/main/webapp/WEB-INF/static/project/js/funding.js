@@ -1,22 +1,17 @@
 const selectStrBtn = document.querySelector('.selectStr');
 const selectBox = document.querySelector('#timeSelect');
-const datepickers = document.querySelectorAll('.datepicker');
-const startPicker = document.querySelector('.datepicker.start');
-const endPicker = document.querySelector('.datepicker.end');
+const datepicker = document.querySelector('.datepicker');
 let today = new Date();
-const applyBtn = document.querySelector('button.applyBtn');
+const saveBtn = document.querySelector('button.save');
+
+// 목표금액 field
+const goalMoney = document.querySelector('.goalMoney')
+const receiveMoney = document.querySelector('.receiveMoney')
+const feeCalc = document.querySelector('.feeCalc');
+
 
 window.onload = function(){
-    //요소를 동적으로 생성해서 body에 append하고 감춰두기
     const dateInput = document.createElement('input');
-    dateInput.setAttribute('type', 'text');
-    dateInput.setAttribute('id', 'dateInput');
-    dateInput.setAttribute('value','날짜를 선택해주세요');
-    dateInput.setAttribute('style','')
-    document.body.appendChild(dateInput);
-    //dateInput.style.display = 'none';
-    dateInput.classList.add('hidden');
-
     $('#dateInput').daterangepicker({
         "locale": {
             "format": "YYYY-MM-DD",
@@ -43,10 +38,15 @@ window.onload = function(){
             // console.log(diff)
             return diff < 10 || diff > 180 //심사기간을 고려하여 now()로부터 10일 이후부터 시작일 설정 가능, 종료일은 180일 이내(펀딩 기간은 max 60일)
         },
-        "drops": "auto"
+        "drops": "auto",
+
     });
 
+    $('#dateInput').on('apply.daterangepicker', function(ev, picker){
+        $(this).parent().attr('data-str_dtm', picker.startDate.format('YYYY-MM-DD'))
+        $(this).parent().attr('data-end_dtm', picker.endDate.format('YYYY-MM-DD'))
 
+    })
 
     //시간 선택
     selectStrBtn.addEventListener("click",function(){
@@ -55,19 +55,56 @@ window.onload = function(){
         selectBox.classList.toggle('hidden')
     })
 
-    for(datepicker of datepickers){
-        datepicker.addEventListener('click', function(){
-            this.querySelector('span').innerHTML = ''
-            this.querySelector('span').appendChild(dateInput);
-            $('#dateInput').show()
-            dateInput.click();
-
-        })
-    }
-    dateInput.addEventListener('click',function(){
-        dateInput.classList.toggle('hidden');
+    datepicker.addEventListener('click', function(){
+        this.querySelector('#dateInput').classList.toggle('hidden');
     })
 
+
+    saveBtn.addEventListener('click', function(){
+        const formData = new FormData();
+
+    })
+
+
+    goalMoney.addEventListener('input', function(){
+        //input또는 keyup이벤트
+
+        let goal = this.value;
+        //유효성 검사 (사용자에게 올바른 값을 입력하도록 유도하기)
+        moneyNotice(goal, 500000, 9999999999)
+        //수령액 및 수수료 계산기
+        calcMoney(goal, 10)
+        //comma 적용
+        this.value = comma(uncomma(goal));
+
+    })
+}
+
+const moneyNotice = function(money, min, max){
+    //500,000원 이상 9,999,999,999원 이하
+    const notice = document.querySelector('.notice')
+    money = uncomma(money)
+    if(money < min) {
+        notice.innerHTML = comma(min)+'원 이상의 금액을 입력해주세요.'
+    } else if (money > max) {
+        notice.innerHTML = comma(max)+'원 이하의 금액을 입력해주세요'
+    } else
+        notice.innerHTML = ''
+}
+
+const calcMoney = function(goalMoney, rate){
+    goalMoney = uncomma(goalMoney)
+    //VAT을 포함시켜서 수수료를 계산 (수수료 10% -> VAT 포함 총 11% )
+    feeCalc.innerHTML = comma(Math.floor(goalMoney * (rate * 1.1) / 100));
+    receiveMoney.innerHTML = comma(goalMoney - uncomma(feeCalc.innerHTML));
+}
+function comma(money) {
+    money = String(money);
+    return money.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
 }
 
 
