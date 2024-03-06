@@ -48,6 +48,7 @@ public class ServletContext implements WebMvcConfigurer {
         registry.addResourceHandler("/user/img/*").addResourceLocations("file:///C:/Users/USER/fundly/img/");
 
         registry.addResourceHandler("/chat/img/*").addResourceLocations("file:/Users/dobigulbi/fundly/chat/img/");
+        registry.addResourceHandler("/fundly/project/img/*").addResourceLocations("file:/Users/dobigulbi/fundly/project/img/");
 //        registry.addResourceHandler("/user/img/*").addResourceLocations("file:////fundly/img/");
     }
 
@@ -60,7 +61,7 @@ public class ServletContext implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(new ChatInterceptor()).addPathPatterns("/chat*");
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/editor/*");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/project/editor/*");
     }
 
     @Bean

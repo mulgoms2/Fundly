@@ -3,7 +3,6 @@ window.onload = ()=>{
     saveBtn.addEventListener("click", updateProjectInfo);
 };
 
-
 async function updateProjectInfo(){
     const longTitle = document.querySelector("#longTitle").value;
 

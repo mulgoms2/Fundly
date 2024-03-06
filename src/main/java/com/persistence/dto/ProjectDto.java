@@ -2,9 +2,13 @@ package com.persistence.dto;
 
 import com.fundly.project.controller.StoryForm;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 @Getter
 @Setter
@@ -102,6 +106,13 @@ public class ProjectDto {
                 .build();
     }
 
+    public static ProjectCreatorDto toCreatorDto(ProjectDto projectDto) {
+        return ProjectCreatorDto.builder()
+                .pj_sel_name(projectDto.getPj_sel_name())
+                .pj_sel_short_intro(projectDto.getPj_sel_short_intro())
+                .pj_prof_image_url(projectDto.getPj_prof_image_url())
+                .build();
+    }
 
 
     public void updateBasicInfo(ProjectInfoUpdateRequest request) {
@@ -109,7 +120,6 @@ public class ProjectDto {
         this.sub_ctg = request.getSub_ctg();
         this.pj_long_title = request.getPj_long_title();
         this.pj_short_title = request.getPj_short_title();
-        this.pj_thumbnail_url = request.getPj_thumbnail_url();
         this.pj_tag = request.getPj_tag();
     }
 
@@ -136,6 +146,14 @@ public class ProjectDto {
     }
 
     public static ProjectBasicInfo toBasicInfo(ProjectDto project) {
+        String pjTags = project.getPj_tag();
+        StringTokenizer tokenizer = new StringTokenizer(pjTags, ",");
+        List<String> tagList = new ArrayList<>();
+
+        while (tokenizer.hasMoreTokens()) {
+            tagList.add(tokenizer.nextToken());
+        }
+
         return ProjectBasicInfo.builder()
                 .pj_id(project.getPj_id())
                 .sel_name(project.getPj_sel_name())
@@ -143,7 +161,16 @@ public class ProjectDto {
                 .sub_ctg(project.getSub_ctg())
                 .pj_short_title(project.getPj_short_title())
                 .pj_long_title(project.getPj_long_title())
+                .tags(tagList)
                 .build();
     }
 
+    public void updateCreatorInfo(ProjectCreatorUpdateRequest request) {
+        this.pj_sel_name = request.getPj_sel_name();
+//        this.pj_prof_image_url =
+    }
+
+    public void updateProfileImage(String pj_prof_image_url) {
+        this.setPj_prof_image_url(pj_prof_image_url);
+    }
 }

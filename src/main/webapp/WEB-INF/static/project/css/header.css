@@ -155,3 +155,9 @@ body {
     border-top: .5px solid #ececec;
     border-bottom: .5px solid #ececec;
 }
+.category {
+    width: 270px;
+    height: 42px;
+    border: 0.1px solid #eaeaea;
+    padding: 0 10px;
+}

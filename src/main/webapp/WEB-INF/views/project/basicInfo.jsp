@@ -32,19 +32,22 @@
                 <div class="formBx">
                     <div class="left">
                         <p>카테고리</p>
-                        <div>
-                            <input readonly type="text" placeholder="카테고리를 선택해주세요.">
-                            <input type="text" value="${projectDto.ctg}">
-                            <i class="fas fa-solid fa-chevron-down"></i>
-                            <%--                            <i class="fas fa-solid fa-chevron-up"></i> 클릭시 transition--%>
-                        </div>
+                            <select id="category" class="category">
+                                <option>반려동물</option>
+                                <option>디자인, 문구</option>
+                                <option>출판</option>
+                                <option>캐릭터 굿즈</option>
+                                <option>홈리빙</option>
+                                <option>테크 가전</option>
+                                <option>주얼리</option>
+                                <option>사진</option>
+                                <option>향수/뷰티</option>
+                            </select>
                     </div>
                     <div class="right">
                         <p>세부카테고리</p>
-                        <div>
-                            <input readonly type="text" placeholder="세부 카테고리를 선택해주세요.">
-                            <i class="fas fa-solid fa-chevron-down"></i>
-                        </div>
+                        <select id="subCategory" class="category">
+                        </select>
                     </div>
                 </div>
             </div>
@@ -149,7 +152,6 @@
                     <p>최소 1개, 최대 5개까지 업로드 가능</p>
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
-
                 </label>
                 <input accept=".jpg, .jpeg, .png" type="file" multiple/>
             </div>
@@ -182,9 +184,12 @@
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
-                        <p>0/10개</p>
                     </div>
-                    <div id="tagContainer" class="tagContainer"></div>
+                    <div id="tagContainer" class="tagContainer">
+                        <c:forEach var="tag" items="${basicInfo.tags}">
+                            <span class="searchTag">${tag}<button id="eraseBtn" class="eraseBtn" onclick="deleteSearchTag(event);"><i class="fa-solid fa-x fa-2xs"></i></button></span>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,57 +197,98 @@
 </div>
 <script>
     window.onload = () => {
-        const saveBtn = document.querySelector(".save");
+        // 저장버튼 클릭시 서버로 post 요청 보내기
+        const saveBtn = document.getElementById("saveBtn");
         saveBtn.addEventListener("click", updateProjectInfo);
 
+        // 검색태그 이벤트리스너 등록
         document.querySelector("#searchTag").addEventListener("keypress", handleTagInput)
+
+        document.querySelector("#category").addEventListener("input", printSubCategory);
+        // 프로젝트 카테고리 불러오기
+        document.querySelector("#category").value = "${projectDto.ctg}";
+    };
+
+    const printSubCategory = () => {
+        const category = document.querySelector("#category");
+        const subCtg = document.querySelector("#subCategory");
+
+        if (category.value === "반려동물") {
+            const 먹이 = document.createElement('option');
+            const 장난감 = document.createElement('option');
+            먹이.innerText = "먹이";
+            장난감.innerText = "장난감";
+
+            subCtg.appendChild(먹이);
+            subCtg.appendChild(장난감);
+        }
     };
 
     const handleTagInput = (e) => {
         if (e.code === "Enter") {
-            if (checkTagCount(e) > 5) {
+            if (maxCount(5)) {
                 alert("태그는 최대 5개 까지만 저장할 수 있습니다.")
                 clearInput(e);
                 return;
             }
             const tagString = e.target.value;
+            if (tagString.trim().length === 0) {
+                clearInput(e);
+                return;
+            }
             const searchTag = makeTag(tagString);
 
             printTag(searchTag);
             clearInput(e);
         }
-    }
+    };
+
     const printTag = (tag) => {
         document.querySelector("#tagContainer").innerHTML += tag;
-    }
+    };
 
-    const checkTagCount = (e) => {
-        return false;
-    }
+    const maxCount = (count) => {
+        const tagCount = document.querySelector("#tagContainer").children.length;
+
+        return count < tagCount + 1;
+    };
 
     const clearInput = (e) => {
         e.target.value = "";
-    }
+    };
 
     const makeTag = (content) => {
-        return `<span class="searchTag">${'${content}'}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
-    }
+        return `<span class="searchTag">${'${content}'}<button id="eraseBtn" class="eraseBtn" onclick="deleteSearchTag(event);"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
+    };
+
+    const deleteSearchTag = (e) => {
+        e.currentTarget.parentElement.outerHTML = "";
+    };
+
+    const concatSearchTags = () => {
+        const tagList = document.querySelector("#tagContainer").children;
+        const tagArr = [...tagList].map(span => span.innerText);
+        // 태그를 컴마로 구문된 문자열로 합친다.
+
+        return tagArr.toString();
+    };
 
     async function updateProjectInfo() {
         const longTitle = document.querySelector("#longTitle").value;
         const shotTitle = document.querySelector("#shortTitle").value;
         const pjIntro = document.querySelector("#pjIntro").value;
-        // const searchTags = concatSearchTags();
+        const category = document.querySelector("#category").value;
+        const searchTags = concatSearchTags();
 
         const formData = new FormData();
         formData.append("pj_id", "${projectDto.pj_id}");
-        // formData.append("ctg", "반려동물");
+        formData.append("ctg", category);
         // formData.append("sub_ctg");
         formData.append("pj_long_title", longTitle);
         formData.append("pj_short_title", shotTitle);
         formData.append("pj_short_intro", pjIntro);
-        // formData.append("pj_thumbnail_img");
-        // formData.append("pj_tag");
+        // formData.append("pj_thumbnail_img"); 이미지는 별도로 처리하자
+        formData.append("pj_tag", searchTags);
 
         const response = await fetch("<c:url value="/project/editor/infoUpdate"/>", {
             method: "post",

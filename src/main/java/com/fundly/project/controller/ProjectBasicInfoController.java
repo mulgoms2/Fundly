@@ -46,7 +46,6 @@ public class ProjectBasicInfoController {
     @GetMapping("/info")
 //    프로젝트 기본정보 탭을 불러온다.
      public String getBasicInfo(@ModelAttribute ProjectDto projectDto, Model model) {
-
         model.addAttribute("basicInfo", ProjectDto.toBasicInfo(projectDto));
 
         return "project.basicInfo";
@@ -55,7 +54,6 @@ public class ProjectBasicInfoController {
     @PostMapping("/info")
 //    프로젝트를 생성한다.
         public String makeProject(@ModelAttribute ProjectAddRequest addRequest, HttpSession session, Model model) {
-
         ProjectDto pj = projectService.add(addRequest);
 
         model.addAttribute("basicInfo", ProjectDto.toBasicInfo(pj));
@@ -67,7 +65,7 @@ public class ProjectBasicInfoController {
     }
 
     @PostMapping("/infoUpdate")
-//    프로젝트 정보를 업데이트한다.
+//    멀티파트 요청을 받아 업데이트를 처리한다.
     public ResponseEntity<Boolean> updateBasicInfo(@Valid ProjectInfoUpdateRequest updateRequest, ProjectDto project) {
         project.updateBasicInfo(updateRequest);
         projectService.update(project);
