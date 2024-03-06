@@ -28,6 +28,8 @@ public class MailSendService {
     //이메일 보낼 양식
     public String joinEmail(String email) {
         makeRandomNumber();
+
+        /* 랜덤 인증번호를 저장(email 별 구분 ) 하는 table 은 ? */
         String setFrom = email; //
         String toMail = email;
         String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
@@ -41,7 +43,7 @@ public class MailSendService {
         return Integer.toString(authNumber);
     }
 
-    public void mailSend(String setFrom, String toMail, String title, String content,int authNumber) {
+    public void mailSend(String setFrom, String toMail, String title, String content, int authNumber) {
         MimeMessage message = mailSender.createMimeMessage();
 
         // true 매개값을 전달하면 multipart 형식의 메세지 전달이 가능.문자 인코딩 설정도 가능하다.

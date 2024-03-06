@@ -19,7 +19,6 @@ public class LoginServiceImpl implements LoginService {
     private final UserLoginDao userLoginDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    public LoginServiceImpl(){}
     public LoginServiceImpl(UserLoginDao userLoginDao){
         this.userLoginDao = userLoginDao;
     }
