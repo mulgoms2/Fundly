@@ -29,7 +29,8 @@
     <%-- pay module --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <%-- jquery --%>
     <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
-    <script type="text/javascript" src="/static/pay/js/payMeans.js"></script>
+    <script type="text/javascript" src="/static/pay/js/orderPayMeans.js"></script>
+    <script type="text/javascript" src="/static/pay/js/registerPayMeans.js"></script>
     <link rel="stylesheet" href="/static/pay/css/pay-means-popup.css">
     <link rel="stylesheet" href="/static/main/common.css">
 </head>
@@ -175,71 +176,74 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="cardListElemContainer">
-                                <div class="cardListElemWrapper">
-                                    <div class="cardListElem">
-                                        <div class="payNoticeBannerWrapper">
-                                            <div class="payNoticeBanner">
-                                                <div class="payNoticeBannerIcon">
-                                                    <svg viewBox="0 0 48 48">
-                                                        <path d="M21.5 23.1C21.5 23.0448 21.5448 23 21.6 23H26.4C26.4552 23 26.5 23.0448 26.5 23.1V33.9C26.5 33.9552 26.4552 34 26.4 34H21.6C21.5448 34 21.5 33.9552 21.5 33.9V23.1Z"></path>
-                                                        <path d="M21 17C21 15.3431 22.3431 14 24 14C25.6569 14 27 15.3431 27 17C27 18.6569 25.6569 20 24 20C22.3431 20 21 18.6569 21 17Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 40C32.8366 40 40 32.8366 40 24C40 15.1634 32.8366 8 24 8C15.1634 8 8 15.1634 8 24C8 32.8366 15.1634 40 24 40ZM24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"></path>
-                                                    </svg>
+                                <div id="cardList" class="cardListElemContainer">
+                                    <div class="cardListElemWrapper">
+                                        <div class="cardListElem">
+                                            <div class="payNoticeBannerWrapper">
+                                                <div class="payNoticeBanner">
+                                                    <div class="payNoticeBannerIcon">
+                                                        <svg viewBox="0 0 48 48">
+                                                            <path d="M21.5 23.1C21.5 23.0448 21.5448 23 21.6 23H26.4C26.4552 23 26.5 23.0448 26.5 23.1V33.9C26.5 33.9552 26.4552 34 26.4 34H21.6C21.5448 34 21.5 33.9552 21.5 33.9V23.1Z"></path>
+                                                            <path d="M21 17C21 15.3431 22.3431 14 24 14C25.6569 14 27 15.3431 27 17C27 18.6569 25.6569 20 24 20C22.3431 20 21 18.6569 21 17Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M24 40C32.8366 40 40 32.8366 40 24C40 15.1634 32.8366 8 24 8C15.1634 8 8 15.1634 8 24C8 32.8366 15.1634 40 24 40ZM24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <span>할부로 후원하려면 카드를 재등록 해주세요. 신용카드만 할부 가능합니다.</span>
                                                 </div>
-                                                <span>할부로 후원하려면 카드를 재등록 해주세요. 신용카드만 할부 가능합니다.</span>
+                                                <button id="regBtn" type="button" class="popupBtn payRegBtn">등록</button>
                                             </div>
-                                            <button type="button" class="popupBtn payRegBtn">등록</button>
-                                        </div>
-                                        <div class="cardInfoWrapper">
-                                            <div>
+                                            <div class="cardInfoWrapper">
                                                 <div class="cardImg"></div>
-                                            </div>
-                                            <div class="cardContentWrapper">
-                                                <div class="cardContent">
-                                                    <div class="cardContentTitle">
-                                                        국민카드
-                                                        <span class="basicMark cardDefaultTag">기본</span>
+                                                <div class="cardContentWrapper">
+                                                    <div class="cardContent">
+                                                        <div class="cardContentTitle"></div>
+                                                        <div class="cardContentNumber"></div>
+                                                        <button type="button" class="popupBtn payChangeBtn">변경</button>
                                                     </div>
-                                                    <div class="cardContentNumber">
-                                                        ************ 3392
-                                                    </div>
-                                                    <button type="button" class="popupBtn payChangeBtn">변경</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="cardInstallWrapper">
-                                        <div class="cardInstall">
-                                            <div>
-                                                <div class="cardInstallMonthTitle">할부 개월</div>
-                                                <div class="cardInstallMonthSelection">
-                                                    <div class="monthContentSelectWrapper">
-                                                        <div class="monthContentSelect">
-                                                            <span class="monthSelectInputWrapper">
-                                                                <input disabled="" readonly="" type="text" inputmode="text" autocapitalize="off" autocomplete="off" class="inputInner" value="일시불">
-                                                                <div class="arrowDownIcon">
-                                                                    <svg viewBox="0 0 48 48">
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M2 14.4065C2 13.1363 3.09843 12.0615 4.39657 12.0615C4.99571 12.0615 5.59485 12.257 6.09414 12.7455L23.9685 29.4526L41.843 12.6478C42.8415 11.7684 44.3394 11.7684 45.338 12.7455C46.2367 13.7226 46.2367 15.1882 45.2381 16.0676L23.9685 36L2.79886 16.0676C2.29957 15.6767 2 14.9928 2 14.4065Z"></path>
-                                                                    </svg>
-                                                                </div>
-                                                            </span>
+                                        <div class="cardInstallWrapper">
+                                            <div class="cardInstall">
+                                                <div>
+                                                    <div class="cardInstallMonthTitle">할부 개월</div>
+                                                    <div class="cardInstallMonthSelection">
+                                                        <div class="monthContentSelectWrapper">
+                                                            <div class="monthContentSelect">
+                                                                <span class="monthSelectInputWrapper">
+                                                                    <input disabled="" readonly="" type="text" inputmode="text" autocapitalize="off" autocomplete="off" class="inputInner" value="일시불">
+                                                                    <div class="arrowDownIcon">
+                                                                        <svg viewBox="0 0 48 48">
+                                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 14.4065C2 13.1363 3.09843 12.0615 4.39657 12.0615C4.99571 12.0615 5.59485 12.257 6.09414 12.7455L23.9685 29.4526L41.843 12.6478C42.8415 11.7684 44.3394 11.7684 45.338 12.7455C46.2367 13.7226 46.2367 15.1882 45.2381 16.0676L23.9685 36L2.79886 16.0676C2.29957 15.6767 2 14.9928 2 14.4065Z"></path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cardInstallGuide">
+                                                            <button class="guideBtn" type="button">
+                                                                <span>무이자 할부 안내</span>
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <div class="cardInstallGuide">
-                                                        <button class="guideBtn" type="button">
-                                                            <span>무이자 할부 안내</span>
-                                                        </button>
-                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="cardInstallDescription">* 무이자 할부 기간은 카드사에 따라 결제 시점에 변동될 수 있습니다.</div>
+                                                    <div>* 5만원 미만 후원은 할부가 불가합니다.</div>
+                                                    <div>* 체크카드, 법인카드는 할부가 불가합니다.</div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div class="cardInstallDescription">* 무이자 할부 기간은 카드사에 따라 결제 시점에 변동될 수 있습니다.</div>
-                                                <div>* 5만원 미만 후원은 할부가 불가합니다.</div>
-                                                <div>* 체크카드, 법인카드는 할부가 불가합니다.</div>
+                                        </div>
+                                        <div class="defaultPayCheckboxWrapper">
+                                            <div class="defaultPayCheckbox">
+                                                <label class="updateDefaultBtnLabel" for="updateDefaultCheckbox"></label>
+                                                <input id="updateDefaultCheckbox" type="checkbox" value="">기본 결제수단으로 등록
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+<%--                                등록된 결제수단이 없는 경우 보여준다.--%>
+                                <div id="emptyList" class="emptyList cardListElemContainer">
+                                    <span>+ 카드 등록</span>
                                 </div>
                             </div>
                         </div>
@@ -271,7 +275,7 @@
                         </div>
                     </div>
                     <div class="totalBtnBox">
-                        <input type="button" class="orderBtn" value="후원하기">
+                        <input type="button" id="orderBtn" class="orderBtn" value="후원하기">
                     </div>
                 </div>
             </div>

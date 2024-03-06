@@ -9,7 +9,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
-<script type="text/javascript" src="/static/pay/js/payMeans.js"></script>
+<script type="text/javascript" src="/static/pay/js/settingPayMeans.js"></script>
+<script type="text/javascript" src="/static/pay/js/registerPayMeans.js"></script>
 <link rel="stylesheet" href="/static/pay/css/pay-means-list.css">
 <link rel="stylesheet" href="/static/pay/css/pay-means-popup.css">
 <link rel="stylesheet" href="/static/main/common.css">
