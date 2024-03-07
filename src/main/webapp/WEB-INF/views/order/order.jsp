@@ -283,7 +283,9 @@
             </div>
         </div>
     </div>
-    <%-- register popup --%>
+    <%-- 결제수단등록 팝업 register popup --%>
     <jsp:include page="../pay/registerCardFormPop.jsp" />
+    <%-- 결제수단변경 팝업 change popup --%>
+    <jsp:include page="../pay/changeCardPop.jsp" />
 </body>
 </html>
