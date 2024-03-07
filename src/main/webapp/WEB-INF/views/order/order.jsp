@@ -31,7 +31,9 @@
     <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
     <script type="text/javascript" src="/static/pay/js/orderPayMeans.js"></script>
     <script type="text/javascript" src="/static/pay/js/registerPayMeans.js"></script>
-    <link rel="stylesheet" href="/static/pay/css/pay-means-popup.css">
+    <link rel="stylesheet" href="/static/pay/css/registerPayMeansPop.css">
+    <link rel="stylesheet" href="/static/pay/css/changePayMeansPop.css">
+    <link rel="stylesheet" href="/static/pay/css/settingPayMeans.css">
     <link rel="stylesheet" href="/static/main/common.css">
 </head>
 <body>
@@ -189,7 +191,7 @@
                                                     </div>
                                                     <span>할부로 후원하려면 카드를 재등록 해주세요. 신용카드만 할부 가능합니다.</span>
                                                 </div>
-                                                <button id="regBtn" type="button" class="popupBtn payRegBtn">등록</button>
+                                                <button id="payRegBtn" type="button" class="popupBtn payRegBtn">등록</button>
                                             </div>
                                             <div class="cardInfoWrapper">
                                                 <div class="cardImg"></div>
@@ -197,7 +199,7 @@
                                                     <div class="cardContent">
                                                         <div class="cardContentTitle"></div>
                                                         <div class="cardContentNumber"></div>
-                                                        <button type="button" class="popupBtn payChangeBtn">변경</button>
+                                                        <button id="payChangeBtn" type="button" class="popupBtn payChangeBtn">변경</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -275,13 +277,15 @@
                         </div>
                     </div>
                     <div class="totalBtnBox">
-                        <input type="button" id="orderBtn" class="orderBtn" value="후원하기">
+                        <button id="orderBtn" class="orderBtn" value="후원하기">후원하기</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <%--register popup--%>
+    <%-- 결제수단등록 팝업 register popup --%>
     <jsp:include page="../pay/registerCardFormPop.jsp" />
+    <%-- 결제수단변경 팝업 change popup --%>
+    <jsp:include page="../pay/changeCardPop.jsp" />
 </body>
 </html>

@@ -38,7 +38,7 @@ $(document).ready(function () {
                 <div class="companyName">${payMeansDto.card_co_type}
                     ${payMeansDto.default_pay_means_yn === 'Y' ? '<span class="default_tag">기본</span>' : ''}
                 </div>
-                <div class="cardNumber">************${payMeansDto.card_no}</div>
+                <div class="cardNumber">************ ${payMeansDto.card_no}</div>
             </div>
             <div class="func">
                 <button type="button" class="meatballBtn">
