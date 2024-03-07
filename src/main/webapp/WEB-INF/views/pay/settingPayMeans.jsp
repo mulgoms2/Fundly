@@ -11,15 +11,15 @@
 <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
 <script type="text/javascript" src="/static/pay/js/settingPayMeans.js"></script>
 <script type="text/javascript" src="/static/pay/js/registerPayMeans.js"></script>
-<link rel="stylesheet" href="/static/pay/css/pay-means-list.css">
-<link rel="stylesheet" href="/static/pay/css/pay-means-popup.css">
+<link rel="stylesheet" href="/static/pay/css/settingPayMeans.css">
+<link rel="stylesheet" href="/static/pay/css/registerPayMeansPop.css">
 <link rel="stylesheet" href="/static/main/common.css">
 <div class="containerWrapper fontStyle">
     <div class="leftContainer">
         <div class="settingFormWrapper">
             <div class="settingFormHeader">
                 <p class="settingFormTitle">등록된 결제수단</p>
-                <button class="settingFormButton" type="button" id="regBtn">+ 추가</button>
+                <button class="settingFormButton" type="button" id="payRegBtn">+ 추가</button>
             </div>
             <div class="emptyList">
                 <div class="emptyListErrorMsg">
