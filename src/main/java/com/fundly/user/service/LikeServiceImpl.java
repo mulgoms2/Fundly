@@ -1,5 +1,6 @@
 package com.fundly.user.service;
 
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.model.ProjectMapper;
 import com.fundly.user.dto.LikeProjectDto;
 import com.fundly.user.model.LikeDao;
@@ -39,37 +40,37 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void changeLike(LikeDto likedto, ProjectDto pjdto) {
-        try {
 
-            // 찜한 목록 조회
-            LikeDto likes = likedao.checkLike(likedto);
+        // 프로젝트가 존재하는지에 대한 예외처리
+        ProjectDto existingProject = pjdao.getByPjId(pjdto.getPj_id());
+        if (existingProject == null) {
+            throw new ProjectNotFoundException("해당 프로젝트를 찾을 수 없습니다.");
+        }
 
-            // 처음 좋아요
-            if(likes == null) {
+        // 찜한 목록 조회
+        LikeDto likes = likedao.checkLike(likedto);
 
-                likedao.insertLike(likedto);
-                pjdao.upLikeCnt(pjdto);
+        // 목록에 있는지 확인 후 없으면 처음 좋아요
+        if (likes == null) {
 
+            likedao.insertLike(likedto);
+            pjdao.upLikeCnt(pjdto);
+
+        } else {
+
+            // 이미 있다면 좋아요상태를 체크 후
+            // 좋아요 취소
+            if (likes.getLike_status() == 1) {
+                likedao.cancelLike(likedto);
+                pjdao.downLikeCnt(pjdto);
+
+            // 다시 좋아요
             } else {
 
-                // 좋아요 취소
-                if (likes.getLike_status() == 1) {
-                    likedao.cancelLike(likedto);
-                    pjdao.downLikeCnt(pjdto);
+                likedao.reLike(likedto);
+                pjdao.upLikeCnt(pjdto);
 
-                // 다시 좋아요
-                } else {
-
-                    likedao.reLike(likedto);
-                    pjdao.upLikeCnt(pjdto);
-
-                }
             }
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-
         }
     }
 
