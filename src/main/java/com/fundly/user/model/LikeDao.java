@@ -2,10 +2,8 @@ package com.fundly.user.model;
 
 
 import com.fundly.user.dto.LikeProjectDto;
-import com.fundly.user.dto.LikeResponseDto;
 import com.persistence.dto.LikeDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;

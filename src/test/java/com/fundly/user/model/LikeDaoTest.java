@@ -1,7 +1,6 @@
 package com.fundly.user.model;
 
 import com.fundly.user.dto.LikeProjectDto;
-import com.fundly.user.dto.LikeResponseDto;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
 import com.persistence.dto.UserDto;
