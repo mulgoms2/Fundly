@@ -1,6 +1,6 @@
 package com.fundly.project.service;
 
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.model.ProjectMapper;
 import com.persistence.dto.*;
@@ -105,7 +105,7 @@ class ProjectServiceImplTest {
     void getByNonExistId() {
         given(projectMapper.getByPjId(any())).willReturn(null);
 
-        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.get("hello"));
+        assertThatExceptionOfType(ProjectNotFoundException.class).isThrownBy(() -> projectServiceImpl.get("hello"));
     }
 
     @Test
@@ -117,7 +117,7 @@ class ProjectServiceImplTest {
         List<ProjectDto> emptyList = new ArrayList<>();
         given(projectMapper.getListByUserId(any())).willReturn(emptyList);
 
-        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.getEditingProject(user_email));
+        assertThatExceptionOfType(ProjectNotFoundException.class).isThrownBy(() -> projectServiceImpl.getEditingProject(user_email));
 
 //        작성중인 상태의 프로젝트가 존재하지 않으면 예외를 발생시킨다.
 //        assertThat(pj_id).isNull();
@@ -188,7 +188,7 @@ class ProjectServiceImplTest {
 //        해당 프로젝트 아이디로 조회되는 프로젝트가 없는 예외상황
         given(projectMapper.getByPjId(pj_id)).willReturn(null);
 
-        assertThatExceptionOfType(ProjectNofFoundException.class).isThrownBy(() -> projectServiceImpl.getProjectBasicInfo(pj_id));
+        assertThatExceptionOfType(ProjectNotFoundException.class).isThrownBy(() -> projectServiceImpl.getProjectBasicInfo(pj_id));
     }
 
     @Test

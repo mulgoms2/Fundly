@@ -1,7 +1,7 @@
 package com.fundly.project.controller;
 
 import com.fundly.project.exception.ProjectAddFailureException;
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
 import com.persistence.dto.ProjectAddRequest;
@@ -32,7 +32,7 @@ public class ProjectBasicInfoController {
             ProjectDto projectDto = projectService.getEditingProject(user_email);
             session.setAttribute("pj_id", projectDto.getPj_id());
             return projectDto;
-        } catch (ProjectNofFoundException e) {
+        } catch (ProjectNotFoundException e) {
             return null;
         }
     }

@@ -3,7 +3,7 @@ package com.fundly.project.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fundly.project.exception.ProjectAddFailureException;
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
 import com.persistence.dto.*;
@@ -122,7 +122,7 @@ class ProjectBasicInfoControllerTest {
     @DisplayName("getStart() 프로젝트 올리기 페이지에 작성중인 프로젝트가 존재하지 않는다.")
     void get_start_with_project() throws Exception {
         ProjectStarter pjStarter = ProjectStarter.builder().build();
-        given(service.getEditingProject(user_id)).willThrow(ProjectNofFoundException.class);
+        given(service.getEditingProject(user_id)).willThrow(ProjectNotFoundException.class);
 
         mockMvc.perform(get(BASE_URL + "/start").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
