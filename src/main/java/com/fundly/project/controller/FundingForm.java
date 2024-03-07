@@ -11,13 +11,13 @@ import java.time.format.DateTimeFormatter;
 @Data
 @Builder
 public class FundingForm {
-    BigInteger fund_goal_money;
-    LocalDateTime fund_str_dtm;
-    LocalDateTime fund_end_dtm;
-    int fund_period;
-    LocalDateTime pj_pay_due_dtm;
-    LocalDateTime fund_calc_due_dtm;
-    String fund_range;
+    private BigInteger fund_goal_money;
+    private LocalDateTime fund_str_dtm;
+    private LocalDateTime fund_end_dtm;
+    private int fund_period;
+    private LocalDateTime pj_pay_due_dtm;
+    private LocalDateTime fund_calc_due_dtm;
+    private String fund_range;
 
     public void setFundPeriod(){
         Period period = Period.between(fund_str_dtm.toLocalDate(), fund_end_dtm.toLocalDate());

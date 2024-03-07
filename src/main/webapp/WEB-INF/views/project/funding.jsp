@@ -97,7 +97,7 @@
                                     <p>선택하신 종료일 다음날 0시에 펀딩이 종료됩니다.</p>
                                 </div>
                                 <div>
-                                    <p class="ntc">펀딩 기간 : 일</p>
+                                    <p class="ntc range">펀딩 기간 : 일</p>
                                 </div>
                             </div>
                         </li>
@@ -106,10 +106,10 @@
                                 <p class="tit">후원자 결제 종료</p>
                                 <div class="notice">
                                     <p>프로젝트가 성공하면 펀딩 종료 다음 날 후원금이 결제됩니다.
-                                        <br>결제가 이루어지지 않은 경우 24시간 간격으로 7일 동안 결제를 시도합니다.</p>
+                                        <br>결제가 이루어지지 않은 경우 24시간 후, 다시 한번 결제가 시도됩니다.</p>
                                 </div>
                                 <div class="payEnd">
-                                    <p class="ntc"> </p>
+                                    <p class="ntc end"> </p>
                                 </div>
                             </div>
                         </li>
@@ -121,7 +121,7 @@
                                         <br>7일째 되는 날 입금됩니다.</p>
                                 </div>
                                 <div class="payIn">
-                                    <p class="ntc"></p> <!-- N영업일을 구하는 쿼리? JS에서 보여주기? 어쨌든 이 정보도 저장을 해야.. -->
+                                    <p class="ntc payIn"></p> <!-- N영업일을 구하는 쿼리? JS에서 보여주기? 어쨌든 이 정보도 저장을 해야.. -->
                                 </div>
                             </div>
                         </li>

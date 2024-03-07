@@ -8,6 +8,7 @@ const saveBtn = document.querySelector('button.save');
 const goalMoney = document.querySelector('.goalMoney')
 const receiveMoney = document.querySelector('.receiveMoney')
 const feeCalc = document.querySelector('.feeCalc');
+const range = document.querySelector('.ntc.range')
 
 
 window.onload = function(){
@@ -46,6 +47,11 @@ window.onload = function(){
         $(this).parent().attr('data-str_dtm', picker.startDate.format('YYYY-MM-DD'))
         $(this).parent().attr('data-end_dtm', picker.endDate.format('YYYY-MM-DD'))
 
+        //기간을 계산하는 함수
+        $('.ntc.range').text("펀딩 기간 : " + calcRange(picker.startDate, picker.endDate)+"일");
+        console.log(calcFinalPayment(picker.endDate));
+        const finalDay = calcFinalPayment(picker.endDate)
+        $('.ntc.end').text("결제 종료 예정일 : " + finalDay.year + "-" + finalDay.month + "-" + finalDay.date)
     })
 
     //시간 선택
@@ -59,23 +65,20 @@ window.onload = function(){
         this.querySelector('#dateInput').classList.toggle('hidden');
     })
 
-
-    saveBtn.addEventListener('click', function(){
-        const formData = new FormData();
-
-    })
-
-
     goalMoney.addEventListener('input', function(){
-        //input또는 keyup이벤트
-
         let goal = this.value;
+
         //유효성 검사 (사용자에게 올바른 값을 입력하도록 유도하기)
         moneyNotice(goal, 500000, 9999999999)
         //수령액 및 수수료 계산기
         calcMoney(goal, 10)
         //comma 적용
         this.value = comma(uncomma(goal));
+
+    })
+
+    saveBtn.addEventListener('click', function(){
+        const formData = new FormData();
 
     })
 }
@@ -98,15 +101,36 @@ const calcMoney = function(goalMoney, rate){
     feeCalc.innerHTML = comma(Math.floor(goalMoney * (rate * 1.1) / 100));
     receiveMoney.innerHTML = comma(goalMoney - uncomma(feeCalc.innerHTML));
 }
-function comma(money) {
+const comma = function(money) {
     money = String(money);
     return money.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 }
-function uncomma(str) {
+const uncomma = function(str) {
     str = String(str);
     return str.replace(/[^\d]+/g, '');
 }
 
+const calcRange = function(startDate, endDate){
+    const diff = new Date(endDate).getTime() - new Date(startDate).getTime()
+    return Math.floor(diff / (1000*60*60*24));
+}
+
+const calcFinalPayment = function(endDate){
+    let finalDay = new Date(endDate)
+    finalDay = new Date(finalDay.setDate(finalDay.getDate() + 1));
+    return {
+        "year": finalDay.getFullYear(),
+        "month": finalDay.getMonth()+1,
+        "date": finalDay.getDate()
+    }
+}
+
+const calc7daysFundingResult = function(){}
+//공휴일 api를 미리 db에 저장해둔다.
+//daterangepicker에서 apply이벤트가 발생하면
+//서버로 결제 종료일 정보를 보내고,
+//db에서 해당 기간에 해당하는 공휴일을 조회해서 가져온다(list 또는 arr)
+//엑셀의 WORKDAY 함수 동작을 참고 결제 종료일
 
 
 
