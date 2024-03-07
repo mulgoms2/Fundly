@@ -1,7 +1,7 @@
 package com.fundly.project.service;
 
 import com.fundly.project.controller.StoryForm;
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.model.ProjectMapper;
 import com.persistence.dao.FileDao;
@@ -37,7 +37,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectDto pj = projectMapper.getByPjId(pj_id);
 
         if (pj == null) {
-            ProjectNofFoundException ex = new ProjectNofFoundException("해당 아이디로 조회되는 프로젝트가 없습니다.");
+            ProjectNotFoundException ex = new ProjectNotFoundException("해당 아이디로 조회되는 프로젝트가 없습니다.");
             log.error("ProjectServiceImpl.getById(String pj_id) : {}\n {}\n", ex.getMessage(), ex.getStackTrace());
             throw ex;
         }
@@ -52,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (project == null) {
             String errMsg = "업데이트 대상 프로젝트를 찾을 수 없습니다.";
             log.error(errMsg);
-            throw new ProjectNofFoundException(errMsg);
+            throw new ProjectNotFoundException(errMsg);
         }
 
 //        상태변경하기
@@ -89,7 +89,7 @@ public class ProjectServiceImpl implements ProjectService {
 //        프로젝트 에디터. 기본정보 탭에 필요한 자료를 가져다준다.
         ProjectDto project = projectMapper.getByPjId(pj_id);
         if (project == null) {
-            ProjectNofFoundException ex = new ProjectNofFoundException("해당 아이디로 조회되는 프로젝트가 존재하지 않습니다.");
+            ProjectNotFoundException ex = new ProjectNotFoundException("해당 아이디로 조회되는 프로젝트가 존재하지 않습니다.");
             log.error("getProjectBasicInfo(String pj_id) : {}\n{}", ex.getMessage(), ex.getStackTrace());
             throw ex;
         }
@@ -107,7 +107,7 @@ public class ProjectServiceImpl implements ProjectService {
                 }
             }
         }
-        throw new ProjectNofFoundException("편집중인 프로젝트가 존재하지 않습니다.");
+        throw new ProjectNotFoundException("편집중인 프로젝트가 존재하지 않습니다.");
     }
 
     //    //    아직 컨트롤러에서 어느정도까지 데이터가 필요한지 정확히 정해지지 않아 응답데이터가 미완성이다.

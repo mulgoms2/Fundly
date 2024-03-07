@@ -33,6 +33,8 @@
         <typeAlias alias="LikeDto" type="com.persistence.dto.LikeDto"/>
         <typeAlias type="com.persistence.dto.FileDto" alias="FileDto"/>
         <typeAlias type="com.persistence.dto.ChatRequest" alias="ChatRequest"/>
-        <typeAlias alias="OrderDto" type="com.persistence.dto.OrderDto" />
+        <typeAlias alias="OrderDto" type="com.persistence.dto.OrderDto"/>
+        <typeAlias alias="LikeRequestDto" type="com.fundly.user.dto.LikeRequestDto"/>
+        <typeAlias alias="LikeProjectDto" type="com.fundly.user.dto.LikeProjectDto"/>
     </typeAliases>
 </configuration>

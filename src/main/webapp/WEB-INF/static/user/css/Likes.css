@@ -33,11 +33,19 @@
     display: flex;
     position: relative;
 }
+
+/* 요청할 데이터 확인 목적 */
 .pjId {
     display : none;
 }
 .userId {
     display : none;
+}
+.likeStatus {
+    display : none;
+}
+.likeCnt {
+    display:none;
 }
 
 /* 프로젝트 이미지 */
@@ -56,9 +64,6 @@
 }
 
 /* 하트버튼 */
-.likeCnt {
-    /*display:none;*/
-}
 .likeBtn {
     position: absolute;
     width: 0;
@@ -79,10 +84,10 @@
 }
 /* default 상태 */
 .likeBtn .btnIco .icoImg.on {
-    display: none;
+    display: block;
 }
 .likeBtn .btnIco .icoImg {
-    display: block;
+    display: none;
 }
 .likeBtn .btnIco svg {
     width: 22px;
