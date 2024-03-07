@@ -1,5 +1,7 @@
 package com.fundly.user.model;
 
+import com.fundly.user.dto.LikeProjectDto;
+import com.fundly.user.dto.LikeResponseDto;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
 import com.persistence.dto.UserDto;
@@ -20,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
@@ -57,8 +60,8 @@ class LikeDaoTest {
     @SneakyThrows
     @DisplayName("좋아요목록삭제")
     void deleteAllLikeTest() {
-//        int result = likedao.deleteAllLike();
-//        System.out.println("result = " + result);
+        int result = likedao.deleteAllLike(likedto);
+        System.out.println("result = " + result);
     }
 
     @Test
@@ -107,10 +110,10 @@ class LikeDaoTest {
     @Test
     @SneakyThrows
     @DisplayName("좋아요확인")
-    void getLikeTest() {
+    void checkLikeTest() {
 
         assertTrue(likedao.insertLike(likedto)==1);
-        LikeDto result = likedao.getLike(likedto);
+        LikeDto result = likedao.checkLike(likedto);
         log.error("\n\n\n" + result);
 
     }
@@ -130,7 +133,7 @@ class LikeDaoTest {
 
         assertTrue(likedao.insertLike(likedto)==1);
         //좋아요목록 불러와서
-        likedao.getLike(likedto);
+        likedao.checkLike(likedto);
         //좋아요 상태가 1이면
         //likedao.cancelLike()
         assertTrue(likedao.cancelLike(likedto)==1);
@@ -145,7 +148,7 @@ class LikeDaoTest {
         //좋아요목록 불러와서
         assertTrue(likedao.insertLike(likedto)==1);
         //좋아요 상태가 0이면
-        likedao.getLike(likedto);
+        likedao.checkLike(likedto);
         assertTrue(likedao.cancelLike(likedto)==1);
         //likedao.reLike()
         assertTrue(likedao.reLike(likedto)==1);
@@ -159,5 +162,21 @@ class LikeDaoTest {
         map.put("pageSize", 10);
         List<LikeDto> result = likedao.selectPage(map);
         log.error("\n\n\n" + result);
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("프로젝트-좋아요테이블 조인테스트")
+    void test() {
+        assertTrue(likedao.insertLike(likedto)==1);
+
+        List<LikeProjectDto> res = likedao.AllLikeListWithPj(likedto.getUser_id());
+        System.out.println("[[[[조인테스트 출력]]]] " + res);
+        
+        int like_status = res.get(0).getLike_status();
+        System.out.println("res_like_status = " + like_status);
+
+        String pj_id = res.get(0).getPj_id();
+        System.out.println("res_pj_id = " + pj_id);
     }
 }

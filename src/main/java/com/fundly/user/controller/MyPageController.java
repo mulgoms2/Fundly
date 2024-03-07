@@ -1,5 +1,6 @@
 package com.fundly.user.controller;
 
+import com.fundly.user.dto.LikeProjectDto;
 import com.fundly.user.service.LikeService;
 import com.fundly.user.service.UserInfoService;
 import com.persistence.dto.LikeDto;
@@ -110,11 +111,9 @@ public class MyPageController {
             model.addAttribute("user_profileImg",user_profileImg);
 
             // 유저 아이디 통해 좋아요 목록 불러오기 (디폴트 : 진행중인 프로젝트)
-            LikeDto likedto = new LikeDto(user_email);
-            List<ProjectDto> likes = likeservice.getListWithPjStatus(likedto,"ing");
-
-            log.error("\n\n\n likes=" + likes+ "\n\n\n");
+            List<LikeProjectDto> likes = likeservice.getLikeList(userInfo.getUser_id());
             model.addAttribute("likes", likes);
+            log.error("\n\n\n" + likes);
 
         } catch (Exception e) {
 
@@ -125,30 +124,6 @@ public class MyPageController {
         }
         return moveView;
     }
-//
-//    public List<ProjectDto> getListWithPjEntire(LikeDto likedto) {
-//        try {
-//            return likeservice.getListWithPjEntire(likedto);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    public List<ProjectDto> getListWithPjIng(LikeDto likedto) {
-//        try {
-//            return likeservice.getListWithPjStatus(likedto,"ing");
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    public List<ProjectDto> getListWithPjEnd(LikeDto likedto) {
-//        try {
-//            return likeservice.getListWithPjStatus(likedto,"end");
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();

@@ -6,9 +6,11 @@
 
     <select id="countLike" resultType="int">
         select count(*) from LIKE_PJ
+        where user_id = #{user_id}
+        and like_status = 1
     </select>
 
-    <select id="getLike" resultType="LikeDto">
+    <select id="checkLike" resultType="LikeDto">
         select * from LIKE_PJ
         where user_id = #{user_id}
         and pj_id = #{pj_id}
@@ -33,6 +35,16 @@
         and pj_id = #{pj_id}
     </update>
 
+    <select id="AllLikeListWithPj" resultType="LikeProjectDto">
+        select a.*,b.*
+        from pj a , like_pj b
+        where a.pj_id = b.pj_id
+          and b.user_id = #{user_id}
+          and a.pj_status = 'ing'
+          and b.like_status = 1
+        order by b.like_dtm desc
+    </select>
+
     <delete id="deleteAllLike">
         delete from LIKE_PJ
         where user_id = #{user_id}
@@ -44,7 +56,6 @@
         and pj_id = #{pj_id}
     </delete>
 
-<!--    좋아요목록 전체-->
     <select id="AllLikeList" resultType="LikeDto">
         select * from LIKE_PJ
         where user_id = #{user_id}
@@ -58,6 +69,7 @@
         order by like_dtm desc
         LIMIT #{offset}, #{pageSize}
     </select>
+
 <!--    좋아요목록 진행중 상태만-->
 <!--    <select id="IngLikeList" resultType="LikeDto">-->
 <!--        select * from LIKE_PJ-->

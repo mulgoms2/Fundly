@@ -1,6 +1,8 @@
 package com.fundly.user.model;
 
 
+import com.fundly.user.dto.LikeProjectDto;
+import com.fundly.user.dto.LikeResponseDto;
 import com.persistence.dto.LikeDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,13 +13,17 @@ import java.util.Map;
 @Mapper
 public interface LikeDao {
 
+    //현재 좋아요한 프로젝트 수
     int countLike(LikeDto likedto) throws Exception;
 
     //현재 좋아요 확인(조건: 해당 유저와 해당 프로젝트 아이디 모두 일치)
-    LikeDto getLike(LikeDto likedto) throws Exception;
+    LikeDto checkLike(LikeDto likedto) throws Exception;
 
     //회원의 현재 좋아요한 목록만 확인(최근 좋아요 순)
     List<LikeDto> AllLikeList(LikeDto likedto) throws Exception;
+
+    //프로젝트와 조인한 좋아요 목록
+    List<LikeProjectDto> AllLikeListWithPj(String user_id) throws Exception;
 
     //처음 좋아요
     int insertLike(LikeDto likedto) throws Exception;
@@ -35,4 +41,5 @@ public interface LikeDao {
     int deleteAllLike(LikeDto likedto) throws Exception;
 
     List<LikeDto> selectPage(Map map) throws Exception;
+
 }

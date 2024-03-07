@@ -1,6 +1,7 @@
 package com.fundly.user.service;
 
 import com.fundly.project.model.ProjectMapper;
+import com.fundly.user.dto.LikeProjectDto;
 import com.fundly.user.model.LikeDao;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
@@ -41,7 +42,7 @@ public class LikeServiceImpl implements LikeService {
         try {
 
             // 찜한 목록 조회
-            LikeDto likes = likedao.getLike(likedto);
+            LikeDto likes = likedao.checkLike(likedto);
 
             // 처음 좋아요
             if(likes == null) {
@@ -72,35 +73,14 @@ public class LikeServiceImpl implements LikeService {
         }
     }
 
-    public ProjectDto getupdatedPj(ProjectDto pjdto) {
-
-        try {
-//
-//            int updatedCnt = pjdao.selectLikeCnt(pjdto);
-//            pjdto.setCurr_pj_like_cnt(updatedCnt);
-            return pjdao.getByPjId(pjdto.getPj_id());
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-
-        }
-
+    @Override
+    public List<LikeProjectDto> getLikeList(String user_id) throws Exception {
+        return likedao.AllLikeListWithPj(user_id);
     }
 
     @Override
-    public LikeDto  getupdatedLike(LikeDto likedto) {
-
-        try {
-
-            return likedao.getLike(likedto);
-
-        } catch(Exception e) {
-
-            throw new RuntimeException(e);
-
-        }
-
+    public int getLikeCnt(LikeDto likedto) throws Exception {
+        return likedao.countLike(likedto);
     }
 
     @Override
