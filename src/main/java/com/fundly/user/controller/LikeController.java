@@ -24,9 +24,7 @@ public class LikeController {
     }
 
     @PostMapping
-    public ResponseEntity<List<LikeProjectDto>> clickLike(@RequestBody LikeRequestDto likereq) {
-
-        try {
+    public ResponseEntity<List<LikeProjectDto>> clickLike(@RequestBody LikeRequestDto likereq) throws Exception {
 
             // 요청한 데이터 dto에 담기
             LikeDto likedto = LikeDto.builder().pj_id(likereq.getPj_id()).user_id(likereq.getUser_id()).build();
@@ -39,12 +37,6 @@ public class LikeController {
             List<LikeProjectDto> response = likeservice.getLikeList(likedto.getUser_id());
 
             return ResponseEntity.ok(response);
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-
-        }
     }
 
     @PostMapping("/status")

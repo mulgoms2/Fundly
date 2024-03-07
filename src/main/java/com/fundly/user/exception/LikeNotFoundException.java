@@ -1,10 +1,10 @@
 package com.fundly.user.exception;
 
-public class LikeDataAccessException extends Exception{
+public class LikeNotFoundException extends Exception{
 
-    public LikeDataAccessException() {}
+    public LikeNotFoundException() {}
 
-    public LikeDataAccessException(String message, Exception e) {
+    public LikeNotFoundException(String message, Exception e) {
         super(e + ":"  + message);
     }
 }
