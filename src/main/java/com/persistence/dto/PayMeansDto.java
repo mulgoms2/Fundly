@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class PayMeansDto {
-    // 1. 카드 + 계좌 공통
     private String pay_means_id; // 결제수단 ID
     private String user_id; // 회원 ID
     private Integer seq;
@@ -23,8 +22,6 @@ public class PayMeansDto {
     private String file_path; // 결제수단 이미지 파일 경로
     private String file_name; // 결제수단 이미지 파일명
     private String file_extension; // 결제수단 이미지 파일 확장자
-
-// 2. 카드
     private String default_pay_means_yn; // 기본 결제수단 여부
     private String card_co_info_agree_yn; // 결제사 정보제공 동의 여부
     private String card_co_type; // 카드사 종류
@@ -36,13 +33,7 @@ public class PayMeansDto {
     private String card_valid_date; // 카드 유효기간
     private Integer card_type; // 카드 타입 (신용카드 == 0, 체크카드 == 1) TODO: DB 컬럼 새로 추가
 
-// 3. 계좌
-//    private String acc_bank_name; // 결제은행
-//    private String acc_no; // 계좌번호
-//    private String acc_own_kor_name; // 예금주 한글이름
-//    private String acc_own_eng_name; // 예금주 영문이름
-
-    // 4. dba
+    // dba
     @EqualsAndHashCode.Exclude
     private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
