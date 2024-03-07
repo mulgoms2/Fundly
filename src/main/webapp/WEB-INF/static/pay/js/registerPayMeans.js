@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    // 추가 버튼 클릭 시 팝업창 open
-    $("#regBtn, #emptyList").click(function (e) {
+    // 추가(등록) 버튼 클릭 시 팝업창 open
+    $("#payRegBtn, #emptyList").click(function (e) {
         e.preventDefault();
         $('#popRegister').bPopup();
     })
