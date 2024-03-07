@@ -82,7 +82,7 @@
             <div class="titBox">
                 <div class="itrTit">
                     <a href="#">
-                        <span class="gftCate">향수</span>
+                        <span class="gftCate">${pj.ctg}</span><!--향수-->
                     </a>
 <%--                    <h1 class="gftTit">다가오는 봄을 위한 라일락 생화향수 &lt;블로썸&gt; </h1>--%>
                     <h1 class="gftTit">${pj.pj_long_title}</h1>
@@ -116,19 +116,19 @@
                         <div class="sttElm">
                             <div class="elmTit">모인금액</div>
                             <div class="elmBox">
-                                    <span class="val">8,887,100
-                                        <span class="sMall">원</span>
-                                    </span>
+                                <span class="val">8,887,100
+                                    <span class="sMall">원</span>
+                                </span>
                                 <span class="valPct">1777%</span>
                             </div>
                         </div>
                         <div class="sttElm">
                             <div class="elmTit">남은시간</div>
                             <div class="elmBox">
-                                    <span class="val">
-                                        12
-                                        <span class="sMall">일</span>
-                                    </span>
+                                <span class="val">
+                                    12
+                                    <span class="sMall">일</span>
+                                </span>
                             </div>
                         </div>
                         <div class="sttElm">
@@ -144,15 +144,15 @@
                     <div class="itrFund">
                         <dl>
                             <dt>목표금액</dt>
-                            <dd>500,000원</dd>
+                            <dd>${pj.fund_goal_money}<span>원</span></dd><!--500,000원-->
                         </dl>
                         <dl>
                             <dt>펀딩 기간</dt>
-                            <dd>2023.01.31 ~ 2024.02.17<span class="fndInfo">12일 남음</span></dd>
+                            <dd>${pj.fund_str_dtm} ~ ${pj.fund_end_dtm}<span class="fndInfo">12일 남음</span></dd><!--2023.01.31 ~ 2024.02.17-->
                         </dl>
                         <dl>
                             <dt>결제</dt>
-                            <dd>목표금액 달성시 2024.02.03에 진행</dd>
+                            <dd>목표금액 달성시 ${pj.fund_calc_due_dtm}에 진행</dd><!--2024.02.03-->
                         </dl>
                     </div>
                     <div class="btnWrap">
@@ -199,7 +199,7 @@
                                 <button class="btn" data-target="#section3">일정</button>
                                 <button class="btn" data-target="#section4">팀 소개</button>
                                 <button class="btn" data-target="#section5">선물 설명</button>
-                                <button class="btn" data-target="#section6">신뢰와 안전</button>
+<%--                                <button class="btn" data-target="#section6">신뢰와 안전</button>--%>
                             </div>
                         </div>
                         <div class="scrMain">
@@ -312,94 +312,98 @@
 <%--                                    </p>--%>
                                 </div>
                                 <div class="strBud" id="section2">
-                                    <div class="strTit">프로젝트 소개</div>
-                                    <p>
-                                        목표금액 50만원은 블로썸 향료를 조향 및 생산하는 비용, 원료 비용 그리고 용기, 오버캡의 기본적인 재료비이며<br>생산된 향료와 베이스를 믹싱&amp;숙성하는 과정, 공병 살균, 소독 및 병입 과정에서의 제작비 그리고 패키지에 필요한 패키지의 최소한 비용입니다. 대표의 조향, 패키지 디자인의 비용은 책정하지 않았습니다.<br>언제나처럼, 향수가 완성되기까지 전 과정 모두 정직하고 진실되게 임할 것을 약속드립니다.
-                                    </p>
+                                    ${pj.pj_budget}
+<%--                                    <div class="strTit">프로젝트 예산</div>--%>
+<%--                                    <p>--%>
+<%--                                        목표금액 50만원은 블로썸 향료를 조향 및 생산하는 비용, 원료 비용 그리고 용기, 오버캡의 기본적인 재료비이며<br>생산된 향료와 베이스를 믹싱&amp;숙성하는 과정, 공병 살균, 소독 및 병입 과정에서의 제작비 그리고 패키지에 필요한 패키지의 최소한 비용입니다. 대표의 조향, 패키지 디자인의 비용은 책정하지 않았습니다.<br>언제나처럼, 향수가 완성되기까지 전 과정 모두 정직하고 진실되게 임할 것을 약속드립니다.--%>
+<%--                                    </p>--%>
                                 </div>
                                 <div class="strSch" id="section3">
-                                    <div class="strTit">프로젝트 일정</div>
-                                    <p>
-                                        <strong>완료 : 향료, 제조사 계약, 부자재 확보</strong>
-                                    </p>
-                                    <p>
-                                        펀딩 시작 01/31<br>
-                                        향수 제작 시작일 02/01<br>
-                                        펀딩 종료일 02/17<br>
-                                        향수 제작 완료 02/15<br>
-                                        선물 배송 시작 03/12
-                                    </p>
+                                    ${pj.pj_sched}
+<%--                                    <div class="strTit">프로젝트 일정</div>--%>
+<%--                                    <p>--%>
+<%--                                        <strong>완료 : 향료, 제조사 계약, 부자재 확보</strong>--%>
+<%--                                    </p>--%>
+<%--                                    <p>--%>
+<%--                                        펀딩 시작 01/31<br>--%>
+<%--                                        향수 제작 시작일 02/01<br>--%>
+<%--                                        펀딩 종료일 02/17<br>--%>
+<%--                                        향수 제작 완료 02/15<br>--%>
+<%--                                        선물 배송 시작 03/12--%>
+<%--                                    </p>--%>
                                 </div>
                                 <div class="strTeam" id="section4">
-                                    <div class="strTit">프로젝트 팀 소개</div>
-                                    <div>
-                                        <h2>
-                                            About <strong>세이리</strong><img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvOWNmM2U4N2YtNWRkYS00YjNlLTkyNzctYTMzNTg5MDQzYzE2LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                        </h2>
-                                        <p>
-                                            세이리는 2019년 시작된 프래그런스 브랜드입니다.<br>미술가이며 퍼퓸디렉터인 이세희의 이름을 담았습니다.&nbsp;<br>브랜드명에 이름을 담은 이유는 완성되기까지 책임감을 가지고 전 과정 정직하게 임하자는 것과 최고의 원료를 통해 완성도 있는 향기를 전해드리자는 초심을 잃고 싶지 않아서 였습니다.<br>세이리의 향수 작업은 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻어 진행되며 마치 작품을 선물하듯 향 하나하나엔 고유의 그림이 새겨져 있습니다.<br>제조 및 디자인은 한국에서 수제작으로 이루어지며 최고급 성분으로 만든 풍부한 에센스로 종일 피부에 밀착됩니다.<br>세이리가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의 방식을 나타내 주며 나아가 당신을 새로운 곳으로 안내하길 꿈꾸며 작업하고 있습니다. <br>기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의 여정을 여러분과 함께하고 싶습니다.&nbsp;
-                                        </p>
-                                    </div>
+                                    ${pj.pj_sel_intro}
+<%--                                    <div class="strTit">프로젝트 팀 소개</div>--%>
+<%--                                    <div>--%>
+<%--                                        <h2>--%>
+<%--                                            About <strong>세이리</strong><img src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvOWNmM2U4N2YtNWRkYS00YjNlLTkyNzctYTMzNTg5MDQzYzE2LmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                        </h2>--%>
+<%--                                        <p>--%>
+<%--                                            세이리는 2019년 시작된 프래그런스 브랜드입니다.<br>미술가이며 퍼퓸디렉터인 이세희의 이름을 담았습니다.&nbsp;<br>브랜드명에 이름을 담은 이유는 완성되기까지 책임감을 가지고 전 과정 정직하게 임하자는 것과 최고의 원료를 통해 완성도 있는 향기를 전해드리자는 초심을 잃고 싶지 않아서 였습니다.<br>세이리의 향수 작업은 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻어 진행되며 마치 작품을 선물하듯 향 하나하나엔 고유의 그림이 새겨져 있습니다.<br>제조 및 디자인은 한국에서 수제작으로 이루어지며 최고급 성분으로 만든 풍부한 에센스로 종일 피부에 밀착됩니다.<br>세이리가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의 방식을 나타내 주며 나아가 당신을 새로운 곳으로 안내하길 꿈꾸며 작업하고 있습니다. <br>기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의 여정을 여러분과 함께하고 싶습니다.&nbsp;--%>
+<%--                                        </p>--%>
+<%--                                    </div>--%>
                                 </div>
                                 <div class="strDesc" id="section5">
-                                    <div class="strTit">선물 설명</div>
-                                    <p>
-                                        # 텀블벅 런칭 가격으로
-                                        <strong><u> 정가대비 30% 이상 할인률</u></strong>로 구성되었습니다.<br>
-                                        # 리워드의 한정수량 소진 시 인상된 가격으로 리워드가 구성됩니다.<br>
-                                        # 미니퍼퓸 향은 미정이며, 블로썸 이외의 향으로 증정해드립니다.<br>
-                                        # 그 밖의 원하시는 구성이 있으실 경우 &lt;창작자에게 문의하기&gt;를 통해 말씀해주세요.
-                                        <img id="cbf28f6f-3335-44af-a32e-16cbf517ab1a" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvNDViZDIzYTQtOTVmNi00YTQzLWEwZmMtOGEyNDQ1ZmQzYTgzLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">
-                                    </p>
+                                    ${pj.pj_gift_intro}
+<%--                                    <div class="strTit">선물 설명</div>--%>
+<%--                                    <p>--%>
+<%--                                        # 텀블벅 런칭 가격으로--%>
+<%--                                        <strong><u> 정가대비 30% 이상 할인률</u></strong>로 구성되었습니다.<br>--%>
+<%--                                        # 리워드의 한정수량 소진 시 인상된 가격으로 리워드가 구성됩니다.<br>--%>
+<%--                                        # 미니퍼퓸 향은 미정이며, 블로썸 이외의 향으로 증정해드립니다.<br>--%>
+<%--                                        # 그 밖의 원하시는 구성이 있으실 경우 &lt;창작자에게 문의하기&gt;를 통해 말씀해주세요.--%>
+<%--                                        <img id="cbf28f6f-3335-44af-a32e-16cbf517ab1a" src="https://img.tumblbug.com/eyJidWNrZXQiOiJ0dW1ibGJ1Zy1pbWctYXNzZXRzIiwia2V5Ijoic3RvcnkvMzIwYjViMzJlZTc3MzljNWU4MmIxN2MyYjEwMTE1NWVlZjQ3ZTRjZi9jNGE5NDg3MzlmYzBkNjk3NWNhZmQzZGZmNWU1MzQ2MTFmYTY0OTVkLzVkZDYwZTZlNDMzYTE4N2Q5MDhlYzRiNDI3YzYxODdlMDI1MjI5MGQvNDViZDIzYTQtOTVmNi00YTQzLWEwZmMtOGEyNDQ1ZmQzYTgzLmpwZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTI0MCwid2l0aG91dEVubGFyZ2VtZW50Ijp0cnVlfX19">--%>
+<%--                                    </p>--%>
                                 </div>
-                                <div class="strSafe" id="section6">
-                                    <div class="strTit">신뢰와 안전</div>
-                                    <div class="crowdFd">
-                                        <div class="crowdTit">크라우드 펀딩에 대한 안내</div>
-                                        <dl>
-                                            <dt>
-                                                <img alt="" src="/static/img/prjone.png">후원은 구매가 아닌 창의적인 계획에 자금을 지원하는 일입니다.
-                                            </dt>
-                                            <dd>전자상거래법상 통신판매는 소비자의 청약 전 규격, 제조연월일 등 구체적인 상품정보가 제공 가능한 것을 대상으로 합니다. 따라서 텀블벅에서의 후원은 통신판매에 해당하지 않고, 전자상거래법 및 소비자보호규정(수령 후 7일 내 청약철회 등)이 적용되지 않습니다.</dd>
-                                        </dl>
-                                        <dl>
-                                            <dt>
-                                                <img alt="" src="/static/img/prjtwo.png">프로젝트는 계획과 달리 진행될 수 있습니다.
-                                            </dt>
-                                            <dd>
-                                                예상을 뛰어넘는 멋진 결과가 나올 수 있지만 진행 과정에서 계획이 지연, 변경되거나 무산될 수도 있습니다. 본 프로젝트를 완수할 책임과 권리는 창작자에게 있습니다.
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                    <div class="crowdLink">
-                                        <a href="#">
-                                            크라우드펀딩·후원 이해하기
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#f86453" d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
-                                        </a>
-                                    </div>
-                                    <div class="gftPcy">
-                                        <div class="pcyTit">프로젝트 정책</div>
-                                        <div class="pcyCont">
-                                            - 프로젝트 마감일 후에는 즉시 제작 및 실행에 착수하는 프로젝트 특성상 단순 변심에 의한 후원금 환불이 불가능합니다.<br>- 예상 전달일로부터 14일 이상 선물 전달이 이뤄지지 않을 경우, 환불을 원하시는 분들께는 수수료를 제한 후원금을 환불해 드립니다. (플랫폼 수수료: 모금액의 5%, 부가세 별도 / 결제 수수료: 결제 성공액의 3%, 부가세 별도 )<br>- 선물 전달을 위한 배송지 및 서베이 답변은 2024년 3월 5일에 일괄 취합할 예정입니다.<br>- 이후 배송지 변경이나 서베이 답변 변경을 원하실 때에는 '창작자에게 문의하기'로 개별 문의하셔야 합니다.<br>배송이 필요한 선물<br>- 파손 또는 불량품 수령 시 7일 이내로 교환이 가능합니다.<br>- 교환 및 AS 문의는 '창작자에게 문의하기'로 신청해 주세요.<br>- 파손이나 불량품 교환시 발생하는 비용은 창작자가 부담합니다. 선물 확인을 위한 포장 훼손 외에 아이템의 가치가 훼손된 경우에는 교환 및 환불이 불가합니다.<br>- 후원자가 배송지를 잘못 기재하거나 창작자에게 사전 고지 없이 배송지를 수정하여 배송사고가 발생할 경우 창작자는 최대 1번까지 재발송 해 드립니다. 배송비 부담은 후원자에게 있습니다<br>예상되는 어려움<br>펀딩 진행 및 선물 전달 과정에서 발생 가능한 문제가 있다면 후원자에게 명확하게 알려주세요. 대응 계획을 함께 적는다면 후원자에게 신뢰를 줄 수 있습니다.
-                                        </div>
-                                    </div>
-                                    <div class="gftDif">
-                                        <div class="difTit">예상되는 어려움</div>
-                                        <div class="difCont">
-                                            2024년 3월 12일은 선물의 예상 전달 시작일입니다. 후원자분들에게 도착하는 날은 지역 또는 택배사의 사정에 따라 변동될 수 있으며, 이 날짜는 배송 시작일임을 고지합니다. 향수를 제조하는 과정에서 부자재 수급 혹은 예상치 못한 문제로 인해서 약간의 딜레이가 있을 수 있습니다. 천재지변 등 불가피한 이유로 지연이나 중단될 경우에는 사전에 커뮤니티를 통해 안내해드리고 양해를 구하겠습니다.
-                                        </div>
-                                    </div>
-                                    <div class="prdInfo">
-                                        <div class="prdTit">
-                                            상품정보 고시
-                                        </div>
-                                    </div>
-                                    <div class="gftReport">
-                                        <button class="reportBtn" id="popReportBtn">
-                                            <span>프로젝트 신고</span>
-                                        </button>
-                                    </div>
-                                </div>
+<%--                                <div class="strSafe">--%>
+<%--                                    <div class="strTit">신뢰와 안전</div>--%>
+<%--                                    <div class="crowdFd">--%>
+<%--                                        <div class="crowdTit">크라우드 펀딩에 대한 안내</div>--%>
+<%--                                        <dl>--%>
+<%--                                            <dt>--%>
+<%--                                                <img alt="" src="/static/img/prjone.png">후원은 구매가 아닌 창의적인 계획에 자금을 지원하는 일입니다.--%>
+<%--                                            </dt>--%>
+<%--                                            <dd>전자상거래법상 통신판매는 소비자의 청약 전 규격, 제조연월일 등 구체적인 상품정보가 제공 가능한 것을 대상으로 합니다. 따라서 텀블벅에서의 후원은 통신판매에 해당하지 않고, 전자상거래법 및 소비자보호규정(수령 후 7일 내 청약철회 등)이 적용되지 않습니다.</dd>--%>
+<%--                                        </dl>--%>
+<%--                                        <dl>--%>
+<%--                                            <dt>--%>
+<%--                                                <img alt="" src="/static/img/prjtwo.png">프로젝트는 계획과 달리 진행될 수 있습니다.--%>
+<%--                                            </dt>--%>
+<%--                                            <dd>--%>
+<%--                                                예상을 뛰어넘는 멋진 결과가 나올 수 있지만 진행 과정에서 계획이 지연, 변경되거나 무산될 수도 있습니다. 본 프로젝트를 완수할 책임과 권리는 창작자에게 있습니다.--%>
+<%--                                            </dd>--%>
+<%--                                        </dl>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="crowdLink">--%>
+<%--                                        <a href="#">--%>
+<%--                                            크라우드펀딩·후원 이해하기--%>
+<%--                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#f86453" d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>--%>
+<%--                                        </a>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftPcy">--%>
+<%--                                        <div class="pcyTit">프로젝트 정책</div>--%>
+<%--                                        <div class="pcyCont">--%>
+<%--                                            - 프로젝트 마감일 후에는 즉시 제작 및 실행에 착수하는 프로젝트 특성상 단순 변심에 의한 후원금 환불이 불가능합니다.<br>- 예상 전달일로부터 14일 이상 선물 전달이 이뤄지지 않을 경우, 환불을 원하시는 분들께는 수수료를 제한 후원금을 환불해 드립니다. (플랫폼 수수료: 모금액의 5%, 부가세 별도 / 결제 수수료: 결제 성공액의 3%, 부가세 별도 )<br>- 선물 전달을 위한 배송지 및 서베이 답변은 2024년 3월 5일에 일괄 취합할 예정입니다.<br>- 이후 배송지 변경이나 서베이 답변 변경을 원하실 때에는 '창작자에게 문의하기'로 개별 문의하셔야 합니다.<br>배송이 필요한 선물<br>- 파손 또는 불량품 수령 시 7일 이내로 교환이 가능합니다.<br>- 교환 및 AS 문의는 '창작자에게 문의하기'로 신청해 주세요.<br>- 파손이나 불량품 교환시 발생하는 비용은 창작자가 부담합니다. 선물 확인을 위한 포장 훼손 외에 아이템의 가치가 훼손된 경우에는 교환 및 환불이 불가합니다.<br>- 후원자가 배송지를 잘못 기재하거나 창작자에게 사전 고지 없이 배송지를 수정하여 배송사고가 발생할 경우 창작자는 최대 1번까지 재발송 해 드립니다. 배송비 부담은 후원자에게 있습니다<br>예상되는 어려움<br>펀딩 진행 및 선물 전달 과정에서 발생 가능한 문제가 있다면 후원자에게 명확하게 알려주세요. 대응 계획을 함께 적는다면 후원자에게 신뢰를 줄 수 있습니다.--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftDif">--%>
+<%--                                        <div class="difTit">예상되는 어려움</div>--%>
+<%--                                        <div class="difCont">--%>
+<%--                                            ${pj.gift_ship_due_date}<!--2024년 3월 12일-->은 선물의 예상 전달 시작일입니다. 후원자분들에게 도착하는 날은 지역 또는 택배사의 사정에 따라 변동될 수 있으며, 이 날짜는 배송 시작일임을 고지합니다. 향수를 제조하는 과정에서 부자재 수급 혹은 예상치 못한 문제로 인해서 약간의 딜레이가 있을 수 있습니다. 천재지변 등 불가피한 이유로 지연이나 중단될 경우에는 사전에 커뮤니티를 통해 안내해드리고 양해를 구하겠습니다.--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="prdInfo">--%>
+<%--                                        <div class="prdTit">--%>
+<%--                                            상품정보 고시--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftReport">--%>
+<%--                                        <button class="reportBtn" id="popReportBtn">--%>
+<%--                                            <span>프로젝트 신고</span>--%>
+<%--                                        </button>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
                             </div>
                         </div>
                     </div>
@@ -410,26 +414,28 @@
                                 <div class="crtGr">
                                     <div class="crtPrf">
                                         <a href="#" class="prfImg">
-                                            <img src="/static/img/seili.webp" alt="">
+                                            ${pj.pj_prof_image_url}
+<%--                                            <img src="/static/img/seili.webp" alt="">--%>
                                         </a>
                                         <div class="crtIf">
                                             <div class="crtName">
                                                 <a href="#">세이리 SEI LI</a>
                                             </div>
-                                            <div class="lastLogin">
-                                                <span>마지막 로그인</span>
-                                                <b>1시간 전</b>
-                                            </div>
+<%--                                            <div class="lastLogin">--%>
+<%--                                                <span>마지막 로그인</span>--%>
+<%--                                                <b>1시간 전</b>--%>
+<%--                                            </div>--%>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="crtDesc">
-                                    세이리는 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻은
-                                    조향을 하며 마치 작품을 선물하듯 향이 지니는 고유의 그림이 새겨져
-                                    있습니다. 저희가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의
-                                    방식을 나타내주며 나아가 당신을 새로운 곳으로 안내하길 꿈꿉니다.
-                                    기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의
-                                    여정을 함께하고 싶습니다.
+                                    ${pj.pj_sel_short_intro}
+<%--                                    세이리는 듣고 읽고 발견한 모든 것과 예술과 여행에서 영감을 얻은--%>
+<%--                                    조향을 하며 마치 작품을 선물하듯 향이 지니는 고유의 그림이 새겨져--%>
+<%--                                    있습니다. 저희가 창작한 향기들이 아름다운 영혼과 문화, 예술, 삶의--%>
+<%--                                    방식을 나타내주며 나아가 당신을 새로운 곳으로 안내하길 꿈꿉니다.--%>
+<%--                                    기억을 불러일으키고 경험을 공유하며 감정을 전달하는 마법 같은 향의--%>
+<%--                                    여정을 함께하고 싶습니다.--%>
                                 </div>
                                 <div class="btnWrap">
                                     <button class="msg">
@@ -439,31 +445,31 @@
                                         </a>
                                     </button>
                                 </div>
-                                <div class="reviewInfo">
-                                    <div class="revwBox">
-                                        <a href="#">
-                                            <div class="revwTit">
-                                                이전 프로젝트 후기
-                                                <span class="revwCount">492</span>
-                                            </div>
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                        </a>
-                                    </div>
-                                    <div class="revwWrap">
-                                        <span class="revwTag">
-                                            <span>퀄리티가 좋아요</span>
-                                            <strong>411</strong>
-                                        </span>
-                                        <span class="revwTag">
-                                            <span>특별해요</span>
-                                            <strong>337</strong>
-                                        </span>
-                                        <span class="revwTag">
-                                            <span>즐거움을 줘요</span>
-                                            <strong>308</strong>
-                                        </span>
-                                    </div>
-                                </div>
+<%--                                <div class="reviewInfo">--%>
+<%--                                    <div class="revwBox">--%>
+<%--                                        <a href="#">--%>
+<%--                                            <div class="revwTit">--%>
+<%--                                                이전 프로젝트 후기--%>
+<%--                                                <span class="revwCount">492</span>--%>
+<%--                                            </div>--%>
+<%--                                            <i class="fa-solid fa-chevron-right"></i>--%>
+<%--                                        </a>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="revwWrap">--%>
+<%--                                        <span class="revwTag">--%>
+<%--                                            <span>퀄리티가 좋아요</span>--%>
+<%--                                            <strong>411</strong>--%>
+<%--                                        </span>--%>
+<%--                                        <span class="revwTag">--%>
+<%--                                            <span>특별해요</span>--%>
+<%--                                            <strong>337</strong>--%>
+<%--                                        </span>--%>
+<%--                                        <span class="revwTag">--%>
+<%--                                            <span>즐거움을 줘요</span>--%>
+<%--                                            <strong>308</strong>--%>
+<%--                                        </span>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
                             </div>
                         </div>
                         <div class="gftSlct">
