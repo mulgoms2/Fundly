@@ -23,7 +23,7 @@ public class LikeController {
         this.likeservice = likeservice;
     }
 
-    @PostMapping
+    @PostMapping("/update")
     public ResponseEntity<List<LikeProjectDto>> clickLike(@RequestBody LikeRequestDto likereq) throws Exception {
 
             // 요청한 데이터 dto에 담기

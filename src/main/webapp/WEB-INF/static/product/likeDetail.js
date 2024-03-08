@@ -37,11 +37,11 @@ const clickLikeBtn = () => {
     let obj = {
         pj_id : "P5040",
         user_id : "bada",
-        // curr_pj_like_cnt : 10
+        curr_pj_like_cnt : 10
     };
 
     // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
-    fetch("/like", {
+    fetch("/like/update", {
         method: "POST",
         headers: {
             "content-type": "application/json",

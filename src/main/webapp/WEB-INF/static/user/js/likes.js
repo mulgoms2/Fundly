@@ -1,52 +1,6 @@
-//
-// window.onload = function() {loadLike();};
-//
-// // 현재 좋아요 상태 정보 가져오기
-// const loadLike = () => {
-//
-//     // 클래스 이름을 사용하여 요소 가져오기
-//     // const elements = document.getElementsByClassName('pjId');
-//     // console.log(elements)
-//
-//     // 모든 좋아요 버튼이 포함된 요소를 가져옵니다.
-//     // const likeButtons = document.querySelectorAll(".likeBtn");
-//
-//     // likeButtons.forEach((likeButton) => {
-//     //     console.log(likeButton);
-//     //     // 각 좋아요 버튼의 부모 요소에서 user_id를 가져옵니다.
-//     //     const user_id = likeButton.closest(".cardWrap").querySelector(".userId").innerText;
-//     //     console.log(user_id);
-//
-//     // let user_id =  document.querySelectorAll("userId")[0].innerText;
-//     // console.log(user_id);
-//     let userElements = document.querySelectorAll(".userId");
-//
-//     userElements.forEach(function(element) {
-//         let user_id = element.innerText;
-//         console.log(user_id);
-//
-//         // 요청 보낼 데이터
-//         const obj = {
-//             user_id: user_id
-//         };
-//
-//         // 서버로 좋아요 정보 전송 및 서버 응답 받기
-//         fetch("/like/status", {
-//             method: "POST",
-//             headers: {
-//                 "content-type": "application/json",
-//                 "accept": "application/json"
-//             },
-//             body: JSON.stringify(obj)
-//         })
-//             .then(res => res.json())
-//             .then((response) => {});
-//     });
-//     // });
-// };
 
 // 좋아요 버튼 클릭시 정보 전송하고 상태값 변경 시킨 후 가져오기
-function clickLikeBtn(event) {
+function clickLikeBtn (event){
 
     // 클릭된 버튼의 부모 요소로 데이터를 얻는다
     const btnico = event.target.closest('.btnIco');
@@ -63,8 +17,9 @@ function clickLikeBtn(event) {
             user_id : user_id,
             curr_pj_like_cnt : curr_pj_like_cnt
         };
+
         // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
-        fetch("/like", {
+        fetch("/like/update", {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -156,51 +111,3 @@ function updated(res) {
     });
     likesContainer.innerHTML = html;
 }
-
-// // 1. 좋아요 상태에 따라 버튼이미지 전환
-// function colorLike(type) {
-//
-//     const heartReds = document.querySelectorAll(".icoImg.on")
-//     const heartWhites = document.querySelectorAll(".icoImg")
-//
-//     // NodeList의 첫 번째 요소에만 변화를 줍니다.
-//     if (heartReds.length > 0) {
-//         const firstHeartRed = heartReds[0];
-//         const firstHeartWhite = heartWhites[0];
-//
-//         // 첫 번째 요소에 대한 작업 수행
-//         if (type === 'white') {
-//             firstHeartRed.style.display = 'none';
-//             firstHeartWhite.style.display = 'block';
-//         } else if (type === 'red') {
-//             firstHeartRed.style.display = 'block';
-//             firstHeartWhite.style.display = 'none';
-//         }
-//     }
-// }
-    // const checkHeart = (response) => {
-//
-//     if(response.like_status === 0) {
-//
-//         // 4. 좋아요 버튼 하양
-//         colorLike('white');
-//
-//     } else if(response.like_status === 1) {
-//
-//         // 6. 좋아요 버튼 빨강
-//         colorLike('red');
-//
-//     }
-//     console.log(response.like_status);
-// }
-
-    // // 2. 상태0이면 하양하트로 고정
-    // if(type === 'white') {
-    //     heartRed.style.display = 'none';
-    //     heartWhite.style.display = 'block';
-    //
-    //     // 3. 상태1이면 빨강하트로 고정
-    // } else if(type === 'red') {
-    //     heartRed.style.display = 'block';
-    //     heartWhite.style.display = 'none';
-    // }
