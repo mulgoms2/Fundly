@@ -21,6 +21,8 @@ public interface ProjectMapper {
     List<ProjectDto> selectAllPj() throws DataAccessException;
     ProjectDto selectByEntireStatus(@Param("pj_id") String pjId);
     ProjectDto selectByStatus(@Param("pj_id") String pjId, @Param("pj_status") String status);
+
+    List<ProjectDto> getListByStatus(String status);
     int upLikeCnt(ProjectDto pjdto) throws Exception;
     int downLikeCnt(ProjectDto pjdto) throws Exception;
     int selectLikeCnt(ProjectDto pjdto) throws Exception;

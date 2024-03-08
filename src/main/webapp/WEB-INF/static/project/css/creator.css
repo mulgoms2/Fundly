@@ -175,6 +175,7 @@ label:hover {
     display: none;
     width: 100%;
 }
+
 .acc .pjForm .btnWrp {
     display: flex;
     flex-direction: row;
@@ -182,7 +183,8 @@ label:hover {
     align-items: center;
     height: 40px;
 }
-.acc .pjForm .btnWrp button{
+
+.acc .pjForm .btnWrp button {
     width: 88px;
     height: 40px;
     margin-left: 12px;
@@ -192,6 +194,7 @@ label:hover {
     font-size: 12px;
     font-weight: 500;
 }
+
 .acc .pjForm .btnWrp button.cancel{
     background-color: #ffffff;
 }

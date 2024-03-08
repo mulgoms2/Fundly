@@ -1,9 +1,11 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.exception.ImageSaveFailureException;
 import com.fundly.project.exception.ProjectAddFailureException;
 import com.fundly.project.exception.ProjectNofFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
+import com.fundly.project.util.FileUploader;
 import com.persistence.dto.ProjectAddRequest;
 import com.persistence.dto.ProjectDto;
 import com.persistence.dto.ProjectInfoUpdateRequest;
@@ -13,8 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
@@ -27,11 +29,9 @@ public class ProjectBasicInfoController {
 
     @ModelAttribute("projectDto")
 //    비로그인시 로그인페이지. 로그인시 기존 프로젝트 확인 후 존재하면 세션에 저장. 없으면 저장 x
-    ProjectDto initProjectEditor(@SessionAttribute String user_email, HttpSession session) {
+    ProjectDto initProjectEditor(@SessionAttribute String user_email) {
         try {
-            ProjectDto projectDto = projectService.getEditingProject(user_email);
-            session.setAttribute("pj_id", projectDto.getPj_id());
-            return projectDto;
+            return projectService.getEditingProject(user_email);
         } catch (ProjectNofFoundException e) {
             return null;
         }
@@ -45,7 +45,7 @@ public class ProjectBasicInfoController {
 
     @GetMapping("/info")
 //    프로젝트 기본정보 탭을 불러온다.
-     public String getBasicInfo(@ModelAttribute ProjectDto projectDto, Model model) {
+    public String getBasicInfo(@ModelAttribute ProjectDto projectDto, Model model) {
         model.addAttribute("basicInfo", ProjectDto.toBasicInfo(projectDto));
 
         return "project.basicInfo";
@@ -53,15 +53,13 @@ public class ProjectBasicInfoController {
 
     @PostMapping("/info")
 //    프로젝트를 생성한다.
-        public String makeProject(@ModelAttribute ProjectAddRequest addRequest, HttpSession session, Model model) {
+    public String makeProject(@ModelAttribute ProjectAddRequest addRequest, Model model) {
         ProjectDto pj = projectService.add(addRequest);
 
-        model.addAttribute("basicInfo", ProjectDto.toBasicInfo(pj));
         model.addAttribute("projectDto", pj);
 
-        session.setAttribute("pj_id", pj.getPj_id());
-
-        return "project.basicInfo";
+//        중복 제출 막기위한 리다이렉트
+        return "redirect:/project/editor/info";
     }
 
     @PostMapping("/infoUpdate")
@@ -73,19 +71,37 @@ public class ProjectBasicInfoController {
         return ResponseEntity.ok(true);
     }
 
+    @PostMapping(value = "/info/image", produces = "text/plain; charset=UTF-8")
+    public ResponseEntity<String> updateThumbnailImage(MultipartFile image, ProjectDto projectDto) {
+        String tagSrcUrl = FileUploader.uploadFile(image);
+
+        projectDto.updateThumbnailImage(tagSrcUrl);
+
+        projectService.update(projectDto);
+
+        return ResponseEntity.ok(tagSrcUrl);
+    }
+
+    @ExceptionHandler(ImageSaveFailureException.class)
+    private void failToSaveImage(ImageSaveFailureException e) {
+        log.error("{}\n\n\n{}",e.getMessage(),e.getStackTrace());
+    }
     @ExceptionHandler(ProjectUpdateFailureException.class)
-    private ResponseEntity<Boolean> failToUpdate() {
+    private ResponseEntity<Boolean> failToUpdate(ProjectUpdateFailureException e) {
+        log.error("{}\n{}",e.getMessage(), e.getStackTrace());
         return ResponseEntity.badRequest().body(false);
     }
 
     @ExceptionHandler(ProjectAddFailureException.class)
-    private String projectAddFail(Model model) {
+    private String projectAddFail(Model model, ProjectUpdateFailureException e) {
+        log.error("{}\n{}",e.getMessage(), e.getStackTrace());
         model.addAttribute("errorMsg", "프로젝트 생성에 실패하였습니다. 다시 시도해주세요");
         return "project/clientError";
     }
 
     @ExceptionHandler(Exception.class)
-    private String handleCommonError(Model model) {
+    private String handleCommonError(Model model, Exception e) {
+        log.error("{}\n {}\n", e.getCause(), e.getStackTrace());
         model.addAttribute("errorMsg", "잘못 된 접근입니다. 다시 시도해주세요.");
         return "project/clientError";
     }

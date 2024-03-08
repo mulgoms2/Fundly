@@ -45,6 +45,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<ProjectDto> getListByStatus(String status) {
+
+        return null;
+    }
+
+    @Override
     public ProjectBasicInfo updatePjInfo(ProjectInfoUpdateRequest request) {
 //        업데이트 대상 프로젝트 가져오기
         String pjId = request.getPj_id();

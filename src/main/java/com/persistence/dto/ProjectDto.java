@@ -29,7 +29,7 @@ public class ProjectDto {
     //		종료
 //    public enum PJ_STAUS {심사중, 승인됨, 반려됨, 진행중단, 진행중, 펀딩종료}
 
-//    @NonNull
+    //    @NonNull
     private String pj_id; //uuid만들어서 그대로 집어넣으면?? // PK를 노출하는 것은 좋지 않다고....하는데..
     private String pj_sel_id; //로그인 세션에서 가져오기.
 
@@ -45,12 +45,12 @@ public class ProjectDto {
     private String pj_short_title; //프로젝트 짧은 제목
     private String pj_thumbnail_url; // 프로젝트 대표이미지
     private String pj_short_intro; //프로제트 요약(기본정보 탭에서 작성)
-//    컴마로 구분된 통 문자열이 들어온다.
+    //    컴마로 구분된 통 문자열이 들어온다.
     private String pj_tag; // 검색 태그
 
     //프로젝트 기획 - 펀딩 계획
     private BigInteger fund_goal_money; //펀딩 목표금액 10
-//    @DateTimeFormat()
+    //    @DateTimeFormat()
     private LocalDateTime fund_str_dtm;// 펀딩시작일시
     private LocalDateTime fund_end_dtm; //펀딩 종료일시
     private LocalDateTime pj_pay_due_dtm; //후원 결제 예정일
@@ -58,7 +58,7 @@ public class ProjectDto {
 
     //프로젝트 기획 - 프로젝트 계획
     private String pj_intro; //프로젝트 소개(t.e에서 작성)
-//    예산이 실제로는 예산 사용 계획서 글이다.
+    //    예산이 실제로는 예산 사용 계획서 글이다.
     private String pj_budget; //프로젝트 예산(t.e에서 작성) ////!!!!테이블에서 컬럼명과 타입을 수정해야합니다!!!
     private String pj_sched; //프로젝트 일정(t.e에서 작성)
     private String pj_sel_intro; //창작자 또는 팀 소개(t.e에서 작성)
@@ -147,13 +147,14 @@ public class ProjectDto {
 
     public static ProjectBasicInfo toBasicInfo(ProjectDto project) {
         String pjTags = project.getPj_tag();
-        StringTokenizer tokenizer = new StringTokenizer(pjTags, ",");
         List<String> tagList = new ArrayList<>();
 
-        while (tokenizer.hasMoreTokens()) {
-            tagList.add(tokenizer.nextToken());
+        if (pjTags != null) {
+            StringTokenizer tokenizer = new StringTokenizer(pjTags, ",");
+            while (tokenizer.hasMoreTokens()) {
+                tagList.add(tokenizer.nextToken());
+            }
         }
-
         return ProjectBasicInfo.builder()
                 .pj_id(project.getPj_id())
                 .sel_name(project.getPj_sel_name())
@@ -170,7 +171,11 @@ public class ProjectDto {
 //        this.pj_prof_image_url =
     }
 
-    public void updateProfileImage(String pj_prof_image_url) {
-        this.setPj_prof_image_url(pj_prof_image_url);
+    public void updateProfileImage(String tagSrcUrl) {
+        this.pj_prof_image_url = tagSrcUrl;
+    }
+
+    public void updateThumbnailImage(String tagSrcUrl) {
+        this.pj_thumbnail_url = tagSrcUrl;
     }
 }

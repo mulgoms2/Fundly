@@ -149,11 +149,15 @@
                 </div>
                 <label class="pjImgUp">
                     <span><i class="fa-solid fa-arrow-up-from-bracket"></i>이미지 업로드</span>
-                    <p>최소 1개, 최대 5개까지 업로드 가능</p>
+<%--                    <p>최소 1개, 최대 5개까지 업로드 가능</p>--%>
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
+                    <input type="file" id="fileInput" accept="image/*">
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
                 </label>
-                <input accept=".jpg, .jpeg, .png" type="file" multiple/>
+                <div class="imgBx">
+<%--                    <img id="profImg" src="${creator.pj_prof_image_url}">--%>
+                                            <img src="<c:url value='/static/project/img/lemon.jpg'/>">
+                </div>
             </div>
         </div>
         <!-- 프로젝트 해시태그 -->
@@ -187,7 +191,7 @@
                     </div>
                     <div id="tagContainer" class="tagContainer">
                         <c:forEach var="tag" items="${basicInfo.tags}">
-                            <span class="searchTag">${tag}<button id="eraseBtn" class="eraseBtn" onclick="deleteSearchTag(event);"><i class="fa-solid fa-x fa-2xs"></i></button></span>
+                            <span class="searchTag">${tag}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>
                         </c:forEach>
                     </div>
                 </div>
@@ -195,114 +199,20 @@
         </div>
     </div>
 </div>
+<script src="/static/project/js/basicInfo.js"></script>
 <script>
     window.onload = () => {
         // 저장버튼 클릭시 서버로 post 요청 보내기
         const saveBtn = document.getElementById("saveBtn");
         saveBtn.addEventListener("click", updateProjectInfo);
 
+        // document.getElementById("eraseBtn").addEventListener("click", deleteSearchTag);
+        // document.getElementById("tagContainer").addEventListener("click", deleteSearchTag);
         // 검색태그 이벤트리스너 등록
-        document.querySelector("#searchTag").addEventListener("keypress", handleTagInput)
+        document.querySelector("#searchTag").addEventListener("keypress", handleTagInput);
 
         document.querySelector("#category").addEventListener("input", printSubCategory);
         // 프로젝트 카테고리 불러오기
         document.querySelector("#category").value = "${projectDto.ctg}";
     };
-
-    const printSubCategory = () => {
-        const category = document.querySelector("#category");
-        const subCtg = document.querySelector("#subCategory");
-
-        if (category.value === "반려동물") {
-            const 먹이 = document.createElement('option');
-            const 장난감 = document.createElement('option');
-            먹이.innerText = "먹이";
-            장난감.innerText = "장난감";
-
-            subCtg.appendChild(먹이);
-            subCtg.appendChild(장난감);
-        }
-    };
-
-    const handleTagInput = (e) => {
-        if (e.code === "Enter") {
-            if (maxCount(5)) {
-                alert("태그는 최대 5개 까지만 저장할 수 있습니다.")
-                clearInput(e);
-                return;
-            }
-            const tagString = e.target.value;
-            if (tagString.trim().length === 0) {
-                clearInput(e);
-                return;
-            }
-            const searchTag = makeTag(tagString);
-
-            printTag(searchTag);
-            clearInput(e);
-        }
-    };
-
-    const printTag = (tag) => {
-        document.querySelector("#tagContainer").innerHTML += tag;
-    };
-
-    const maxCount = (count) => {
-        const tagCount = document.querySelector("#tagContainer").children.length;
-
-        return count < tagCount + 1;
-    };
-
-    const clearInput = (e) => {
-        e.target.value = "";
-    };
-
-    const makeTag = (content) => {
-        return `<span class="searchTag">${'${content}'}<button id="eraseBtn" class="eraseBtn" onclick="deleteSearchTag(event);"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
-    };
-
-    const deleteSearchTag = (e) => {
-        e.currentTarget.parentElement.outerHTML = "";
-    };
-
-    const concatSearchTags = () => {
-        const tagList = document.querySelector("#tagContainer").children;
-        const tagArr = [...tagList].map(span => span.innerText);
-        // 태그를 컴마로 구문된 문자열로 합친다.
-
-        return tagArr.toString();
-    };
-
-    async function updateProjectInfo() {
-        const longTitle = document.querySelector("#longTitle").value;
-        const shotTitle = document.querySelector("#shortTitle").value;
-        const pjIntro = document.querySelector("#pjIntro").value;
-        const category = document.querySelector("#category").value;
-        const searchTags = concatSearchTags();
-
-        const formData = new FormData();
-        formData.append("pj_id", "${projectDto.pj_id}");
-        formData.append("ctg", category);
-        // formData.append("sub_ctg");
-        formData.append("pj_long_title", longTitle);
-        formData.append("pj_short_title", shotTitle);
-        formData.append("pj_short_intro", pjIntro);
-        // formData.append("pj_thumbnail_img"); 이미지는 별도로 처리하자
-        formData.append("pj_tag", searchTags);
-
-        const response = await fetch("<c:url value="/project/editor/infoUpdate"/>", {
-            method: "post",
-            headers: {},
-            body: formData
-        });
-
-        const result = await response.json();
-        if (result) {
-            alert("저장이 완료되었습니다.");
-        }
-    }
 </script>
-<%--<script src="/static/project/js/projectInfo.js"></script>--%>
-
-<%--</body>--%>
-<%--</html>--%>
