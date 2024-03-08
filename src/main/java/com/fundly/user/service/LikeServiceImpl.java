@@ -1,13 +1,18 @@
 package com.fundly.user.service;
 
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.model.ProjectMapper;
+import com.fundly.user.dto.LikeProjectDto;
 import com.fundly.user.model.LikeDao;
+import com.fundly.user.validate.LikeValidator;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +25,14 @@ public class LikeServiceImpl implements LikeService {
     LikeDao likedao;
     ProjectMapper pjdao;
     LikeService likeservice;
+    LikeValidator likevalidator;
 
     public LikeServiceImpl() {}
-    public LikeServiceImpl (LikeDao likedao,ProjectMapper pjdao,LikeService likeservice) {
+    public LikeServiceImpl (LikeDao likedao,ProjectMapper pjdao,LikeService likeservice, LikeValidator likevalidator) {
         this.likedao = likedao;
         this.pjdao = pjdao;
         this.likeservice = likeservice;
+        this.likevalidator = likevalidator;
     }
 
     @Autowired
@@ -38,69 +45,42 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void changeLike(LikeDto likedto, ProjectDto pjdto) {
-        try {
 
-            // 찜한 목록 조회
-            LikeDto likes = likedao.getLike(likedto);
+        // 프로젝트가 존재하는지에 대한 유효성 검사
+//        Errors errors = new BeanPropertyBindingResult(likedto, "likedto");
+//        likevalidator.validate(likedto,errors);
 
-            // 처음 좋아요
-            if(likes == null) {
+        // 찜한 목록 조회
+        LikeDto likes = likedao.checkLike(likedto);
 
-                likedao.insertLike(likedto);
-                pjdao.upLikeCnt(pjdto);
-
+        // 목록에 있는지 확인 후 없으면 처음 좋아요
+        if (likes == null) {
+            likedao.insertLike(likedto);
+            pjdao.upLikeCnt(pjdto);
+        } else {
+            // 이미 있다면 좋아요상태를 체크 후
+            // 좋아요 취소
+            if (likes.getLike_status() == 1) {
+                likedao.cancelLike(likedto);
+                pjdao.downLikeCnt(pjdto);
+            // 다시 좋아요
             } else {
-
-                // 좋아요 취소
-                if (likes.getLike_status() == 1) {
-                    likedao.cancelLike(likedto);
-                    pjdao.downLikeCnt(pjdto);
-
-                // 다시 좋아요
-                } else {
-
-                    likedao.reLike(likedto);
-                    pjdao.upLikeCnt(pjdto);
-
-                }
+                likedao.reLike(likedto);
+                pjdao.upLikeCnt(pjdto);
             }
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-
         }
     }
 
-    public ProjectDto getupdatedPj(ProjectDto pjdto) {
+    @Override
+    public List<LikeProjectDto> getLikeList(String user_id) {
 
-        try {
-//
-//            int updatedCnt = pjdao.selectLikeCnt(pjdto);
-//            pjdto.setCurr_pj_like_cnt(updatedCnt);
-            return pjdao.getByPjId(pjdto.getPj_id());
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-
-        }
+        return likedao.AllLikeListWithPj(user_id);
 
     }
 
     @Override
-    public LikeDto  getupdatedLike(LikeDto likedto) {
-
-        try {
-
-            return likedao.getLike(likedto);
-
-        } catch(Exception e) {
-
-            throw new RuntimeException(e);
-
-        }
-
+    public int getLikeCnt(LikeDto likedto) {
+        return likedao.countLike(likedto);
     }
 
     @Override
@@ -138,7 +118,7 @@ public class LikeServiceImpl implements LikeService {
 
     // 좋아요 목록 전체를 보여준다.
     @Override
-    public List<ProjectDto> getListWithPjEntire(LikeDto likedto) throws Exception {
+    public List<ProjectDto> getListWithPjEntire(LikeDto likedto) {
         // 좋아요 목록
         List<LikeDto> likes = likedao.AllLikeList(likedto);
 
@@ -161,7 +141,7 @@ public class LikeServiceImpl implements LikeService {
         } return projectList;
     }
 
-    public List<LikeDto> getPage(Map map) throws Exception {
+    public List<LikeDto> getPage(Map map) {
         return likedao.selectPage(map);
     }
 }

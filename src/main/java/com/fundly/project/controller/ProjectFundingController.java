@@ -1,6 +1,6 @@
 package com.fundly.project.controller;
 
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.service.ProjectService;
 import com.persistence.dto.ProjectDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ProjectFundingController {
             ProjectDto projectDto = projectService.getEditingProject(user_email);
             session.setAttribute("pj_id", projectDto.getPj_id());
             return projectDto;
-        } catch (ProjectNofFoundException e) {
+        } catch (ProjectNotFoundException e) {
             return null;
         }
     }
