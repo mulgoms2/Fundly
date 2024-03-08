@@ -20,8 +20,8 @@ public class HolidayAPIController {
         this.holidayAPIService = holidayAPIService;
     }
 
-    @GetMapping("/holiday")
-    public ResponseEntity<?> getHolidays() throws Exception {
+    @GetMapping("/holidayAPI")
+    public ResponseEntity<?> getHolidaysFromAPI() throws Exception {
         int year = LocalDateTime.now().getYear();
 
         for (int i = 0; i < 2; i++) { //올해와 내년말까지의 공휴일 데이터 가져오기
@@ -32,8 +32,14 @@ public class HolidayAPIController {
             List<Map<String, Object>> itemList = getItemList(holidayMap);
             holidayAPIService.saveHolidayList(itemList);
         }
-        List<HolidayDto> holidayList = holidayAPIService.getHolidayList();
+        List<HolidayDto> holidayList = holidayAPIService.getFullHolidayList();
         return ResponseEntity.ok().body(holidayList);
+    }
+
+    @GetMapping("/project/holiday")
+    public ResponseEntity<?> getHoliday(LocalDateTime pj_pay_due_dtm) throws Exception {
+        List<HolidayDto> list = holidayAPIService.getHolidayList(pj_pay_due_dtm);
+        return ResponseEntity.ok().body(list);
     }
 
     public static List<Map<String, Object>> getItemList(Map<String, Object> holidayMap){

@@ -20,7 +20,7 @@
     </select>
 
     <!-- SELECT -->
-    <select id="selectRange" resultType="HolidayDto">
+    <select id="selectHolidays" resultType="HolidayDto">
         SELECT *
         FROM holidays
         WHERE DATEDIFF(holidayDate, #{pj_pay_due_dtm}) >= 30;

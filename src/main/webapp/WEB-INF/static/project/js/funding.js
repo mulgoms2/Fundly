@@ -44,14 +44,32 @@ window.onload = function(){
     });
 
     $('#dateInput').on('apply.daterangepicker', function(ev, picker){
+        //datepicker의 정보를 attribute로 담아두기
+        //picker.startDate, picker.endDate의 타입 자체는 Object. (Date가 아니다)
+
         $(this).parent().attr('data-str_dtm', picker.startDate.format('YYYY-MM-DD'))
         $(this).parent().attr('data-end_dtm', picker.endDate.format('YYYY-MM-DD'))
 
-        //기간을 계산하는 함수
+
+
+        //기간을 계산하는 함수를 호출해서 innerText 표시
         $('.ntc.range').text("펀딩 기간 : " + calcRange(picker.startDate, picker.endDate)+"일");
-        console.log(calcFinalPayment(picker.endDate));
-        const finalDay = calcFinalPayment(picker.endDate)
-        $('.ntc.end').text("결제 종료 예정일 : " + finalDay.year + "-" + finalDay.month + "-" + finalDay.date)
+        //console.log(calcFinalPayment(picker.endDate));
+
+
+        const finalFundDay = new Date(picker.endDate) //펀딩 종료 일자
+
+        //결제 종료일을 innerText로 표시
+        const finalPayDay = calcFinalPayment(finalFundDay) //type: Date
+        console.log(finalPayDay)
+        $('.ntc.end').text("결제 종료 예정일 : " + finalPayDay.getFullYear() + "-" + (finalPayDay.getMonth() + 1) + "-" + finalPayDay.getDate());
+
+
+        const finalIncomeDay = calcFinalIncomeDay(finalPayDay);
+
+
+
+
     })
 
     //시간 선택
@@ -115,18 +133,47 @@ const calcRange = function(startDate, endDate){
     return Math.floor(diff / (1000*60*60*24));
 }
 
-const calcFinalPayment = function(endDate){
-    let finalDay = new Date(endDate)
+const calcFinalPayment = function(finalDay){
     finalDay = new Date(finalDay.setDate(finalDay.getDate() + 1));
-    return {
-        "year": finalDay.getFullYear(),
-        "month": finalDay.getMonth()+1,
-        "date": finalDay.getDate()
-    }
+    return finalDay;
 }
 
-const calc7daysFundingResult = function(){}
-//(공휴일 api를 이용해 공휴일 데이터를 미리 db에 저장해둔다.)
+const calcFinalIncomeDay = function(finalPayDay){
+    const holidayArr = getHolidays();
+
+    // 결제 완료일에 따른 주말 제외 7 영업일 계산하기
+    let finalIncomeDay = null;
+    const workDay = 7; //default 영업일
+    const finalWeekOfDay = finalPayDay.getDay() //결제종료일의 요일
+    console.log(finalWeekOfDay);
+    if(finalWeekOfDay>=0 && finalWeekOfDay<=3) { //일월화수 : 주말을 2번 포함하므로 7영업일은 9
+        finalPayDay.setDate(finalPayDay.getDate() + workDay + 2)
+    } else if (finalWeekOfDay>=4 && finalWeekOfDay<=5){ //목금 : 주말을 4번 포함
+        finalPayDay.setDate(finalPayDay.getDate() + workDay + 4)
+    } else { //토 : 주말을 3번 포함
+        finalPayDay.setDate(finalPayDay.getDate() + workDay + 3)
+    }
+    finalIncomeDay = new Date(finalPayDay);
+
+
+
+
+    return finalIncomeDay;
+}
+
+const getHolidays = async function(){
+    const holidayArr = await fetch('/project/holiday',{
+        method: "GET",
+        headers: {
+            "accept": "application/json"
+        }
+    })
+    return holidayArr;
+}
+
+
+
+//(전제 : 공휴일 api를 이용해 공휴일 데이터를 미리 db에 저장해둔다.)
 //daterangepicker에서 apply이벤트가 발생하면
 //서버로 결제 종료일 정보를 보내고,
 //db에서 결제 종료일+30일의 내의 공휴일 list를 받아온다.
