@@ -1,8 +1,7 @@
 package com.fundly.project.controller;
 
-import com.fundly.chat.validate.ValidFile;
 import com.fundly.project.exception.ImageSaveFailureException;
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
 import com.fundly.project.util.FileUploader;
@@ -15,14 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -37,7 +28,7 @@ public class ProjectCreatorController {
         try {
             ProjectDto projectDto = projectService.getEditingProject(user_email);
             return projectDto;
-        } catch (ProjectNofFoundException e) {
+        } catch (ProjectNotFoundException e) {
             return null;
         }
     }

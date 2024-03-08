@@ -2,7 +2,7 @@ package com.fundly.project.controller;
 
 import com.fundly.project.exception.ImageSaveFailureException;
 import com.fundly.project.exception.ProjectAddFailureException;
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
 import com.fundly.project.util.FileUploader;
@@ -32,7 +32,7 @@ public class ProjectBasicInfoController {
     ProjectDto initProjectEditor(@SessionAttribute String user_email) {
         try {
             return projectService.getEditingProject(user_email);
-        } catch (ProjectNofFoundException e) {
+        } catch (ProjectNotFoundException e) {
             return null;
         }
     }
