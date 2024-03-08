@@ -126,11 +126,20 @@ const calcFinalPayment = function(endDate){
 }
 
 const calc7daysFundingResult = function(){}
-//공휴일 api를 미리 db에 저장해둔다.
+//(공휴일 api를 이용해 공휴일 데이터를 미리 db에 저장해둔다.)
 //daterangepicker에서 apply이벤트가 발생하면
 //서버로 결제 종료일 정보를 보내고,
-//db에서 해당 기간에 해당하는 공휴일을 조회해서 가져온다(list 또는 arr)
-//엑셀의 WORKDAY 함수 동작을 참고 결제 종료일
+//db에서 결제 종료일+30일의 내의 공휴일 list를 받아온다.
+//
+//결제 종료일의 요일에 따라 7일 내에 포함된 주말의 수가 달라지므로 분기처리 필요
+//결제 종료일 + (주말제외 7일)에 해당하는 날짜를 배열(arr)로 만들기
+//결제 종료일 + (주말제외 7일)인 date
+//for(date of arr){
+   //if(list.contains(date){
+    // date.setDate(date.getDate() + 1);
+    //}
+
+//return date;
 
 
 

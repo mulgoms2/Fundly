@@ -37,10 +37,8 @@
         DELETE FROM holidays
     </delete>
 
-
-
-
-
-
+    <update id="truncate">
+        truncate holidays;
+    </update>
 
 </mapper>

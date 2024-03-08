@@ -9,4 +9,5 @@ import java.util.List;
 public interface HolidayMapper {
     int insert(HolidayDto holidayDto) throws Exception;
     List<HolidayDto> selectAll() throws Exception;
+    int truncate() throws Exception;
 }
