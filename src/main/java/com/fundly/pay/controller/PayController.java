@@ -189,9 +189,10 @@ public class PayController {
 
             payMeansDto.setBill_key(billKeyResponseDto.getBody().getResponse().getCustomer_id());
             payMeansDto.setCard_co_type(billKeyResponseDto.getBody().getResponse().getCard_publisher_name());
+            payMeansDto.setCard_type(billKeyResponseDto.getBody().getResponse().getCard_type());
 
             // 카드번호 뒤 4자리
-            String cardNumber =billKeyResponseDto.getBody().getResponse().getCard_number();
+            String cardNumber = billKeyResponseDto.getBody().getResponse().getCard_number();
             cardNumber = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
             payMeansDto.setCard_no(cardNumber);
 

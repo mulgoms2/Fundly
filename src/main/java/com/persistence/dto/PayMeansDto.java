@@ -2,6 +2,7 @@ package com.persistence.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
@@ -10,35 +11,29 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class PayMeansDto {
-    // 1. 카드 + 계좌 공통
     private String pay_means_id; // 결제수단 ID
     private String user_id; // 회원 ID
     private Integer seq;
+    @NonNull
     private String own_type; // 카드소유주/예금주 유형 (개인, 법인)
+    @NonNull
     private String own_birth; // 생년월일
     private String bill_key; // 포트원 결제수단별 등록키 TODO: DB 컬럼 새로 추가
     private String file_path; // 결제수단 이미지 파일 경로
     private String file_name; // 결제수단 이미지 파일명
     private String file_extension; // 결제수단 이미지 파일 확장자
-
-// 2. 카드
     private String default_pay_means_yn; // 기본 결제수단 여부
     private String card_co_info_agree_yn; // 결제사 정보제공 동의 여부
     private String card_co_type; // 카드사 종류
-//    private String card_own_kor_name; // 카드 소유주 한글이름
-//    private String card_own_eng_name; // 카드 소유주 영문이름
+    @NonNull
     private String card_no; // 카드 뒷자리 번호 4개 TODO: DB 컬럼 새로 추가
+    @NonNull
     private String card_pwd; // 카드 비밀번호 앞 2자리 TODO: DB 타입 변경 (Integer -> String)
+    @NonNull
     private String card_valid_date; // 카드 유효기간
-//    private String card_valid_yn; // 카드 사용가능 여부
+    private Integer card_type; // 카드 타입 (신용카드 == 0, 체크카드 == 1) TODO: DB 컬럼 새로 추가
 
-// 3. 계좌
-//    private String acc_bank_name; // 결제은행
-//    private String acc_no; // 계좌번호
-//    private String acc_own_kor_name; // 예금주 한글이름
-//    private String acc_own_eng_name; // 예금주 영문이름
-
-    // 4. dba
+    // dba
     @EqualsAndHashCode.Exclude
     private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
@@ -105,6 +100,14 @@ public class PayMeansDto {
 
     public void setCard_valid_date(String card_valid_date) {
         this.card_valid_date = card_valid_date;
+    }
+
+    public Integer getCard_type() {
+        return card_type;
+    }
+
+    public void setCard_type(Integer card_type) {
+        this.card_type = card_type;
     }
 
     public String getPay_means_id() {

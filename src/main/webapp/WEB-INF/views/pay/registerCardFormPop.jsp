@@ -17,7 +17,7 @@
             <button class="b-close">닫기</button>
         </div>
     </div>
-    <div class="popScr">
+    <div>
         <form action="" id="form" method="post">
             <div class="ownType">
                 <label class="ownTypeRadio"><input type="radio" id="personal" name="own_type" value="personal" checked><span>개인</span></label>

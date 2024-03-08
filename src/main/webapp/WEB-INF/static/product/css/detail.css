@@ -467,9 +467,6 @@
     font-weight: 700;
     line-height: 28px;
 }
-.gftReport {
-    padding-top: 30px;
-}
 .gftReport .reportBtn {
     display: flex;
     flex-wrap: wrap;
