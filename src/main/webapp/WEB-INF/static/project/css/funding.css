@@ -6,6 +6,13 @@
     box-sizing: border-box;
     /*border-radius :5px;*/
 }
+select { /* select박스 기본 화살표 없애기 */
+    -webkit-appearance:none; /* 크롬 화살표 없애기 */
+    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
+    appearance:none /* 기본 화살표 없애기 */
+
+}
+
 input, textarea {
     border: none;
     outline:none;
@@ -91,7 +98,7 @@ body {
     padding: 5px 0 0;
     font-size: 12px;
 }
-.goal .pjForm .goalCalc .result em {
+.goal .pjForm .goalCalc .result div {
     font-size: 18px;
     color: #f86453;
     font-weight: 700;
@@ -104,7 +111,7 @@ body {
     margin: 0 0 3px;
     font-size: 12px;
 }
-.goal .pjForm .goalCalc .fee em{
+.goal .pjForm .goalCalc .fee div{
     color: #3d3d3d;
     font-size: 12px;
 }
@@ -147,7 +154,8 @@ body {
     flex-direction: row;
     justify-content: space-between;
 }
-.plan .pjForm div > div > button {
+.plan .pjForm div > div > button,
+    .plan .pjForm li .start .startH select {
     width: 298px;
     height: 40px;
     padding: 0 14px;
@@ -157,12 +165,17 @@ body {
     color: #3d3d3d;
     font-size: 14px;
     text-align: left;
+    margin-bottom: 3px;
+}
+
+.plan .pjForm li .start .startH select:hover {
+    cursor: pointer;
 }
 .plan .pjForm div > div > button > span {
     padding: 0 10px;
 }
 .plan .pjForm li .days{
-    padding: 46px 0 0;
+    padding: 10px 0 0;
 }
 .plan .pjForm li .days p.cont {
     color: #9e9e9e;
@@ -174,6 +187,9 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+.plan .pjForm li .start .startH button.hidden{
+    display: none;
+}
 .plan .pjForm li .notice {
     margin: 10px 0;
     padding: 16px 46px 16px 26px;
@@ -184,6 +200,15 @@ body {
 .plan .pjForm li .close div button {
     width: 100%;
 }
-.plan .pjForm .payEnd p, .plan .pjForm .payIn p{
-    color: #9e9e9e;
+p.ntc{
+    color: #f86453;
+}
+.hidden {
+    display: none;
+}
+#dateInput{
+    display: inline;
+}
+#dateInput:hover {
+    cursor:pointer;
 }
