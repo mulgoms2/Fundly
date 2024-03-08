@@ -44,44 +44,38 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void changeLike(LikeDto likedto, ProjectDto pjdto) throws ProjectNotFoundException {
+    public void changeLike(LikeDto likedto, ProjectDto pjdto) {
 
         // 프로젝트가 존재하는지에 대한 유효성 검사
-        Errors errors = new BeanPropertyBindingResult(likedto, "likedto");
-        likevalidator.validate(likedto,errors);
+//        Errors errors = new BeanPropertyBindingResult(likedto, "likedto");
+//        likevalidator.validate(likedto,errors);
 
-        // 예외 발생시 메시지 출력
-        if (errors.hasErrors()) {
+        // 찜한 목록 조회
+        LikeDto likes = likedao.checkLike(likedto);
 
-            throw new ProjectNotFoundException("프로젝트를 찾을 수 없습니다.");
-            
-        // 없으면 좋아요 로직 수행
+        // 목록에 있는지 확인 후 없으면 처음 좋아요
+        if (likes == null) {
+            likedao.insertLike(likedto);
+            pjdao.upLikeCnt(pjdto);
         } else {
-
-            // 찜한 목록 조회
-            LikeDto likes = likedao.checkLike(likedto);
-            // 목록에 있는지 확인 후 없으면 처음 좋아요
-            if (likes == null) {
-                likedao.insertLike(likedto);
-                pjdao.upLikeCnt(pjdto);
+            // 이미 있다면 좋아요상태를 체크 후
+            // 좋아요 취소
+            if (likes.getLike_status() == 1) {
+                likedao.cancelLike(likedto);
+                pjdao.downLikeCnt(pjdto);
+            // 다시 좋아요
             } else {
-                // 이미 있다면 좋아요상태를 체크 후
-                // 좋아요 취소
-                if (likes.getLike_status() == 1) {
-                    likedao.cancelLike(likedto);
-                    pjdao.downLikeCnt(pjdto);
-                // 다시 좋아요
-                } else {
-                    likedao.reLike(likedto);
-                    pjdao.upLikeCnt(pjdto);
-                }
+                likedao.reLike(likedto);
+                pjdao.upLikeCnt(pjdto);
             }
         }
     }
 
     @Override
     public List<LikeProjectDto> getLikeList(String user_id) {
+
         return likedao.AllLikeListWithPj(user_id);
+
     }
 
     @Override
