@@ -8,12 +8,17 @@ const saveBtn = document.querySelector('button.save');
 const goalMoney = document.querySelector('.goalMoney')
 const receiveMoney = document.querySelector('.receiveMoney')
 const feeCalc = document.querySelector('.feeCalc');
-const range = document.querySelector('.ntc.range')
-const incomeDay = document.querySelector('.ntc.payIn');
+const startTime = document.querySelector('select[name=startTime]')
+const range = document.querySelector('span.range')
+const payEndDay = document.querySelector('span.end')
+const incomeDay = document.querySelector('span.payIn');
 
 
 window.onload = function(){
     const dateInput = document.createElement('input');
+
+    //datepicker의 요소 혹은 이벤트를 쓸 때는 vanilla js가 아닌 jquery로 써야 적용되어서
+    //어쩔 수 없이 혼용
     $('#dateInput').daterangepicker({
         "locale": {
             "format": "YYYY-MM-DD",
@@ -45,31 +50,30 @@ window.onload = function(){
     });
 
     $('#dateInput').on('apply.daterangepicker', function(ev, picker){
-        //datepicker의 정보를 attribute로 담아두기
+        //datepicker로부터 펀딩 일정이 결정(apply)되면, 결제종료일과 정산예정일 등을 계산한다.
+
+
+        //1. datepicker의 정보를 attribute로 담아두기
         //picker.startDate, picker.endDate의 타입 자체는 Object. (Date가 아니다)
 
         $(this).parent().attr('data-str_dtm', picker.startDate.format('YYYY-MM-DD'))
         $(this).parent().attr('data-end_dtm', picker.endDate.format('YYYY-MM-DD'))
 
 
-
-        //기간을 계산하는 함수를 호출해서 innerText 표시
-        $('.ntc.range').text("펀딩 기간 : " + calcRange(picker.startDate, picker.endDate)+"일");
+        //2. 펀딩 기간 계산
+        $('span.range').text(calcRange(picker.startDate, picker.endDate));
         //console.log(calcFinalPayment(picker.endDate));
-
 
         const finalFundDay = new Date(picker.endDate) //펀딩 종료 일자
 
-
-        //결제 종료일을 innerText로 표시
+        //3. 결제 종료일을 계산한다.
         const finalPayDay = calcFinalPayment(finalFundDay) //type: Date
-        console.log("finalPayDay")
-        console.log(finalPayDay)
+        // console.log("finalPayDay")
+        // console.log(finalPayDay)
+        $('span.end').text(finalPayDay.toISOString().substring(0,10));
 
-        $('.ntc.end').text("결제 종료 예정일 : " + finalPayDay.toISOString().substring(0,10));
-
-
-        calcFinalIncomeDay(finalPayDay); //정산예정일을 구하는 함수
+        //4. 정산예정일을 계산한다.
+        calcFinalIncomeDay(finalPayDay);
 
     })
 
@@ -97,7 +101,26 @@ window.onload = function(){
     })
 
     saveBtn.addEventListener('click', function(){
-        const formData = new FormData();
+        //유효성 검사를 통과한 formData를 얻어온다.
+        const validForm = validFormCheck();
+        if(!validForm) alert('양식에 맞추어 다시 입력해주세요')
+        //console.log('validForm')
+        console.log(validForm)
+        fetch('/project/editor/funding',{
+            method:"POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(validForm)
+        }).then(res => {
+            if(!res.ok){
+                throw res
+            }
+            return res.json()
+        }).then(data => {
+            if(data == true)
+                location.href = "/project/editor/funding"
+        }).catch(error => console.log(error))
 
     })
 }
@@ -139,13 +162,14 @@ const calcFinalPayment = function(finalDay){
     return finalDay;
 }
 
+//결제완료일로부터 7영업일에 해당하는 날짜를 구하는 함수(주말, 공휴일 제외 7영업일) : 입금예정일
 const calcFinalIncomeDay = async function(finalPayDay){
     const holidayArr = await getHolidays(finalPayDay); //결제 종료일로부터 30일 이내의 공휴일 목록을 읽어온다.
-    // console.log("holidayArr")
-    // console.log(holidayArr)
+    console.log("holidayArr")
+    console.log(holidayArr)
 
     let workDay = 7; //default는 7영업일
-    let finalIncomeDay = null;
+    let finalIncomeDay = null; //입금예정일
     let tempIncomeDay = new Date(finalPayDay.getTime());
     let nextDayFromPay = new Date(tempIncomeDay.setDate(tempIncomeDay.getDate()+1))
 
@@ -159,14 +183,14 @@ const calcFinalIncomeDay = async function(finalPayDay){
         }
         nextDayFromPay.setDate(nextDayFromPay.getDate()+1)
     }
-    console.log("workDay")
-    console.log(workDay)
-    tempIncomeDay.setDate(finalPayDay.getDate()+workDay)
+    // console.log("workDay")
+    // console.log(workDay)
+    finalPayDay.setDate(finalPayDay.getDate()+workDay)
 
-    finalIncomeDay = tempIncomeDay;
-    console.log("finalIncomeDay")
-    console.log(finalIncomeDay);
-    incomeDay.innerText = '정산예정일 : ' + finalIncomeDay.toISOString().substring(0,10);
+    finalIncomeDay = finalPayDay;
+    // console.log("finalIncomeDay")
+    // console.log(finalIncomeDay);
+    incomeDay.innerText = finalIncomeDay.toISOString().substring(0,10);
 }
 
 const getHolidays = async function(finalPayDay){
@@ -174,22 +198,73 @@ const getHolidays = async function(finalPayDay){
     const holidayArr = await fetch('/project/holiday?finalPayDay='+finalPayDay.toISOString().substring(0,19), {
         method: "GET",
     }).then(response => response.json())
-    // console.log('this')
-    // console.log(holidayArr)
-    return holidayArr
+
+    return holidayArr;
 }
 
-const getDateRange = function (startDate, lastDate){ //from startDate(포함x) to lastDate
-    let dateRange = []
-    let tmp = new Date(startDate.getTime())
-    tmp.setDate(tmp.getDate()+1)
-    while(tmp <= lastDate){
-        dateRange.push(tmp.toISOString().substring(0,10))
-        tmp.setDate(tmp.getDate()+1)
+const validFormCheck = function() {
+    let validForm = {}
+    var regexDate = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/
+    var regexDateTime = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])(T)(0[0-9]|1[0-9]|2[0-3]):(0[1-9]|[0-5][0-9]):(0[1-9]|[0-5][0-9])$/
+
+    //목표금액 유효성 체크
+    const money = parseInt(uncomma(goalMoney.value))
+
+    if (isNull(money) || isNaN(money) || money < 500000 || money > 9999999999 ) {
+        return false;
+    } else {
+        validForm.fund_goal_money = money
     }
-    console.log(dateRange)
-    return dateRange;
+
+    //펀딩 시작일, 종료일 체크
+    let fund_str_dtm = datepicker.getAttribute('data-str_dtm')
+    let fund_end_dtm = datepicker.getAttribute('data-end_dtm')
+    let str_tm = startTime.value;
+
+    str_tm = (str_tm[1] === ':' ? '0' + str_tm : str_tm); //el에서 자릿수를 맞추고 싶었는데 문자열 결합이 안돼서(0이 숫자로 계산됨) js로 처리
+    fund_str_dtm = fund_str_dtm + 'T' + str_tm + ':00'//펀딩 시작일+펀딩 시작 시간을 합한다.
+    fund_end_dtm = fund_end_dtm + 'T' + "23:59:59"
+
+    if (isNull(fund_str_dtm) || isNull(fund_end_dtm) || isNull(str_tm)
+            || !regexDateTime.test(fund_end_dtm) || !regexDateTime.test(fund_str_dtm)) return false; //입력되지 않으면 유효성 체크 탈락
+    validForm.fund_str_dtm = fund_str_dtm;
+    validForm.fund_end_dtm = fund_end_dtm;
+
+
+    //예상 결제 종료일, 정산 예정일
+    let pj_pay_due_dtm = payEndDay.innerText
+    let fund_calc_due_dtm = incomeDay.innerText
+
+    pj_pay_due_dtm = pj_pay_due_dtm + 'T' + "23:59:59"
+    fund_calc_due_dtm = fund_calc_due_dtm + 'T' + "23:59:59"
+
+    if (isNull(pj_pay_due_dtm) || !regexDateTime.test(pj_pay_due_dtm)
+        || isNull(fund_calc_due_dtm) || !regexDateTime.test(fund_calc_due_dtm)) return false;
+
+    validForm.pj_pay_due_dtm = pj_pay_due_dtm
+    validForm.fund_calc_due_dtm = fund_calc_due_dtm
+
+    console.log(validForm);
+    return validForm;
 }
+
+const isNull = function(item){
+    return typeof item === 'undefined' || item === null
+}
+
+
+//두 날짜 사이의 날들을 배열로 반환하는 함수
+// const getDateRange = function (startDate, lastDate){ //from startDate(포함x) to lastDate
+//     let dateRange = []
+//     let tmp = new Date(startDate.getTime())
+//     tmp.setDate(tmp.getDate()+1)
+//     while(tmp <= lastDate){
+//         dateRange.push(tmp.toISOString().substring(0,10))
+//         tmp.setDate(tmp.getDate()+1)
+//     }
+//     console.log(dateRange)
+//     return dateRange;
+// }
 
 
 

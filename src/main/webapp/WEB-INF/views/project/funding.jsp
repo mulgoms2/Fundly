@@ -80,7 +80,7 @@
                                 <div class="startH">
                                     <p class="tit">시작시간</p>
                                     <button class="selectStr" type="button"><span>시작 시간을 선택해주세요</span><i class="fas fa-solid fa-chevron-down"></i></button>
-                                    <select id="timeSelect" class="hidden" name="startTime">
+                                    <select id="timeSelect" class="hidden" name="startTime" value="">
                                         <c:forEach begin="1" end="19" step="1" var="i">
                                             <fmt:parseNumber var="hour" value="${((i+1)/2)+8}" integerOnly="true" />
 <%--                                                jstl은 나눗셈 연산지 dobule로 연산한다. 정수형으로 바꾸기 위해 fmt태그 활용--%>
@@ -97,7 +97,7 @@
                                     <p>선택하신 종료일 다음날 0시에 펀딩이 종료됩니다.</p>
                                 </div>
                                 <div>
-                                    <p class="ntc range">펀딩 기간 : 일</p>
+                                    <p class="ntc">펀딩 기간 : <span class="range"></span>일</p>
                                 </div>
                             </div>
                         </li>
@@ -109,7 +109,7 @@
                                         <br>결제가 이루어지지 않은 경우 24시간 후, 다시 한번 결제가 시도됩니다.</p>
                                 </div>
                                 <div class="payEnd">
-                                    <p class="ntc end"> </p>
+                                    <p class="ntc">예상 결제 종료일 : <span class="end"></span></p>
                                 </div>
                             </div>
                         </li>
@@ -121,7 +121,7 @@
                                         <br>7일째 되는 날 입금됩니다.</p>
                                 </div>
                                 <div class="payIn">
-                                    <p class="ntc payIn"></p> <!-- N영업일을 구하는 쿼리? JS에서 보여주기? 어쨌든 이 정보도 저장을 해야.. -->
+                                    <p class="ntc">정산예정일 : <span class="payIn"></span></p> <!-- N영업일을 구하는 쿼리? JS에서 보여주기? 어쨌든 이 정보도 저장을 해야.. -->
                                 </div>
                             </div>
                         </li>

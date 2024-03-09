@@ -1,5 +1,6 @@
 package com.persistence.dto;
 
+import com.fundly.project.controller.FundingForm;
 import com.fundly.project.controller.StoryForm;
 import lombok.*;
 
@@ -119,6 +120,27 @@ public class ProjectDto {
         this.pj_sched = storyForm.getPj_sched();
         this.pj_sel_intro = storyForm.getPj_sel_intro();
         this.pj_gift_intro = storyForm.getPj_gift_intro();
+    }
+
+    public void updateFunding(FundingForm fundingForm){
+        this.fund_goal_money = fundingForm.getFund_goal_money();
+        this.fund_str_dtm = fundingForm.getFund_str_dtm();
+        this.fund_end_dtm = fundingForm.getFund_end_dtm();
+        this.pj_pay_due_dtm = fundingForm.getPj_pay_due_dtm();
+        this.fund_calc_due_dtm = fundingForm.getFund_calc_due_dtm();
+    }
+
+    public static FundingForm toFundingForm(ProjectDto project){
+        FundingForm fundingForm = FundingForm.builder()
+                .fund_goal_money(project.getFund_goal_money())
+                .fund_str_dtm(project.getFund_str_dtm())
+                .fund_end_dtm(project.getFund_end_dtm())
+                .pj_pay_due_dtm(project.getPj_pay_due_dtm())
+                .fund_calc_due_dtm(project.getFund_calc_due_dtm())
+                .build();
+
+        return fundingForm.calcFundPeriod().calcFundRange();
+//        return fundingForm.calcFundRange();
     }
 
     public static StoryForm toStoryForm(ProjectDto project) {

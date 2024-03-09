@@ -24,7 +24,7 @@ public class HolidayAPIController {
         this.holidayAPIService = holidayAPIService;
     }
 
-    @GetMapping("/holidayAPI")
+    @GetMapping("/holidayAPI") // 올해와 내년에 해당하는 공휴일을 요청해서 DB에 저장
     public ResponseEntity<?> getHolidaysFromAPI() throws Exception {
         int year = LocalDateTime.now().getYear();
 
@@ -40,7 +40,7 @@ public class HolidayAPIController {
         return ResponseEntity.ok().body(holidayList);
     }
 
-    @GetMapping("/project/holiday")
+    @GetMapping("/project/holiday") //(프로젝트) 결제완료일로부터 30일에 해당하는 공휴일 리스트를 가져오기
     public ResponseEntity<?> getHoliday(String finalPayDay) throws Exception {
         log.error("\n\n finalPayDay={} \n\n", finalPayDay);
 
@@ -55,7 +55,9 @@ public class HolidayAPIController {
         return ResponseEntity.ok().body(list);
     }
 
-    public static List<Map<String, Object>> getItemList(Map<String, Object> holidayMap){
+
+    //holidayMap에서 item List를 얻기
+    private static List<Map<String, Object>> getItemList(Map<String, Object> holidayMap){
         //중첩된 Map형태라서 하나씩 꺼내야함.
         Map<String, Object> response = (Map<String, Object>) holidayMap.get("response");
         Map<String, Object> body = (Map<String, Object>) response.get("body");
@@ -64,9 +66,4 @@ public class HolidayAPIController {
         return itemList;
     }
 
-//    @InitBinder
-//    public void dataBind(WebDataBinder binder) {
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        binder.registerCustomEditor(LocalDateTime.class, new CustomDateEditor(df, false));
-//    }
 }
