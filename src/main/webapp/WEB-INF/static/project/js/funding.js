@@ -38,7 +38,7 @@ window.onload = function(){
             // console.log(selected)
             const diff = (selected.getTime() - today.getTime()) / (1000*60*60*24)
             // console.log(diff)
-            return diff < 10 || diff > 180 //심사기간을 고려하여 now()로부터 10일 이후부터 시작일 설정 가능, 종료일은 180일 이내(펀딩 기간은 max 60일)
+            return diff < 10 || diff > 360 //심사기간을 고려하여 now()로부터 10일 이후부터 시작일 설정 가능, 종료일은 1년 이내(펀딩 기간은 max 60일)
         },
         "drops": "auto",
 
@@ -66,7 +66,7 @@ window.onload = function(){
         console.log("finalPayDay")
         console.log(finalPayDay)
 
-        $('.ntc.end').text("결제 종료 예정일 : " + finalPayDay.getFullYear() + "-" + (finalPayDay.getMonth() + 1) + "-" + finalPayDay.getDate());
+        $('.ntc.end').text("결제 종료 예정일 : " + finalPayDay.toISOString().substring(0,10));
 
 
         calcFinalIncomeDay(finalPayDay); //정산예정일을 구하는 함수
@@ -140,48 +140,32 @@ const calcFinalPayment = function(finalDay){
 }
 
 const calcFinalIncomeDay = async function(finalPayDay){
-    const holidayArr = await getHolidays(finalPayDay);
-    console.log("holidayArr")
-    console.log(holidayArr)
+    const holidayArr = await getHolidays(finalPayDay); //결제 종료일로부터 30일 이내의 공휴일 목록을 읽어온다.
+    // console.log("holidayArr")
+    // console.log(holidayArr)
 
-    // 주말 갯수에 따른 영업일 계산
+    let workDay = 7; //default는 7영업일
     let finalIncomeDay = null;
-    const workDay = 7; //default 영업일
-    const tempIncomeDay = new Date(finalPayDay.getTime());
-    const finalWeekOfDay = tempIncomeDay.getDay() //결제종료일의 요일
-    console.log(finalWeekOfDay);
+    let tempIncomeDay = new Date(finalPayDay.getTime());
+    let nextDayFromPay = new Date(tempIncomeDay.setDate(tempIncomeDay.getDate()+1))
 
-    let plusDay = 3; // default 토 : 주말을 3번 포함
-    if(finalWeekOfDay>=0 && finalWeekOfDay<=3) { //일월화수 : 주말을 2번 포함하므로 7영업일은 9
-        plusDay = 2;
-    } else if (finalWeekOfDay>=4 && finalWeekOfDay<=5){ //목금 : 주말을 4번 포함
-        plusDay = 4;
+    const isWeekendOrHoliday = function(date){ //해당 날짜가 공휴일이거나 주말인지 체크하는 함수
+        return [0,6].includes(date.getDay()) || holidayArr.includes(date.toISOString().substring(0,10));
     }
-    tempIncomeDay.setDate(tempIncomeDay.getDate() + workDay + plusDay)
-    console.log(tempIncomeDay)
-    console.log(finalPayDay)
 
-    //7영업일에 해당하는 날들 ('yyyy-mm-dd' 형식의 string 배열)
-    const dateRange = getDateRange(finalPayDay, tempIncomeDay)
-
-    //공휴일 갯수에 따른 영업일 계산
-    for(holiday of holidayArr){
-        const isWeekend = [0,6].includes(new Date(holiday).getDay()) //공휴일이 주말인지 여부
-        const isIncluded = dateRange.includes(holiday) //공휴일이 계산 중인 영업일 범위에 포함되는지 여부
-
-        if(isIncluded){ //영업일에 공휴일이 포함되어 있는 경우
-            if(!isWeekend){ //공휴일이 주말이 아닐 경우
-                plusDay = 1; //하루를 더 더한다.
-            } else {
-                plusDay = 0;
-            }
-            tempIncomeDay.setDate(tempIncomeDay.getDate() + plusDay)
+    for(let i=0; i<workDay; i++){
+        if(isWeekendOrHoliday(nextDayFromPay)){
+            ++workDay
         }
+        nextDayFromPay.setDate(nextDayFromPay.getDate()+1)
     }
+    console.log("workDay")
+    console.log(workDay)
+    tempIncomeDay.setDate(finalPayDay.getDate()+workDay)
+
     finalIncomeDay = tempIncomeDay;
     console.log("finalIncomeDay")
     console.log(finalIncomeDay);
-
     incomeDay.innerText = '정산예정일 : ' + finalIncomeDay.toISOString().substring(0,10);
 }
 
@@ -190,8 +174,8 @@ const getHolidays = async function(finalPayDay){
     const holidayArr = await fetch('/project/holiday?finalPayDay='+finalPayDay.toISOString().substring(0,19), {
         method: "GET",
     }).then(response => response.json())
-    console.log('this')
-    console.log(holidayArr)
+    // console.log('this')
+    // console.log(holidayArr)
     return holidayArr
 }
 
