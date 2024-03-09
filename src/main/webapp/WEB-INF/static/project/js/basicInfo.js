@@ -62,6 +62,8 @@ const handleTagInput = (e) => {
     }
 };
 const handleSearchTagInput = (e) => {
+    console.log(e);
+    console.log(e.target.value);
 
     if (validInput(e.target.value)) {
         alert("공백 및 특수문자는 입력할 수 없습니다.");
@@ -70,7 +72,6 @@ const handleSearchTagInput = (e) => {
     if (enterPressed(e)) {
     //     공백 및 특문 검사.
         const tag = e.target.value;
-
     }
 };
 const enterPressed = (e) => {
