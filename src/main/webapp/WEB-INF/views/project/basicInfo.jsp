@@ -201,7 +201,7 @@
 </div>
 <script src="/static/project/js/basicInfo.js"></script>
 <script>
-    window.onload = () => {
+    (() => {
         // 저장버튼 클릭시 서버로 post 요청 보내기
         const saveBtn = document.getElementById("saveBtn");
         saveBtn.addEventListener("click", updateProjectInfo);
@@ -214,5 +214,5 @@
         document.querySelector("#category").addEventListener("input", printSubCategory);
         // 프로젝트 카테고리 불러오기
         document.querySelector("#category").value = "${projectDto.ctg}";
-    };
+    })();
 </script>

@@ -32,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -323,5 +324,18 @@ class ProjectBasicInfoControllerTest {
 
         mockMvc.perform(multipart("/project/editor/info/image").file(file).sessionAttr("user_email","dbswo")).andDo(print());
 
+    }
+
+    @Test
+    @DisplayName("프로젝트 최종 제출하기 테스트.")
+    void project_submit() throws Exception {
+        ProjectDto project = ProjectDto.builder().pj_id(pj_id).pj_status("작성중").build();
+        given(service.getEditingProject(any())).willReturn(project);
+
+        mockMvc.perform(post("/project/editor/submit").sessionAttr("user_email", "dbswoi123@naver.com"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"))
+                .andExpect(model().attribute("projectDto",project))
+                .andDo(print());
     }
 }

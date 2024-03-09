@@ -59,7 +59,8 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 252px;
+    width: 300px;
+    padding-right: 6px;
     height: 64px;
 }
 .topContents .header div.hBtnWrap > button {
@@ -160,4 +161,18 @@ body {
     height: 42px;
     border: 0.1px solid #eaeaea;
     padding: 0 10px;
+}
+
+.pjSubmit {
+    background-color: #0fc2cd;
+    border: 1px solid #0fc2cd;
+    color: #ffffff;
+    width: 120px;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 12px;
+    box-sizing: content-box;
+    line-height: 40px;
+    font-weight: 500;
+    margin-right: 5px;
 }

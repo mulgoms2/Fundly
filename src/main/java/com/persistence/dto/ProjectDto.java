@@ -19,15 +19,15 @@ import java.util.StringTokenizer;
 @Builder
 @EqualsAndHashCode
 public class ProjectDto {
-    //	프로젝트상태	작성중
-    //		심사중
-    //		승인됨
-    //		반려됨
-    //		진행중단	창작자 개인사유에 의한 취소/신고처리된 프로젝트 - 관리자의 승인하에 정해진 상태
-    //		진행중	프로젝트상태가 진행중일때 펀딩결과상태컬럼에 값이(펀딩성공or펀딩실패) 들어갈 예정
-    //		펀딩종료
-    //		종료
-//    public enum PJ_STAUS {심사중, 승인됨, 반려됨, 진행중단, 진행중, 펀딩종료}
+//    public enum PJ_STAUS {
+//        심사대기(0,1), 진행중(1,2 ), 승인됨(2,3), 반려됨(3,4), 진행중단(4,5), 펀딩종료(5, 6),;
+//        private final Integer step;
+//        private final Integer nextStep;
+//        PJ_STAUS(int step, int nextStep) {
+//            this.step = step;
+//            this.nextStep = nextStep;
+//        }
+//    }
 
     //    @NonNull
     private String pj_id; //uuid만들어서 그대로 집어넣으면?? // PK를 노출하는 것은 좋지 않다고....하는데..
