@@ -67,7 +67,7 @@ $(document).ready(function () {
         let totalMoney = BigInt($('.totalMoney').text()); // TODO: 최종 후원 금액(BigInt) (임시)
 
         // 신용카드이고 최종후원금액이 5만원 이상인 경우, 할부개월 Select Box 활성화
-        if (cardType === 0 && totalMoney < 50000) {
+        if (cardType === 0 && totalMoney >= 50000) {
             $('.monthSelectInputWrapper').removeClass('disabled'); // css 변경
 
             // 할부개월 Select Box 클릭하면 Select Option 열림
