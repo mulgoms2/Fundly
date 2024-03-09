@@ -2,15 +2,19 @@ package com.fundly.project.controller;
 
 import com.fundly.project.service.HolidayAPIService;
 import com.persistence.dto.HolidayDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 public class HolidayAPIController {
     private HolidayAPIService holidayAPIService;
@@ -37,8 +41,17 @@ public class HolidayAPIController {
     }
 
     @GetMapping("/project/holiday")
-    public ResponseEntity<?> getHoliday(LocalDateTime pj_pay_due_dtm) throws Exception {
-        List<HolidayDto> list = holidayAPIService.getHolidayList(pj_pay_due_dtm);
+    public ResponseEntity<?> getHoliday(String finalPayDay) throws Exception {
+        log.error("\n\n finalPayDay={} \n\n", finalPayDay);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime pj_pay_due_dtm = LocalDateTime.parse(finalPayDay, formatter);
+        log.error("\n\n pj_pay_due_dtm={} \n\n", pj_pay_due_dtm);
+        List<HolidayDto> dtolist = holidayAPIService.getHolidayList(pj_pay_due_dtm);
+
+        List<String> list = dtolist.stream().map(HolidayDto::getHolidayDate).collect(Collectors.toList());
+
+        log.error("\n\n list={} \n\n", list);
         return ResponseEntity.ok().body(list);
     }
 
@@ -50,4 +63,10 @@ public class HolidayAPIController {
         List<Map<String, Object>> itemList = (List<Map<String, Object>>) items.get("item");
         return itemList;
     }
+
+//    @InitBinder
+//    public void dataBind(WebDataBinder binder) {
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//        binder.registerCustomEditor(LocalDateTime.class, new CustomDateEditor(df, false));
+//    }
 }

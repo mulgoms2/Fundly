@@ -9,6 +9,7 @@ const goalMoney = document.querySelector('.goalMoney')
 const receiveMoney = document.querySelector('.receiveMoney')
 const feeCalc = document.querySelector('.feeCalc');
 const range = document.querySelector('.ntc.range')
+const incomeDay = document.querySelector('.ntc.payIn');
 
 
 window.onload = function(){
@@ -59,16 +60,16 @@ window.onload = function(){
 
         const finalFundDay = new Date(picker.endDate) //펀딩 종료 일자
 
+
         //결제 종료일을 innerText로 표시
         const finalPayDay = calcFinalPayment(finalFundDay) //type: Date
+        console.log("finalPayDay")
         console.log(finalPayDay)
+
         $('.ntc.end').text("결제 종료 예정일 : " + finalPayDay.getFullYear() + "-" + (finalPayDay.getMonth() + 1) + "-" + finalPayDay.getDate());
 
 
-        const finalIncomeDay = calcFinalIncomeDay(finalPayDay);
-
-
-
+        calcFinalIncomeDay(finalPayDay); //정산예정일을 구하는 함수
 
     })
 
@@ -138,37 +139,72 @@ const calcFinalPayment = function(finalDay){
     return finalDay;
 }
 
-const calcFinalIncomeDay = function(finalPayDay){
-    const holidayArr = getHolidays();
+const calcFinalIncomeDay = async function(finalPayDay){
+    const holidayArr = await getHolidays(finalPayDay);
+    console.log("holidayArr")
+    console.log(holidayArr)
 
-    // 결제 완료일에 따른 주말 제외 7 영업일 계산하기
+    // 주말 갯수에 따른 영업일 계산
     let finalIncomeDay = null;
     const workDay = 7; //default 영업일
-    const finalWeekOfDay = finalPayDay.getDay() //결제종료일의 요일
+    const tempIncomeDay = new Date(finalPayDay.getTime());
+    const finalWeekOfDay = tempIncomeDay.getDay() //결제종료일의 요일
     console.log(finalWeekOfDay);
+
+    let plusDay = 3; // default 토 : 주말을 3번 포함
     if(finalWeekOfDay>=0 && finalWeekOfDay<=3) { //일월화수 : 주말을 2번 포함하므로 7영업일은 9
-        finalPayDay.setDate(finalPayDay.getDate() + workDay + 2)
+        plusDay = 2;
     } else if (finalWeekOfDay>=4 && finalWeekOfDay<=5){ //목금 : 주말을 4번 포함
-        finalPayDay.setDate(finalPayDay.getDate() + workDay + 4)
-    } else { //토 : 주말을 3번 포함
-        finalPayDay.setDate(finalPayDay.getDate() + workDay + 3)
+        plusDay = 4;
     }
-    finalIncomeDay = new Date(finalPayDay);
+    tempIncomeDay.setDate(tempIncomeDay.getDate() + workDay + plusDay)
+    console.log(tempIncomeDay)
+    console.log(finalPayDay)
 
+    //7영업일에 해당하는 날들 ('yyyy-mm-dd' 형식의 string 배열)
+    const dateRange = getDateRange(finalPayDay, tempIncomeDay)
 
+    //공휴일 갯수에 따른 영업일 계산
+    for(holiday of holidayArr){
+        const isWeekend = [0,6].includes(new Date(holiday).getDay()) //공휴일이 주말인지 여부
+        const isIncluded = dateRange.includes(holiday) //공휴일이 계산 중인 영업일 범위에 포함되는지 여부
 
+        if(isIncluded){ //영업일에 공휴일이 포함되어 있는 경우
+            if(!isWeekend){ //공휴일이 주말이 아닐 경우
+                plusDay = 1; //하루를 더 더한다.
+            } else {
+                plusDay = 0;
+            }
+            tempIncomeDay.setDate(tempIncomeDay.getDate() + plusDay)
+        }
+    }
+    finalIncomeDay = tempIncomeDay;
+    console.log("finalIncomeDay")
+    console.log(finalIncomeDay);
 
-    return finalIncomeDay;
+    incomeDay.innerText = '정산예정일 : ' + finalIncomeDay.toISOString().substring(0,10);
 }
 
-const getHolidays = async function(){
-    const holidayArr = await fetch('/project/holiday',{
+const getHolidays = async function(finalPayDay){
+
+    const holidayArr = await fetch('/project/holiday?finalPayDay='+finalPayDay.toISOString().substring(0,19), {
         method: "GET",
-        headers: {
-            "accept": "application/json"
-        }
-    })
-    return holidayArr;
+    }).then(response => response.json())
+    console.log('this')
+    console.log(holidayArr)
+    return holidayArr
+}
+
+const getDateRange = function (startDate, lastDate){ //from startDate(포함x) to lastDate
+    let dateRange = []
+    let tmp = new Date(startDate.getTime())
+    tmp.setDate(tmp.getDate()+1)
+    while(tmp <= lastDate){
+        dateRange.push(tmp.toISOString().substring(0,10))
+        tmp.setDate(tmp.getDate()+1)
+    }
+    console.log(dateRange)
+    return dateRange;
 }
 
 
@@ -181,12 +217,6 @@ const getHolidays = async function(){
 //결제 종료일의 요일에 따라 7일 내에 포함된 주말의 수가 달라지므로 분기처리 필요
 //결제 종료일 + (주말제외 7일)에 해당하는 날짜를 배열(arr)로 만들기
 //결제 종료일 + (주말제외 7일)인 date
-//for(date of arr){
-   //if(list.contains(date){
-    // date.setDate(date.getDate() + 1);
-    //}
-
-//return date;
 
 
 
