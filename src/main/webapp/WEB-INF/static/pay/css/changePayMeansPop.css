@@ -54,7 +54,6 @@
 .payInfoWrap {
     display: flex;
     margin-left: 14px;
-    cursor: pointer;
 }
 .cardDetailWrap {
     margin: 0px 16px 0px 14px;
