@@ -212,13 +212,14 @@
                                                         <div class="monthContentSelectWrapper">
                                                             <div class="monthContentSelect">
                                                                 <span class="monthSelectInputWrapper">
-                                                                    <input disabled="" readonly="" type="text" inputmode="text" autocapitalize="off" autocomplete="off" class="inputInner" value="일시불">
+                                                                    <input id="cardInstallInput" readonly type="text" inputmode="text" autocapitalize="off" autocomplete="off" class="inputInner" value="일시불">
                                                                     <div class="arrowDownIcon">
                                                                         <svg viewBox="0 0 48 48">
                                                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M2 14.4065C2 13.1363 3.09843 12.0615 4.39657 12.0615C4.99571 12.0615 5.59485 12.257 6.09414 12.7455L23.9685 29.4526L41.843 12.6478C42.8415 11.7684 44.3394 11.7684 45.338 12.7455C46.2367 13.7226 46.2367 15.1882 45.2381 16.0676L23.9685 36L2.79886 16.0676C2.29957 15.6767 2 14.9928 2 14.4065Z"></path>
                                                                         </svg>
                                                                     </div>
                                                                 </span>
+                                                                <div class="selectOptions"></div>
                                                             </div>
                                                         </div>
                                                         <div class="cardInstallGuide">
@@ -259,7 +260,7 @@
                         <div class="totalBox">
                             <div class="totalBoxConts">
                                 <div class="totalName">최종 후원 금액</div>
-                                <div class="totalMoney">22,000원</div>
+                                <div class="totalMoney">22000</div>원
                             </div>
                         </div>
                     </div>

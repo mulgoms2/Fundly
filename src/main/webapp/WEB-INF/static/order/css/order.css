@@ -472,9 +472,22 @@ div .popupBtn:hover {
 .monthContentSelect {
     position: relative;
 }
+.selectOptions {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 100px;
+    overflow-y: auto;
+    width: 100%;
+}
+.selectOption {
+    padding: 8px;
+    cursor: pointer;
+}
 .monthSelectInputWrapper {
     padding: 0px 18px;
-    background: rgba(240, 240, 240, 0.7);
+    background-color: #fff;
     border: 1px solid rgb(228, 228, 228);
     color: rgb(61, 61, 61);
     max-height: 44px;
@@ -485,6 +498,9 @@ div .popupBtn:hover {
     letter-spacing: -0.015em;
     align-items: center;
     border-radius: 1px;
+}
+.disabled {
+    background: rgba(240, 240, 240, 0.7);
 }
 .inputInner {
     width: 100%;
