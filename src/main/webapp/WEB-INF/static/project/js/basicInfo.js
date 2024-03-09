@@ -1,7 +1,8 @@
 const initHandler = () => {
     // 저장버튼 클릭시 서버로 post 요청 보내기
     document.getElementById("saveBtn").addEventListener("click", handleSaveBtnClick);
-    document.getElementById("searchTag").addEventListener("keypress", handleTagInput);
+    document.getElementById("searchTag").addEventListener("keypress", handleSearchTagInput);
+    // document.getElementById("searchTag").addEventListener("keypress", handleTagInput);
     document.getElementById("category").addEventListener("input", printSubCategory);
     document.getElementById("thumbnail_input").addEventListener("input", handleThumbnailInput);
 };
@@ -60,6 +61,27 @@ const handleTagInput = (e) => {
         clearInput(e);
     }
 };
+const handleSearchTagInput = (e) => {
+
+    if (validInput(e.target.value)) {
+        alert("공백 및 특수문자는 입력할 수 없습니다.");
+        return;
+    }
+    if (enterPressed(e)) {
+    //     공백 및 특문 검사.
+        const tag = e.target.value;
+
+    }
+};
+const enterPressed = (e) => {
+    return e.key === "Enter";
+};
+const validInput = (text) => {
+    // const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+    let regExp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
+    console.log(text);
+    return regExp.test(text);
+};
 const printTag = (tag) => {
     document.querySelector("#tagContainer").innerHTML += tag;
 };
@@ -74,6 +96,12 @@ const makeTag = (content) => {
 const deleteSearchTag = (e) => {
     e.currentTarget.parentElement.outerHTML = "";
 };
+const handleSaveBtnClick = () => {
+    const formData = getPjInfoForm();
+    const endPoint = "/project/editor/infoUpdate";
+
+    postProject(endPoint, formData);
+};
 const concatSearchTags = () => {
     const tagList = document.querySelector("#tagContainer").children;
     const tagArr = [...tagList].map(span => span.innerText);
@@ -81,14 +109,6 @@ const concatSearchTags = () => {
 
     return tagArr.toString();
 };
-
-const handleSaveBtnClick = () => {
-    const formData = getPjInfoForm();
-    const endPoint = "/project/editor/infoUpdate";
-
-    postProject(endPoint, formData);
-};
-
 const getPjInfoForm = () => {
     const formData = new FormData();
     const longTitle = document.querySelector("#longTitle").value;
@@ -106,13 +126,11 @@ const getPjInfoForm = () => {
 
     return formData;
 };
-
 const handleThumbnailInput = async (e) => {
     const endPoint = "/project/editor/info/image";
     const imgFormData = getImageFormData("thumbnail_input");
     const src_url = await fetchImage(endPoint, imgFormData);
 
-    console.log(src_url);
     printImgTag("thumbnail_img", src_url);
     clearInput(e);
 }
