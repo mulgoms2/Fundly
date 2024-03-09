@@ -3,7 +3,7 @@ $(document).ready(function () {
     function fetchData() {
         $.ajax({
             type: "GET",
-            url: `/pay/list?page=${page}`,
+            url: `/pay/list/setting?page=${page}`,
             success: function (data) {
                 // 더보기 버튼 보여줄 것인지의 여부
                 data.pageHandler.showNext? ($('.boxViewMoreWrapper').show()) : ($('.boxViewMoreWrapper').hide());
