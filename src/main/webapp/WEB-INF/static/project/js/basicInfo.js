@@ -1,10 +1,9 @@
 const initHandler = () => {
-    // 저장버튼 클릭시 서버로 post 요청 보내기
     document.getElementById("saveBtn").addEventListener("click", handleSaveBtnClick);
-    document.getElementById("searchTag").addEventListener("keypress", handleSearchTagInput);
-    // document.getElementById("searchTag").addEventListener("keypress", handleTagInput);
+    document.getElementById("searchTagIpt").addEventListener("keyup", handleSearchTagInput);
     document.getElementById("category").addEventListener("input", printSubCategory);
     document.getElementById("thumbnail_input").addEventListener("input", handleThumbnailInput);
+    document.querySelectorAll(".eraseBtn").forEach(btn => btn.addEventListener("click", deleteSearchTag));
 };
 const printSubCategory = () => {
     const category = document.querySelector("#category");
@@ -20,79 +19,49 @@ const printSubCategory = () => {
         subCtg.appendChild(장난감);
     }
 };
-const handleTagInput = (e) => {
-    const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
-    let inputValue = e.target.value;
-
-    console.log(regExp.test(inputValue));
-    
-    if (regExp.test(inputValue)) {
-        console.log("log");
-        alert("특수문자 및 공백은 입력하실 수 없습니다.")
-        e.target.value = "";
+const handleSearchTagInput = (e) => {
+    const inputTxt = e.target.value;
+    if (validInput(inputTxt)) {
+        alert("공백 및 특수문자는 입력할 수 없습니다.");
+        clearInput(e);
         return;
     }
-
-    if (e.code === "Enter") {
-        if (maxCount(5)) {
-            alert("태그는 최대 5개 까지만 저장할 수 있습니다.")
+    if (enterPressed(e)) {
+        if (countTag() >= 5) {
+            alert("태그는 최대 5개 까지 입력할 수 있습니다");
             clearInput(e);
             return;
         }
-        const tagString = e.target.value;
-        console.log(tagString);
-        if (tagString.trim().length === 0) {
-            clearInput(e);
-            return;
-        }
-        // const searchTag = makeTag(tagString);
-        //
-        // printTag(searchTag);
-
-        const span = document.createElement("span");
-        span.className = "searchTag";
-        span.innerText = tagString;
-
-        const button = document.createElement("button");
-        button.classList.add();
-
-        document.querySelector("#tagContainer").appendChild(span);
+        makeSearchTag(inputTxt);
 
         clearInput(e);
     }
 };
-const handleSearchTagInput = (e) => {
-    console.log(e);
-    console.log(e.target.value);
+const makeSearchTag = (inputTxt) => {
+    const span = document.createElement("span");
+    const button = document.createElement("button");
+    const i = document.createElement("i");
+    span.className = "searchTag";
+    span.innerText = inputTxt;
+    button.className = "eraseBtn";
+    i.className = "fa-solid fa-x fa-2xs";
 
-    if (validInput(e.target.value)) {
-        alert("공백 및 특수문자는 입력할 수 없습니다.");
-        return;
-    }
-    if (enterPressed(e)) {
-    //     공백 및 특문 검사.
-        const tag = e.target.value;
-    }
+    button.appendChild(i);
+    span.appendChild(button);
+
+    button.addEventListener("click", deleteSearchTag);
+    document.querySelector("#tagContainer").appendChild(span);
+};
+const countTag = () => {
+    const tagCount = document.querySelector("#tagContainer").children.length;
+    return tagCount;
 };
 const enterPressed = (e) => {
     return e.key === "Enter";
 };
 const validInput = (text) => {
-    // const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
     let regExp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
-    console.log(text);
     return regExp.test(text);
-};
-const printTag = (tag) => {
-    document.querySelector("#tagContainer").innerHTML += tag;
-};
-const maxCount = (count) => {
-    const tagCount = document.querySelector("#tagContainer").children.length;
-
-    return count < tagCount + 1;
-};
-const makeTag = (content) => {
-    return `<span class="searchTag">${content}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
 };
 const deleteSearchTag = (e) => {
     e.currentTarget.parentElement.outerHTML = "";

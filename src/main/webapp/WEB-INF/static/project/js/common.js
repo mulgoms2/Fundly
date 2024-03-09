@@ -30,9 +30,7 @@ const fetchImage = async (endPoint, imgFormData) => {
         body: imgFormData,
     });
 
-    const saved_url = await response.text();
-
-    return saved_url;
+    return await response.text();
 };
 
 const getImageFormData = (tagId) => {

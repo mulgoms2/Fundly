@@ -182,7 +182,7 @@
             <div class="pjForm none">
                 <div class="pjInputWrap">
                     <div>
-                        <input type="text" id="searchTag" class="pjInput"
+                        <input type="text" id="searchTagIpt" class="pjInput"
                                placeholder="Enter를 눌러서 핵심 키워드를 등록해주세요.(최대 5개)">
                     </div>
                     <div class="notice">
