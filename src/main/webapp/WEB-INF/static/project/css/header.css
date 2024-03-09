@@ -34,16 +34,14 @@ body {
 .topContents {
     display: flex;
     flex-direction: column;
-    width: 1080px;
+    width: 100%;
     margin: 0 auto;
     color: #0d0d0d;
 }
 .headerWrap {
     width: 100%;
-    height: 64px;
     position: fixed;
     background-color: #fff;
-    z-index: 9;
 }
 .topContents .header {
     /*position: fixed;*/
@@ -51,7 +49,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /*margin:0 163.3px;*/
+    margin:0 auto;
     width: 1080px;
     height: 64px;
     z-index: 9;
@@ -106,15 +104,19 @@ body {
 .topContents .header div.hBtnWrap > button.hidden {
     display: none;
 }
+.menuWrap {
+    width: 100%;
+    background: #fff;
+}
 .topContents .topContentsWrapper{
-    margin-top: 64px;
+    /*margin-top: 64px;*/
     width: 1080px;
     height: 104px;
-    /*margin: 0 163.3px;*/
+    margin: 64px auto 0px auto;
     padding: 39px 0 21px;
 }
 
-.topContents .topContentsWrapper > span{
+.topContents .topContentsWrapper > .subTitle{
     display: inline-block;
     margin:0;
     padding:0;
@@ -123,12 +125,12 @@ body {
     line-height: 44px;
 }
 .topContents .fixedContentWrapper{
-    width: 1080px;
+    width: 100%;
     height: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    background: #fff;
     /*margin: 0 163.3px;*/
 }
 .topContents .fixedContentWrapper.fixed{
@@ -140,6 +142,7 @@ body {
 .topContents .fixedContentWrapper div.planWrap{
     width: 1080px;
     height: 60px;
+    margin: 0 auto;
 }
 .topContents .fixedContentWrapper > div.planWrap > ul{
     width: 757px;
