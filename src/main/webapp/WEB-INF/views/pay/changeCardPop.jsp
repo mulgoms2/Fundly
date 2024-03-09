@@ -34,9 +34,7 @@
                         </svg>
                     </div>
                 </li>
-                <li class="currentPage">
-                    <a rel="nofollow">1</a>
-                </li>
+                <li class="pageNav"></li>
                 <li class="nextPageWrap">
                     <div class="nextPage">
                         <svg viewBox="0 0 48 48">
