@@ -8,18 +8,20 @@
 <%--</head>--%>
 <%--<body>--%>
 <div class="topContents">
-    <div class="header">
-        <div>
-            <a href="javascript:void(0)"></a><i class="fas fa-solid fa-arrow-left"></i>
-        </div>
-        <div class="hBtnWrap">
-<%--            <a href="pro" class="preview">제출하기</a>--%>
-    <form id="pjSubmitForm" action="/project/editor/submit" method="post">
-            <button id="pjSubmit" class="pjSubmit">제출하기</button>
-    </form>
-            <button type="button" class="cancel">취소</button>
-            <button id="saveBtn" type="button" class="save">저장</button>
-            <button type="button" class="modify">수정</button>
+    <div class="headerWrap">
+        <div class="header">
+            <div>
+                <a href="javascript:void(0)"></a><i class="fas fa-solid fa-arrow-left"></i>
+            </div>
+            <div class="hBtnWrap">
+                <%--            <a href="pro" class="preview">제출하기</a>--%>
+                <form id="pjSubmitForm" action="/project/editor/submit" method="post">
+                    <button id="pjSubmit" class="pjSubmit">제출하기</button>
+                </form>
+                <button type="button" class="cancel">취소</button>
+                <button id="saveBtn" type="button" class="save">저장</button>
+                <button type="button" class="modify">수정</button>
+            </div>
         </div>
     </div>
     <div class="topContentsWrapper">
