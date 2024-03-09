@@ -20,6 +20,7 @@ const printSubCategory = () => {
     }
 };
 const handleSearchTagInput = (e) => {
+    console.log(e);
     const inputTxt = e.target.value;
     if (validInput(inputTxt)) {
         alert("공백 및 특수문자는 입력할 수 없습니다.");
@@ -61,8 +62,9 @@ const enterPressed = (e) => {
 };
 const validInput = (text) => {
     let regExp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
-    return regExp.test(text);
+    return text === "" || regExp.test(text);
 };
+
 const deleteSearchTag = (e) => {
     e.currentTarget.parentElement.outerHTML = "";
 };
