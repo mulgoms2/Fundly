@@ -168,10 +168,3 @@
     </div>
 </div>
 <script src="/static/project/js/creator.js"></script>
-<script>
-<%--    프로필 이미지가 첨부될 경우. 저장버튼과는 별개로 업데이트를 처리하자.  --%>
-window.onload = () => {
-    document.getElementById("saveBtn").addEventListener("click", saveProject);
-    document.getElementById("pjImgUp").addEventListener("input", handleImgInput);
-}
-</script>

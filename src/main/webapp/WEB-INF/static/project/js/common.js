@@ -9,3 +9,43 @@ const submitProject = (e) => {
         e.preventDefault();
     }
 }
+
+const postProject = async (endPoint, formData) => {
+    const response = await fetch(endPoint ,{
+        method: "post",
+        headers: {},
+        body: formData,
+    });
+
+    const isSucceed = await response.json();
+
+    if (isSucceed)
+        alert("저장이 완료되었습니다.")
+}
+
+const fetchImage = async (endPoint, imgFormData) => {
+    const response = await fetch(endPoint, {
+        method: "post",
+        headers: {},
+        body: imgFormData,
+    });
+
+    const saved_url = await response.text();
+
+    return saved_url;
+};
+
+const getImageFormData = (tagId) => {
+    const formData = new FormData();
+    const imgFile = document.getElementById(tagId).files[0];
+
+    formData.append("image", imgFile);
+
+    return formData;
+};
+const printImgTag = (tagId, imgSrc) => {
+    document.getElementById(tagId).src = imgSrc;
+};
+const clearInput = (e) => {
+    e.target.value = "";
+};

@@ -151,12 +151,11 @@
                     <span><i class="fa-solid fa-arrow-up-from-bracket"></i>이미지 업로드</span>
 <%--                    <p>최소 1개, 최대 5개까지 업로드 가능</p>--%>
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
-                    <input type="file" id="fileInput" accept="image/*">
+                    <input type="file" id="thumbnail_input" accept="image/*">
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
                 </label>
                 <div class="imgBx">
-<%--                    <img id="profImg" src="${creator.pj_prof_image_url}">--%>
-                                            <img src="<c:url value='/static/project/img/lemon.jpg'/>">
+                    <img id="thumbnail_img" class="thumbnail_img" src="${projectDto.pj_thumbnail_url}">
                 </div>
             </div>
         </div>
@@ -200,19 +199,3 @@
     </div>
 </div>
 <script src="/static/project/js/basicInfo.js"></script>
-<script>
-    (() => {
-        // 저장버튼 클릭시 서버로 post 요청 보내기
-        const saveBtn = document.getElementById("saveBtn");
-        saveBtn.addEventListener("click", updateProjectInfo);
-
-        // document.getElementById("eraseBtn").addEventListener("click", deleteSearchTag);
-        // document.getElementById("tagContainer").addEventListener("click", deleteSearchTag);
-        // 검색태그 이벤트리스너 등록
-        document.querySelector("#searchTag").addEventListener("keypress", handleTagInput);
-
-        document.querySelector("#category").addEventListener("input", printSubCategory);
-        // 프로젝트 카테고리 불러오기
-        document.querySelector("#category").value = "${projectDto.ctg}";
-    })();
-</script>

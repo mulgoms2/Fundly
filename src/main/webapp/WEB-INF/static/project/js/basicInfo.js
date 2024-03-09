@@ -1,3 +1,10 @@
+const initHandler = () => {
+    // 저장버튼 클릭시 서버로 post 요청 보내기
+    document.getElementById("saveBtn").addEventListener("click", handleSaveBtnClick);
+    document.getElementById("searchTag").addEventListener("keypress", handleTagInput);
+    document.getElementById("category").addEventListener("input", printSubCategory);
+    document.getElementById("thumbnail_input").addEventListener("input", handleThumbnailInput);
+};
 const printSubCategory = () => {
     const category = document.querySelector("#category");
     const subCtg = document.querySelector("#subCategory");
@@ -12,7 +19,6 @@ const printSubCategory = () => {
         subCtg.appendChild(장난감);
     }
 };
-
 const handleTagInput = (e) => {
     const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
     let inputValue = e.target.value;
@@ -54,29 +60,20 @@ const handleTagInput = (e) => {
         clearInput(e);
     }
 };
-
 const printTag = (tag) => {
     document.querySelector("#tagContainer").innerHTML += tag;
 };
-
 const maxCount = (count) => {
     const tagCount = document.querySelector("#tagContainer").children.length;
 
     return count < tagCount + 1;
 };
-
-const clearInput = (e) => {
-    e.target.value = "";
-};
-
 const makeTag = (content) => {
     return `<span class="searchTag">${content}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
 };
-
 const deleteSearchTag = (e) => {
     e.currentTarget.parentElement.outerHTML = "";
 };
-
 const concatSearchTags = () => {
     const tagList = document.querySelector("#tagContainer").children;
     const tagArr = [...tagList].map(span => span.innerText);
@@ -85,29 +82,39 @@ const concatSearchTags = () => {
     return tagArr.toString();
 };
 
-const updateProjectInfo = async () => {
+const handleSaveBtnClick = () => {
+    const formData = getPjInfoForm();
+    const endPoint = "/project/editor/infoUpdate";
+
+    postProject(endPoint, formData);
+};
+
+const getPjInfoForm = () => {
+    const formData = new FormData();
     const longTitle = document.querySelector("#longTitle").value;
     const shotTitle = document.querySelector("#shortTitle").value;
     const pjIntro = document.querySelector("#pjIntro").value;
     const category = document.querySelector("#category").value;
     const searchTags = concatSearchTags();
 
-    const formData = new FormData();
-    formData.append("ctg", category);
-    // formData.append("sub_ctg");
     formData.append("pj_long_title", longTitle);
     formData.append("pj_short_title", shotTitle);
     formData.append("pj_short_intro", pjIntro);
+    formData.append("ctg", category);
     formData.append("pj_tag", searchTags);
+    // formData.append("sub_ctg");
 
-    const response = await fetch("/project/editor/infoUpdate", {
-        method: "post",
-        headers: {},
-        body: formData
-    });
-
-    const result = await response.json();
-    if (result) {
-        alert("저장이 완료되었습니다.");
-    }
+    return formData;
 };
+
+const handleThumbnailInput = async (e) => {
+    const endPoint = "/project/editor/info/image";
+    const imgFormData = getImageFormData("thumbnail_input");
+    const src_url = await fetchImage(endPoint, imgFormData);
+
+    console.log(src_url);
+    printImgTag("thumbnail_img", src_url);
+    clearInput(e);
+}
+
+initHandler();

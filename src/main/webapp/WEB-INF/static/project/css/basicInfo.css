@@ -278,3 +278,8 @@ div {
     border: 0.1px solid #eaeaea;
     padding: 0 10px;
 }
+
+.thumbnail_img {
+    width: 280px;
+
+}
