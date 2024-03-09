@@ -44,12 +44,59 @@ $(document).ready(function () {
         })
     }
 
+    // 할부개월 Select Options 렌더링
+    const cardInstallList = ['일시불', '2개월(무이자)', '3개월(무이자)', '4개월', '5개월', '6개월', '7개월',
+    '8개월', '9개월', '10개월', '11개월', '12개월'];
+
+    for (let data of cardInstallList) {
+        $('.selectOptions').append(
+            `<div class="selectOption" data-value="${data}">${data}</div>`
+        );
+    }
+
+    // 할부개월 Select Option 클릭 이벤트
+    $('.selectOptions').on('click', '.selectOption', function() {
+        let selectedOption = $(this).data('value');
+        $('#cardInstallInput').prop("value", selectedOption);
+    });
+
+    // 할부개월 Select Box 조작
+    function handleCardInstallUI(cardType) {
+        console.log("selectedPayMeans: " + selectedPayMeans)
+        console.log("cardType: " + cardType)
+        let totalMoney = BigInt($('.totalMoney').text()); // TODO: 최종 후원 금액(BigInt) (임시)
+
+        // 신용카드이고 최종후원금액이 5만원 이상인 경우, 할부개월 Select Box 활성화
+        if (cardType === 0 && totalMoney >= 50000) {
+            $('.monthSelectInputWrapper').removeClass('disabled'); // css 변경
+
+            // 할부개월 Select Box 클릭하면 Select Option 열림
+            $(".monthSelectInputWrapper").on("click", function (e) {
+                e.stopPropagation();
+                $(".selectOptions").toggle();
+            });
+        } else {
+            $(".monthSelectInputWrapper").off("click"); // 클릭 이벤트 핸들러 제거
+            $('.monthSelectInputWrapper').addClass('disabled'); // css 변경
+            $('#cardInstallInput').prop("value", "일시불"); // 일시불로 초기화
+        }
+    }
+
+    $(document).on("click", function (e) {
+        // 다른 곳 클릭하면 할부개월 Select Option 닫음
+        if ($(e.target).closest(".monthSelectInputWrapper").length === 0) {
+            $(".selectOptions").hide();
+        }
+    })
+
     // 주문페이지에 대표 결제수단 렌더링
     function renderPayOnOrderPage(payMeans) {
         // 대표 결제수단으로 저장
         updateSelectedPayMeans(payMeans)
         // 주문페이지에 대표 결제수단 렌더링
         appendPayOnOrderPage()
+        // 할부개월 Select Box UI 제어
+        handleCardInstallUI(selectedPayMeans.card_type);
     }
 
     // 결제수단변경 팝업창에 결제수단 리스트 렌더링
@@ -172,8 +219,8 @@ $(document).ready(function () {
 
     // TODO: 주문페이지 '후원하기' 버튼 클릭 이벤트
     $("#orderBtn").click(function () {
-        // 선택된 결제수단 데이터: selectedPayMeans
-        console.log(selectedPayMeans)
+        console.log(selectedPayMeans); // 선택된 결제수단 데이터: selectedPayMeans
+        console.log($('#cardInstallInput').prop("value")); // 신용카드 할부개월 데이터
 
         // '기본 결제수단으로 등록'을 선택한 경우
         if ($('#updateDefaultCheckbox').is(':checked')) {
