@@ -46,3 +46,15 @@ const printImgTag = (tagId, imgSrc) => {
 const clearInput = (e) => {
     e.target.value = "";
 };
+
+const countText = (text) => {
+    return text.length;
+};
+const displayCount = (count, maxNum ,where) => {
+    where.innerText = `${count}/${maxNum}`;
+};
+
+
+const deleteLastChar = (str) => {
+    return str.slice(0, -1);
+};

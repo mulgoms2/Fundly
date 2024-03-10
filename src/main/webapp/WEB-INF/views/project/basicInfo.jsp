@@ -32,17 +32,17 @@
                 <div class="formBx">
                     <div class="left">
                         <p>카테고리</p>
-                            <select id="category" class="category">
-                                <option>반려동물</option>
-                                <option>디자인, 문구</option>
-                                <option>출판</option>
-                                <option>캐릭터 굿즈</option>
-                                <option>홈리빙</option>
-                                <option>테크 가전</option>
-                                <option>주얼리</option>
-                                <option>사진</option>
-                                <option>향수/뷰티</option>
-                            </select>
+                        <select id="category" class="category">
+                            <option>반려동물</option>
+                            <option>디자인, 문구</option>
+                            <option>출판</option>
+                            <option>캐릭터 굿즈</option>
+                            <option>홈리빙</option>
+                            <option>테크 가전</option>
+                            <option>주얼리</option>
+                            <option>사진</option>
+                            <option>향수/뷰티</option>
+                        </select>
                     </div>
                     <div class="right">
                         <p>세부카테고리</p>
@@ -75,7 +75,8 @@
                                 <input type="text" id="longTitle" class="pjInput" value="${projectDto.pj_long_title}"
                                        placeholder="긴 제목을 입력해주세요."/>
                             </div>
-                            <p>0/32</p>
+                            <c:set var="longCount" value="${empty projectDto.pj_long_title ? 0 : projectDto.pj_long_title.length()}"/>
+                            <p id="longTitleCounter">${longCount}/32</p>
                         </div>
                     </div>
 
@@ -89,7 +90,8 @@
                                 <input type="text" id="shortTitle" class="pjInput" value="${projectDto.pj_short_title}"
                                        placeholder="짧은 제목을 입력해주세요.">
                             </div>
-                            <p>0/7</p>
+                            <c:set var="shortCount" value="${empty projectDto.pj_short_title ? 0 : projectDto.pj_short_title.length()}"/>
+                            <p id="shortTitleCounter">${shortCount}/7</p>
                         </div>
                     </div>
                 </div>
@@ -118,8 +120,9 @@
                         <textarea id="pjIntro" class="pjTxt">${projectDto.pj_short_intro}</textarea>
                     </div>
                     <div class="notice">
+                        <c:set var="introCount" value="${empty projectDto.pj_short_intro ? 0 : projectDto.pj_short_intro.length()}"/>
                         <p>필수 항목입니다.</p>
-                        <p>0/50</p>
+                        <p id="introCounter">${introCount}/50</p>
                     </div>
                 </div>
             </div>
@@ -149,7 +152,7 @@
                 </div>
                 <label class="pjImgUp">
                     <span><i class="fa-solid fa-arrow-up-from-bracket"></i>이미지 업로드</span>
-<%--                    <p>최소 1개, 최대 5개까지 업로드 가능</p>--%>
+                    <%--                    <p>최소 1개, 최대 5개까지 업로드 가능</p>--%>
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
                     <input type="file" id="thumbnail_input" accept="image/*">
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
@@ -190,7 +193,9 @@
                     </div>
                     <div id="tagContainer" class="tagContainer">
                         <c:forEach var="tag" items="${basicInfo.tags}">
-                            <span class="searchTag">${tag}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>
+                            <span class="searchTag">${tag}
+                                <button id="eraseBtn" class="eraseBtn"><i
+                                        class="fa-solid fa-x fa-2xs"></i></button></span>
                         </c:forEach>
                     </div>
                 </div>
