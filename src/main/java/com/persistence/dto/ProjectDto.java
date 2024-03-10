@@ -139,7 +139,9 @@ public class ProjectDto {
                 .fund_calc_due_dtm(project.getFund_calc_due_dtm())
                 .build();
 
-        return fundingForm.calcFundPeriod().calcFundRange();
+        return fundingForm.calcFundPeriod()
+                .calcFundRange().calcFundStrTime()
+                .dtmToString();
 //        return fundingForm.calcFundRange();
     }
 

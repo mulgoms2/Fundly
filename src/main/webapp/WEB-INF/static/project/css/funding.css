@@ -159,7 +159,7 @@ body {
     .plan .pjForm li .start .startH select {
     width: 298px;
     height: 40px;
-    padding: 0 14px;
+    padding: 0 24px;
     border: .5px solid #ececec;
     line-height: 100%;
     background-color: #ffffff;
@@ -172,9 +172,9 @@ body {
 .plan .pjForm li .start .startH select:hover {
     cursor: pointer;
 }
-.plan .pjForm div > div > button > span {
-    padding: 0 10px;
-}
+/*.plan .pjForm div > div > button > span {*/
+/*    padding: 0 10px;*/
+/*}*/
 .plan .pjForm li .days{
     padding: 10px 0 0;
 }

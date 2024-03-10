@@ -15,10 +15,9 @@ const incomeDay = document.querySelector('span.payIn');
 
 
 window.onload = function(){
-    const dateInput = document.createElement('input');
+    inputCheck(goalMoney); //일단은 강제로 input이벤트를 발생시킬 수가 없어서 이렇게 처리.
 
-    //datepicker의 요소 혹은 이벤트를 쓸 때는 vanilla js가 아닌 jquery로 써야 적용되어서
-    //어쩔 수 없이 혼용
+    //datepicker의 요소 혹은 이벤트를 쓸 때는 vanilla js가 아닌 jquery로 써야 적용되어서 어쩔 수 없이 혼용
     $('#dateInput').daterangepicker({
         "locale": {
             "format": "YYYY-MM-DD",
@@ -46,8 +45,11 @@ window.onload = function(){
             return diff < 10 || diff > 360 //심사기간을 고려하여 now()로부터 10일 이후부터 시작일 설정 가능, 종료일은 1년 이내(펀딩 기간은 max 60일)
         },
         "drops": "auto",
+        "startDate": $('.datepicker').attr('data-str_dtm').substring(0,10) || new Date(),
+        "endDate": $('.datepicker').attr('data-end_dtm').substring(0,10) || new Date(),
 
     });
+
 
     $('#dateInput').on('apply.daterangepicker', function(ev, picker){
         //datepicker로부터 펀딩 일정이 결정(apply)되면, 결제종료일과 정산예정일 등을 계산한다.
@@ -55,7 +57,6 @@ window.onload = function(){
 
         //1. datepicker의 정보를 attribute로 담아두기
         //picker.startDate, picker.endDate의 타입 자체는 Object. (Date가 아니다)
-
         $(this).parent().attr('data-str_dtm', picker.startDate.format('YYYY-MM-DD'))
         $(this).parent().attr('data-end_dtm', picker.endDate.format('YYYY-MM-DD'))
 
@@ -89,15 +90,7 @@ window.onload = function(){
     })
 
     goalMoney.addEventListener('input', function(){
-        let goal = this.value;
-
-        //유효성 검사 (사용자에게 올바른 값을 입력하도록 유도하기)
-        moneyNotice(goal, 500000, 9999999999)
-        //수령액 및 수수료 계산기
-        calcMoney(goal, 10)
-        //comma 적용
-        this.value = comma(uncomma(goal));
-
+        inputCheck(this);
     })
 
     saveBtn.addEventListener('click', function(){
@@ -123,6 +116,17 @@ window.onload = function(){
         }).catch(error => console.log(error))
 
     })
+}
+
+const inputCheck = function(elem){
+    let goal = elem.value;
+
+    //유효성 검사 (사용자에게 올바른 값을 입력하도록 유도하기)
+    moneyNotice(goal, 500000, 9999999999)
+    //수령액 및 수수료 계산기
+    calcMoney(goal, 10)
+    //comma 적용
+    elem.value = comma(uncomma(goal));
 }
 
 const moneyNotice = function(money, min, max){
@@ -221,7 +225,9 @@ const validFormCheck = function() {
     let fund_end_dtm = datepicker.getAttribute('data-end_dtm')
     let str_tm = startTime.value;
 
-    str_tm = (str_tm[1] === ':' ? '0' + str_tm : str_tm); //el에서 자릿수를 맞추고 싶었는데 문자열 결합이 안돼서(0이 숫자로 계산됨) js로 처리
+    // str_tm = (str_tm[1] === ':' ? '0' + str_tm : str_tm); //el에서 자릿수를 맞추고 싶었는데 문자열 결합이 안돼서(0이 숫자로 계산됨) js로 처리
+    // el로 처리완
+
     fund_str_dtm = fund_str_dtm + 'T' + str_tm + ':00'//펀딩 시작일+펀딩 시작 시간을 합한다.
     fund_end_dtm = fund_end_dtm + 'T' + "23:59:59"
 
@@ -229,6 +235,7 @@ const validFormCheck = function() {
             || !regexDateTime.test(fund_end_dtm) || !regexDateTime.test(fund_str_dtm)) return false; //입력되지 않으면 유효성 체크 탈락
     validForm.fund_str_dtm = fund_str_dtm;
     validForm.fund_end_dtm = fund_end_dtm;
+    validForm.fund_str_tm = startTime.value;
 
 
     //예상 결제 종료일, 정산 예정일
@@ -251,6 +258,8 @@ const validFormCheck = function() {
 const isNull = function(item){
     return typeof item === 'undefined' || item === null
 }
+
+
 
 
 //두 날짜 사이의 날들을 배열로 반환하는 함수
