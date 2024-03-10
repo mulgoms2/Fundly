@@ -109,6 +109,7 @@ window.onload = function(){
             if(!res.ok){
                 throw res
             }
+            alert('성공적으로 저장되었습니다.')
             return res.json()
         }).then(data => {
             if(data == true)
@@ -251,6 +252,7 @@ const validFormCheck = function() {
     validForm.pj_pay_due_dtm = pj_pay_due_dtm
     validForm.fund_calc_due_dtm = fund_calc_due_dtm
 
+    console.log('validForm')
     console.log(validForm);
     return validForm;
 }

@@ -32,7 +32,7 @@ tinymce.init({
     toolbar_mode: 'sliding',
     /* enable title field in the Image dialog*/
     image_title: true,
-    images_upload_url: '/project/story/image',
+    images_upload_url: '/project/editor/story/image',
     relative_urls: false, //상대경로 꺼주기
     // URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
     // images_reuse_filename: true, //이걸 true로 주면 ? 물음표가 뒤에 붙는다. 왜지?
@@ -183,7 +183,7 @@ window.onload = function(){
         }
 
         //console.log(storyForm);
-        fetch("/project/story",{
+        fetch("/project/editor/story",{
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -196,7 +196,7 @@ window.onload = function(){
                     throw response
                 }
                 alert('성공적으로 저장되었습니다.')
-                location.href="/project/story"; //직접 데이터를 뷰에 뿌려주지 말고 get요청을 보내기
+                location.href="/project/editor/story"; //직접 데이터를 뷰에 뿌려주지 말고 get요청을 보내기
             })
             .catch(error => error); //에러처리 부분은 더 공부해서 적절하게 처리하기.
 
@@ -204,7 +204,7 @@ window.onload = function(){
 
     storyModifyBtn.addEventListener('click',function(){ //수정 form을 서버로부터 받아온다.
         if(!confirm('프로젝트 계획을 수정하시겠습니까?')) return;
-        location.href = "/project/story?edit="+true
+        location.href = "/project/editor/story?edit="+true
     })
 
 }

@@ -10,14 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-
 @Slf4j
 @Controller
 @SessionAttributes("projectDto")
 @RequestMapping("/project/editor")
 public class ProjectFundingController {
-    @Autowired
+
     ProjectService projectService;
     @ModelAttribute("projectDto")
     ProjectDto initProjectEditor(@SessionAttribute String user_email) {
@@ -27,6 +25,11 @@ public class ProjectFundingController {
         } catch (ProjectNotFoundException e) {
             return null;
         }
+    }
+
+    @Autowired
+    public ProjectFundingController(ProjectService projectService){
+        this.projectService = projectService;
     }
 
     @GetMapping("/funding")

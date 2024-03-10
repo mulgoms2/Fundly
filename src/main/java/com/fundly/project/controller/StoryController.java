@@ -1,5 +1,6 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.service.ProjectService;
 import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +25,12 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/project")
+@RequestMapping("/project/editor")
+@SessionAttributes("projectDto")
 public class StoryController {
-
     ProjectService projectService;
     StoryImageValidator imageValidator;
     MessageSource messageSource;
-  
-//    String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
     static final String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
     static final String REMOTE_URL = "/project/img/";
   
@@ -40,10 +39,21 @@ public class StoryController {
         this.projectService = projectService;
         this.imageValidator = imageValidator;
         this.messageSource = messageSource;
+
+    }
+
+    @ModelAttribute("projectDto")
+//    비로그인시 로그인페이지. 로그인시 기존 프로젝트 확인 후 존재하면 세션에 저장. 없으면 저장 x
+    ProjectDto initProjectEditor(@SessionAttribute String user_email) {
+        try {
+            return projectService.getEditingProject(user_email);
+        } catch (ProjectNotFoundException e) {
+            return null;
+        }
     }
 
     //프로젝트 계획
-    @GetMapping("/editor/story")//pj_id는 session에서 가져오는 것으로 수정할 예정
+    @GetMapping("/story")//pj_id는 session에서 가져오는 것으로 수정할 예정
     public String makeStory(@SessionAttribute ProjectDto projectDto, Model m, @RequestParam(required = false) boolean edit){
         //작성한 내용이 아무것도 없으면 프로젝트 에디터를 띄우고
         //작성한 항목이 하나라도 있으면, 작성한 내용을 먼저 보여주고 수정버튼을 누르면 에디터를 띄워주도록 하기
@@ -72,7 +82,7 @@ public class StoryController {
         // 3. DB Project테이블 update
         // 뷰로 업데이트 된 데이터를 다시 전송
         String[] imgArr = storyForm.getImgArr();
-        String[] delArr = mkDeleteArray(imgArr);
+        String[] delArr = mkDeleteArray(imgArr, projectDto.getPj_id());
         //log.error("\n\n imgArr={} \n\n", Arrays.toString(imgArr));
         //log.error("\n\n received storyForm={} \n\n", storyForm);
         try {
@@ -102,7 +112,7 @@ public class StoryController {
     //이미지 자동업로드 설정이라, 텍스트 에디터에 추가되는 이미지마다 이 요청을 보내는 것
     @PostMapping("/story/image")
     @ResponseBody
-    public ResponseEntity<?> saveStoryImage(StoryImage uploadFile, BindingResult result, HttpServletRequest request) throws ParseException, IOException {
+    public ResponseEntity<?> saveStoryImage(StoryImage uploadFile, BindingResult result, HttpServletRequest request, ProjectDto projectDto) throws ParseException, IOException {
         //Multipart를 file로 가진 FileDto로 받지 않고 MultipartFile로 바로 받으면 아무것도 받을 수가 없다.(null) 왜지?
         //@RequestBody를 붙여도 안되더라.
         //업로드된 이미지를 서버에 저장하고 이미지의 원격 주소를 반환하는 메서드
@@ -142,7 +152,7 @@ public class StoryController {
 //        log.error("\n\n width={}\n\n", uploadFile.getWidth());
 //        log.error("\n\n height={}\n\n", uploadFile.getHeight());
       
-        String originFileName = uploadImg.getOriginalFilename();
+        String originFileName = projectDto.getPj_id()+"-"+uploadImg.getOriginalFilename();
       
         log.error("\n\n originFileName={}\n\n",originFileName);
 
@@ -170,18 +180,31 @@ public class StoryController {
 
     }
 
-    public String[] mkDeleteArray(String[] imgArr) {
+    public String[] mkDeleteArray(String[] imgArr, String pj_id) {
         //삭제할 이미지 이름을 담을 리스트
         List<String> list = new ArrayList();
 
-        //imgArr는 저장이 확정된 파일명 배열. 편의를 위해 리스트로 바꿔줌
+        //imgArr는 저장이 확정된 파일명 배열. 편의를 위해 리스트로 바꿔줌(imgList)
         List imgList = Arrays.asList(imgArr);
         log.error("\n\n imgList={}\n\n", imgList);
 
-        //이미지 서버에 임시저장된 이미지 이름을 불러온다. tempArr
+        //이미지 서버에 임시저장된 모든 이미지 이름들을 불러온다. tempArr
         File file = new File(IMG_SAVE_SERVER_LOC);
         String[] tempArr = file.list();
-        log.error("\n\n tempArr={} \n\n", Arrays.toString(tempArr));
+        log.error("\n\n (all) tempArr={} \n\n", Arrays.toString(tempArr));
+        log.error("\n\n (all) tempArr.length={} \n\n", tempArr.length);
+
+        List<String> tempDel = new ArrayList<>();
+        for(int i=0; i<tempArr.length; i++){
+            if(tempArr[i].contains(pj_id)){
+                tempDel.add(tempArr[i]); //그 중 같은 프로젝트에 속한 파일들만 골라서 리스트에 담는다.(같은 pj_id 포함)
+            }
+        }
+
+        tempArr = tempDel.toArray(String[]::new);
+
+        log.error("\n\n (same pj) tempArr={} \n\n", Arrays.toString(tempArr));
+        log.error("\n\n (same pj) tempArr.length={} \n\n", tempArr.length);
 
         //js와 달리 java는 Arrays에 contains가 없네..List로 바꿔서 처리.
         for (int i = 0; i < tempArr.length; i++) {
