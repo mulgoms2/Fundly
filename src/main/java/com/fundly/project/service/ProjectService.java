@@ -3,8 +3,13 @@ package com.fundly.project.service;
 import com.fundly.project.controller.StoryForm;
 import com.persistence.dto.*;
 
+import java.util.List;
+
 public interface ProjectService {
+
     ProjectDto get(String pjId);
+
+    List<ProjectDto> getListByStatus(String status);
 
     ProjectDto add(ProjectAddRequest pjAddReq);
 

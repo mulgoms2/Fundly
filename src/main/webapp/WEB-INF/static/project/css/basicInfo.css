@@ -261,7 +261,7 @@ div {
 .tagContainer > span {
     border-radius: 10px;
     background-color: #eaeaea;
-    padding : 5px 10px 5px 16px;
+    padding : 5px 13px 5px 16px;
     margin-right: 5px;
     color: #333;
     position: relative;
@@ -270,4 +270,16 @@ div {
 .eraseBtn{
     border: 0;
     margin-left: 11px;
+}
+
+.category {
+    width: 270px;
+    height: 42px;
+    border: 0.1px solid #eaeaea;
+    padding: 0 10px;
+}
+
+.thumbnail_img {
+    width: 280px;
+
 }

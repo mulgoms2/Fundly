@@ -87,7 +87,6 @@ public class LikeServiceImpl implements LikeService {
     @Transactional
     public List<ProjectDto> getListWithPjStatus(LikeDto likedto, String pj_status) {
         try {
-
             // 좋아요 목록
             List<LikeDto> likes = likedao.AllLikeList(likedto);
 

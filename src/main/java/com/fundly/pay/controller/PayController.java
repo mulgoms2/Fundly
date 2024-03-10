@@ -140,11 +140,11 @@ public class PayController {
     }
 
     @ResponseBody
-    @GetMapping("/list")
-    public ResponseEntity<PayResponseDto> list(@SessionAttribute("user_email") String userId, @RequestParam(defaultValue = "1") Integer page, RedirectAttributes rattr) {
+    @GetMapping("/list/{name}")
+    public ResponseEntity<PayResponseDto> list(@SessionAttribute("user_email") String userId, @PathVariable("name") String name, @RequestParam(defaultValue = "1") Integer page, RedirectAttributes rattr) {
         try {
             int totalCnt = payMeansService.getPayMeansCountForUser(userId);
-            PayPageHandler pageHandler = new PayPageHandler(totalCnt, page);
+            PayPageHandler pageHandler = new PayPageHandler(name, totalCnt, page);
 
             Map map = new HashMap();
             map.put("pay_means_id", userId);

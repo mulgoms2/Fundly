@@ -20,10 +20,9 @@ public class ProjectFundingController {
     @Autowired
     ProjectService projectService;
     @ModelAttribute("projectDto")
-    ProjectDto initProjectEditor(@SessionAttribute String user_email, HttpSession session) {
+    ProjectDto initProjectEditor(@SessionAttribute String user_email) {
         try {
             ProjectDto projectDto = projectService.getEditingProject(user_email);
-            session.setAttribute("pj_id", projectDto.getPj_id());
             return projectDto;
         } catch (ProjectNotFoundException e) {
             return null;

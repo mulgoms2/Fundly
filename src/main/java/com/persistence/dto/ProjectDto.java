@@ -3,9 +3,13 @@ package com.persistence.dto;
 import com.fundly.project.controller.FundingForm;
 import com.fundly.project.controller.StoryForm;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 @Getter
 @Setter
@@ -16,17 +20,17 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode
 public class ProjectDto {
-    //	프로젝트상태	작성중
-    //		심사중
-    //		승인됨
-    //		반려됨
-    //		진행중단	창작자 개인사유에 의한 취소/신고처리된 프로젝트 - 관리자의 승인하에 정해진 상태
-    //		진행중	프로젝트상태가 진행중일때 펀딩결과상태컬럼에 값이(펀딩성공or펀딩실패) 들어갈 예정
-    //		펀딩종료
-    //		종료
-//    public enum PJ_STAUS {심사중, 승인됨, 반려됨, 진행중단, 진행중, 펀딩종료}
+//    public enum PJ_STAUS {
+//        심사대기(0,1), 진행중(1,2 ), 승인됨(2,3), 반려됨(3,4), 진행중단(4,5), 펀딩종료(5, 6),;
+//        private final Integer step;
+//        private final Integer nextStep;
+//        PJ_STAUS(int step, int nextStep) {
+//            this.step = step;
+//            this.nextStep = nextStep;
+//        }
+//    }
 
-//    @NonNull
+    //    @NonNull
     private String pj_id; //uuid만들어서 그대로 집어넣으면?? // PK를 노출하는 것은 좋지 않다고....하는데..
     private String pj_sel_id; //로그인 세션에서 가져오기.
 
@@ -42,12 +46,12 @@ public class ProjectDto {
     private String pj_short_title; //프로젝트 짧은 제목
     private String pj_thumbnail_url; // 프로젝트 대표이미지
     private String pj_short_intro; //프로제트 요약(기본정보 탭에서 작성)
-//    컴마로 구분된 통 문자열이 들어온다.
+    //    컴마로 구분된 통 문자열이 들어온다.
     private String pj_tag; // 검색 태그
 
     //프로젝트 기획 - 펀딩 계획
     private BigInteger fund_goal_money; //펀딩 목표금액 10
-//    @DateTimeFormat()
+    //    @DateTimeFormat()
     private LocalDateTime fund_str_dtm;// 펀딩시작일시
     private LocalDateTime fund_end_dtm; //펀딩 종료일시
     private LocalDateTime pj_pay_due_dtm; //후원 결제 예정일
@@ -55,7 +59,7 @@ public class ProjectDto {
 
     //프로젝트 기획 - 프로젝트 계획
     private String pj_intro; //프로젝트 소개(t.e에서 작성)
-//    예산이 실제로는 예산 사용 계획서 글이다.
+    //    예산이 실제로는 예산 사용 계획서 글이다.
     private String pj_budget; //프로젝트 예산(t.e에서 작성) ////!!!!테이블에서 컬럼명과 타입을 수정해야합니다!!!
     private String pj_sched; //프로젝트 일정(t.e에서 작성)
     private String pj_sel_intro; //창작자 또는 팀 소개(t.e에서 작성)
@@ -103,6 +107,13 @@ public class ProjectDto {
                 .build();
     }
 
+    public static ProjectCreatorDto toCreatorDto(ProjectDto projectDto) {
+        return ProjectCreatorDto.builder()
+                .pj_sel_name(projectDto.getPj_sel_name())
+                .pj_sel_short_intro(projectDto.getPj_sel_short_intro())
+                .pj_prof_image_url(projectDto.getPj_prof_image_url())
+                .build();
+    }
 
 
     public void updateBasicInfo(ProjectInfoUpdateRequest request) {
@@ -110,7 +121,6 @@ public class ProjectDto {
         this.sub_ctg = request.getSub_ctg();
         this.pj_long_title = request.getPj_long_title();
         this.pj_short_title = request.getPj_short_title();
-        this.pj_thumbnail_url = request.getPj_thumbnail_url();
         this.pj_tag = request.getPj_tag();
     }
 
@@ -160,6 +170,15 @@ public class ProjectDto {
     }
 
     public static ProjectBasicInfo toBasicInfo(ProjectDto project) {
+        String pjTags = project.getPj_tag();
+        List<String> tagList = new ArrayList<>();
+
+        if (pjTags != null) {
+            StringTokenizer tokenizer = new StringTokenizer(pjTags, ",");
+            while (tokenizer.hasMoreTokens()) {
+                tagList.add(tokenizer.nextToken());
+            }
+        }
         return ProjectBasicInfo.builder()
                 .pj_id(project.getPj_id())
                 .sel_name(project.getPj_sel_name())
@@ -167,7 +186,20 @@ public class ProjectDto {
                 .sub_ctg(project.getSub_ctg())
                 .pj_short_title(project.getPj_short_title())
                 .pj_long_title(project.getPj_long_title())
+                .tags(tagList)
                 .build();
     }
 
+    public void updateCreatorInfo(ProjectCreatorUpdateRequest request) {
+        this.pj_sel_name = request.getPj_sel_name();
+//        this.pj_prof_image_url =
+    }
+
+    public void updateProfileImage(String tagSrcUrl) {
+        this.pj_prof_image_url = tagSrcUrl;
+    }
+
+    public void updateThumbnailImage(String tagSrcUrl) {
+        this.pj_thumbnail_url = tagSrcUrl;
+    }
 }
