@@ -20,12 +20,14 @@
     </select>
 
     <!-- SELECT -->
+
+    <!--    결제 일로부터 한달치의 공휴일 리스트를 가져옴-->
     <select id="selectHolidays" resultType="HolidayDto">
         SELECT *
         FROM holidays
-        WHERE DATEDIFF(holidayDate, #{pj_pay_due_dtm}) >= 30;
+        WHERE DATEDIFF(holidayDate, #{pj_pay_due_dtm}) BETWEEN 0 AND 30;
     </select>
-<!--    결제 일로부터 한달치의 공휴일 리스트를 가져옴-->
+
 
     <select id="selectAll" resultType="HolidayDto">
         SELECT *
