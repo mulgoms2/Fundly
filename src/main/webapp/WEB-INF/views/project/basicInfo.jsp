@@ -32,19 +32,22 @@
                 <div class="formBx">
                     <div class="left">
                         <p>카테고리</p>
-                        <div>
-                            <input readonly type="text" placeholder="카테고리를 선택해주세요.">
-                            <input type="text" value="${projectDto.ctg}">
-                            <i class="fas fa-solid fa-chevron-down"></i>
-                            <%--                            <i class="fas fa-solid fa-chevron-up"></i> 클릭시 transition--%>
-                        </div>
+                        <select id="category" class="category">
+                            <option>반려동물</option>
+                            <option>디자인, 문구</option>
+                            <option>출판</option>
+                            <option>캐릭터 굿즈</option>
+                            <option>홈리빙</option>
+                            <option>테크 가전</option>
+                            <option>주얼리</option>
+                            <option>사진</option>
+                            <option>향수/뷰티</option>
+                        </select>
                     </div>
                     <div class="right">
                         <p>세부카테고리</p>
-                        <div>
-                            <input readonly type="text" placeholder="세부 카테고리를 선택해주세요.">
-                            <i class="fas fa-solid fa-chevron-down"></i>
-                        </div>
+                        <select id="subCategory" class="category">
+                        </select>
                     </div>
                 </div>
             </div>
@@ -72,7 +75,8 @@
                                 <input type="text" id="longTitle" class="pjInput" value="${projectDto.pj_long_title}"
                                        placeholder="긴 제목을 입력해주세요."/>
                             </div>
-                            <p>0/32</p>
+                            <c:set var="longCount" value="${empty projectDto.pj_long_title ? 0 : projectDto.pj_long_title.length()}"/>
+                            <p id="longTitleCounter">${longCount}/32</p>
                         </div>
                     </div>
 
@@ -86,7 +90,8 @@
                                 <input type="text" id="shortTitle" class="pjInput" value="${projectDto.pj_short_title}"
                                        placeholder="짧은 제목을 입력해주세요.">
                             </div>
-                            <p>0/7</p>
+                            <c:set var="shortCount" value="${empty projectDto.pj_short_title ? 0 : projectDto.pj_short_title.length()}"/>
+                            <p id="shortTitleCounter">${shortCount}/7</p>
                         </div>
                     </div>
                 </div>
@@ -115,8 +120,9 @@
                         <textarea id="pjIntro" class="pjTxt">${projectDto.pj_short_intro}</textarea>
                     </div>
                     <div class="notice">
+                        <c:set var="introCount" value="${empty projectDto.pj_short_intro ? 0 : projectDto.pj_short_intro.length()}"/>
                         <p>필수 항목입니다.</p>
-                        <p>0/50</p>
+                        <p id="introCounter">${introCount}/50</p>
                     </div>
                 </div>
             </div>
@@ -146,12 +152,14 @@
                 </div>
                 <label class="pjImgUp">
                     <span><i class="fa-solid fa-arrow-up-from-bracket"></i>이미지 업로드</span>
-                    <p>최소 1개, 최대 5개까지 업로드 가능</p>
+                    <%--                    <p>최소 1개, 최대 5개까지 업로드 가능</p>--%>
                     <p>파일 형식: jpg 또는 png / 사이즈: 가로 1,240px, 세로 930px 이상</p>
+                    <input type="file" id="thumbnail_input" accept="image/*">
                     <strong>※ 이미지를 등록하면 즉시 반영됩니다.</strong>
-
                 </label>
-                <input accept=".jpg, .jpeg, .png" type="file" multiple/>
+                <div class="imgBx">
+                    <img id="thumbnail_img" class="thumbnail_img" src="${projectDto.pj_thumbnail_url}">
+                </div>
             </div>
         </div>
         <!-- 프로젝트 해시태그 -->
@@ -177,86 +185,22 @@
             <div class="pjForm none">
                 <div class="pjInputWrap">
                     <div>
-                        <input type="text" id="searchTag" class="pjInput"
+                        <input type="text" id="searchTagIpt" class="pjInput"
                                placeholder="Enter를 눌러서 핵심 키워드를 등록해주세요.(최대 5개)">
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
-                        <p>0/10개</p>
                     </div>
-                    <div id="tagContainer" class="tagContainer"></div>
+                    <div id="tagContainer" class="tagContainer">
+                        <c:forEach var="tag" items="${basicInfo.tags}">
+                            <span class="searchTag">${tag}
+                                <button id="eraseBtn" class="eraseBtn"><i
+                                        class="fa-solid fa-x fa-2xs"></i></button></span>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    window.onload = () => {
-        const saveBtn = document.querySelector(".save");
-        saveBtn.addEventListener("click", updateProjectInfo);
-
-        document.querySelector("#searchTag").addEventListener("keypress", handleTagInput)
-    };
-
-    const handleTagInput = (e) => {
-        if (e.code === "Enter") {
-            if (checkTagCount(e) > 5) {
-                alert("태그는 최대 5개 까지만 저장할 수 있습니다.")
-                clearInput(e);
-                return;
-            }
-            const tagString = e.target.value;
-            const searchTag = makeTag(tagString);
-
-            printTag(searchTag);
-            clearInput(e);
-        }
-    }
-    const printTag = (tag) => {
-        document.querySelector("#tagContainer").innerHTML += tag;
-    }
-
-    const checkTagCount = (e) => {
-        return false;
-    }
-
-    const clearInput = (e) => {
-        e.target.value = "";
-    }
-
-    const makeTag = (content) => {
-        return `<span class="searchTag">${'${content}'}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
-    }
-
-    async function updateProjectInfo() {
-        const longTitle = document.querySelector("#longTitle").value;
-        const shotTitle = document.querySelector("#shortTitle").value;
-        const pjIntro = document.querySelector("#pjIntro").value;
-        // const searchTags = concatSearchTags();
-
-        const formData = new FormData();
-        formData.append("pj_id", "${projectDto.pj_id}");
-        // formData.append("ctg", "반려동물");
-        // formData.append("sub_ctg");
-        formData.append("pj_long_title", longTitle);
-        formData.append("pj_short_title", shotTitle);
-        formData.append("pj_short_intro", pjIntro);
-        // formData.append("pj_thumbnail_img");
-        // formData.append("pj_tag");
-
-        const response = await fetch("<c:url value="/project/editor/infoUpdate"/>", {
-            method: "post",
-            headers: {},
-            body: formData
-        });
-
-        const result = await response.json();
-        if (result) {
-            alert("저장이 완료되었습니다.");
-        }
-    }
-</script>
-<%--<script src="/static/project/js/projectInfo.js"></script>--%>
-
-<%--</body>--%>
-<%--</html>--%>
+<script src="/static/project/js/basicInfo.js"></script>

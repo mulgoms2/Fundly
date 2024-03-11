@@ -47,7 +47,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/user")
 public class UserProfileController {
-    String IMG_SAVE_LOCATION = "/Users/USER/fundly/img/";
+    String IMG_SAVE_LOCATION = "/Users/bada/desktop/나JAVA봐라/";
+//    String IMG_SAVE_LOCATION = "/Users/USER/fundly/img/";
 //    String IMG_SAVE_LOCATION = "/fundly/img/";
 //    String IMG_SAVE_LOCATION = "/static/";
 

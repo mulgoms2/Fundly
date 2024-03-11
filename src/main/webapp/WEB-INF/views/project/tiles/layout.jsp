@@ -21,13 +21,16 @@
     <link rel="stylesheet" href="/static/project/css/basicInfo.css">
     <link rel="stylesheet" href="/static/project/css/creator.css">
     <link rel="stylesheet" href="/static/project/css/story.css">
+<%--    <!-- 펀딩 계획의 dateRangePicker--%>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="https://kit.fontawesome.com/99823c8069.js" crossorigin="anonymous"></script>
-
-    <%--    <link rel="stylesheet" href="/static/project/css/basicInfo.css">--%>
 
     <!--별개의 JS파일은 각 main에 따로 두는 것 고려 -->
     <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<%--    <script defer src="/static/project/js/reward.js"></script>--%>
+    <script defer src="/static/project/js/common.js"></script>
 </head>
 <body>
 <div class="projectEditorWrap">

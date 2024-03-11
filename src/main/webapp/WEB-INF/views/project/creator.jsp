@@ -17,7 +17,7 @@
             <div class="pjForm none">
                 <div class="pjInputWrap">
                     <div>
-                        <input type="text" class="pjInput" placeholder="창작자님의 이름을 입력해주세요.">
+                        <input type="text" id="selName" class="pjInput" placeholder="창작자님의 이름을 입력해주세요." value="${creator.pj_sel_name}">
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
@@ -40,11 +40,12 @@
             <div class="pjForm none">
                 <div class="profBx">
                     <div class="imgBx">
-                        <img src="<c:url value='/static/project/img/lemon.jpg'/>">
+                        <img id="profImg" src="${creator.pj_prof_image_url}">
+<%--                        <img src="<c:url value='/static/project/img/lemon.jpg'/>">--%>
                     </div>
                     <div class="upBx">
                         <label for="pjImgUp"><i class="fa-solid fa-arrow-up-from-bracket"></i>이미지 파일 업로드
-                            <input id="pjImgUp" accept=".jpg, .png, .gif, .jpeg" type="file">
+                            <input id="pjImgUp" accept="image/*" type="file">
                         </label>
                         <p>
                             파일 형식은 jpg 또는 png 또는 gif,
@@ -72,7 +73,7 @@
                 </div>
                 <div class="pjInputWrap">
                     <div class="pjInputBx">
-                        <textarea class="pjTxt" placeholder="간단한 이력과 소개를 써주세요."></textarea>
+                        <textarea id="selIntro" class="pjTxt" placeholder="간단한 이력과 소개를 써주세요.">${creator.pj_sel_short_intro}</textarea>
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
@@ -114,18 +115,14 @@
                         <div class="bank">
                             <div class="half">
                                 <p>거래은행</p>
-                                <button type="button" class="inputWrp">
-                                    <div>은행을 선택해주세요</div>
-                                    <i class="fas fa-solid fa-chevron-down"></i>
-                                </button>
-                                <span>케이뱅크와 카카오뱅크는 계좌등록이 불가합니다</span>
-                                <select id="bank" style="display:none">
+                                <select id="bank" class="category">
                                     <option value="IBK">기업은행</option>
                                     <option value="KB">국민은행</option>
                                     <option value="NH">농협은행</option>
                                     <option value="SH">신한은행</option>
                                     <option value="WR">우리은행</option>
                                 </select>
+                                <span>케이뱅크와 카카오뱅는 계좌등록이 불가합니다</span>
                             </div>
                             <div class="half">
                                 <p>예금주명</p>
@@ -155,7 +152,7 @@
                             <p>통장 사본 첨부</p>
                             <label for="accImg">
                                 <i class="fa-solid fa-arrow-up-from-bracket"></i><span>파일 업로드</span>
-                                <input id="accImg" accept=".jpg, .png, .gif, .jpeg" type="file">
+                                <input id="accImg" accept="image/*" type="file">
                             </label>
                         </div>
                     </li>
@@ -170,3 +167,4 @@
         </div>
     </div>
 </div>
+<script src="/static/project/js/creator.js"></script>

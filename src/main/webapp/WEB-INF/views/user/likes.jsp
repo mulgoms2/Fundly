@@ -6,15 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session="false" %>
+<%--<jsp:useBean id="likes" scope="request" type="java.util.List"/>--%>
 <div class="main" id="likesMain">
-    <div class="likesTitle">
+    <div class="likesTitle" id="likesTitle">
         <div class="title">관심 프로젝트</div>
-
-<%--    TODO: likeCnt => 유저의 like_status = 1인 likes의 count(*) --%>
-
-        <span class="likesCnt">4</span>개의 프로젝트를 좋아합니다.
+        <c:set var="likeCnt" value="${fn:length(likes)}" />
+        <span class="likesCnt">${likeCnt}</span>개의 프로젝트를 좋아합니다.
     </div>
     <div class="likesTap">
         <div class="stateCombo">
@@ -39,10 +39,8 @@
     <div class="likesMainContainer">
         <div class="projectListWithCard">
             <div class="projectCardWrap" id="projectCardWrap">
-                <c:forEach var="likes" items="${likes}">
+                <c:forEach items="${likes}" var="likes">
                 <div class="cardWrap">
-                    <span class="pjId" id="pjId">${likes.pj_id}</span>
-                    <span class="userId" id="userId">${userInfo.user_id}</span>
                     <div class="banBox">
                         <div class="mnBan">
                             <div class="banImg after">
@@ -52,18 +50,20 @@
                             </div>
                         </div>
                         <button class="likeBtn">
-                            <div class="likeCnt" id="like_cnt">${likes.curr_pj_like_cnt}</div>
+                            <div class="likeCnt" id="ikeCnt">${likes.curr_pj_like_cnt}</div>
+                            <div class="pjId" id="pjId">${likes.pj_id}</div>
+                            <div class="userId" id="userId">${likes.user_id}</div>
+                            <div class="likeStatus" id="likeStatus">${likes.like_status}</div>
                             <div class="btnIco">
-                                <div class="icoImg" id="heartWhite" onclick="clickLikeBtn()">
+                                <div class="icoImg" onclick="clickLikeBtn(event)">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                         <path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/>
                                     </svg>
                                 </div>
-                                <div class="icoImg on" id="heartRed" onclick="clickLikeBtn()">
+                                <div class="icoImg on" onclick="clickLikeBtn(event)">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                         <path fill="#fa6462" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
                                     </svg>
-
                                 </div>
                             </div>
                         </button>

@@ -14,6 +14,9 @@ a {
 i {
     font-style: normal;
 }
+button {
+    cursor: pointer;
+}
 
 /* 헤더 */
 .headerContainer {
@@ -83,10 +86,13 @@ i {
 }
 
 /* order */
-
 .Info {
     font-weight: bold;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
+    font-size: 16px;
+    align-items: center;
+    line-height: 27px;
+    letter-spacing: -0.02em;
 }
 .orderWrap {
     height: 1360px;
@@ -149,14 +155,19 @@ i {
     align-items: center;
 }
 .basicMark {
-    background-color: #ff4f4f;
-    color: #fff;
-    padding: 2px 7px;
-    width: 20px;
-    border-radius: 3px;
+    min-height: 18px;
+    padding: 0px 6px;
     font-size: 10px;
+    line-height: 16px;
+    letter-spacing: -0.005em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
     font-weight: bold;
-    text-align: center;
+    color: rgb(255, 255, 255);
+    background: rgb(255, 87, 87);
+    margin: 0 2px 0 2px;
 }
 
 /* 공통 Box,Btn */
@@ -164,7 +175,7 @@ i {
     width: 670px;
     box-sizing: border-box;
     border: 1px solid rgb(225, 225, 225);
-    border-radius: 3px;
+    border-radius: 4px;
 }
 .boxConts {
     padding: 20px;
@@ -172,62 +183,20 @@ i {
     flex-direction: column;
     gap: 10px;
 }
-.payBox {
-    width: 670px;
-    box-sizing: border-box;
-    border-top: none;
-    border-left: 1px solid rgb(225, 225, 225);
-    border-right: 1px solid rgb(225, 225, 225);
-    border-bottom: 1px solid rgb(225, 225, 225);
-    border-radius: 3px;
-}
 .adrBtn, .payBtn {
     margin-left: auto;
 }
-.ChangeBtn {
+.popupBtn {
     font-size: small;
     border: 1px solid rgb(225, 225, 225);
     border-radius: 25px;
     outline: none;
     background-color: inherit ;
-    padding:7px 12px;
-    cursor: pointer;
+    padding: 7px 12px;
+    color: #3d3d3d;
 }
-div .ChangeBtn:hover {
+div .popupBtn:hover {
     background-color: rgb(225, 225, 225);
-}
-
-/* pay */
-.rdoWrap {
-    display: flex;
-    gap: 40px;
-}
-.payIcon {
-    width: 14px;
-}
-.payTopNotice {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.basicPayMark {
-    background-color: #f3f3f3;
-    padding: 2px 7px;
-    border-radius: 3px;
-    font-size: 10px;
-    text-align: center;
-    line-height: 20px;
-    margin-left: -35px;
-}
-.creditImg img {
-    width: 200px;
-}
-.payCredit {
-    display: flex;
-    gap: 20px;
-}
-.payBtn {
-    margin-right: auto;
 }
 
 /*!*.rdoBox label{*!*/
@@ -288,7 +257,6 @@ div .ChangeBtn:hover {
 /*}*/
 
 /* total */
-
 .totalContainer {
     display: flex;
     flex-direction: column;
@@ -331,4 +299,268 @@ div .ChangeBtn:hover {
     color: #fff;
     border:none;
     font-size: 1.1em;
+}
+
+/*pay*/
+.orderPageFontStyle {
+    font-family: 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    color: #3d3d3d;
+}
+.payContainer {
+    padding-bottom: 20px;
+}
+.rdoSelectorWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding: 20px;
+}
+.rdoListElemWrapper {
+    border-bottom: none;
+    padding: 0px;
+    display: flex;
+}
+.rdoListElem {
+    width: 100%;
+}
+.rdoListElemLabel {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.rdoSelectorOption {
+    padding: 0px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.rdoSelectorOptionTag {
+    display: flex;
+    padding: 1px 4px;
+    height: 18px;
+    align-items: center;
+    border-radius: 4px;
+    background: rgb(240, 240, 240);
+    font: 400 10px / 18px "Noto Sans KR";
+    color: rgb(61, 61, 61);
+}
+.cardListElemContainer {
+    border-top: 1px solid rgb(230, 230, 230);
+}
+.cardListElemWrapper {
+    position: relative;
+    display: flex;
+    width: 95%;
+    align-items: flex-start;
+    min-height: 90px;
+    flex-direction: column;
+}
+.cardListElem {
+    width: 100%;
+    padding: 16px;
+}
+.payNoticeBannerWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    background: rgb(243, 250, 255);
+    font: 400 13px / 22px "Noto Sans KR";
+    color: rgb(61, 61, 61);
+}
+.payNoticeBanner {
+    display: flex;
+    gap: 5.88px;
+    font: 400 13px / 22px "Noto Sans KR";
+    color: rgb(61, 61, 61);
+}
+.payNoticeBannerIcon {
+    align-self: flex-start;
+    font-size: 14.25px;
+    display: inline-flex;
+}
+.payNoticeBannerIcon svg {
+    margin-top: 3px;
+    fill: rgb(55, 165, 247);
+    width: 1em;
+    height: 1em;
+}
+.payRegBtn {
+    background: rgb(255, 255, 255);
+}
+.cardInfoWrapper {
+    display: flex;
+}
+.cardImg {
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 85px;
+    height: 54px;
+}
+.imgBox {
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 80px;
+    height: 95%;
+    border: 1px solid rgb(230, 230, 230);
+}
+.cardContentWrapper {
+    flex-grow: 1;
+    display: inline-flex;
+    flex-flow: column;
+    justify-content: center;
+    margin-left: 10px;
+}
+.cardContent {
+    position: relative;
+}
+.cardContentTitle {
+    font-size: 16px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+}
+.cardDefaultTag {
+    position: relative;
+    z-index: 1;
+    top: -0.3em;
+}
+.cardContentNumber {
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -0.015em;
+    color: #3d3d3d;
+}
+.payChangeBtn {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    display: inline-flex;
+}
+.cardInstallWrapper {
+    width: 100%;
+    padding: 0px 16px 16px;
+}
+.cardInstall {
+    padding: 16px;
+    background-color: rgb(252, 252, 252);
+}
+.cardInstallMonthTitle {
+    margin-bottom: 10px;
+    font: 700 12px / 20px "Noto Sans KR";
+}
+.cardInstallMonthSelection {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+    font: 400 14px / 24px "Noto Sans KR";
+}
+.monthContentSelectWrapper {
+    max-width: 360px;
+    width: 100%;
+}
+.monthContentSelect {
+    position: relative;
+}
+.selectOptions {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 100px;
+    overflow-y: auto;
+    width: 100%;
+}
+.selectOption {
+    padding: 8px;
+    cursor: pointer;
+}
+.monthSelectInputWrapper {
+    padding: 0px 18px;
+    background-color: #fff;
+    border: 1px solid rgb(228, 228, 228);
+    color: rgb(61, 61, 61);
+    max-height: 44px;
+    min-width: 100px;
+    display: flex;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.015em;
+    align-items: center;
+    border-radius: 1px;
+}
+.disabled {
+    background: rgba(240, 240, 240, 0.7);
+}
+.inputInner {
+    width: 100%;
+    background: transparent;
+    border: 0px;
+    padding: 11px 0px;
+    box-sizing: border-box;
+    height: 100%;
+    outline: none;
+    margin: 0px;
+}
+.arrowDownIcon {
+    font-size: 10px;
+    display: inline-flex;
+    align-self: center;
+    color: rgb(61, 61, 61);
+}
+.arrowDownIcon svg {
+    fill: rgb(158, 158, 158);
+    width: 1em;
+    height: 1em;
+}
+.guideBtn {
+    background: transparent;
+    border: 0px;
+    padding: 0px;
+    color: rgb(39, 163, 255);
+    font-weight: normal;
+    text-decoration: underline;
+}
+.cardInstallDescription {
+    font: 700 14px / 22px "Noto Sans KR";
+}
+.defaultPayCheckboxWrapper {
+    padding: 0px 16px 16px;
+}
+.defaultPayCheckbox {
+    padding: 16px;
+    background-color: rgb(252, 252, 252);
+    display: flex;
+}
+.updateDefaultBtnLabel {
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+}
+#updateDefaultCheckbox {
+    margin-right: 10px;
+}
+.emptyList {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 60px;
+}
+.emptyList span {
+    display: inline-flex;
+    font-size: 16px;
+    line-height: 27px;
+    color: rgb(109, 109, 109);
 }

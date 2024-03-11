@@ -17,7 +17,7 @@
             <button class="b-close">닫기</button>
         </div>
     </div>
-    <div class="popScr">
+    <div>
         <form action="" id="form" method="post">
             <div class="ownType">
                 <label class="ownTypeRadio"><input type="radio" id="personal" name="own_type" value="personal" checked><span>개인</span></label>
@@ -31,11 +31,11 @@
                     </span>
                     <span class="cardNoBoxDivider">-</span>
                     <span class="cardNoBoxContent">
-                        <input class="cardNoInput" id="card_no_2" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" autocapitalize="off" autocomplete="off" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <input class="cardNoInput" id="card_no_2" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" autocapitalize="off" autocomplete="off" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                     </span>
                     <span class="cardNoBoxDivider">-</span>
                     <span class="cardNoBoxContent">
-                        <input class="cardNoInput" id="card_no_3" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" autocapitalize="off" autocomplete="off" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <input class="cardNoInput" id="card_no_3" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="0000" autocapitalize="off" autocomplete="off" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                     </span>
                     <span class="cardNoBoxDivider">-</span>
                     <span class="cardNoBoxContent">
@@ -78,7 +78,7 @@
             </div>
             <div class="checkboxWrapper">
                 <div class="checkboxFirst">
-                    <span class="checkboxFirstSpan"><a target="_blank">내용보기</a></span>
+                    <span class="checkboxFirstSpan"><a target="_blank" href="https://tumblbug.com/payment_info_policy">내용보기</a></span>
                     <div class="checkboxInputWrapper">
                         <input class="checkboxInput" id="card_co_info_agree_yn" type="checkbox" name="card_co_info_agree_yn" value="Y">결제사 정보제공 동의
                     </div>

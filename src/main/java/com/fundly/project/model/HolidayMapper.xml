@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--현재 작성중인 Mapper와 연결시켜줄 DAO객체를 명시한다-->
+<mapper namespace="com.fundly.project.model.HolidayMapper">
+
+    <!-- INSERT -->
+    <insert id="insert" parameterType="HolidayDto">
+        INSERT INTO holidays
+            (holidayDate, holidayName)
+        VALUES
+            (#{holidayDate}, #{holidayName})
+    </insert>
+
+    <!-- COUNT -->
+    <select id="count" resultType="int">
+        SELECT count(*)
+        FROM holidays
+        WHERE DATEDIFF(holidayDate, #{pj_pay_due_dtm}) >= 30;
+    </select>
+
+    <!-- SELECT -->
+
+    <!--    결제 일로부터 한달치의 공휴일 리스트를 가져옴-->
+    <select id="selectHolidays" resultType="HolidayDto">
+        SELECT *
+        FROM holidays
+        WHERE DATEDIFF(holidayDate, #{pj_pay_due_dtm}) BETWEEN 0 AND 30;
+    </select>
+
+
+    <select id="selectAll" resultType="HolidayDto">
+        SELECT *
+        FROM holidays
+    </select>
+
+    <!--3. DELETE ALL-->
+    <delete id="deleteAll">
+        DELETE FROM holidays
+    </delete>
+
+    <update id="truncate">
+        truncate holidays;
+    </update>
+
+</mapper>

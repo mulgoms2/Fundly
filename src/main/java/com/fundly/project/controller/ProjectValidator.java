@@ -14,6 +14,5 @@ public class ProjectValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ProjectDto projectDto = (ProjectDto) target;
-
     }
 }

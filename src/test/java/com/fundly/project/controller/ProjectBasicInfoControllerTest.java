@@ -2,10 +2,12 @@ package com.fundly.project.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fundly.project.exception.ImageSaveFailureException;
 import com.fundly.project.exception.ProjectAddFailureException;
-import com.fundly.project.exception.ProjectNofFoundException;
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
+import com.fundly.project.util.FileUploader;
 import com.persistence.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -23,7 +26,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.servlet.http.HttpSession;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.extractProperty;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -122,7 +131,7 @@ class ProjectBasicInfoControllerTest {
     @DisplayName("getStart() 프로젝트 올리기 페이지에 작성중인 프로젝트가 존재하지 않는다.")
     void get_start_with_project() throws Exception {
         ProjectStarter pjStarter = ProjectStarter.builder().build();
-        given(service.getEditingProject(user_id)).willThrow(ProjectNofFoundException.class);
+        given(service.getEditingProject(user_id)).willThrow(ProjectNotFoundException.class);
 
         mockMvc.perform(get(BASE_URL + "/start").sessionAttr("user_email", user_id))
                 .andExpect(status().isOk())
@@ -219,9 +228,8 @@ class ProjectBasicInfoControllerTest {
         given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
 
         mockMvc.perform(post(BASE_URL + "/info").param("user_email", user_id).sessionAttr("user_email", user_id))
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("project.basicInfo"))
-                .andExpect(model().attributeExists("basicInfo"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/project/editor/info"))
                 .andDo(print());
     }
 
@@ -237,9 +245,7 @@ class ProjectBasicInfoControllerTest {
         ResultMatcher rm = getSessionChecker("pj_id", pj_id);
 
         mockMvc.perform(post(BASE_URL + "/info").param("user_email", "dbswo").sessionAttr("user_email", user_id))
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("project.basicInfo"))
-                .andExpect(model().attributeExists("basicInfo"))
+                .andExpect(status().is3xxRedirection())
                 .andExpect(rm)
                 .andDo(print());
     }
@@ -303,6 +309,33 @@ class ProjectBasicInfoControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("false"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("이미지 파일 업로드 테스트")
+    void imgSaveFailureExceptionTest() throws Exception {
+//        given(FileUploader.uploadFile(any())).willThrow(ImageSaveFailureException.class);
+        given(service.getEditingProject(any())).willReturn(ProjectDto.builder().pj_id(pj_id).build());
+
+        byte[] mockImg = new byte[10];
+
+        MockMultipartFile file = new MockMultipartFile("image", "스크린샷_2012.png", "image/png", mockImg);
+
+        mockMvc.perform(multipart("/project/editor/info/image").file(file).sessionAttr("user_email","dbswo")).andDo(print());
+
+    }
+
+    @Test
+    @DisplayName("프로젝트 최종 제출하기 테스트.")
+    void project_submit() throws Exception {
+        ProjectDto project = ProjectDto.builder().pj_id(pj_id).pj_status("작성중").build();
+        given(service.getEditingProject(any())).willReturn(project);
+
+        mockMvc.perform(post("/project/editor/submit").sessionAttr("user_email", "dbswoi123@naver.com"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"))
+                .andExpect(model().attribute("projectDto",project))
                 .andDo(print());
     }
 }

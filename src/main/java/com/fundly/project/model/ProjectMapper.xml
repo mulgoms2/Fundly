@@ -110,4 +110,7 @@
     <select id="getRandPjList" resultType="com.persistence.dto.ProjectDto">
         select * from pj order by rand() limit 9
     </select>
+    <select id="getListByStatus" resultType="com.persistence.dto.ProjectDto">
+        select * from pj where pj_status = #{status}
+    </select>
 </mapper>

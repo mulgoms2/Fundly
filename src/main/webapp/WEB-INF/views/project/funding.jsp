@@ -35,19 +35,19 @@
                 </div>
                 <div class="goalBx">
                     <div class="inputBx">
-                        <input type="number" placeholder="50만원 이상 100억원 미만을 입력하세요.">
+                        <input class="goalMoney" type="text" placeholder="50만원 이상 100억원 미만을 입력하세요." value="${fundingForm.fund_goal_money}">
                         <span>원</span>
                     </div>
-                    <p class="notice">50만원 이상의 금액을 입력해주세요.</p>
+                    <p class="notice"></p>
                 </div>
                 <div class="goalCalc">
                     <div class="result">
                         <span>목표 달성시 예상 수령 금액</span>
-                        <em>100,000,000원</em>
+                        <div><p class="receiveMoney"></p>원</div>
                     </div>
                     <div class="fee">
                         <span>총 수수료(총 결제 성공 금액의 10% + VAT)</span>
-                        <em>50,000 원</em>
+                        <div><p class="feeCalc"></p>원</div>
                     </div>
                 </div>
             </div>
@@ -69,27 +69,41 @@
                         <li>
                             <div class="start">
                                 <div class="startD">
-                                    <p class="tit">시작일</p>
-                                    <button type="button"><i class="far fa-regular fa-calendar"></i><span>2024/2/22</span></button><!-- 추후 jquery datepicker로 변경 -->
+                                    <p class="tit" >펀딩 기간</p>
+<%--                                    <button type="button"><i class="far fa-regular fa-calendar"></i><span>2024/2/22</span></button>--%>
+                                    <button class="datepicker" type="button" data-str_dtm="${fundingForm.fund_str_dtm}" data-end_dtm="${fundingForm.fund_end_dtm}">
+                                        <i class="far fa-regular fa-calendar"></i>
+
+                                        <input type="text" id="dateInput" class="hidden" name="dateRange" readonly="true" value="">
+                                    </button>
                                 </div>
                                 <div class="startH">
                                     <p class="tit">시작시간</p>
-                                    <button type="button"><span>시작 시간을 선택해주세요</span><i class="fas fa-solid fa-chevron-down"></i></button>
+                                    <button class="selectStr" type="button"><span>${empty fundingForm.fund_str_tm? '시작 시간을 선택해주세요' : fundingForm.fund_str_tm}</span><i class="fas fa-solid fa-chevron-down"></i></button>
+                                    <select id="timeSelect" class="hidden" name="startTime" value="">
+                                        <i class="fas fa-solid fa-chevron-down"></i>
+<%--                                        fontawsome 이거 왜 적용이 안되지--%>
+
+                                        <c:forEach begin="1" end="19" step="1" var="i">
+                                            <fmt:parseNumber var="hour" value="${((i+1)/2)+8}" integerOnly="true" />
+                                            <%--jstl은 나눗셈 연산지 dobule로 연산한다. 정수형으로 바꾸기 위해 fmt태그 활용--%>
+                                            <c:if test="${hour<10}">
+                                                <c:set var="hour" value="0${hour}"/>
+                                            </c:if>
+                                            <c:set var="min" value="${i%2==0?'30':'00'}"/>
+                                            <option value="${hour}:${min}">${hour}:${min}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                             <div class="days">
-                                <p class="tit">펀딩기간</p>
-                                <p class="cont">최대 60일</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="close">
-                                <p class="tit">종료일</p>
+<%--                                <p class="tit">펀딩기간</p>--%>
                                 <div class="notice">
+                                    <p>펀딩기간은 최대 60일까지 선택 가능합니다.</p>
                                     <p>선택하신 종료일 다음날 0시에 펀딩이 종료됩니다.</p>
                                 </div>
                                 <div>
-                                    <button type="button"><i class="far fa-regular fa-calendar"></i><span>2024/2/22</span></button>
+                                    <p class="ntc">펀딩 기간 : <span class="range">${fundingForm.fund_period}</span>일</p>
                                 </div>
                             </div>
                         </li>
@@ -98,22 +112,22 @@
                                 <p class="tit">후원자 결제 종료</p>
                                 <div class="notice">
                                     <p>프로젝트가 성공하면 펀딩 종료 다음 날 후원금이 결제됩니다.
-                                        <br>결제가 이루어지지 않은 경우 24시간 간격으로 7일 동안 결제를 시도합니다.</p>
+                                        <br>결제가 이루어지지 않은 경우 24시간 후, 다시 한번 결제가 시도됩니다.</p>
                                 </div>
                                 <div class="payEnd">
-                                    <p>2024.02.29</p>
+                                    <p class="ntc">예상 결제 종료일 : <span class="end">${fundingForm.pj_pay_dtm_string}</span></p>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div>
-                                <p class="tit">정산일</p>
+                                <p class="tit">정산예정일</p>
                                 <div class="notice">
                                     <p>모금액은 후원자 결제 종료 다음 날부터 영업일 기준(주말 및 공휴일 제외)
                                         <br>7일째 되는 날 입금됩니다.</p>
                                 </div>
                                 <div class="payIn">
-                                    <p>2024.03.12</p> <!-- N영업일을 구하는 쿼리? JS에서 보여주기? 어쨌든 이 정보도 저장을 해야.. -->
+                                    <p class="ntc">정산예정일 : <span class="payIn">${fundingForm.calc_due_dtm_string}</span></p> <!-- N영업일을 구하는 쿼리? JS에서 보여주기? 어쨌든 이 정보도 저장을 해야.. -->
                                 </div>
                             </div>
                         </li>
@@ -123,3 +137,5 @@
         </div>
     </div>
 </div>
+<script src="/static/project/js/funding.js"></script>
+

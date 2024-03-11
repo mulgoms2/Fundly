@@ -43,16 +43,15 @@ public class PayController {
 
     @ResponseBody
     @PostMapping("/update")
-    public ResponseEntity<PayResponseDto> updateDefaultMeans(PayMeansDto payMeansDto) {
+    public ResponseEntity<PayResponseDto> updateDefaultMeans(@SessionAttribute("user_email") String userId, PayMeansDto payMeansDto) {
         // 1. 기본결제수단지정 버튼을 클릭한다.
         // 2. Y인 row가 있으면 N으로 바꾼다.
         // 3. 해당 결제수단을 Y로 바꾼다.
         // 4. Y인 row가 1개인지 검증한다.
         // 4. Y인 것은 태그를 붙이고 첫번째로 출력한다.
-        String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
         try {
             // 1. session의 user Id와 payMeansDto user Id가 같은지 확인한다.
-            if (!userCheck(payMeansDto.getUser_id())) {
+            if (!userCheck(userId, payMeansDto.getUser_id())) {
                 throw new Exception("Update Failed. - userCheck Error");
             }
             log.info("userCheck 성공");
@@ -102,10 +101,10 @@ public class PayController {
 
     @ResponseBody
     @PostMapping("/remove")
-    public ResponseEntity<PayResponseDto> remove(PayMeansDto payMeansDto, long from, long to) {
+    public ResponseEntity<PayResponseDto> remove(@SessionAttribute("user_email") String userId, PayMeansDto payMeansDto, long from, long to) {
         String payMeansId = payMeansDto.getPay_means_id();
         try {
-            if (!userCheck(payMeansDto.getUser_id())) {
+            if (!userCheck(userId, payMeansDto.getUser_id())) {
                 throw new Exception("Remove Failed. - userCheck Error");
             }
             String authToken = portOneService.getToken().getBody().getResponse().getAccess_token();
@@ -137,18 +136,15 @@ public class PayController {
             // TODO: 상태코드별 에러 처리 세분화 필요
             PayResponseDto payResponseDto = new PayResponseDto("DEL_ERROR", payMeansDto);
             return ResponseEntity.badRequest().body(payResponseDto);
-
         }
     }
 
     @ResponseBody
-    @GetMapping("/list")
-    public ResponseEntity<PayResponseDto> list(@RequestParam(defaultValue = "1") Integer page, RedirectAttributes rattr) {
-        String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
-
+    @GetMapping("/list/{name}")
+    public ResponseEntity<PayResponseDto> list(@SessionAttribute("user_email") String userId, @PathVariable("name") String name, @RequestParam(defaultValue = "1") Integer page, RedirectAttributes rattr) {
         try {
             int totalCnt = payMeansService.getPayMeansCountForUser(userId);
-            PayPageHandler pageHandler = new PayPageHandler(totalCnt, page);
+            PayPageHandler pageHandler = new PayPageHandler(name, totalCnt, page);
 
             Map map = new HashMap();
             map.put("pay_means_id", userId);
@@ -168,8 +164,8 @@ public class PayController {
 
     @ResponseBody
     @PostMapping("/register")
-    public ResponseEntity<PayResponseDto> register(PayMeansDto payMeansDto) {
-        String userId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
+    public ResponseEntity<PayResponseDto> register(@SessionAttribute("user_email") String userId, PayMeansDto payMeansDto) {
+
         payMeansDto.setUser_id(userId);
         payMeansDto.setDba_reg_id(userId);
         if (payMeansDto.getDefault_pay_means_yn() == null) {
@@ -193,9 +189,10 @@ public class PayController {
 
             payMeansDto.setBill_key(billKeyResponseDto.getBody().getResponse().getCustomer_id());
             payMeansDto.setCard_co_type(billKeyResponseDto.getBody().getResponse().getCard_publisher_name());
+            payMeansDto.setCard_type(billKeyResponseDto.getBody().getResponse().getCard_type());
 
             // 카드번호 뒤 4자리
-            String cardNumber =billKeyResponseDto.getBody().getResponse().getCard_number();
+            String cardNumber = billKeyResponseDto.getBody().getResponse().getCard_number();
             cardNumber = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
             payMeansDto.setCard_no(cardNumber);
 
@@ -225,10 +222,7 @@ public class PayController {
         }
     }
 
-    private boolean userCheck(String payMeansDtoUserId) {
-//        String sessionId = (String) session.getAttribute("id");
-        String sessionId = "test"; // TODO: 세션에서 유저아이디 가져오기 (String) session.getAttribute("id")
-        return sessionId.equals(payMeansDtoUserId);
+    private boolean userCheck(String userId, String payMeansDtoUserId) {
+        return userId.equals(payMeansDtoUserId);
     }
-
 }
