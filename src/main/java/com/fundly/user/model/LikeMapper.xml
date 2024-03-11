@@ -40,7 +40,7 @@
         from pj a , like_pj b
         where a.pj_id = b.pj_id
           and b.user_id = #{user_id}
-          and a.pj_status = 'ing'
+          and a.pj_status = '012006'
           and b.like_status = 1
         order by b.like_dtm desc
     </select>
