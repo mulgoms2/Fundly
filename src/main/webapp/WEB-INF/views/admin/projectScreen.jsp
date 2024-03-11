@@ -163,7 +163,7 @@
                 <%--                </td>--%>
 
                 <c:forEach var="ProjectDto" items="${projectList}">
-                    <form id="form_${ProjectDto.pj_id}" method="post" action="<c:url value="/admin/projectStatus"/>"">
+                    <form id="form_${ProjectDto.pj_id}" method="post" action="<c:url value="/admin/projectStatus"/>">
                     <input type="hidden" name="pj_id" value="${ProjectDto.pj_id}">
                     <tr>
                         <td>${ProjectDto.pj_id}</td>
