@@ -23,8 +23,9 @@ public class LikeController {
         this.likeservice = likeservice;
     }
 
+    // 유저의 좋아요 목록을 위한 컨트롤러
     @PostMapping("/update")
-    public ResponseEntity<List<LikeProjectDto>> clickLike(@RequestBody LikeRequestDto likereq) throws Exception {
+    public ResponseEntity<List<LikeProjectDto>> clickLikeList(@RequestBody LikeRequestDto likereq) throws Exception {
 
             // 요청한 데이터 dto에 담기
             LikeDto likedto = LikeDto.builder().pj_id(likereq.getPj_id()).user_id(likereq.getUser_id()).build();
@@ -40,7 +41,7 @@ public class LikeController {
     }
 
     @PostMapping("/status")
-    public ResponseEntity<List<LikeProjectDto>> IsLike(@RequestBody LikeRequestDto likereq) {
+    public ResponseEntity<List<LikeProjectDto>> isLikeList(@RequestBody LikeRequestDto likereq) {
 
         // 현재 좋아요 상태 가져오기
         try {
@@ -54,24 +55,30 @@ public class LikeController {
         }
     }
 
-//    @PostMapping("/status")
-//    public ResponseEntity<List<LikeDto>> IsLike(@RequestBody LikeRequestDto likereq) {
-//
-//        // 현재 좋아요 상태 가져오기
-//        try {
-//            log.error("\n\n\n [load]요청한 likedto:" + likereq + "\n\n\n");
-//
-//            LikeDto likedto = LikeDto.builder().pj_id(likereq.getPj_id()).user_id(likereq.getUser_id()).build();
-//
-//            log.error("\n\n\n [load]응답한 likedto:" + likeservice.getupdatedLike(likedto) + "\n\n\n");
-//            return ResponseEntity.ok(likeservice.getupdatedLike(likedto));
-//
-//        } catch (Exception e) {
-//
-//            throw new RuntimeException(e);
-//
-//        }
-//    }
+    // 프로젝트 상세페이지를 위한 컨트롤러
+    @PostMapping("/check")
+    public ResponseEntity<LikeDto> isLike(@RequestBody LikeRequestDto likereq) throws Exception {
+
+        return ResponseEntity.ok(likeservice.checkLike(likereq));
+    }
+
+    @PostMapping("/change")
+    public ResponseEntity<LikeProjectDto> clickLike(@RequestBody LikeRequestDto likereq) throws Exception {
+
+        // 요청한 데이터 dto에 담기
+        LikeDto likedto = LikeDto.builder().pj_id(likereq.getPj_id()).user_id(likereq.getUser_id()).build();
+        ProjectDto pjdto = ProjectDto.builder().pj_id(likereq.getPj_id()).curr_pj_like_cnt(likereq.getCurr_pj_like_cnt()).build();
+
+        // 좋아요 상태,좋아요 수 업데이트
+        likeservice.changeLike(likedto,pjdto);
+
+        LikeProjectDto response = likeservice.getLike(likedto);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+
 
 //    @GetMapping("/likes")
 //    public String getLikeList(int page, int pageSize, Model m) {
