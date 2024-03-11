@@ -26,11 +26,11 @@ public class NewsDto {
     @ToString.Exclude
     private String hid_yn;
     @ToString.Exclude
-    private Date reg_dtm;
+    private String reg_dtm;
     private String reg_id;
     @ToString.Exclude
     private int file_cnt;
 
-    private Date mod_dtm;
+    private String mod_dtm;
     private String mod_id;
 }

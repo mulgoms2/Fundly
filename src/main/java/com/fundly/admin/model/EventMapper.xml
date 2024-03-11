@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.admin.model.EventDao">
+    <insert id="insert" parameterType="EventDto">
+        INSERT INTO event
+            (event_title, event_cont, reg_id,event_str_date,event_end_date)
+        VALUES
+            (#{event_title}, #{event_cont}, #{reg_id},#{event_str_date},#{event_end_date})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="EventDto">
+        SELECT *
+        FROM event WHERE event_seq=#{event_seq}
+    </select>
+
+    <select id="selectAll" resultType="EventDto">
+        SELECT *
+        FROM event
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM event where event_seq=#{event_seq} and reg_id=#{reg_id}
+    </delete>
+
+    <delete id="deleteAll" >
+        DELETE FROM event
+    </delete>
+
+    <update id="update" parameterType="EventDto">
+        UPDATE event
+        SET   event_title = #{event_title}
+          , event_cont = #{event_cont}
+          , mod_dtm = now()
+          ,  mod_id = #{mod_id}
+        WHERE event_seq = #{event_seq} and reg_id = #{reg_id}
+    </update>
+
+    <select id="count" resultType="int">
+        select count(*) from event
+    </select>
+
+    <update id="increaseView" parameterType="int">
+        UPDATE event
+        SET event_view_cnt = event_view_cnt + 1
+        WHERE event_seq = #{event_seq}
+    </update>
+    <select id="selectPage" parameterType="map" resultType="EventDto">
+        select *
+        from event
+        ORDER BY event_seq
+        LIMIT #{offset}, #{pageSize}
+    </select>
+</mapper>

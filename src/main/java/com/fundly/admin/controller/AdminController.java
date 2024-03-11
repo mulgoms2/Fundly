@@ -1,22 +1,39 @@
 package com.fundly.admin.controller;
 
 import com.fundly.admin.model.PageHandler;
-import com.fundly.admin.service.CtgGuideService;
-import com.fundly.admin.service.InformService;
-import com.fundly.admin.service.NewsService;
-import com.persistence.dto.CtgGuideDto;
-import com.persistence.dto.InformDto;
-import com.persistence.dto.NewsDto;
+import com.fundly.admin.service.*;
+import com.fundly.project.service.ProjectService;
+import com.google.gson.JsonObject;
+import com.persistence.dto.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -26,16 +43,35 @@ public class AdminController {
     CtgGuideService ctgGuideService;
     @Autowired
     InformService informService;
-
-
-    @GetMapping("/list")
+    @Autowired
+    AdminService adminService;
+    @Autowired
+    EventService eventService;
+    @Autowired
+    TermService termService;
+    @Autowired
+    StatusService statusService;
+    @Autowired
+    ProjectService projectService;
+    @RequestMapping("/list")
     public String getNewsList(@RequestParam (required = false, defaultValue = "1") Integer page, Model model,
-                              @RequestParam (required = false, defaultValue = "10") Integer pageSize){
+                              @RequestParam (required = false, defaultValue = "10") Integer pageSize,HttpServletRequest req){
                                 //값이없어도에러나지않고 page=1 pageSize=10 default값으로 넣어준다
+//        HttpSession session = req.getSession();
+//
+//        if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","로그인후 이용가능합니다");
+//            return "admin/login";
+//        }
+
         try {
             List<NewsDto> NewsList = newsService.selectPage(page,pageSize);
             int totalCnt = newsService.count();
             PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
+            if(page > pageHandler.getTotalPage()){
+                model.addAttribute("msg","게시물이없습니다");
+                return "/admin/index";
+            }
             model.addAttribute("NewsList",NewsList);
             model.addAttribute("ph",pageHandler);
             model.addAttribute("page",page);
@@ -135,34 +171,75 @@ public class AdminController {
         }return "admin/index";
     }
 
-    @GetMapping("/ctglist")
-    public String getCtgList(Model model){
+    @GetMapping("/eventList")
+    public String getEventList(Model model){
         try {
-            List<CtgGuideDto> CtgList = ctgGuideService.selectAllCtg();
-            model.addAttribute("CtgList",CtgList);
+            List<EventDto> eventList = eventService.selectAllEvent();
+            model.addAttribute("eventList",eventList);
+            model.addAttribute("now", LocalDateTime.now());
+        }catch (Exception e){
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }return "admin/ctgList";
-
+        }
+        return "admin/eventList";
     }
-    @GetMapping("/informlist")
-    public String getInformList(Model model){
+    @PostMapping("/eventWrite")
+    public String insertEvent(EventDto eventDto,Model model){
         try {
-            List<InformDto> InformList = informService.selectAllInform();
-            model.addAttribute("InformList",InformList);
+            eventService.insertEvent(eventDto);
+        }catch (Exception e){
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }return "admin/informList";
-
+        }return "redirect:/admin/eventList";
     }
+    @GetMapping("/eventWrite")
+    public String insertEvent(){
+        return "admin/eventWrite";
+    }
+
+    @GetMapping("/termWrite")
+    public String insertTerm(){return "admin/termWrite";}
+
+    @PostMapping("/termWrite")
+    public String insertTerm(TermDto termDto, Model model){
+        try {
+            termService.insertTerm(termDto);
+        }catch (Exception e){}
+        return "redirect:/";
+    }
+    @RequestMapping("/projectList")
+    public String projectList(Model model){
+        try {
+            List<ProjectDto> projectList = statusService.getSelectAllPj();
+            model.addAttribute("projectList",projectList);
+        }catch (Exception e){}
+        return "admin/projectScreen";
+    }
+
+    @PostMapping("/projectStatus")
+    public String projectStatus(ProjectDto dto){
+        try {
+            System.out.println("pj_Id = " + dto.getPj_id());
+            System.out.println("pj_status = " + dto.getPj_status());
+            statusService.updateStatus(dto);
+        }catch (Exception e){}
+        return "redirect:/admin/projectList";
+    }
+
+    @GetMapping("/projectStatus")
+    public String projectStatus(String pj_status,Model model){
+        try {
+            List<ProjectDto> projectList = projectService.getListByStatus(pj_status);
+            model.addAttribute("projectList",projectList);
+        }catch (Exception e){}
+        return "admin/projectScreen";
+    }
+
+
     @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class})
     public String handleException(Model model) {
         model.addAttribute("msg","system Error");
         return "admin/error";
     }
+
 
 
 }

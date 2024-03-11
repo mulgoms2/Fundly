@@ -1,7 +1,9 @@
 package com.fundly.admin.controller;
 
 import com.fundly.admin.service.SubHelpService;
+import com.fundly.admin.service.TermService;
 import com.persistence.dto.SubHelpDto;
+import com.persistence.dto.TermDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,16 +20,21 @@ import java.util.List;
 public class HelpController {
     @Autowired
     SubHelpService subHelpService;
+    @Autowired
+    TermService termService;
     @GetMapping("/subList")
     public String subHelp(Model model) {
         try {
             int totalSortcnt = subHelpService.countSub();
+            List<TermDto> termTitleList = termService.selectAllTitle();
+            model.addAttribute("termTitleList",termTitleList);
             for (int i = 0; i < totalSortcnt; i++) {
                 List<SubHelpDto> subList = subHelpService.selectAllSubHelp(i);
                 int count = subHelpService.count(i);
                 model.addAttribute("subList" + i, subList);
                 model.addAttribute("count" + i, count);
             }
+
 //            List<List<SubHelpDto>> subLists = new ArrayList<>();
 //            List<Integer> counts = new ArrayList<>();
 //
@@ -43,26 +50,6 @@ public class HelpController {
 //            model.addAttribute("subLists", subLists);
 //            model.addAttribute("counts", counts);
 
-//            List<SubHelpDto> subList0 = subHelpService.selectAllSubHelp(0);
-//            List<SubHelpDto> subList1 = subHelpService.selectAllSubHelp(1);
-//            List<SubHelpDto> subList2 = subHelpService.selectAllSubHelp(2);
-//            List<SubHelpDto> subList3 = subHelpService.selectAllSubHelp(3);
-//            List<SubHelpDto> subList4 = subHelpService.selectAllSubHelp(4);
-//            int count0 = subHelpService.count(0);
-//            int count1 = subHelpService.count(1);
-//            int count2 = subHelpService.count(2);
-//            int count3 = subHelpService.count(3);
-//            int count4 = subHelpService.count(4);
-//            model.addAttribute("count0", count0);
-//            model.addAttribute("count1", count1);
-//            model.addAttribute("count2", count2);
-//            model.addAttribute("count3", count3);
-//            model.addAttribute("count4", count4);
-//            model.addAttribute("subList0", subList0);
-//            model.addAttribute("subList1", subList1);
-//            model.addAttribute("subList2", subList2);
-//            model.addAttribute("subList3", subList3);
-//            model.addAttribute("subList4", subList4);
             return "admin/subHelp";
         } catch (Exception e) {
             throw new RuntimeException(e);

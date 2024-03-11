@@ -22,7 +22,7 @@
         <div class="nav-wrapper">
             <span class="icon-menu"></span>
             <nav class="user-nav" id="user-nav">
-                <a href="/Fundly/">텀블벅으로 돌아가기</a>
+                <a href="/">텀블벅으로 돌아가기</a>
                 <a href="">문의하기</a>
             </nav>
         </div>
