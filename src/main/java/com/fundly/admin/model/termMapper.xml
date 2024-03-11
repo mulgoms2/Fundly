@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fundly.admin.model.TermDao">
+    <insert id="insert" parameterType="TermDto">
+        INSERT INTO term
+            (term_title, term_cont, reg_id,term_srt_date)
+        VALUES
+            (#{term_title}, #{term_cont}, #{reg_id},#{term_srt_date})
+    </insert>
+
+    <select id="select" parameterType="int" resultType="TermDto">
+        SELECT *
+        FROM term WHERE term_seq=#{term_seq}
+    </select>
+
+    <select id="selectAll" resultType="TermDto">
+        SELECT *
+        FROM term
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM term where term_seq=#{term_seq} and reg_id=#{reg_id}
+    </delete>
+
+    <delete id="deleteAll" >
+        DELETE FROM term
+    </delete>
+
+    <update id="update" parameterType="TermDto">
+        UPDATE term
+        SET   term_title = #{term_title}
+          , term_cont = #{term_cont}
+          , mod_dtm = now()
+          ,  mod_id = #{reg_id}
+        WHERE term_seq = #{term_seq} and reg_id = #{reg_id}
+    </update>
+
+
+    <select id="count" resultType="int">
+        select count(*) from event
+    </select>
+
+    <update id="increaseView" parameterType="int">
+        UPDATE term
+        SET term_view_cnt = term_view_cnt + 1
+        WHERE term_seq = #{term_seq}
+    </update>
+
+    <select id="selectAllTitle"  resultType="TermDto">
+        select term_title from term
+        group by term_title;
+    </select>
+
+
+    <select id="selectTitle" parameterType="String" resultType="TermDto">
+        select * from term
+        where term_title = #{term_title}
+        order by term_srt_date desc
+            limit 1;
+    </select>
+<!--    <select id="termPrevNext" parameterType="map" resultType="TermDto">-->
+<!--    SELECT *,-->
+<!--    LAG(term_seq) OVER (PARTITION BY term_title ORDER BY term_seq) AS prev,-->
+<!--    LEAD(term_seq) OVER (PARTITION BY term_title ORDER BY term_seq) AS next-->
+<!--    FROM term-->
+<!--    </select>-->
+    <select id="termPrevNext" parameterType="map" resultType="TermDto">
+        <![CDATA[
+        SELECT *,
+        (SELECT term_seq FROM term WHERE term_title = (SELECT term_title FROM term WHERE term_seq = #{term_seq}) AND term_seq < #{term_seq} ORDER BY term_seq DESC LIMIT 1) AS prev,
+        (SELECT term_seq FROM term WHERE term_title = (SELECT term_title FROM term WHERE term_seq =#{term_seq}) AND term_seq > #{term_seq} ORDER BY term_seq ASC LIMIT 1) AS next
+        FROM term
+        WHERE term_seq = #{term_seq};
+  ]]>
+    </select>
+    <update id="prevUpdate" parameterType="TermDto">
+        UPDATE term
+        SET
+            mod_dtm = now()
+        WHERE term_seq = #{term_seq} and reg_id = #{reg_id}
+    </update>
+</mapper>

@@ -28,7 +28,7 @@
         <nav class="lftWrap">
             <ul class="lnb">
                 <li>
-                    <a href="#" class="">회원관리</a>
+                    <a href="<c:url value="/admin/list"/>" class="">게시판</a>
                     <ul class="sub">
                         <li>
                             <a href="#">회원정보</a>
@@ -42,7 +42,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="">프로젝트관리</a>
+                    <a href="<c:url value="/admin/projectList"/> " class="">프로젝트관리</a>
                     <ul class="sub">
                         <li>
                             <a href="#">서브메뉴1</a>
@@ -113,11 +113,7 @@
 
             </form>
         </div>
-<%--        <div class="lftBox">--%>
-<%--            <span class="sttBlue">선물 전달 중</span>--%>
-<%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
-<%--            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>--%>
-<%--        </div>--%>
+
         <div class="rgtLink">
             <a href="#">자세히 보기</a>
         </div>
@@ -126,13 +122,9 @@
         <div class="lftBtngrp">
             <a href="<c:url value='/admin/list'/>">
                 <i class="fa-regular fa-comments"></i>
-                <span>보도 자료</span>
-            </a>
-            <a href="<c:url value='/admin/ctglist'/>">
-                <i class="fa-solid fa-location-dot fa-lg"></i>
                 <span>공지사항</span>
             </a>
-            <a href="#">
+            <a href="<c:url value="/admin/eventList"/> ">
                 <i class="fa-solid fa-gift fa-lg"></i>
                 <span>이벤트</span>
             </a>
@@ -194,5 +186,8 @@
     <p>@Copyright 2024. 텀블벅 관리자 사이트 All Rights Reserved.</p>
 </footer>
 
+<script>
+    if("${msg}"!=""){alert("${msg}")}
+</script>
 </body>
 </html>

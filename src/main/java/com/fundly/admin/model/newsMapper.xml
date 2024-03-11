@@ -10,6 +10,7 @@
             (#{news_title}, #{news_cont}, #{reg_id})
     </insert>
 
+
     <select id="select" parameterType="int" resultType="NewsDto">
         SELECT news_seq, news_title, news_cont, reg_id, news_view_cnt, reg_dtm, mod_dtm,hid_yn,mod_id
         FROM news WHERE news_seq=#{news_seq}
@@ -59,3 +60,4 @@
         ORDER BY reg_dtm DESC
     </select>
 </mapper>
+
