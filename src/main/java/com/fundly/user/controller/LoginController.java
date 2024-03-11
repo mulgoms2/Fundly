@@ -30,13 +30,14 @@ import java.util.Map;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-    private final LoginService loginService;
-    private final UserProfileService userProfileService;
 
     /*
-    * 1. 로그인 get , post
-    * 2. 쿠키, 세션
-    * */
+     * 1. 로그인 get , post
+     * 2. 쿠키, 세션
+     * */
+
+    private final LoginService loginService;
+    private final UserProfileService userProfileService;
 
     @Autowired
     public LoginController(LoginService loginService,UserProfileService userProfileService){
