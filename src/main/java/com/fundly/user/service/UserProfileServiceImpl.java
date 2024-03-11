@@ -54,8 +54,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         try {
 
 //            log.error("\n\n"  + userDto + "\n\n");
-
-            log.error("====1====");
+            String pwd_mod_yn="N";
             UserProfileDto userProfileInfo = userProfileDao.userProfileinfo(userDto);
 
 //            log.error("\n\n"  + userProfileInfo + "\n\n");
@@ -75,6 +74,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 String userInPwd = userDto.getUser_pwd();
                 String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
                 userProfileInfo.setUser_pwd(encoderPwd);
+                pwd_mod_yn="Y";
             }
 //            log.info("userProfileInfo ===== " + userProfileInfo + "\n\n");
 
@@ -84,7 +84,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 log.error("유저정보 업데이트 에러 ");
             }
 
-            if (userHistService.userHistinsert(userProfileInfo) != 1) {
+            if (userHistService.userHistinsert(userProfileInfo,pwd_mod_yn) != 1) {
                 log.error("유저정보 저장 에러");
             }
             return userProfileDao.userProfileinfo(UserDto.builder().user_email(userProfileInfo.getUser_email()).build());

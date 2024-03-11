@@ -1,14 +1,16 @@
 package com.fundly.user.controller;
 
 import com.fundly.user.dto.UserJoinDto;
+import com.fundly.user.exception.UserJoinFailException;
 import com.fundly.user.service.JoinService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,10 +25,11 @@ import java.util.Map;
 public class JoinController {
 
     /* 회원가입
-    *  회원가입버튼클릭 - 회원가입폼 - 값 입력 - 버튼 클릭
-    *  error : valid로 값 비교한 후에 맞지 않으면 error msg  */
+     *  회원가입버튼클릭 - 회원가입폼 - 값 입력 - 버튼 클릭
+     *  error : valid로 값 비교한 후에 맞지 않으면 error msg  */
 
     private final JoinService joinService;
+
 //    private MailSendService mailSendService;
 
     @Autowired
@@ -35,23 +38,13 @@ public class JoinController {
     }
 
     @GetMapping("/add")
-    public String join(@ModelAttribute("userJoinDto")UserJoinDto userJoinDto){  log.info("dddddddddddddddd"); return "user/join";}
+    public String join(@ModelAttribute("userJoinDto")UserJoinDto userJoinDto){ return "user/join";}
 
     @PostMapping( "/add")
-//    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-
-    public String joinsave(@Valid  UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
-
-        /*
-        binding으로 value 값 확인
-        Exception을 이용한
-        * */
+    public String joinsave(@Validated UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
 
         /* userjoindto valid */
         if(bindingResult.hasErrors()) {
-//            throw new RuntimeException("BingindResult Error : 관리자에게 문의해주세요.\n\n\n"+ bindingResult);
-
-            /*  error value*/
             Map<String, String> validResult = validateHandling(bindingResult);
 
             for (String key : validResult.keySet()) {
@@ -64,19 +57,11 @@ public class JoinController {
 
         try {
             joinService.userJoin(userJoinDto);
-
         } catch (Exception e) {
             rattr.addFlashAttribute("errmsg", e.getMessage().split(" ",2)[1]);
-            // 이미 가입되어 있을 때 기존 값을 보여줄것인가 ? 그냥 초기화 할것인가 ? : 초기화
-//            rattr.addFlashAttribute(userJoinDto);
+            rattr.addFlashAttribute(userJoinDto);
             return "redirect:/join/add";
-
-            //*예외 처리하기(어디로 갈것인가), 디스패처서블릿 인지 확인하기 ,핸들러 어댑터,
-            //개발 순서(우선순위) 개발->화면
-            //서버에서도 각 dto에서 , valid 에 따른 입력값 재 확인 요구(화면 유지하면서 해당 vaild 체크 하기)
-            // 화면간의 이동에 따른 주석
         }
-//        회원가입 후 로그인 화면으로 갈것인가 ? 메인으로 갈것인가 ? :  로그인 화면
         return "/user/login";
     }
 
@@ -91,13 +76,31 @@ public class JoinController {
         return validatorResult;
     }
 
-    /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */
-//    @ExceptionHandler({RuntimeException.class, SQLException.class, IllegalArgumentException.class, Exception.class})
-    @ExceptionHandler({Exception.class}) // 우선 전체 적인 Exception 확인, null 은 어떤가 ?
-    public String handleException() { return "user/error"; }
-
-//    public String Exception(){
-//    }
+    /* Exception */
+    @ExceptionHandler({UserJoinFailException.class})
+    public String UserJoinFailException(Model model, UserJoinFailException e){
+        log.error("UserJoinFailException {\n " + e.getMessage() +" }\n ");
+        model.addAttribute("errorMsg",e.getMessage());
+        return "user/error";
+    }
+    @ExceptionHandler({SQLException.class})
+    public String SQLException(Model model, SQLException e) {
+        log.error("SQLException {\n " + e.getMessage() +" }\n ");
+        model.addAttribute("errorMsg","서버 오류입니다. 관리자에게 문의해주세요.");
+        return "user/error";
+    }
+    @ExceptionHandler({RuntimeException.class})
+    public String handleException(Model model,RuntimeException e) {
+        log.error("RuntimeException {\n " + e.getMessage() +" }\n ");
+        model.addAttribute("errorMsg","잘못된 접근입니다. 관리자에게 문의해주세요.");
+        return "user/error";
+    }
+    @ExceptionHandler({Exception.class})
+    public String handleException(Model model, Exception e) {
+        log.error("Exception {\n " + e.getMessage() +" }\n ");
+        model.addAttribute("errorMsg","잘못된 접근입니다. 관리자에게 문의해주세요.");
+        return "user/error";
+    }
 
 //    // 메일 인증
 //    @PostMapping("/mailCheck")

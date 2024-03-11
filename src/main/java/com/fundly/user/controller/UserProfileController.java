@@ -69,8 +69,8 @@ public class UserProfileController {
         String user_email = (String)(session.getAttribute("user_email"));
         String user_profileImg = getCookieValue(request,"user_profileImg");
 
-        log.info("user_email = " + user_email + "\n\n");
-        log.info("user_profileImg = " + user_profileImg + "\n\n");
+//        log.info("user_email = " + user_email + "\n\n");
+//        log.info("user_profileImg = " + user_profileImg + "\n\n");
 
         UserDto userInfo = null;
         try {

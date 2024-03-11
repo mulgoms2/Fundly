@@ -1,5 +1,4 @@
 /* pwd */
-
 /* 이메일, 비밀번호에 대한 정규식 */
 const pwd =/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=\-.])(?=.*[0-9]).{8,20}$/;
 
@@ -48,6 +47,7 @@ togglePwdConfirm.addEventListener('click', function () {
 const userNowPwdValue = document.getElementById("userNowPwdValue");
 const userChaPwdValue = document.getElementById("userChaPwdValue");
 const userChaPwdConfirmValue = document.getElementById("userChaPwdConfirmValue");
+const userPhoneValue = document.getElementById("userPhoneValue");
 
 // 비밀번호는 8자~20자
 userNowPwdValue.addEventListener("keyup", () => {
@@ -98,6 +98,16 @@ userChaPwdConfirmValue.addEventListener("keyup", () => {
     }
 })
 
+/* user phone no*/
+userPhoneValue.addEventListener("keyup", () => {
+    if (!(userPhoneValue.value.length > 9 && userPhoneValue.value.length < 15) && userPhoneValue.value.length!== 0) {
+        setMessage('유효한 연락처가 아닙니다', "pTagChaDetailWrap", "msgPhoneNo", "red");
+        return false;
+    }else{
+        setMessage('', "pTagChaDetailWrap", "msgPhoneNo", "rgb(230, 230, 230)");
+    }
+})
+
 /* change btn */
 const changePwd = document.getElementById('changePwd');
 const changePhoneNo = document.getElementById('changePhoneNo');
@@ -124,7 +134,6 @@ const pwdsave = document.getElementById('pwdsave');
 const phonenosave = document.getElementById('phonenosave');
 
 pwdsave.addEventListener("click",()=> {
-
     const nowPwdValue = document.getElementById('userNowPwdValue').value;
     const changePwdValue = document.getElementById('userChaPwdValue').value;
     const url = "/user/update";
@@ -166,11 +175,22 @@ pwdsave.addEventListener("click",()=> {
 phonenosave.addEventListener("click",()=> {
 
     const userPhoneValue = document.getElementById('userPhoneValue').value;
+    const valueLength = userPhoneValue.replaceAll('-','').length;
     const url = "/user/update";
     const data = {
         'user_phone_no': userPhoneValue,
         'user_email': getCookie('user_email')
     };
+
+    if(valueLength === 0){
+        setMessage('연락처를 입력해주세요.', "pTagChaDetailWrap", "msgPhoneNo", "red");
+        return false;
+    }
+
+    if (!(valueLength > 9 && valueLength < 15) && valueLength!== 0) {
+        setMessage('유효한 연락처가 아닙니다', "pTagChaDetailWrap", "msgPhoneNo", "red");
+        return false;
+    }
 
     // fetch API를 사용하여 POST 요청 보내기
     fetch(url, {
@@ -188,7 +208,6 @@ phonenosave.addEventListener("click",()=> {
             return response.json()
         })
         .then((userInfo) => {
-
             init();
             changePhoneNo.click();
             document.querySelector('.pTagChaDetailPhoneNo').innerText=userInfo.user_phone_no;
@@ -221,3 +240,10 @@ function setMessage(msg, elementid, msgid, color){
     document.getElementById(elementid).style.border = "1px solid " + color;
     // elementid.focus();
 }
+
+function oninputPhone(target) {
+    target.value = target.value
+        .replace(/[^0-9]/g, '')
+        .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+}
+
