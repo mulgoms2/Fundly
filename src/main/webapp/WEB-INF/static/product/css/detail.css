@@ -153,10 +153,12 @@
     line-height: 20px;
 }
 .itrFund dd {
+    width: calc(100% - 56px);
     display: flex;
     align-items: center;
 }
 .itrFund .fndInfo {
+    min-width: 52px;
     height: 20px;
     margin-left: 6px;
     padding: 2px 6px;

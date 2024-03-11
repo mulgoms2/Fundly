@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class detailController {
     @Autowired
     private ProjectService projectService;
-//    private itemService itemService;
-//    private giftService giftService;
+
 
     @GetMapping("/detail")
     public String detail(){
@@ -34,13 +33,4 @@ public class detailController {
     public String creator(){
         return "product/creation";
     }
-
-//    @PostMapping("/detail/{pj_id}")
-//    public String detailPageinfo(@PathVariable String pj_id, Model model) {
-//        itemService itemServe = itemService.get(pj_id);
-//
-//        model.addAttribute("itemServe", itemServe);
-//
-//        return "product/detail"
-//    }
 }

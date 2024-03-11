@@ -574,8 +574,8 @@
                             </div>
                             <div class="gftBox">
                                 <div class="gftEl" id="gftnotFnd">
-                                    <div class="gftVal">
-                                        1,000원 +
+                                    <div class="gftVal"><!--1000-->
+                                        ${giftServe.gift_money}원 +
                                     </div>
                                     <div class="gftDesc">
                                         선물 없이 후원하기
@@ -583,19 +583,19 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                        <span class="slctGft">
+                                        <span class="slctGft"><!--2-->
                                             <i class="fa-solid fa-check"></i>
-                                            2개 선택
+                                            ${giftServe.gift_sold_qty}개 선택
                                         </span>
-                                        <span class="slctRmn">
-                                            28개 남음
+                                        <span class="slctRmn"><!--28-->
+                                            ${gift_curr_qty}개 남음
                                         </span>
                                     </div>
-                                    <div class="gftVal">
-                                        29,800원 +
+                                    <div class="gftVal"><!--29800-->
+                                        ${gift_money}원 +
                                     </div>
-                                    <div class="gftDesc">
-                                        [텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함
+                                    <div class="gftDesc"><!--[텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함-->
+                                        ${gift_name}
                                     </div>
                                     <ul>
                                         <li>
@@ -614,19 +614,19 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                            <span class="slctGft">
+                                            <span class="slctGft"><!--5-->
                                                 <i class="fa-solid fa-check"></i>
-                                                15개 선택
+                                                ${gift_sold_qty}개 선택
                                             </span>
-                                        <span class="slctRmn">
-                                                5개 남음
+                                        <span class="slctRmn"><!--15-->
+                                                ${gift_curr_qty}개 남음
                                             </span>
                                     </div>
-                                    <div class="gftVal">
-                                        51,100원 +
+                                    <div class="gftVal"><!--51100-->
+                                        ${gift_money}원 +
                                     </div>
-                                    <div class="gftDesc">
-                                        [얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함
+                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함-->
+                                        ${gift_name}
                                     </div>
                                     <ul>
                                         <li>
@@ -649,19 +649,19 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                        <span class="slctGft">
+                                        <span class="slctGft"><!--10-->
                                             <i class="fa-solid fa-check"></i>
-                                            10개 선택
+                                            ${gift_sold_qty}개 선택
                                         </span>
-                                        <span class="slctRmn">
-                                            10개 남음
+                                        <span class="slctRmn"><!--10-->
+                                            ${gift_curr_qty}개 남음
                                         </span>
                                     </div>
-                                    <div class="gftVal">
-                                        65,700원 +
+                                    <div class="gftVal"><!--65,700-->
+                                        ${gift_money}원 +
                                     </div>
-                                    <div class="gftDesc">
-                                        [얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함
+                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함-->
+                                        ${gift_name}
                                     </div>
                                     <ul>
                                         <li>
@@ -680,19 +680,19 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                            <span class="slctGft">
-                                                <i class="fa-solid fa-check"></i>
-                                                11개 선택
-                                            </span>
-                                        <span class="slctRmn">
-                                                4개 남음
-                                            </span>
+                                        <span class="slctGft"><!--11-->
+                                            <i class="fa-solid fa-check"></i>
+                                            ${gift_sold_qty}개 선택
+                                        </span>
+                                        <span class="slctRmn"><!--4-->
+                                            ${gift_sold_qty}개 남음
+                                        </span>
                                     </div>
-                                    <div class="gftVal">
-                                        95,500원 +
+                                    <div class="gftVal"><!--95,500-->
+                                        ${gift_money}원 +
                                     </div>
-                                    <div class="gftDesc">
-                                        [얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함
+                                    <div class="gftDesc"><!--[얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함-->
+                                        ${gift_money}
                                     </div>
                                     <ul>
                                         <li>
@@ -715,19 +715,19 @@
                                 </div>
                                 <div class="gftEl">
                                     <div class="spnLine">
-                                        <span class="slctGft">
+                                        <span class="slctGft"><!--8-->
                                             <i class="fa-solid fa-check"></i>
-                                            8개 선택
+                                            ${gift_sold_qty}개 선택
                                         </span>
-                                        <span class="slctRmn">
-                                            2개 남음
+                                        <span class="slctRmn"><!--2-->
+                                            ${gift_curr_qty}개 남음
                                         </span>
                                     </div>
-                                    <div class="gftVal">
-                                        149,500원 +
+                                    <div class="gftVal"><!--149,500-->
+                                        ${gift_money}원 +
                                     </div>
-                                    <div class="gftDesc">
-                                        [세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함
+                                    <div class="gftDesc"><!--[세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함-->
+                                        ${gift_name}
                                     </div>
                                     <ul>
                                         <li>
@@ -754,19 +754,19 @@
                                 </div>
                                 <div class="gftEl soldOut">
                                     <div class="spnLine">
-                                        <span class="slctGft">
+                                        <span class="slctGft"><!--100-->
                                             <i class="fa-solid fa-check"></i>
-                                            100개 선택
+                                            ${gift_sold_qty}개 선택
                                         </span>
-                                        <span class="slctRmn">
-                                            선착순 마감
+                                        <span class="slctRmn"><!--0개라서 마감이라는 글자로 변경해주어야 함-->
+                                            ${gift_curr_qty}
                                         </span>
                                     </div>
-                                    <div class="gftVal">
-                                        34,500원 +
+                                    <div class="gftVal"><!--34,500-->
+                                        ${gift_money}원 +
                                     </div>
-                                    <div class="gftDesc">
-                                        [얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함
+                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함-->
+                                        ${gift_name}
                                     </div>
                                     <ul>
                                         <li>
@@ -785,19 +785,19 @@
                                 </div>
                                 <div class="gftEl soldOut">
                                     <div class="spnLine">
-                                        <span class="slctGft">
+                                        <span class="slctGft"><!--50-->
                                             <i class="fa-solid fa-check"></i>
-                                            50개 선택
+                                            ${gift_sold_qty}개 선택
                                         </span>
-                                        <span class="slctRmn">
-                                            선착순 마감
+                                        <span class="slctRmn"><!--0개라서 마감이라는 글자로 변경해주어야 함-->
+                                            ${gift_curr_qty}
                                         </span>
                                     </div>
-                                    <div class="gftVal">
-                                        35,500원 +
+                                    <div class="gftVal"><!--35,500-->
+                                        ${gift_money}원 +
                                     </div>
-                                    <div class="gftDesc">
-                                        [얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함
+                                    <div class="gftDesc"><!--[얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함-->
+                                        ${gift_name}
                                     </div>
                                     <ul>
                                         <li>
@@ -1230,15 +1230,15 @@
                                             <div class="gftEl">
                                                 <div class="spnLine">
                                                     <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
+                                                        <i class="fa-solid fa-check"></i><!--2개-->
                                                         2개 선택
                                                     </span>
-                                                    <span class="slctRmn">
+                                                    <span class="slctRmn"><!--28개-->
                                                         28개 남음
                                                     </span>
                                                 </div>
-                                                <div class="gftVal">
-                                                    29,800원 +
+                                                <div class="gftVal"><!--29,800원-->
+                                                    29800원 +
                                                 </div>
                                                 <div class="gftDesc">
                                                     [텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함
@@ -1261,15 +1261,15 @@
                                             <div class="gftEl">
                                                 <div class="spnLine">
                                                     <span class="slctGft">
-                                                        <i class="fa-solid fa-check"></i>
+                                                        <i class="fa-solid fa-check"></i><!--15개-->
                                                         15개 선택
                                                     </span>
                                                     <span class="slctRmn">
                                                         5개 남음
                                                     </span>
                                                 </div>
-                                                <div class="gftVal">
-                                                    51,100원 +
+                                                <div class="gftVal"><!--51,100원-->
+                                                    51100원 +
                                                 </div>
                                                 <div class="gftDesc">
                                                     [얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함
