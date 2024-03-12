@@ -6,8 +6,9 @@ import lombok.Data;
 @Data
 @Builder
 public class ProjectTemplate {
-    private String thumb_nail_img;
+    private String pj_id;
+    private String thumbnail_img_url;
     private String category;
-    private String sel_name;
-    private String short_title;
+    private String long_title;
+    private String funding_percentage;
 }

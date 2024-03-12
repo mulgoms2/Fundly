@@ -4,5 +4,5 @@ import com.fundly.user.dto.UserProfileDto;
 import com.persistence.dto.UserDto;
 
 public interface UserHistService {
-    int userHistinsert(UserProfileDto userProfileDto);
+    int userHistinsert(UserProfileDto userProfileDto, String pwd_mod_yn);
 }

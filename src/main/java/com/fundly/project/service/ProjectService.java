@@ -11,6 +11,8 @@ public interface ProjectService {
 
     List<ProjectDto> getListByStatus(String status);
 
+    List<ProjectDto> getListByCategory(String category);
+
     ProjectDto add(ProjectAddRequest pjAddReq);
 
     StoryForm updatePjStory(StoryForm storyForm);

@@ -15,6 +15,23 @@
     margin: auto 0;
 }
 
+.nowNowPwdWrap, .chaPwdMainWrap, .chaPwdConfirmWrap, .pTagChaDetailWrap {
+    width: 328px;
+    border: 1px solid rgb(230, 230, 230);
+    color: rgb(13, 13, 13);
+    background: rgb(255, 255, 255);
+    padding: 0px 12px;
+    max-height: 44px;
+    min-width: 100px;
+    display: flex;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.015em;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 1px;
+}
+
 /* email */
 .mailChkeckV{
     color: rgb(0, 200, 142);
@@ -37,7 +54,7 @@
 .userNowPwdDetail{
     /*display: flex;*/
 }
-.msgPwd {
+.msgPwd, .msgPhone {
     color: red;
     font-size: 14px;
 }
@@ -58,25 +75,12 @@
     margin : 0px 0px 10px
 }
 
-.nowNowPwdWrap, .chaPwdMainWrap, .chaPwdConfirmWrap {
-    width: 328px;
-    border: 1px solid rgb(230, 230, 230);
-    color: rgb(13, 13, 13);
-    background: rgb(255, 255, 255);
-    padding: 0px 12px;
-    max-height: 44px;
-    min-width: 100px;
-    display: flex;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: -0.015em;
-    -webkit-box-align: center;
-    align-items: center;
-    border-radius: 1px;
-}
-
 .chaPwdMainWrap {
     margin-bottom: 10px;
+}
+
+.chaPwdmargin{
+    margin-top: 12px;
 }
 
 .txtInput {
@@ -103,9 +107,6 @@
     text-decoration: underline;
 }
 
-.chaPwdmargin{
-    margin-top: 12px;
-}
 
 .userNowPwdDetail{
     font-family: 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -120,6 +121,7 @@
 }
 
 /* phone */
+
 .pTagDetailPhoneNo{
     display: none;
 }
@@ -128,6 +130,12 @@
     color: rgb(0, 200, 142);
     display: flex;
 }
+
+/*#userPhoneValue{*/
+/*    width: auto;*/
+/*    height: 42px;*/
+/*    border: 1px solid rgb(230, 230, 230);*/
+/*}*/
 
 .phoneChkeckV svg {
     margin: 0px 6px 0px 0px;

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="q" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,7 @@
         <nav class="lftWrap">
             <ul class="lnb">
                 <li>
-                    <a href="#" class="">회원관리</a>
+                    <a href="<c:url value='/admin/list'/>" class="">게시판관리</a>
                     <ul class="sub">
                         <li>
                             <a href="#">회원정보</a>
@@ -106,28 +107,34 @@
         <p class="tit">게시판 관리</p>
     </div>
     <div class="sttBox">
-<%--        <div class="lftBox">--%>
-<%--            <span class="sttBlue">선물 전달 중</span>--%>
-<%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
-<%--            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>--%>
-<%--        </div>--%>
+        <div>
+            <form action="<c:url value='/admin/search' />" method="post">
+                <input type="text" name="news_title" value="">
+                <button type="submit">검색</button>
+
+            </form>
+        </div>
         <div class="rgtLink">
             <a href="#">자세히 보기</a>
         </div>
     </div>
     <div class="btnWrap">
         <div class="lftBtngrp">
-            <a href="#">
+            <a href="<c:url value='/admin/projectList'/>">
                 <i class="fa-regular fa-comments"></i>
-                <span>보도 자료</span>
+                <span>전체</span>
             </a>
-            <a href="#">
+            <a href="<c:url value='/admin/projectStatus?pj_status=심사대기중'/>">
                 <i class="fa-solid fa-location-dot fa-lg"></i>
-                <span>공지사항</span>
+                <span>심사대기중</span>
             </a>
-            <a href="#">
+            <a href="<c:url value="/admin/projectStatus?pj_status=반려"/> ">
                 <i class="fa-solid fa-gift fa-lg"></i>
-                <span>이벤트</span>
+                <span>반려</span>
+            </a>
+            <a href="<c:url value="/admin/projectStatus?pj_status=승인"/> ">
+                <i class="fa-solid fa-gift fa-lg"></i>
+                <span>승인</span>
             </a>
         </div>
         <div class="rgtBtngrp">
@@ -142,38 +149,60 @@
         <div class="tbWrap">
             <table>
                 <tr>
-                    <th>게시물번호</th>
-                    <th>제목</th>
+                    <th>프로젝트아이디</th>
+                    <th>짧은제목</th>
                     <th>등록자</th>
-                    <th>조회수</th>
-                    <th>등록일시</th>
-                    <th>수정일시</th>
-                    <th>숨김여부</th>
-                    <th><button id="write" onclick="location.href=' <c:url value='/admin/write'/>'">글쓰기</button> </th>
+                    <th>카테고리</th>
+                    <th>심사요청일시</th>
+                    <th>프로젝트상태</th>
+                    <th></th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
-<%--                <td colspan="9">--%>
-<%--                    <p class="noData">데이터가 없습니다</p>--%>
-<%--                </td>--%>
+                <%--                <td colspan="9">--%>
+                <%--                    <p class="noData">데이터가 없습니다</p>--%>
+                <%--                </td>--%>
 
-                <c:forEach var="NewsDto" items="${NewsList}">
+                <c:forEach var="ProjectDto" items="${projectList}">
+                    <form id="form_${ProjectDto.pj_id}" method="post" action="<c:url value="/admin/projectStatus"/>">
+                    <input type="hidden" name="pj_id" value="${ProjectDto.pj_id}">
                     <tr>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_seq}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_title}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_id}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.news_view_cnt}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.mod_dtm!=null? NewsDto.mod_dtm :NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}'/>">${NewsDto.hid_yn}</a></td>
+                        <td>${ProjectDto.pj_id}</td>
+                        <td><a href="">${ProjectDto.pj_short_title}</a></td>
+                        <td><a href="">${ProjectDto.pj_sel_id}</a></td>
+                        <td><a href="">${ProjectDto.ctg}</a></td>
+                        <td><a href="">${ProjectDto.pj_reg_dtm}</a></td>
+                        <td><a href="">${ProjectDto.pj_status}</a></td>
+                        <td>
+                            <select id="pj_status" name="pj_status" class="statusSelect">
+                                <option value="승인" ${ProjectDto.pj_status eq '승인' ? 'selected' : ''}>승인</option>
+                                <option value="반려" ${ProjectDto.pj_status eq '반려' ? 'selected' : ''}>반려</option>
+                                <option value="심사대기중" ${ProjectDto.pj_status eq '심사대기중' ? 'selected' : ''}>심사대기중</option>
+                            </select>
+                        </td>
+                        <td><button type="button" onclick="submitForm('${ProjectDto.pj_id}')">제출</button></td>
                     </tr>
+                    </form>
+
                 </c:forEach>
             </table>
         </div>
     </div>
+
 </div>
 <footer>
     <p>@Copyright 2024. 텀블벅 관리자 사이트 All Rights Reserved.</p>
 </footer>
 
+<script>
+    function submitForm(pj_id) {
+        var formId = "form_" + pj_id;
+        var form = document.getElementById(formId);
+        // var selectedOption = document.querySelector('#' + formId + ' select[name="pj_status"]').value;
+        // var message = selectedOption + " 하시겠습니까?";
+        if (confirm(" 선택된 프로젝트상태를 변경하시겠습니까?")) {
+            form.submit();
+        }
+    }
+</script>
 </body>
 </html>
