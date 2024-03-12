@@ -1,5 +1,6 @@
 const selectStrBtn = document.querySelector('.selectStr');
 const selectBox = document.querySelector('#timeSelect');
+const options = document.querySelectorAll('option');
 const datepicker = document.querySelector('.datepicker');
 let today = new Date();
 const saveBtn = document.querySelector('button.save');
@@ -15,7 +16,16 @@ const incomeDay = document.querySelector('span.payIn');
 
 
 window.onload = function(){
-    inputCheck(goalMoney); //일단은 강제로 input이벤트를 발생시킬 수가 없어서 이렇게 처리.
+    inputCheck(goalMoney); //일단은 강제로 input이벤트를 발생시킬 수가 없어서 이렇게 처리.(3자리 comma 및 수수료 계산)
+
+    //
+    for(option of options){
+        //select의 value에 el을 쓰는 것 만으로는 해당 value를 가지는 option이 알아서 selected되진 않아서
+        //onload시 반영되게 했다.
+        if(option.value === startTime.value){
+            option.selected = true;
+        }
+    }
 
     //datepicker의 요소 혹은 이벤트를 쓸 때는 vanilla js가 아닌 jquery로 써야 적용되어서 어쩔 수 없이 혼용
     $('#dateInput').daterangepicker({
@@ -273,30 +283,6 @@ const isNull = function(item){
 
 
 
-
-//두 날짜 사이의 날들을 배열로 반환하는 함수
-// const getDateRange = function (startDate, lastDate){ //from startDate(포함x) to lastDate
-//     let dateRange = []
-//     let tmp = new Date(startDate.getTime())
-//     tmp.setDate(tmp.getDate()+1)
-//     while(tmp <= lastDate){
-//         dateRange.push(tmp.toISOString().substring(0,10))
-//         tmp.setDate(tmp.getDate()+1)
-//     }
-//     console.log(dateRange)
-//     return dateRange;
-// }
-
-
-
-//(전제 : 공휴일 api를 이용해 공휴일 데이터를 미리 db에 저장해둔다.)
-//daterangepicker에서 apply이벤트가 발생하면
-//서버로 결제 종료일 정보를 보내고,
-//db에서 결제 종료일+30일의 내의 공휴일 list를 받아온다.
-//
-//결제 종료일의 요일에 따라 7일 내에 포함된 주말의 수가 달라지므로 분기처리 필요
-//결제 종료일 + (주말제외 7일)에 해당하는 날짜를 배열(arr)로 만들기
-//결제 종료일 + (주말제외 7일)인 date
 
 
 

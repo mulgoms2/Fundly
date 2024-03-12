@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,8 +82,8 @@ public class ItemController {
     //아이템을 등록하기
     @PostMapping("/item")
     @ResponseBody
-    public ResponseEntity<?> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result){ //아이템 등록
-
+    public ResponseEntity<?> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result, ProjectDto projectDto, @SessionAttribute String user_email){ //아이템 등록
+        String pj_id = projectDto.getPj_id();
 
         log.error("binding result={}",result);
         log.error("**** error codes ****");
@@ -103,10 +102,10 @@ public class ItemController {
         }
 
         try { // 유효성 검사에 통과한 경우
-            itemDto.setPj_id("pj1"); //지금은 하드코딩이지만 나중에 현 프로젝트 아이디를 넣어줘야함.
-            itemDto.setDba_reg_id("asdf"); //원래는 세션에서 얻어온 아이디를 넣어줘야한다.
+            itemDto.setPj_id(pj_id); //지금은 하드코딩이지만 나중에 현 프로젝트 아이디를 넣어줘야함.
+            itemDto.setDba_reg_id(user_email); //원래는 세션에서 얻어온 아이디를 넣어줘야한다.
             if(itemService.registerItem(itemDto)==1){
-                List<ItemDto> list = itemService.getItemList("pj1");
+                List<ItemDto> list = itemService.getItemList(pj_id);
                 System.out.println("list = " + list);
                 return new ResponseEntity<>(list, HttpStatus.OK);
             } else {
@@ -163,14 +162,14 @@ public class ItemController {
 
     @DeleteMapping("/item")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> removeItem(Integer item_id, HttpSession session){
+    public ResponseEntity<List<ItemDto>> removeItem(Integer item_id, @SessionAttribute String user_email, ProjectDto projectDto){
 //        System.out.println("itemDto = " + itemDto);
 //        System.out.println("itemDto.getItem_id() = " + itemDto.getItem_id());
 
         //아이디가 일치해야만 아이템 삭제가 가능하도록
         //String id = (String)session.getAttribute("id"); 원래는 session으로부터 로그인 아이디를 얻어와야함
-        String id = "asdf";
-        String pj_id = "pj1";
+        String id = user_email;
+        String pj_id = projectDto.getPj_id();
         try {
             int rowCnt = itemService.remove(item_id);
             System.out.println("rowCnt = " + rowCnt);
@@ -210,7 +209,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping("/items")
+    @GetMapping("/items") //선물페이지에서 드롭다운 체크박스로 선택한 아이템을 가져오는 메서드
     @ResponseBody
     public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){ //Dto로 넘겨주도록 수정
         System.out.println("item_id = " + item_id);

@@ -1,24 +1,21 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.service.GiftService;
 import com.fundly.project.service.ItemService;
+import com.fundly.project.service.ProjectService;
+import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -26,28 +23,38 @@ import java.util.UUID;
 @Slf4j
 @Controller
 @RequestMapping("/project")
-//@InitBinder메서드가 있어도 그냥 클래스에 @RestController붙여도 되나?
+@SessionAttributes("projectDto")
 public class GiftController {
     ItemService itemService;
     GiftService giftService;
     MessageSource messageSource;
-//    ObjectMapper objectMapper;
+    ProjectService projectService;
+
+
 
     @Autowired
-    GiftController(ItemService itemService, GiftService giftService, MessageSource messageSource) {
+    GiftController(ItemService itemService, GiftService giftService, ProjectService projectService, MessageSource messageSource) {
         this.itemService = itemService;
         this.giftService = giftService;
         this.messageSource = messageSource;
-//        this.objectMapper = new ObjectMapper();
-//        this.objectMapper.registerModule(new JavaTimeModule());
+        this.projectService = projectService;
     }
 
+    @ModelAttribute("projectDto")
+    ProjectDto initProjectEditor(@SessionAttribute String user_email) {
+        try {
+            return projectService.getEditingProject(user_email);
+        } catch (ProjectNotFoundException e) {
+            return null;
+        }
+    }
     @GetMapping("/gift")
     @ResponseBody
-    public ResponseEntity<?> getGiftList(String pj_id) {
-        log.error("\n\n pj_id={} \n\n",pj_id);
+//    public ResponseEntity<?> getGiftList(String pj_id) {
+    public ResponseEntity<?> getGiftList(ProjectDto projectDto) {
+        log.error("\n\n pj_id={} \n\n",projectDto.getPj_id());
         try{
-            List<GiftForm> list = giftService.getAllGiftList(pj_id);
+            List<GiftForm> list = giftService.getAllGiftList(projectDto.getPj_id());
             log.error("\n\n list={} \n\n",list);
             return new ResponseEntity<List<GiftForm>>(list, HttpStatus.OK);
         } catch(Exception e){
@@ -73,11 +80,10 @@ public class GiftController {
     //선물 등록하기
     @PostMapping("/gift")
     @ResponseBody
-    public ResponseEntity<?> registerGift(@RequestBody @Valid GiftForm giftForm, BindingResult result, HttpSession session){
+    public ResponseEntity<?> registerGift(@RequestBody GiftForm giftForm, BindingResult result, ProjectDto projectDto, @SessionAttribute String user_email){
         log.error("\n\n giftForm={}\n\n",giftForm);
-        String pj_id = "pj1"; //하드코딩. 나중에 바꿔주기
-        //String id = (String)session.getAttribute("id");
-        String id = "asdf"; //하드코딩. 세션으로부터 id 얻어오는 것으로 바꾸기.
+        String pj_id = projectDto.getPj_id(); //하드코딩. 나중에 바꿔주기
+        String id = user_email; //하드코딩. 세션으로부터 id 얻어오는 것으로 바꾸기.
         String gift_id = UUID.randomUUID().toString();
         //GiftRegister시에 Tx로 GiftItemDetailDto에 insert가 함께 발생, 즉 gift_id가 미리 존재해야한다. (ai라면 다시 꺼내기 애매함)
 
@@ -180,15 +186,15 @@ public class GiftController {
         }
     }
 
-    @InitBinder
-    public void dataBind(WebDataBinder binder){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        binder.registerCustomEditor(LocalDateTime.class, new CustomDateEditor(df,false));
-        //이건 item이 아니라 gift쪽에서 날짜 입력받을 때 쓰기.
-
-        binder.setValidator(new GiftValidator());
-        List<Validator> validatorList = binder.getValidators();
-        log.error("validatorList = {}",validatorList);
-    }
+//    @InitBinder
+//    public void dataBind(WebDataBinder binder){
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//        binder.registerCustomEditor(LocalDateTime.class, new CustomDateEditor(df,false));
+//        //이건 item이 아니라 gift쪽에서 날짜 입력받을 때 쓰기.
+//
+//        binder.setValidator(new GiftValidator());
+//        List<Validator> validatorList = binder.getValidators();
+//        log.error("validatorList = {}",validatorList);
+//    }
 
 }
