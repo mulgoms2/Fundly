@@ -73,6 +73,8 @@ public class ItemController {
     @GetMapping("/editor/reward")
     public String makeGift(Model m, ProjectDto projectDto) throws Exception {
         log.error("\n\n(itemController) projectDto={}\n\n", projectDto);
+        m.addAttribute("pj_pay_due_dtm",projectDto.getPj_pay_due_dtm().toLocalDate());
+        m.addAttribute("pj_id", projectDto.getPj_id());
 
         return "project.reward";
     }

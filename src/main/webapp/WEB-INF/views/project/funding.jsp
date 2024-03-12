@@ -79,8 +79,8 @@
                                 </div>
                                 <div class="startH">
                                     <p class="tit">시작시간</p>
-                                    <button class="selectStr" type="button"><span>${empty fundingForm.fund_str_tm? '시작 시간을 선택해주세요' : fundingForm.fund_str_tm}</span><i class="fas fa-solid fa-chevron-down"></i></button>
-                                    <select id="timeSelect" class="hidden" name="startTime" value="">
+                                    <button class="selectStr" type="button"><span>${empty fundingForm.fund_str_tm ? '시작 시간을 선택해주세요' : fundingForm.fund_str_tm}</span><i class="fas fa-solid fa-chevron-down"></i></button>
+                                    <select id="timeSelect" class="hidden" name="startTime" value="${fundingForm.fund_str_tm}">
                                         <i class="fas fa-solid fa-chevron-down"></i>
 <%--                                        fontawsome 이거 왜 적용이 안되지--%>
 

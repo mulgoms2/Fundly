@@ -97,7 +97,7 @@ window.onload = function(){
         //유효성 검사를 통과한 formData를 얻어온다.
         const validForm = validFormCheck();
         if(!validForm) alert('양식에 맞추어 다시 입력해주세요')
-        //console.log('validForm')
+        console.log('validForm')
         console.log(validForm)
         fetch('/project/editor/funding',{
             method:"POST",
@@ -219,29 +219,38 @@ const validFormCheck = function() {
         return false;
     } else {
         validForm.fund_goal_money = money
+        console.log(validForm)
     }
 
     //펀딩 시작일, 종료일 체크
+    //date-picker의 형식은 yyyy-mm-dd인데, model에 담겨오는 fundingForm은 yyyy-mm-ddTHH:mm:ss
+    //format때문에 fundingForm 수정 요청이 매끄럽게 넘어가지 못함
     let fund_str_dtm = datepicker.getAttribute('data-str_dtm')
     let fund_end_dtm = datepicker.getAttribute('data-end_dtm')
     let str_tm = startTime.value;
 
-    // str_tm = (str_tm[1] === ':' ? '0' + str_tm : str_tm); //el에서 자릿수를 맞추고 싶었는데 문자열 결합이 안돼서(0이 숫자로 계산됨) js로 처리
-    // el로 처리완
+    fund_str_dtm = new Date(fund_str_dtm)
+    fund_end_dtm = new Date(fund_end_dtm)
 
-    fund_str_dtm = fund_str_dtm + 'T' + str_tm + ':00'//펀딩 시작일+펀딩 시작 시간을 합한다.
-    fund_end_dtm = fund_end_dtm + 'T' + "23:59:59"
+    fund_str_dtm = fund_str_dtm.toISOString().substring(0,10) + 'T' + str_tm + ':00'
+    fund_end_dtm = fund_end_dtm.toISOString().substring(0,10) + 'T' + '23:59:59'
+
+    console.log(fund_str_dtm)
+    console.log(fund_end_dtm)
+    console.log(str_tm)
 
     if (isNull(fund_str_dtm) || isNull(fund_end_dtm) || isNull(str_tm)
             || !regexDateTime.test(fund_end_dtm) || !regexDateTime.test(fund_str_dtm)) return false; //입력되지 않으면 유효성 체크 탈락
     validForm.fund_str_dtm = fund_str_dtm;
     validForm.fund_end_dtm = fund_end_dtm;
-    validForm.fund_str_tm = startTime.value;
+    validForm.fund_str_tm = str_tm;
+    console.log(validForm)
 
 
     //예상 결제 종료일, 정산 예정일
     let pj_pay_due_dtm = payEndDay.innerText
     let fund_calc_due_dtm = incomeDay.innerText
+
 
     pj_pay_due_dtm = pj_pay_due_dtm + 'T' + "23:59:59"
     fund_calc_due_dtm = fund_calc_due_dtm + 'T' + "23:59:59"
@@ -251,6 +260,7 @@ const validFormCheck = function() {
 
     validForm.pj_pay_due_dtm = pj_pay_due_dtm
     validForm.fund_calc_due_dtm = fund_calc_due_dtm
+    console.log(validForm)
 
     console.log('validForm')
     console.log(validForm);
