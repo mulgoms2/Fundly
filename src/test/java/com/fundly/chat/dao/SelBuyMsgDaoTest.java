@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Transactional
 @SpringJUnitWebConfig(classes = {RootContext.class, ServletContext.class})
@@ -31,9 +32,9 @@ public class SelBuyMsgDaoTest {
         assertEquals(0, selBuyMsgDao.count());
 
         chatRequest = ChatRequest.builder()
-                .pj_id("asdf")
-                .buy_id("123")
-                .build();
+                                 .pj_id("asdf")
+                                 .buy_id("123")
+                                 .build();
 
         assertEquals(1, selBuyMsgDao.makeChatRoom(chatRequest));
     }
@@ -44,11 +45,11 @@ public class SelBuyMsgDaoTest {
     public void selectChatRoomTest() {
 //        given
 //        when
-        SelBuyMsgDto selBuyMsgDto = selBuyMsgDao.selectChatRoom(chatRequest);
+        SelBuyMsgDto chatRoom = selBuyMsgDao.selectChatRoom(chatRequest);
 //        then
 
 
-        assertEquals(selBuyMsgDto.getBuy_id(), "123");
-        assertEquals(selBuyMsgDto.getPj_id(), "asdf");
+        assertThat(chatRoom.getUser_id()).isEqualTo("123");
+        assertThat(chatRoom.getPj_id()).isEqualTo("asdf");
     }
 }
