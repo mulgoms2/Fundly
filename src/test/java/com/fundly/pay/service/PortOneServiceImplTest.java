@@ -7,7 +7,9 @@ import com.fundly.pay.dto.payment.PaymentResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import com.fundly.pay.dto.token.TokenResponseDto;
+import com.fundly.pay.model.PayDao;
 import com.fundly.pay.model.PayMeansDao;
+import com.persistence.dto.PayDto;
 import config.RootContext;
 import config.ServletContext;
 import lombok.SneakyThrows;
@@ -34,6 +36,9 @@ class PortOneServiceImplTest {
     @Autowired
     PayMeansDao payMeansDao;
 
+    @Autowired
+    PayDao payDao;
+
     @Value("${PAY_CARD_NO}")
     private String PAY_CARD_NO;
 
@@ -51,12 +56,15 @@ class PortOneServiceImplTest {
     String payMeansId = "";
     PaymentRequestDto paymentRequestDto;
     BillKeyRequestDto billKeyRequestDto;
+    String orderListId = "";
 
     @BeforeEach
     @SneakyThrows
     @DisplayName("테스트 수행 전 초기화")
     void init() {
+        orderListId = payDao.selectOrderListId(userId);
         payMeansId = payMeansDao.selectPayMeansId(userId);
+        payDao.insertIntoOrder(PayDto.builder().order_list_id(orderListId).pay_means_id(payMeansId).build());
 
         // 빌링키 발급 & 삭제 RequestDto 생성
         billKeyRequestDto = BillKeyRequestDto.builder()
@@ -90,7 +98,7 @@ class PortOneServiceImplTest {
     @Test
     @DisplayName("결제")
     void requestPayTest() {
-        paymentRequestDto.setMerchant_uid("requestPayTest_99999");
+        paymentRequestDto.setMerchant_uid(orderListId);
 
         ResponseEntity<PaymentResponseDto> paymentResponseDto = portOneService.requestPay(paymentRequestDto, authToken);
         assertEquals(paymentResponseDto.getStatusCodeValue(), 200);
@@ -100,7 +108,7 @@ class PortOneServiceImplTest {
     @Test
     @DisplayName("결제 취소")
     void cancelPayTest() {
-        paymentRequestDto.setMerchant_uid("cancelPayTest_99999");
+        paymentRequestDto.setMerchant_uid(orderListId);
 
         // 결제
         ResponseEntity<PaymentResponseDto> paymentResponseDto = portOneService.requestPay(paymentRequestDto, authToken);
