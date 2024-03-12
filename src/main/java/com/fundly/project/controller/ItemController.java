@@ -1,8 +1,11 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.service.GiftService;
 import com.fundly.project.service.ItemService;
+import com.fundly.project.service.ProjectService;
 import com.persistence.dto.ItemDto;
+import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -12,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -26,15 +27,17 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/project")
+@SessionAttributes("projectDto")
 public class ItemController {
     ItemService itemService;
     GiftService giftService;
-
+    ProjectService projectService;
     MessageSource messageSource;
     @Autowired
-    ItemController(ItemService itemService, GiftService giftService, MessageSource messageSource){
+    ItemController(ItemService itemService, GiftService giftService, ProjectService projectService, MessageSource messageSource){
         this.itemService = itemService;
         this.giftService = giftService;
+        this.projectService = projectService;
         this.messageSource = messageSource;
     }
 
@@ -54,22 +57,24 @@ public class ItemController {
 //        return "project.reward";
 //    }  //try-catch
 
+    @ModelAttribute("projectDto")
+    ProjectDto initProjectEditor(@SessionAttribute String user_email) {
+        try {
+            return projectService.getEditingProject(user_email);
+        } catch (ProjectNotFoundException e) {
+            return null;
+        }
+    }
+
+
 
 
     // 아이템+선물 페이지
     @GetMapping("/editor/reward")
-    public String makeGift(Model m, HttpSession session) throws Exception { //global catcher에서 예외처리
-        //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
-        //뷰단에서는 itemDtoList가 empty면 보여줄 화면과 empty가 아니면 보여줄 화면이 나뉨.
-
-//        List<ItemDto> itemList = itemService.getItemList("pj1");
-//        System.out.println("itemList = " + itemList);
-//        m.addAttribute("itemList",itemList); //비동기로 서버로 데이터를 요청할거라 처음 뷰에 데이터를 넘겨주지도 않아도 됨.
-
-//        throw new Exception("global catcher test");
-
-        //session.setAttribute("pj_id","90d85c31-cfe0-4410-b148-e0f9d2abcd3c");
-        //프로젝트 계획 컨트롤러에서 pj_id를 꺼내 쓰기 위해 임시로 하드코딩 담아둔것.
+    public String makeGift(Model m, ProjectDto projectDto) throws Exception {
+        log.error("\n\n(itemController) projectDto={}\n\n", projectDto);
+        m.addAttribute("pj_pay_due_dtm",projectDto.getPj_pay_due_dtm().toLocalDate());
+        m.addAttribute("pj_id", projectDto.getPj_id());
 
         return "project.reward";
     }
@@ -239,16 +244,16 @@ public class ItemController {
         }
     }
 
-    @InitBinder
-    public void dataBind(WebDataBinder binder){
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(df,false));
-        // 이건 item이 아니라 gift쪽에서 날짜 입력받을 때 쓰기.
-
-        binder.setValidator(new ItemValidator());
-//        binder.addValidators(new GiftValidator()); //giftValidator
-        List<Validator> validatorList = binder.getValidators();
-        log.error("validatorList = {}",validatorList);
-    }
+//    @InitBinder
+//    public void dataBind(WebDataBinder binder){
+////        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+////        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(df,false));
+//        // 이건 item이 아니라 gift쪽에서 날짜 입력받을 때 쓰기.
+//
+//        binder.setValidator(new ItemValidator());
+////        binder.addValidators(new GiftValidator()); //giftValidator
+//        List<Validator> validatorList = binder.getValidators();
+//        log.error("validatorList = {}",validatorList);
+//    }
 
 }
