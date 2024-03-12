@@ -18,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -104,7 +105,7 @@ public class MyPageController {
             UserDto dto = UserDto.builder().user_email(user_email).user_id(user_email).build();
             UserDto userInfo = userInfoService.userInfo(dto);
             String userjoindateView = userInfoService.userJoindate(dto);
-            String user_profileImg = getCookieValue(request,"user_profileImg");
+            String user_profileImg = URLDecoder.decode(getCookieValue(request,"user_profileImg"),"UTF-8") ;
 
             model.addAttribute("userInfo",userInfo);
             model.addAttribute("userjoindateView",userjoindateView);

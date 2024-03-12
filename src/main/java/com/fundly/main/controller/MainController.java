@@ -17,6 +17,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 @Slf4j
 @Controller
@@ -31,7 +33,12 @@ public class MainController {
 
         String user_email = getCookieValue(request,"user_email");
         String sessionemail = (String)(session.getAttribute("user_email"));
-        String user_profileImg = getCookieValue(request,"user_profileImg");
+        String user_profileImg = null;
+        try {
+            user_profileImg = URLDecoder.decode(getCookieValue(request,"user_profileImg"),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
 
         if(sessionemail== null && user_email != null){
             session.setAttribute("user_email",user_email);
