@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class HolidayAPIServiceImpl implements HolidayAPIService {
@@ -35,13 +37,24 @@ public class HolidayAPIServiceImpl implements HolidayAPIService {
     }
 
     @Override
-    public List<HolidayDto> getFullHolidayList() throws Exception{
+    public List<HolidayDto> getFullHolidayList() {
         List<HolidayDto> list = holidayMapper.selectAll();
+        //Mapper에서 DataAccessException 발생 가능(runtimeException)
+        //이 에러에 대한 정보를 가공해서 알려주어야 하나? 아니면
         return list;
     }
 
     public List<HolidayDto> getHolidayList(LocalDateTime pj_pay_due_dtm){
         List<HolidayDto> list = holidayMapper.selectHolidays(pj_pay_due_dtm);
         return list;
+    }
+
+    public static List<String> getHolidayNameList(List<HolidayDto> dtolist){
+        //내부에서 service인스턴스를 쓰지 않아서 static 메서드로 선언함
+
+        //매개변수 유효성 체크
+        dtolist = Objects.requireNonNull(dtolist, "List<HolidayDto>타입의 매개변수가 null입니다.");
+
+        return dtolist.stream().map(HolidayDto::getHolidayDate).collect(Collectors.toList());
     }
 }
