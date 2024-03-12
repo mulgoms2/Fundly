@@ -1,5 +1,6 @@
 package com.fundly.user.model;
 
+import com.fundly.project.model.ProjectMapper;
 import com.fundly.user.dto.LikeProjectDto;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
@@ -31,6 +32,8 @@ class LikeDaoTest {
 
     @Autowired
     LikeDao likedao;
+    @Autowired
+    ProjectMapper pjdao;
     UserDto userdto;
     ProjectDto pjdto;
     LikeDto likedto;
@@ -50,9 +53,9 @@ class LikeDaoTest {
     void start() {
 
         userdto = UserDto.builder().user_id("bada").build();
-        pjdto = ProjectDto.builder().pj_id("P1010").build();
+        pjdto = ProjectDto.builder().pj_id("P1010").pj_status("012006").build();
         likedto = LikeDto.builder().user_id(userdto.getUser_id()).pj_id(pjdto.getPj_id()).build();
-        log.error("\n\n\n" + likedto);
+        log.debug("\n\n\n" + likedto);
 
     }
     @Test
@@ -91,7 +94,7 @@ class LikeDaoTest {
 
         List<LikeDto> likes = likedao.AllLikeList(likedto);
         assertTrue(likes.size()==2);
-        log.error("\n\n\n" + likes);
+        log.debug("\n\n\n" + likes);
 
         // 첫번째 좋아요 취소 후 다시 좋아요
         assertTrue(likedao.cancelLike(likedto)==1);
@@ -101,7 +104,7 @@ class LikeDaoTest {
         // 다시 좋아요한 프로젝트가 먼저인지 순서 확인
         List<LikeDto> likes2 = likedao.AllLikeList(likedto);
         assertTrue(likes.size()==2);
-        log.error("\n\n\n" + likes2);
+        log.debug("\n\n\n" + likes2);
 
 
     }
@@ -113,7 +116,7 @@ class LikeDaoTest {
 
         assertTrue(likedao.insertLike(likedto)==1);
         LikeDto result = likedao.checkLike(likedto);
-        log.error("\n\n\n" + result);
+        log.debug("\n\n\n" + result);
 
     }
 
@@ -160,7 +163,7 @@ class LikeDaoTest {
         map.put("offset",1);
         map.put("pageSize", 10);
         List<LikeDto> result = likedao.selectPage(map);
-        log.error("\n\n\n" + result);
+        log.debug("\n\n\n" + result);
     }
 
     @Test
@@ -168,10 +171,12 @@ class LikeDaoTest {
     @DisplayName("프로젝트-좋아요테이블 조인테스트")
     void test() {
         assertTrue(likedao.insertLike(likedto)==1);
+        assertTrue(pjdao.insert(pjdto)==1);
+        log.debug("\n\n\n" + likedao.checkLike(likedto) + "\n\n\n");
 
-        List<LikeProjectDto> res = likedao.AllLikeListWithPj(likedto.getUser_id());
-        System.out.println("[[[[조인테스트 출력]]]] " + res);
-        
+        List<LikeProjectDto> res = likedao.AllLikeListWithPj("bada");
+        log.debug("\n\n\n[res]" + likedao.AllLikeListWithPj("bada") + "\n\n\n");
+
         int like_status = res.get(0).getLike_status();
         System.out.println("res_like_status = " + like_status);
 
