@@ -22,7 +22,7 @@ const radioBtns = document.querySelector('.pjBox.gift').querySelectorAll('input[
 const maxInputs = document.querySelectorAll('.maxInput');
 const pjForm = document.querySelector('.pjBox.item').querySelector('.pjForm');
 const giftInitBtn = document.querySelector("#gftInit"); //선물 초기화 버튼
-const giftCnclBtn = document.querySelector("#gftModCncl"); //선물 초기화 버튼
+const giftCnclBtn = document.querySelector("#gftModCncl"); //선물 수정 취소 버튼
 const giftSaveBtn = document.querySelector("#gftSave"); //선물 저장버튼
 const giftModBtn = document.querySelector("#gftMod"); //선물 수정버튼
 
@@ -789,7 +789,7 @@ const mkItmDrop = function (arr) {
         list += '<input type="checkbox" class="checkedItem" onchange="changeFoot()" data-item_id=' + itm.item_id + '>'
         list += '<div>'
         list += '<span>' + itm.item_name + ' (' + itm.item_option_type + ') </span>'
-        list += '<em>0개의 선물에 포함됨</em>'
+        // list += '<em>0개의 선물에 포함됨</em>'
         list += '</div>'
         list += '</li>'
     }
@@ -1048,9 +1048,9 @@ const noOffset = function(date){
 }
 
 const calcDate = function(elem){
-    const hidden = elem.parentElement.querySelector('input[type=hidden]')
-    console.log(hidden);
-    let from = new Date(hidden.value);
+    const payDay = document.querySelector('#payDay')
+    console.log(payDay);
+    let from = new Date(payDay.innerText);
     console.log("before from")
     console.log(from)
     const shipDate = document.querySelector('#shipDate');
@@ -1267,7 +1267,9 @@ const removeGift = function(elem){
             const giftArr = data //서버로부터 giftList를 받아옴
             const giftList = document.querySelector('#giftList')
             //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
+            giftInit();//수정 눌렀다가 삭제했을 경우, 수정form을 초기화시켜주지 않으면 선물은 삭제됐는데 수정form은 남아있는 상태가 되므로 초기화 필수.
             showList(mkGiftList(giftArr),giftList);
+
 
         })
         .catch(error => error).then(error => {
@@ -1577,8 +1579,8 @@ const init = function () {
 const giftInit = function(){
     //checkbox 해제 및 selectItm 감추기
     const checkedElems = document.querySelectorAll('input[type=checkbox]:checked');
-    //console.log("checkedElems")
-    //console.log(checkedElems);
+    console.log("checkedElems")
+    console.log(checkedElems);
     for(elem of checkedElems){
         elem.checked = false;
     }
@@ -1778,11 +1780,12 @@ const giftValidCheck = function(){
     }else if(shipCalc<1 || shipCalc>1825){
         return false;
     }
-    let payDay = document.querySelector('#payDay').value;
-    payDay = noOffset(new Date(payDay));
+    let payDay = document.querySelector('#payDay');
+    payDay = noOffset(new Date(payDay.innerHTML));
     // console.log(payDay);
     // console.log(typeof payDay);
-    validForm.pj_pay_due_dtm = payDay.toISOString().substring(0,19);
+    validForm.pj_pay_due_dtm = payDay.toISOString().substring(0,19); //이건 여기서 생성하는 값이 아니다.
+    // validForm.pj_pay_due_dtm = payDay.innerHTML; 이건 여기서 생성하는 값이 아니다.
     //사실 이 모든게 datepicker에서 iso String형식으로 날짜를 넘기길래 따라한건데..
     //offset은 내가 생각못한 변수였다. 이렇게까지 불편하게 iso String을 써야하는 근본적인 이유가 있나?
 

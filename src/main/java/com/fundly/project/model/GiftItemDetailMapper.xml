@@ -37,7 +37,7 @@
     <insert id="insert" parameterType="GiftItemDetailDto">
         INSERT INTO pj_gift_item_detail
             (gift_id, item_id, item_qty, item_name)
-        VALUES (#{gift_id},#{item_id},#{item_qty},(select item_name from pj_item_tmp where item_id = #{item_id}))
+        VALUES (#{gift_id},#{item_id},#{item_qty},(select item_name from pj_item where item_id = #{item_id}))
     </insert>
 
 
