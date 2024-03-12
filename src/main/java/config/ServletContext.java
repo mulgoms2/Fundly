@@ -17,6 +17,9 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com", "com.fundly"},
@@ -24,6 +27,9 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Service.class, Repository.class, Mapper.class})
 )
 public class ServletContext implements WebMvcConfigurer {
+
+    Path root = Paths.get(System.getProperty("user.name"));
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         WebMvcConfigurer.super.configureViewResolvers(registry);
@@ -45,7 +51,8 @@ public class ServletContext implements WebMvcConfigurer {
         registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/lemon/fundly/img/", "file:/Users/dobigulbi/fundly/img/");
 
 //        registry.addResourceHandler("/img/*").addResourceLocations("file:///C:/Users/fundly/img/");
-        registry.addResourceHandler("/user/img/*").addResourceLocations("file:///C:/Users/USER/fundly/img/", "file:/Users/bada/desktop/나JAVA봐라/");
+
+        registry.addResourceHandler("/user/img/*").addResourceLocations("file:///C:/Users/"+root+"/fundly/img/", "file:/Users/"+root+"/fundly/img/");
 
         registry.addResourceHandler("/chat/img/*").addResourceLocations("file:/Users/dobigulbi/fundly/chat/img/");
         registry.addResourceHandler("/fundly/project/img/*").addResourceLocations("file:/Users/dobigulbi/fundly/project/img/");
