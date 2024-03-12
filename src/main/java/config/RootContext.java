@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 @Configuration
 @MapperScan(basePackages = {"com.fundly.**.model", "com.**.dao"})
 @PropertySource(value = {"/WEB-INF/config/db.properties", "/WEB-INF/config/mailPro.properties", "/WEB-INF/config/pay.properties"})
-@PropertySource(value = {"/WEB-INF/config/payTest.properties"})
+//@PropertySource(value = {"/WEB-INF/config/payTest.properties"})
 @ComponentScan(basePackages = "com.fundly", excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Controller.class ))
 @EnableTransactionManagement
 public class RootContext {
