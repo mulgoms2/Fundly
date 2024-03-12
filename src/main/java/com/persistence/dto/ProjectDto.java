@@ -3,7 +3,6 @@ package com.persistence.dto;
 import com.fundly.project.controller.FundingForm;
 import com.fundly.project.controller.StoryForm;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -150,9 +149,8 @@ public class ProjectDto {
                 .build();
 
         return fundingForm.calcFundPeriod()
-                .calcFundRange().calcFundStrTime()
-                .dtmToString();
-//        return fundingForm.calcFundRange();
+                .calcFundStrTime().dtmToString();
+
     }
 
     public static StoryForm toStoryForm(ProjectDto project) {

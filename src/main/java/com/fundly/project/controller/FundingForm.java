@@ -7,10 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -18,20 +18,29 @@ import java.time.format.DateTimeFormatter;
 @Builder
 @Slf4j
 public class FundingForm {
+    @NotNull
     private BigInteger fund_goal_money;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fund_str_dtm;
+
     private String fund_str_tm;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fund_end_dtm;
+
     private int fund_period = 0;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime pj_pay_due_dtm;
-    private String pj_pay_dtm_string;
+
+    private String pj_pay_dtm_string; //편의를 위해 (el에서 바로 쓰려고)
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fund_calc_due_dtm;
-    private String calc_due_dtm_string="";
-    private String fund_range ="";
+
+    private String calc_due_dtm_string=""; //편의를 위해 (el에서 바로 쓰려고)
+    //private String fund_range ="";
 
     public FundingForm calcFundPeriod(){
         if(fund_str_dtm!=null && fund_end_dtm!=null){
@@ -42,13 +51,13 @@ public class FundingForm {
         }
         return this;
     }
-    public FundingForm calcFundRange(){
-        if(fund_str_dtm!=null && fund_end_dtm!=null) {
-            this.fund_range = this.fund_str_dtm.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    + "~" + this.fund_end_dtm.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        }
-        return this;
-    }
+//    public FundingForm calcFundRange(){
+//        if(fund_str_dtm!=null && fund_end_dtm!=null) {
+//            this.fund_range = this.fund_str_dtm.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+//                    + "~" + this.fund_end_dtm.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//        }
+//        return this;
+//    }
 
     public FundingForm calcFundStrTime(){
         if(fund_str_dtm!=null) {

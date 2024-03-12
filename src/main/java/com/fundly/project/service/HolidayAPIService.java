@@ -13,4 +13,5 @@ public interface HolidayAPIService {
 
     List<HolidayDto> getFullHolidayList() throws Exception;
     List<HolidayDto> getHolidayList(LocalDateTime pj_pay_due_dtm) throws Exception;
+    //List<String> getHolidayNameList(List<HolidayDto> dtolist);
 }

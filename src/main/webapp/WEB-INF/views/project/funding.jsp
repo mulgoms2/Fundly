@@ -127,7 +127,7 @@
                                         <br>7일째 되는 날 입금됩니다.</p>
                                 </div>
                                 <div class="payIn">
-                                    <p class="ntc">정산예정일 : <span class="payIn">${fundingForm.calc_due_dtm_string}</span></p> <!-- N영업일을 구하는 쿼리? JS에서 보여주기? 어쨌든 이 정보도 저장을 해야.. -->
+                                    <p class="ntc">정산예정일 : <span class="payIn">${fundingForm.calc_due_dtm_string}</span></p>
                                 </div>
                             </div>
                         </li>
