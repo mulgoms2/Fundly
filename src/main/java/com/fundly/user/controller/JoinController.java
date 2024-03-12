@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,12 +80,6 @@ public class JoinController {
     public String UserJoinFailException(Model model, UserJoinFailException e){
         log.error("UserJoinFailException {\n " + e.getMessage() +" }\n ");
         model.addAttribute("errorMsg",e.getMessage());
-        return "user/error";
-    }
-    @ExceptionHandler({SQLException.class})
-    public String SQLException(Model model, SQLException e) {
-        log.error("SQLException {\n " + e.getMessage() +" }\n ");
-        model.addAttribute("errorMsg","서버 오류입니다. 관리자에게 문의해주세요.");
         return "user/error";
     }
     @ExceptionHandler({RuntimeException.class})
