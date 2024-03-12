@@ -82,6 +82,8 @@ public class LoginController {
 
             if(profileImg !=null){
                 /* cookie add , profile img split... */
+
+                log.error("프로필이미지 값은 " + profileImg);
                 response.addCookie(setCookie("user_profileImg",profileImg.split("/")[5],-1,"/"));
             }
 
