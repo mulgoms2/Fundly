@@ -14,6 +14,11 @@
     width: 100px;
 }
 
+.fontSize {
+    font-size: 15px;
+    font-weight: bold;
+}
+
 #header {
     text-align: center;
     padding: 15px ;

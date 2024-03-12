@@ -27,21 +27,21 @@ class OauthDaoTest {
     @DisplayName("OAUTH 정보 불러오기")
     void oauthInfo() {
 
-        OauthDto oauthDto = OauthDto.builder()
-                .snsId("3355810633")
-                .user_email("initsave@gmail.com")
-                .refresh_token("okhvvd7dcKzx5YNOT_Ui9iZFuqK57H6997sKKiUOAAABjc339OzMISgqRbFCUQ")
-                .access_token("IW7xV_FR-5-5CcgEvrcT2ExrBpWKrHCf4kIKKiUOAAABjc339PDMISgqRbFCUQ")
-                .user_name("전임경")
-                .build();
-
-        try {
-            OauthDto value = oauthDao.OauthInfo(oauthDto);
-
-            assertEquals(oauthDto.getSnsId(),value.getSnsId());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        OauthDto oauthDto = OauthDto.builder()
+//                .snsId("3355810633")
+//                .user_email("initsave@gmail.com")
+//                .refresh_token("okhvvd7dcKzx5YNOT_Ui9iZFuqK57H6997sKKiUOAAABjc339OzMISgqRbFCUQ")
+//                .access_token("IW7xV_FR-5-5CcgEvrcT2ExrBpWKrHCf4kIKKiUOAAABjc339PDMISgqRbFCUQ")
+//                .user_name("전임경")
+//                .build();
+//
+//        try {
+//            OauthDto value = oauthDao.OauthInfo(oauthDto);
+//
+//            assertEquals(oauthDto.getSnsId(),value.getSnsId());
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 

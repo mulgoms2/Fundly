@@ -39,8 +39,6 @@ public class JoinServiceImpl implements JoinService {
 
         if(userJoinDao.emailCheck(userJoinDto)==1){
             // 익셉션에 (에러)에 따른 사용자에게 전달을 구별해서 컨트롤러에서 msg 전달 RuntimeException(x)
-//                throw new RuntimeException("이미 가입된 사용자입니다.");
-//                throw new RuntimeException("JOIN_DUP_ERROR");
             UserJoinFailException e = new UserJoinFailException("이미 가입된 사용자입니다.");
             log.debug("emailCheck(userJoinDto) : {}\n{}", e.getMessage(), e.getStackTrace());
             throw e;
