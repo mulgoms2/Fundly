@@ -33,15 +33,22 @@ public class PayServiceImpl implements PayService {
 
     // 결제테이블 데이터 생성: 주문테이블에서 결제테이블로 데이터 insert
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void createPayRecordFromOrder() {
         try {
             // 주문테이블에서 주문상태 == '주문완료' 데이터를 가져온다.
             List<PayDto> payDtoList = payDao.selectCompletedOrder();
 
             for (PayDto payDto : payDtoList) {
-                // 데이터 세팅 및 결제테이블 insert
-                setUpAndInsertPayRecord(payDto);
+                try {
+                    // 결제테이블 PK setting
+                    payDto.setPay_id(payDao.selectPayId(payDto.getUser_id()));
+                    // 결제테이블 insert
+                    setUpAndInsertPayRecord(payDto);
+                }
+                catch (Exception e) {
+                    // 에러가 발생해도 다음 데이터에 대한 처리가 수행되도록 로그만 출력
+                    log.error("{} : {}\n {}\n", "setUpAndInsertPayRecord(payDto)", e.getMessage(), e.getStackTrace());
+                }
             }
         } catch (Exception e) {
             handleException("createPayRecordFromOrder()", e);
@@ -49,100 +56,111 @@ public class PayServiceImpl implements PayService {
     }
 
     // 결제 메서드
+    // 특정 결제(processPayment)에서 실패가 발생했다고 해도, 이전에 수행완료된 결제 로직이 롤백될 필요가 없기 때문에 트랜잭션 필요 X
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void executePayment() {
         try {
-            // 결제대상을 조회한다.
+            // 결제대상을 조회한다. (결제상태 == '미결제')
             List<PayDto> payDtoList = payDao.selectPayTarget();
             // 결제 로직을 수행한다.
-            processPayment(payDtoList, "결제");
+            for (PayDto payDto : payDtoList) {
+                try {
+                    processPayment(payDto, "결제");
+                } catch (Exception e) {
+                    // 에러가 발생해도 다음 데이터에 대한 처리가 수행되도록 로그만 출력
+                    log.error("{} : {}\n {}\n", "processPayment(payDto, '결제')", e.getMessage(), e.getStackTrace());
+                }
+            }
         } catch (Exception e) {
-            // 예외 처리
             handleException("executePayment()", e);
         }
     }
 
     // 재결제 메서드
+    // 특정 결제(processPayment)에서 실패가 발생했다고 해도, 이전에 수행완료된 결제 로직이 롤백될 필요가 없기 때문에 트랜잭션 필요 X
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void retryPayment() {
         try {
             // 재결제대상을 조회한다.
             List<PayDto> payDtoList = payDao.selectPayRetryTarget();
             // 결제 로직을 수행한다.
-            processPayment(payDtoList, "재결제");
+            for (PayDto payDto : payDtoList) {
+                try {
+                    processPayment(payDto, "재결제");
+                } catch (Exception e) {
+                    // 에러가 발생해도 다음 데이터에 대한 처리가 수행되도록 로그만 출력
+                    log.error("{} : {}\n {}\n", "processPayment(payDto, '재결제')", e.getMessage(), e.getStackTrace());
+                }
+            }
         } catch (Exception e) {
-            // 예외 처리
             handleException("retryPayment()", e);
         }
     }
 
-    // 데이터 세팅 및 결제테이블 insert
-    private void setUpAndInsertPayRecord(PayDto payDto) {
+    // 결제테이블 insert
+    @Override
+    @Transactional // insert()와 updatePayInsertedToY()가 한 번에 수행되어야 하므로 트랜잭션 필요
+    public void setUpAndInsertPayRecord(PayDto payDto) {
         try {
-            // 1. 결제테이블의 PK인 payId를 세팅한다.
-            payDto.setPay_id(payDao.selectPayId(payDto.getUser_id()));
-            // 2. 결제테이블에 insert 한다.
+            // 1. 결제테이블에 insert 한다.
             payDao.insert(payDto);
-            // 3. 주문테이블의 pay_inserted_yn 컬럼의 값을 'Y'로 바꾼다.
+            // 2. 주문테이블의 pay_inserted_yn 컬럼의 값을 'Y'로 바꾼다.
             payDao.updatePayInsertedToY(payDto.getOrder_list_id());
         } catch (Exception e) {
             handleException("setUpAndInsertPayRecord(PayDto payDto)", e);
         }
     }
 
-    // 결제 수행 로직
-    private void processPayment(List<PayDto> payDtoList, String flag) {
-        for (PayDto payDto : payDtoList) {
-            try {
-                // 포트원에 결제 요청을 한다.
-                ResponseEntity<PaymentResponseDto> requestPayResponseDto = requestPayToPortOne(payDto);
-                // 결제 성공
-                if (isPaymentSucessful(requestPayResponseDto)) {
-                    // 결제금액 검증: 요청한 금액과 실제 결제된 금액이 같은지 비교
-                    if (isValidPaymentAmount(payDto.getOrder_pay_money(), requestPayResponseDto.getBody().getResponse().getCancel_amount())) {
-                        // 결제금액 검증에 성공한 경우,
-                        Instant instant = Instant.ofEpochSecond(requestPayResponseDto.getBody().getResponse().getPaid_at()); // Unix Epoch Time을 Instant 객체로 변환
-                        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("UTC")); // Instant를 LocalDateTime으로 변환
-                        // 1) 결제일시 setting
-                        payDto.setPay_dtm(localDateTime);
-                        // 2) 결제상태 == '결제완료'로 update
-                        updatePayStatus(payDto, "결제완료");
-                    } else { // 결제금액 검증에 실패한 경우, 포트원에 결제 취소 요청을 한다.
-                        cancelPayment(payDto, flag);
-                    }
-                } else { // 결제 실패
-                    // 결제상태 == '(재)결제실패'로 update
-                    handleFailedPayment(payDto, String.format("%실패", flag), String.format("% 실패", flag));
+    // 결제 로직
+    @Override
+    public void processPayment(PayDto payDto, String flag) {
+        try {
+            // 1. 포트원에 결제 요청을 한다.
+            ResponseEntity<PaymentResponseDto> requestPayResponseDto = requestPayToPortOne(payDto, flag);
+
+            // 2. 결제금액 검증: 요청한 금액과 실제 결제된 금액이 같은지 비교
+            // 결제금액 검증 성공 시, 결제상태 == '결제완료'로 update
+            if (isValidPaymentAmount(payDto.getPay_money(), requestPayResponseDto.getBody().getResponse().getAmount())) {
+                Instant instant = Instant.ofEpochSecond(requestPayResponseDto.getBody().getResponse().getPaid_at()); // Unix Epoch Time을 Instant 객체로 변환
+                LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("UTC")); // Instant를 LocalDateTime으로 변환
+                // 1) 결제일시 setting
+                payDto.setPay_dtm(localDateTime);
+                // 2) 결제상태 == '결제완료'로 update
+                try {
+                    updatePayStatus(payDto, "결제완료");
+                } catch (Exception e) {
+                    // 결제완료 상태 update 실패 시, 결제 취소 요청
+                    cancelPayment(payDto, flag);
                 }
-            } catch (Exception e) {
-                handleException("processPayment(List<PayDto> payDtoList, String flag)", e);
+            } else { // 결제금액 검증 실패 시, 결제 취소 요청
+                cancelPayment(payDto, flag);
             }
+        } catch (Exception e) {
+            handleException("processPayment(PayDto payDto, String flag)", e);
         }
     }
 
-    // 결제 취소 로직 수행
-    private void cancelPayment(PayDto payDto, String flag) {
-        ResponseEntity<PaymentResponseDto> cancelPayResponseDto = requestCancelPayToPortOne(payDto);
-        // 결제 취소 성공
-        if (isPaymentCancelSuccessful(cancelPayResponseDto)) {
-            // 결제 취소가 되었으면, 결제상태 == '(재)결제취소'로 update
-            handleFailedPayment(payDto, String.format("%s취소", flag), "결제금액 검증 실패: 결제금액 위변조 의심");
-        } else { // 결제 취소 실패
-            // TODO: "결제취소실패"는 따로 결제취소 재시도해야 한다.
-            // 결제상태 == '(재)결제취소실패'로 update
-            handleFailedPayment(payDto, String.format("%s취소실패", flag), String.format("% 취소 실패", flag));
+    // 결제취소 로직
+    @Override
+    public void cancelPayment(PayDto payDto, String flag) {
+        try {
+            // 결제취소 요청
+            requestCancelPayToPortOne(payDto, flag);
+            // 결제취소 성공 시, 결제상태 == '(재)결제실패'로 update
+            handleFailedPayment(payDto, String.format("%s실패", flag));
+        } catch (Exception e) {
+            handleException("cancelPayment(PayDto payDto, String flag)", e);
         }
     }
 
     // 포트원 결제 요청
-    private ResponseEntity<PaymentResponseDto> requestPayToPortOne(PayDto payDto) {
+    @Override
+    public ResponseEntity<PaymentResponseDto> requestPayToPortOne(PayDto payDto, String flag) {
         // 1. 결제요청 시 보낼 객체를 생성한다.
         PaymentRequestDto paymentRequestDto = PaymentRequestDto.builder()
                 .customer_uid(payDto.getPay_means_id())
                 .merchant_uid(payDto.getOrder_list_id())
-                .amount(payDto.getOrder_pay_money())
+                .amount(payDto.getPay_money())
                 .name(payDto.getOrder_list_id())
                 .build();
         try {
@@ -150,14 +168,14 @@ public class PayServiceImpl implements PayService {
             String authToken = portOneService.getToken().getBody().getResponse().getAccess_token();
             // 3. 결제 요청한다.
             return portOneService.requestPay(paymentRequestDto, authToken);
-        } catch (Exception e) {
-            handleException("requestPayToPortOne(PayDto payDto)", e);
+        } catch (Exception e) { // 에러 발생 시, 결제상태 == '(재)결제실패'로 update
+            handleFailedPayment(payDto, String.format("%s실패", flag));
             return null;
         }
     }
 
-    // 포트원 결제 취소 요청
-    private ResponseEntity<PaymentResponseDto> requestCancelPayToPortOne(PayDto payDto) {
+    // 포트원 결제취소 요청
+    private void requestCancelPayToPortOne(PayDto payDto, String flag) {
         // 1. 결제요청 시 보낼 객체를 생성한다.
         PaymentRequestDto paymentRequestDto = PaymentRequestDto.builder()
                 .merchant_uid(payDto.getOrder_list_id())
@@ -166,42 +184,74 @@ public class PayServiceImpl implements PayService {
             // 2. access token 을 발급받는다.
             String authToken = portOneService.getToken().getBody().getResponse().getAccess_token();
             // 3. 결제 취소 요청한다.
-            return portOneService.cancelPay(paymentRequestDto, authToken);
-        } catch (Exception e) {
-            handleException("requestCancelPayToPortOne(PayDto payDto)", e);
-            return null;
+            portOneService.cancelPay(paymentRequestDto, authToken);
+        } catch (Exception e) { // 에러 발생 시, 결제상태 == '(재)결제취소실패'로 update
+            handleFailedPayment(payDto, String.format("%s취소실패", flag));
         }
     }
 
-    // 결제취소 여부 확인
-    private boolean isPaymentCancelSuccessful(ResponseEntity<PaymentResponseDto> paymentResponseDto) {
-        return paymentResponseDto != null && paymentResponseDto.getBody().getResponse().getStatus().equals("cancelled");
-    }
-
-    // 결제 여부 확인
-    private boolean isPaymentSucessful(ResponseEntity<PaymentResponseDto> paymentResponseDto) {
-        return paymentResponseDto != null && paymentResponseDto.getBody().getResponse().getStatus().equals("paid");
-    }
-
     // (재)결제(취소) 실패 처리
-    private void handleFailedPayment(PayDto payDto, String payStatus, String errorMessage) {
-        // 결제상태 update
-        updatePayStatus(payDto, payStatus);
+    private void handleFailedPayment(PayDto payDto, String payStatus) {
+        try {
+            updatePayStatus(payDto, payStatus); // 결제상태 update
+        } catch (Exception e) {}
+
+        String errorMessage = String.format("%s - 결제ID: %s, 주문ID: %s, 결제수단: %s, 결제금액: %s",
+                payStatus, payDto.getPay_id(), payDto.getOrder_list_id(), payDto.getPay_means_id(), payDto.getPay_money());
+
         throw new RuntimeException(errorMessage);
     }
 
     // 결제상태 update
-    private void updatePayStatus(PayDto payDto, String payStatus) {
+    @Override
+    @Transactional // updatePayStatus()와 insertPayHistory()가 한 번에 수행되어야 하므로 트랜잭션 필요
+    public void updatePayStatus(PayDto payDto, String payStatus) {
         payDto.setPay_status(payStatus);
         try {
-            payDao.updatePayStatus(payDto);
+            payDao.updatePayStatus(payDto); // 결제상태 update
+            payDto.setPay_status_hist_id(payDao.selectPayStatusHistId(payDto.getUser_id())); // 결제상태이력 PK
+            payDto.setDba_mod_dtm(payDao.selectPayModDtm(payDto.getPay_id())); // 결제상태 udpate 시각 조회
+            payDao.insertPayHistory(payDto); // 결제상태이력 테이블에 insert
         } catch (Exception e) {
+            // 앞에 결제로직이 수행되었는데 결제상태만 update되지 않은 경우는 어떻게 해야 하나? 일단 로그를 남기자.
             handleException("updatePayStatus(PayDto payDto, String payStatus)", e);
         }
     }
 
     // 결제금액 검증 메서드 : 결제되어야 하는 금액과 실제 결제된 금액이 일치하는지 검증
-    private boolean isValidPaymentAmount(BigInteger amountToBePaid, BigInteger amount) {
+    public boolean isValidPaymentAmount(BigInteger amountToBePaid, BigInteger amount) {
         return amount.equals(amountToBePaid);
+    }
+
+    // ---------------------------- Transaction Test Methods >.< ----------------------------
+    // 결제테이블 insert
+    @Transactional // insert()와 updatePayInsertedToY()가 한 번에 수행되어야 하므로 트랜잭션 필요
+    public void setUpAndInsertPayRecordForTest(PayDto payDto) {
+        try {
+            // 1. 결제테이블에 insert 한다.
+            payDao.insert(payDto);
+            // 2. 주문테이블의 pay_inserted_yn 컬럼의 값을 'Y'로 바꾼다.
+            payDao.updatePayInsertedToY(payDto.getOrder_list_id());
+
+            throw new RuntimeException("this is intentional error!"); // 트랜잭션 테스트를 위해 의도적인 에러 발생
+        } catch (Exception e) {
+            handleException("setUpAndInsertPayRecord(PayDto payDto)", e);
+        }
+    }
+
+    // 결제상태 update
+    @Transactional // updatePayStatus()와 insertPayHistory()가 한 번에 수행되어야 하므로 트랜잭션 필요
+    public void updatePayStatusForTest(PayDto payDto, String payStatus) {
+        payDto.setPay_status(payStatus);
+        try {
+            payDao.updatePayStatus(payDto); // 결제상태 update
+            payDto.setDba_mod_dtm(payDao.selectPayModDtm(payDto.getPay_id())); // 결제상태 udpate 시각 조회
+            payDao.insertPayHistory(payDto); // 결제상태이력 테이블에 insert
+
+            throw new RuntimeException("this is intentional error!"); // 트랜잭션 테스트를 위해 의도적인 에러 발생
+        } catch (Exception e) {
+            // 앞에 결제로직이 수행되었는데 결제상태만 update되지 않은 경우는 어떻게 해야 하나? 일단 로그를 남기자.
+            handleException("updatePayStatus(PayDto payDto, String payStatus)", e);
+        }
     }
 }
