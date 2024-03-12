@@ -33,12 +33,7 @@ public class MainController {
 
         String user_email = getCookieValue(request,"user_email");
         String sessionemail = (String)(session.getAttribute("user_email"));
-        String user_profileImg = null;
-        try {
-            user_profileImg = URLDecoder.decode(getCookieValue(request,"user_profileImg"),"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        String user_profileImg = getCookieValue(request,"user_profileImg");
 
         if(sessionemail== null && user_email != null){
             session.setAttribute("user_email",user_email);
@@ -49,7 +44,6 @@ public class MainController {
         UserDto userInfo = userInfoService.userInfo(UserDto.builder().user_email(user_email).build());
         model.addAttribute("userInfo",userInfo);
         model.addAttribute("user_profileImg",user_profileImg);
-
 
         return "main.index";
     }
@@ -62,7 +56,16 @@ public class MainController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
-                    return cookie.getValue();
+                    if(cookie.getName().equals(cookieName) && cookieName.equals("user_profileImg"))
+                    {
+                        try {
+                            return URLDecoder.decode(cookie.getValue(),"UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }else{
+                        return cookie.getValue();
+                    }
                 }
             }
         }

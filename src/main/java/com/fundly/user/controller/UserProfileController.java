@@ -70,18 +70,16 @@ public class UserProfileController {
 //        String user_email = (String)session
 
         String user_email = (String)(session.getAttribute("user_email"));
+        String user_profileImg = getCookieValue(request,"user_profileImg");
 
 //        log.info("user_email = " + user_email + "\n\n");
 //        log.info("user_profileImg = " + user_profileImg + "\n\n");
 
         UserDto userInfo = null;
-        String user_profileImg = null;
         try {
-
-            user_profileImg = URLDecoder.decode(getCookieValue(request,"user_profileImg"),"UTF-8") ;
             userInfo = userInfoService.userInfo(UserDto.builder().user_email(user_email).build());
 
-//            log.info("userInfo = " + userInfo + "\n\n");
+            log.info("userInfo = " + userInfo + "\n\n");
 
         } catch (Exception e) {
 
@@ -91,8 +89,8 @@ public class UserProfileController {
         model.addAttribute("userInfo",userInfo);
         model.addAttribute("user_profileImg",user_profileImg);
 
-//        log.error("유저 정보는 ? " + userInfo);
-//        log.error(" 이미지 주소 값은 ? : "+user_profileImg);
+        log.error("유저 정보는 ? " + userInfo);
+        log.error(" 이미지 주소 값은 ? : "+user_profileImg);
 
         return "user/settingProfile";
     }
@@ -200,7 +198,16 @@ public class UserProfileController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
-                    return cookie.getValue();
+                    if(cookie.getName().equals(cookieName) && cookieName.equals("user_profileImg"))
+                    {
+                        try {
+                            return URLDecoder.decode(cookie.getValue(),"UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }else{
+                        return cookie.getValue();
+                    }
                 }
             }
         }

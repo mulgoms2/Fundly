@@ -116,16 +116,22 @@ changePwd.addEventListener("click",()=> {
     const pTagbeforePwd = document.querySelector('.pTagbeforePwd');
     const pTagDetailPwd = document.querySelector('.pTagDetailPwd');
     init();
+    document.getElementById('userPhoneValue').value = '';
+    setMessage('', "pTagChaDetailWrap", "msgPhoneNo", "rgb(230, 230, 230)");
     changeBtn(changePwd,pTagbeforePwd,pTagDetailPwd);
 });
+
+// changePhoneNo.addEventListener("click",()=> {
 
 changePhoneNo.addEventListener("click",()=> {
     const pTagbeforePhoneNo = document.querySelector('.pTagbeforePhoneNo');
     const pTagDetailPhoneNo = document.querySelector('.pTagDetailPhoneNo');
-    const userNameValue = document.getElementById('userNameValue');
-    init();
+    // const userPhoneValue = document.getElementById('userPhoneValue');
+
+    document.getElementById('userPhoneValue').value = '';
+    setMessage('', "pTagChaDetailWrap", "msgPhoneNo", "rgb(230, 230, 230)");
+
     changeBtn(changePhoneNo,pTagbeforePhoneNo,pTagDetailPhoneNo);
-    // userNameValue.style.border = "1px solid rgb(230, 230, 230)";
 });
 
 
@@ -208,7 +214,7 @@ phonenosave.addEventListener("click",()=> {
             return response.json()
         })
         .then((userInfo) => {
-            init();
+            // init();
             changePhoneNo.click();
             document.querySelector('.pTagChaDetailPhoneNo').innerText=userInfo.user_phone_no;
             alert('전화번호가 성공적으로 수정되었습니다.');

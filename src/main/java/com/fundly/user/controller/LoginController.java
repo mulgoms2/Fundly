@@ -25,6 +25,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,11 +120,10 @@ public class LoginController {
             }
 
             if(access_token!=null){
-                response.addCookie(setCookie("kat","",0,"/"));
                 return "redirect:/oauth/logout";
             }
 
-            response.getWriter().println("<script>alert('로그 아웃되었습니다.');</script>");
+//            response.getWriter().println("<script>alert('로그 아웃되었습니다.');</script>");
             return "redirect:/";
         } catch (Exception e) {
             log.error("Exception error : " + e.getMessage());
@@ -137,7 +139,16 @@ public class LoginController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
-                    return cookie.getValue();
+                    if(cookie.getName().equals(cookieName) && cookieName.equals("user_profileImg"))
+                    {
+                        try {
+                            return URLDecoder.decode(cookie.getValue(),"UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }else{
+                        return cookie.getValue();
+                    }
                 }
             }
         }
@@ -158,7 +169,10 @@ public class LoginController {
 
     // cookie key/value setting
     public Cookie setCookie(String cookieKey, String cookieValue, int maxAge, String path){
-        Cookie cookie = new Cookie(cookieKey,cookieValue);
+        String encodedValue = null;
+        try { encodedValue = URLEncoder.encode(cookieValue, "UTF-8"); }
+        catch (UnsupportedEncodingException e) { throw new RuntimeException(e); }
+        Cookie cookie = new Cookie(cookieKey,encodedValue);
         cookie.setMaxAge(maxAge); // 쿠키를 삭제
         cookie.setPath(path);
 
