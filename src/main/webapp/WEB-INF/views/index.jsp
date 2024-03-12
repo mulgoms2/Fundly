@@ -1,7 +1,7 @@
 <%--<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page session ="false"%>
+<%@ page session="false" %>
 
 <%--<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : user_name}"/>--%>
 
@@ -120,34 +120,34 @@
     </div>
     <div class="rGt">
         <div class="gRd"><!--Grid를 이용하기 위해 div로 한번 더 묶어줌-->
-            <div class="banBox"><!--1번 배너-->
-                <div class="mnBan">
-                    <div class="banImg">
-                        <a href="#">
-                            <img src="/static/img/mnban01.webp" alt="">
-                        </a>
-                    </div>
-                    <div class="faLike">
-                        <button class="likeBtn"><!--하트 처리 미완성-->
+            <div id="ban1" class="banBox"><!--1번 배너-->
+                <%--                <div class="mnBan">--%>
+                <%--                    <div class="banImg">--%>
+                <%--                        <a href="#">--%>
+                <%--                            <img src="/static/img/mnban01.webp" alt="">--%>
+                <%--                        </a>--%>
+                <%--                    </div>--%>
+                <%--                    <div class="faLike">--%>
+                <%--                        <button class="likeBtn"><!--하트 처리 미완성-->--%>
 
-                        </button>
-                    </div>
-                </div>
-                <div class="banTxt">
-                    <div class="txtGr">
-                        <div class="subTxt">
-                            <span>
-                                <a href="#">아트북디자인더하트</a>
-                            </span>
-                        </div>
-                        <div class="subTit">
-                            <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>
-                        </div>
-                        <div class="pstTag">
-                            <span>557% 달성</span>
-                        </div>
-                    </div>
-                </div>
+                <%--                        </button>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
+                <%--                <div class="banTxt">--%>
+                <%--                    <div class="txtGr">--%>
+                <%--                        <div class="subTxt">--%>
+                <%--                            <span>--%>
+                <%--                                <a href="#">아트북디자인더하트</a>--%>
+                <%--                            </span>--%>
+                <%--                        </div>--%>
+                <%--                        <div class="subTit">--%>
+                <%--                            <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>--%>
+                <%--                        </div>--%>
+                <%--                        <div class="pstTag">--%>
+                <%--                            <span>557% 달성</span>--%>
+                <%--                        </div>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
             </div>
             <div class="banBox"><!--2번 배너-->
                 <div class="mnBan">
@@ -341,9 +341,8 @@
         </div>
     </div>
 </div>
+<script src="/static/main/index.js"></script>
 <script>
-
-    /* errmsg redirect */
     const errmsg = "${errmsg}";
     if (errmsg === "USER_ERROR") alert("로그인 확인해 주세요.");
 </script>
