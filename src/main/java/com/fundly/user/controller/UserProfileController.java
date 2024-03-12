@@ -47,8 +47,10 @@ import java.util.*;
 @Controller
 @RequestMapping("/user")
 public class UserProfileController {
-    String IMG_SAVE_LOCATION = "/Users/bada/desktop/나JAVA봐라/";
-//    String IMG_SAVE_LOCATION = "/Users/USER/fundly/img/";
+    Path root = Paths.get(System.getProperty("user.name"));
+
+//    String IMG_SAVE_LOCATION = "/Users/bada/desktop/나JAVA봐라/";
+    String IMG_SAVE_LOCATION = "/Users/"+root+"/fundly/img/";
 //    String IMG_SAVE_LOCATION = "/fundly/img/";
 //    String IMG_SAVE_LOCATION = "/static/";
 
@@ -118,6 +120,9 @@ public class UserProfileController {
 
         String originFileName = file.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
+
+        log.error(IMG_SAVE_LOCATION + "DDDDDDDDDDDD");
+
         String saveImgUrl = IMG_SAVE_LOCATION + uuid + originFileName;
         String imgname = uuid + originFileName;
         MultipartFile imgFile = file;

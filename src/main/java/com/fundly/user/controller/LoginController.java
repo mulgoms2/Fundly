@@ -1,6 +1,8 @@
 package com.fundly.user.controller;
 
 import com.fundly.user.dto.UserLoginDto;
+import com.fundly.user.exception.UserJoinFailException;
+import com.fundly.user.exception.UserLoinFailException;
 import com.fundly.user.model.UserLoginDao;
 import com.fundly.user.service.LoginService;
 import com.fundly.user.service.UserProfileService;
@@ -9,6 +11,7 @@ import com.persistence.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -25,6 +28,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -50,7 +54,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@Valid UserLoginDto userLoginDto, BindingResult bindingResult, HttpSession session,
-                        HttpServletResponse response, RedirectAttributes rattr) throws Exception {
+                        HttpServletResponse response, RedirectAttributes rattr)   {
         /*
             1. 기존 로그인 정보가 있는가? 있다면 자동으로 로그인 된 값을 가져 와서 화면에 보여준다.
                 - 추후 소셜로그인 정보와 함께 고민
@@ -61,33 +65,28 @@ public class LoginController {
 
         /* userLoginDto valid */
         if(bindingResult.hasErrors()) {
-
-            /*  error value*/
             Map<String, String> validResult = validateHandling(bindingResult);
 
             for (String key : validResult.keySet()) {
                 rattr.addFlashAttribute(key, validResult.get(key));
             }
 
-            log.info("\n\n\n" + userLoginDto +"\n\n\n");
-
             rattr.addFlashAttribute(userLoginDto);
             return "redirect:/login/login";
         }
 
         try {
-            loginService.Login(userLoginDto, session, response);
 
-            String profileImg =userProfileService.getUserProfileImg(FileDto.builder().table_name("user_info").table_key(userLoginDto.getUser_email()).build());
-//            log.error(profileImg.split("/")[5]);
+            loginService.Login(userLoginDto, session, response);
+            String profileImg = userProfileService.getUserProfileImg(FileDto.builder().table_name("user_info").table_key(userLoginDto.getUser_email()).build());
+
             if(profileImg !=null){
                 /* cookie add , profile img split... */
                 response.addCookie(setCookie("user_profileImg",profileImg.split("/")[5],-1,"/"));
             }
 
         } catch (Exception e) {
-//            throw new RuntimeException(e);
-            rattr.addFlashAttribute("errmsg", e.getMessage().split(" ",2)[1]);
+            rattr.addFlashAttribute("errmsg", e.getMessage());
             rattr.addFlashAttribute(userLoginDto);
             return "redirect:/login/login";
         }
@@ -95,24 +94,24 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @GetMapping("/forgetPwd")
+    @GetMapping("/forgetPwd") //TODO : 비밀번호 찾기 할것인가 ?
     public String forgetPwd(){
         return "user/forgetpwd";
     }
 
-    @RequestMapping("/logout")
-    public String logout(HttpSession session, HttpServletResponse response, HttpServletRequest request, RedirectAttributes rattr) throws Exception {
+    @GetMapping("/logout")
+    public String logout(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
 
         try {
             String user_email = (String)(session.getAttribute("user_email"));
             String access_token = getCookieValue(request,"kat");
 
-            if(user_email!="") {
-                session.invalidate();
-
+            if(!Objects.equals(user_email, "")) {
                 response.addCookie(setCookie("user_email","",0,"/"));
                 response.addCookie(setCookie("user_name","",0,"/"));
                 response.addCookie(setCookie("user_profileImg","",0,"/"));
+
+                session.invalidate();
             }
 
             if(access_token!=null){
@@ -123,6 +122,7 @@ public class LoginController {
             response.getWriter().println("<script>alert('로그 아웃되었습니다.');</script>");
             return "redirect:/";
         } catch (Exception e) {
+            log.error("Exception error : " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -163,11 +163,24 @@ public class LoginController {
         return cookie;
     }
 
-    /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */
-    @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class})
-    public String handleException()
-    {
+    /* Exception */
+    @ExceptionHandler({UserLoinFailException.class})
+    public String UserLoinFailException(Model model, UserLoinFailException e){
+        log.error("UserLoinFailException {\n " + e.getMessage() +" }\n ");
+        model.addAttribute("errorMsg",e.getMessage());
         return "user/error";
     }
 
+    @ExceptionHandler({RuntimeException.class})
+    public String RuntimeException(Model model,RuntimeException e) {
+        log.error("RuntimeException {\n " + e.getMessage() +" }\n ");
+        model.addAttribute("errorMsg","잘못된 접근입니다. 관리자에게 문의해주세요.");
+        return "user/error";
+    }
+    @ExceptionHandler({Exception.class})
+    public String Exception(Model model, Exception e) {
+        log.error("Exception {\n " + e.getMessage() +" }\n ");
+        model.addAttribute("errorMsg","잘못된 접근입니다. 관리자에게 문의해주세요.");
+        return "user/error";
+    }
 }

@@ -277,9 +277,6 @@
     /* errmsg redirect */
     const errmsg = "${errmsg}";
     if(errmsg!== "") alert(errmsg);
-    // if (errmsg === "VALID_ERROR") alert("입력된 값을 확인해 주세요.");
-    // if (errmsg === "JOIN_PWD_ERROR") alert("비밀번호를 확인해주세요.");
-    // if (errmsg === "JOIN_DUP_ERROR") alert("이미 가입된 사용자입니다.");
 
     /* valid errorMsg */
     const validUserEmail = '${valid_user_email}';

@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserLoginDao {
-    UserLoginDto selectUser(UserLoginDto userLoginDto) throws Exception;
+    UserLoginDto selectUser(UserLoginDto userLoginDto) ;
 }

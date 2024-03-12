@@ -7,5 +7,5 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public interface LoginService {
-    UserLoginDto Login(UserLoginDto userLoginDto, HttpSession session, HttpServletResponse response) throws Exception;
+    UserLoginDto Login(UserLoginDto userLoginDto, HttpSession session, HttpServletResponse response) ;
 }
