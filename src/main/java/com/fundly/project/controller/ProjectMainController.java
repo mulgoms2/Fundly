@@ -35,6 +35,9 @@ public class ProjectMainController {
         List<ProjectDto> listByCategory = projectService.getListByCategory(category);
 
 //        프로젝트Dto 리스트를 => 프로젝트 템플릿 리스트로 변환
+        if (listByCategory == null)
+            return ResponseEntity.ok(null);
+
         List<ProjectTemplate> pjTemplateList = listByCategory.stream()
                                                              .map(ProjectDto::toProjectTemplate)
                                                              .collect(toList());
