@@ -233,7 +233,7 @@ public class KakaoServiceImpl implements KakaoService {
                 res+=line;
             }
 
-//            log.info("\n\nres = " + res + "\n\n");
+            log.info("\n\n 유저 정보 res = " + res + "\n\n");
 
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(res);
@@ -245,10 +245,15 @@ public class KakaoServiceImpl implements KakaoService {
             String nickname = properties.get("nickname").toString();
             String name = kakao_account.get("name").toString();
 
+            String phone =null;
+            if(kakao_account.get("phone_number")!= null)
+                phone = kakao_account.get("phone_number").toString();
+
             result.put("id", id);
             result.put("email", email);
             result.put("nickname", nickname);
             result.put("name", name);
+            result.put("phone", phone);
 
             br.close();
 
@@ -290,6 +295,50 @@ public class KakaoServiceImpl implements KakaoService {
                 boolean agreed = serviceTermObject.get("agreed").getAsBoolean();
                 result.put(tag,agreed);
             }
+
+            br.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getshipping_address(String access_token) throws IOException {
+
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            URL url = new URL(kakaoApi_Uri + "/v1/user/shipping_address");
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Authorization", "Bearer " + access_token);
+            urlConnection.setRequestMethod("GET");
+
+            int responseCode = urlConnection.getResponseCode();
+            log.info("\n\nresponseCode = " + responseCode + "\n\n");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String line = "";
+            String res = "";
+            while((line=br.readLine())!=null)
+            {
+                res+=line;
+            }
+
+            log.error("데이터 값입니다 : \n\n" + res + "]]] \n\n");
+
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(res, JsonObject.class);
+//            JsonArray serviceTermsArray = jsonObject.getAsJsonArray("service_terms");
+//            for (JsonElement element : serviceTermsArray) {
+////                JsonObject serviceTermObject = element.getAsJsonObject();
+////                JsonObject serviceTermObject = element.getAsJsonObject();
+////                String tag = serviceTermObject.get("tag").getAsString();
+////                boolean agreed = serviceTermObject.get("agreed").getAsBoolean();
+////                result.put(tag,agreed);
+//            }
 
             br.close();
 

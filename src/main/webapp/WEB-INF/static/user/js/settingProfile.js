@@ -20,14 +20,15 @@ changeName.addEventListener("click",()=> {
     userNameValue.style.border = "1px solid rgb(230, 230, 230)";
 });
 
-changeIntro.addEventListener("click",()=> {
+changeIntro?.addEventListener("click",()=> {
     const pTagbeforeIntro = document.querySelector('.pTagbeforeIntro');
     const pTagDetailIntro = document.querySelector('.pTagDetailIntro');
     const introValue = document.getElementById('introValue');
-    document.getElementById('introValue').value= document.querySelector('pre').textContent.trim();
+
+    if(document.querySelector('pre') !== null)
+        document.getElementById('introValue').value= document.querySelector('pre').textContent.trim();
 
     changeBtn(changeIntro,pTagbeforeIntro,pTagDetailIntro);
-
     introValue.style.border = "border: 1px solid rgb(230, 230, 230)";
     introValue.style.resize = "none";
     introValue.style.width = "100%";
@@ -125,7 +126,7 @@ introsave.addEventListener("click",()=> {
 
     const pTagbeforeIntro = document.querySelector('.pTagbeforeIntro');
     const userintro = document.getElementById('introValue').value;
-    // const url = "/user/update";
+    const url = "/user/update";
     const data = {'user_intro': userintro, 'user_email': getCookie('user_email')};
 
     // fetch API를 사용하여 POST 요청 보내기
@@ -152,10 +153,8 @@ introsave.addEventListener("click",()=> {
 
         })
         .catch(error => error).then(error=>{
-
-        // alert(error);
         // 오류 처리
-        // console.error('error msg : ', error)
+        console.error('error msg : ', error)
     })
 });
 
