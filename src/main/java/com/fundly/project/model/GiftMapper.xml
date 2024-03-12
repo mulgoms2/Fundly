@@ -5,18 +5,18 @@
 <mapper namespace="com.fundly.project.model.GiftMapper">
 
     <sql id="selectFromGiftTb">
-        SELECT * from pj_gift_tmp2
+        SELECT * from pj_gift
     </sql>
 
     <!-- (특정 프로젝트의) 모든 선물 갯수 세기 -->
     <select id="count" resultType="int">
-        SELECT count(gift_id) FROM pj_gift_tmp2
+        SELECT count(gift_id) FROM pj_gift
         WHERE pj_id = #{pj_id}
     </select>
 
     <!--    1. (특정 프로젝트의) 선물 등록하기 -->
     <insert id="insert" parameterType="GiftDto">
-        INSERT INTO pj_gift_tmp2
+        INSERT INTO pj_gift
         (gift_id, gift_name,pj_id,gift_qty_lim_yn,gift_total_qty,
          gift_max_qty_per_person, gift_ship_due_date, gift_money,
          gift_curr_qty, dba_reg_id)
@@ -49,7 +49,7 @@
     <!--    선물의 상태 변경-->
     <!--    5. (프로젝트 심사 요청 이전) 선물의 상세 내용 변경 -->
     <update id="updateContentBefore" parameterType="GiftDto">
-        UPDATE pj_gift_tmp2
+        UPDATE pj_gift
         SET gift_name = #{gift_name},
         gift_qty_lim_yn = #{gift_qty_lim_yn},
         gift_total_qty = #{gift_total_qty},
@@ -68,7 +68,7 @@
 
     <!--    6. (프로젝트 진행 중) 특정 선물의 판매 상태 변경 (ex. 판매중 -> 일시품절)  -->
     <update id="updateStatus" parameterType="GiftDto">
-        UPDATE pj_gift_tmp2
+        UPDATE pj_gift
         SET gift_status = #{gift_status},
             dba_mod_dtm = now(),
             dba_mod_id = #{dba_mod_id}
@@ -77,7 +77,7 @@
 
     <!-- 7. (프로젝트 진행 중) 특정 선물의 선물 수량 변경 -->
     <update id="updateQty" parameterType="GiftDto">
-        UPDATE pj_gift_tmp2
+        UPDATE pj_gift
         SET  gift_qty_lim_yn = #{gift_qty_lim_yn},
              gift_total_qty = #{gift_total_qty},
              gift_max_qty_per_person = #{gift_max_qty_per_person},
@@ -89,12 +89,12 @@
     <!--    선물 삭제하기     -->
     <!--  7. 특정 선물 삭제  -->
     <delete id="delete">
-        DELETE FROM pj_gift_tmp2
+        DELETE FROM pj_gift
         WHERE gift_id = #{gift_id}
     </delete>
 
     <delete id="deleteAll">
-        TRUNCATE pj_gift_tmp2
+        TRUNCATE pj_gift
     </delete>
 
 </mapper>

@@ -150,5 +150,8 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.selectLikeCnt(pjdto);
     }
 
-
+    @Override
+    public List<ProjectDto> getListByCategory(String category) {
+        return null;
+    }
 }

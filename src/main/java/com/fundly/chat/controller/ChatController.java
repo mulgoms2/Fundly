@@ -7,8 +7,6 @@ import com.persistence.dto.SelBuyMsgDetailsDto;
 import com.persistence.dto.SelBuyMsgDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,15 +14,14 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 @Controller
@@ -49,12 +46,12 @@ public class ChatController {
 
         SelBuyMsgDto selBuyMsgDto = chatService.joinChatRoom(chatRequest);
 
-        return ResponseEntity.ok().body(selBuyMsgDto);
+        return ResponseEntity.ok()
+                             .body(selBuyMsgDto);
     }
 
     @GetMapping("/chatPop")
     public String joinChatRoom(@Valid @ModelAttribute ChatRequest chatRequest, BindingResult result) {
-
         if (result.hasErrors()) {
 //            로그인 정보를 담지 않은 사용자가 접속시. 로그인후 이용하라는 오류 메시지를 띄운 페이지로 이동한다.
             return "chat/error";
@@ -133,8 +130,10 @@ public class ChatController {
 //    }
 
     private void saveFileToDrive(FileDto uploadFile, HttpServletRequest request) {
-        String originFileName = uploadFile.getFile().getOriginalFilename();
-        String uuid = UUID.randomUUID().toString();
+        String originFileName = uploadFile.getFile()
+                                          .getOriginalFilename();
+        String uuid = UUID.randomUUID()
+                          .toString();
         String local_storage_url = request.getContextPath() + IMG_SAVE_LOCATION + uuid + originFileName;
         String db_saved_img_url = "/chat/img/" + uuid + originFileName;
 

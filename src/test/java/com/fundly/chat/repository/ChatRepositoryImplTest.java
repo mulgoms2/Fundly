@@ -47,7 +47,10 @@ class ChatRepositoryImplTest {
         assertEquals(0, selBuyMsgDao.count());
         assertEquals(0, selBuyMsgDetailsDao.count());
 
-        request = ChatRequest.builder().pj_id("123").buy_id("asdf").build();
+        request = ChatRequest.builder()
+                             .pj_id("123")
+                             .buy_id("asdf")
+                             .build();
     }
 
     @Test
@@ -60,21 +63,28 @@ class ChatRepositoryImplTest {
         SelBuyMsgDto selBuyMsgDto = chatService.joinChatRoom(request);
 
 //        채팅방에 메시지를 저장한다.
-        SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder().room_num(selBuyMsgDto.getRoom_num()).msg_cont("hello").build();
+        SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder()
+                                                         .room_num(selBuyMsgDto.getRoom_num())
+                                                         .msg_cont("hello")
+                                                         .build();
         chatService.saveMessage(message);
         //when
         SelBuyMsgDto chatRoom = chatRepository.getChatRoom(request);
 
         //then
         assertNotNull(chatRoom);
-        assertEquals(false, chatRoom.getMessage_list().isEmpty());
+        assertEquals(false, chatRoom.getMessage_list()
+                                    .isEmpty());
     }
 
     @Test
     @DisplayName("채팅방 만들기 검사")
     void makeChatRoom() throws Exception {
         // given
-        ChatRequest request = ChatRequest.builder().pj_id("123").buy_id("asdf").build();
+        ChatRequest request = ChatRequest.builder()
+                                         .pj_id("123")
+                                         .buy_id("asdf")
+                                         .build();
 
 //        when
         chatRepository.makeChatRoom(request);
@@ -82,7 +92,7 @@ class ChatRepositoryImplTest {
 //        then
         SelBuyMsgDto chatRoom = chatRepository.getChatRoom(request);
 
-        assertEquals(request.getBuy_id(), chatRoom.getBuy_id());
+        assertEquals(request.getBuy_id(), chatRoom.getUser_id());
     }
 
     @Test
@@ -94,7 +104,10 @@ class ChatRepositoryImplTest {
 //        메시지 리스트를 만들어서 넣는다.
 
         for (int i = 0; i < 100; i++) {
-            SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder().room_num(selBuyMsgDto.getRoom_num()).msg_cont("helo" + i).build();
+            SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder()
+                                                             .room_num(selBuyMsgDto.getRoom_num())
+                                                             .msg_cont("helo" + i)
+                                                             .build();
             chatService.saveMessage(message);
         }
 
@@ -110,7 +123,10 @@ class ChatRepositoryImplTest {
         selBuyMsgDao.makeChatRoom(request);
         SelBuyMsgDto selBuyMsgDto = selBuyMsgDao.selectChatRoom(request);
 
-        SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder().room_num(selBuyMsgDto.getRoom_num()).msg_cont("hello").build();
+        SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder()
+                                                         .room_num(selBuyMsgDto.getRoom_num())
+                                                         .msg_cont("hello")
+                                                         .build();
 
         int i = chatRepository.saveMessage(message);
 
@@ -126,13 +142,19 @@ class ChatRepositoryImplTest {
 //        메시지 리스트를 만들어서 넣는다.
 
         for (int i = 0; i < 100; i++) {
-            SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder().room_num(selBuyMsgDto.getRoom_num()).msg_cont("helo" + i).build();
+            SelBuyMsgDetailsDto message = SelBuyMsgDetailsDto.builder()
+                                                             .room_num(selBuyMsgDto.getRoom_num())
+                                                             .msg_cont("helo" + i)
+                                                             .build();
             chatService.saveMessage(message);
         }
 
         List<SelBuyMsgDetailsDto> selBuyMsgDetailsDtos = chatRepository.loadAllMessages(selBuyMsgDto);
 
-        boolean b = selBuyMsgDetailsDtos.stream().peek(e-> System.out.println(e+"\n\n")).anyMatch(message -> !message.getSvr_intime_string().isEmpty());
+        boolean b = selBuyMsgDetailsDtos.stream()
+                                        .peek(e -> System.out.println(e + "\n\n"))
+                                        .anyMatch(message -> !message.getSvr_intime_string()
+                                                                     .isEmpty());
 
         assertEquals(true, b);
     }
