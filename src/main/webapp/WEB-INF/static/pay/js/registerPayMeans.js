@@ -1,3 +1,8 @@
+// 팝업 이동 비활성화
+$.fn.bPopup.defaults = $.extend({}, $.fn.bPopup.defaults, {
+    follow: [false, false]  // 이동 비활성화
+});
+
 $(document).ready(function () {
     // 추가(등록) 버튼 클릭 시 팝업창 open
     $("#payRegBtn, #emptyList").click(function (e) {
@@ -6,8 +11,8 @@ $(document).ready(function () {
     })
 
     // esc 버튼 클릭 시 form 초기화
-    $(document).keydown(function(event) {
-        if ( event.keyCode == 27 || event.which == 27 ) {
+    $(document).keydown(function (event) {
+        if (event.keyCode == 27 || event.which == 27) {
             $('#form')[0].reset();
         }
     });
@@ -15,7 +20,7 @@ $(document).ready(function () {
     // 팝업창 닫기 버튼 클릭 시 form 초기화
     $('.b-close').click(function () {
         $('#form')[0].reset();
-    })
+    });
 
     // Register pop-up form
     let currentYear = new Date().getFullYear();
@@ -52,7 +57,7 @@ $(document).ready(function () {
 
     $('#card_co_info_agree_yn').change(function () {
         $('#card_co_info_agree_yn_err_msg').text(
-            !$(this).prop("checked") ? '결제사 정보제공에 동의하셔야 합니다.': ''
+            !$(this).prop("checked") ? '결제사 정보제공에 동의하셔야 합니다.' : ''
         );
     });
 

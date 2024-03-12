@@ -48,7 +48,66 @@
         <section class="section knowledge-base">
             <h2 class="section-title">주제별 도움말</h2>
             <div class="three collapsible columns">
+                <div class="column">
+                    <h3>텀블벅 기본</h3>
+                    <ul class="article-list">
+                        <c:forEach var="SubHelpDto" items="${subList0}">
+                            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
+                        </c:forEach>
+                    </ul>
 
+                    <a href="<c:url value='/help/detail?sub_help_sort=0'/>">총${count0}개 글 보기</a>
+
+                    <br><br><br><br>
+                </div>
+                <div class="column">
+                    <h3>후원자 질문</h3>
+                    <ul class="article-list">
+                        <c:forEach var="SubHelpDto" items="${subList1}">
+                            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
+                        </c:forEach>
+                    </ul>
+
+                    <a href="<c:url value='/help/detail?sub_help_sort=1'/>">총${count1}개 글 보기</a>
+
+                    <br><br><br><br>
+                </div>
+                <div class="column">
+                    <h3>프로젝트 올리기</h3>
+                    <ul class="article-list">
+                        <c:forEach var="SubHelpDto" items="${subList2}">
+                            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
+                        </c:forEach>
+                    </ul>
+
+                    <a href="<c:url value='/help/detail?sub_help_sort=2'/>">총${count2}개 글 보기</a>
+
+                    <br><br><br><br>
+                </div>
+                <div class="column">
+                    <h3>시작하고 알리기</h3>
+                    <ul class="article-list">
+                        <c:forEach var="SubHelpDto" items="${subList3}">
+                            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
+                        </c:forEach>
+                    </ul>
+
+                    <a href="<c:url value='/help/detail?sub_help_sort=3'/>">총${count3}개 글 보기</a>
+
+                    <br><br><br><br>
+                </div>
+                <div class="column">
+                    <h3>소통하고 전달하기</h3>
+                    <ul class="article-list">
+                        <c:forEach var="SubHelpDto" items="${subList4}">
+                            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
+                        </c:forEach>
+                    </ul>
+
+                    <a href="<c:url value='/help/detail?sub_help_sort=4'/>">총${count4}개 글 보기</a>
+
+                    <br><br><br><br>
+                </div>
 
 <%--    <c:forEach var="subList" items="${subLists}" varStatus="status">--%>
 <%--        <div class="column">--%>
@@ -66,66 +125,24 @@
 <%--    </c:forEach>--%>
             </div>
         </section>
+
+        <section class="section policy">
+            <h2 class="section-title">약관 및 정책</h2>
+            <div class="three collapsible columns">
+                <div class="column">
+                    <ul class="article-list">
+                        <c:forEach var="termTitle" items="${termTitleList}">
+                            <li class="article-list-item article-promoted">
+                                <a href="<c:url value="/termDetail?term_title=${termTitle.term_title}"/> " class="article-list-link">
+                                    ${termTitle.term_title}
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </div>
 </main>
 </body>
-</html>                <div class="column">
-    <h3>텀블벅 기본</h3>
-    <ul class="article-list">
-        <c:forEach var="SubHelpDto" items="${subList0}">
-            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
-        </c:forEach>
-    </ul>
-
-    <a href="<c:url value='/help/detail?sub_help_sort=0'/>">총${count0}개 글 보기</a>
-
-    <br><br><br><br>
-</div>
-<div class="column">
-    <h3>후원자 질문</h3>
-    <ul class="article-list">
-        <c:forEach var="SubHelpDto" items="${subList1}">
-            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
-        </c:forEach>
-    </ul>
-
-    <a href="<c:url value='/help/detail?sub_help_sort=1'/>">총${count1}개 글 보기</a>
-
-    <br><br><br><br>
-</div>
-<div class="column">
-    <h3>프로젝트 올리기</h3>
-    <ul class="article-list">
-        <c:forEach var="SubHelpDto" items="${subList2}">
-            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
-        </c:forEach>
-    </ul>
-
-    <a href="<c:url value='/help/detail?sub_help_sort=2'/>">총${count2}개 글 보기</a>
-
-    <br><br><br><br>
-</div>
-<div class="column">
-    <h3>시작하고 알리기</h3>
-    <ul class="article-list">
-        <c:forEach var="SubHelpDto" items="${subList3}">
-            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
-        </c:forEach>
-    </ul>
-
-    <a href="<c:url value='/help/detail?sub_help_sort=3'/>">총${count3}개 글 보기</a>
-
-    <br><br><br><br>
-</div>
-<div class="column">
-    <h3>소통하고 전달하기</h3>
-    <ul class="article-list">
-        <c:forEach var="SubHelpDto" items="${subList4}">
-            <li class="article-list-item article-promoted"><a class="article-list-link" href="<c:url value='/help/detaildetail?sub_help_seq=${SubHelpDto.sub_help_seq}&sub_help_sort=${SubHelpDto.sub_help_sort}' />">${SubHelpDto.sub_help_title}</a></li>
-        </c:forEach>
-    </ul>
-
-    <a href="<c:url value='/help/detail?sub_help_sort=4'/>">총${count4}개 글 보기</a>
-
-    <br><br><br><br>
-</div>
+</html>

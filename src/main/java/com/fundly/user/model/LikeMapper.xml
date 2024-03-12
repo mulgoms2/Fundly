@@ -11,7 +11,7 @@
     </select>
 
     <select id="checkLike" resultType="LikeDto">
-        select * from LIKE_PJ
+        select like_status from LIKE_PJ
         where user_id = #{user_id}
         and pj_id = #{pj_id}
     </select>
@@ -38,11 +38,18 @@
     <select id="AllLikeListWithPj" resultType="LikeProjectDto">
         select a.*,b.*
         from pj a , like_pj b
-        where a.pj_id = b.pj_id
-          and b.user_id = #{user_id}
-          and a.pj_status = 'ing'
+        where b.user_id = #{user_id}
+          and a.pj_id = b.pj_id
+          and a.pj_status = '012006'
           and b.like_status = 1
         order by b.like_dtm desc
+    </select>
+
+    <select id="getLikeWithPj" resultType="LikeProjectDto">
+        select a.*,b.*
+        from pj a , like_pj b
+        where a.pj_id = #{pj_id}
+          and b.user_id = #{user_id}
     </select>
 
     <delete id="deleteAllLike">

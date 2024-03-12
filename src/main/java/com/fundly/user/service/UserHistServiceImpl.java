@@ -24,12 +24,16 @@ public class UserHistServiceImpl implements UserHistService {
     }
 
     @Override
-    public int userHistinsert(UserProfileDto userProfileDto){
+    public int userHistinsert(UserProfileDto userProfileDto,String pwd_mod_yn){
         try {
             String uuid = UUID.randomUUID().toString();
 
             log.error("userProfileDto.getUser_pwd()"  + userProfileDto.getUser_pwd());
             log.error("userProfileDto.getUser_prev_pwd()"  + userProfileDto.getUser_prev_pwd());
+            log.error("--------------------------------------------------------------------------------------");
+            log.error(userProfileDto.getUser_pwd());
+            log.error(userProfileDto.getUser_prev_pwd());
+            log.error("--------------------------------------------------------------------------------------");
 
             UserHistDto userHistDto = UserHistDto.builder()
                     .user_hist_id(uuid)
@@ -43,7 +47,8 @@ public class UserHistServiceImpl implements UserHistService {
                     .phone_no(userProfileDto.getUser_phone_no())
                     .name(userProfileDto.getUser_name())
                     .email(userProfileDto.getUser_email())
-                    .pwd_mod_yn(Objects.equals(userProfileDto.getUser_pwd(), userProfileDto.getUser_prev_pwd()) ? "N" : "Y")
+                    .pwd_mod_yn(pwd_mod_yn)
+//                    .pwd_mod_yn(Objects.equals(userProfileDto.getUser_pwd(), userProfileDto.getUser_prev_pwd()) ? "N" : "Y")
 //                    .pwd_mod_yn("N")
                     .comments("")
 //                    .dba_reg_dtm(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))

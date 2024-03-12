@@ -19,7 +19,8 @@ import java.util.StringTokenizer;
 @Builder
 @EqualsAndHashCode
 public class ProjectDto {
-//    public enum PJ_STAUS {
+    private static BigInteger curr_money;
+    //    public enum PJ_STAUS {
 //        심사대기(0,1), 진행중(1,2 ), 승인됨(2,3), 반려됨(3,4), 진행중단(4,5), 펀딩종료(5, 6),;
 //        private final Integer step;
 //        private final Integer nextStep;
@@ -87,11 +88,15 @@ public class ProjectDto {
     // t.e에서 첨부하는 이미지들은.... 파일 테이블 이용??
 
     public static ProjectAddResponse toResponseDto(ProjectDto pj) {
-        return ProjectAddResponse.builder().pj_id(pj.getPj_id()).sel_id(pj.getPj_sel_id()).build();
+        return ProjectAddResponse.builder()
+                                 .pj_id(pj.getPj_id())
+                                 .sel_id(pj.getPj_sel_id())
+                                 .build();
     }
 
     public static ProjectTemplate toTemplate(ProjectDto pj) {
-        return ProjectTemplate.builder().build();
+        return ProjectTemplate.builder()
+                              .build();
     }
 
     public static ProjectInfoUpdateResponse toInfoUpdateResponse(ProjectDto project) {
@@ -108,10 +113,10 @@ public class ProjectDto {
 
     public static ProjectCreatorDto toCreatorDto(ProjectDto projectDto) {
         return ProjectCreatorDto.builder()
-                .pj_sel_name(projectDto.getPj_sel_name())
-                .pj_sel_short_intro(projectDto.getPj_sel_short_intro())
-                .pj_prof_image_url(projectDto.getPj_prof_image_url())
-                .build();
+                                .pj_sel_name(projectDto.getPj_sel_name())
+                                .pj_sel_short_intro(projectDto.getPj_sel_short_intro())
+                                .pj_prof_image_url(projectDto.getPj_prof_image_url())
+                                .build();
     }
 
 
@@ -131,7 +136,7 @@ public class ProjectDto {
         this.pj_gift_intro = storyForm.getPj_gift_intro();
     }
 
-    public void updateFunding(FundingForm fundingForm){
+    public void updateFunding(FundingForm fundingForm) {
         this.fund_goal_money = fundingForm.getFund_goal_money();
         this.fund_str_dtm = fundingForm.getFund_str_dtm();
         this.fund_end_dtm = fundingForm.getFund_end_dtm();
@@ -139,29 +144,27 @@ public class ProjectDto {
         this.fund_calc_due_dtm = fundingForm.getFund_calc_due_dtm();
     }
 
-    public static FundingForm toFundingForm(ProjectDto project){
+    public static FundingForm toFundingForm(ProjectDto project) {
         FundingForm fundingForm = FundingForm.builder()
-                .fund_goal_money(project.getFund_goal_money())
-                .fund_str_dtm(project.getFund_str_dtm())
-                .fund_end_dtm(project.getFund_end_dtm())
-                .pj_pay_due_dtm(project.getPj_pay_due_dtm())
-                .fund_calc_due_dtm(project.getFund_calc_due_dtm())
-                .build();
+                                             .fund_goal_money(project.getFund_goal_money())
+                                             .fund_str_dtm(project.getFund_str_dtm())
+                                             .fund_end_dtm(project.getFund_end_dtm())
+                                             .pj_pay_due_dtm(project.getPj_pay_due_dtm())
+                                             .fund_calc_due_dtm(project.getFund_calc_due_dtm())
+                                             .build();
 
-        return fundingForm.calcFundPeriod()
-                .calcFundStrTime().dtmToString();
-
+        return fundingForm.calcFundPeriod().calcFundStrTime().dtmToString();
     }
 
     public static StoryForm toStoryForm(ProjectDto project) {
         StoryForm storyForm = StoryForm.builder()
-                .pj_id(project.getPj_id())
-                .pj_intro(project.getPj_intro())
-                .pj_budget(project.getPj_budget())
-                .pj_sched(project.getPj_sched())
-                .pj_sel_intro(project.getPj_sel_intro())
-                .pj_gift_intro(project.getPj_gift_intro())
-                .build();
+                                       .pj_id(project.getPj_id())
+                                       .pj_intro(project.getPj_intro())
+                                       .pj_budget(project.getPj_budget())
+                                       .pj_sched(project.getPj_sched())
+                                       .pj_sel_intro(project.getPj_sel_intro())
+                                       .pj_gift_intro(project.getPj_gift_intro())
+                                       .build();
 
         storyForm.isEmpty();
         return storyForm;
@@ -178,14 +181,36 @@ public class ProjectDto {
             }
         }
         return ProjectBasicInfo.builder()
-                .pj_id(project.getPj_id())
-                .sel_name(project.getPj_sel_name())
-                .ctg(project.getCtg())
-                .sub_ctg(project.getSub_ctg())
-                .pj_short_title(project.getPj_short_title())
-                .pj_long_title(project.getPj_long_title())
-                .tags(tagList)
-                .build();
+                               .pj_id(project.getPj_id())
+                               .sel_name(project.getPj_sel_name())
+                               .ctg(project.getCtg())
+                               .sub_ctg(project.getSub_ctg())
+                               .pj_short_title(project.getPj_short_title())
+                               .pj_long_title(project.getPj_long_title())
+                               .tags(tagList)
+                               .build();
+    }
+
+    public static ProjectTemplate toProjectTemplate(ProjectDto projectDto) {
+//        펀딩 달성률을 여기서 계산해서 넣어주자.
+        BigInteger goal_money = projectDto.getFund_goal_money();
+        BigInteger curr_money = projectDto.getCurr_fund_money();
+        BigInteger fund_percent;
+        try {
+            fund_percent = curr_money.multiply(BigInteger.valueOf(100L))
+                                     .divide(goal_money);
+        } catch (NullPointerException e) {
+            fund_percent = null;
+        }
+
+
+        return ProjectTemplate.builder()
+                              .pj_id(projectDto.getPj_id())
+                              .thumbnail_img_url(projectDto.getPj_thumbnail_url())
+                              .category(projectDto.getCtg())
+                              .long_title(projectDto.getPj_long_title())
+                              .funding_percentage(String.valueOf(fund_percent))
+                              .build();
     }
 
     public void updateCreatorInfo(ProjectCreatorUpdateRequest request) {
