@@ -1,6 +1,7 @@
 package com.fundly.user.service;
 
 import com.fundly.user.dto.LikeProjectDto;
+import com.fundly.user.dto.LikeRequestDto;
 import com.persistence.dto.LikeDto;
 import com.persistence.dto.ProjectDto;
 
@@ -14,6 +15,12 @@ public interface LikeService {
 
     //    현재 찜한 정보 가져오기
     List<LikeProjectDto> getLikeList(String user_id) throws Exception;
+
+    // 현재 찜한 정보 가져오기 in 상세페이지
+    LikeProjectDto getLike(LikeDto likedto) throws Exception;
+
+    // 현재 프로젝트에 대한 좋아요상태 확인 in 상세페이지
+    LikeDto checkLike(LikeRequestDto likereq) throws Exception;
 
     // 찜한 목록 개수 가져오기
     int getLikeCnt(LikeDto likedto) throws Exception;

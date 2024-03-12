@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
+@Transactional
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class UserJoinDaoTest {
 

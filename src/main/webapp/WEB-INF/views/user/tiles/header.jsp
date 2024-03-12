@@ -22,11 +22,11 @@
             </div>
 
             <div class="userIf" >
-                <div class="infoGr"  id = "loginInfo">
+                <div class="infoGr" id = "loginInfo">
                     <div class="ifImg">
                         <span id="profileImg" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></span>
                     </div>
-                    <div class="ifTxt"id="ifTxt">${loginInfo}</div>
+                    <div class="ifTxt" id="ifTxt">${loginInfo}</div>
                     <div class="MyPageList" id = "MyPageList">
                         <a href="<c:url value='/mypage/profile'/>"><div class="pageItem" id = "Profile">프로필</div></a>
                         <a href="<c:url value='/mypage/coupon'/>"><div class="pageItem" id = "Coupon">응원권</div></a>

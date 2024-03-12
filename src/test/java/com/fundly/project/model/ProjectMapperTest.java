@@ -274,13 +274,13 @@ class ProjectMapperTest {
     @DisplayName("유저의 좋아요 프로젝트 목록중 진행중인 프로젝트 조회하기")
     void selectByStatus() {
         String pj_id;
-        String status = "ing";
+        String status = "012006";
 
 //        조건
-        //프로젝트 테이블에 ing 상태인 프로젝트가 존재한다.
-        project1.setPj_status("ing");
-        project2.setPj_status("ing");
-        project3.setPj_status("end");
+        //프로젝트 테이블에 진행중 상태인 프로젝트가 존재한다.
+        project1.setPj_status("012006");
+        project2.setPj_status("012006");
+        project3.setPj_status("012007"); // 펀딩종료
         projectMapper.insert(project1);
         projectMapper.insert(project2);
         projectMapper.insert(project3);
@@ -288,7 +288,7 @@ class ProjectMapperTest {
         List<ProjectDto> likedList = new ArrayList<>();
 
         for (int i = 1; i <= 3; i++) {
-            ProjectDto likedPj = projectMapper.selectByStatus(String.valueOf(i), "ing");
+            ProjectDto likedPj = projectMapper.selectByStatus(String.valueOf(i), "012006");
 
             if (likedPj != null) {
                 likedList.add(likedPj);

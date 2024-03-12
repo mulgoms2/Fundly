@@ -1531,3 +1531,11 @@ button:disabled {
     line-height: 27px;
     letter-spacing: -0.02em;
 }
+
+/* 요청-응답 전송용 데이터 by은주 */
+.userId {
+    display: none;
+}
+.pjId {
+    display: none;
+}

@@ -47,7 +47,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDto> getListByStatus(String status) {
 
-        return null;
+        return projectMapper.getListByStatus(status);
     }
 
     @Override
