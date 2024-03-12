@@ -36,7 +36,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,8 +54,6 @@ public class UserProfileController {
 
 //    String IMG_SAVE_LOCATION = "/Users/bada/desktop/나JAVA봐라/";
     String IMG_SAVE_LOCATION = "/Users/"+root+"/fundly/img/";
-//    String IMG_SAVE_LOCATION = "/fundly/img/";
-//    String IMG_SAVE_LOCATION = "/static/";
 
     private final UserInfoService userInfoService;
     private final UserProfileService userProfileService;
@@ -65,7 +66,7 @@ public class UserProfileController {
 
     /* 설정 - 프로필 */
     @GetMapping("/profileBasic")
-    public String settingProfile(HttpSession session, Model model,HttpServletRequest request,HttpServletResponse response){
+    public String settingProfile(HttpSession session, Model model,HttpServletRequest request){
 //        String user_email = (String)session
 
         String user_email = (String)(session.getAttribute("user_email"));
@@ -89,8 +90,8 @@ public class UserProfileController {
         model.addAttribute("user_profileImg",user_profileImg);
 
         log.error("유저 정보는 ? " + userInfo);
-
         log.error(" 이미지 주소 값은 ? : "+user_profileImg);
+
         return "user/settingProfile";
     }
 
@@ -178,8 +179,12 @@ public class UserProfileController {
     }
 
     public Cookie setCookie(String cookieKey, String cookieValue, int maxAge, String path){
-        log.info("coo = " + cookieKey + ", value = " + cookieValue + ", maxage = " + maxAge + ", path = " + path);
-        Cookie cookie = new Cookie(cookieKey,cookieValue);
+
+//        log.info("coo = " + cookieKey + ", value = " + cookieValue + ", maxage = " + maxAge + ", path = " + path);
+        String encodedValue = null;
+        try { encodedValue = URLEncoder.encode(cookieValue, "UTF-8"); }
+        catch (UnsupportedEncodingException e) { throw new RuntimeException(e); }
+        Cookie cookie = new Cookie(cookieKey,encodedValue);
         cookie.setMaxAge(maxAge); // 쿠키를 삭제
         cookie.setPath(path);
 
@@ -193,7 +198,16 @@ public class UserProfileController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
-                    return cookie.getValue();
+                    if(cookie.getName().equals(cookieName) && cookieName.equals("user_profileImg"))
+                    {
+                        try {
+                            return URLDecoder.decode(cookie.getValue(),"UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }else{
+                        return cookie.getValue();
+                    }
                 }
             }
         }
