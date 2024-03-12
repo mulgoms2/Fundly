@@ -106,26 +106,29 @@
         <p class="tit">게시판 관리</p>
     </div>
     <div class="sttBox">
-<%--        <div class="lftBox">--%>
-<%--            <span class="sttBlue">선물 전달 중</span>--%>
-<%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
-<%--            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>--%>
-<%--        </div>--%>
+        <div>
+            <form action="<c:url value='/admin/search' />" method="post">
+                <input type="text" name="news_title" value="">
+                <button type="submit">검색</button>
+
+            </form>
+        </div>
+        <%--        <div class="lftBox">--%>
+        <%--            <span class="sttBlue">선물 전달 중</span>--%>
+        <%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
+        <%--            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>--%>
+        <%--        </div>--%>
         <div class="rgtLink">
             <a href="#">자세히 보기</a>
         </div>
     </div>
     <div class="btnWrap">
         <div class="lftBtngrp">
-            <a href="#">
+            <a href="<c:url value='/admin/list'/>">
                 <i class="fa-regular fa-comments"></i>
-                <span>보도 자료</span>
-            </a>
-            <a href="#">
-                <i class="fa-solid fa-location-dot fa-lg"></i>
                 <span>공지사항</span>
             </a>
-            <a href="#">
+            <a href="<c:url value="/admin/eventList"/> ">
                 <i class="fa-solid fa-gift fa-lg"></i>
                 <span>이벤트</span>
             </a>
@@ -149,31 +152,61 @@
                     <th>등록일시</th>
                     <th>수정일시</th>
                     <th>숨김여부</th>
+                    <th>이벤트시작</th>
+                    <th>이벤트종료</th>
                     <th><button id="write" onclick="location.href=' <c:url value='/admin/write'/>'">글쓰기</button> </th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
-<%--                <td colspan="9">--%>
-<%--                    <p class="noData">데이터가 없습니다</p>--%>
-<%--                </td>--%>
+                <%--                <td colspan="9">--%>
+                <%--                    <p class="noData">데이터가 없습니다</p>--%>
+                <%--                </td>--%>
 
-                <c:forEach var="InformDto" items="${InformList}">
+                <c:forEach var="EventDto" items="${eventList}">
                     <tr>
-                        <td><a href="<c:url value='/admin/select?inform_seq=${InformDto.inform_seq}'/>">${InformDto.inform_seq}</a></td>
-                        <td><a href="<c:url value='/admin/select?inform_seq=${InformDto.inform_seq}'/>">${InformDto.inform_title}</a></td>
-                        <td><a href="<c:url value='/admin/select?inform_seq=${InformDto.inform_seq}'/>">${InformDto.reg_id}</a></td>
-                        <td><a href="<c:url value='/admin/select?inform_seq=${InformDto.inform_seq}'/>">${InformDto.inform_view_cnt}</a></td>
-                        <td><a href="<c:url value='/admin/select?inform_seq=${InformDto.inform_seq}'/>">${InformDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?inform_seq=${InformDto.inform_seq}'/>">${InformDto.mod_dtm!=null? InformDto.mod_dtm :InformDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?inform_seq=${InformDto.inform_seq}'/>">${InformDto.hid_yn}</a></td>
-                    </tr>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_seq}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_title}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.reg_id}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_view_cnt}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.mod_dtm!=null? EventDto.mod_dtm :EventDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.hid_yn}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_str_date}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_end_date}</a></td>
+
+                        <c:choose>
+                        <c:when test="${EventDto.event_str_date.isBefore(now) && EventDto.event_end_date.isAfter(now)}">
+                        <td> 진행 중</td>
+                        </c:when>
+                        <c:otherwise>
+                        <td>종료됨 </td>
+                        </c:otherwise>
+                        </c:choose>
                 </c:forEach>
             </table>
+            <td>
+
+            </td>
         </div>
     </div>
+    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">
+        <c:if test="${ph.showPrev}">
+            <a href="<c:url value='/admin/list?page=${ph.beginPage-1}'/>">&lt;</a>
+        </c:if>
+        <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+            <a href="<c:url value='/admin/list?page=${i}'/> ">${i}</a>
+        </c:forEach>
+        <c:if test="${ph.showNext}">
+            <a href="<c:url value='/admin/list?page=${ph.endPage+1}'/>">&gt;</a>
+        </c:if>
+    </div>
+    <input type="text" id="searchInput"  placeholder="검색어를 입력하세요">
 </div>
 <footer>
     <p>@Copyright 2024. 텀블벅 관리자 사이트 All Rights Reserved.</p>
 </footer>
 
+<script>
+    if("${msg}"!=""){alert("${msg}")}
+</script>
 </body>
 </html>

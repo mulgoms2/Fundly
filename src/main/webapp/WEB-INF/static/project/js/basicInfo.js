@@ -1,10 +1,13 @@
-const initHandler = () => {
-    // 저장버튼 클릭시 서버로 post 요청 보내기
+window.addEventListener("load", ()=>{
     document.getElementById("saveBtn").addEventListener("click", handleSaveBtnClick);
-    document.getElementById("searchTag").addEventListener("keypress", handleTagInput);
+    document.getElementById("searchTagIpt").addEventListener("keyup", handleSearchTagInput);
     document.getElementById("category").addEventListener("input", printSubCategory);
     document.getElementById("thumbnail_input").addEventListener("input", handleThumbnailInput);
-};
+    document.querySelectorAll(".eraseBtn").forEach(btn => btn.addEventListener("click", deleteSearchTag));
+    document.getElementById("longTitle").addEventListener("input", handleLongTitleInput);
+    document.getElementById("shortTitle").addEventListener("input", handleShortTitleInput);
+    document.getElementById("pjIntro").addEventListener("input", handleIntroInput);
+});
 const printSubCategory = () => {
     const category = document.querySelector("#category");
     const subCtg = document.querySelector("#subCategory");
@@ -19,60 +22,60 @@ const printSubCategory = () => {
         subCtg.appendChild(장난감);
     }
 };
-const handleTagInput = (e) => {
-    const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
-    let inputValue = e.target.value;
 
-    console.log(regExp.test(inputValue));
-    
-    if (regExp.test(inputValue)) {
-        console.log("log");
-        alert("특수문자 및 공백은 입력하실 수 없습니다.")
-        e.target.value = "";
+const handleSearchTagInput = (e) => {
+    const inputTxt = e.target.value;
+    if (validInput(inputTxt)) {
+        alert("공백 및 특수문자는 입력할 수 없습니다.");
+        clearInput(e);
         return;
     }
-
-    if (e.code === "Enter") {
-        if (maxCount(5)) {
-            alert("태그는 최대 5개 까지만 저장할 수 있습니다.")
+    if (enterPressed(e)) {
+        if (countTag() >= 5) {
+            alert("태그는 최대 5개 까지 입력할 수 있습니다");
             clearInput(e);
             return;
         }
-        const tagString = e.target.value;
-        console.log(tagString);
-        if (tagString.trim().length === 0) {
-            clearInput(e);
-            return;
-        }
-        // const searchTag = makeTag(tagString);
-        //
-        // printTag(searchTag);
-
-        const span = document.createElement("span");
-        span.className = "searchTag";
-        span.innerText = tagString;
-
-        const button = document.createElement("button");
-        button.classList.add();
-
-        document.querySelector("#tagContainer").appendChild(span);
+        makeSearchTag(inputTxt);
 
         clearInput(e);
     }
 };
-const printTag = (tag) => {
-    document.querySelector("#tagContainer").innerHTML += tag;
-};
-const maxCount = (count) => {
-    const tagCount = document.querySelector("#tagContainer").children.length;
+const makeSearchTag = (inputTxt) => {
+    const span = document.createElement("span");
+    const button = document.createElement("button");
+    const i = document.createElement("i");
+    span.className = "searchTag";
+    span.innerText = inputTxt;
+    button.className = "eraseBtn";
+    i.className = "fa-solid fa-x fa-2xs";
 
-    return count < tagCount + 1;
+    button.appendChild(i);
+    span.appendChild(button);
+
+    button.addEventListener("click", deleteSearchTag);
+    document.querySelector("#tagContainer").appendChild(span);
 };
-const makeTag = (content) => {
-    return `<span class="searchTag">${content}<button id="eraseBtn" class="eraseBtn"><i class="fa-solid fa-x fa-2xs"></i></button></span>`;
+const countTag = () => {
+    const tagCount = document.querySelector("#tagContainer").children.length;
+    return tagCount;
 };
+const enterPressed = (e) => {
+    return e.key === "Enter";
+};
+const validInput = (text) => {
+    let regExp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/gim;
+    return text === "" || regExp.test(text);
+};
+
 const deleteSearchTag = (e) => {
     e.currentTarget.parentElement.outerHTML = "";
+};
+const handleSaveBtnClick = () => {
+    const formData = getPjInfoForm();
+    const endPoint = "/project/editor/infoUpdate";
+
+    postProject(endPoint, formData);
 };
 const concatSearchTags = () => {
     const tagList = document.querySelector("#tagContainer").children;
@@ -81,14 +84,6 @@ const concatSearchTags = () => {
 
     return tagArr.toString();
 };
-
-const handleSaveBtnClick = () => {
-    const formData = getPjInfoForm();
-    const endPoint = "/project/editor/infoUpdate";
-
-    postProject(endPoint, formData);
-};
-
 const getPjInfoForm = () => {
     const formData = new FormData();
     const longTitle = document.querySelector("#longTitle").value;
@@ -106,15 +101,58 @@ const getPjInfoForm = () => {
 
     return formData;
 };
-
 const handleThumbnailInput = async (e) => {
     const endPoint = "/project/editor/info/image";
     const imgFormData = getImageFormData("thumbnail_input");
     const src_url = await fetchImage(endPoint, imgFormData);
 
-    console.log(src_url);
     printImgTag("thumbnail_img", src_url);
     clearInput(e);
 }
+const handleLongTitleInput = (e) => {
+    const countTag = document.getElementById("longTitleCounter");
+    const inputText = e.target.value;
+    const count = countText(inputText);
 
-initHandler();
+    if (count > 32) {
+        alert("입력 범위를 초과하였습니다.");
+        deleteLastChar(inputText);
+
+        e.target.value = deleteLastChar(inputText);
+        return;
+    }
+
+    displayCount(count, 32, countTag);
+};
+
+const handleShortTitleInput = (e) => {
+    const countTag = document.getElementById("shortTitleCounter");
+    const inputText = e.target.value;
+    const count = countText(inputText);
+
+    if (count > 7) {
+        alert("입력 범위를 초과하였습니다.");
+        deleteLastChar(inputText);
+
+        e.target.value = deleteLastChar(inputText);
+        return;
+    }
+
+    displayCount(count, 7, countTag);
+};
+
+const handleIntroInput = (e) => {
+    const countTag = document.getElementById("introCounter");
+    const inputText = e.target.value;
+    const count = countText(inputText);
+
+    if (count > 50) {
+        alert("입력 범위를 초과하였습니다.");
+        deleteLastChar(inputText);
+
+        e.target.value = deleteLastChar(inputText);
+        return;
+    }
+
+    displayCount(count, 50, countTag);
+};

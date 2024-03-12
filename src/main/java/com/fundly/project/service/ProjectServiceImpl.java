@@ -47,7 +47,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDto> getListByStatus(String status) {
 
-        return null;
+        return projectMapper.getListByStatus(status);
     }
 
     @Override
@@ -149,4 +149,6 @@ public class ProjectServiceImpl implements ProjectService {
     public int selectLikeCnt(ProjectDto pjdto) throws Exception {
         return projectMapper.selectLikeCnt(pjdto);
     }
+
+
 }

@@ -1,9 +1,8 @@
-window.onload = () => {
+window.addEventListener("load", () => {
     const projectSubmitForm = document.getElementById("pjSubmitForm");
 
     projectSubmitForm.addEventListener("submit", submitProject);
-};
-
+});
 const submitProject = (e) => {
     if (!window.confirm("최종 제출 이후에는 프로젝트 심사가 진행됩니다. 심사 중에는 프로젝트를 수정할 수 없습니다. 제출하시겠습니까?")) {
         e.preventDefault();
@@ -30,9 +29,7 @@ const fetchImage = async (endPoint, imgFormData) => {
         body: imgFormData,
     });
 
-    const saved_url = await response.text();
-
-    return saved_url;
+    return await response.text();
 };
 
 const getImageFormData = (tagId) => {
@@ -48,4 +45,16 @@ const printImgTag = (tagId, imgSrc) => {
 };
 const clearInput = (e) => {
     e.target.value = "";
+};
+
+const countText = (text) => {
+    return text.length;
+};
+const displayCount = (count, maxNum ,where) => {
+    where.innerText = `${count}/${maxNum}`;
+};
+
+
+const deleteLastChar = (str) => {
+    return str.slice(0, -1);
 };

@@ -23,6 +23,7 @@ public interface LikeDao {
 
     //프로젝트와 조인한 좋아요 목록
     List<LikeProjectDto> AllLikeListWithPj(String user_id) throws DataAccessException;
+    LikeProjectDto getLikeWithPj(LikeDto likedto) throws DataAccessException;
 
     //처음 좋아요
     int insertLike(LikeDto likedto) throws DataAccessException;

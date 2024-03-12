@@ -3,6 +3,7 @@ package com.fundly.user.service;
 import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.model.ProjectMapper;
 import com.fundly.user.dto.LikeProjectDto;
+import com.fundly.user.dto.LikeRequestDto;
 import com.fundly.user.model.LikeDao;
 import com.fundly.user.validate.LikeValidator;
 import com.persistence.dto.LikeDto;
@@ -76,6 +77,18 @@ public class LikeServiceImpl implements LikeService {
 
         return likedao.AllLikeListWithPj(user_id);
 
+    }
+
+    @Override
+    public LikeDto checkLike(LikeRequestDto likereq) {
+
+        LikeDto likedto = LikeDto.builder().pj_id(likereq.getPj_id()).user_id(likereq.getUser_id()).build();
+        return likedao.checkLike(likedto);
+    }
+
+    @Override
+    public LikeProjectDto getLike(LikeDto likedto) {
+        return likedao.getLikeWithPj(likedto);
     }
 
     @Override

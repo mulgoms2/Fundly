@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
     <div class="flexOnly">
       <div class="container">
 
@@ -47,7 +48,7 @@
             <div class="pTagDetailPwd">
               <div class="pTagChaDetail">
 
-                  <div class="pwdFont">현재 비밀번호</div>
+                <div class="pwdFont">현재 비밀번호</div>
                   <div class="userNowPwdDetail">
                       <div class ="nowNowPwdWrap" id="nowNowPwdWrap">
                           <input type="password" placeholder="현재 비밀번호" autocapitalize="off"
@@ -106,26 +107,29 @@
             <div class="pTagbeforePhoneNo">
               <div class="pTagChaDetailPhoneNo">
                   ${userInfo.user_phone_no}
-
               </div>
-                <div class="phoneChkeckV">
-                    <div class="checkIcon">
-                        <svg viewBox="0 0 48 48"><path fill-rule="evenodd" clip-rule="evenodd" d="M41.6 8L18.9 30.8L6.2 19L2 23.5L19.1 39.4L46 12.4L41.6 8Z"></path></svg>
+                <c:if test="${(!(empty userInfo.user_phone_no || userInfo.user_phone_no == ''))}">
+                    <div class="phoneChkeckV">
+                        <div class="checkIcon">
+                            <svg viewBox="0 0 48 48"><path fill-rule="evenodd" clip-rule="evenodd" d="M41.6 8L18.9 30.8L6.2 19L2 23.5L19.1 39.4L46 12.4L41.6 8Z"></path></svg>
+                        </div>
+                        인증된 연락처입니다.
                     </div>
-                    인증된 연락처입니다.
-                </div>
+                </c:if>
             </div>
 
             <div class="pTagDetailPhoneNo">
               <div class="pTagChaDetail">
-                  <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="20" placeholder="휴대 번호를 입력해주세요." autocapitalize="off"
-                         autocomplete="off" id="userPhoneValue" value = "${userInfo.user_phone_no}">
+                  <div class="pTagChaDetailWrap" id ="pTagChaDetailWrap">
+                      <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="14" placeholder="휴대 번호를 입력해주세요." autocapitalize="off"
+                             autocomplete="off" class="txtInput" id="userPhoneValue" oninput="oninputPhone(this)" value = "${userInfo.user_phone_no}">
+                  </div>
+                  <div id="msgPhoneNo" class="msgPhone" ></div>
               </div>
               <div class="pTagChaBtn"><Button class="filesave" id="phonenosave" ><span>저장</span></Button></div>
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="userSettingContainer">

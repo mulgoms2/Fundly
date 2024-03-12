@@ -27,4 +27,6 @@ public interface ProjectMapper {
     int downLikeCnt(ProjectDto pjdto) throws DataAccessException;
     int selectLikeCnt(ProjectDto pjdto) throws DataAccessException;
     List<ProjectDto> getRandPjList();
+
+    int updateStatus(ProjectDto dto) throws DataAccessException;
 }

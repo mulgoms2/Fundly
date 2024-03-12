@@ -1,8 +1,12 @@
 package com.persistence.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -13,13 +17,15 @@ public class EventDto {
     private String event_title;
     private String event_cont;
     private String event_str_yn;
-    private String event_str_date;
-    private String event_end_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime event_str_date;
+    @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime event_end_date;
     private int event_view_cnt;
     private String hid_yn;
-    private Date reg_dtm;
+    private LocalDateTime reg_dtm;
     private String reg_id;
-    private Date mod_dtm;
+    private LocalDateTime mod_dtm;
     private String mod_id;
     private int file_cnt;
 }

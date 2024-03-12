@@ -7,20 +7,17 @@ import com.fundly.project.exception.ProjectUpdateFailureException;
 import com.fundly.project.service.ProjectService;
 import com.fundly.project.util.FileUploader;
 import com.persistence.dto.ProjectAddRequest;
-import com.persistence.dto.ProjectBasicInfo;
 import com.persistence.dto.ProjectDto;
 import com.persistence.dto.ProjectInfoUpdateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j

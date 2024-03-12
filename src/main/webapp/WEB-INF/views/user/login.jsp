@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class ="joinLink">
-                    <span>아직 펀들리 계정이 없으신가요?  </span><a href="<c:url value='/join/add'/>" class="join">회원가입</a>
+                    <span>아직 펀들리 계정이 없으신가요?</span> <a href="<c:url value='/join/add'/>" class="join">회원가입</a>
                 </div>
             </div>
         </main>

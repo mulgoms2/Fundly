@@ -3,7 +3,7 @@ $(document).ready(function () {
     function fetchData() {
         $.ajax({
             type: "GET",
-            url: `/pay/list?page=${page}`,
+            url: `/pay/list/setting?page=${page}`,
             success: function (data) {
                 // 더보기 버튼 보여줄 것인지의 여부
                 data.pageHandler.showNext? ($('.boxViewMoreWrapper').show()) : ($('.boxViewMoreWrapper').hide());
@@ -20,7 +20,7 @@ $(document).ready(function () {
                 }
             },
             error: function () {
-                alert("결제수단 조회에 실패했습니다. 다시 시도해주세요.");
+                // alert("결제수단 조회에 실패했습니다. 다시 시도해주세요.");
             }
         })
     }

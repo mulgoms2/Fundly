@@ -113,4 +113,9 @@
     <select id="getListByStatus" resultType="com.persistence.dto.ProjectDto">
         select * from pj where pj_status = #{status}
     </select>
+    <update id="updateStatus" parameterType="ProjectDto">
+        update PJ
+        set pj_status = #{pj_status}
+        where pj_id = #{pj_id}
+    </update>
 </mapper>
