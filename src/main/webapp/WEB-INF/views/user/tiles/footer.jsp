@@ -5,23 +5,24 @@
         <div class="infoList">
             <div class="infoItem">
                 <div>펀들리</div>
-                <a href="">공지사항</a>
-                <a href="">서비스 소개</a>
+                <a href="<c:url value="/noticeList"/> " >공지사항</a>
+<%--                <a href="">서비스 소개</a>--%>
             </div>
 
             <div class="infoItem">
                 <div>이용안내</div>
-                <a href="">헬프 센터</a>
-                <a href="">첫 후원 가이드</a>
-                <a href="">창작자 가이드</a>
-                <a href="">수수료 안내</a>
+                <a href="<c:url value="/help/subList"/> " > 헬프 센터</a>
+<%--                termDetail?term_title=수수료%20정책--%>
+<%--                <a href="">첫 후원 가이드</a>--%>
+<%--                <a href="">창작자 가이드</a>--%>
+<%--                <a href="">수수료 안내</a>--%>
             </div>
 
             <div class="infoItem">
                 <div>정책</div>
-                <a href="">이용약관</a>
-                <a href="">개인정보처리방침</a>
-                <a href="">프로젝트 심사 기준</a>
+                <a href="<c:url value="/termDetail?term_title=서비스 이용약관"/>" target="_blank">이용약관</a>
+                <a href="<c:url value="/termDetail?term_title=개인정보처리방침"/>" target="_blank">개인정보처리방침</a>
+                <a href="<c:url value="/termDetail?term_title=프로젝트 심사 기준"/>" target="_blank">프로젝트 심사 기준</a>
             </div>
         </div>
 
