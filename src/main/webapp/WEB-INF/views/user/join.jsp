@@ -74,19 +74,19 @@
                         <div class="singleChk">
                             <input type="checkbox" class="singleChk" id = "site_term_agree_yn" name = "site_term_agree_yn" value="${userJoinDto.site_term_agree_yn}"/>
                             <label for="site_term_agree_yn" class="single">펀들리 이용 약관동의(필수)</label>
-                            <a href="" >내용보기</a>
+                            <a href="<c:url value="/termDetail?term_title=서비스 이용약관"/>" target="_blank"> 내용보기</a>
                         </div>
 
                         <div class="singleChk">
                             <input type="checkbox" class="singleChk" id = "p_Info_agree_yn" name="p_Info_agree_yn" value="${userJoinDto.p_Info_agree_yn}"/>
                             <label for="p_Info_agree_yn" class="single">개인정보 수집 및 이용 동의(필수)</label>
-                            <a href="" >내용보기</a>
+                            <a href="<c:url value="/termDetail?term_title=개인정보처리방침"/>" target="_blank">내용보기</a>
                         </div>
 
                         <div class="selectChk">
                             <input type="checkbox" class="selectChk" id= "p_info_oth_agree_yn" name="p_info_oth_agree_yn" value="${userJoinDto.p_info_oth_agree_yn}"/>
                             <label for="p_info_oth_agree_yn" class="single">개인정보 제 3자 제공 동의(선택)</label>
-                            <a href="" >내용보기</a>
+                            <a href="<c:url value="/termDetail?term_title=개인정보 제3자 제공 동의"/>" target="_blank">내용보기</a>
                         </div>
 
                         <div class="selectChk">
