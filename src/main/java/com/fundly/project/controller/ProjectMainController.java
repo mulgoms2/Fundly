@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -35,10 +36,18 @@ public class ProjectMainController {
         List<ProjectDto> listByCategory = projectService.getListByCategory(category);
 
 //        프로젝트Dto 리스트를 => 프로젝트 템플릿 리스트로 변환
+        if (listByCategory == null) return ResponseEntity.ok(new ArrayList<>());
+
         List<ProjectTemplate> pjTemplateList = listByCategory.stream()
-                                                             .map(ProjectDto::toProjectTemplate)
-                                                             .collect(toList());
+                .filter(this::isFundingStatus)
+                .map(ProjectDto::toProjectTemplate)
+                .collect(toList());
 
         return ResponseEntity.ok(pjTemplateList);
+    }
+
+    private boolean isFundingStatus(ProjectDto projectDto) {
+        return projectDto.getPj_status()
+                .equals("승인");
     }
 }

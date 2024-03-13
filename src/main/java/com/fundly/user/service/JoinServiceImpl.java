@@ -39,14 +39,14 @@ public class JoinServiceImpl implements JoinService {
 
         if(userJoinDao.emailCheck(userJoinDto)==1){
             // 익셉션에 (에러)에 따른 사용자에게 전달을 구별해서 컨트롤러에서 msg 전달 RuntimeException(x)
-//                throw new RuntimeException("이미 가입된 사용자입니다.");
-//                throw new RuntimeException("JOIN_DUP_ERROR");
             UserJoinFailException e = new UserJoinFailException("이미 가입된 사용자입니다.");
             log.debug("emailCheck(userJoinDto) : {}\n{}", e.getMessage(), e.getStackTrace());
             throw e;
         }
 
         try{
+
+            log.error("유저값 : " + userJoinDto);
             return userJoinDao.insert(setUserInfo(userJoinDto));
 
         }catch (Exception e){
@@ -62,6 +62,9 @@ public class JoinServiceImpl implements JoinService {
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)
         String userInPwd = userJoinDto.getUser_pwd();
         String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
+
+
+//        System.out.println("\n\n"+userJoinDto.getUser_phone_no()+"\n 유저 정보에 번호 있나?\n");
 
         userJoinDto.setUser_id(userJoinDto.getUser_email());
         userJoinDto.setUser_pwd(encoderPwd);

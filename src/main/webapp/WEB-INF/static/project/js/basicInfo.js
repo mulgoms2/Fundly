@@ -1,29 +1,30 @@
-window.addEventListener("load", ()=>{
+window.addEventListener("load", () => {
     document.getElementById("saveBtn").addEventListener("click", handleSaveBtnClick);
     document.getElementById("searchTagIpt").addEventListener("keyup", handleSearchTagInput);
-    document.getElementById("category").addEventListener("input", printSubCategory);
+    // document.getElementById("category").addEventListener("input", printSubCategory);
     document.getElementById("thumbnail_input").addEventListener("input", handleThumbnailInput);
     document.querySelectorAll(".eraseBtn").forEach(btn => btn.addEventListener("click", deleteSearchTag));
     document.getElementById("longTitle").addEventListener("input", handleLongTitleInput);
     document.getElementById("shortTitle").addEventListener("input", handleShortTitleInput);
     document.getElementById("pjIntro").addEventListener("input", handleIntroInput);
 });
-const printSubCategory = () => {
-    const category = document.querySelector("#category");
-    const subCtg = document.querySelector("#subCategory");
-
-    if (category.value === "반려동물") {
-        const 먹이 = document.createElement('option');
-        const 장난감 = document.createElement('option');
-        먹이.innerText = "먹이";
-        장난감.innerText = "장난감";
-
-        subCtg.appendChild(먹이);
-        subCtg.appendChild(장난감);
-    }
-};
+// const printSubCategory = () => {
+//     const category = document.querySelector("#category");
+//     const subCtg = document.querySelector("#subCategory");
+//
+//     if (category.value === "반려동물") {
+//         const 먹이 = document.createElement('option');
+//         const 장난감 = document.createElement('option');
+//         먹이.innerText = "먹이";
+//         장난감.innerText = "장난감";
+//
+//         subCtg.appendChild(먹이);
+//         subCtg.appendChild(장난감);
+//     }
+// };
 
 const handleSearchTagInput = (e) => {
+    console.log(e);
     const inputTxt = e.target.value;
     if (validInput(inputTxt)) {
         alert("공백 및 특수문자는 입력할 수 없습니다.");

@@ -157,7 +157,9 @@ public class ProjectDto {
                                              .fund_calc_due_dtm(project.getFund_calc_due_dtm())
                                              .build();
 
-        return fundingForm.calcFundPeriod().calcFundStrTime().dtmToString();
+        return fundingForm.calcFundPeriod()
+                          .calcFundStrTime()
+                          .dtmToString();
     }
 
     public static StoryForm toStoryForm(ProjectDto project) {
@@ -204,7 +206,7 @@ public class ProjectDto {
             fund_percent = curr_money.multiply(BigInteger.valueOf(100L))
                                      .divide(goal_money);
         } catch (NullPointerException e) {
-            fund_percent = null;
+            fund_percent = BigInteger.valueOf(0L);
         }
 
 
@@ -212,6 +214,7 @@ public class ProjectDto {
                               .pj_id(projectDto.getPj_id())
                               .thumbnail_img_url(projectDto.getPj_thumbnail_url())
                               .category(projectDto.getCtg())
+                              .sel_name(projectDto.getPj_sel_name())
                               .long_title(projectDto.getPj_long_title())
                               .funding_percentage(String.valueOf(fund_percent))
                               .build();

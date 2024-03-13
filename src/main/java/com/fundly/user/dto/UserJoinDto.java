@@ -45,6 +45,8 @@ public class UserJoinDto {
 //    @NotEmpty (message = "비밀번호는 공백 없이 입력해주세요.")
     private String user_pwdConfirm;
 
+    private String user_phone_no;
+
     @Nullable
     @Valid
     private String user_join_date;
