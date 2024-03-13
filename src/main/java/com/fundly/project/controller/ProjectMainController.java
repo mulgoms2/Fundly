@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -36,7 +37,7 @@ public class ProjectMainController {
 
 //        프로젝트Dto 리스트를 => 프로젝트 템플릿 리스트로 변환
         if (listByCategory == null)
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok(new ArrayList<>());
 
         List<ProjectTemplate> pjTemplateList = listByCategory.stream()
                                                              .map(ProjectDto::toProjectTemplate)

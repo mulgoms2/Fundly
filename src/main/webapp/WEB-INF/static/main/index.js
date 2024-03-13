@@ -1,14 +1,21 @@
 window.addEventListener("load", () => {
     initProjectTemplate();
 });
-const initProjectTemplate = () => {
+const initProjectTemplate = async () => {
     // 서버에 프로젝트를 요청한다.
-
-    console.log("helo")
-    const project_list = fetchProjectList();
+    const project_list = await fetchProjectList();
     // 프로젝트 리스트를 반환받는다.
 
     // 프로젝트 리스트에서 프로젝트 하나씩을 태그로 만든다.
+    project_list.forEach(projectDto => {
+        // 프로젝트 하나하나를 태그로 만든다.
+        const pj_tag = makePjTemplateTag(projectDto);
+        // 그리드 안에 넣는다.
+
+        //그리드가 있어야 한다.
+        const grid = document.querySelector(".gRd");
+        grid.innerHTML += pj_tag;
+    });
 
     // 하나씩 태그로 만들 때 일어나는 일
     // 프로젝트 객체로부터 이미지 태그 url을 비롯한 각각의 정보를 받아낸다.
@@ -26,7 +33,6 @@ const fetchProjectList = async () => {
         method: "get",
     });
 
-    console.log(response);
     const projectList = await response.json();
 
     // 받아온 프로젝트 리스트를 반환한다.
@@ -35,18 +41,20 @@ const fetchProjectList = async () => {
     return projectList;
 };
 const makePjTemplateTag = (projectDto) => {
-    //  private String pj_id;
-    //     private String thumbnail_img_url;
-    //     private String category;
-    //     private String long_title;
-    //     private String funding_percentage;
-    // const imgSrcUrl = projectDto.thumbnail_img_url;
-    const long_title = projectDto.title;
 
-    return `<div class="mnBan">
+    const pj_id = projectDto.pj_id;
+    const imgSrcUrl = projectDto.thumbnail_img_url;
+    const long_title = projectDto.long_title;
+    const category = projectDto.category;
+    const funding_percentage = projectDto.funding_percentage;
+    const sel_name = projectDto.sel_name;
+    const detail_page = "/detail/" + pj_id;
+
+    return `<div class="banBox">
+                <div class="mnBan">
                     <div class="banImg">
-                        <a href="#">
-                            <img src=${imgSrcUrl} alt="">
+                        <a href=${detail_page}>
+                            <img src="${imgSrcUrl}" alt="">
                         </a>
                     </div>
                     <div class="faLike">
@@ -58,20 +66,21 @@ const makePjTemplateTag = (projectDto) => {
                     <div class="txtGr">
                         <div class="subTxt">
                             <span>
-<!--                                <a href="#">아트북디자인더하트</a>-->
+                               <a href="#">${category}</a>
+                            </span>
+                            <span class="bar">
+                               <a href="#">${sel_name}</a>
                             </span>
                         </div>
                         <div class="subTit">
 <!--                       프로젝트 타이틀  -->
-<!--                            <a href="#">12+1지신 노리개 부적 뱃지와 2024 새해 맞이</a>-->
+                            <a href=${detail_page}>${long_title}</a>
                         </div>
                         <div class="pstTag">
-<!--                        펀딩 달성률 -->
-                            <span>557% 달성</span>
+                            <span>${funding_percentage}%</span>
                         </div>
                     </div>
-                </div>`;
+                </div>
+              </div>
+             `;
 };
-
-
-document.getElementById("ban1").innerHTML = makePjTemplateTag();
