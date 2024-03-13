@@ -45,6 +45,7 @@ public class ProjectBasicInfoController {
     @GetMapping("/start")
 //   프로젝트 에디터 시작페이지. 이어작성, 새로작성 구분
     public String getStartPage(@ModelAttribute ProjectDto projectDto) {
+
         return "project/start";
     }
 
@@ -100,24 +101,26 @@ public class ProjectBasicInfoController {
 //        세션에서 프로젝트dto를 제거한다.
         sessionStatus.setComplete();
 
-        log.debug("{}" ,sessionStatus.isComplete());
+        log.debug("{}", sessionStatus.isComplete());
 //        완료 메시지 & 홈으로 리다이렉트
         return "redirect:/";
     }
 
     @ExceptionHandler(ImageSaveFailureException.class)
     private void failToSaveImage(ImageSaveFailureException e) {
-        log.error("{}\n\n\n{}",e.getMessage(),e.getStackTrace());
+        log.error("{}\n\n\n{}", e.getMessage(), e.getStackTrace());
     }
+
     @ExceptionHandler(ProjectUpdateFailureException.class)
     private ResponseEntity<Boolean> failToUpdate(ProjectUpdateFailureException e) {
-        log.error("{}\n{}",e.getMessage(), e.getStackTrace());
-        return ResponseEntity.badRequest().body(false);
+        log.error("{}\n{}", e.getMessage(), e.getStackTrace());
+        return ResponseEntity.badRequest()
+                .body(false);
     }
 
     @ExceptionHandler(ProjectAddFailureException.class)
     private String projectAddFail(Model model, ProjectUpdateFailureException e) {
-        log.error("{}\n{}",e.getMessage(), e.getStackTrace());
+        log.error("{}\n{}", e.getMessage(), e.getStackTrace());
         model.addAttribute("errorMsg", "프로젝트 생성에 실패하였습니다. 다시 시도해주세요");
         return "project/clientError";
     }
