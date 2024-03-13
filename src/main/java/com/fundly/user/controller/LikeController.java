@@ -24,7 +24,7 @@ public class LikeController {
     }
 
     // 유저의 좋아요 목록을 위한 컨트롤러
-    @PostMapping("/update")
+    @PostMapping("/updateList")
     public ResponseEntity<List<LikeProjectDto>> clickLikeList(@RequestBody LikeRequestDto likereq) throws Exception {
 
             // 요청한 데이터 dto에 담기
@@ -40,7 +40,7 @@ public class LikeController {
             return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/status")
+    @PostMapping("/checkList")
     public ResponseEntity<List<LikeProjectDto>> isLikeList(@RequestBody LikeRequestDto likereq) {
 
         // 현재 좋아요 상태 가져오기
@@ -62,7 +62,7 @@ public class LikeController {
         return ResponseEntity.ok(likeservice.checkLike(likereq));
     }
 
-    @PostMapping("/change")
+    @PostMapping("/update")
     public ResponseEntity<LikeProjectDto> clickLike(@RequestBody LikeRequestDto likereq) throws Exception {
 
         // 요청한 데이터 dto에 담기
@@ -73,6 +73,7 @@ public class LikeController {
         likeservice.changeLike(likedto,pjdto);
 
         LikeProjectDto response = likeservice.getLike(likedto);
+        log.debug("\n\n\n" + response + "\n\n\n");
 
         return ResponseEntity.ok(response);
     }

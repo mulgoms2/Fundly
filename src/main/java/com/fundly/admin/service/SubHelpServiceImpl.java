@@ -1,6 +1,7 @@
 package com.fundly.admin.service;
 
 import com.fundly.admin.model.SubHelpDao;
+import com.persistence.dto.NewsDto;
 import com.persistence.dto.SubHelpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,11 @@ public class SubHelpServiceImpl implements SubHelpService{
     }
 
     @Override
+    public int countAll() throws Exception{
+        return subHelpDao.countAll();
+    }
+
+    @Override
     public int updateSubHelp(SubHelpDto dto) throws Exception {
         return subHelpDao.update(dto);
     }
@@ -55,5 +61,25 @@ public class SubHelpServiceImpl implements SubHelpService{
     @Override
     public int countSub() throws Exception {
         return subHelpDao.countSub();
+    }
+
+    @Override
+    public List<SubHelpDto> selectAllAll() throws Exception {
+        return subHelpDao.selectAllAll();
+    }
+
+    @Override
+    public List<SubHelpDto> selectPage(Integer page, Integer pageSize) throws Exception {
+        Map map = new HashMap();
+        map.put("offset",(page-1)*10);
+        map.put("pageSize",pageSize);
+
+        return subHelpDao.selectPage(map);
+    }
+
+    @Override
+    public List<SubHelpDto> searchHelp(String sub_help_title) throws Exception {
+        sub_help_title = '%'+sub_help_title+'%';
+        return  subHelpDao.searchHelp(sub_help_title);
     }
 }

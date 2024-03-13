@@ -36,7 +36,7 @@
     </update>
 
     <select id="AllLikeListWithPj" resultType="LikeProjectDto">
-        select a.*,b.*
+        select a.*,b.user_id,b.like_status,b.like_dtm
         from pj a , like_pj b
         where b.user_id = #{user_id}
           and a.pj_id = b.pj_id
@@ -46,8 +46,9 @@
     </select>
 
     <select id="getLikeWithPj" resultType="LikeProjectDto">
-        select a.*,b.*
-        from pj a , like_pj b
+        select distinct a.*,b.user_id,b.like_status,b.like_dtm
+        from like_pj b
+        left join (select distinct * from pj) as a on b.pj_id = a.pj_id
         where a.pj_id = #{pj_id}
           and b.user_id = #{user_id}
     </select>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="q" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="tf" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -259,27 +260,27 @@
         <span class="group">이벤트</span>
         <header>
             <h3>${event.event_title}</h3>
-            <span class="date">${event.mod_dtm==null ? event.reg_dtm: event.mod_dtm}</span>
+            <span class="date"><tf:formatDateTime value="${event.mod_dtm!=null? event.mod_dtm :event.reg_dtm}"/></span>
         </header>
         <div class="event-indicator">
             <c:choose>
                 <c:when test="${event.event_str_date.isBefore(now) && event.event_end_date.isAfter(now)}">
                     <em class="in_progress">진행 중 </em>
-                    이벤트 기간 : ${event.event_str_date} ~ ${event.event_end_date}
+                    이벤트 기간 : <tf:formatDateTime value="${event.event_str_date}"/> ~ <tf:formatDateTime value="${event.event_end_date}"/>
                 </c:when>
                 <c:otherwise>
                     <em class="complete">종료</em>
-                    이벤트 기간 : ${event.event_str_date} ~ ${event.event_end_date}
+                    이벤트 기간 : <tf:formatDateTime value="${event.event_str_date}"/> ~ <tf:formatDateTime value="${event.event_end_date}"/>
                 </c:otherwise>
             </c:choose>
         </div>
         <div class="content">${event.event_cont}</div>
     </div>
     <ul class="Detail__StyledSubNav-sc-1n09q0s-3 iquFLs">
-        <li><b>이전글</b><button type="button" value="/notices/notice/460">
+        <li><b>이전글</b><button type="button" value="">
             <em>공지사항</em>[이용 안내] 2024년 설 연휴 서비스 이용 안내 (24.02.09.(금)~24.02.12.(월))</button>
         </li>
-        <li><b>다음글</b><button type="button" value="/notices/notice/465">
+        <li><b>다음글</b><button type="button" value="">
             <em>공지사항</em>[이용 안내] 네이버페이 3월 은행/증권사 시스템 점검 일정 안내</button>
         </li>
     </ul>

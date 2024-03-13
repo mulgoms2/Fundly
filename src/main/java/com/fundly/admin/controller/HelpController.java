@@ -2,6 +2,7 @@ package com.fundly.admin.controller;
 
 import com.fundly.admin.service.SubHelpService;
 import com.fundly.admin.service.TermService;
+import com.persistence.dto.NewsDto;
 import com.persistence.dto.SubHelpDto;
 import com.persistence.dto.TermDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,5 +99,13 @@ public class HelpController {
         return "admin/helpDetailDetail";
     }
 
-
+    @PostMapping("/search")
+    public String searchNews( String sub_help_title,Model model){
+        try {
+            List<SubHelpDto> subList = subHelpService.searchHelp(sub_help_title);
+            model.addAttribute("subList",subList);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }return "admin/subHelpSearch";
+    }
 }

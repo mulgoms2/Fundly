@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -21,7 +20,17 @@ import java.util.List;
 public class OrderController {
 
     @GetMapping("/order")
-    public String order() {
+    public String order(Model model, HttpSession session) {
+
+        //로그인 안되어 있으면 로그인 페이지
+        String user_email = (String)(session.getAttribute("user_email"));
+
+        if(user_email == null || user_email.isEmpty()){
+            model.addAttribute("errmsg","USER_ERROR");
+            return "user/login";
+        }
+
         return "order/order";
+
     }
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="q" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="tf" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -266,7 +267,7 @@
 
                                     </span>
                                     <span class="title"> ${EventDto.event_title}</span>
-                                    <span class="date">${EventDto.mod_dtm!=null? EventDto.mod_dtm :EventDto.reg_dtm}</span>
+                                    <span class="date"><tf:formatDateTime value="${EventDto.mod_dtm!=null? EventDto.mod_dtm :EventDto.reg_dtm}"/></span>
                                 </span>
                 <div class="img-box">
                   <img src="">
@@ -278,13 +279,13 @@
       </div>
       <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">
         <c:if test="${ph.showPrev}">
-          <a href="<c:url value='/admin/list?page=${ph.beginPage-1}'/>">&lt;</a>
+          <a href="<c:url value='/eventList?page=${ph.beginPage-1}'/>">&lt;</a>
         </c:if>
         <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-          <a href="<c:url value='/admin/list?page=${i}'/> ">${i}</a>
+          <a href="<c:url value='/eventList?page=${i}'/> ">${i}</a>
         </c:forEach>
         <c:if test="${ph.showNext}">
-          <a href="<c:url value='/admin/list?page=${ph.endPage+1}'/>">&gt;</a>
+          <a href="<c:url value='/eventList?page=${ph.endPage+1}'/>">&gt;</a>
         </c:if>
       </div>
       <input type="text" id="searchInput"  placeholder="검색어를 입력하세요">
