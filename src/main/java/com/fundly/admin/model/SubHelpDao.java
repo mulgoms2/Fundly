@@ -1,5 +1,6 @@
 package com.fundly.admin.model;
 
+
 import com.persistence.dto.SubHelpDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,10 +20,16 @@ public interface SubHelpDao {
 
     int count(Integer sub_help_sort) throws Exception;
 
+    int countAll() throws Exception;
+
     int countSub() throws Exception;
 
     int update(SubHelpDto dto) throws Exception;
 
     int increaseView(Integer sub_help_seq) throws Exception;
 
+    List<SubHelpDto> selectAllAll() throws Exception;
+
+    List<SubHelpDto> selectPage(Map map) throws Exception;
+    List<SubHelpDto> searchHelp(String sub_help_title) throws Exception;
 }

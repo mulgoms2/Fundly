@@ -47,7 +47,7 @@
 
     <button onclick="goToWrite()" style=${helpModifyInfo!=null ? "display:none" : ""}>등록</button>
     <button onclick="goToModify()" style=${helpModifyInfo!=null ? "" : "display:none"} >수정완료</button>
-    <button onclick="location.href='<c:url value="/admin/list"/>'"  style=${helpModifyInfo!=null ? "" : "display:none"}>취소</button>
+    <button onclick="location.href='<c:url value="/admin/subHelpList"/>'"  style=${helpModifyInfo!=null ? "" : "display:none"}>취소</button>
     <button onclick="goToDelete()">삭제</button>
 </form>
 <script>

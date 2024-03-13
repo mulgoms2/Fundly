@@ -195,7 +195,7 @@
         <div class="article-container">
             <article class="static article">
                 <h1 class="article-title">
-                    ${prne.term_title}(${prne.term_srt_date} ${prne.term_end_date==null ? "": "~"+prne.term_end_date})
+                    ${prne.term_title}(${prne.term_srt_date} ~ ${prne.term_end_date==null ? "": prne.term_end_date})
                 </h1>
                 <div>시행일: ${prne.term_srt_date}  <c:choose>
                     <c:when test="${prne.prev==0}">

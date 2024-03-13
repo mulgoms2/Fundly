@@ -20,6 +20,10 @@
         FROM sub_help
         WHERE sub_help_sort = #{sub_help_sort}
     </select>
+    <select id="selectAllAll" parameterType="int" resultType="SubHelpDto">
+        SELECT *
+        FROM sub_help
+    </select>
 
     <delete id="delete" parameterType="map">
         DELETE FROM sub_help where sub_help_seq=#{sub_help_seq} and reg_id=#{reg_id}
@@ -42,6 +46,10 @@
         select count(*) from sub_help where sub_help_sort = #{sub_help_sort}
     </select>
 
+    <select id="countAll"   resultType="int">
+        select count(*) from sub_help
+    </select>
+
     <select id="countSub"   resultType="int">
         select count(DISTINCT sub_help_sort)
         from sub_help;
@@ -52,4 +60,16 @@
         SET sub_help_view_cnt = sub_help_view_cnt + 1
         WHERE sub_help_seq = #{sub_help_seq}
     </update>
+
+    <select id="selectPage" parameterType="map" resultType="SubHelpDto">
+        SELECT *
+        FROM sub_help
+        ORDER BY reg_dtm DESC, sub_help_seq DESC
+            LIMIT #{offset}, #{pageSize}
+    </select>
+    <select id="searchHelp" parameterType="string" resultType="SubHelpDto">
+        SELECT * FROM sub_help
+        WHERE sub_help_title LIKE #{sub_help_title}
+        ORDER BY reg_dtm DESC
+    </select>
 </mapper>

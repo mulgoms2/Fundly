@@ -73,4 +73,17 @@ public class TermServiceImpl implements TermService{
         map.put("term_title",term_title);
         return termDao.termPrevNext(map);
     }
+
+    @Override
+    public int termprevUpdate(Integer term_seq) throws Exception {
+        return termDao.prevUpdate(term_seq);
+    }
+
+    @Override
+    public List<TermDto> selectPage(Integer page, Integer pageSize) throws Exception {
+        Map map = new HashMap();
+        map.put("offset",(page-1)*10);
+        map.put("pageSize",pageSize);
+        return termDao.selectPage(map);
+    }
 }
