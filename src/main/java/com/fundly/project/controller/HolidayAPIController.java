@@ -29,7 +29,8 @@ public class HolidayAPIController {
 
     @GetMapping("/holidayAPI") // 올해와 내년에 해당하는 공휴일을 요청해서 DB에 저장
     public ResponseEntity<List<HolidayDto>> getHolidaysFromAPI() throws Exception {
-        int year = LocalDateTime.now().getYear();
+        int year = LocalDateTime.now()
+                .getYear();
 
         for (int i = 0; i < 2; i++) { //올해와 내년말까지의 공휴일 데이터 가져오기
             String solYear = String.valueOf(year + i);
@@ -39,8 +40,10 @@ public class HolidayAPIController {
             List<Map<String, Object>> itemList = getItemList(holidayMap);
             holidayAPIService.saveHolidayList(itemList);
         }
+
         List<HolidayDto> holidayList = holidayAPIService.getFullHolidayList();
-        return ResponseEntity.ok().body(holidayList);
+        return ResponseEntity.ok()
+                .body(holidayList);
     }
 
     @GetMapping("/project/holiday") //(프로젝트) 결제완료일로부터 30일에 해당하는 공휴일 리스트를 가져오기
@@ -54,15 +57,18 @@ public class HolidayAPIController {
         log.error("\n\n pj_pay_due_dtm={} \n\n", pj_pay_due_dtm);
         List<HolidayDto> dtolist = holidayAPIService.getHolidayList(pj_pay_due_dtm);
 
-        List<String> list = dtolist.stream().map(HolidayDto::getHolidayDate).collect(Collectors.toList());
+        List<String> list = dtolist.stream()
+                .map(HolidayDto::getHolidayDate)
+                .collect(Collectors.toList());
 
         log.error("\n\n list={} \n\n", list);
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok()
+                .body(list);
     }
 
 
     //holidayMap에서 item List를 얻기
-    private static List<Map<String, Object>> getItemList(Map<String, Object> holidayMap){
+    private static List<Map<String, Object>> getItemList(Map<String, Object> holidayMap) {
         //중첩된 Map형태라서 하나씩 꺼내야함.
         Map<String, Object> response = (Map<String, Object>) holidayMap.get("response");
         Map<String, Object> body = (Map<String, Object>) response.get("body");
@@ -72,17 +78,19 @@ public class HolidayAPIController {
     }
 
     @ExceptionHandler(Exception.class) //이 컨트롤러에서 발생할 수 있는 에러를 모두 처리
-    public ResponseEntity<String> handleGeneralHolidayException(Exception e, Errors errors){
+    public ResponseEntity<String> handleGeneralHolidayException(Exception e, Errors errors) {
         e.printStackTrace();
-        if(e instanceof DateTimeParseException){ //getHoliday의 경우, LocalDateTime.parse()에서 parseException발생 가능
-            log.error("\n\n dateTimeParseException error={} \n\n", e.getMessage(),e.getCause());
-            return ResponseEntity.badRequest().body("invalid date format");
+        if (e instanceof DateTimeParseException) { //getHoliday의 경우, LocalDateTime.parse()에서 parseException발생 가능
+            log.error("\n\n dateTimeParseException error={} \n\n", e.getMessage(), e.getCause());
+            return ResponseEntity.badRequest()
+                    .body("invalid date format");
             //todo 뷰에서 alert()로 알맞은 알림메시지를 띄우기 (ex. 펀딩기간을 알맞게 설정해주세요)
             // 결제예정일은 펀딩종료일이 입력되면 자동적으로 계산되는 value이지만
             // client쪽에서 조작 등으로 접근할 수도 있으니(?)
 
         }
-        return ResponseEntity.internalServerError().body("에러가 발생했습니다.");
+        return ResponseEntity.internalServerError()
+                .body("에러가 발생했습니다.");
         //API로부터 정보를 가져오지 못한 경우
     }
 
