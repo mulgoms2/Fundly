@@ -19,19 +19,24 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Controller
 @RequestMapping("/project/editor")
 @SessionAttributes("projectDto")
 public class StoryController {
+    final static Path root = Paths.get(System.getProperty("user.name"));
     ProjectService projectService;
     StoryImageValidator imageValidator;
     MessageSource messageSource;
-    static final String IMG_SAVE_SERVER_LOC = "/Users/lemon/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
+
+    static final String IMG_SAVE_SERVER_LOC = "/Users/" + root + "/fundly/img/"; //컨트롤러에서밖에 안 쓰는데 여기 둬도 될까
     static final String REMOTE_URL = "/project/img/";
   
     @Autowired
@@ -54,19 +59,24 @@ public class StoryController {
 
     //프로젝트 계획
     @GetMapping("/story")//pj_id는 session에서 가져오는 것으로 수정할 예정
-    public String makeStory(@SessionAttribute ProjectDto projectDto, Model m, @RequestParam(required = false) boolean edit){
+    public String makeStory(ProjectDto projectDto, Model m, @RequestParam(required = false) boolean edit){
         //작성한 내용이 아무것도 없으면 프로젝트 에디터를 띄우고
         //작성한 항목이 하나라도 있으면, 작성한 내용을 먼저 보여주고 수정버튼을 누르면 에디터를 띄워주도록 하기
         //해당 상태에 대한 정보를 storyForm이 변수로 갖고 있어서 jsp에서 그에 따라 맞는 코드를 보여준다.
         log.error("\n\n projectDto={}\n\n", projectDto);
 //        log.error("\n\n edit={}\n\n",edit);
-        StoryForm storyForm = projectService.getStoryFormByPjId(projectDto.getPj_id());
-        if (edit) {
+        StoryForm storyForm = StoryForm.builder().build();
+        try{
+            storyForm = projectService.getStoryFormByPjId(projectDto.getPj_id());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (Objects.nonNull(storyForm) && edit) {
             storyForm.setEdit();
         }
 //        log.error("\n\n storyForm={} \n\n",storyForm);
 //        log.error("\n\n storyForm.getIsEmpty()={}",storyForm.getIsEmpty());
-        m.addAttribute(storyForm);
+        m.addAttribute("storyForm", storyForm);
         return "project.story";
     }
 

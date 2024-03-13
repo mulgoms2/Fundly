@@ -48,11 +48,10 @@ public class ServletContext implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("/WEB-INF/static/");
 
-        registry.addResourceHandler("/project/img/*")
-                .addResourceLocations("file:///C:/Users/lemon/fundly/img/", "file:/Users/dobigulbi/fundly/img/");
+        registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
+//        registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/lemon/fundly/img/", "file:/Users/dobigulbi/fundly/img/");
+        registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/" + root + "/fundly/img/", "file:/Users/" + root + "/fundly/img/");
 
 //        registry.addResourceHandler("/img/*").addResourceLocations("file:///C:/Users/fundly/img/");
 
