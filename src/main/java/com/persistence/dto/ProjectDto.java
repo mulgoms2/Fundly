@@ -73,7 +73,7 @@ public class ProjectDto {
     // 입금계좌는 입금계좌 테이블에서 진행
 
     // 그 외
-    private String gift_ship_due_date; //상품 전달 예정일
+    private LocalDateTime gift_ship_due_date; //상품 전달 예정일
     private String pj_status; //프로젝트 상태
     private String fund_result_status; //펀딩 결과 상태
 
@@ -143,6 +143,10 @@ public class ProjectDto {
         this.pj_pay_due_dtm = fundingForm.getPj_pay_due_dtm();
         this.fund_calc_due_dtm = fundingForm.getFund_calc_due_dtm();
     }
+
+//    public void updateGiftShipDueDate(GiftForm giftForm){
+//        this.gift_ship_due_date = giftForm.getGift_ship_due_date();
+//    }
 
     public static FundingForm toFundingForm(ProjectDto project) {
         FundingForm fundingForm = FundingForm.builder()

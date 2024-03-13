@@ -20,6 +20,7 @@
             <button id="itmBtn" type="button">
                 <div><i class="fas fa-solid fa-list"></i><span>아이템</span></div>
             </button>
+            <input type="hidden" id="pj_id" value="${pj_id}">
         </div>
         <div class="rightBtn">
             <div>
