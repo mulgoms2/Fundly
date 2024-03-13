@@ -87,6 +87,7 @@ public class GiftController {
         String gift_id = UUID.randomUUID().toString();
         //GiftRegister시에 Tx로 GiftItemDetailDto에 insert가 함께 발생, 즉 gift_id가 미리 존재해야한다. (ai라면 다시 꺼내기 애매함)
 
+//        projectDto.setGift_ship_due_date(giftForm.getGift_ship_due_date());
         giftForm.setPj_id(pj_id);
         giftForm.setDba_reg_id(id);
         giftForm.setGift_id(gift_id);

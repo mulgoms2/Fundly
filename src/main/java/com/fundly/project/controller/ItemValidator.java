@@ -45,8 +45,8 @@ public class ItemValidator implements Validator {
         if(item_option_type.equals("객관식 옵션")){
             String[] optArr = item_option.split(",");
             log.error("optArr={}", Arrays.toString(optArr));
-            if(optArr.length<3) // 최소 2개 이상을 입력해야하는 조건
-                errors.rejectValue("item_option","insufficient",new String[]{"3"},null);
+            if(optArr.length<2) // 최소 2개 이상을 입력해야하는 조건
+                errors.rejectValue("item_option","insufficient",new String[]{"2"},null);
             for(int i=0; i<optArr.length; i++){ //각 옵션의 길이는 100자를 넘지 않는다.
                 if(optArr[i]==null || optArr[i].length() > 100){
                     errors.rejectValue("item_option","invalidLength",new String[]{"1","100"},null);

@@ -4,6 +4,7 @@ import com.fundly.project.controller.GiftForm;
 import com.fundly.project.model.GiftItemDetailMapper;
 import com.fundly.project.model.GiftMapper;
 import com.fundly.project.model.ItemMapper;
+import com.fundly.project.model.ProjectMapper;
 import com.persistence.dto.GiftDto;
 import com.persistence.dto.GiftItemDetailDto;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +21,14 @@ public class GiftServiceImpl implements GiftService {
     GiftMapper giftMapper;
     GiftItemDetailMapper giftItemDetailMapper;
     ItemMapper itemMapper;
+    ProjectMapper projectMapper;
 
     @Autowired
-    GiftServiceImpl (GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper, ItemMapper itemMapper){
+    GiftServiceImpl (GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper, ItemMapper itemMapper, ProjectMapper projectMapper){
         this.giftMapper = giftMapper;
         this.giftItemDetailMapper = giftItemDetailMapper;
         this.itemMapper = itemMapper;
+        this.projectMapper = projectMapper;
     }
 
     @Override
@@ -46,12 +49,12 @@ public class GiftServiceImpl implements GiftService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int registerGift(GiftDto giftDto, List<GiftItemDetailDto> itemList) throws Exception{
-        int rowCnt = giftMapper.insert(giftDto);
+        int rowCnt = giftMapper.insert(giftDto); //선물 테이블에 insert
 
         for(int i=0; i<itemList.size(); i++){
-            giftItemDetailMapper.insert(itemList.get(i));
+            giftItemDetailMapper.insert(itemList.get(i)); //선물-아이템 상세 테이블에 insert
         }
-        // todo projectDto도 업데이트 필요함.
+
 
 //        문제 상황 :
 //         giftItemDetail 테이블의 column이 타입이 맞지 않을 경우 데이터 insert가 안되어 SQLException 발생
