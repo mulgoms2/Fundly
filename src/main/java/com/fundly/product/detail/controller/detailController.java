@@ -21,7 +21,7 @@ public class detailController {
 
 
     @GetMapping("/detail")
-    public String detail(){
+    public String detail() {
         return "product/detail";
     }
 
@@ -36,7 +36,7 @@ public class detailController {
 //            GiftForm gf = giftService.getGift(gift_id);
             model.addAttribute("giftServe", giftServe);
 //            System.out.println("giftFormaaaaaaaaa" + gf);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "errorPage";
         }
@@ -49,7 +49,7 @@ public class detailController {
 
     // 창작자 컨트롤러
     @GetMapping("/creation")
-    public String creator(){
+    public String creator() {
         return "product/creation";
     }
 }
