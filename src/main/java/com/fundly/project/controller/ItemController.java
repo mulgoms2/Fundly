@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 @Slf4j
@@ -72,7 +73,9 @@ public class ItemController {
     @GetMapping("/editor/reward")
     public String makeGift(Model m, ProjectDto projectDto) throws Exception {
         log.error("\n\n(itemController) projectDto={}\n\n", projectDto);
-        m.addAttribute("pj_pay_due_dtm",projectDto.getPj_pay_due_dtm().toLocalDate());
+        if(Objects.nonNull(projectDto.getPj_pay_due_dtm())){
+            m.addAttribute("pj_pay_due_dtm",projectDto.getPj_pay_due_dtm().toLocalDate());
+        }
         m.addAttribute("pj_id", projectDto.getPj_id());
 
         return "project.reward";
@@ -97,7 +100,7 @@ public class ItemController {
 
             log.error("***************** messageSource={}",messageSource);
             ErrorResult errorResult = new ErrorResult(result, messageSource);
-            return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(errorResult);
             // 에러 메시지를 담고 있는 객체를 보내 400번 에러로 응답한다.
         }
 
@@ -107,7 +110,7 @@ public class ItemController {
             if(itemService.registerItem(itemDto)==1){
                 List<ItemDto> list = itemService.getItemList(pj_id);
                 System.out.println("list = " + list);
-                return new ResponseEntity<>(list, HttpStatus.OK);
+                return ResponseEntity.ok().body(list);
             } else {
                 throw new Exception("item register FAIL");
             }

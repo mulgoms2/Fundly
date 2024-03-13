@@ -80,7 +80,6 @@
         pj_sel_name        = #{pj_sel_name},
         pj_sel_short_intro = #{pj_sel_short_intro},
         pj_prof_image_url  = #{pj_prof_image_url},
-        gift_ship_due_date = #{gift_ship_due_date},
         pj_status          = #{pj_status},
         fund_result_status = #{fund_result_status},
         curr_pj_like_cnt   = #{curr_pj_like_cnt},
