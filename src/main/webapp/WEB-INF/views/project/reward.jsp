@@ -20,6 +20,7 @@
             <button id="itmBtn" type="button">
                 <div><i class="fas fa-solid fa-list"></i><span>아이템</span></div>
             </button>
+            <input type="hidden" id="pj_id" value="${pj_id}">
         </div>
         <div class="rightBtn">
             <div>
@@ -188,10 +189,10 @@
                             </div>
                             <hr>
                             <div>
-                                <p>결제 종료일(2024-03-01)로부터</p> <!--여기 나중에 고쳐야 함. 하드코딩 xx-->
+                                <p>결제 종료일( <span id="payDay">${empty pj_pay_due_dtm? "" : pj_pay_due_dtm} </span> )로부터</p> <!--여기 나중에 고쳐야 함. 하드코딩 xx-->
                                 <div>
                                     <div>
-                                        <input id="payDay" type="hidden" value="2024-03-01T00:00:00"> <!--pj에서 넘어온 값을 넣어줘야함 <%--${pj.fund_end_dtm}--%> -->
+<%--                                        <input id="payDay" type="hidden" value=""> <!--pj에서 넘어온 값을 넣어줘야함 &lt;%&ndash;${pj.fund_end_dtm}&ndash;%&gt; -->--%>
                                         <input id="shipCalc" type="number" onkeyup="validDays(this,1825);calcDate(this)">
                                         <div>일 뒤</div>
                                     </div>

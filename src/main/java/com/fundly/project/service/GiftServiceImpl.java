@@ -4,6 +4,7 @@ import com.fundly.project.controller.GiftForm;
 import com.fundly.project.model.GiftItemDetailMapper;
 import com.fundly.project.model.GiftMapper;
 import com.fundly.project.model.ItemMapper;
+import com.fundly.project.model.ProjectMapper;
 import com.persistence.dto.GiftDto;
 import com.persistence.dto.GiftItemDetailDto;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +21,14 @@ public class GiftServiceImpl implements GiftService {
     GiftMapper giftMapper;
     GiftItemDetailMapper giftItemDetailMapper;
     ItemMapper itemMapper;
+    ProjectMapper projectMapper;
 
     @Autowired
-    GiftServiceImpl (GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper, ItemMapper itemMapper){
+    GiftServiceImpl (GiftMapper giftMapper, GiftItemDetailMapper giftItemDetailMapper, ItemMapper itemMapper, ProjectMapper projectMapper){
         this.giftMapper = giftMapper;
         this.giftItemDetailMapper = giftItemDetailMapper;
         this.itemMapper = itemMapper;
+        this.projectMapper = projectMapper;
     }
 
     @Override
@@ -42,27 +45,30 @@ public class GiftServiceImpl implements GiftService {
         return registerGift(giftDto, itemList);
     }
 
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int registerGift(GiftDto giftDto, List<GiftItemDetailDto> itemList) throws Exception{
-        int rowCnt = giftMapper.insert(giftDto);
+        int rowCnt = giftMapper.insert(giftDto); //선물 테이블에 insert
 
         for(int i=0; i<itemList.size(); i++){
-            giftItemDetailMapper.insert(itemList.get(i));
+            giftItemDetailMapper.insert(itemList.get(i)); //선물-아이템 상세 테이블에 insert
         }
-        //Todo 문제 상황 :
-        // giftItemDetail 테이블의 column이 타입이 맞지 않을 경우 데이터 insert가 안되어 SQLException 발생
-        // gift테이블에만 insert가 된다. 즉 Tx 적용이 안됨.
-        // rollbackFor로 Exception.class를 적어주었음에도 하위 타입인 SQLException에 대하여
-        // rollback이 발생하지 않았다. 왜지?
-        // ** giftMapper.insert를 giftItemDetailMapper 뒷 순서로 바꾸니 Tx 적용이 된다.
-        // (rollback이 작용한게 아니라 Exception발생에 따라 뒤의 코드가 아예 실행이 안된것)
-        // n개의 giftItemDetailMapper의 insert메서드가 하나의 클래스에 속한 메서드라서
-        // 프록시 방식의 @Transactional이 작동하지 않는걸까?
-        // 여기 확실히 짚고 넘어가야 할 것 같다.
 
-        //todo 엥 이상하게 이제는 Tx가 먹힌다. 아까는 왜 안됐지...ㅡㅡ
-        // 아무튼 Tx는 적용되는걸 꼭 확인하고 넘어가자.
+
+//        문제 상황 :
+//         giftItemDetail 테이블의 column이 타입이 맞지 않을 경우 데이터 insert가 안되어 SQLException 발생
+//         gift테이블에만 insert가 된다. 즉 Tx 적용이 안됨.
+//         rollbackFor로 Exception.class를 적어주었음에도 하위 타입인 SQLException에 대하여
+//         rollback이 발생하지 않았다. 왜지?
+//         ** giftMapper.insert를 giftItemDetailMapper 뒷 순서로 바꾸니 Tx 적용이 된다.
+//         (rollback이 작용한게 아니라 Exception발생에 따라 뒤의 코드가 아예 실행이 안된것)
+//         n개의 giftItemDetailMapper의 insert메서드가 하나의 클래스에 속한 메서드라서
+//         프록시 방식의 @Transactional이 작동하지 않는걸까?
+//         여기 확실히 짚고 넘어가야 할 것 같다.
+//
+//        엥 이상하게 이제는 Tx가 먹힌다. 아까는 왜 안됐지...ㅡㅡ
+//         아무튼 Tx는 적용되는걸 꼭 확인하고 넘어가자.
 
 
         //throw new Exception();

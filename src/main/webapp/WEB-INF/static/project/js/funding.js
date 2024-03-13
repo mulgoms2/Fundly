@@ -1,5 +1,6 @@
 const selectStrBtn = document.querySelector('.selectStr');
 const selectBox = document.querySelector('#timeSelect');
+const options = document.querySelectorAll('option');
 const datepicker = document.querySelector('.datepicker');
 let today = new Date();
 const saveBtn = document.querySelector('button.save');
@@ -15,7 +16,16 @@ const incomeDay = document.querySelector('span.payIn');
 
 
 window.onload = function(){
-    inputCheck(goalMoney); //일단은 강제로 input이벤트를 발생시킬 수가 없어서 이렇게 처리.
+    inputCheck(goalMoney); //일단은 강제로 input이벤트를 발생시킬 수가 없어서 이렇게 처리.(3자리 comma 및 수수료 계산)
+
+    //
+    for(option of options){
+        //select의 value에 el을 쓰는 것 만으로는 해당 value를 가지는 option이 알아서 selected되진 않아서
+        //onload시 반영되게 했다.
+        if(option.value === startTime.value){
+            option.selected = true;
+        }
+    }
 
     //datepicker의 요소 혹은 이벤트를 쓸 때는 vanilla js가 아닌 jquery로 써야 적용되어서 어쩔 수 없이 혼용
     $('#dateInput').daterangepicker({
@@ -97,7 +107,7 @@ window.onload = function(){
         //유효성 검사를 통과한 formData를 얻어온다.
         const validForm = validFormCheck();
         if(!validForm) alert('양식에 맞추어 다시 입력해주세요')
-        //console.log('validForm')
+        console.log('validForm')
         console.log(validForm)
         fetch('/project/editor/funding',{
             method:"POST",
@@ -109,6 +119,7 @@ window.onload = function(){
             if(!res.ok){
                 throw res
             }
+            alert('성공적으로 저장되었습니다.')
             return res.json()
         }).then(data => {
             if(data == true)
@@ -218,29 +229,38 @@ const validFormCheck = function() {
         return false;
     } else {
         validForm.fund_goal_money = money
+        console.log(validForm)
     }
 
     //펀딩 시작일, 종료일 체크
+    //date-picker의 형식은 yyyy-mm-dd인데, model에 담겨오는 fundingForm은 yyyy-mm-ddTHH:mm:ss
+    //format때문에 fundingForm 수정 요청이 매끄럽게 넘어가지 못함
     let fund_str_dtm = datepicker.getAttribute('data-str_dtm')
     let fund_end_dtm = datepicker.getAttribute('data-end_dtm')
     let str_tm = startTime.value;
 
-    // str_tm = (str_tm[1] === ':' ? '0' + str_tm : str_tm); //el에서 자릿수를 맞추고 싶었는데 문자열 결합이 안돼서(0이 숫자로 계산됨) js로 처리
-    // el로 처리완
+    fund_str_dtm = new Date(fund_str_dtm)
+    fund_end_dtm = new Date(fund_end_dtm)
 
-    fund_str_dtm = fund_str_dtm + 'T' + str_tm + ':00'//펀딩 시작일+펀딩 시작 시간을 합한다.
-    fund_end_dtm = fund_end_dtm + 'T' + "23:59:59"
+    fund_str_dtm = fund_str_dtm.toISOString().substring(0,10) + 'T' + str_tm + ':00'
+    fund_end_dtm = fund_end_dtm.toISOString().substring(0,10) + 'T' + '23:59:59'
+
+    console.log(fund_str_dtm)
+    console.log(fund_end_dtm)
+    console.log(str_tm)
 
     if (isNull(fund_str_dtm) || isNull(fund_end_dtm) || isNull(str_tm)
             || !regexDateTime.test(fund_end_dtm) || !regexDateTime.test(fund_str_dtm)) return false; //입력되지 않으면 유효성 체크 탈락
     validForm.fund_str_dtm = fund_str_dtm;
     validForm.fund_end_dtm = fund_end_dtm;
-    validForm.fund_str_tm = startTime.value;
+    validForm.fund_str_tm = str_tm;
+    console.log(validForm)
 
 
     //예상 결제 종료일, 정산 예정일
     let pj_pay_due_dtm = payEndDay.innerText
     let fund_calc_due_dtm = incomeDay.innerText
+
 
     pj_pay_due_dtm = pj_pay_due_dtm + 'T' + "23:59:59"
     fund_calc_due_dtm = fund_calc_due_dtm + 'T' + "23:59:59"
@@ -250,7 +270,9 @@ const validFormCheck = function() {
 
     validForm.pj_pay_due_dtm = pj_pay_due_dtm
     validForm.fund_calc_due_dtm = fund_calc_due_dtm
+    console.log(validForm)
 
+    console.log('validForm')
     console.log(validForm);
     return validForm;
 }
@@ -261,30 +283,6 @@ const isNull = function(item){
 
 
 
-
-//두 날짜 사이의 날들을 배열로 반환하는 함수
-// const getDateRange = function (startDate, lastDate){ //from startDate(포함x) to lastDate
-//     let dateRange = []
-//     let tmp = new Date(startDate.getTime())
-//     tmp.setDate(tmp.getDate()+1)
-//     while(tmp <= lastDate){
-//         dateRange.push(tmp.toISOString().substring(0,10))
-//         tmp.setDate(tmp.getDate()+1)
-//     }
-//     console.log(dateRange)
-//     return dateRange;
-// }
-
-
-
-//(전제 : 공휴일 api를 이용해 공휴일 데이터를 미리 db에 저장해둔다.)
-//daterangepicker에서 apply이벤트가 발생하면
-//서버로 결제 종료일 정보를 보내고,
-//db에서 결제 종료일+30일의 내의 공휴일 list를 받아온다.
-//
-//결제 종료일의 요일에 따라 7일 내에 포함된 주말의 수가 달라지므로 분기처리 필요
-//결제 종료일 + (주말제외 7일)에 해당하는 날짜를 배열(arr)로 만들기
-//결제 종료일 + (주말제외 7일)인 date
 
 
 

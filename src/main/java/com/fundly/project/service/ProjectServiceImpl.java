@@ -108,7 +108,8 @@ public class ProjectServiceImpl implements ProjectService {
 
         if (!pjList.isEmpty()) {
             for (ProjectDto project : pjList) {
-                if (project.getPj_status().equals("작성중")) {
+                if (project.getPj_status()
+                           .equals("작성중")) {
                     return project;
                 }
             }
@@ -152,6 +153,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDto> getListByCategory(String category) {
-        return null;
+        return projectMapper.getListByCategory(category);
     }
 }

@@ -1,3 +1,5 @@
+
+
 <%--
   Created by IntelliJ IDEA.
   User: init
@@ -9,29 +11,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>로그인</title>
         <link rel="stylesheet" href="<c:url value='/static/user/css/Login.css?after'/>">
-        <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<%--        <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>--%>
     </head>
 
     <body>
-        <header id="header"><a href="<c:url value='/'/>"><img class="logo" src="/static/img/fundly-logo.svg"></a></header>
+        <header id="header"><a href="<c:url value='/'/>"><img class="logo" src="<c:url value='/static/img/fundly-logo.svg'/>"></a></header>
 
         <main id="main">
             <div class="mainWrap">
-                <%--            <div class="Explntxt">--%>
-                <%--                <h4>간편하게 로그인하고</h4>--%>
-                <%--                <h3>세상에 하나뿐인</h3>--%>
-                <%--                <h3>특별한 프로젝트를 발견해보세요</h3>--%>
-                <%--            </div>--%>
                 <div class="loginBox">
-                    <h2>로그인</h2>
+                    <label for="user_email" class ="fontSize">로그인</label>
                     <form id="usLoginForm">
                         <div class ="emailView">
 <%--                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" autocomplete="off" spellcheck="false"/>--%>
-                            <label for="user_email"></label><input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" spellcheck="false"/>
+                            <input type="text" id ="user_email" name="user_email" value="${userLoginDto.user_email}"  placeholder="이메일 입력" spellcheck="false"/>
                             <div id="msgEmail" class="msg"></div>
                         </div>
 
@@ -61,10 +56,10 @@
                             <div class="kakaImg"></div>
                             <div>카카오톡으로 로그인</div>
                         </button>
-                        <button id="googleBtn" class="googleBtn">
-                            <div class="googleImg"></div>
-                            <div>구글로 로그인</div>
-                        </button>
+<%--                        <button id="googleBtn" class="googleBtn">--%>
+<%--                            <div class="googleImg"></div>--%>
+<%--                            <div>구글로 로그인</div>--%>
+<%--                        </button>--%>
                     </div>
                 </div>
                 <div class ="joinLink">
@@ -117,17 +112,17 @@
         usLoginForm.addEventListener("submit",function(e) {
             e.preventDefault();
 
-            // if(user_email.value.length === 0) {
-            //     setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
-            //     user_email.focus();
-            //     return false;
-            // }
-            //
-            // if(user_pwd.value.length === 0){
-            //     setMessage('비밀번호를 입력하세요.', "user_pwd", "msgPwd", "red");
-            //     user_pwd.focus();
-            //     return false;
-            // }
+            if(user_email.value.length === 0) {
+                setMessage('이메일을 입력해주세요.',"user_email", "msgEmail", "red");
+                user_email.focus();
+                return false;
+            }
+
+            if(user_pwd.value.length === 0){
+                setMessage('비밀번호를 입력하세요.', "user_pwd", "msgPwd", "red");
+                user_pwd.focus();
+                return false;
+            }
             usLoginForm.action = '<c:url value="/login/login"/>';
             usLoginForm.method = 'POST';
             usLoginForm.submit();
@@ -152,9 +147,7 @@
 
         /* errmsg redirect */
         const errmsg = "${errmsg}";
-        if (errmsg === "LOGIN_PWD_ERROR") alert("비밀번호를 확인해주세요.");
-        if (errmsg === "LOGIN_STATUS_ERROR") alert("비활성 유저입니다.");
-        if (errmsg === "LOGIN_EMAIL_ERROR") alert("가입 정보가 없습니다.");
+        if(errmsg!== "") alert(errmsg);
 
         /* valid errorMsg */
         const validUserEmail = '${valid_user_email}';

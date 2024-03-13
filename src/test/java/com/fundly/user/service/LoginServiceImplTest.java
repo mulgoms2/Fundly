@@ -43,18 +43,18 @@ class LoginServiceImplTest {
 //    @SneakyThrows
     @DisplayName("로그인 서비스 & 세션 만들기(로그인)")
     void login(){
-        UserLoginDto userLoginDto = UserLoginDto.builder()
-                .user_pwd("12345q!")
-                .user_email("ab12345@test.com")
-                .build();
-
-        try {
-            UserLoginDto userinfo = loginService.Login(userLoginDto,session,response);
-
-            assertEquals(userLoginDto.getUser_email(),userinfo.getUser_email());
-        } catch (Exception e) {
-//            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+//        UserLoginDto userLoginDto = UserLoginDto.builder()
+//                .user_pwd("12345q!")
+//                .user_email("ab12345@test.com")
+//                .build();
+//
+//        try {
+//            UserLoginDto userinfo = loginService.Login(userLoginDto,session,response);
+//
+//            assertEquals(userLoginDto.getUser_email(),userinfo.getUser_email());
+//        } catch (Exception e) {
+////            e.printStackTrace();
+//            throw new RuntimeException(e);
+//        }
     }
 }

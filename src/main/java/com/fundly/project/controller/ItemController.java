@@ -1,8 +1,11 @@
 package com.fundly.project.controller;
 
+import com.fundly.project.exception.ProjectNotFoundException;
 import com.fundly.project.service.GiftService;
 import com.fundly.project.service.ItemService;
+import com.fundly.project.service.ProjectService;
 import com.persistence.dto.ItemDto;
+import com.persistence.dto.ProjectDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -12,11 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,15 +26,17 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/project")
+@SessionAttributes("projectDto")
 public class ItemController {
     ItemService itemService;
     GiftService giftService;
-
+    ProjectService projectService;
     MessageSource messageSource;
     @Autowired
-    ItemController(ItemService itemService, GiftService giftService, MessageSource messageSource){
+    ItemController(ItemService itemService, GiftService giftService, ProjectService projectService, MessageSource messageSource){
         this.itemService = itemService;
         this.giftService = giftService;
+        this.projectService = projectService;
         this.messageSource = messageSource;
     }
 
@@ -54,22 +56,24 @@ public class ItemController {
 //        return "project.reward";
 //    }  //try-catch
 
+    @ModelAttribute("projectDto")
+    ProjectDto initProjectEditor(@SessionAttribute String user_email) {
+        try {
+            return projectService.getEditingProject(user_email);
+        } catch (ProjectNotFoundException e) {
+            return null;
+        }
+    }
+
+
 
 
     // 아이템+선물 페이지
     @GetMapping("/editor/reward")
-    public String makeGift(Model m, HttpSession session) throws Exception { //global catcher에서 예외처리
-        //itemService로부터 itemDtoList를 꺼내와서 뷰에 전달함
-        //뷰단에서는 itemDtoList가 empty면 보여줄 화면과 empty가 아니면 보여줄 화면이 나뉨.
-
-//        List<ItemDto> itemList = itemService.getItemList("pj1");
-//        System.out.println("itemList = " + itemList);
-//        m.addAttribute("itemList",itemList); //비동기로 서버로 데이터를 요청할거라 처음 뷰에 데이터를 넘겨주지도 않아도 됨.
-
-//        throw new Exception("global catcher test");
-
-        //session.setAttribute("pj_id","90d85c31-cfe0-4410-b148-e0f9d2abcd3c");
-        //프로젝트 계획 컨트롤러에서 pj_id를 꺼내 쓰기 위해 임시로 하드코딩 담아둔것.
+    public String makeGift(Model m, ProjectDto projectDto) throws Exception {
+        log.error("\n\n(itemController) projectDto={}\n\n", projectDto);
+        m.addAttribute("pj_pay_due_dtm",projectDto.getPj_pay_due_dtm().toLocalDate());
+        m.addAttribute("pj_id", projectDto.getPj_id());
 
         return "project.reward";
     }
@@ -78,8 +82,8 @@ public class ItemController {
     //아이템을 등록하기
     @PostMapping("/item")
     @ResponseBody
-    public ResponseEntity<?> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result){ //아이템 등록
-
+    public ResponseEntity<?> makeItem(@Valid @RequestBody ItemDto itemDto, BindingResult result, ProjectDto projectDto, @SessionAttribute String user_email){ //아이템 등록
+        String pj_id = projectDto.getPj_id();
 
         log.error("binding result={}",result);
         log.error("**** error codes ****");
@@ -98,10 +102,10 @@ public class ItemController {
         }
 
         try { // 유효성 검사에 통과한 경우
-            itemDto.setPj_id("pj1"); //지금은 하드코딩이지만 나중에 현 프로젝트 아이디를 넣어줘야함.
-            itemDto.setDba_reg_id("asdf"); //원래는 세션에서 얻어온 아이디를 넣어줘야한다.
+            itemDto.setPj_id(pj_id); //지금은 하드코딩이지만 나중에 현 프로젝트 아이디를 넣어줘야함.
+            itemDto.setDba_reg_id(user_email); //원래는 세션에서 얻어온 아이디를 넣어줘야한다.
             if(itemService.registerItem(itemDto)==1){
-                List<ItemDto> list = itemService.getItemList("pj1");
+                List<ItemDto> list = itemService.getItemList(pj_id);
                 System.out.println("list = " + list);
                 return new ResponseEntity<>(list, HttpStatus.OK);
             } else {
@@ -158,14 +162,14 @@ public class ItemController {
 
     @DeleteMapping("/item")
     @ResponseBody
-    public ResponseEntity<List<ItemDto>> removeItem(Integer item_id, HttpSession session){
+    public ResponseEntity<List<ItemDto>> removeItem(Integer item_id, @SessionAttribute String user_email, ProjectDto projectDto){
 //        System.out.println("itemDto = " + itemDto);
 //        System.out.println("itemDto.getItem_id() = " + itemDto.getItem_id());
 
         //아이디가 일치해야만 아이템 삭제가 가능하도록
         //String id = (String)session.getAttribute("id"); 원래는 session으로부터 로그인 아이디를 얻어와야함
-        String id = "asdf";
-        String pj_id = "pj1";
+        String id = user_email;
+        String pj_id = projectDto.getPj_id();
         try {
             int rowCnt = itemService.remove(item_id);
             System.out.println("rowCnt = " + rowCnt);
@@ -205,7 +209,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping("/items")
+    @GetMapping("/items") //선물페이지에서 드롭다운 체크박스로 선택한 아이템을 가져오는 메서드
     @ResponseBody
     public ResponseEntity<List<ItemDto>> getItemSelected(String item_id){ //Dto로 넘겨주도록 수정
         System.out.println("item_id = " + item_id);
@@ -239,16 +243,16 @@ public class ItemController {
         }
     }
 
-    @InitBinder
-    public void dataBind(WebDataBinder binder){
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(df,false));
-        // 이건 item이 아니라 gift쪽에서 날짜 입력받을 때 쓰기.
-
-        binder.setValidator(new ItemValidator());
-//        binder.addValidators(new GiftValidator()); //giftValidator
-        List<Validator> validatorList = binder.getValidators();
-        log.error("validatorList = {}",validatorList);
-    }
+//    @InitBinder
+//    public void dataBind(WebDataBinder binder){
+////        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+////        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(df,false));
+//        // 이건 item이 아니라 gift쪽에서 날짜 입력받을 때 쓰기.
+//
+//        binder.setValidator(new ItemValidator());
+////        binder.addValidators(new GiftValidator()); //giftValidator
+//        List<Validator> validatorList = binder.getValidators();
+//        log.error("validatorList = {}",validatorList);
+//    }
 
 }

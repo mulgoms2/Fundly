@@ -2,6 +2,8 @@ package com.fundly.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fundly.user.dto.UserJoinDto;
+import com.fundly.user.exception.UserJoinFailException;
+import com.fundly.user.exception.UserLoinFailException;
 import com.fundly.user.service.JoinService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,7 @@ class JoinControllerTest {
     private ObjectMapper objectMapper;
 
     @BeforeEach
-    @DisplayName("유저 컨트롤 테스트 설정")
+    @DisplayName("join controller test setting")
     public void setMockMvc(){
         this.objectMapper = new ObjectMapper();
         this.mockMvc = MockMvcBuilders.standaloneSetup(joinController).build();
@@ -44,9 +46,9 @@ class JoinControllerTest {
     void 유저_회원가입_화면_이동_테스트() {
         // when
         mockMvc.perform(get("/join/add"))
-                .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("user/join"));
+                .andExpect(view().name("user/join"))
+                .andDo(print());
     }
 
     @Test
@@ -55,9 +57,7 @@ class JoinControllerTest {
     void 유저_회원가입_입력값_오류(){
 
         //given
-        UserJoinDto userJoinDto = UserJoinDto.builder()
-                .user_email("invalidemail")
-                .build();
+        UserJoinDto userJoinDto = UserJoinDto.builder().user_email("invalid") .build();
 
         //when - then
         mockMvc.perform(post("/join/add")
@@ -93,5 +93,25 @@ class JoinControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("/user/login"))
                 .andDo(print());
+    }
+
+    @Test
+    @DisplayName("에러 테스트")
+    void 에러_테스트() {
+
+        try{
+            throw new UserJoinFailException("이미 가입된 사용자입니다.");
+//            throw new RuntimeException("RuntimeException 에러 발생");
+//            throw new Exception("Exception 에러 발생");
+        }catch (UserJoinFailException ue){
+            log.debug("UserJoinFailException.getMessage() = " + ue.getMessage());
+            ue.printStackTrace();
+        }catch (RuntimeException re){
+            log.debug("RuntimeException.getMessage() = " + re.getMessage());
+            re.printStackTrace();
+        }catch (Exception e){
+            log.debug("Exception.getMessage() = " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

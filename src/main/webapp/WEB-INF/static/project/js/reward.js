@@ -2,6 +2,7 @@ let optArr = []; //window.onload 안에 있으면 함수에서 못 갖다 쓴다
 //let itemArr = [];
 //아이템 페이지의 요소들
 //header.js에 옮김
+const hiddenPjId = document.querySelector('#pj_id');
 const itemPage = document.querySelector("#item"); //아이템 페이지 div단락
 const giftPage = document.querySelector("#gift"); //선물 페이지 div단락
 const strPage = document.querySelector("#str"); //선물 만들기 첫 페이지
@@ -22,7 +23,7 @@ const radioBtns = document.querySelector('.pjBox.gift').querySelectorAll('input[
 const maxInputs = document.querySelectorAll('.maxInput');
 const pjForm = document.querySelector('.pjBox.item').querySelector('.pjForm');
 const giftInitBtn = document.querySelector("#gftInit"); //선물 초기화 버튼
-const giftCnclBtn = document.querySelector("#gftModCncl"); //선물 초기화 버튼
+const giftCnclBtn = document.querySelector("#gftModCncl"); //선물 수정 취소 버튼
 const giftSaveBtn = document.querySelector("#gftSave"); //선물 저장버튼
 const giftModBtn = document.querySelector("#gftMod"); //선물 수정버튼
 
@@ -53,7 +54,8 @@ window.onload = function () {
     // 처음 뷰를 요청시 디폴트 페이지는
     // 선물 등록 페이지(giftPage) / 또는 선물-아이템 시작페이지(strPage)
     mkHidden([itemPage]);//즉, 아이템 페이지는 처음엔 숨겨두었다가(디폴트x) 클릭하면 보여주게 됨.
-    loadPage("pj1"); //DB에서 해당 프로젝트에 등록된 아이템의 수를 조회해 giftPage 또는 strPage를 보여주는 함수
+    loadPage(hiddenPjId.value); //DB에서 해당 프로젝트에 등록된 아이템의 수를 조회해 giftPage 또는 strPage를 보여주는 함수
+    console.log(hiddenPjId.value)
     // todo 현재 프로젝트 아이디는 하드코딩 상태.
     //  나중에 어떻게 프로젝트 아이디를 넘길지 생각하기.
     //   1. tiles의 헤더부분에 hidden input으로 pj_id를 가지고 있기
@@ -64,7 +66,7 @@ window.onload = function () {
     gftBtn.addEventListener("click", async function () {
         colorChange(this, itmBtn);
         //서버에서 등록된 아이템 수를 가져와서 0인지 체크해야함.
-        const pj_id = "pj1" //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
+        const pj_id = hiddenPjId.value //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
         const cnt = await fetchItemCnt(pj_id)
 
         if (cnt === 0) { //등록된 아이템이 없으면
@@ -85,7 +87,7 @@ window.onload = function () {
     itmBtn.addEventListener("click", async function () {
         colorChange(this, gftBtn); //활성, 비활성 버튼의 색을 바꿔준다.
         // const cnt = document.querySelectorAll("#itemList > div");
-        const pj_id = "pj1" //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
+        const pj_id = hiddenPjId.value //하드코딩... 나중에 pj_id를 어디서 가져올지 생각해야해
         const cnt = await fetchItemCnt(pj_id)
         //window.scrollTo(0,0); //최상단으로 이동
         if (cnt === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
@@ -170,7 +172,6 @@ window.onload = function () {
                 const ItemArr = data
                 const itemList = document.querySelector('#itemList')
                 showList(mkItmList(ItemArr),itemList);
-
             })
             .catch(error => error).then(error => {
                 alert("[등록 실패] " + error);
@@ -350,7 +351,7 @@ window.onload = function () {
         //todo reward.jsp 처음 로딩되었을 때, item버튼을 누르지 않으면, pj_id를 읽어올 수 없는 상황이다.
         // pj_id를 읽어오는 방법을 바꿔야함***
         //const pj_id = document.querySelector('#itemList').querySelector('div').getAttribute('data-pj_id');
-        const pj_id = "pj1"
+        const pj_id = hiddenPjId.value
         const itmDropdown = document.querySelector('#itmDropdown');
         const div = itmDropdown.querySelector('div');
         console.log('div');
@@ -561,13 +562,14 @@ window.onload = function () {
             })
             .then(data => {
                 alert('선물이 성공적으로 수정되었습니다.')
-                giftInit(); //입력창 초기화
                 const tit = document.querySelector('div.gift div.first > p.tit')
                 tit.innerHTML = '선물 등록하기';
                 //수정된 리스트를 다시 뿌려주기
                 const giftArr = data
                 const giftList = document.querySelector('#giftList')
                 showList(mkGiftList(giftArr),giftList);
+
+                giftInit(); //입력창 초기화
 
             })
             .catch(error=> error).then(error => console.log(error))
@@ -640,7 +642,7 @@ const loadGiftList = function(pj_id) {
 async function loadPage(pj_id){
 
     const cnt = await fetchItemCnt(pj_id); //서버로부터 해당 프로젝트에 등록된 아이템 수를 가져온다.
-    console.log("cnt here")
+    //console.log("cnt here")
     //console.log(cnt);
     //console.log(typeof cnt); number
 
@@ -789,7 +791,7 @@ const mkItmDrop = function (arr) {
         list += '<input type="checkbox" class="checkedItem" onchange="changeFoot()" data-item_id=' + itm.item_id + '>'
         list += '<div>'
         list += '<span>' + itm.item_name + ' (' + itm.item_option_type + ') </span>'
-        list += '<em>0개의 선물에 포함됨</em>'
+        // list += '<em>0개의 선물에 포함됨</em>'
         list += '</div>'
         list += '</li>'
     }
@@ -1048,9 +1050,9 @@ const noOffset = function(date){
 }
 
 const calcDate = function(elem){
-    const hidden = elem.parentElement.querySelector('input[type=hidden]')
-    console.log(hidden);
-    let from = new Date(hidden.value);
+    const payDay = document.querySelector('#payDay')
+    console.log(payDay);
+    let from = new Date(payDay.innerText);
     console.log("before from")
     console.log(from)
     const shipDate = document.querySelector('#shipDate');
@@ -1115,7 +1117,7 @@ const changeFoot = function () { //체크박스의 체크 상태에 따라 foote
     detail.innerHTML = '<b style="color:#3d3d3d">'+ length +'</b>' + '개의 아이템 선택';
 }
 
-const selectItem = function (elem) {
+const selectItem = function (elem) { //드롭다운 체크박스에서 선택한 아이템을 가져와서
     const checkedElems = document.querySelectorAll('input[type=checkbox]:checked');
     const itmDropdown = document.querySelector('#itmDropdown');
     const itemIdArr = []; //checked된 item_id들을 담을 배열
@@ -1147,7 +1149,7 @@ const selectItem = function (elem) {
         // headers: {"content-type": "application/json"},
         // data: JSON.stringify({'item_id':item_id}),
         success: function (result) {
-            alert('콘솔을 확인하세요.')
+            //alert('콘솔을 확인하세요.')
             console.dir(result);
             const arr = result;
             if(arr!=null){
@@ -1194,7 +1196,7 @@ const removeItm = function (elem) {
             return;
         }
     }
-    if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하면 해당 아이템이 포함된 *개의 선물에서도 삭제됩니다.")) return;
+    if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하시면 해당 아이템이 포함된 선물들도 같이 삭제됩니다.")) return;
     //ajax로 컨트롤러를 통해 db에서 아이템 삭제 후 리스트를 다시 불러와서 보여줘야함.
     // const item_id = elem.querySelector("input[type=hidden]").value;
     const item_id = elem.getAttribute('data-item_id');
@@ -1268,7 +1270,9 @@ const removeGift = function(elem){
             const giftList = document.querySelector('#giftList')
             //선물리스트 data를 가지고 html태그를 만드는 함수 호출해서 화면에 뿌리기
             showList(mkGiftList(giftArr),giftList);
-
+            giftInit();
+            //수정 눌렀다가 삭제했을 경우, 수정form을 초기화시켜주지 않으면 선물은 삭제됐는데 수정form은 남아있는 상태가 되므로 초기화 필수.
+            //근데 이게 안먹힘..
         })
         .catch(error => error).then(error => {
         alert(error);
@@ -1396,7 +1400,7 @@ const modifyGift = async function(event, elem){
     const tit = document.querySelector('div.gift div.first > p.tit')
     const shipDate = document.querySelector('#shipDate')
     const days = document.querySelector('#shipCalc');
-    const payDay = document.querySelector('#payDay').value;
+    const payDay = document.querySelector('#payDay').innerText;
     const giftMoney = document.querySelector('#giftMoney');
     const limits = document.querySelectorAll('input[name=limit]')
     const maxLimits = document.querySelectorAll('input[name=maxLimit]')
@@ -1577,8 +1581,8 @@ const init = function () {
 const giftInit = function(){
     //checkbox 해제 및 selectItm 감추기
     const checkedElems = document.querySelectorAll('input[type=checkbox]:checked');
-    //console.log("checkedElems")
-    //console.log(checkedElems);
+    console.log("checkedElems")
+    console.log(checkedElems);
     for(elem of checkedElems){
         elem.checked = false;
     }
@@ -1778,13 +1782,11 @@ const giftValidCheck = function(){
     }else if(shipCalc<1 || shipCalc>1825){
         return false;
     }
-    let payDay = document.querySelector('#payDay').value;
-    payDay = noOffset(new Date(payDay));
+    let payDay = document.querySelector('#payDay');
+    payDay = noOffset(new Date(payDay.innerHTML));
     // console.log(payDay);
     // console.log(typeof payDay);
-    validForm.pj_pay_due_dtm = payDay.toISOString().substring(0,19);
-    //사실 이 모든게 datepicker에서 iso String형식으로 날짜를 넘기길래 따라한건데..
-    //offset은 내가 생각못한 변수였다. 이렇게까지 불편하게 iso String을 써야하는 근본적인 이유가 있나?
+    validForm.pj_pay_due_dtm = new Date(payDay).toISOString().substring(0,19); //이건 여기서 생성하는 값이 아니다.
 
     let shipDay = document.querySelector("#shipDay").innerHTML
     shipDay = noOffset(new Date(shipDay)); //toISOString을 쓰면 offset때문에 시간차이가 생김.

@@ -59,9 +59,9 @@
                       </div>
                       <div id="msgCheckPwd" class="msgPwd" ></div>
                   </div>
-                  <div class="pwdInit">비밀번호가 기억나지 않나요?
-                      <a href="#">비밀번호 초기화</a>
-                  </div>
+<%--                  <div class="pwdInit">비밀번호가 기억나지 않나요?--%>
+<%--                      <a href="#">비밀번호 초기화</a>--%>
+<%--                  </div>--%>
                   <div class="chaPwdWrap">
                       <div class="pwdFont">변경할 비밀번호</div>
 

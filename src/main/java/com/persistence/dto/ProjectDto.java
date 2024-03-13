@@ -73,7 +73,7 @@ public class ProjectDto {
     // 입금계좌는 입금계좌 테이블에서 진행
 
     // 그 외
-    private String gift_ship_due_date; //상품 전달 예정일
+    private LocalDateTime gift_ship_due_date; //상품 전달 예정일
     private String pj_status; //프로젝트 상태
     private String fund_result_status; //펀딩 결과 상태
 
@@ -144,6 +144,10 @@ public class ProjectDto {
         this.fund_calc_due_dtm = fundingForm.getFund_calc_due_dtm();
     }
 
+//    public void updateGiftShipDueDate(GiftForm giftForm){
+//        this.gift_ship_due_date = giftForm.getGift_ship_due_date();
+//    }
+
     public static FundingForm toFundingForm(ProjectDto project) {
         FundingForm fundingForm = FundingForm.builder()
                                              .fund_goal_money(project.getFund_goal_money())
@@ -154,10 +158,8 @@ public class ProjectDto {
                                              .build();
 
         return fundingForm.calcFundPeriod()
-                          .calcFundRange()
                           .calcFundStrTime()
                           .dtmToString();
-//        return fundingForm.calcFundRange();
     }
 
     public static StoryForm toStoryForm(ProjectDto project) {
@@ -204,7 +206,7 @@ public class ProjectDto {
             fund_percent = curr_money.multiply(BigInteger.valueOf(100L))
                                      .divide(goal_money);
         } catch (NullPointerException e) {
-            fund_percent = null;
+            fund_percent = BigInteger.valueOf(0L);
         }
 
 
@@ -212,6 +214,7 @@ public class ProjectDto {
                               .pj_id(projectDto.getPj_id())
                               .thumbnail_img_url(projectDto.getPj_thumbnail_url())
                               .category(projectDto.getCtg())
+                              .sel_name(projectDto.getPj_sel_name())
                               .long_title(projectDto.getPj_long_title())
                               .funding_percentage(String.valueOf(fund_percent))
                               .build();
