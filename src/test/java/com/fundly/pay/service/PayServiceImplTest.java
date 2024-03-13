@@ -29,15 +29,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringJUnitWebConfig({RootContext.class, ServletContext.class})
 class PayServiceImplTest {
 
-    @Autowired PayService payService;
-    @Autowired PayDao payDao;
-    @Autowired PortOneService portOneService;
+    @Autowired
+    PayService payService;
+    @Autowired
+    PayDao payDao;
+    @Autowired
+    PortOneService portOneService;
 
     String userId = "test";
     String payMeansId = "PAY-MEANS_am0229@naver.com_1"; // TODO: 결제수단 등록 선행
     BigInteger payMoney = BigInteger.valueOf(100L);
     LocalDateTime payDueDtm = LocalDateTime.now(); // 결제예정일
-    LocalDateTime payDdlnDtm = LocalDateTime.now().plusDays(14); // 결제마감일
+    LocalDateTime payDdlnDtm = LocalDateTime.now()
+            .plusDays(14); // 결제마감일
     String payId;
     PayDto payDto;
 //    String adrId = "ADR_test_1";
@@ -54,8 +58,13 @@ class PayServiceImplTest {
 
         payId = payDao.selectPayId(userId);
         payDto = PayDto.builder()
-                .user_id(userId).pay_id(payId).pay_means_id(payMeansId)
-                .pay_money(payMoney).pay_due_dtm(payDueDtm).pay_ddln_dtm(payDdlnDtm).build();
+                .user_id(userId)
+                .pay_id(payId)
+                .pay_means_id(payMeansId)
+                .pay_money(payMoney)
+                .pay_due_dtm(payDueDtm)
+                .pay_ddln_dtm(payDdlnDtm)
+                .build();
 
         // given
         insertOrderData(); // 주문데이터 생성
@@ -71,10 +80,14 @@ class PayServiceImplTest {
 
         // insert한 데이터 확인
         assertTrue(payDao.selectOrderData(orderListId) != null);
-        assertEquals(payDao.selectOrderData(orderListId).getOrder_list_id(), orderListId);
-        assertEquals(payDao.selectOrderData(orderListId).getOrder_status(), "010002"); // default: '주문완료'
-        assertEquals(payDao.selectOrderData(orderListId).getPay_means_id(), payMeansId);
-        assertEquals(payDao.selectOrderData(orderListId).getPay_inserted_yn(), 'N'); // default: N
+        assertEquals(payDao.selectOrderData(orderListId)
+                .getOrder_list_id(), orderListId);
+        assertEquals(payDao.selectOrderData(orderListId)
+                .getOrder_status(), "010002"); // default: '주문완료'
+        assertEquals(payDao.selectOrderData(orderListId)
+                .getPay_means_id(), payMeansId);
+        assertEquals(payDao.selectOrderData(orderListId)
+                .getPay_inserted_yn(), 'N'); // default: N
     }
 
     @DisplayName("테스트 후 데이터 리셋")
@@ -125,13 +138,16 @@ class PayServiceImplTest {
     private void initDataForUpdateStatusTest() {
         payService.setUpAndInsertPayRecord(payDto); // 결제데이터 생성
         payDto.setPay_status_hist_id(payDao.selectPayStatusHistId(userId)); // pay_status_hist_id 초기화
-        assertEquals(payDao.selectPayData(payId).getPay_status(), "001001"); // before: 미결제
+        assertEquals(payDao.selectPayData(payId)
+                .getPay_status(), "001001"); // before: 미결제
         assertTrue(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()) == null); // before
     }
 
     @SneakyThrows
     private void verifyUpdatePayStatus(String payStatus, String methodName) {
-        String currStatusCode = payDao.selectPayData(payId).getPay_status() == null? "001001" : payDao.selectPayData(payId).getPay_status(); // 기존 결제상태코드
+        String currStatusCode = payDao.selectPayData(payId)
+                .getPay_status() == null ? "001001" : payDao.selectPayData(payId)
+                .getPay_status(); // 기존 결제상태코드
         String targetStatusCode = getPayStatusCode(payStatus); // 변경할 결제상태코드
 
         payDto.setPay_status_hist_id(payDao.selectPayStatusHistId(userId)); // 결제상태이력테이블 PK 생성
@@ -140,9 +156,13 @@ class PayServiceImplTest {
             payService.updatePayStatus(payDto, payStatus);
 
             // then
-            assertEquals(payDao.selectPayData(payId).getPay_status(), targetStatusCode); // 새로운 결제상태로 update
-            assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getPay_status(), targetStatusCode);
-            assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getMod_dtm(), payDao.selectPayData(payId).getDba_mod_dtm());
+            assertEquals(payDao.selectPayData(payId)
+                    .getPay_status(), targetStatusCode); // 새로운 결제상태로 update
+            assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                    .getPay_status(), targetStatusCode);
+            assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                    .getMod_dtm(), payDao.selectPayData(payId)
+                    .getDba_mod_dtm());
         } else { // 트랜잭션 테스트인 경우
             try {
                 // when - 의도적으로 에러를 발생시키는 테스트 메서드 실행
@@ -151,7 +171,8 @@ class PayServiceImplTest {
                 log.error("{} : {}\n {}\n", "verifyUpdatePayStatus()", e.getMessage(), e.getStackTrace());
             }
             // then
-            assertEquals(payDao.selectPayData(payId).getPay_status(), currStatusCode); // 기존 결제상태로 rollback
+            assertEquals(payDao.selectPayData(payId)
+                    .getPay_status(), currStatusCode); // 기존 결제상태로 rollback
             assertTrue(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()) == null); // 결제상태이력 insert rollback
         }
     }
@@ -191,7 +212,8 @@ class PayServiceImplTest {
         assertEquals(insertedPayData.getPay_status(), "001001"); // default: 미결제
 
         // after: 주문테이블 pay_inserted_yn == 'Y'
-        assertEquals(payDao.selectOrderData(payDto.getOrder_list_id()).getPay_inserted_yn(), 'Y');
+        assertEquals(payDao.selectOrderData(payDto.getOrder_list_id())
+                .getPay_inserted_yn(), 'Y');
     }
 
     @Test
@@ -207,7 +229,8 @@ class PayServiceImplTest {
         }
         // then
         assertTrue(payDao.selectPayData(payDto.getPay_id()) == null); // insert 롤백되어 null
-        assertEquals(payDao.selectOrderData(payDto.getOrder_list_id()).getPay_inserted_yn(), 'N'); // update 롤백되어 'N'
+        assertEquals(payDao.selectOrderData(payDto.getOrder_list_id())
+                .getPay_inserted_yn(), 'N'); // update 롤백되어 'N'
     }
 
     @Test
@@ -215,7 +238,9 @@ class PayServiceImplTest {
     @DisplayName("결제데이터 생성 테스트")
     void createPayRecordFromOrderTest() {
         // given
-        for (int i = 0; i < 3; i++) { insertOrderData(); } // 주문데이터 생성
+        for (int i = 0; i < 3; i++) {
+            insertOrderData();
+        } // 주문데이터 생성
 
         // when
         payService.createPayRecordFromOrder(); // 테스트 메서드 실행
@@ -223,7 +248,8 @@ class PayServiceImplTest {
         // then
         // 결제테이블에 insert된 주문데이터의 pay_inserterd_yn이 'Y'로 업데이트되었는지 확인
         for (PayDto pay : payDao.selectAll()) {
-            assertEquals(payDao.selectOrderData(pay.getOrder_list_id()).getPay_inserted_yn(), 'Y');
+            assertEquals(payDao.selectOrderData(pay.getOrder_list_id())
+                    .getPay_inserted_yn(), 'Y');
             assertEquals(pay.getPay_status(), "001001");
         }
     }
@@ -241,9 +267,13 @@ class PayServiceImplTest {
         payService.processPayment(payDto, flag); // 결제 로직 실행
 
         // then - 결제 성공 시
-        assertEquals(payDao.selectPayData(payId).getPay_status(), getPayStatusCode("결제완료")); // '결제완료'로 update
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getPay_status(), getPayStatusCode("결제완료"));
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getMod_dtm(), payDao.selectPayData(payId).getDba_mod_dtm());
+        assertEquals(payDao.selectPayData(payId)
+                .getPay_status(), getPayStatusCode("결제완료")); // '결제완료'로 update
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getPay_status(), getPayStatusCode("결제완료"));
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getMod_dtm(), payDao.selectPayData(payId)
+                .getDba_mod_dtm());
     }
 
     @Test
@@ -264,9 +294,13 @@ class PayServiceImplTest {
             log.error("{} : {}\n {}\n", "cancelPaymentTest()", e.getMessage(), e.getStackTrace());
         }
         // then - 결제취소 성공 결과
-        assertEquals(payDao.selectPayData(payId).getPay_status(), getPayStatusCode(flag + "실패")); // flag+"실패'로 update
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getPay_status(), getPayStatusCode(flag + "실패"));
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getMod_dtm(), payDao.selectPayData(payId).getDba_mod_dtm());
+        assertEquals(payDao.selectPayData(payId)
+                .getPay_status(), getPayStatusCode(flag + "실패")); // flag+"실패'로 update
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getPay_status(), getPayStatusCode(flag + "실패"));
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getMod_dtm(), payDao.selectPayData(payId)
+                .getDba_mod_dtm());
     }
 
     @Test
@@ -287,9 +321,13 @@ class PayServiceImplTest {
             log.error("{} : {}\n {}\n", "cancelPaymentFailTest()", e.getMessage(), e.getStackTrace());
         }
         // then - 결제취소 실패 결과
-        assertEquals(payDao.selectPayData(payId).getPay_status(), getPayStatusCode(flag + "취소실패")); // flag+"실패'로 update
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getPay_status(), getPayStatusCode(flag + "취소실패"));
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getMod_dtm(), payDao.selectPayData(payId).getDba_mod_dtm());
+        assertEquals(payDao.selectPayData(payId)
+                .getPay_status(), getPayStatusCode(flag + "취소실패")); // flag+"실패'로 update
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getPay_status(), getPayStatusCode(flag + "취소실패"));
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getMod_dtm(), payDao.selectPayData(payId)
+                .getDba_mod_dtm());
     }
 
     @Test
@@ -310,9 +348,13 @@ class PayServiceImplTest {
         }
 
         // then - 결제금액 검증실패 -> (재)결제취소 성공 결과 = (재)결제실패
-        assertEquals(payDao.selectPayData(payId).getPay_status(), getPayStatusCode(flag + "실패")); // flag+"실패'로 update
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getPay_status(), getPayStatusCode(flag + "실패"));
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getMod_dtm(), payDao.selectPayData(payId).getDba_mod_dtm());
+        assertEquals(payDao.selectPayData(payId)
+                .getPay_status(), getPayStatusCode(flag + "실패")); // flag+"실패'로 update
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getPay_status(), getPayStatusCode(flag + "실패"));
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getMod_dtm(), payDao.selectPayData(payId)
+                .getDba_mod_dtm());
     }
 
     @Test
@@ -333,14 +375,19 @@ class PayServiceImplTest {
         }
 
         // then - 결제상태 업데이트 실패 -> (재)결제취소 성공 결과 = (재)결제실패
-        assertEquals(payDao.selectPayData(payId).getPay_status(), getPayStatusCode(flag + "실패")); // flag+"실패'로 update
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getPay_status(), getPayStatusCode(flag + "실패"));
-        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id()).getMod_dtm(), payDao.selectPayData(payId).getDba_mod_dtm());
+        assertEquals(payDao.selectPayData(payId)
+                .getPay_status(), getPayStatusCode(flag + "실패")); // flag+"실패'로 update
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getPay_status(), getPayStatusCode(flag + "실패"));
+        assertEquals(payDao.selectPayStatusHistData(payDto.getPay_status_hist_id())
+                .getMod_dtm(), payDao.selectPayData(payId)
+                .getDba_mod_dtm());
     }
 
     // 결제금액 검증실패로 인한 결제실패 메서드
     private void processPaymentForValidFailTest(PayDto payDto, String flag) {
-        BigInteger fakeMoney = payDto.getPay_money().add(BigInteger.valueOf(1000)); // 위조 금액
+        BigInteger fakeMoney = payDto.getPay_money()
+                .add(BigInteger.valueOf(1000)); // 위조 금액
         try {
             // 1. 포트원에 결제 요청을 한다.
             ResponseEntity<PaymentResponseDto> requestPayResponseDto = payService.requestPayToPortOne(payDto, flag);
@@ -348,7 +395,9 @@ class PayServiceImplTest {
             // 2. 결제금액 검증: 요청한 금액과 실제 결제된 금액이 같은지 비교
             // 결제금액 검증 성공 시, 결제상태 == '결제완료'로 update
             if (payService.isValidPaymentAmount(payDto.getPay_money(), fakeMoney)) { // false. error point
-                Instant instant = Instant.ofEpochSecond(requestPayResponseDto.getBody().getResponse().getPaid_at()); // Unix Epoch Time을 Instant 객체로 변환
+                Instant instant = Instant.ofEpochSecond(requestPayResponseDto.getBody()
+                        .getResponse()
+                        .getPaid_at()); // Unix Epoch Time을 Instant 객체로 변환
                 LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("UTC")); // Instant를 LocalDateTime으로 변환
                 // 1) 결제일시 setting
                 payDto.setPay_dtm(localDateTime);
@@ -375,8 +424,12 @@ class PayServiceImplTest {
 
             // 2. 결제금액 검증: 요청한 금액과 실제 결제된 금액이 같은지 비교
             // 결제금액 검증 성공 시, 결제상태 == '결제완료'로 update
-            if (payService.isValidPaymentAmount(payDto.getPay_money(), requestPayResponseDto.getBody().getResponse().getAmount())) {
-                Instant instant = Instant.ofEpochSecond(requestPayResponseDto.getBody().getResponse().getPaid_at()); // Unix Epoch Time을 Instant 객체로 변환
+            if (payService.isValidPaymentAmount(payDto.getPay_money(), requestPayResponseDto.getBody()
+                    .getResponse()
+                    .getAmount())) {
+                Instant instant = Instant.ofEpochSecond(requestPayResponseDto.getBody()
+                        .getResponse()
+                        .getPaid_at()); // Unix Epoch Time을 Instant 객체로 변환
                 LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("UTC")); // Instant를 LocalDateTime으로 변환
                 // 1) 결제일시 setting
                 payDto.setPay_dtm(localDateTime);
@@ -400,7 +453,9 @@ class PayServiceImplTest {
     @DisplayName("복수데이터 결제 테스트")
     void executePaymentTest() {
         // given
-        for (int i = 0; i < 3; i++) { insertOrderData(); } // 주문데이터 생성
+        for (int i = 0; i < 3; i++) {
+            insertOrderData();
+        } // 주문데이터 생성
         payService.createPayRecordFromOrder(); // 결제데이터 생성
 
         // when
@@ -410,9 +465,11 @@ class PayServiceImplTest {
         List<PayDto> payDtoList = payDao.selectAll();
         for (int i = 0; i < payDtoList.size(); i++) {
             if (i == 0) { // 이미 주문이 이루어진 id -> 실패
-                assertEquals(payDtoList.get(i).getPay_status(), getPayStatusCode("결제실패"));
+                assertEquals(payDtoList.get(i)
+                        .getPay_status(), getPayStatusCode("결제실패"));
             } else {
-                assertEquals(payDtoList.get(i).getPay_status(), getPayStatusCode("결제완료"));
+                assertEquals(payDtoList.get(i)
+                        .getPay_status(), getPayStatusCode("결제완료"));
             }
         }
     }
@@ -422,14 +479,18 @@ class PayServiceImplTest {
     @DisplayName("복수데이터 재결제 테스트")
     void retryPaymentTest() {
         // given
-        for (int i = 0; i < 3; i++) { insertOrderData(); } // 주문데이터 생성
+        for (int i = 0; i < 3; i++) {
+            insertOrderData();
+        } // 주문데이터 생성
         payService.createPayRecordFromOrder(); // 결제데이터 생성
 
         // 재결제대상 데이터로 가공
         for (PayDto pay : payDao.selectAll()) {
-            pay.setPay_due_dtm(pay.getPay_due_dtm().minusDays(1)); // 결제예정일을 어제로 설정 (재결제예정이 오늘)
+            pay.setPay_due_dtm(pay.getPay_due_dtm()
+                    .minusDays(1)); // 결제예정일을 어제로 설정 (재결제예정이 오늘)
             payService.updatePayStatus(pay, "결제실패");// '결제실패'로 update
-            assertEquals(payDao.selectByPayId(pay.getPay_id()).getPay_status(), getPayStatusCode("결제실패"));
+            assertEquals(payDao.selectByPayId(pay.getPay_id())
+                    .getPay_status(), getPayStatusCode("결제실패"));
         }
 
         // when
@@ -439,9 +500,11 @@ class PayServiceImplTest {
         List<PayDto> payDtoList = payDao.selectAll();
         for (int i = 0; i < payDtoList.size(); i++) {
             if (i == 0) { // 이미 주문이 이루어진 id -> 실패
-                assertEquals(payDtoList.get(i).getPay_status(), getPayStatusCode("재결제실패"));
+                assertEquals(payDtoList.get(i)
+                        .getPay_status(), getPayStatusCode("재결제실패"));
             } else {
-                assertEquals(payDtoList.get(i).getPay_status(), getPayStatusCode("결제완료"));
+                assertEquals(payDtoList.get(i)
+                        .getPay_status(), getPayStatusCode("결제완료"));
             }
         }
     }

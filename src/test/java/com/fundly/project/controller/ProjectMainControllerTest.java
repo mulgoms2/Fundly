@@ -39,14 +39,14 @@ class ProjectMainControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(projectMainController)
-                                 .build();
+                .build();
     }
 
     @Test
     void test() throws Exception {
         mockMvc.perform(get(endPoint + "/test"))
-               .andExpect(content().string("test"))
-               .andExpect(status().isOk());
+                .andExpect(content().string("test"))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -55,19 +55,19 @@ class ProjectMainControllerTest {
         List<ProjectDto> pjList = new ArrayList<>();
 
         ProjectDto pj1 = ProjectDto.builder()
-                                   .pj_id("01")
-                                   .pj_intro("helo")
-                                   .fund_goal_money(BigInteger.valueOf(30000000L))
-                                   .curr_fund_money(BigInteger.valueOf(300000000L))
-                                   .build();
+                .pj_id("01")
+                .pj_intro("helo")
+                .fund_goal_money(BigInteger.valueOf(30000000L))
+                .curr_fund_money(BigInteger.valueOf(300000000L))
+                .build();
 
         pjList.add(pj1);
         given(projectService.getListByCategory(any())).willReturn(pjList);
 
-        mockMvc.perform(get(endPoint + "/hello"))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$").isNotEmpty())
-               .andExpect(jsonPath("$").isArray())
-               .andDo(print());
+        mockMvc.perform(get(endPoint + "/helo"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$").isArray())
+                .andDo(print());
     }
 }
