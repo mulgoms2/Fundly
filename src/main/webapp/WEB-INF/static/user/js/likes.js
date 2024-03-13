@@ -19,7 +19,7 @@ function clickLikeBtn (event){
         };
 
         // 1. 서버로 좋아요 정보 전송 2. 서버 응답 받기
-        fetch("/like/update", {
+        fetch("/like/updateList", {
             method: "POST",
             headers: {
                 "content-type": "application/json",

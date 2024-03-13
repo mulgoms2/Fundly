@@ -169,7 +169,7 @@ class LikeDaoTest {
     @Test
     @SneakyThrows
     @DisplayName("프로젝트-좋아요테이블 조인테스트")
-    void test() {
+    void projectlikedtoTest() {
         assertTrue(likedao.insertLike(likedto)==1);
         assertTrue(pjdao.insert(pjdto)==1);
         log.debug("\n\n\n" + likedao.checkLike(likedto) + "\n\n\n");
@@ -182,5 +182,16 @@ class LikeDaoTest {
 
         String pj_id = res.get(0).getPj_id();
         System.out.println("res_pj_id = " + pj_id);
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("레프트조인으로중복제거한라이크확인테스트")
+    void getLikeWithPjTest() {
+        assertTrue(likedao.insertLike(likedto)==1);
+        assertTrue(pjdao.insert(pjdto)==1);
+
+        LikeProjectDto res = likedao.getLikeWithPj(likedto);
+        log.debug("\n\n\n[res]" + res + "\n\n\n");
     }
 }

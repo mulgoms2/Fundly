@@ -6,17 +6,15 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+@EqualsAndHashCode
 public class OrderDto {
-    @NonNull
     private String order_list_id;
     private int seq;
     private String adr_id;
-    @NonNull
     private String user_id;
-    @NonNull
     private String pj_id;
     private int cpn_seq;
     private BigInteger pay_money;
@@ -32,6 +30,8 @@ public class OrderDto {
     private LocalDateTime pay_due_dtm;
     private char pay_inserted_yn;
     private String gift_ship_due_date; //상품 전달 예정일
+
+    // DBA
     @EqualsAndHashCode.Exclude
     private LocalDateTime dba_reg_dtm;
     private String dba_reg_id;
