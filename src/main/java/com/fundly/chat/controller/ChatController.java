@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Controller
@@ -32,7 +34,9 @@ public class ChatController {
 
     @Autowired
     ChatService chatService;
-    String IMG_SAVE_LOCATION = "/Users/dobigulbi/fundly/chat/img/";
+
+    public static final Path SYS_USER = Paths.get(System.getProperty("user.name"));
+    public static final String IMG_SAVE_LOCATION = "/Users/" + SYS_USER + "/fundly/chat/img/";
 
     @GetMapping("/chat/test")
 //    테스트용
@@ -40,14 +44,14 @@ public class ChatController {
         return "chat/asyncAwait";
     }
 
-    @PostMapping("/chat/test")
     @ResponseBody
+    @PostMapping("/chat/test")
     public ResponseEntity<SelBuyMsgDto> test(@RequestBody ChatRequest chatRequest) {
 
         SelBuyMsgDto selBuyMsgDto = chatService.joinChatRoom(chatRequest);
 
         return ResponseEntity.ok()
-                             .body(selBuyMsgDto);
+                .body(selBuyMsgDto);
     }
 
     @GetMapping("/chatPop")
@@ -131,9 +135,9 @@ public class ChatController {
 
     private void saveFileToDrive(FileDto uploadFile, HttpServletRequest request) {
         String originFileName = uploadFile.getFile()
-                                          .getOriginalFilename();
+                .getOriginalFilename();
         String uuid = UUID.randomUUID()
-                          .toString();
+                .toString();
         String local_storage_url = request.getContextPath() + IMG_SAVE_LOCATION + uuid + originFileName;
         String db_saved_img_url = "/chat/img/" + uuid + originFileName;
 
