@@ -106,9 +106,7 @@
                     <a href="<c:url value='/login/login'/>">기존 계정으로 로그인하기</a>
 
                     <div class="otherJoin">
-                                 <span>
-                                     또는
-                                 </span>
+                         <span>또는</span>
                     </div>
                 </div>
             </form>
@@ -240,6 +238,9 @@
             return false;
         }
 
+        console.log("유저비밀번호 : " + user_pwd.value);
+        console.log("유저비밀번호체크 : " + user_pwdConfirm.value);
+
         if(!user_pwd.value===user_pwdConfirm.value){
             setMessage('비밀번호가 일치하지 않습니다.', "user_pwdConfirm", "msgPwdConfirm", "red");
             return false;
@@ -252,9 +253,9 @@
             return false;
         }
 
-        joinForm.action = '<c:url value="/join/add"/>';
-        joinForm.method = 'POST';
-        joinForm.submit();
+        <%--joinForm.action = '<c:url value="/join/add"/>';--%>
+        <%--joinForm.method = 'POST';--%>
+        <%--joinForm.submit();--%>
     })
 
     /* Oauth2 kakao */
