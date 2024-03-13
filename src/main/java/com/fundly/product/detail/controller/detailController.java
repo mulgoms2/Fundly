@@ -33,7 +33,7 @@ public class detailController {
             List<GiftForm> giftServe = giftService.getAllGiftList(pj_id);
 
 //            List<GiftItemDetailDto> itemDt = giftService.getGift(gift_id);
-            GiftForm gf = giftService.getGift(gift_id);
+//            GiftForm gf = giftService.getGift(gift_id);
             model.addAttribute("giftServe", giftServe);
 //            System.out.println("giftFormaaaaaaaaa" + gf);
         } catch (Exception e){
