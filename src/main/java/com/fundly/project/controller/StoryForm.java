@@ -19,7 +19,7 @@ public class StoryForm {
     private String pj_sel_intro;
     private String pj_gift_intro;
     private boolean isEmpty;
-    private boolean edit;
+    private boolean edit = false;
     private String[] imgArr;
 
     public boolean isEmpty(){ // 다섯개가 다 null이면 true반환
