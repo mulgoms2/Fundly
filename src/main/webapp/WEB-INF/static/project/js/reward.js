@@ -1306,7 +1306,7 @@ const removeOpt = function (arr, elem) { //옵션이 담기거나, 아이템이 
     //배열에서 삭제
     const opt = elem.querySelector('span').innerHTML;
     const index = arr.indexOf(opt);
-    alert("index=" + index);
+   //alert("index=" + index);
     arr.splice(index, 1);
     //요소 삭제
     elem.remove();
