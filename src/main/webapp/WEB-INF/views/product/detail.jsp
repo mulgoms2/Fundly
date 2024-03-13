@@ -359,7 +359,7 @@
                                     <%--                                    </div>--%>
                                 </div>
                                 <div class="strDesc" id="section5">
-<%--                                <div class="strDesc" id="section5">--%>
+                                    <%--                                <div class="strDesc" id="section5">--%>
                                     ${pj.pj_gift_intro}
                                     <%--                                    <div class="strTit">선물 설명</div>--%>
                                     <%--                                    <p>--%>
@@ -3779,7 +3779,7 @@
 </div>
 <script>
     (() => {
-        const url = "chatPop?buy_id=" + "${sessionScope.user_email}" + "&pj_id=" + "${pj_id}";
+        const url = "/chatPop?buy_id=" + "${sessionScope.user_email}" + "&pj_id=" + "${pj_id}";
         const chatBtn = document.querySelector("#chatBtn");
 
 

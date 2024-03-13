@@ -49,9 +49,11 @@ public class ServletContext implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("/WEB-INF/static/");
 //        registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/lemon/fundly/img/", "file:/Users/dobigulbi/fundly/img/");
-        registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/" + root + "/fundly/img/", "file:/Users/" + root + "/fundly/img/");
+        registry.addResourceHandler("/project/img/*")
+                .addResourceLocations("file:///C:/Users/" + root + "/fundly/img/", "file:/Users/" + root + "/fundly/img/");
 
 //        registry.addResourceHandler("/img/*").addResourceLocations("file:///C:/Users/fundly/img/");
 
@@ -59,7 +61,7 @@ public class ServletContext implements WebMvcConfigurer {
                 .addResourceLocations("file:///C:/Users/" + root + "/fundly/img/", "file:/Users/" + root + "/fundly/img/");
 
         registry.addResourceHandler("/chat/img/*")
-                .addResourceLocations("file:/Users/dobigulbi/fundly/chat/img/");
+                .addResourceLocations("file:///C:/Users/" + root + "/fundly/chat/img/", "file:/Users/" + root + "/fundly/chat/img/");
 
         registry.addResourceHandler("/fundly/project/img/*")
                 .addResourceLocations("file:///C:/Users/" + root + "/fundly/project/img/", "file:/Users/" + root + "/fundly/project/img/");
