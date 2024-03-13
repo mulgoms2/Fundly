@@ -47,13 +47,13 @@
         INSERT INTO PJ (pj_id, pj_sel_name, pj_sel_id, ctg, sub_ctg, pj_long_title, pj_short_title, pj_intro,
                         pj_short_intro, pj_tag,
                         pj_pay_due_dtm, pj_sel_intro, pj_gift_intro, fund_goal_money, fund_str_dtm,
-                        fund_end_dtm, fund_calc_due_dtm, gift_ship_due_date, pj_status, fund_result_status,
+                        fund_end_dtm, fund_calc_due_dtm, pj_status, fund_result_status,
                         curr_pj_like_cnt,
                         curr_fund_money, curr_buy_cnt, dba_reg_id)
         VALUES (#{pj_id}, #{pj_sel_name}, #{pj_sel_id}, #{ctg}, #{sub_ctg}, #{pj_long_title}, #{pj_short_title},
                 #{pj_intro}, #{pj_short_intro}, #{pj_tag},
                 #{pj_pay_due_dtm}, #{pj_sel_intro}, #{pj_gift_intro}, #{fund_goal_money}, #{fund_str_dtm},
-                #{fund_end_dtm}, #{fund_calc_due_dtm}, #{gift_ship_due_date}, #{pj_status}, #{fund_result_status},
+                #{fund_end_dtm}, #{fund_calc_due_dtm}, #{pj_status}, #{fund_result_status},
                 #{curr_pj_like_cnt},
                 #{curr_fund_money}, #{curr_buy_cnt}, #{pj_sel_id})
     </insert>
