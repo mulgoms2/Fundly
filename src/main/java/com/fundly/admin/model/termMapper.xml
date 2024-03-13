@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fundly.admin.model.TermDao">
-    <insert id="insert" parameterType="TermDto">
+    <insert id="insert" parameterType="TermDto" useGeneratedKeys="true"
+            keyProperty="term_seq" keyColumn="term_seq">
         INSERT INTO term
             (term_title, term_cont, reg_id,term_srt_date)
         VALUES
@@ -39,7 +40,7 @@
 
 
     <select id="count" resultType="int">
-        select count(*) from event
+        select count(*) from term
     </select>
 
     <update id="increaseView" parameterType="int">
@@ -75,10 +76,17 @@
         WHERE term_seq = #{term_seq};
   ]]>
     </select>
-    <update id="prevUpdate" parameterType="TermDto">
+    <update id="prevUpdate" parameterType="int">
         UPDATE term
         SET
-            mod_dtm = now()
-        WHERE term_seq = #{term_seq} and reg_id = #{reg_id}
+            term_end_date = now()
+        WHERE term_seq = #{term_seq}
     </update>
+
+    <select id="selectPage" parameterType="map" resultType="TermDto">
+        SELECT *
+        FROM term
+        ORDER BY reg_dtm DESC, term_seq DESC
+            LIMIT #{offset}, #{pageSize}
+    </select>
 </mapper>

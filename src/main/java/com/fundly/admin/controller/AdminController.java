@@ -28,9 +28,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Slf4j
@@ -53,6 +51,8 @@ public class AdminController {
     StatusService statusService;
     @Autowired
     ProjectService projectService;
+    @Autowired
+    SubHelpService subHelpService;
     @RequestMapping("/list")
     public String getNewsList(@RequestParam (required = false, defaultValue = "1") Integer page, Model model,
                               @RequestParam (required = false, defaultValue = "10") Integer pageSize,HttpServletRequest req){
@@ -172,9 +172,14 @@ public class AdminController {
     }
 
     @GetMapping("/eventList")
-    public String getEventList(Model model){
+    public String getEventList(@RequestParam (required = false, defaultValue = "1") Integer page, Model model,
+                               @RequestParam (required = false, defaultValue = "10") Integer pageSize ){
         try {
-            List<EventDto> eventList = eventService.selectAllEvent();
+            List<EventDto> eventList = eventService.selectPage(page,pageSize);
+            int totalCnt = eventService.count();
+            PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
+            model.addAttribute("ph",pageHandler);
+            model.addAttribute("page",page);
             model.addAttribute("eventList",eventList);
             model.addAttribute("now", LocalDateTime.now());
         }catch (Exception e){
@@ -202,6 +207,11 @@ public class AdminController {
     public String insertTerm(TermDto termDto, Model model){
         try {
             termService.insertTerm(termDto);
+            System.out.println("dto.getTerm_seq() = " + termDto.getTerm_seq());
+            System.out.println("dto.getTerm_title() = " + termDto.getTerm_title());
+            TermDto termpre = termService.termPrevNext(termDto.getTerm_seq(),termDto.getTerm_title());
+            Integer prev = termpre.getPrev();
+            if(prev!=0){termService.termprevUpdate(prev);}
         }catch (Exception e){}
         return "redirect:/";
     }
@@ -232,6 +242,44 @@ public class AdminController {
         }catch (Exception e){}
         return "admin/projectScreen";
     }
+
+    @GetMapping("/subHelpList")
+    public String getSubHelpList( Model model
+                                ){
+        try{
+//            List<SubHelpDto> subList = subHelpService.selectPage(page,pageSize);
+//            int totalCnt = subHelpService.countAll();
+//            PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
+//            model.addAttribute("subList",subList);
+//            model.addAttribute("ph",pageHandler);
+//            model.addAttribute("page",page);
+            List<SubHelpDto> subList = subHelpService.selectAllAll();
+            model.addAttribute("subList",subList);
+        }catch (Exception e){}
+        return "admin/subList";
+    }
+
+    @GetMapping("/termList")
+    public String getTermList( Model model
+                             ){
+        try{
+//            List<TermDto> termList = termService.selectPage(page,pageSize);
+//            int totalCnt = termService.count();
+//            PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
+//            model.addAttribute("termList",termList);
+//            model.addAttribute("ph",pageHandler);
+//            model.addAttribute("page",page);
+            List<TermDto> termList = termService.selectAllTerm();
+            model.addAttribute("termList",termList);
+        }catch (Exception e){}
+        return "admin/termList";
+    }
+
+
+
+
+
+
 
 
     @ExceptionHandler({RuntimeException.class, SQLException.class,IllegalArgumentException.class})

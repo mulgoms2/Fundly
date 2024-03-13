@@ -36,7 +36,11 @@
         <div class="hero-container">
             <div class="hero-inner">
                 <h1>무엇을 도와드릴까요?</h1>
-                <form role="search" class="search search-full" data-search="" data-instant="true" autocomplete="off" action="https://help.tumblbug.com/hc/ko/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓" autocomplete="off"><input type="search" name="query" id="query" placeholder="결제, 정산, 심사기준 등으로 검색해보세요" autocomplete="off" aria-label="결제, 정산, 심사기준 등으로 검색해보세요"></form>
+<%--                <form role="search" class="search search-full" data-search="" data-instant="true" autocomplete="off" action="https://help.tumblbug.com/hc/ko/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓" autocomplete="off"><input type="search" name="query" id="query" placeholder="결제, 정산, 심사기준 등으로 검색해보세요" autocomplete="off" aria-label="결제, 정산, 심사기준 등으로 검색해보세요"></form>--%>
+                <form role="search" class="search search-full" data-search="" data-instant="true" autocomplete="off" action="<c:url value='/help/search'/>" accept-charset="UTF-8" method="post">
+                    <input name="utf8" type="hidden" value="" autocomplete="off"><input type="search" name="sub_help_title" id="sub_help_title" placeholder="결제, 정산, 심사기준 등으로 검색해보세요" autocomplete="off" aria-label="결제, 정산, 심사기준 등으로 검색해보세요"> <button type="submit">검색</button></form>
+
+
             </div>
         </div>
     </section>

@@ -29,4 +29,7 @@ public interface TermDao {
 
     TermDto selectTitle(String term_title) throws Exception;
     TermDto termPrevNext(Map map) throws Exception;
+
+    int prevUpdate(Integer term_seq) throws Exception;
+    List<TermDto> selectPage(Map map) throws Exception;
 }

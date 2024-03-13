@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="q" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="tf" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,101 +103,106 @@
     </div>
 </div>
 <div class="conWrap">
-    <div class="title">
-        <p class="tit">게시판 관리</p>
-    </div>
-    <div class="sttBox">
-        <div>
-            <form action="<c:url value='/admin/search' />" method="post">
-                    <input type="text" name="news_title" value="">
-                    <button type="submit">검색</button>
+<div class="title">
+    <p class="tit">게시판 관리</p>
+</div>
+<div class="sttBox">
+    <div>
+        <form action="<c:url value='/admin/search' />" method="post">
+            <input type="text" name="news_title" value="">
+            <button type="submit">검색</button>
 
-            </form>
-        </div>
-
-        <div class="rgtLink">
-            <a href="#">자세히 보기</a>
-        </div>
+        </form>
     </div>
-    <div class="btnWrap">
-        <div class="lftBtngrp">
-            <a href="<c:url value='/admin/list'/>">
-                <i class="fa-regular fa-comments"></i>
-                <span>공지사항</span>
-            </a>
-            <a href="<c:url value="/admin/eventList"/> ">
-                <i class="fa-solid fa-gift fa-lg"></i>
-                <span>이벤트</span>
-            </a>
-            <a href="<c:url value="/admin/termList"/> ">
-                <i class="fa-solid fa-gift fa-lg"></i>
-                <span>이용약관</span>
-            </a>
-            <a href="<c:url value="/admin/subHelpList"/> ">
-                <i class="fa-solid fa-gift fa-lg"></i>
-                <span>헬프센터</span>
-            </a>
-        </div>
-        <div class="rgtBtngrp">
-            <button class="gray">
-                <i class="fa-regular fa-file-import"></i>
-                운송장 입력
-            </button>
-            <button class="carrot">엑셀 메일 발송</button>
-        </div>
+    <%--        <div class="lftBox">--%>
+    <%--            <span class="sttBlue">선물 전달 중</span>--%>
+    <%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
+    <%--            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>--%>
+    <%--        </div>--%>
+    <div class="rgtLink">
+        <a href="#">자세히 보기</a>
     </div>
-    <div class="tbCont">
-        <div class="tbWrap">
-            <table>
-                <tr>
-                    <th>게시물번호</th>
-                    <th>제목</th>
-                    <th>등록자</th>
-                    <th>조회수</th>
-                    <th>등록일시</th>
-                    <th>수정일시</th>
-                    <th>숨김여부</th>
-                    <th><button id="write" onclick="location.href=' <c:url value='/admin/write'/>'">글쓰기</button> </th>
-
-                </tr>
-                <!-- 데이터가 없을 경우 -->
+</div>
+<div class="btnWrap">
+    <div class="lftBtngrp">
+        <a href="<c:url value='/admin/list'/>">
+            <i class="fa-regular fa-comments"></i>
+            <span>공지사항</span>
+        </a>
+        <a href="<c:url value="/admin/eventList"/> ">
+            <i class="fa-solid fa-gift fa-lg"></i>
+            <span>이벤트</span>
+        </a>
+        <a href="<c:url value="/admin/termList"/> ">
+            <i class="fa-solid fa-gift fa-lg"></i>
+            <span>이용약관</span>
+        </a>
+        <a href="<c:url value="/admin/subHelpList"/> ">
+            <i class="fa-solid fa-gift fa-lg"></i>
+            <span>헬프센터</span>
+        </a>
+    </div>
+    <div class="rgtBtngrp">
+        <button class="gray">
+            <i class="fa-regular fa-file-import"></i>
+            운송장 입력
+        </button>
+        <button class="carrot">엑셀 메일 발송</button>
+    </div>
+</div>
+<div class="tbCont">
+<div class="tbWrap">
+<table>
+<tr>
+    <th>게시물번호</th>
+    <th>제목</th>
+    <th>등록자</th>
+    <th>조회수</th>
+    <th>등록일시</th>
+    <th>수정일시</th>
+    <th>약관시작일</th>
+    <th>약관종료일</th>
+    <th><button id="write" onclick="location.href=' <c:url value='/admin/termWrite'/>'">글쓰기</button> </th>
+</tr>
+<!-- 데이터가 없을 경우 -->
 <%--                <td colspan="9">--%>
 <%--                    <p class="noData">데이터가 없습니다</p>--%>
 <%--                </td>--%>
 
-                <c:forEach var="NewsDto" items="${NewsList}">
-                    <tr>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_seq}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_title}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.reg_id}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_view_cnt}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.mod_dtm!=null? NewsDto.mod_dtm :NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.hid_yn}</a></td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
-    </div>
-    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">
-        <c:if test="${ph.showPrev}">
-            <a href="<c:url value='/admin/list?page=${ph.beginPage-1}'/>">&lt;</a>
-        </c:if>
-        <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-            <a href="<c:url value='/admin/list?page=${i}'/> ">${i}</a>
+<c:forEach var="termDto" items="${termList}">
+    <tr>
+    <td><a href="">${termDto.term_seq}</a></td>
+    <td><a href="">${termDto.term_title}</a></td>
+    <td><a href="">${termDto.reg_id}</a></td>
+    <td><a href="">${termDto.term_view_cnt}</a></td>
+    <td><a href="">${termDto.reg_dtm}</a></td>
+    <td><a href="">${termDto.mod_dtm!=null? termDto.mod_dtm :termDto.reg_dtm}</a></td>
+    <td><a href=""><tf:formatDateTime value="${termDto.term_srt_date}"/></a></td>
+    <td><a href=""><tf:formatDateTime value="${termDto.term_end_date}"/></a></td>
         </c:forEach>
-        <c:if test="${ph.showNext}">
-            <a href="<c:url value='/admin/list?page=${ph.endPage+1}'/>">&gt;</a>
-        </c:if>
-    </div>
-    <input type="text" id="searchInput"  placeholder="검색어를 입력하세요">
-</div>
-<footer>
-    <p>@Copyright 2024. 텀블벅 관리자 사이트 All Rights Reserved.</p>
-</footer>
+</table>
 
-<script>
-    if("${msg}"!=""){alert("${msg}")}
-</script>
-</body>
-</html>
+    </div>
+    </div>
+<%--    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">--%>
+<%--    <c:if test="${ph.showPrev}">--%>
+<%--        <a href="<c:url value='/admin/termList?page=${ph.beginPage-1}'/>">&lt;</a>--%>
+<%--    </c:if>--%>
+<%--    <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">--%>
+<%--        <a href="<c:url value='/admin/termList?page=${i}'/> ">${i}</a>--%>
+<%--    </c:forEach>--%>
+<%--    <c:if test="${ph.showNext}">--%>
+<%--        <a href="<c:url value='/admin/termList?page=${ph.endPage+1}'/>">&gt;</a>--%>
+<%--    </c:if>--%>
+<%--    </div>--%>
+    <input type="text" id="searchInput"  placeholder="검색어를 입력하세요">
+    </div>
+    <footer>
+    <p>@Copyright 2024. 텀블벅 관리자 사이트 All Rights Reserved.</p>
+    </footer>
+
+    <script>
+
+    </script>
+    </body>
+    </html>

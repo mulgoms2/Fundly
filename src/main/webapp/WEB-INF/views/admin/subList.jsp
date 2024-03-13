@@ -108,12 +108,16 @@
     <div class="sttBox">
         <div>
             <form action="<c:url value='/admin/search' />" method="post">
-                    <input type="text" name="news_title" value="">
-                    <button type="submit">검색</button>
+                <input type="text" name="news_title" value="">
+                <button type="submit">검색</button>
 
             </form>
         </div>
-
+        <%--        <div class="lftBox">--%>
+        <%--            <span class="sttBlue">선물 전달 중</span>--%>
+        <%--            <p class="bxTit">선물 발송 후, 운송장을 입력하고 선물 전달 상태를 '전달 완료'로 변경해주세요.</p>--%>
+        <%--            <p class="bxStit">운송장을 입력하여 후원자가 배송 상태를 확인할 수 있도록 해주세요.</p>--%>
+        <%--        </div>--%>
         <div class="rgtLink">
             <a href="#">자세히 보기</a>
         </div>
@@ -156,39 +160,42 @@
                     <th>등록일시</th>
                     <th>수정일시</th>
                     <th>숨김여부</th>
-                    <th><button id="write" onclick="location.href=' <c:url value='/admin/write'/>'">글쓰기</button> </th>
-
+                    <th><button id="write" onclick="location.href=' <c:url value='/help/write1'/>'">글쓰기</button> </th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
-<%--                <td colspan="9">--%>
-<%--                    <p class="noData">데이터가 없습니다</p>--%>
-<%--                </td>--%>
+                <%--                <td colspan="9">--%>
+                <%--                    <p class="noData">데이터가 없습니다</p>--%>
+                <%--                </td>--%>
 
-                <c:forEach var="NewsDto" items="${NewsList}">
-                    <tr>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_seq}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_title}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.reg_id}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.news_view_cnt}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.mod_dtm!=null? NewsDto.mod_dtm :NewsDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?news_seq=${NewsDto.news_seq}&page=${page}'/>">${NewsDto.hid_yn}</a></td>
+                <c:forEach var="subDto" items="${subList}">
+                <tr>
+                    <td><a href="">${subDto.sub_help_seq}</a></td>
+                    <td><a href="">${subDto.sub_help_sort}</a></td>
+                    <td><a href="">${subDto.reg_id}</a></td>
+                    <td><a href="">${subDto.sub_help_view_cnt}</a></td>
+                    <td><a href="">${subDto.reg_dtm}</a></td>
+                    <td><a href="">${subDto.mod_dtm!=null? subDto.mod_dtm :subDto.reg_dtm}   </a></td>                                                                                                                                                                                                o.mod_dtm :subDto.reg_dtm}</a></td>
+                    <td><a href="">${subDto.hid_yn}</a></td>
                     </tr>
                 </c:forEach>
             </table>
+
+            <td>
+
+            </td>
         </div>
     </div>
-    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">
-        <c:if test="${ph.showPrev}">
-            <a href="<c:url value='/admin/list?page=${ph.beginPage-1}'/>">&lt;</a>
-        </c:if>
-        <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-            <a href="<c:url value='/admin/list?page=${i}'/> ">${i}</a>
-        </c:forEach>
-        <c:if test="${ph.showNext}">
-            <a href="<c:url value='/admin/list?page=${ph.endPage+1}'/>">&gt;</a>
-        </c:if>
-    </div>
+<%--    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">--%>
+<%--        <c:if test="${ph.showPrev}">--%>
+<%--            <a href="<c:url value='/admin/subHelpList?page=${ph.beginPage-1}'/>">&lt;</a>--%>
+<%--        </c:if>--%>
+<%--        <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">--%>
+<%--            <a href="<c:url value='/admin/subHelpList?page=${i}'/> ">${i}</a>--%>
+<%--        </c:forEach>--%>
+<%--        <c:if test="${ph.showNext}">--%>
+<%--            <a href="<c:url value='/admin/subHelpList?page=${ph.endPage+1}'/>">&gt;</a>--%>
+<%--        </c:if>--%>
+<%--    </div>--%>
     <input type="text" id="searchInput"  placeholder="검색어를 입력하세요">
 </div>
 <footer>
@@ -196,7 +203,7 @@
 </footer>
 
 <script>
-    if("${msg}"!=""){alert("${msg}")}
+
 </script>
 </body>
 </html>

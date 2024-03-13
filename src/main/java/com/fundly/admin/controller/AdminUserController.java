@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-public class AdminUserController {
+public class                                                                                             AdminUserController {
     @Autowired
     NewsService newsService;
     @Autowired
@@ -39,7 +39,7 @@ public class AdminUserController {
             PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
             if(page > pageHandler.getTotalPage()){
                 model.addAttribute("msg","게시물이없습니다");
-                return "redirect:/noticeList";
+                return "admin/userNotice";
             }
             model.addAttribute("NewsList",NewsList);
             model.addAttribute("ph",pageHandler);
@@ -75,7 +75,7 @@ public class AdminUserController {
             int totalCnt = eventService.count();
             PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
             if(page > pageHandler.getTotalPage()){
-                return "redirect:/eventList";
+                return "admin/userEvent";
             }
             model.addAttribute("EventList",EventList);
             model.addAttribute("ph",pageHandler);

@@ -25,4 +25,8 @@ public interface TermService {
 
     public TermDto termPrevNext(Integer term_seq,String term_title) throws Exception;
 
+    public int termprevUpdate(Integer term_seq) throws Exception;
+
+    public List<TermDto> selectPage(Integer page,Integer pageSize) throws Exception;
+
 }

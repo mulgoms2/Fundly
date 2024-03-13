@@ -1,6 +1,7 @@
 package com.fundly.admin.service;
 
 
+
 import com.persistence.dto.SubHelpDto;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,15 @@ public interface SubHelpService {
 
     public int count(Integer sub_help_sort) throws Exception;
 
+    public int countAll() throws Exception;
+
     public int countSub() throws Exception;
 
     public int updateSubHelp(SubHelpDto dto) throws Exception;
+
+    public List<SubHelpDto> selectAllAll() throws Exception;
+
+    public List<SubHelpDto> selectPage(Integer page,Integer pageSize) throws Exception;
+    public List<SubHelpDto> searchHelp(String sub_help_title) throws Exception;
 
 }

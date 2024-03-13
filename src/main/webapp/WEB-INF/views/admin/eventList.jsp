@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="q" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="tf" tagdir="/WEB-INF/tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +30,7 @@
         <nav class="lftWrap">
             <ul class="lnb">
                 <li>
-                    <a href="#" class="">회원관리</a>
+                    <a href="<c:url value="/admin/list"/>" class="">게시판</a>
                     <ul class="sub">
                         <li>
                             <a href="#">회원정보</a>
@@ -42,7 +44,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="">프로젝트관리</a>
+                    <a href="<c:url value="/admin/projectList"/> " class="">프로젝트관리</a>
                     <ul class="sub">
                         <li>
                             <a href="#">서브메뉴1</a>
@@ -132,6 +134,14 @@
                 <i class="fa-solid fa-gift fa-lg"></i>
                 <span>이벤트</span>
             </a>
+            <a href="<c:url value="/admin/termList"/> ">
+                <i class="fa-solid fa-gift fa-lg"></i>
+                <span>이용약관</span>
+            </a>
+            <a href="<c:url value="/admin/subHelpList"/> ">
+                <i class="fa-solid fa-gift fa-lg"></i>
+                <span>헬프센터</span>
+            </a>
         </div>
         <div class="rgtBtngrp">
             <button class="gray">
@@ -154,7 +164,8 @@
                     <th>숨김여부</th>
                     <th>이벤트시작</th>
                     <th>이벤트종료</th>
-                    <th><button id="write" onclick="location.href=' <c:url value='/admin/write'/>'">글쓰기</button> </th>
+                    <th>진행상태</th>
+                    <th><button id="write" onclick="location.href=' <c:url value='/admin/eventWrite'/>'">글쓰기</button> </th>
                 </tr>
                 <!-- 데이터가 없을 경우 -->
                 <%--                <td colspan="9">--%>
@@ -168,11 +179,10 @@
                         <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.reg_id}</a></td>
                         <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_view_cnt}</a></td>
                         <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.mod_dtm!=null? EventDto.mod_dtm :EventDto.reg_dtm}</a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>"> ${EventDto.mod_dtm!=null? EventDto.mod_dtm :EventDto.reg_dtm}</a></td>
                         <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.hid_yn}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_str_date}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_end_date}</a></td>
-
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>"><tf:formatDateTime value="${EventDto.event_str_date}"/></a></td>
+                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>"><tf:formatDateTime value="${EventDto.event_end_date}"/></a></td>
                         <c:choose>
                         <c:when test="${EventDto.event_str_date.isBefore(now) && EventDto.event_end_date.isAfter(now)}">
                         <td> 진행 중</td>
