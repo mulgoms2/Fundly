@@ -7,16 +7,16 @@ changeImg?.addEventListener("click", () => {
     const pTagbefore = document.querySelector('.pTagbefore');
     const pTagDetail = document.querySelector('.pTagDetail');
 
-    changeBtn(changeImg,pTagbefore,pTagDetail);
+    changeBtn(changeImg, pTagbefore, pTagDetail);
 });
 
 changeName?.addEventListener("click", () => {
     const pTagbeforeName = document.querySelector('.pTagbeforeName');
     const pTagDetailName = document.querySelector('.pTagDetailName');
     const userNameValue = document.getElementById('userNameValue');
-    document.getElementById('userNameValue').value= pTagbeforeName.textContent.trim();
+    document.getElementById('userNameValue').value = pTagbeforeName.textContent.trim();
 
-    changeBtn(changeName,pTagbeforeName,pTagDetailName);
+    changeBtn(changeName, pTagbeforeName, pTagDetailName);
     userNameValue.style.border = "1px solid rgb(230, 230, 230)";
 });
 
@@ -25,10 +25,10 @@ changeIntro?.addEventListener("click", () => {
     const pTagDetailIntro = document.querySelector('.pTagDetailIntro');
     const introValue = document.getElementById('introValue');
 
-    if(document.querySelector('pre') !== null)
-        document.getElementById('introValue').value= document.querySelector('pre').textContent.trim();
+    if (document.querySelector('pre') !== null)
+        document.getElementById('introValue').value = document.querySelector('pre').textContent.trim();
 
-    changeBtn(changeIntro,pTagbeforeIntro,pTagDetailIntro);
+    changeBtn(changeIntro, pTagbeforeIntro, pTagDetailIntro);
     introValue.style.border = "border: 1px solid rgb(230, 230, 230)";
     introValue.style.resize = "none";
     introValue.style.width = "100%";
@@ -83,7 +83,7 @@ imgsave?.addEventListener("click", () => {
 
 
 /* name */
-namesave.addEventListener("click",()=> {
+namesave?.addEventListener("click", () => {
 
     const pTagbeforeName = document.querySelector('.pTagbeforeName');
     const userName = document.getElementById('userNameValue').value;
@@ -98,7 +98,7 @@ namesave.addEventListener("click",()=> {
         },
         body: JSON.stringify(data)
     })
-        .then( (response) =>{
+        .then((response) => {
             // 응답 처리
             if (!response.ok) {
                 throw response.text();
@@ -109,16 +109,16 @@ namesave.addEventListener("click",()=> {
 
             let info = userInfo;
             pTagbeforeName.innerText = info.user_name;
-            document.getElementById('ifTxt').innerText =info.user_name;
+            document.getElementById('ifTxt').innerText = info.user_name;
             changeName.click();
 
             alert('이름이 성공적으로 수정되었습니다.');
 
         })
-        .catch(error => error).then(error=>{
-            // 오류 처리
-            console.error('error msg : ', error)
-        })
+        .catch(error => error).then(error => {
+        // 오류 처리
+        console.error('error msg : ', error)
+    })
 });// },{capture:true});
 
 /* intro */
@@ -137,7 +137,7 @@ introsave?.addEventListener("click", () => {
         },
         body: JSON.stringify(data)
     })
-        .then( (response) =>{
+        .then((response) => {
             // 응답 처리
             if (!response.ok) {
                 throw response.text();
@@ -152,7 +152,7 @@ introsave?.addEventListener("click", () => {
             alert('소개가 성공적으로 수정되었습니다.');
 
         })
-        .catch(error => error).then(error=>{
+        .catch(error => error).then(error => {
         // 오류 처리
         console.error('error msg : ', error)
     })
@@ -162,15 +162,15 @@ introsave?.addEventListener("click", () => {
 const userNameValue = document.getElementById('userNameValue');
 const introValue = document.getElementById('introValue');
 
-userNameValue.addEventListener("keydown",function (e){
-    if(e.key === "Enter"){
+userNameValue?.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
         namesave.click();
     }
 })
 
-introValue.addEventListener("keydown",function (e){
-    if(e.key === "Enter"){
-        if(!e.shiftKey){
+introValue?.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        if (!e.shiftKey) {
             // alert('엔터 실행');
             introsave.click();
         }
