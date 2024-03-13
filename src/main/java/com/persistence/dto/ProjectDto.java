@@ -73,7 +73,7 @@ public class ProjectDto {
     // 입금계좌는 입금계좌 테이블에서 진행
 
     // 그 외
-    private LocalDateTime gift_ship_due_date; //상품 전달 예정일
+    //private LocalDateTime gift_ship_due_date; //상품 전달 예정일 -> 프로젝트 테이블에 필요없음.
     private String pj_status; //프로젝트 상태
     private String fund_result_status; //펀딩 결과 상태
 

@@ -26,7 +26,7 @@ const giftInitBtn = document.querySelector("#gftInit"); //선물 초기화 버�
 const giftCnclBtn = document.querySelector("#gftModCncl"); //선물 수정 취소 버튼
 const giftSaveBtn = document.querySelector("#gftSave"); //선물 저장버튼
 const giftModBtn = document.querySelector("#gftMod"); //선물 수정버튼
-
+const payDay = document.querySelector('#payDay');
 
 
 
@@ -47,6 +47,11 @@ window.onscroll = function(){ //window.onscroll
 }
 
 window.onload = function () {
+    //펀딩계획 탭의 결제 예정일이 먼저 존재해야한다.
+    if(payDay.innerHTML==="") {
+        alert('펀딩 계획을 먼저 작성한 후 선물/아이템을 만들 수 있습니다.\n펀딩 계획을 먼저 작성해주세요.')
+        location.href = '/project/editor/funding';
+    }
 
     // reward.jsp 뷰에는 세가지 페이지가 존재(itemPage, giftPage, strPage)
     // 상태에 따라 세가지 뷰를 css로 none / block 처리해서 보여주게 된다.
@@ -158,10 +163,15 @@ window.onload = function () {
             body: JSON.stringify(validForm)
         })
             .then( response => {
-                if(!response.ok) {
+                // if(!response.ok) {
+                //     throw response.text()
+                // }
+                // return response.json()
+                if(response.ok){
+                    return response.json()
+                } else {
                     throw response.text()
                 }
-                return response.json()
             })
             .then(data => {
                 alert('아이템이 성공적으로 등록되었습니다.')
@@ -173,11 +183,12 @@ window.onload = function () {
                 const itemList = document.querySelector('#itemList')
                 showList(mkItmList(ItemArr),itemList);
             })
-            .catch(error => error).then(error => {
-                alert("[등록 실패] " + error);
-                console.log("item등록 실패");
-                console.log(error);
-        })
+            .catch(error => error)
+        //     .then(error => {
+        //         alert("[등록 실패] " + error);
+        //         console.log("item등록 실패");
+        //         console.log(error);
+        // })
             // .then(error => {
             //     alert('아이템 등록에 실패했습니다.')
             //     console.log(error)
@@ -510,10 +521,11 @@ window.onload = function () {
                 //다음 입력을 위해 입력 필드 초기화 함수 호출
                 giftInit();
             })
-            .catch(error => error).then(error => {
-                alert("[등록 실패] "+error);
-                console.log(error);
-        })
+            .catch(error => error)
+        //     .then(error => {
+        //         alert("[등록 실패] "+error);
+        //         console.log(error);
+        // })
             // 중복된 선물 이름을 입력한 경우에도, 다른 입력값을 보존하기 위해 입력 필드 초기화 함수는 호출하지 않는다.
     })
 
@@ -1050,7 +1062,7 @@ const noOffset = function(date){
 }
 
 const calcDate = function(elem){
-    const payDay = document.querySelector('#payDay')
+    // const payDay = document.querySelector('#payDay')
     console.log(payDay);
     let from = new Date(payDay.innerText);
     console.log("before from")
@@ -1200,7 +1212,7 @@ const removeItm = function (elem) {
     //ajax로 컨트롤러를 통해 db에서 아이템 삭제 후 리스트를 다시 불러와서 보여줘야함.
     // const item_id = elem.querySelector("input[type=hidden]").value;
     const item_id = elem.getAttribute('data-item_id');
-    alert(item_id);
+    // alert(item_id);
     // alert(item_id);
     $.ajax({
         type: 'DELETE',
@@ -1255,6 +1267,9 @@ const removeGift = function(elem){
 
     })
         .then((response) => {
+            console.log("response")
+            console.log(response);
+            console.log(response.ok)
             if(!response.ok){
                 throw response.text();
                 //text도 promise를 반환한다. 서버에서 보낸 string은 왜 json으로 변환하지 못할까.
@@ -1262,7 +1277,7 @@ const removeGift = function(elem){
             }
             return response.json() //200번 응답코드일때만.
         })
-        .then((data) => {
+        .then(data => {
             alert("선물이 성공적으로 삭제되었습니다.");
             //console.log("here check")
             //console.log(data);
@@ -1272,12 +1287,13 @@ const removeGift = function(elem){
             showList(mkGiftList(giftArr),giftList);
             giftInit();
             //수정 눌렀다가 삭제했을 경우, 수정form을 초기화시켜주지 않으면 선물은 삭제됐는데 수정form은 남아있는 상태가 되므로 초기화 필수.
-            //근데 이게 안먹힘..
+            //근데 수정 form의 초기화가 안먹힘..
         })
-        .catch(error => error).then(error => {
-        alert(error);
-        console.log(error);
-    })
+        .catch(error => error)
+    //     .then(error => {
+    //     alert(error);
+    //     console.log(error);
+    // })
     // 중복된 선물 이름을 입력한 경우에도, 다른 입력값을 보존하기 위해 입력 필드 초기화 함수는 호출하지 않는다.
     //해당 태그를 지우기
     //elem.remove();
@@ -1589,20 +1605,20 @@ const giftInit = function(){
     const selectItm = document.querySelector("#selectItm");
     const div = selectItm.querySelector('div')
     //console.log(selectItm);  //selectItm을 none처리하면 안됨.
-    //console.log(div);
+    console.log(div);
     if(div){ //div가 없을 때 div.style하면 에러나서 이후 코드 실행 안되므로 추가.
         div.style.display = 'none';
     }
     // 모든 input요소 초기화 (라디오 체크드 해제 포함)
     const inputs = document.querySelectorAll('.gift .pjForm input:not([type=radio]):not([type=hidden])')
-    //console.log(inputs)
+    console.log(inputs)
 
     for(input of inputs){
         input.value = ''
     }
     const radios = document.querySelectorAll('.gift .pjForm input[type=radio]:checked')
     for(radio of radios){
-        //console.log(radio)
+        console.log(radio)
         radio.checked = false;
         radio.parentElement.style.border = '.5px solid #ececec';
         console.log(radio.value)

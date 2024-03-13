@@ -189,7 +189,7 @@
                             </div>
                             <hr>
                             <div>
-                                <p>결제 종료일( <span id="payDay">${empty pj_pay_due_dtm? "" : pj_pay_due_dtm} </span> )로부터</p> <!--여기 나중에 고쳐야 함. 하드코딩 xx-->
+                                <p>결제 종료일( <span id="payDay">${empty pj_pay_due_dtm? "" : pj_pay_due_dtm}</span> )로부터</p> <!--여기 나중에 고쳐야 함. 하드코딩 xx-->
                                 <div>
                                     <div>
 <%--                                        <input id="payDay" type="hidden" value=""> <!--pj에서 넘어온 값을 넣어줘야함 &lt;%&ndash;${pj.fund_end_dtm}&ndash;%&gt; -->--%>
