@@ -178,7 +178,13 @@
     <td><a href="">${termDto.reg_dtm}</a></td>
     <td><a href="">${termDto.mod_dtm!=null? termDto.mod_dtm :termDto.reg_dtm}</a></td>
     <td><a href=""><tf:formatDateTime value="${termDto.term_srt_date}"/></a></td>
-    <td><a href=""><tf:formatDateTime value="${termDto.term_end_date}"/></a></td>
+        <c:choose>
+        <c:when test="${termDto.term_end_date == null }">
+        </c:when>
+        <c:otherwise>
+        <td><a href=""><tf:formatDateTime value="${termDto.term_end_date}"/></a></td>
+        </c:otherwise>
+        </c:choose>
         </c:forEach>
 </table>
 
