@@ -577,245 +577,249 @@
                             <div class="gftBox">
                                 <div class="gftEl" id="gftnotFnd">
                                     <div class="gftVal"><!--1000-->
-                                        ${giftServe.gift_money}원 +
+                                        1000원 +
                                     </div>
                                     <div class="gftDesc">
                                         선물 없이 후원하기
                                     </div>
                                 </div>
+                                <c:forEach var="giftDto" items="${giftServe}">
                                 <div class="gftEl">
                                     <div class="spnLine">
                                         <span class="slctGft"><!--2-->
                                             <i class="fa-solid fa-check"></i>
-                                            ${giftServe.gift_sold_qty}개 선택
+                                            ${giftDto.gift_sold_qty}개 선택
                                         </span>
                                         <span class="slctRmn"><!--28-->
-                                            ${gift_curr_qty}개 남음
+                                            ${giftDto.gift_curr_qty}개 남음
                                         </span>
                                     </div>
                                     <div class="gftVal"><!--29800-->
-                                        ${gift_money}원 +
+                                        ${giftDto.gift_money}원 +
                                     </div>
                                     <div class="gftDesc"><!--[텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함-->
-                                        ${gift_name}
+                                        ${giftDto.gift_name}
                                     </div>
-                                    <ul>
-                                        <li>
-                                            <span>블로썸 오드퍼퓸(50ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 미니퍼퓸(3ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>일러스트 엽서</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                    </ul>
+                                    <c:forEach var="giftForm" items="${gf}">
+                                        <ul>
+                                            <li>
+                                                <span>${giftForm.item_name}</span><!--블로썸 오드퍼퓸(50ML)-->
+                                                <span>${giftForm.item_qty}</span><!--(x1)-->
+                                            </li>
+                                            <li>
+                                                <span>${giftForm.item_name}</span><!--세이리 미니퍼퓸(3ML)-->
+                                                <span>${giftForm.item_qty}</span><!--(x1)-->
+                                            </li>
+                                            <li>
+                                                <span>${giftForm.item_name}</span><!--일러스트 엽서-->
+                                                <span>${giftForm.item_qty}</span><!--(x1)-->
+                                            </li>
+                                        </ul>
+                                    </c:forEach>
                                 </div>
-                                <div class="gftEl">
-                                    <div class="spnLine">
-                                            <span class="slctGft"><!--5-->
-                                                <i class="fa-solid fa-check"></i>
-                                                ${gift_sold_qty}개 선택
-                                            </span>
-                                        <span class="slctRmn"><!--15-->
-                                                ${gift_curr_qty}개 남음
-                                            </span>
-                                    </div>
-                                    <div class="gftVal"><!--51100-->
-                                        ${gift_money}원 +
-                                    </div>
-                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함-->
-                                        ${gift_name}
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <span>블로썸 오드퍼퓸(50ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>블로썸 퍼퓸디퓨저(120ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 미니퍼퓸(3ML)</span>
-                                            <span>(x2)</span>
-                                        </li>
-                                        <li>
-                                            <span>일러스트 엽서</span>
-                                            <span>(x2)</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="gftEl">
-                                    <div class="spnLine">
-                                        <span class="slctGft"><!--10-->
-                                            <i class="fa-solid fa-check"></i>
-                                            ${gift_sold_qty}개 선택
-                                        </span>
-                                        <span class="slctRmn"><!--10-->
-                                            ${gift_curr_qty}개 남음
-                                        </span>
-                                    </div>
-                                    <div class="gftVal"><!--65,700-->
-                                        ${gift_money}원 +
-                                    </div>
-                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함-->
-                                        ${gift_name}
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <span>블로썸 오드퍼퓸(50ML)</span>
-                                            <span>(x2)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 미니퍼퓸(3ML)</span>
-                                            <span>(x2)</span>
-                                        </li>
-                                        <li>
-                                            <span>일러스트 엽서</span>
-                                            <span>(x2)</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="gftEl">
-                                    <div class="spnLine">
-                                        <span class="slctGft"><!--11-->
-                                            <i class="fa-solid fa-check"></i>
-                                            ${gift_sold_qty}개 선택
-                                        </span>
-                                        <span class="slctRmn"><!--4-->
-                                            ${gift_sold_qty}개 남음
-                                        </span>
-                                    </div>
-                                    <div class="gftVal"><!--95,500-->
-                                        ${gift_money}원 +
-                                    </div>
-                                    <div class="gftDesc"><!--[얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함-->
-                                        ${gift_money}
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <span>블로썸 오드퍼퓸(50ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
-                                            <span>택(x2)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 미니퍼퓸(3ML)</span>
-                                            <span>(x3)</span>
-                                        </li>
-                                        <li>
-                                            <span>일러스트 엽서</span>
-                                            <span>(x3)</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="gftEl">
-                                    <div class="spnLine">
-                                        <span class="slctGft"><!--8-->
-                                            <i class="fa-solid fa-check"></i>
-                                            ${gift_sold_qty}개 선택
-                                        </span>
-                                        <span class="slctRmn"><!--2-->
-                                            ${gift_curr_qty}개 남음
-                                        </span>
-                                    </div>
-                                    <div class="gftVal"><!--149,500-->
-                                        ${gift_money}원 +
-                                    </div>
-                                    <div class="gftDesc"><!--[세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함-->
-                                        ${gift_name}
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <span>블로썸 오드퍼퓸(50ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>
-                                            <span>택(x4)</span>
-                                        </li>
-                                        <li>
-                                            <span>블로썸 퍼퓸디퓨저(120ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 미니퍼퓸(3ML)</span>
-                                            <span>(x5)</span>
-                                        </li>
-                                        <li>
-                                            <span>일러스트 엽서</span>
-                                            <span>(x5)</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="gftEl soldOut">
-                                    <div class="spnLine">
-                                        <span class="slctGft"><!--100-->
-                                            <i class="fa-solid fa-check"></i>
-                                            ${gift_sold_qty}개 선택
-                                        </span>
-                                        <span class="slctRmn"><!--0개라서 마감이라는 글자로 변경해주어야 함-->
-                                            ${gift_curr_qty}
-                                        </span>
-                                    </div>
-                                    <div class="gftVal"><!--34,500-->
-                                        ${gift_money}원 +
-                                    </div>
-                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함-->
-                                        ${gift_name}
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <span>블로썸 오드퍼퓸(50ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 미니퍼퓸(3ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>일러스트 엽서</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="gftEl soldOut">
-                                    <div class="spnLine">
-                                        <span class="slctGft"><!--50-->
-                                            <i class="fa-solid fa-check"></i>
-                                            ${gift_sold_qty}개 선택
-                                        </span>
-                                        <span class="slctRmn"><!--0개라서 마감이라는 글자로 변경해주어야 함-->
-                                            ${gift_curr_qty}
-                                        </span>
-                                    </div>
-                                    <div class="gftVal"><!--35,500-->
-                                        ${gift_money}원 +
-                                    </div>
-                                    <div class="gftDesc"><!--[얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함-->
-                                        ${gift_name}
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <span>블로썸 오드퍼퓸(50ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>세이리 미니퍼퓸(3ML)</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                        <li>
-                                            <span>일러스트 엽서</span>
-                                            <span>(x1)</span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                </c:forEach>
+<%--                                <div class="gftEl">--%>
+<%--                                    <div class="spnLine">--%>
+<%--                                            <span class="slctGft"><!--5-->--%>
+<%--                                                <i class="fa-solid fa-check"></i>--%>
+<%--                                                ${gift_sold_qty}개 선택--%>
+<%--                                            </span>--%>
+<%--                                        <span class="slctRmn"><!--15-->--%>
+<%--                                                ${gift_curr_qty}개 남음--%>
+<%--                                            </span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftVal"><!--51100-->--%>
+<%--                                        ${gift_money}원 +--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함-->--%>
+<%--                                        ${gift_name}--%>
+<%--                                    </div>--%>
+<%--                                    <ul>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 오드퍼퓸(50ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 퍼퓸디퓨저(120ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 미니퍼퓸(3ML)</span>--%>
+<%--                                            <span>(x2)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>일러스트 엽서</span>--%>
+<%--                                            <span>(x2)</span>--%>
+<%--                                        </li>--%>
+<%--                                    </ul>--%>
+<%--                                </div>--%>
+<%--                                <div class="gftEl">--%>
+<%--                                    <div class="spnLine">--%>
+<%--                                        <span class="slctGft"><!--10-->--%>
+<%--                                            <i class="fa-solid fa-check"></i>--%>
+<%--                                            ${gift_sold_qty}개 선택--%>
+<%--                                        </span>--%>
+<%--                                        <span class="slctRmn"><!--10-->--%>
+<%--                                            ${gift_curr_qty}개 남음--%>
+<%--                                        </span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftVal"><!--65,700-->--%>
+<%--                                        ${gift_money}원 +--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함-->--%>
+<%--                                        ${gift_name}--%>
+<%--                                    </div>--%>
+<%--                                    <ul>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 오드퍼퓸(50ML)</span>--%>
+<%--                                            <span>(x2)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 미니퍼퓸(3ML)</span>--%>
+<%--                                            <span>(x2)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>일러스트 엽서</span>--%>
+<%--                                            <span>(x2)</span>--%>
+<%--                                        </li>--%>
+<%--                                    </ul>--%>
+<%--                                </div>--%>
+<%--                                <div class="gftEl">--%>
+<%--                                    <div class="spnLine">--%>
+<%--                                        <span class="slctGft"><!--11-->--%>
+<%--                                            <i class="fa-solid fa-check"></i>--%>
+<%--                                            ${gift_sold_qty}개 선택--%>
+<%--                                        </span>--%>
+<%--                                        <span class="slctRmn"><!--4-->--%>
+<%--                                            ${gift_sold_qty}개 남음--%>
+<%--                                        </span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftVal"><!--95,500-->--%>
+<%--                                        ${gift_money}원 +--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftDesc"><!--[얼리버드] 퍼퓸 3개 구성 / 35% 할인가 / 배송비포함-->--%>
+<%--                                        ${gift_money}--%>
+<%--                                    </div>--%>
+<%--                                    <ul>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 오드퍼퓸(50ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>--%>
+<%--                                            <span>택(x2)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 미니퍼퓸(3ML)</span>--%>
+<%--                                            <span>(x3)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>일러스트 엽서</span>--%>
+<%--                                            <span>(x3)</span>--%>
+<%--                                        </li>--%>
+<%--                                    </ul>--%>
+<%--                                </div>--%>
+<%--                                <div class="gftEl">--%>
+<%--                                    <div class="spnLine">--%>
+<%--                                        <span class="slctGft"><!--8-->--%>
+<%--                                            <i class="fa-solid fa-check"></i>--%>
+<%--                                            ${gift_sold_qty}개 선택--%>
+<%--                                        </span>--%>
+<%--                                        <span class="slctRmn"><!--2-->--%>
+<%--                                            ${gift_curr_qty}개 남음--%>
+<%--                                        </span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftVal"><!--149,500-->--%>
+<%--                                        ${gift_money}원 +--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftDesc"><!--[세이리 매니아] 퍼퓸 5개 구성 / 39% 할인가 + 디퓨저 선물증정 / 배송비포함-->--%>
+<%--                                        ${gift_name}--%>
+<%--                                    </div>--%>
+<%--                                    <ul>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 오드퍼퓸(50ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 오드퍼퓸(블로썸 선택가능, 50ML)</span>--%>
+<%--                                            <span>택(x4)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 퍼퓸디퓨저(120ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 미니퍼퓸(3ML)</span>--%>
+<%--                                            <span>(x5)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>일러스트 엽서</span>--%>
+<%--                                            <span>(x5)</span>--%>
+<%--                                        </li>--%>
+<%--                                    </ul>--%>
+<%--                                </div>--%>
+<%--                                <div class="gftEl soldOut">--%>
+<%--                                    <div class="spnLine">--%>
+<%--                                        <span class="slctGft"><!--100-->--%>
+<%--                                            <i class="fa-solid fa-check"></i>--%>
+<%--                                            ${gift_sold_qty}개 선택--%>
+<%--                                        </span>--%>
+<%--                                        <span class="slctRmn"><!--0개라서 마감이라는 글자로 변경해주어야 함-->--%>
+<%--                                            ${gift_curr_qty}--%>
+<%--                                        </span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftVal"><!--34,500-->--%>
+<%--                                        ${gift_money}원 +--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftDesc"><!--[얼리버드] 블로썸 퍼퓸 1개 / 30% 할인가 / 배송비포함-->--%>
+<%--                                        ${gift_name}--%>
+<%--                                    </div>--%>
+<%--                                    <ul>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 오드퍼퓸(50ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 미니퍼퓸(3ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>일러스트 엽서</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                    </ul>--%>
+<%--                                </div>--%>
+<%--                                <div class="gftEl soldOut">--%>
+<%--                                    <div class="spnLine">--%>
+<%--                                        <span class="slctGft"><!--50-->--%>
+<%--                                            <i class="fa-solid fa-check"></i>--%>
+<%--                                            ${gift_sold_qty}개 선택--%>
+<%--                                        </span>--%>
+<%--                                        <span class="slctRmn"><!--0개라서 마감이라는 글자로 변경해주어야 함-->--%>
+<%--                                            ${gift_curr_qty}--%>
+<%--                                        </span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftVal"><!--35,500-->--%>
+<%--                                        ${gift_money}원 +--%>
+<%--                                    </div>--%>
+<%--                                    <div class="gftDesc"><!--[얼리버드 2차] 블로썸 퍼퓸 1개 / 28% 할인가 / 배송비포함-->--%>
+<%--                                        ${gift_name}--%>
+<%--                                    </div>--%>
+<%--                                    <ul>--%>
+<%--                                        <li>--%>
+<%--                                            <span>블로썸 오드퍼퓸(50ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>세이리 미니퍼퓸(3ML)</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                        <li>--%>
+<%--                                            <span>일러스트 엽서</span>--%>
+<%--                                            <span>(x1)</span>--%>
+<%--                                        </li>--%>
+<%--                                    </ul>--%>
+<%--                                </div>--%>
                             </div>
                         </div>
                     </div>
