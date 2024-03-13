@@ -410,7 +410,7 @@ em {
 .mainContainer {
     width: 1080px;
     margin: 0 auto;
-    padding-top: 100px;
+    padding: 120px 0;
 }
 
 .title {
@@ -469,27 +469,25 @@ em {
     justify-content: space-between;
     align-items: center;
 }
-.lftBtngrp > a,
-.lftBtngrp > .msgBtn{
+.lftBtngrp > button {
     margin-right: 20px;
     color: #777;
 }
-.lftBtngrp > a > .fa-regular.fa-comments,
-.lftBtngrp > a > .fa-solid.fa-location-dot,
-.lftBtngrp > a > .fa-solid.fa-gift {
+.lftBtngrp > button > .fa-regular.fa-comments,
+.lftBtngrp > button > .fa-solid.fa-location-dot,
+.lftBtngrp > button > .fa-solid.fa-gift {
     width: 20px;
     height: 20px;
     line-height: 20px;
 }
-.lftBtngrp > a > .fa-solid.fa-location-dot {
+.lftBtngrp > button > .fa-solid.fa-location-dot {
     text-align: center;
 }
 
-.lftBtngrp > a:hover,
-.lftBtngrp > .msgBtn:hover {
+.lftBtngrp > button:hover {
     color: #F86453;
 }
-.lftBtngrp > a:last-child {
+.lftBtngrp > button:last-child {
     margin-right: 0px;
 }
 
@@ -633,6 +631,9 @@ button.gray {
     background: #fafafa;
     border: 1px solid #d3d3d3;
 }
+button.gray:hover {
+    background: #eaeaea;
+}
 button.carrot {
     color: #fff;
     background: #F86453;
@@ -655,6 +656,7 @@ button.carrot {
 .tbWrap {
     width: 100%;
     border-top: 2px solid #0a0a0a;
+    border-bottom: 2px solid #0a0a0a;
     overflow-x: auto;
 }
 .tbWrap.br th{
@@ -685,9 +687,12 @@ button.carrot {
 .tbWrap table td {
     color: #707070;
 }
+.tbWrap table tr:hover {
+    background: #e6efff;
+}
 .tbWrap table .gftList,
 .tbWrap table td > p {
-    width: 400px;
+    width: 360px;
 }
 .tbWrap table .taL {
     text-align: left;

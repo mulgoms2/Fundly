@@ -68,7 +68,7 @@ $(function () {
 
     //* 탭메뉴_레벨2 스크롤 고정 *//
     $(window).scroll(function() {
-        if ($(this).scrollTop() > 1340) { // 스크롤 높이가 1340px를 넘으면
+        if ($(this).scrollTop() > 1300) { // 스크롤 높이가 1300px를 넘으면
             $('.gftSlct').addClass('fix'); // 상품을 화면 상단에 고정
         } else {
             $('.gftSlct').removeClass('fix'); // 그렇지 않으면 상품을 숨김

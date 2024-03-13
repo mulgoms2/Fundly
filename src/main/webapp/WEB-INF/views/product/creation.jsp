@@ -61,14 +61,14 @@
                     <i class="fa-regular fa-comments"></i>
                     <span>메시지 발송</span>
                 </button>
-                <a href="#">
+                <button>
                     <i class="fa-solid fa-location-dot fa-lg"></i>
                     <span>배송지 확정</span>
-                </a>
-                <a href="#">
+                </button>
+                <button>
                     <i class="fa-solid fa-gift fa-lg"></i>
                     <span>선물 전달 완료</span>
-                </a>
+                </button>
             </div>
             <div class="rgtBtngrp">
                 <button class="gray">
@@ -86,7 +86,6 @@
                         <col width="80px">
                         <col width="60px">
                         <col>
-                        <col width="90px">
                         <col width="100px">
                         <col width="120px">
                         <col width="80px">
@@ -103,7 +102,6 @@
                             <th>후원번호</th>
                             <th>이름</th>
                             <th class="gftList">선물</th>
-                            <th>추가 후원금</th>
                             <th>총 후원 금액</th>
                             <th>후원 일시</th>
                             <th>알림 신청</th>
@@ -127,8 +125,7 @@
                                 <p>29800원</p>
                                 <p class="ell">[텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함</p>
                             </td>
-                            <td>0원</td>
-                            <td>29800원</td>
+                            <td class="taR">29800원</td>
                             <td>2024-03-05 15:30</td>
                             <td>Y</td>
                             <td>결제 예약</td>
@@ -146,8 +143,7 @@
                                 <p>51100원</p>
                                 <p class="ell">[얼리버드] 블로썸 퍼퓸 + 디퓨저 듀오 / 30% 할인가 / 배송비포함</p>
                             </td>
-                            <td>0원</td>
-                            <td>29800원</td>
+                            <td class="taR">51100원</td>
                             <td>2024-03-06 09:23</td>
                             <td>Y</td>
                             <td>결제 예약</td>
@@ -165,8 +161,7 @@
                                 <p>65700원</p>
                                 <p class="ell">[얼리버드] 블로썸 퍼퓸 더블구성 / 33% 할인가 / 배송비포함</p>
                             </td>
-                            <td>0원</td>
-                            <td>65700원</td>
+                            <td class="taR">65700원</td>
                             <td>2024-03-06 10:10</td>
                             <td>Y</td>
                             <td>결제 예약</td>
@@ -184,9 +179,8 @@
                                 <p>29800원</p>
                                 <p class="ell">[텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함</p>
                             </td>
-                            <td>0원</td>
-                            <td>59600원</td>
-                            <td>2024-03-06 09:23</td>
+                            <td class="taR">59600원</td>
+                            <td>2024-03-06 11:43</td>
                             <td>Y</td>
                             <td>결제 예약</td>
                             <td>대기중</td>
@@ -197,14 +191,13 @@
                                     <input type="checkbox" id="chk5" class="ipt" value="체크안됨">
                                 </div>
                             </td>
-                            <td>4</td>
+                            <td>5</td>
                             <td>이시아</td>
                             <td class="gftList taL">
                                 <p>29800원</p>
                                 <p class="ell">[텀블벅 혜택] 블로썸 퍼퓸 1개 / 26% 할인가 / 배송비포함</p>
                             </td>
-                            <td>0원</td>
-                            <td>119200원</td>
+                            <td class="taR">120200원</td>
                             <td>2024-03-07 12:33</td>
                             <td>Y</td>
                             <td>결제 예약</td>
