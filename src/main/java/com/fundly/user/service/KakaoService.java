@@ -19,4 +19,5 @@ public interface KakaoService {
     Map<String, Object> getUserInfo(String access_token) throws IOException;
 
     Map<String, Object> getservice_terms(String access_token) throws IOException;
+    Map<String, Object> getshipping_address(String access_token) throws IOException;
 }

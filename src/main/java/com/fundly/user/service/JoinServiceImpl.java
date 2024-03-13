@@ -45,6 +45,8 @@ public class JoinServiceImpl implements JoinService {
         }
 
         try{
+
+            log.error("유저값 : " + userJoinDto);
             return userJoinDao.insert(setUserInfo(userJoinDto));
 
         }catch (Exception e){
@@ -60,6 +62,9 @@ public class JoinServiceImpl implements JoinService {
         String user_status = "A"; // 활동중 (임의의 회원상태 코드)
         String userInPwd = userJoinDto.getUser_pwd();
         String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
+
+
+//        System.out.println("\n\n"+userJoinDto.getUser_phone_no()+"\n 유저 정보에 번호 있나?\n");
 
         userJoinDto.setUser_id(userJoinDto.getUser_email());
         userJoinDto.setUser_pwd(encoderPwd);

@@ -21,9 +21,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.sql.DataSource;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 
 @Slf4j
 @Configuration
@@ -80,31 +77,32 @@ public class RootContext {
     public JavaMailSenderImpl mailSender() throws Exception {
 
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-
-        javaMailSender.setHost("smtp.gmail.com");
-        javaMailSender.setPort(587);
-        javaMailSender.setUsername(env.getProperty("mail.id"));
-        javaMailSender.setPassword(env.getProperty("mail.pwd"));
-
+//
+//        javaMailSender.setHost("smtp.gmail.com");
+//        javaMailSender.setPort(587);
+//        javaMailSender.setUsername(env.getProperty("mail.id"));
+//        javaMailSender.setPassword(env.getProperty("mail.pwd"));
+//
+////        Properties properties = new Properties();
+////        properties.setProperty("mail.transport.protocol", "smtp");
+////        properties.setProperty("mail.smtp.auth", "true");
+////        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+////        properties.setProperty("mail.smtp.starttls.enable", "true");
+////        properties.setProperty("mail.debug", "false");
+////        properties.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
+////        properties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+//
+//
 //        Properties properties = new Properties();
-//        properties.setProperty("mail.transport.protocol", "smtp");
-//        properties.setProperty("mail.smtp.auth", "true");
-//        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-//        properties.setProperty("mail.smtp.starttls.enable", "true");
-//        properties.setProperty("mail.debug", "false");
-//        properties.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
-//        properties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-
-
-        Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("src/main/webapp/WEB-INF/config/mailPro.properties")) {
-            properties.load(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        javaMailSender.setJavaMailProperties(properties);
-
+////        try (FileInputStream fis = new FileInputStream("src/main/webapp/WEB-INF/config/mailPro.properties")) {
+//        try (FileInputStream fis = new FileInputStream("/WEB-INF/config/mailPro.properties")) {
+//            properties.load(fis);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        javaMailSender.setJavaMailProperties(properties);
+//
         return javaMailSender;
     }
     @Bean

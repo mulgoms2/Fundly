@@ -54,7 +54,7 @@ public class PortOneServiceImpl implements PortOneService {
                         throw new RuntimeException("PortOneService cancelPay() ERROR" + res.getBody().getMessage());
                     }
                     if (!Objects.requireNonNull(res.getBody()).getResponse().getStatus().equals("cancelled")) {
-                        throw new RuntimeException("PortOneService requestPay() ERROR: " + res.getBody().getResponse().getFail_reason());
+                        throw new RuntimeException("PortOneService cancelPay() ERROR: " + res.getBody().getResponse().getFail_reason());
                     }
                 })
                 .doOnError(e -> { // ERROR
@@ -90,6 +90,7 @@ public class PortOneServiceImpl implements PortOneService {
                     }
                 })
                 .doOnError(e -> { // ERROR
+                    log.info("requestPay 요청 실패");
                     handleException("requestPay(PaymentRequestDto paymentRequestDto, String authToken)", (Exception) e);
                 })
                 .block();
