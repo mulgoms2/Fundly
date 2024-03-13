@@ -6,12 +6,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Slf4j
 public class FileUploader {
-    public static final String SAVE_LOCATION = "/Users/dobigulbi/fundly/project/img/";
+    static Path root = Paths.get(System.getProperty("user.name"));
+    public static final String SAVE_LOCATION = "/Users/" + root + "/fundly/project/img/";
     public static final String REMOTE_URL = "/fundly/project/img/";
+
     public static String uploadFile(MultipartFile file) {
         String file_name = UUID.randomUUID() + file.getOriginalFilename();
         String tag_src_url = REMOTE_URL + file_name;
