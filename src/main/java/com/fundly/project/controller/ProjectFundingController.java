@@ -35,35 +35,37 @@ public class ProjectFundingController {
     }
 
     @Autowired
-    public ProjectFundingController(ProjectService projectService, FundingFormValidator formValidator){
+    public ProjectFundingController(ProjectService projectService, FundingFormValidator formValidator) {
         this.projectService = projectService;
         this.formValidator = formValidator;
     }
 
     @GetMapping("/funding")
-    public String fundingPlan(@SessionAttribute ProjectDto projectDto, Model m){
-        log.error("\n\n projectDto={} \n\n", projectDto);
+    public String fundingPlan(@SessionAttribute ProjectDto projectDto, Model m) {
+        log.debug("\n\n projectDto={} \n\n", projectDto);
         FundingForm fundingForm = null; //funding페이지를 처음 작성하는 경우에는
-        try{
+        try {
             fundingForm = ProjectDto.toFundingForm(projectDto); // dto에 funding 데이터가 없어서 NPE터짐.
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         m.addAttribute("fundingForm", fundingForm);
-        log.error("\n\n fundingForm={} \n\n", fundingForm);
+        log.debug("\n\n fundingForm={} \n\n", fundingForm);
 
         return "project.funding";
     }
 
     @PostMapping("/funding")
     @ResponseBody
-    public ResponseEntity<Boolean> updateFundingPlan(@RequestBody @Validated FundingForm fundingForm, BindingResult result, ProjectDto projectDto){
+    public ResponseEntity<Boolean> updateFundingPlan(@RequestBody @Validated FundingForm fundingForm, BindingResult result, ProjectDto projectDto) {
         log.error("\n\n fundingForm={} \n\n", fundingForm);
         log.error("\n\n projectDto={} \n\n", projectDto);
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             System.out.println("\n\n***** errorList");
-            result.getAllErrors().stream().forEach(System.out::println);
+            result.getAllErrors()
+                    .stream()
+                    .forEach(System.out::println);
             //테스트
         }
 
@@ -71,26 +73,30 @@ public class ProjectFundingController {
 
         try {
             projectService.update(projectDto); //성공적으로 업데이트 되었는지 어떻게 판단하지?
-            return ResponseEntity.ok().body(true);
-        } catch(Exception e) {
+            return ResponseEntity.ok()
+                    .body(true);
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(false);
+            return ResponseEntity.badRequest()
+                    .body(false);
         }
     }
 
     //JSON데이터는 deserialize에 실패하면 HttpMessageNotReadableException을 던진다.
     //(JSON parse error 발생). 객체를 만들지 못하면 Validation 단계로 넘어가지도 못함.
     @ExceptionHandler(HttpMessageNotReadableException.class) //공통예외로 뺄 수 있으면 좋겠다.
-    public ResponseEntity<String> failedToJSONConversion(HttpMessageNotReadableException e){
+    public ResponseEntity<String> failedToJSONConversion(HttpMessageNotReadableException e) {
         log.error("\n\n errorList \n\n");
-        if(e.getCause() instanceof DateTimeParseException){
-            DateTimeParseException e2 = (DateTimeParseException)e.getCause();
+        if (e.getCause() instanceof DateTimeParseException) {
+            DateTimeParseException e2 = (DateTimeParseException) e.getCause();
             System.out.println("e2 = " + e2);
-            return ResponseEntity.badRequest().body(e2.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(e2.getMessage());
         }
 //        log.error("\n\ne.getCause()={}",e.getCause());
 //        return ResponseEntity.badRequest().body(e.getMessage());
-        return ResponseEntity.badRequest().body(e.getMessage());
+        return ResponseEntity.badRequest()
+                .body(e.getMessage());
 
     }
 }
