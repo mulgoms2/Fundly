@@ -14,9 +14,13 @@ import java.time.LocalDateTime;
 public class OrderGiftDetailsDto {
     private String order_detail_seq;
     private String order_no;
+    private int seq;
     private String gift_id;
     private String order_gift_name;
     private int order_gift_qty;
+    @EqualsAndHashCode.Exclude
+    private LocalDateTime gift_ship_due_date;
+    private int gift_money;
 
     // DBA
     @EqualsAndHashCode.Exclude
