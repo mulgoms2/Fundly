@@ -25,4 +25,6 @@ public interface PayService {
     void setUpAndInsertPayRecordForTest(PayDto payDto);
     @Transactional
     void updatePayStatusForTest(PayDto payDto, String payStatus);
+    @Transactional
+    ResponseEntity<PayDto> requestPayforDemo(PayDto payDto); // 프로젝트 시연용
 }

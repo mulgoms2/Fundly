@@ -254,4 +254,68 @@ public class PayServiceImpl implements PayService {
             handleException("updatePayStatus(PayDto payDto, String payStatus)", e);
         }
     }
+
+    // ---------------------------- 주문페이지 즉시 결제를 위한 메서드들 (프로젝트 시연용) ----------------------------
+    // 주문데이터 insert
+    private void insertOrder(PayDto payDto) {
+        try {
+            String userId = payDto.getUser_id();
+
+            // 이미 사용된 order_list_id 사용을 막기 위해 첫번째 데이터 insert하고 시작
+            PayDto fakePayDto = PayDto.builder().user_id(userId).pay_id(payDao.selectPayId(userId))
+                    .order_list_id(payDao.selectOrderListId(userId)).order_status("010003").build();
+            payDao.insertIntoOrder(fakePayDto);
+
+            // 주문데이터 세팅
+            String payId = payDao.selectPayId(userId);
+            String orderListId = payDao.selectOrderListId(userId);
+
+            payDto = PayDto.builder()
+                    .user_id(userId)
+                    .pay_id(payId)
+                    .order_list_id(orderListId)
+                    .pay_means_id(payDto.getPay_means_id())
+                    .pay_money(payDto.getPay_money())
+                    .pay_due_dtm(payDto.getPay_due_dtm())
+                    .pay_ddln_dtm(payDto.getPay_ddln_dtm())
+                    .build();
+
+            payDao.insertIntoOrder(payDto);
+        } catch (Exception e) {
+            handleException("insertOrder(PayDto payDto)", e);
+        }
+    }
+
+    private void resetTable() {
+        try {
+            // 주문테이블 초기화
+            payDao.deleteAllOrder();
+            payDao.deleteAllPay();
+        } catch (Exception e) {
+            handleException("resetTable()", e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<PayDto> requestPayforDemo(PayDto payDto) {
+        try {
+            // 0. 테이블 초기화
+            resetTable();
+
+            // 1. 주문테이블 데이터 생성
+            insertOrder(payDto);
+
+            // 2. 결제테이블 데이터 생성: 주문테이블에서 결제테이블로 데이터 insert
+            createPayRecordFromOrder();
+
+            // 3. 결제
+            executePayment();
+
+            return ResponseEntity.ok().body(payDto);
+        } catch (Exception e) {
+            log.error("{} : {}\n {}\n", "requestPayforDemo(PayDto payDto)", e.getMessage(), e.getStackTrace());
+            return ResponseEntity.internalServerError().body(payDto);
+        }
+    }
 }
