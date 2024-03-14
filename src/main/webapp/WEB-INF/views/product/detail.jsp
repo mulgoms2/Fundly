@@ -95,17 +95,16 @@
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/ad5baaad-977f-49a8-98ad-be8f3388c004.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=d231790d0cc0269996739076d3b0c3cb"
-                                     alt="">
+                                <img src="${pj.pj_thumbnail_url}" alt="">
                             </div>
-                            <div class="swiper-slide">
-                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/6c283549-911d-4b8b-a9c4-1905ddb66478.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=501c8005e5339d9cb1c58072d1d5d73f"
-                                     alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/04fa14ed-e852-44df-a265-b66cfd0d0bf6.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=a46c2aa5a414407b4d0df4d454b9531d"
-                                     alt="">
-                            </div>
+                            <%--                            <div class="swiper-slide">--%>
+                            <%--                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/6c283549-911d-4b8b-a9c4-1905ddb66478.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=501c8005e5339d9cb1c58072d1d5d73f"--%>
+                            <%--                                     alt="">--%>
+                            <%--                            </div>--%>
+                            <%--                            <div class="swiper-slide">--%>
+                            <%--                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/04fa14ed-e852-44df-a265-b66cfd0d0bf6.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=a46c2aa5a414407b4d0df4d454b9531d"--%>
+                            <%--                                     alt="">--%>
+                            <%--                            </div>--%>
                         </div>
                     </div>
                     <div class="swiper-button-next">
