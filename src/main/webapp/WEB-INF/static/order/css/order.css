@@ -23,14 +23,14 @@ button {
     border-bottom: 1px solid rgb(240, 240, 240);
     box-shadow: 0 0.1px 1px 0 rgb(222, 222, 222);
 }
-.header {
+.orderHeader {
     width: 100%;
     height : 65px;
-    /*margin-top: 10px;*/
     display: flex;
     align-items: center;
     max-width: 1160px;
     margin: 0 auto;
+    /*gap:1em;*/
 }
 .orderTitle {
     padding : 20px;
@@ -41,6 +41,8 @@ button {
 }
 .logo {
     width: 90px;
+    margin-top: 5px;
+    margin-right : 15px;
 }
 
 /* main */
@@ -55,6 +57,7 @@ button {
     display: flex;
     column-gap: 1.5em;
     padding-top:25px;
+    gap : 2em;
 }
 .pjTit {
     display: flex;
