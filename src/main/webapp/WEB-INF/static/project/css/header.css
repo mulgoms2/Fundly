@@ -38,6 +38,18 @@ body {
     background-color: #ffffff;
 }
 
+/* default 상태 */
+/*.icoImg.on {*/
+/*    display: none;*/
+/*}*/
+/*.icoImg {*/
+/*    display: block;*/
+/*}*/
+/*.icoImg svg {*/
+/*    width: 14px;*/
+/*    height: 14px;*/
+/*}*/
+
 .topContents {
     display: flex;
     flex-direction: column;

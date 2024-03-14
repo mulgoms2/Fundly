@@ -38,10 +38,11 @@
 </head>
 <body>
     <div class="headerContainer">
-        <div class="header">
+        <div class="orderHeader">
             <a href="<c:url value='/'/>">
                 <img alt="" class="logo" src="/static/img/fundly-logo.svg">
             </a>
+            <div>•</div>
             <div class="orderTitle">프로젝트 후원하기</div>
         </div>
     </div>
