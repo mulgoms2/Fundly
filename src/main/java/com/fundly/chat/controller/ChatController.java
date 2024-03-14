@@ -146,6 +146,7 @@ public class ChatController {
         try {
             file.transferTo(new File(local_storage_url));
         } catch (IOException e) {
+            e.printStackTrace();
             log.error("ChatController.saveFileToDrive(). 파일 저장중 예외가 발생하였습니다.");
             throw new RuntimeException(e);
         }

@@ -359,7 +359,10 @@
                                     <%--                                    </div>--%>
                                 </div>
                                 <div class="strDesc" id="section5">
+<<<<<<< Updated upstream
                                     <%--                                <div class="strDesc" id="section5">--%>
+=======
+>>>>>>> Stashed changes
                                     ${pj.pj_gift_intro}
                                     <%--                                    <div class="strTit">선물 설명</div>--%>
                                     <%--                                    <p>--%>

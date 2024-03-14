@@ -16,6 +16,7 @@ const incomeDay = document.querySelector('span.payIn');
 
 
 window.onload = function(){
+
     inputCheck(goalMoney); //일단은 강제로 input이벤트를 발생시킬 수가 없어서 이렇게 처리.(3자리 comma 및 수수료 계산)
 
     //
@@ -239,8 +240,14 @@ const validFormCheck = function() {
     let fund_end_dtm = datepicker.getAttribute('data-end_dtm')
     let str_tm = startTime.value;
 
+    if (isNull(fund_str_dtm) || isNull(fund_end_dtm) || isNull(str_tm)) return false;
+    //처음 펀딩 계획을 작성하는 경우에, daterangepicker로 날짜를 지정하지 않으면, data- attribute의 값이 없는 상태(빈문자열)이기에
+    //new Date() 호출 못함(invalid date). 그래서 빈문자열임을 체크한다.
+
+
     fund_str_dtm = new Date(fund_str_dtm)
     fund_end_dtm = new Date(fund_end_dtm)
+
 
     fund_str_dtm = fund_str_dtm.toISOString().substring(0,10) + 'T' + str_tm + ':00'
     fund_end_dtm = fund_end_dtm.toISOString().substring(0,10) + 'T' + '23:59:59'
@@ -278,7 +285,7 @@ const validFormCheck = function() {
 }
 
 const isNull = function(item){
-    return typeof item === 'undefined' || item === null
+    return typeof item === 'undefined' || item === null || item === ''
 }
 
 
