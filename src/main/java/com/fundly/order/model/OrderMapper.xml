@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fundly.user.model.OrderDao">
-
+<mapper namespace="com.fundly.order.model.OrderDao">
+    <select id="select" resultType="OrderDto">
+        select * from ORDER
+        where order_list_id = #{order_list_id}
+    </select>
 </mapper>
