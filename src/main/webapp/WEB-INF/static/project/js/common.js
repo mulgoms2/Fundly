@@ -1,9 +1,16 @@
 window.addEventListener("load", () => {
     const projectSubmitForm = document.getElementById("pjSubmitForm");
-
     projectSubmitForm.addEventListener("submit", submitProject);
+
+    const home_button = document.getElementById("homeBtn");
+    home_button.addEventListener("click", homeHandler);
 });
 
+const homeHandler = (e) => {
+    if (!window.confirm("저장하지 않은 정보는 유실될 수 있습니다. 홈 화면으로 이동하시겠습니까?")) {
+        e.preventDefault();
+    }
+};
 const submitProject = (e) => {
     if (!window.confirm("최종 제출 이후에는 프로젝트 심사가 진행됩니다. 심사 중에는 프로젝트를 수정할 수 없습니다. 제출하시겠습니까?")) {
         e.preventDefault();
