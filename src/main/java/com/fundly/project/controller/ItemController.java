@@ -16,12 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 
 @Slf4j
@@ -71,9 +71,14 @@ public class ItemController {
 
     // 아이템+선물 페이지
     @GetMapping("/editor/reward")
-    public String makeGift(Model m, ProjectDto projectDto) throws Exception {
+    public String makeGift(Model m, ProjectDto projectDto, RedirectAttributes rattr) throws Exception {
         log.error("\n\n(itemController) projectDto={}\n\n", projectDto);
-        if(Objects.nonNull(projectDto.getPj_pay_due_dtm())){
+//       if(Objects.isNull(projectDto.getPj_pay_due_dtm())){
+//           rattr.addFlashAttribute("msg","noPayDueDtmYet");
+//           return "redirect:/project/editor/funding";
+//           //에러 메시지 띄워야함.
+//       }
+        if(projectDto.getPj_pay_due_dtm()!=null){
             m.addAttribute("pj_pay_due_dtm",projectDto.getPj_pay_due_dtm().toLocalDate());
         }
         m.addAttribute("pj_id", projectDto.getPj_id());

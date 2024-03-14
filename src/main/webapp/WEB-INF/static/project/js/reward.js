@@ -1,7 +1,11 @@
 let optArr = []; //window.onload 안에 있으면 함수에서 못 갖다 쓴다.
 //let itemArr = [];
+
+//header요소
+const headerSaveBtn = document.querySelector("#saveBtn")
+
+
 //아이템 페이지의 요소들
-//header.js에 옮김
 const hiddenPjId = document.querySelector('#pj_id');
 const itemPage = document.querySelector("#item"); //아이템 페이지 div단락
 const giftPage = document.querySelector("#gift"); //선물 페이지 div단락
@@ -61,11 +65,6 @@ window.onload = function () {
     mkHidden([itemPage]);//즉, 아이템 페이지는 처음엔 숨겨두었다가(디폴트x) 클릭하면 보여주게 됨.
     loadPage(hiddenPjId.value); //DB에서 해당 프로젝트에 등록된 아이템의 수를 조회해 giftPage 또는 strPage를 보여주는 함수
     console.log(hiddenPjId.value)
-    // todo 현재 프로젝트 아이디는 하드코딩 상태.
-    //  나중에 어떻게 프로젝트 아이디를 넘길지 생각하기.
-    //   1. tiles의 헤더부분에 hidden input으로 pj_id를 가지고 있기
-    //   2. url에 pathVariable로 달고 다니기
-    //   3. 세션정보로 부터 pj_id를 구하는 함수를 만들고 이를 이용하기 등..else?
 
     //선물버튼 클릭시
     gftBtn.addEventListener("click", async function () {
@@ -97,6 +96,7 @@ window.onload = function () {
         //window.scrollTo(0,0); //최상단으로 이동
         if (cnt === 0) { //등록된 아이템의 수에 따라 숨길 페이지가 다르다.
             mkHidden([strPage])
+            // headerSaveBtn.disabled = true;
         } else {
             mkHidden([giftPage])
         }
@@ -120,6 +120,20 @@ window.onload = function () {
         } else itmSaveBtn.disabled = false;
     }) //todo 이 함수는.. 제대로 기능하는지 모르겠다. 나중에 고치든지 지우든지.
 
+    //헤더의 저장버튼
+    headerSaveBtn.addEventListener("click", function(){
+        const page = document.querySelector('div.active')
+        console.log(page)
+        console.log(page.id)
+        if(page.id == 'item') {
+            itmSaveBtn.click();
+        } else if(page.id == 'gift'){
+            giftSaveBtn.click();
+        } else {
+            alert('아이템과 선물을 등록해주세요.')
+        }
+
+    })
 
     itmName.addEventListener("input", function () {
         lengthCheck(this, 50, '아이템 이름');
@@ -242,8 +256,8 @@ window.onload = function () {
             .then(data => {
                 alert('아이템이 성공적으로 수정되었습니다.')
                 init(); //입력창 초기화
-                const tit = document.querySelector('div.item div.first > p.tit')
-                tit.innerHTML = '아이템 등록하기';
+                // const tit = document.querySelector('div.item div.first > p.tit')
+                // tit.innerHTML = '아이템 등록하기';
                 //수정된 리스트를 다시 뿌려주기
                 const ItemArr = data
                 const itemList = document.querySelector('#itemList')
@@ -260,12 +274,12 @@ window.onload = function () {
         //입력창 초기화
         init();
         //버튼 초기화
-        itmSaveBtn.style.display = 'block';
-        itmModBtn.style.display = 'none';
-        itmInitBtn.style.display = 'block';
-        itmCnclBtn.style.display = 'none';
-        const tit = document.querySelector('div.item div.first > p.tit')
-        tit.innerHTML = '아이템 등록하기';
+        // itmSaveBtn.style.display = 'block';
+        // itmModBtn.style.display = 'none';
+        // itmInitBtn.style.display = 'block';
+        // itmCnclBtn.style.display = 'none';
+        // const tit = document.querySelector('div.item div.first > p.tit')
+        // tit.innerHTML = '아이템 등록하기';
     })
 
 
@@ -538,12 +552,12 @@ window.onload = function () {
         //입력창 초기화
         giftInit();
         //버튼 초기화
-        giftSaveBtn.style.display = 'block';
-        giftModBtn.style.display = 'none';
-        giftInitBtn.style.display = 'block';
-        giftCnclBtn.style.display = 'none';
-        const tit = document.querySelector('div.gift div.first > p.tit')
-        tit.innerHTML = '선물 등록하기';
+        // giftSaveBtn.style.display = 'block';
+        // giftModBtn.style.display = 'none';
+        // giftInitBtn.style.display = 'block';
+        // giftCnclBtn.style.display = 'none';
+        // const tit = document.querySelector('div.gift div.first > p.tit')
+        // tit.innerHTML = '선물 등록하기';
     })
 
     //선물페이지의 선물 수정버튼
@@ -574,8 +588,8 @@ window.onload = function () {
             })
             .then(data => {
                 alert('선물이 성공적으로 수정되었습니다.')
-                const tit = document.querySelector('div.gift div.first > p.tit')
-                tit.innerHTML = '선물 등록하기';
+                // const tit = document.querySelector('div.gift div.first > p.tit')
+                // tit.innerHTML = '선물 만들기';
                 //수정된 리스트를 다시 뿌려주기
                 const giftArr = data
                 const giftList = document.querySelector('#giftList')
@@ -688,13 +702,19 @@ const tglHidden = function (elements) {
 //header.js로 옮김//
 const mkHidden = function (elements) {
     elements.forEach(element => {
-        if (element != null)
+        if (element != null) {
             element.style.display = "none";
+            element.classList.remove('active');
+            console.log(element.classList);
+        }
     })
 }
-const mkVisible = function (element) {
-    if (element != null)
+const mkVisible = function (element) { // 'hiddden'이었던걸 다시 'visible'하게 바꾸는 함수
+    if (element != null) {
         element.style.display = "flex";
+        element.classList.add('active');
+        console.log(element.classList);
+    }
 }
 
 const lengthCheck = function (elem, maxLength, string) {
@@ -1065,6 +1085,10 @@ const calcDate = function(elem){
     // const payDay = document.querySelector('#payDay')
     console.log(payDay);
     let from = new Date(payDay.innerText);
+    from.setHours(23);
+    from.setMinutes(59);
+    from.setSeconds(59);
+
     console.log("before from")
     console.log(from)
     const shipDate = document.querySelector('#shipDate');
@@ -1204,11 +1228,12 @@ const showList = function (list, elem) {
 const removeItm = function (elem) {
     const div = elem.closest('div.modi')
     if(div.classList.contains("orange")){ //현재 수정상태라면,
-        if(!confirm("아이템 수정을 취소하고 삭제하시겠습니까?")){
+        if(!confirm("아이템 수정을 취소하고 삭제하시겠습니까? \n삭제하시면 해당 아이템이 포함된 선물들도 같이 삭제됩니다.")){
             return;
         }
+    } else {
+        if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하시면 해당 아이템이 포함된 선물들도 같이 삭제됩니다.")) return;
     }
-    if (!confirm("이 아이템을 삭제하시겠습니까? 삭제하시면 해당 아이템이 포함된 선물들도 같이 삭제됩니다.")) return;
     //ajax로 컨트롤러를 통해 db에서 아이템 삭제 후 리스트를 다시 불러와서 보여줘야함.
     // const item_id = elem.querySelector("input[type=hidden]").value;
     const item_id = elem.getAttribute('data-item_id');
@@ -1253,9 +1278,9 @@ const removeGift = function(elem){
         if(!confirm("선물 수정을 취소하고 삭제하시겠습니까?")){
             return;
         }
+    } else {
+        if(!confirm("선물을 삭제하시겠습니까?")) return;
     }
-    if(!confirm("선물을 삭제하시겠습니까?")) return;
-
     //  /project/gift ? gift_id=102 & pj_id=pj120
 
     fetch("/project/gift?gift_id="+elem.getAttribute("data-gift_id")+"&pj_id="+elem.getAttribute("data-pj_id"), {
@@ -1521,14 +1546,27 @@ const modifyGift = async function(event, elem){
     const week  = ['일','월','화','수','목','금','토']
     const day = shipDay.getDay();
     shipDate.querySelector('span').innerHTML = "<span id='shipDay'>"+ year+"-"+month+"-"+date+"</span><span>   ("+ week[day]+") </span>";
-    days.value = (shipDay - new Date(payDay))/(1000*60*60*24);
+    console.log("shipDay="+shipDay)
+    console.log("payDay = " + new Date(payDay))
+
+    days.value = betweenTwoDays(shipDay, new Date(payDay));
 
 
     //3-6.선물금액
     giftMoney.value = comma(gift.gift_money);
 
+}
 
+const betweenTwoDays = function(date1, date2) {
+    date1.setHours(0)
+    date1.setMinutes(0)
+    date1.setSeconds(0)
 
+    date2.setHours(0)
+    date2.setMinutes(0)
+    date2.setSeconds(0)
+
+    return (date1 - date2)/(1000*60*60*24);
 }
 
 const validCheck = function () {
@@ -1565,6 +1603,7 @@ const validCheck = function () {
 }
 
 const init = function () {
+
     itmSaveBtn.disabled = true;
     itmName.value = "";
     itmName.parentElement.nextElementSibling.innerHTML = ''
@@ -1584,6 +1623,11 @@ const init = function () {
     const multiResult = document.querySelector("#multiResult");
     showList(mkOptList(optArr), multiResult);
 
+    //수정하기 -> 만들기로
+    const tit = document.querySelector('.tit.item');
+    tit.innerText = '아이템 만들기';
+
+
     //버튼도 초기화
     itmSaveBtn.style.display = 'block';
     itmInitBtn.style.display = 'block';
@@ -1595,47 +1639,66 @@ const init = function () {
 
 //선물 입력 field의 초기화 함수
 const giftInit = function(){
+
+    location.href = '/project/editor/reward'
+
     //checkbox 해제 및 selectItm 감추기
-    const checkedElems = document.querySelectorAll('input[type=checkbox]:checked');
-    console.log("checkedElems")
-    console.log(checkedElems);
-    for(elem of checkedElems){
-        elem.checked = false;
-    }
-    const selectItm = document.querySelector("#selectItm");
-    const div = selectItm.querySelector('div')
-    //console.log(selectItm);  //selectItm을 none처리하면 안됨.
-    console.log(div);
-    if(div){ //div가 없을 때 div.style하면 에러나서 이후 코드 실행 안되므로 추가.
-        div.style.display = 'none';
-    }
-    // 모든 input요소 초기화 (라디오 체크드 해제 포함)
-    const inputs = document.querySelectorAll('.gift .pjForm input:not([type=radio]):not([type=hidden])')
-    console.log(inputs)
-
-    for(input of inputs){
-        input.value = ''
-    }
-    const radios = document.querySelectorAll('.gift .pjForm input[type=radio]:checked')
-    for(radio of radios){
-        console.log(radio)
-        radio.checked = false;
-        radio.parentElement.style.border = '.5px solid #ececec';
-        console.log(radio.value)
-        if(radio.value ==='y') {
-            radio.parentElement.querySelector('span').style.visibility = 'hidden';
-        }
-    }
-    //라디오value가 'y'이면 input도 none처리해야함. color change도 취소
-
-    const shipDate = document.querySelector('#shipDate');
-    shipDate.querySelector('span').innerHTML = '';
-
-    //버튼도 초기화
-    giftSaveBtn.style.display = 'block';
-    giftModBtn.style.display = 'none';
-    giftInitBtn.style.display = 'block';
-    giftCnclBtn.style.display = 'none';
+    // console.log('giftInit ing 1')
+    // const checkedElems = document.querySelectorAll('input[type=checkbox]:checked');
+    // console.log("checkedElems")
+    // console.log(checkedElems);
+    // for(elem of checkedElems){
+    //     elem.checked = false;
+    // }
+    //
+    // const selectItm = document.querySelector("#selectItm");
+    // const div = selectItm.querySelector('div')
+    // //console.log(selectItm);  //selectItm을 none처리하면 안됨.
+    // console.log(div);
+    // if(div){ //div가 없을 때 div.style하면 에러나서 이후 코드 실행 안되므로 추가.
+    //     div.style.display = 'none';
+    // }
+    // console.log('giftInit ing 2')
+    //
+    // // 모든 input요소 초기화 (라디오 체크드 해제 포함)
+    // const inputs = document.querySelectorAll('.gift .pjForm input:not([type=radio]):not([type=hidden])')
+    // console.log(inputs)
+    //
+    // console.log('giftInit ing 3')
+    //
+    // for(input of inputs){
+    //     input.value = ''
+    // }
+    // const radios = document.querySelectorAll('.gift .pjForm input[type=radio]:checked')
+    // for(radio of radios){
+    //     console.log(radio)
+    //     radio.checked = false;
+    //     console.log('radio.parentElement')
+    //     console.log(radio.parentElement)
+    //     radio.parentElement.style.border = '.5px solid #ececec';
+    //     console.log(radio.value)
+    //     if(radio.value ==='y') {
+    //         radio.parentElement.querySelector('span').style.visibility = 'hidden';
+    //     }
+    // }
+    // console.log('giftInit ing 4')
+    //
+    // //라디오value가 'y'이면 input도 none처리해야함. color change도 취소
+    //
+    // const shipDate = document.querySelector('#shipDate');
+    // shipDate.querySelector('span').innerHTML = '';
+    //
+    // console.log('giftInit ing 5')
+    // // //제목 바꾸기 : 수정하기 -> 만들기
+    // const tit = document.querySelector('.tit.gift')
+    // tit.innerText = '선물 만들기'
+    //
+    // console.log('giftInit ing 6')
+    // //버튼도 초기화
+    // giftSaveBtn.style.display = 'block';
+    // giftModBtn.style.display = 'none';
+    // giftInitBtn.style.display = 'block';
+    // giftCnclBtn.style.display = 'none';
 }
 
 
