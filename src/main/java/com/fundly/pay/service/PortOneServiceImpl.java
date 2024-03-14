@@ -7,6 +7,10 @@ import com.fundly.pay.dto.payment.PaymentResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
 import com.fundly.pay.dto.token.TokenResponseDto;
+import com.fundly.pay.exception.CardInputInvalidException;
+import com.fundly.pay.exception.CardInputNotFoundException;
+import com.fundly.pay.exception.PayInternalServerException;
+import com.fundly.pay.exception.PayPortOneServerException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.Objects;
 
@@ -170,11 +175,59 @@ public class PortOneServiceImpl implements PortOneService {
                     log.info("getBillKey 요청 성공");
                     // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
                     if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
-                        throw new RuntimeException("PortOneService getBillKey() ERROR : " + res.getBody().getMessage());
+                        String errMsg = res.getBody().getMessage();
+                        switch ( errMsg ) {
+                            // "pwd_2digit" is null
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400].issueCard.password2Digits:Invalid 2 digits of password!":
+                                throw new CardInputNotFoundException("PWD_NOT_FOUND");
+                            // "pwd_2digit" is invalid
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 비밀번호틀림, code:F113)":
+                                throw new CardInputInvalidException("PWD_INVALID");
+                            // "birth" is null
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Invalid Request. Please Check this argument: birthOrBusinessRegistrationNumber InvalidLength(field=birthOrBusinessRegistrationNumber, message=Length of birthOrBusinessRegistrationNumber must be one of [6, 10], rule=Fixed(allowedLengths=[6, 10]))":
+                                throw new CardInputNotFoundException("BIRTH_NOT_FOUND");
+                            // "birth" is invalid
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 주민OR사업자등록번호오류, code:F113)":
+                                throw new CardInputInvalidException("BIRTH_INVALID");
+                            // "card_number" is null
+                            case "[\"card_number\"] 파라메터는 필수입니다.":
+                                throw new CardInputNotFoundException("CARD_NUM_NOT_FOUND");
+                            // "card_number" is invalid
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 카드번호 오류, code:F113)":
+                                throw new CardInputInvalidException("CARD_NUM_INVALID");
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 카드번호오류, code:F113)":
+                                throw new CardInputInvalidException("CARD_NUM_INVALID");
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 카드번호틀림, code:F113)":
+                                throw new CardInputInvalidException("CARD_NUM_INVALID");
+                            // "expiry" is null
+                            case "[\"expiry\"] 파라메터는 필수입니다.":
+                                throw new CardInputNotFoundException("EXPIRY_NOT_FOUND");
+                            // "expiry" is invalid
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 유효기간오류, code:F113)":
+                                throw new CardInputInvalidException("EXPIRY_INVALID");
+                            // "pg" does not support card issuer.
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 해당카드 사용불가 가맹점(타카드 사용요망), code:F113)":
+                                throw new CardInputInvalidException("CARD_UNSUPPORTED");
+                            // "pg" is null or invalid
+                            case "비인증결제모듈 사용정보를 찾을 수 없습니다.": // server error
+                                throw new PayInternalServerException("PG_NOT_FOUND");
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 비밀번호 회수초과, code:F113)":
+                                throw new CardInputInvalidException("PWD_LIMIT_EXCEEDED");
+                            default:
+                                throw new RuntimeException("PortOneService getBillKey() ERROR : " + res.getBody().getMessage());
+                        }
                     }
                 })
-                .doOnError(e -> { // ERROR
-                    handleException("getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken)", (Exception) e);
+                .doOnError(WebClientResponseException.class, e -> { // ERROR
+//                    handleException("getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken)", e);
+                    log.error("{} : {}\n {}\n", "getBillKey(BillKeyRequestDto billKeyRequestDto, String authToken)", e.getMessage(), e.getStackTrace());
+
+                    int statusCode = e.getRawStatusCode();
+                    if (statusCode >= 400 && statusCode < 500) { // 4xx error 처리
+                        throw new PayInternalServerException(String.valueOf(statusCode));
+                    } else { // 5xx error 처리
+                        throw new PayPortOneServerException(String.valueOf(statusCode));
+                    }
                 })
                 .block();
     }

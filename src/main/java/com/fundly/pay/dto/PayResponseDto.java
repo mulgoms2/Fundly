@@ -11,16 +11,16 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class PayResponseDto {
-    private String code; // *_SUCCESS 또는 *_ERROR
+    private String code;
     private PayMeansDto payMeansDto;
     private List<PayMeansDto> payMeansDtoList;
     private PayPageHandler pageHandler;
 
-    public PayResponseDto(String code, PayMeansDto payMeansDto) {
+    public PayResponseDto(String code) {
         this.code = code;
-        this.payMeansDto = payMeansDto;
     }
 
+    // [GET] /pay/list
     public PayResponseDto(String code, List<PayMeansDto> payMeansDtoList, PayPageHandler pageHandler) {
         this.code = code;
         this.payMeansDtoList = payMeansDtoList;
