@@ -18,7 +18,7 @@ public class PayMeansDto {
     private String own_type; // 카드소유주/예금주 유형 (개인, 법인)
     @NonNull
     private String own_birth; // 생년월일
-    private String bill_key; // 포트원 결제수단별 등록키 TODO: DB 컬럼 새로 추가
+    private String bill_key; // 포트원 결제수단별 등록키
     private String file_path; // 결제수단 이미지 파일 경로
     private String file_name; // 결제수단 이미지 파일명
     private String file_extension; // 결제수단 이미지 파일 확장자
@@ -26,12 +26,12 @@ public class PayMeansDto {
     private String card_co_info_agree_yn; // 결제사 정보제공 동의 여부
     private String card_co_type; // 카드사 종류
     @NonNull
-    private String card_no; // 카드 뒷자리 번호 4개 TODO: DB 컬럼 새로 추가
+    private String card_no; // 카드 뒷자리 번호 4개
     @NonNull
-    private String card_pwd; // 카드 비밀번호 앞 2자리 TODO: DB 타입 변경 (Integer -> String)
+    private String card_pwd; // 카드 비밀번호 앞 2자리
     @NonNull
     private String card_valid_date; // 카드 유효기간
-    private Integer card_type; // 카드 타입 (신용카드 == 0, 체크카드 == 1) TODO: DB 컬럼 새로 추가
+    private Integer card_type; // 카드 타입 (신용카드 == 0, 체크카드 == 1)
 
     // dba
     @EqualsAndHashCode.Exclude

@@ -8,6 +8,16 @@ $(document).ready(function () {
     $('#form')[0].reset();
     resetErrMsg();
 
+    // 기본결제수단으로지정 체크박스 값 세팅
+    setDefaultPayMeansValue()
+
+    function setDefaultPayMeansValue() {
+        let value = $('#default_pay_means_yn').is(':checked') ? 'Y' : 'N';
+        $('#default_pay_means_yn').val(value.trim());
+
+        console.log($('#default_pay_means_yn').val() + " " + $('#default_pay_means_yn').val().length);
+    }
+
     // 결제수단등록 팝업 유효성 에러 메세지 리셋
     function resetErrMsg() {
         $('#card_pwd_err_msg').text('');
@@ -77,18 +87,22 @@ $(document).ready(function () {
         );
     });
 
+    $('#default_pay_means_yn').change(function(){
+        setDefaultPayMeansValue();
+    });
+
     $("#submitBtn").click(function () {
         resetErrMsg(); // 초기화
         $('#card_no').val($('#card_no_1').val() + $('#card_no_2').val() + $('#card_no_3').val() + $('#card_no_4').val());
 
         let formData = {
-            own_type: $('input[name="own_type"]:checked').val(),
-            card_no: $('#card_no').val(),
-            card_valid_date: $('#card_valid_date').val(),
-            own_birth: $('#own_birth').val(),
-            card_pwd: $('#card_pwd').val(),
-            card_co_info_agree_yn: $('#card_co_info_agree_yn').val(),
-            default_pay_means_yn: $('#default_pay_means_yn').val()
+            own_type: $('input[name="own_type"]:checked').val().trim(),
+            card_no: $('#card_no').val().trim(),
+            card_valid_date: $('#card_valid_date').val().trim(),
+            own_birth: $('#own_birth').val().trim(),
+            card_pwd: $('#card_pwd').val().trim(),
+            card_co_info_agree_yn: $('#card_co_info_agree_yn').val().trim(),
+            default_pay_means_yn: $('#default_pay_means_yn').val().trim()
         };
 
         if (!$("#card_co_info_agree_yn").prop("checked")) {
@@ -104,7 +118,6 @@ $(document).ready(function () {
                     location.reload();
                 },
                 error: function (e) {
-                    // alert("결제수단 등록에 실패했습니다. 다시 시도해주세요.");
                     console.log(e)
                     const code = e.responseJSON.code;
                     let inputErrMsg = "";
