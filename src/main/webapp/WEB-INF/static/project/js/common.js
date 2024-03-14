@@ -1,4 +1,3 @@
-
 window.addEventListener("load", () => {
     const projectSubmitForm = document.getElementById("pjSubmitForm");
 
@@ -12,7 +11,7 @@ const submitProject = (e) => {
 }
 
 const postProject = async (endPoint, formData) => {
-    const response = await fetch(endPoint ,{
+    const response = await fetch(endPoint, {
         method: "post",
         headers: {},
         body: formData,
@@ -52,11 +51,25 @@ const clearInput = (e) => {
 const countText = (text) => {
     return text.length;
 };
-const displayCount = (count, maxNum ,where) => {
+const displayCount = (count, maxNum, where) => {
     where.innerText = `${count}/${maxNum}`;
 };
-
-
 const deleteLastChar = (str) => {
     return str.slice(0, -1);
+};
+const handleTextCount = (e, MAX_COUNT, tag_id) => {
+//     글자수를 체크한다
+    const text = e.target.value;
+    const count = countText(text);
+    const count_tag = document.getElementById(tag_id);
+
+
+//     글자수를 제한한다
+    if (count > MAX_COUNT) {
+        alert(`최대 ${MAX_COUNT}글자 까지만 입력하실 수 있습니다.`);
+        e.target.value = deleteLastChar(text);
+        return;
+    }
+//     글자수릂 표시한다.
+    displayCount(count, MAX_COUNT, count_tag);
 };

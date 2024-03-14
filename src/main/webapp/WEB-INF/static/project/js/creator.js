@@ -1,10 +1,20 @@
-const initHandler = () => {
+window.addEventListener("load", () => {
     const saveBtn = document.getElementById("saveBtn");
     saveBtn.addEventListener("click", handleSaveBtnClick);
 
     const imgInput = document.getElementById("pjImgUp");
     imgInput.addEventListener("input", handleImgInput);
-};
+
+    const nameInput = document.getElementById("selName");
+    nameInput.addEventListener("input", e =>
+        handleTextCount(e, 20, "nameCount")
+    );
+
+    const selIntro = document.getElementById("selIntro");
+    selIntro.addEventListener("input", (e) =>
+        handleTextCount(e, 50, "introCount")
+    );
+});
 
 const handleSaveBtnClick = () => {
     //     버튼이 눌리면 프로젝트 변경 사항을 서버에 보낸다.
@@ -33,5 +43,3 @@ const handleImgInput = async (e) => {
     printImgTag("profImg", src_url);
     clearInput(e);
 };
-
-initHandler();

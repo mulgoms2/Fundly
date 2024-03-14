@@ -17,11 +17,13 @@
             <div class="pjForm none">
                 <div class="pjInputWrap">
                     <div>
-                        <input type="text" id="selName" class="pjInput" placeholder="창작자님의 이름을 입력해주세요." value="${creator.pj_sel_name}">
+                        <input type="text" id="selName" class="pjInput" placeholder="창작자님의 이름을 입력해주세요."
+                               value="${creator.pj_sel_name}">
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
-                        <p>0/20</p>
+                        <c:set var="nameCount" value="${empty creator.pj_sel_name ? 0 : creator.pj_sel_name.length()}"/>
+                        <p id="nameCount">${nameCount}/20</p>
                     </div>
                 </div>
             </div>
@@ -41,7 +43,7 @@
                 <div class="profBx">
                     <div class="imgBx">
                         <img id="profImg" src="${creator.pj_prof_image_url}">
-<%--                        <img src="<c:url value='/static/project/img/lemon.jpg'/>">--%>
+                        <%--                        <img src="<c:url value='/static/project/img/lemon.jpg'/>">--%>
                     </div>
                     <div class="upBx">
                         <label for="pjImgUp"><i class="fa-solid fa-arrow-up-from-bracket"></i>이미지 파일 업로드
@@ -73,16 +75,18 @@
                 </div>
                 <div class="pjInputWrap">
                     <div class="pjInputBx">
-                        <textarea id="selIntro" class="pjTxt" placeholder="간단한 이력과 소개를 써주세요.">${creator.pj_sel_short_intro}</textarea>
+                        <textarea id="selIntro" class="pjTxt"
+                                  placeholder="간단한 이력과 소개를 써주세요.">${creator.pj_sel_short_intro}</textarea>
                     </div>
                     <div class="notice">
                         <p>필수 항목입니다.</p>
-                        <p>0/50</p>
+                        <c:set var="countIntro"
+                               value="${empty creator.pj_sel_short_intro ? 0 : creator.pj_sel_short_intro.length()}"/>
+                        <p id="introCount">${countIntro}/50</p>
                     </div>
                 </div>
             </div>
         </div>
-
         <!--입금계좌-->
         <div class="pjBox acc">
             <dl class="pjInfo">
@@ -99,8 +103,12 @@
                     <li>
                         <p>계좌 종류</p>
                         <div class="btnWrap">
-                            <button type="button"><i class="fas fa-solid fa-user"></i><div>개인</div></button>
-                            <button type="button"><i class="fas fa-solid fa-briefcase"></i><div>사업자</div></button>
+                            <button type="button"><i class="fas fa-solid fa-user"></i>
+                                <div>개인</div>
+                            </button>
+                            <button type="button"><i class="fas fa-solid fa-briefcase"></i>
+                                <div>사업자</div>
+                            </button>
                         </div>
                     </li>
                     <li>
