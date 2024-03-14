@@ -89,7 +89,7 @@
                     <div class="errorMsg" id="card_co_info_agree_yn_err_msg"></div>
                 </div>
                 <div class="checkboxInputWrapper">
-                    <input class="checkboxInput" id="default_pay_means_yn" type="checkbox" name="default_pay_means_yn" value="Y" checked>기본 결제수단으로 등록
+                    <input class="checkboxInput" id="default_pay_means_yn" type="checkbox" name="default_pay_means_yn" checked>기본 결제수단으로 등록
                 </div>
             </div>
         </form>
