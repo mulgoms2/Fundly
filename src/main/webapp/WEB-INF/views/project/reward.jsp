@@ -45,7 +45,7 @@
         <!-- reward.jsp 요청시, 등록된 아이템이 하나도 없다면 보여주는 화면 -->
         <%--        <c:set var="itemList" value="${itemList}"/>--%>
         <%--        <c:if test="${empty itemList}"> <!--JS로 처리하고 싶었지만 안된다 -->--%>
-        <div class="pjBox str" id="str">
+        <div class="pjBox str active" id="str">
             <div class="pjInfo">
                 <div>
                     <div class="myList">
@@ -60,7 +60,7 @@
                 <div class="start">
                     <div>
                         <div class="tit">
-                            <p>선물 만들기</p>
+                            <p class="tit">선물 만들기</p>
                             <i class="fas fa-solid fa-asterisk"></i>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
 
         <!-- 선물 만들기 페이지 -->
         <!--역시 JS로 하고 싶었지만 -->
-        <div class="pjBox gift" id="gift">
+        <div class="pjBox gift active" id="gift">
             <div class="pjInfo">
                 <div>
                     <div class="myList">내가 만든 선물 <span class="count"></span>
@@ -99,7 +99,7 @@
             <div class="pjForm">
                 <div>
                     <div class="first">
-                        <p class="tit">선물 만들기</p>
+                        <p class="tit gift">선물 만들기</p>
                         <p class="cont">선물은 후원자에게 프로젝트의 가치를 전달하는 수단입니다. <br>
                             다양한 금액대로 여러 개의 선물을 만들어주세요. <br>
                             펀딩 성공률이 높아지고, 더 많은 후원 금액을 모금할 수 있어요.</p>
@@ -227,7 +227,7 @@
         </div> <!--gift-->
 
         <!--아이템 만들기 페이지-->
-        <div class="pjBox item" id="item">
+        <div class="pjBox item active" id="item">
             <div class="pjInfo">
                 <div>
                     <div class="myList">내가 만든 아이템 count</div>
@@ -263,7 +263,7 @@
             <div class="pjForm">
                 <div>
                     <div class="first">
-                        <p class="tit">아이템 만들기</p>
+                        <p class="item tit">아이템 만들기</p>
                         <p class="cont">아이템은 선물에 포함되는 구성 품목을 말합니다.<br>특별한 물건부터 의미있는 경험까지 선물을 구성할 아이템을 만들어 보세요.</p>
                     </div>
                     <section>
