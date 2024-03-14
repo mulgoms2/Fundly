@@ -1,6 +1,8 @@
 package com.fundly.user.service;
 
 import com.fundly.user.dto.UserProfileDto;
+import com.fundly.user.exception.UserJoinFailException;
+import com.fundly.user.exception.UserProfileFailException;
 import com.fundly.user.model.UserInfoDao;
 import com.fundly.user.model.UserProfileDao;
 import com.persistence.dao.FileDao;
@@ -52,43 +54,59 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfileDto userUpdate(UserDto userDto){
         try {
-
 //            log.error("\n\n"  + userDto + "\n\n");
             String pwd_mod_yn="N";
             UserProfileDto userProfileInfo = userProfileDao.userProfileinfo(userDto);
-
 //            log.error("\n\n"  + userProfileInfo + "\n\n");
             if(userDto.getUser_name()!=null) userProfileInfo.setUser_name(userDto.getUser_name());
             if(userDto.getUser_intro()!=null) userProfileInfo.setUser_intro(userDto.getUser_intro());
             /* pwd 변경 시 기존 번호 가져오고 수정 할 값 입력 */
             if(userDto.getUser_prev_pwd()!=null){
+
                 /* 암호화 체크 */
                 if(!bCryptPasswordEncoder.matches(userDto.getUser_prev_pwd(),userProfileInfo.getUser_pwd())){
-                    throw new RuntimeException("LOGIN_PWD_ERROR");
-                    //   throw new RuntimeException("비밀번호를 확인해 주세요.");
+                    UserProfileFailException e = new UserProfileFailException("현재 비밀번호가 일치하지 않습니다. 확인해 주세요.");
+                    log.debug("!bCryptPasswordEncoder.matches(userDto.getUser_prev_pwd(),userProfileInfo.getUser_pwd()) : {}\n{}", e.getMessage(), e.getStackTrace());
+                    throw e;
                 }
                 userProfileInfo.setUser_prev_pwd(userProfileInfo.getUser_pwd());
+
+                if(userDto.getUser_prev_pwd().equals(userDto.getUser_pwd())){
+                    UserProfileFailException e = new UserProfileFailException("동일한 비밀번호입니다. 다른 비밀번호로 입력해주세요.");
+                    log.debug("encoderPwd.equals(userProfileInfo.getUser_pwd()) : {}\n{}", e.getMessage(), e.getStackTrace());
+                    throw e;
+                }
             }
 
             if(userDto.getUser_pwd()!=null){
                 String userInPwd = userDto.getUser_pwd();
                 String encoderPwd = bCryptPasswordEncoder.encode(userInPwd);
+
                 userProfileInfo.setUser_pwd(encoderPwd);
                 pwd_mod_yn="Y";
             }
+
 //            log.info("userProfileInfo ===== " + userProfileInfo + "\n\n");
 
             if(userDto.getUser_phone_no()!=null) userProfileInfo.setUser_phone_no(userDto.getUser_phone_no());
 
             if(userProfileDao.update(userProfileInfo)!=1){
-                log.error("유저정보 업데이트 에러 ");
+                UserProfileFailException e = new UserProfileFailException("유저정보 업데이트 에러");
+                log.debug("userProfileDao.update(userProfileInfo)!=1 : {}\n{}", e.getMessage(), e.getStackTrace());
+                throw e;
+//                log.error("유저정보 업데이트 에러 ");
             }
 
             if (userHistService.userHistinsert(userProfileInfo,pwd_mod_yn) != 1) {
-                log.error("유저정보 저장 에러");
+                UserProfileFailException e = new UserProfileFailException("유저정보 내역 저장 에러");
+                log.debug("userHistService.userHistinsert(userProfileInfo,pwd_mod_yn) != 1 : {}\n{}", e.getMessage(), e.getStackTrace());
+                throw e;
+//                log.error("유저정보 저장 에러");
             }
             return userProfileDao.userProfileinfo(UserDto.builder().user_email(userProfileInfo.getUser_email()).build());
-
+        } catch (UserProfileFailException e) {
+            log.error("UserProfileFailException error == " + e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("error == " + e.getMessage());
             throw new RuntimeException(e);

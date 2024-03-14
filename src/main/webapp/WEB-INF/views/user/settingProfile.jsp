@@ -2,11 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
 <c:set var="userprofileImg" value="${user_profileImg=='' || user_profileImg == null ? '/static/img/avatar.webp' : '/user/img/'}"/>
-<div>
-<%--  <h1>${user_profileImg}</h1>--%>
-</div>
-    <div class="flexOnly">
-      <div class="container">
+
+<div class="containerWrap">
+  <div class="userInfoModity">
 
         <div class="profileSetting">
           <div class="profileimgFormHeader ">
@@ -35,7 +33,7 @@
                   <div class="pTagImgDetail">
                   <label for="fileimg" >
                     <span class="filein">파일 업로드</span>
-                    <input id="fileimg" accept=".jpg, .jpeg, .png, .gif" type="file" formenctype="multipart/form-data"/>
+                    <input id="fileimg" accept=".jpg, .jpeg, .png, .gif" type="file" formenctype="multipart/form-data" onchange="handleFile(this.files)"/>
                   </label><br>
                     <span class="fileDetail">250 x 250 픽셀에 최적화되어 있으며, 10Mb 이하의 JPG, GIF, PNG 파일을 지원합니다.</span>
                   </div>
@@ -95,14 +93,11 @@
           </div>
       </div>
 
-      <div class="userSettingContainer">
-        <div class="userInfoMod"></div>
-        <div class="userInfoComment">
-          <p>어떤 정보가 프로필에 공개되나요?</p>
-          <div class="userInfoCommentContent">
-            프로필 사진과, 이름, 사용자 이름, 소개글, 웹사이트 및 회원님과 관련된 프로젝트 등이 프로필 페이지에 공개 됩니다. 프라이버시 설정을 활성화하시면 후원한 프로젝트 목록을 숨길 수 있습니다.
-            <span><a href="/mypage/profile">내 프로필 바로가기</a></span>
-          </div>
+      <div class="userInfoComment">
+        <p>어떤 정보가 프로필에 공개되나요?</p>
+        <div class="userInfoCommentContent">
+          프로필 사진과, 이름, 사용자 이름, 소개글, 웹사이트 및 회원님과 관련된 프로젝트 등이 프로필 페이지에 공개 됩니다. 프라이버시 설정을 활성화하시면 후원한 프로젝트 목록을 숨길 수 있습니다.
+          <span><a href="/mypage/profile">내 프로필 바로가기</a></span>
         </div>
       </div>
     </div>

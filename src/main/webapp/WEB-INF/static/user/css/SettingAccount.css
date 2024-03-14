@@ -2,10 +2,7 @@
 .accountSetting{
     font-size: 14px;
     line-height: 27px;
-    /*letter-spacing: -0.020em;*/
-    /*display: flex;*/
-    /*margin: 12px 0px ;*/
-    padding: 12px 0px;
+    padding: 0px 0px 12px 0px;
     background: #FFF;
     color: #3d3d3d;
     border-bottom: 1px solid rgb(240, 240, 240);
@@ -107,7 +104,6 @@
     text-decoration: underline;
 }
 
-
 .userNowPwdDetail{
     font-family: 'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 14px;
@@ -121,7 +117,6 @@
 }
 
 /* phone */
-
 .pTagDetailPhoneNo{
     display: none;
 }

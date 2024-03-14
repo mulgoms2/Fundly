@@ -33,7 +33,3 @@
     </div>
 </div>
 <script src="/static/main/index.js"></script>
-<script>
-    const errmsg = "${errmsg}";
-    if (errmsg === "USER_ERROR") alert("로그인 확인해 주세요.");
-</script>
