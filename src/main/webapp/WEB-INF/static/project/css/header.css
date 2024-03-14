@@ -24,12 +24,31 @@ button {
     font-size: 14px;
     font-style: normal;
 }
+
+button:disabled {
+    background-color: #e4e4e4;
+    color: #aca0a4;
+}
+/*이거 왜 안먹지*/
+
 button:hover {
     cursor: pointer;
 }
 body {
     background-color: #ffffff;
 }
+
+/* default 상태 */
+/*.icoImg.on {*/
+/*    display: none;*/
+/*}*/
+/*.icoImg {*/
+/*    display: block;*/
+/*}*/
+/*.icoImg svg {*/
+/*    width: 14px;*/
+/*    height: 14px;*/
+/*}*/
 
 .topContents {
     display: flex;

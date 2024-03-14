@@ -43,6 +43,7 @@
                     </span>
                     <input type="hidden" id="card_no" name="card_no">
                 </div>
+                <div class="errorMsg" id="card_no_err_msg"></div>
             </div>
             <div class="formOptionWrapper">
                 <div class="formOptionTitle">카드 유효기간</div>
@@ -55,6 +56,7 @@
                     </div>
                     <input type="hidden" id="card_valid_date" name="card_valid_date">
                 </div>
+                <div class="errorMsg" id="card_valid_date_err_msg"></div>
             </div>
             <div class="formOptionsWrapper">
                 <div class="cardPwdWrapperFirst">
@@ -65,6 +67,7 @@
                                    placeholder="앞 2자리를 입력해주세요." onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                         </span>
                     </div>
+                    <div class="errorMsg" id="card_pwd_err_msg"></div>
                 </div>
                 <div class="cardPwdWrapperSecond" id="own_type_output">
                     <div class="formOptionTitle">소유주 생년월일</div>
@@ -74,6 +77,7 @@
                                    placeholder="예) 920101" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                         </span>
                     </div>
+                    <div class="errorMsg" id="own_birth_err_msg"></div>
                 </div>
             </div>
             <div class="checkboxWrapper">

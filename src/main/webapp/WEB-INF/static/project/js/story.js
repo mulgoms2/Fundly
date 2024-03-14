@@ -135,10 +135,6 @@ necessary, as we are looking to handle it internally.
 
 
 window.onload = function(){
-    let msg = "${msg}"
-    console.log("msg="+msg)
-    if(msg == "FAIL") alert('저장에 실패했습니다.')
-
     const saved = document.querySelector('div.saved');
     console.log(saved); //div class='saved'가 있다는 것은 작성된 내용이 있다는 뜻.
     if(saved!=null){

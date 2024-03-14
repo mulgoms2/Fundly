@@ -92,10 +92,10 @@ public class MyPageController {
             if (user_email == null || user_email == "") {
 //                throw new RuntimeException("USER_ERROR");
 //                log.error("로그인되지 않았습니다");
-                model.addAttribute("errmsg", "USER_ERROR");
+//                model.addAttribute("errmsg", "USER_ERROR");
                 /* session email 없다면 메인 화면으로 가면서 로그인 정보 확인 요청 ..
                  * url 부분은 어떻게 가리는가 ? */
-                return mainView;
+                return "redirect:/login/login";
             }
 
             UserDto dto = UserDto.builder()

@@ -23,12 +23,14 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
-<div class="userId">bada@naver.com</div>
-<div class="pjId">P5040</div>
+<div class="userId">${user.user_email}</div>
+<div class="pjId">${pj.pj_id}</div>
 <div class="header">
     <div class="hd">
         <h1 class="logo">
-            <a href="#"></a>
+            <a href="<c:url value='/'/>">
+                <img class="logo" src="/static/img/fundly-logo.svg">
+            </a>
         </h1>
         <div class="lftSmn">
             <div class="pjtUp">
@@ -95,17 +97,16 @@
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/ad5baaad-977f-49a8-98ad-be8f3388c004.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=d231790d0cc0269996739076d3b0c3cb"
-                                     alt="">
+                                <img src="${pj.pj_thumbnail_url}" alt="">
                             </div>
-                            <div class="swiper-slide">
-                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/6c283549-911d-4b8b-a9c4-1905ddb66478.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=501c8005e5339d9cb1c58072d1d5d73f"
-                                     alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/04fa14ed-e852-44df-a265-b66cfd0d0bf6.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=a46c2aa5a414407b4d0df4d454b9531d"
-                                     alt="">
-                            </div>
+                            <%--                            <div class="swiper-slide">--%>
+                            <%--                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/6c283549-911d-4b8b-a9c4-1905ddb66478.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=501c8005e5339d9cb1c58072d1d5d73f"--%>
+                            <%--                                     alt="">--%>
+                            <%--                            </div>--%>
+                            <%--                            <div class="swiper-slide">--%>
+                            <%--                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/04fa14ed-e852-44df-a265-b66cfd0d0bf6.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=a46c2aa5a414407b4d0df4d454b9531d"--%>
+                            <%--                                     alt="">--%>
+                            <%--                            </div>--%>
                         </div>
                     </div>
                     <div class="swiper-button-next">
@@ -182,7 +183,7 @@
                                               d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
                                     </svg>
                                 </div>
-                                <span class="likeCnt">10</span>
+                                <span class="likeCnt">${pj.curr_pj_like_cnt}</span>
                             </div>
                         </button>
                         <button class="ordBtn purp">이 프로젝트 후원하기</button>
@@ -359,7 +360,10 @@
                                     <%--                                    </div>--%>
                                 </div>
                                 <div class="strDesc" id="section5">
+<<<<<<< Updated upstream
                                     <%--                                <div class="strDesc" id="section5">--%>
+=======
+>>>>>>> Stashed changes
                                     ${pj.pj_gift_intro}
                                     <%--                                    <div class="strTit">선물 설명</div>--%>
                                     <%--                                    <p>--%>
@@ -582,7 +586,9 @@
                                     <div class="twinBtnwrap">
                                         <button class="gftAddbtn">선물 추가하기</button>
                                         <button class="gftCalcbtn">
+                                            <a href="<c:url value='/order'/>">
                                             총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                            </a>
                                         </button>
                                     </div>
                                 </div>

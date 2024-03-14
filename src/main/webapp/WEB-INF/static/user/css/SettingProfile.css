@@ -6,81 +6,10 @@
     /*letter-spacing: -0.020em;*/
     /*display: flex;*/
     /*margin: 12px 0px ;*/
-    padding: 12px 0px;
+    padding: 0px 0px 12px 0px;
     background: #FFF;
     color: #3d3d3d;
     border-bottom: 1px solid rgb(240, 240, 240);
-}
-
-/* 오른쪽 컨테이너 값 */
-.userInfoComment{
-    border-radius: 4px;
-    border: 1px solid rgb(230, 230, 230);
-    margin: 0px;
-    padding: 20px 24px;
-}
-
-.userInfoComment p{
-    font-size: 16px;
-    line-height: 27px;
-    font-weight: bold;
-    margin: 0px 0px 8px;
-    /*letter-spacing: -0.020em;*/
-}
-
-.userInfoCommentContent{
-    font-size: 13px;
-    line-height: 20px;
-    /*letter-spacing: -0.015em;*/
-    color: #6D6D6D;
-    font-family: 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', Arial, 'NotoSansKR', sans-serif;
-}
-
-.userInfoCommentContent span{
-    cursor: pointer;
-    font-weight: normal;
-    box-sizing: inherit;
-    font-size: 13px;
-    line-height: 20px;
-    letter-spacing: -0.015em;
-    color: #6D6D6D;
-}
-
-.userInfoCommentContent>span>a{
-    color: rgb(39, 163, 255);
-    text-decoration: underline;
-}
-
-/* 프로필 - 사진*/
-.detailTitle{
-    display: flex;
-    justify-content: space-between;
-}
-
-/*.pTag{*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*    -webkit-box-align: center;*/
-/*    align-items: center;*/
-/*    font-weight: bold;*/
-/*    -webkit-box-flex: 1;*/
-/*    flex-grow: 1;*/
-/*}*/
-
-.ButtonTag{
-    /*display: inline-flex;*/
-    /*align-items: flex-end;*/
-    height: 32px;
-    padding: 0px 16px;
-    background: rgb(240, 240, 240);
-    border: none;
-    border-radius: 60px;
-    font-weight: 500;
-    color: rgb(61, 61, 61);
-    font-size: 12px ;
-    line-height: 20px ;
-    font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif ;
-    cursor: pointer;
 }
 
 .pTagChaDetailImg{

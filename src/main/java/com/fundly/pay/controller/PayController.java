@@ -6,7 +6,9 @@ import com.fundly.pay.dto.billkey.BillKeyRequestDto;
 import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
+import com.fundly.pay.exception.*;
 import com.fundly.pay.service.PayMeansService;
+import com.fundly.pay.service.PayService;
 import com.fundly.pay.service.PortOneService;
 import com.persistence.dto.PayMeansDto;
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +35,13 @@ public class PayController {
     // 6. 결제 재시도: retryFailedPay() -> DB 결제 상태 업데이트
 
     private final PayMeansService payMeansService;
+    private final PayService payService;
     private final PortOneService portOneService;
 
     @Autowired
-    public PayController(PayMeansService payMeansService, PortOneService portOneService) {
+    public PayController(PayMeansService payMeansService, PayService payService, PortOneService portOneService) {
         this.payMeansService = payMeansService;
+        this.payService = payService;
         this.portOneService = portOneService;
     }
 
@@ -88,13 +92,11 @@ public class PayController {
             }
             log.info("getDefaultPayMeansCount 성공");
 
-            // TODO: 상태코드별 에러 처리 세분화 필요
-            PayResponseDto payResponseDto = new PayResponseDto("UPDATE_SUCCESS", payMeansDto);
+            PayResponseDto payResponseDto = new PayResponseDto("UPDATE_SUCCESS");
             return ResponseEntity.ok().body(payResponseDto);
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: 상태코드별 에러 처리 세분화 필요
-            PayResponseDto payResponseDto = new PayResponseDto("UPDATE_ERROR", payMeansDto);
+            PayResponseDto payResponseDto = new PayResponseDto("UPDATE_ERROR");
             return ResponseEntity.badRequest().body(payResponseDto);
         }
     }
@@ -128,13 +130,12 @@ public class PayController {
             if (rowCnt != 1) throw new Exception("Remove Failed. - DB Delete Error");
             log.info("removePayMeans 성공");
 
-            PayResponseDto payResponseDto = new PayResponseDto("DEL_SUCCESS", payMeansDto);
+            PayResponseDto payResponseDto = new PayResponseDto("DEL_SUCCESS");
             return ResponseEntity.ok().body(payResponseDto);
 
         } catch (Exception e) {
             e.printStackTrace();
-            // TODO: 상태코드별 에러 처리 세분화 필요
-            PayResponseDto payResponseDto = new PayResponseDto("DEL_ERROR", payMeansDto);
+            PayResponseDto payResponseDto = new PayResponseDto("DEL_ERROR");
             return ResponseEntity.badRequest().body(payResponseDto);
         }
     }
@@ -165,7 +166,6 @@ public class PayController {
     @ResponseBody
     @PostMapping("/register")
     public ResponseEntity<PayResponseDto> register(@SessionAttribute("user_email") String userId, PayMeansDto payMeansDto) {
-
         payMeansDto.setUser_id(userId);
         payMeansDto.setDba_reg_id(userId);
         if (payMeansDto.getDefault_pay_means_yn() == null) {
@@ -177,7 +177,7 @@ public class PayController {
             payMeansDto.setPay_means_id(payMeansId);
 
             BillKeyRequestDto billKeyRequestDto = new BillKeyRequestDto(
-                    payMeansDto.getCard_no(),payMeansDto.getCard_valid_date(), payMeansDto.getOwn_birth(),
+                    payMeansDto.getCard_no(), payMeansDto.getCard_valid_date(), payMeansDto.getOwn_birth(),
                     payMeansDto.getCard_pwd(), payMeansDto.getPay_means_id());
 
             String authToken = portOneService.getToken().getBody().getResponse().getAccess_token();
@@ -212,14 +212,28 @@ public class PayController {
             rowCnt = payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
             if (rowCnt != 1) throw new Exception("Register Failed. - registerPayMeans Error");
 
-            PayResponseDto payResponseDto = new PayResponseDto("REG_SUCCESS", payMeansDto);
+            PayResponseDto payResponseDto = new PayResponseDto("REG_SUCCESS");
             return ResponseEntity.ok().body(payResponseDto);
+        } catch (CardInputNotFoundException e) {
+            return handleRegisterError(e, e.getCode(), 400);
+        } catch (CardInputInvalidException e) {
+            return handleRegisterError(e, e.getCode(), 400);
+        } catch (PayInternalServerException e) {
+            return handleRegisterError(e, "FUNDLY_SERVER_ERROR", 500);
+        } catch (PayPortOneServerException e) {
+            return handleRegisterError(e, "PORTONE_SERVER_ERROR", 502);
         } catch (Exception e) {
-            e.printStackTrace();
-            // TODO: 상태코드별 에러 처리 세분화 필요
-            PayResponseDto payResponseDto = new PayResponseDto("REG_ERROR", payMeansDto);
-            return ResponseEntity.badRequest().body(payResponseDto);
+            log.error("{} : {}\n {}\n", "register(@SessionAttribute(\"user_email\") String userId, PayMeansDto payMeansDto)", e.getMessage(), e.getStackTrace());
+            PayResponseDto payResponseDto = new PayResponseDto("UKNOWN_REG_ERROR");
+            return ResponseEntity.status(500).body(payResponseDto);
         }
+    }
+
+    private ResponseEntity<PayResponseDto> handleRegisterError(Exception e, String resultCode, int statusCode) {
+        log.error("{} : {}\n {}\n", "register(@SessionAttribute(\"user_email\") String userId, PayMeansDto payMeansDto)", e.getMessage(), e.getStackTrace());
+
+        PayResponseDto payResponseDto = new PayResponseDto(resultCode);
+        return ResponseEntity.status(statusCode).body(payResponseDto);
     }
 
     private boolean userCheck(String userId, String payMeansDtoUserId) {
