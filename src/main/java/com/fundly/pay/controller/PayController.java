@@ -27,13 +27,6 @@ import java.util.Map;
 @RequestMapping("/pay")
 @Slf4j
 public class PayController {
-    // 1. 포트원 API 호출 전 모든 함수 공통 호출: getToken()
-    // 2. 결제사에 카드 등록: getBillKey() -> registerPayMeans()
-    // 3. 결제 예약: schedulePay() - 결제예정일에 스케줄되도록.. -> 결제예약 api 말고, 한날한시에 일괄적으로 결제 요청을 보내는게 나을 수도?
-    // 4. (주문 취소) -> 결제 취소: cancelPay()
-    // 5. 결제 조회 (내역, 상태):  getPayList() -> DB 결제 상태 업데이트
-    // 6. 결제 재시도: retryFailedPay() -> DB 결제 상태 업데이트
-
     private final PayMeansService payMeansService;
     private final PayService payService;
     private final PortOneService portOneService;
@@ -65,7 +58,7 @@ public class PayController {
             map.put("user_id", userId);
             map.put("dba_mod_id", userId);
 
-            // 기존 기뵨결제수단이 있는지 확인 (있다면 값은 1)
+            // 기존 기본결제수단이 있는지 확인 (있다면 값은 1)
             int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
             // 기존의 기본결제수단이 있다면 해제
             int rowCnt;
@@ -76,7 +69,6 @@ public class PayController {
                 }
                 log.info("unsetDefaultPayMeans 성공");
             }
-
             // 3. 해당 결제수단을 Y로 바꾼다.
             payMeansDto.setDba_mod_id(userId);
             rowCnt = payMeansService.setDefaultPayMeans(payMeansDto);
@@ -166,6 +158,7 @@ public class PayController {
     @ResponseBody
     @PostMapping("/register")
     public ResponseEntity<PayResponseDto> register(@SessionAttribute("user_email") String userId, PayMeansDto payMeansDto) {
+        int rowCnt;
         payMeansDto.setUser_id(userId);
         payMeansDto.setDba_reg_id(userId);
         if (payMeansDto.getDefault_pay_means_yn() == null) {
@@ -196,11 +189,11 @@ public class PayController {
             cardNumber = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
             payMeansDto.setCard_no(cardNumber);
 
-            int rowCnt;
-            int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
-            // 기존 기본결제수단이 있는 경우, 기본결제수단지정 체크한 상태면 기존 것은 unset
-            if (defaultPayMeansCnt != 0) {
-                if (payMeansDto.getDefault_pay_means_yn().equals("Y")) {
+            // 기본결제수단지정에 체크한 경우
+            if (payMeansDto.getDefault_pay_means_yn().equals("Y")) {
+                // 기존 기본결제수단이 있으면 unset
+                int defaultPayMeansCnt = payMeansService.getDefaultPayMeansCount(payMeansDto.getUser_id());
+                if (defaultPayMeansCnt != 0) {
                     Map map = new HashMap();
                     map.put("user_id", userId);
                     map.put("dba_mod_id", userId);
@@ -209,6 +202,7 @@ public class PayController {
                     log.info("unsetDefaultPayMeans 성공");
                 }
             }
+
             rowCnt = payMeansService.registerPayMeans(payMeansDto); // 결제수단 테이블에 insert
             if (rowCnt != 1) throw new Exception("Register Failed. - registerPayMeans Error");
 
