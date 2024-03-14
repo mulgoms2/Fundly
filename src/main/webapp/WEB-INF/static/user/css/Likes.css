@@ -48,6 +48,27 @@
     display:none;
 }
 
+/* 비어있는페이지 */
+.noLikesConts {
+    width: 1160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.8em;
+
+}
+
+.noLikeHeart {
+    margin-top: 100px;
+    width: 70px;
+    height: 70px;
+}
+.noLikes {
+    font-size: 1.2em;
+    color: #949494;
+}
+
 /* 프로젝트 이미지 */
 .mnBan .banImg.after {
     width: 264px;
@@ -230,8 +251,15 @@
     background-size: cover;
 }
 
-.likesCnt{
+.noLikesCnt{
     color: rgb(160, 155, 155);
+    font-family: "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, NotoSansKR, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -0.32px;
+}
+.likesCnt{
+    color: rgb(255, 87, 87);
     font-family: "SF Pro Text", "Helvetica Neue", "Segoe UI", Arial, NotoSansKR, sans-serif;
     font-size: 16px;
     font-weight: bold;
