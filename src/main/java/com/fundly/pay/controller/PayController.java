@@ -219,12 +219,12 @@ public class PayController {
         } catch (CardInputInvalidException e) {
             return handleRegisterError(e, e.getCode(), 400);
         } catch (PayInternalServerException e) {
-            return handleRegisterError(e, e.getCode(), 500);
+            return handleRegisterError(e, "FUNDLY_SERVER_ERROR", 500);
         } catch (PayPortOneServerException e) {
-            return handleRegisterError(e, e.getCode(), 502);
+            return handleRegisterError(e, "PORTONE_SERVER_ERROR", 502);
         } catch (Exception e) {
             log.error("{} : {}\n {}\n", "register(@SessionAttribute(\"user_email\") String userId, PayMeansDto payMeansDto)", e.getMessage(), e.getStackTrace());
-            PayResponseDto payResponseDto = new PayResponseDto("REG_ERROR");
+            PayResponseDto payResponseDto = new PayResponseDto("UKNOWN_REG_ERROR");
             return ResponseEntity.status(500).body(payResponseDto);
         }
     }

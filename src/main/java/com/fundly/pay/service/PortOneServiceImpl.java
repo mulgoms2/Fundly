@@ -173,7 +173,7 @@ public class PortOneServiceImpl implements PortOneService {
                 .toEntity(BillKeyResponseDto.class)
                 .doOnSuccess(res -> { // 200 OK
                     log.info("getBillKey 요청 성공");
-                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 RuntimeException 발생시킨다.
+                    // response의 code 값이 0이어야만 정상적인 조회이므로, 0이 아닌 경우 Exception 발생시킨다.
                     if (Objects.requireNonNull(res.getBody()).getCode() != 0) {
                         String errMsg = res.getBody().getMessage();
                         switch ( errMsg ) {
@@ -213,6 +213,8 @@ public class PortOneServiceImpl implements PortOneService {
                                 throw new PayInternalServerException("PG_NOT_FOUND");
                             case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 비밀번호 회수초과, code:F113)":
                                 throw new CardInputInvalidException("PWD_LIMIT_EXCEEDED");
+                            case "카드정보 인증 및 빌키 발급에 실패하였습니다. [400]Error From NICEPAY. (message: 유효기간 오류, code:3021)":
+                                throw new CardInputInvalidException("CARD_INFO_INVALID");
                             default:
                                 throw new RuntimeException("PortOneService getBillKey() ERROR : " + res.getBody().getMessage());
                         }
