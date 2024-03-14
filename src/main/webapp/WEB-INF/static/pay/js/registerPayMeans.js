@@ -4,22 +4,38 @@ $.fn.bPopup.defaults = $.extend({}, $.fn.bPopup.defaults, {
 });
 
 $(document).ready(function () {
+    // 페이지 리로드 시, 결제수단등록 폼 초기화
+    $('#form')[0].reset();
+    resetErrMsg();
+
+    // 결제수단등록 팝업 유효성 에러 메세지 리셋
+    function resetErrMsg() {
+        $('#card_pwd_err_msg').text('');
+        $('#own_birth_err_msg').text('');
+        $('#card_no_err_msg').text('');
+        $('#card_valid_date_err_msg').text('');
+        $('#card_co_info_agree_yn').text('');
+    }
+
     // 추가(등록) 버튼 클릭 시 팝업창 open
     $("#payRegBtn, #emptyList").click(function (e) {
         e.preventDefault();
         $('#popRegister').bPopup();
+        resetErrMsg();
     })
 
     // esc 버튼 클릭 시 form 초기화
     $(document).keydown(function (event) {
         if (event.keyCode == 27 || event.which == 27) {
             $('#form')[0].reset();
+            resetErrMsg();
         }
     });
 
     // 팝업창 닫기 버튼 클릭 시 form 초기화
     $('.b-close').click(function () {
         $('#form')[0].reset();
+        resetErrMsg();
     });
 
     // Register pop-up form
@@ -62,6 +78,7 @@ $(document).ready(function () {
     });
 
     $("#submitBtn").click(function () {
+        resetErrMsg(); // 초기화
         $('#card_no').val($('#card_no_1').val() + $('#card_no_2').val() + $('#card_no_3').val() + $('#card_no_4').val());
 
         let formData = {
@@ -87,19 +104,44 @@ $(document).ready(function () {
                     location.reload();
                 },
                 error: function (e) {
-                    alert("결제수단 등록에 실패했습니다. 다시 시도해주세요.");
+                    // alert("결제수단 등록에 실패했습니다. 다시 시도해주세요.");
                     console.log(e)
-                    // let payMeansDto = e.responseJSON.payMeansDto;
+                    const code = e.responseJSON.code;
+                    let inputErrMsg = "";
 
-                    // TODO: 유효성 검증 메시지
-                    // 카드 비밀번호 앞 2자리: 비밀번호를 입력하셔야 합니다.
-                    // 소유주 생년월일: 생년월일을 입력하셔야 합니다.
-                    // 카드번호: 카드번호를 입력하셔야 합니다.
-                    // 카드번호: 카드번호가 유효하지 않습니다.
-                    // 카드 유효기간: 유효기간이 일치하지 않습니다.
-                    // 카드 비밀번호 앞 2자리: 유효하지 않은 형식입니다.
-                    // 소유주 생년월일: 입력값이 유효하지 않습니다.
-                    // (완료) 결제사 정보제공에 동의하셔야 합니다.
+                    if (code === "PWD_NOT_FOUND") {
+                        inputErrMsg = "유효하지 않은 형식입니다. (숫자 2자리 입력)";
+                        $('#card_pwd_err_msg').text(inputErrMsg);
+                    } else if (code === "PWD_INVALID") {
+                        inputErrMsg = "비밀번호가 일치하지 않습니다.";
+                        $('#card_pwd_err_msg').text(inputErrMsg);
+                    } else if (code === "BIRTH_NOT_FOUND") {
+                        inputErrMsg = "유효하지 않은 형식입니다. (숫자 6자리 입력)";
+                        $('#own_birth_err_msg').text(inputErrMsg);
+                    } else if (code === "BIRTH_INVALID") {
+                        inputErrMsg = "입력값이 일치하지 않습니다.";
+                        $('#own_birth_err_msg').text(inputErrMsg);
+                    } else if (code === "CARD_NUM_NOT_FOUND") {
+                        inputErrMsg = "카드번호를 입력하셔야 합니다.";
+                        $('#card_no_err_msg').text(inputErrMsg);
+                    } else if (code === "CARD_NUM_INVALID") {
+                        inputErrMsg = "카드번호가 일치하지 않습니다.";
+                        $('#card_no_err_msg').text(inputErrMsg);
+                    } else if (code === "EXPIRY_NOT_FOUND") {
+                        inputErrMsg = "유효기간을 입력하셔야 합니다.";
+                        $('#card_valid_date_err_msg').text(inputErrMsg);
+                    } else if (code === "EXPIRY_INVALID") {
+                        inputErrMsg = "유효기간이 일치하지 않습니다.";
+                        $('#card_valid_date_err_msg').text(inputErrMsg);
+                    } else if (code == "CARD_INFO_INVALID") {
+                        alert("잘못된 카드 정보입니다. 다시 입력해 주세요.")
+                    } else if (code === "CARD_UNSUPPORTED") {
+                        alert("지원하지 않는 카드사입니다. 다른 카드를 등록해 주세요.");
+                    } else if (code === "PWD_LIMIT_EXCEEDED") {
+                        alert("비밀번호 입력 횟수를 초과하였습니다. 10분 후 다시 등록해 주세요.");
+                    } else { // PG_NOT_FOUND or PORTONE_SERVER_ERROR or FUNDLY_SERVER_ERROR or UKNOWN_REG_ERROR : 관리자에게 문의하도록 알림
+                        alert("결제수단 등록에 실패했습니다. 펀들리 고객센터로 문의 바랍니다.");
+                    }
                 }
             })
         }
