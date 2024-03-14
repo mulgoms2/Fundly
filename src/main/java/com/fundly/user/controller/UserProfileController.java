@@ -4,6 +4,7 @@ import com.fundly.chat.service.ChatService;
 import com.fundly.project.controller.ErrorResult;
 import com.fundly.user.dto.UserJoinDto;
 import com.fundly.user.dto.UserProfileDto;
+import com.fundly.user.exception.UserProfileFailException;
 import com.fundly.user.service.JoinService;
 import com.fundly.user.service.UserHistService;
 import com.fundly.user.service.UserInfoService;
@@ -17,6 +18,7 @@ import org.apache.tika.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -121,14 +123,10 @@ public class UserProfileController {
 
         String originFileName = file.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
-
-        log.error(IMG_SAVE_LOCATION + "DDDDDDDDDDDD");
-
         String saveImgUrl = IMG_SAVE_LOCATION + uuid + originFileName;
         String imgname = uuid + originFileName;
         MultipartFile imgFile = file;
 
-        System.out.println("saveImgUrl = " + saveImgUrl);
 //        Path root = Paths.get(System.getProperty("user.home"),"upload");
 //        Path target = root.resolve(saveImgUrl);
 //        Files.copy(inputStream,target);
@@ -152,12 +150,25 @@ public class UserProfileController {
 
     @PostMapping("/update")
     @ResponseBody
-    public ResponseEntity<?> updateSave(@RequestBody @Valid UserDto userDto, BindingResult result) {
+    public ResponseEntity<?> updateSave(@RequestBody @Valid UserDto userDto, BindingResult bindingResult, RedirectAttributes rattr) {
 
 //        // dto binding error msg view
 //        result.getAllErrors().stream().forEach(
 //                error -> Arrays.stream(error.getCodes()).forEach(System.out::println)
 //        );
+
+//        /* userjoindto valid */
+//        if(bindingResult.hasErrors()) {
+//            Map<String, String> validResult = validateHandling(bindingResult);
+//
+//            for (String key : validResult.keySet()) {
+//                rattr.addFlashAttribute(key, validResult.get(key));
+//            }
+//
+//            rattr.addFlashAttribute(userDto);
+//            String msg = "비밀번호가 틀렸습니다.";
+//            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
+//        }
 
         int cnt = 0;
 
@@ -172,8 +183,14 @@ public class UserProfileController {
 //            log.info("cnt = " + cnt);
             UserDto userList = userInfoService.userInfo(UserDto.builder().user_email(userProfileDto.getUser_email()).build());
             return new ResponseEntity<UserDto>(userList, HttpStatus.OK);
+        } catch (UserProfileFailException e) {
+
+            String msg = "{\"msg\": \""+e.getMessage()+"\"}";
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(msg);
+//                    new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error(e.getMessage());
+            log.error("=====1=====");
             return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -212,6 +229,17 @@ public class UserProfileController {
             }
         }
         return null;
+    }
+
+    // 유효성 체크
+    public Map<String, String> validateHandling(Errors errors) {
+        Map<String, String> validatorResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+        return validatorResult;
     }
 
     /* RuntimeException.class, SQLException.class,IllegalArgumentException.class에 따른 에러들 처리 */

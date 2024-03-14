@@ -40,7 +40,7 @@ public class JoinController {
     public String join(@ModelAttribute("userJoinDto")UserJoinDto userJoinDto){ return "user/join";}
 
     @PostMapping( "/add")
-    public String joinsave(@Validated UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr) {
+    public String joinsave(@Validated UserJoinDto userJoinDto, BindingResult bindingResult, RedirectAttributes rattr, Model model) {
 
         /* userjoindto valid */
         if(bindingResult.hasErrors()) {
@@ -61,7 +61,12 @@ public class JoinController {
             rattr.addFlashAttribute(userJoinDto);
             return "redirect:/join/add";
         }
+
+        model.addAttribute("JOIN", "회원가입이 성공적으로 되었습니다.");
         return "/user/login";
+
+//        rattr.addFlashAttribute("JOIN","회원가입이 성공적으로 되었습니다.");
+//        return "/user/login";
     }
 
     // 유효성 체크
