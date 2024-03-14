@@ -6,10 +6,14 @@ import com.fundly.pay.dto.billkey.BillKeyRequestDto;
 import com.fundly.pay.dto.billkey.BillKeyResponseDto;
 import com.fundly.pay.dto.schedule.ScheduledPayRequestDto;
 import com.fundly.pay.dto.schedule.ScheduledPayResponseDto;
-import com.fundly.pay.exception.*;
+import com.fundly.pay.exception.CardInputInvalidException;
+import com.fundly.pay.exception.CardInputNotFoundException;
+import com.fundly.pay.exception.PayInternalServerException;
+import com.fundly.pay.exception.PayPortOneServerException;
 import com.fundly.pay.service.PayMeansService;
 import com.fundly.pay.service.PayService;
 import com.fundly.pay.service.PortOneService;
+import com.persistence.dto.PayDto;
 import com.persistence.dto.PayMeansDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -232,5 +237,21 @@ public class PayController {
 
     private boolean userCheck(String userId, String payMeansDtoUserId) {
         return userId.equals(payMeansDtoUserId);
+    }
+
+    // ---------------------------- 주문페이지 즉시 결제를 위한 메서드들 (프로젝트 시연용) ----------------------------
+    @ResponseBody
+    @PostMapping("/request")
+    public ResponseEntity<PayDto> request(@SessionAttribute("user_email") String userId, PayDto payDto) {
+        payDto.setUser_id(userId);
+        payDto.setPay_due_dtm(LocalDateTime.now()); // 프론트에서 받아와야 하는 정보
+
+        try {
+            payService.requestPayforDemo(payDto);
+            return ResponseEntity.ok().body(payDto);
+        } catch (Exception e) {
+            log.error("{} : {}\n {}\n", "request(@SessionAttribute(\"user_email\") String userId, PayDto payDto)", e.getMessage(), e.getStackTrace());
+            return ResponseEntity.internalServerError().body(payDto);
+        }
     }
 }

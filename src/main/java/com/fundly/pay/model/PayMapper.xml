@@ -163,13 +163,13 @@
 
     <!-- 주문테이블 PK 생성 (Test 용도) -->
     <select id="selectOrderListId" resultType="String" parameterType="String">
-        select concat('ORDER_', #{user_id}, '_', (ifnull(Max(seq), 0) + 1)) from `ORDER`
+        select concat(#{user_id}, '_', (ifnull(Max(seq), 0) + 1)) from `ORDER`
     </select>
 
     <!-- 주문테이블 insert (Test 용도) -->
     <insert id="insertIntoOrder" parameterType="PayDto">
-        insert into `ORDER`(order_list_id, adr_id, user_id, pj_id, cpn_seq, pay_money, order_money, order_dtm, pay_means_id, order_ddln_dtm, pay_due_dtm, dba_reg_id)
-        values (#{order_list_id}, #{adr_id}, #{user_id}, #{pj_id}, 1, #{pay_money}, 1000, '2024-03-01 00:00:00', #{pay_means_id}, '2024-03-02 00:00:00', #{pay_due_dtm}, #{user_id});
+        insert into `ORDER`(order_list_id, adr_id, user_id, pj_id, cpn_seq, pay_money, order_dtm, pay_means_id, order_ddln_dtm, pay_due_dtm, dba_reg_id, order_status)
+        values (#{order_list_id}, #{adr_id}, #{user_id}, #{pj_id}, 1, #{pay_money}, '2024-03-01 00:00:00', #{pay_means_id}, '2024-03-02 00:00:00', #{pay_due_dtm}, #{user_id}, IFNULL(#{order_status}, '010002'));
     </insert>
 
     <!-- 주문테이블 select (Test 용도) -->

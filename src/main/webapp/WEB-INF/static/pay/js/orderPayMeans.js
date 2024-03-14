@@ -3,6 +3,7 @@ $(document).ready(function () {
     let payMeansList;
     let pageHandler;
     let page = 1;
+    let totalMoney = BigInt($('.totalMoney').text()); // TODO: 최종 후원 금액(BigInt) (임시)
 
     // 페이지 로드 시 데이터 가져오기
     fetchData(function () {
@@ -64,7 +65,6 @@ $(document).ready(function () {
     function handleCardInstallUI(cardType) {
         console.log("selectedPayMeans: " + selectedPayMeans)
         console.log("cardType: " + cardType)
-        let totalMoney = BigInt($('.totalMoney').text()); // TODO: 최종 후원 금액(BigInt) (임시)
 
         // 신용카드이고 최종후원금액이 5만원 이상인 경우, 할부개월 Select Box 활성화
         if (cardType === 0 && totalMoney >= 50000) {
@@ -238,5 +238,29 @@ $(document).ready(function () {
                 }
             })
         }
+
+        // 주문 및 결제에 필요한 데이터
+        let payDto = {
+            pay_means_id: selectedPayMeans.pay_means_id,
+            pj_id: "P001",
+            pay_money: totalMoney
+        }
+
+        // 결제 요청
+        $.ajax({
+            type: "POST",
+            url: "/pay/request",
+            data: payDto,
+            success: function (res) {
+                console.log(res);
+                alert("결제가 완료되었습니다.");
+                // location.reload();
+            },
+            error: function (e) {
+                console.log(e);
+                alert("결제 실패했습니다.");
+            }
+        })
+
     })
 });
