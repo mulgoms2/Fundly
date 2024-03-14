@@ -51,11 +51,9 @@ public class ServletContext implements WebMvcConfigurer {
 
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/WEB-INF/static/");
-//        registry.addResourceHandler("/project/img/*").addResourceLocations("file:///C:/Users/lemon/fundly/img/", "file:/Users/dobigulbi/fundly/img/");
+
         registry.addResourceHandler("/project/img/*")
                 .addResourceLocations("file:///C:/Users/" + root + "/fundly/img/", "file:/Users/" + root + "/fundly/img/");
-
-//        registry.addResourceHandler("/img/*").addResourceLocations("file:///C:/Users/fundly/img/");
 
         registry.addResourceHandler("/user/img/*")
                 .addResourceLocations("file:///C:/Users/" + root + "/fundly/img/", "file:/Users/" + root + "/fundly/img/");
@@ -65,7 +63,6 @@ public class ServletContext implements WebMvcConfigurer {
 
         registry.addResourceHandler("/fundly/project/img/*")
                 .addResourceLocations("file:///C:/Users/" + root + "/fundly/project/img/", "file:/Users/" + root + "/fundly/project/img/");
-//        registry.addResourceHandler("/user/img/*").addResourceLocations("file:////fundly/img/");
     }
 
     @Bean

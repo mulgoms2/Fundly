@@ -176,3 +176,8 @@ introValue?.addEventListener("keydown", function (e) {
         }
     }
 })
+
+function handleFile(files) {
+    document.querySelector('.pTagChangeImgFile').style.background = `url('${URL.createObjectURL(files[0])}') 50% 37% / cover no-repeat`;
+}
+

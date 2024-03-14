@@ -106,9 +106,7 @@
                     <a href="<c:url value='/login/login'/>">기존 계정으로 로그인하기</a>
 
                     <div class="otherJoin">
-                                 <span>
-                                     또는
-                                 </span>
+                         <span>또는</span>
                     </div>
                 </div>
             </form>
@@ -137,7 +135,7 @@
     const pwdInputConfirm = document.getElementById('user_pwdConfirm');
 
     function togglePasswordVisibility(inputElement, toggleElement) {
-        toggleElement.addEventListener('click', function () {
+        toggleElement?.addEventListener('click', function () {
             if (inputElement.type === 'password') {
                 inputElement.type = 'text';
                 toggleElement.style.backgroundImage = 'url("<c:url value='/static/img/Icon-private.png'/>")';
@@ -164,7 +162,7 @@
     const email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
     function validateInput(inputElement, regex, msgElement, errorMessage) {
-        inputElement.addEventListener("keyup", () => {
+        inputElement?.addEventListener("keyup", () => {
             if (!regex.test(inputElement.value) && inputElement.value.length !== 0) {
                 setMessage(errorMessage, inputElement.id, msgElement, "red");
             } else {
@@ -175,8 +173,8 @@
 
     validateInput(user_email,email,"msgEmail","유효하지 않은 이메일 형식입니다.");
     validateInput(user_name, /^[a-zA-Z가-힣]{2,50}$/, "msgName", "최소 2자 이상 입력, 숫자는 입력할 수 없습니다.");
-    validateInput(user_pwd, pwd, "msgPwd", "비밀번호는 8자 이상, 20자 이하로 입력하세요.");
-    validateInput(user_pwdConfirm, pwd, "msgPwdConfirm", "비밀번호는 8자 이상, 20자 이하로 입력하세요.");
+    validateInput(user_pwd, pwd, "msgPwd", "비밀번호는 8~20자, 영문, 숫자, 특수문자를 혼합하여 입력해주세요");
+    validateInput(user_pwdConfirm, pwd, "msgPwdConfirm", "비밀번호는 8~20자, 영문, 숫자, 특수문자를 혼합하여 입력해주세요");
 
     /* checkbox 정의 */
     // 전체 동의 체크박스 상태 변경 시 개별 동의 체크박스 상태 변경
@@ -186,15 +184,15 @@
     let singleChk = document.querySelectorAll('.singleChk:checked');
     let selectChk = document.querySelectorAll('.selectChk:checked');
 
-    checkAll.addEventListener('change', function() {
-        allboxes.forEach(checkbox => {
+    checkAll?.addEventListener('change', function() {
+        allboxes?.forEach(checkbox => {
             checkbox.checked = checkAll.checked;
             checkbox.value="on";
         });
     });
 
-    allboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
+    allboxes?.forEach(checkbox => {
+        checkbox?.addEventListener('change', function() {
             singleChk = document.querySelectorAll('.singleChk:checked');
             selectChk = document.querySelectorAll('.selectChk:checked');
 
@@ -217,7 +215,7 @@
     /* form */
     let joinForm = document.querySelector("#joinForm");
 
-    joinForm.addEventListener("submit",function(e) {
+    joinForm?.addEventListener("submit",function(e) {
         e.preventDefault();
 
         if(!(email.test(user_email.value))) {
@@ -240,7 +238,7 @@
             return false;
         }
 
-        if(!user_pwd.value===user_pwdConfirm.value){
+        if(!(user_pwd.value===user_pwdConfirm.value)){
             setMessage('비밀번호가 일치하지 않습니다.', "user_pwdConfirm", "msgPwdConfirm", "red");
             return false;
         }
@@ -260,7 +258,7 @@
     /* Oauth2 kakao */
     const kakaBtn = document.getElementById('kakaBtn');
 
-    kakaBtn.addEventListener('click',()=>{
+    kakaBtn?.addEventListener('click',()=>{
         const kakao = document.createElement('form');
         kakao.action = '<c:url value="/oauth/kakao"/>';
         kakao.method = 'post';

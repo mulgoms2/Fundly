@@ -11,7 +11,9 @@
     <div class="headerWrap">
         <div class="header">
             <div>
-                <a href="javascript:void(0)"></a><i class="fas fa-solid fa-arrow-left"></i>
+                <a id="homeBtn" href="<c:url value="/" />">
+                    <i class="fas fa-solid fa-arrow-left"></i>
+                </a>
             </div>
             <div class="hBtnWrap">
                 <%--            <a href="pro" class="preview">제출하기</a>--%>

@@ -89,7 +89,7 @@
         const email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
         // 이메일 정규식
-        user_email.addEventListener("keydown", () => {
+        user_email?.addEventListener("keydown", () => {
             if(!email.test(user_email.value) && user_email.value.length!==0) {
                 setMessage('유효하지 않은 이메일 형식입니다.', "user_email", "msgEmail", "red");
                 setMessage('', "user_pwd", "msgPwd", "black");
@@ -98,9 +98,8 @@
                 user_email.focus();
             }
         })
-
-        let msg = "${msg}";
-        if(msg!==""){ setMessage(msg, "", "msgPwd", "red");}
+        if("${JOIN}"!==""){alert("${JOIN}");}
+        if("${msg}"!==""){ setMessage("${msg}", "", "msgPwd", "red");}
 
         /* 유효성(입력된 값에 따른 변화 style,value) */
         function setMessage(msg, elementid, msgid, color){
@@ -109,7 +108,7 @@
         }
 
         /* usLoginForm submit */
-        usLoginForm.addEventListener("submit",function(e) {
+        usLoginForm?.addEventListener("submit",function(e) {
             e.preventDefault();
 
             if(user_email.value.length === 0) {
@@ -129,13 +128,13 @@
         })
 
         /* pwd */
-        user_pwd.addEventListener("keyup", () => {
+        user_pwd?.addEventListener("keyup", () => {
             if(user_pwd.value.length > 0) {
                 setMessage('', "user_email", "msgEmail", "black");
             }
         })
 
-        togglePwd.addEventListener('click', function () {
+        togglePwd?.addEventListener('click', function () {
             if (user_pwd.type === 'password') {
                 user_pwd.type = 'text';
                 togglePwd.style.backgroundImage = 'url("/static/img/Icon-private.png")';
@@ -167,7 +166,7 @@
         /* Oauth2 kakao login */
         const kakaBtn = document.getElementById('kakaBtn');
 
-        kakaBtn.addEventListener('click',()=>{
+        kakaBtn?.addEventListener('click',()=>{
             const kakao = document.createElement('form');
             kakao.action = '<c:url value="/oauth/kakaologin"/>';
             kakao.method = 'post';

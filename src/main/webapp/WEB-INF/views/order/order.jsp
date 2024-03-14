@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="giftMoney">
                                     <div class="giftMoneyTit">선물금액</div>
-                                    <div class="giftMoneyCont">23,000원</div>
+                                    <div class="giftMoneyCont">51,000원</div>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +261,7 @@
                         <div class="totalBox">
                             <div class="totalBoxConts">
                                 <div class="totalName">최종 후원 금액</div>
-                                <div class="totalMoney">22000</div>원
+                                <div class="totalMoney">51000</div>원
                             </div>
                         </div>
                     </div>

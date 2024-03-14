@@ -15,7 +15,7 @@
 
 .main.setting{
     height: 100% !important;
-    overflow-y : auto !important;
+    /*overflow-y : auto !important;*/
 }
 
 .tapContainerList{
@@ -70,9 +70,24 @@
     /*padding: 0px 0px 10px;*/
 }
 
+.containerWrap{
+    padding: 24px 0px;
+    align-items: flex-start;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
 
 .flexOnly{
     display: flex;
+}
+
+/* 왼쪽 컨테이너 값*/
+.userInfoModity{
+    width: 672px;
+    margin: 0px 32px 0px 0px;
+    flex: 0 0 auto;
+
 }
 
 /* 오른쪽 컨테이너 값 */
@@ -129,12 +144,12 @@
     -webkit-box-flex: 1;
     flex-grow: 1;
     padding: 10px 0;
+    font-size: 16px;
 }
 
 .ButtonTag{
-    /*display: inline-flex;*/
-    /*align-items: flex-end;*/
     height: 32px;
+    margin: 10px 0px;
     padding: 0px 16px;
     background: rgb(240, 240, 240);
     border: none;
@@ -145,6 +160,8 @@
     line-height: 20px ;
     font-family: NotoSansKR, "SF Pro Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif ;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .pTagChaDetailImg{

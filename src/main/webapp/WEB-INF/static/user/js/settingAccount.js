@@ -79,6 +79,7 @@ userChaPwdValue?.addEventListener("keyup", () => {
 
 // 비밀번호는 8자 이상 20자(21개 변경) 이하 / 숫자, 영문 대소문자, 특수문자 중 2가지 이상 조합
 userChaPwdConfirmValue?.addEventListener("keyup", () => {
+
     if (!(userChaPwdConfirmValue.value.length > 8 && userChaPwdConfirmValue.value.length < 20) && userChaPwdConfirmValue.value.length !== 0) {
         setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "chaPwdConfirmWrap", "msgChangeConfirmPwd", "red");
         return false;
@@ -88,7 +89,7 @@ userChaPwdConfirmValue?.addEventListener("keyup", () => {
     } else if (!pwd.test(userChaPwdConfirmValue.value) && userChaPwdConfirmValue.value.length !== 0) {
         setMessage('영문, 숫자, 특수문자를 혼합하여 입력해주세요.', "chaPwdConfirmWrap", "msgChangeConfirmPwd", "red");
         return false;
-    } else if (userChaPwdConfirmValue.value !== userChaPwdValue.value) {
+    } else if (!(userChaPwdConfirmValue.value === userChaPwdValue.value)) {
         setMessage('비밀번호가 일치하지 않습니다.', "chaPwdConfirmWrap", "msgChangeConfirmPwd", "red");
         return false;
     } else {
@@ -113,10 +114,11 @@ const changePhoneNo = document.getElementById('changePhoneNo');
 changePwd?.addEventListener("click", () => {
     const pTagbeforePwd = document.querySelector('.pTagbeforePwd');
     const pTagDetailPwd = document.querySelector('.pTagDetailPwd');
-    init();
     document.getElementById('userPhoneValue').value = '';
     setMessage('', "pTagChaDetailWrap", "msgPhoneNo", "rgb(230, 230, 230)");
-    changeBtn(changePwd,pTagbeforePwd,pTagDetailPwd);
+    changeBtn(changePwd, pTagbeforePwd, pTagDetailPwd);
+
+    init();
 });
 
 changePhoneNo?.addEventListener("click", () => {
@@ -129,7 +131,7 @@ changePhoneNo?.addEventListener("click", () => {
     document.getElementById('userPhoneValue').value = '';
     setMessage('', "pTagChaDetailWrap", "msgPhoneNo", "rgb(230, 230, 230)");
 
-    changeBtn(changePhoneNo,pTagbeforePhoneNo,pTagDetailPhoneNo);
+    changeBtn(changePhoneNo, pTagbeforePhoneNo, pTagDetailPhoneNo);
 });
 
 
@@ -140,12 +142,40 @@ const phonenosave = document.getElementById('phonenosave');
 pwdsave?.addEventListener("click", () => {
     const nowPwdValue = document.getElementById('userNowPwdValue').value;
     const changePwdValue = document.getElementById('userChaPwdValue').value;
+    const userChaPwdConfirmValue = document.getElementById('userChaPwdConfirmValue').value;
     const url = "/user/update";
     const data = {
         'user_prev_pwd': nowPwdValue,
         'user_pwd': changePwdValue,
         'user_email': getCookie('user_email')
     };
+
+    if (!isValidPassword(nowPwdValue.value)) {
+        setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "nowNowPwdWrap", "msgCheckPwd", "red");
+        return false;
+    }
+
+    if (!isValidPassword(changePwdValue.value)) {
+        setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "chaPwdMainWrap", "msgChangePwd", "red");
+        return false;
+    }
+
+    if (!isValidPassword(userChaPwdConfirmValue.value)) {
+        setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "chaPwdConfirmWrap", "msgChangeConfirmPwd", "red");
+        return false;
+    }
+
+    if(nowPwdValue === changePwdValue){
+        alert("동일한 비밀번호입니다. 다른 비밀번호로 입력해주세요.");
+        setMessage(msg, "chaPwdConfirmWrap", "msgChangeConfirmPwd", "red");
+        return false;
+    }
+
+    if(changePwdValue !== userChaPwdConfirmValue){
+        alert("변경할 비밀번호가 일치하지 않습니다.");
+        setMessage(msg, "chaPwdConfirmWrap", "msgChangeConfirmPwd", "red");
+        return false;
+    }
 
     // fetch API를 사용하여 POST 요청 보내기
     fetch(url, {
@@ -164,16 +194,17 @@ pwdsave?.addEventListener("click", () => {
         })
         .then((userInfo) => {
 
-            init();
+            // init();
             changePwd.click();
             alert('비밀번호가 성공적으로 수정되었습니다.');
 
         })
-        .catch(function (error) {
-            // 오류 처리
-            alert(error);
-            console.error('error msg : ', error);
-        });
+        .catch(error => error).then((error) => {
+            const msg = JSON.parse(error).msg;
+            alert(msg);
+            // setMessage(msg, "nowNowPwdWrap", "msgCheckPwd", "red");
+        }
+    )
 });
 
 phonenosave?.addEventListener("click", () => {
@@ -214,7 +245,7 @@ phonenosave?.addEventListener("click", () => {
         .then((userInfo) => {
             // init();
             changePhoneNo.click();
-            document.querySelector('.pTagChaDetailPhoneNo').innerText=userInfo.user_phone_no;
+            document.querySelector('.pTagChaDetailPhoneNo').innerText = userInfo.user_phone_no;
             alert('전화번호가 성공적으로 수정되었습니다.');
 
         })
@@ -225,14 +256,17 @@ phonenosave?.addEventListener("click", () => {
         });
 });
 
+function isValidPassword(password) {
+    return password.length > 8 && password.length < 20 && password.length !== 0;
+}
 
 function init() {
     document.getElementById('userNowPwdValue').value = '';
     document.getElementById('userChaPwdValue').value = '';
     document.getElementById('userChaPwdConfirmValue').value = '';
-    toggleNowPwd.click();
-    togglePwd.click();
-    togglePwdConfirm.click();
+    // toggleNowPwd.click();
+    // togglePwd.click();
+    // togglePwdConfirm.click();
     setMessage('', "nowNowPwdWrap", "msgCheckPwd", "rgb(230, 230, 230)");
     setMessage('', "chaPwdMainWrap", "msgChangePwd", "rgb(230, 230, 230)");
     setMessage('', "chaPwdConfirmWrap", "msgChangeConfirmPwd", "rgb(230, 230, 230)");
