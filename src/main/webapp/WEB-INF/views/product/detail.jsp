@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="/static/main/style.css">
     <link rel="stylesheet" href="/static/main/common.css">
     <link rel="stylesheet" href="/static/product/css/detail.css">
+    <link rel="stylesheet" href="/static/user/css/usercommon.css">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/product/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery-ui.js"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
     <script type="text/javascript" src="/static/product/vendor/moment.min.js"></script>
@@ -19,12 +20,20 @@
     <script type="text/javascript" src="/static/product/common.js"></script>
     <script type="text/javascript" src="/static/product/detail.js"></script>
     <script type="text/javascript" src="/static/product/likeDetail.js"></script>
+    <script type="text/javascript" src="/static/user/js/header.js"></script>
+    <script type="text/javascript" src="/static/user/js/profile.js"></script>
+    <script type="text/javascript" src="/static/user/js/settingProfile.js"></script>
+    <script type="text/javascript" src="/static/user/js/settingAccount.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
-<div class="userId">${user.user_email}</div>
-<div class="pjId">${pj.pj_id}</div>
+<div class="userId">bada@naver.com</div>
+<div class="pjId">P5040</div>
+<%-- 공용 헤더 페이지에 붙임 --%>
+<%-- LoginInfo --%>
+<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : userInfo.user_name}"/>
+<c:set var="userprofileImg" value="${user_profileImg=='' || user_profileImg == null ? '/static/img/avatar.webp' : '/user/img/'}"/>
 <div class="header">
     <div class="hd">
         <h1 class="logo">
@@ -34,7 +43,7 @@
         </h1>
         <div class="lftSmn">
             <div class="pjtUp">
-                <a href="#">프로젝트 올리기</a>
+                <a href="<c:url value="/project/editor/start" />">프로젝트 올리기</a>
             </div>
             <div class="like">
                 <i class="fa-regular fa-heart"></i>
@@ -42,12 +51,30 @@
             <div class="alm">
                 <i class="fa-regular fa-bell"></i>
             </div>
-            <div class="userIf">
-                <div class="infoGr">
+
+            <div class="userIf" >
+                <div class="infoGr" id ="loginInfo">
                     <div class="ifImg">
-                        <span></span>
+                        <span id="profileImg" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></span>
                     </div>
-                    <div class="ifTxt">이한수</div>
+                    <div class="ifTxt" id="ifTxt">${loginInfo}</div>
+                    <div class="MyPageList" id = "MyPageList">
+                        <a href="<c:url value='/mypage/profile'/>"><div class="pageItem" id = "Profile">프로필</div></a>
+                        <a href="<c:url value='/mypage/coupon'/>"><div class="pageItem" id = "Coupon">응원권</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/mypage/fundingProject'/>"><div class="pageItem" id = "fundingProject">후원한 프로젝트</div></a>
+                        <a href="<c:url value='/mypage/likes'/>"><div class="pageItem" id = "Likes">관심 프로젝트</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/mypage/alarm'/>"><div class="pageItem" id = "Alarm">알림</div></a>
+                        <a href="<c:url value='/mypage/message'/>"><div class="pageItem" id = "Message">메시지</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/mypage/makeProject'/>"><div class="pageItem" id = "MakeProject">내가 만든 프로젝트</div></a>
+                        <a href="<c:url value='/mypage/setting'/>"><div class="pageItem" id = "Setting">설정</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/login/logout'/>"><div class="pageItem" id = "LogOut">로그아웃</div></a>
+                    </div>
+                    <%--                        &lt;%&ndash;                    <div class="ifTxt">로그인/회원가입</div>&ndash;%&gt;--%>
+                    <%--                        &lt;%&ndash;                    <div class="ifTxt">이한수</div>&ndash;%&gt;--%>
                 </div>
             </div>
         </div>
@@ -433,7 +460,7 @@
                                 <div class="crtGr">
                                     <div class="crtPrf">
                                         <a href="#" class="prfImg">
-                                            ${pj.pj_prof_image_url}
+                                            <img src="${pj.pj_prof_image_url}">
                                             <%--                                            <img src="/static/img/seili.webp" alt="">--%>
                                         </a>
                                         <div class="crtIf">

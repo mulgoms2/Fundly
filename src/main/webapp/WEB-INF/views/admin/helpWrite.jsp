@@ -33,7 +33,7 @@
 <form id="push" action="" method="">
     <input type="text" name="sub_help_seq" value="${helpModifyInfo.sub_help_seq}" style="display: none">
     <input type="text" name="sub_help_title" value="${helpModifyInfo.sub_help_title}" placeholder="제목">
-    <input type="text" name="reg_id" value="${helpModifyInfo.reg_id}" placeholder="작성자">
+    <input type="text" name="reg_id" value="${reg_id}" placeholder="작성자" hidden="hidden">
     <select name="sub_help_sort" id="sub_help_sort">
         <option value="0">텀블벅 기본</option>
         <option value="1">후원자 질문</option>

@@ -231,7 +231,7 @@
   <div class="Page__PageComponent-sc-1l7nky8-0 jPogNc Notices__StyledPage-sc-1dlk0ho-0 cwTZWc tbb">
     <div class="Notices__SettingTitle-sc-1dlk0ho-1 jWaTvq">
       <div class="Container__ContainerComponent-o2c7wa-0 dwqwNI Notices__StyledContainer-sc-1dlk0ho-3 gLMSbr">
-        <span class="fnt-lt">공지사항</span>
+        <span class="fnt-lt">이벤트</span>
       </div>
       <div class="Container__ContainerComponent-o2c7wa-0 dwqwNI">
         <div class="TabContainer__ContainerComponent-sc-1vfhfos-0 diQRdx Notices__StyledTabContainer-sc-1dlk0ho-2 lfPVkB">
