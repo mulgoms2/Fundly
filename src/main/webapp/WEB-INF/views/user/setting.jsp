@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page session ="false"%>
+<%@ page session="false" %>
 
 <%--설정--%>
 <div class="main setting">
@@ -18,11 +18,17 @@
     </div>
     <!-- 탭 값 -->
     <div class="tapContainerMain">
-        <div id="tab1" class="tabContent"><jsp:include page="/user/profileBasic"/></div>
-        <div id="tab2" class="tabContent"><jsp:include page="/user/account"/></div>
-        <div id="tab3" class="tabContent"><jsp:include page="../pay/settingPayMeans.jsp"/></div>
-        <div id="tab4" class="tabContent"><jsp:include page="/user/adress"/></div>
-<%--        <div id="tab4" class="tabContent">배송지페이지</div>--%>
+        <div id="tab1" class="tabContent">
+            <jsp:include page="/user/profileBasic"/>
+        </div>
+        <div id="tab2" class="tabContent">
+            <jsp:include page="/user/account"/>
+        </div>
+        <div id="tab3" class="tabContent">
+            <jsp:include page="../pay/settingPayMeans.jsp"/>
+        </div>
+        <%--        <div id="tab4" class="tabContent"><jsp:include page="/user/adress"/></div>--%>
+        <div id="tab4" class="tabContent">배송지페이지</div>
         <div id="tab5" class="tabContent">알림페이지</div>
     </div>
 </div>
@@ -35,9 +41,9 @@
     let tabId = 'tab1';
     showTab(tabId);
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // tab 클릭 이벤트 처리
-        $('.tapItem').click(function(){
+        $('.tapItem').click(function () {
             tabId = $(this).attr('data-tab');
             showTab(tabId);
         })
