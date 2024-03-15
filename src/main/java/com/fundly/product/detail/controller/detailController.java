@@ -3,8 +3,10 @@ package com.fundly.product.detail.controller;
 import com.fundly.project.controller.GiftForm;
 import com.fundly.project.service.GiftService;
 import com.fundly.project.service.ProjectService;
+import com.fundly.user.service.UserInfoService;
 import com.persistence.dto.ProjectDto;
 import com.persistence.dto.UserDto;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,8 @@ import java.util.List;
 public class detailController {
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private UserInfoService userinfoService;
     @Autowired
     private GiftService giftService;
 
@@ -44,7 +48,8 @@ public class detailController {
                     .user_id(user_email)
                     .build();
 
-            model.addAttribute("user", userdto);
+            UserDto userinfo = userinfoService.userInfo(userdto);
+            model.addAttribute("user", userinfo);
             model.addAttribute("user_profileImg", user_profileImg);
 
             List<GiftForm> giftServe = giftService.getAllGiftList(pj_id);
