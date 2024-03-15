@@ -10,4 +10,5 @@ public interface AdminDao {
     int insert(AdminDto dto) throws Exception;
     int update(AdminDto dto) throws Exception;
 
+    String login(AdminDto dto) throws Exception;
 }

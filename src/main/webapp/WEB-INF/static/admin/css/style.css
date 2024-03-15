@@ -9,8 +9,11 @@ body {
 }
 .pg{
     display: flex;
-    margin: 20px 300px 40px;
-    justify-content: space-around;
+    margin: 20px 400px 40px;
+    justify-content: center;
+}
+.pg a {
+    padding: 3px;
 }
 
 .conWrap {
