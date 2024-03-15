@@ -26,7 +26,7 @@ public class OrderController {
         String user_email = (String)(session.getAttribute("user_email"));
 
         if(user_email == null || user_email.isEmpty()){
-            model.addAttribute("errmsg","USER_ERROR");
+//            model.addAttribute("errmsg","USER_ERROR");
             return "user/login";
         }
 
