@@ -28,11 +28,11 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
-<div class="userId">bada@naver.com</div>
-<div class="pjId">P5040</div>
+<div class="userId">${user.user_id}</div>
+<div class="pjId">${pj.pj_id}</div>
 <%-- 공용 헤더 페이지에 붙임 --%>
 <%-- LoginInfo --%>
-<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : userInfo.user_name}"/>
+<c:set var="loginInfo" value="${user.user_email=='' || user.user_email == null ? '로그인/회원가입' : user.user_name}"/>
 <c:set var="userprofileImg" value="${user_profileImg=='' || user_profileImg == null ? '/static/img/avatar.webp' : '/user/img/'}"/>
 <div class="header">
     <div class="hd">
@@ -46,7 +46,9 @@
                 <a href="<c:url value="/project/editor/start" />">프로젝트 올리기</a>
             </div>
             <div class="like">
-                <i class="fa-regular fa-heart"></i>
+                <a href="/mypage/likes">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
             </div>
             <div class="alm">
                 <i class="fa-regular fa-bell"></i>
@@ -57,7 +59,7 @@
                     <div class="ifImg">
                         <span id="profileImg" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></span>
                     </div>
-                    <div class="ifTxt" id="ifTxt">${loginInfo}</div>
+<%--                    <div class="ifTxt" id="ifTxt">${user}</div>--%>
                     <div class="MyPageList" id = "MyPageList">
                         <a href="<c:url value='/mypage/profile'/>"><div class="pageItem" id = "Profile">프로필</div></a>
                         <a href="<c:url value='/mypage/coupon'/>"><div class="pageItem" id = "Coupon">응원권</div></a>
@@ -156,7 +158,7 @@
                         <div class="sttElm">
                             <div class="elmTit">모인금액</div>
                             <div class="elmBox">
-                                <span class="val">8,887,100
+                                <span class="val">${pj.curr_fund_money}
                                     <span class="sMall">원</span>
                                 </span>
                                 <span class="valPct">1777%</span>
@@ -614,7 +616,7 @@
                                         <button class="gftAddbtn">선물 추가하기</button>
                                         <button class="gftCalcbtn">
                                             <a href="<c:url value='/order'/>">
-                                            총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
+                                            총&nbsp;<b><span class="calcTotal">29,800</span>원</b>&nbsp;후원하기
                                             </a>
                                         </button>
                                     </div>
@@ -3066,7 +3068,9 @@
                                             <div class="twinBtnwrap">
                                                 <button class="gftAddbtn">선물 추가하기</button>
                                                 <button class="gftCalcbtn">
-                                                    총&nbsp;<b><span></span>원</b>&nbsp;후원하기
+                                                    <a href="<c:url value='/order'/>">
+                                                        총&nbsp;<b><span class="calcTotal"></span>원</b>&nbsp;후원하기
+                                                    </a>
                                                 </button>
                                             </div>
                                         </div>
