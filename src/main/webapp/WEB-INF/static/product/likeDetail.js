@@ -48,9 +48,8 @@ const clickLikeBtn = () => {
 
     //로그인 유무를 확인하고 로그인 정보가 없으면 로그인페이지로 이동한다.
     if (user_id == null || user_id === ""){
-
         // 세션이 없는 경우, 다른 페이지로 이동
-        alert("로그인이 필요합니다.")
+        // alert("로그인이 필요합니다.")
         window.location.href = '/login/login';
     } else {
         //요청보낼 데이터
