@@ -10,7 +10,7 @@
     <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
 <body>
-<form id="push" action="" method="">
+<form id="push" action="<c:url value='/admin/termWrite'/>" method="post" onsubmit="return goToWrite()">
     <input type="text" name="term_seq" value="" hidden="hidden">
     <select name="term_title" id="" >
         <option value="서비스 이용약관">서비스 이용약관</option>
@@ -19,15 +19,17 @@
         <option value="커뮤니티 운영원칙">커뮤니티 운영원칙</option>
         <option value="프로젝트 심사 기준">프로젝트 심사 기준</option>
         <option value="수수료 정책">수수료 정책</option>
+        <option value="개인정보 제3자 제공 동의">개인정보 제3자 제공 동의</option>
+
     </select>
-    <input type="text" name="reg_id" value="" placeholder="작성자">
+    <input type="text" name="reg_id" value="${reg_id}" hidden="hidden">
     <label for="date">시작일를 선택하세요:
-        <input type="datetime-local" name="term_srt_date" id="date" max="2099-06-20" min="2024-01-01" value="2024-01-01">
+        <input type="datetime-local" name="term_srt_date" id="date" max="2099-06-20" min="2024-01-01" value="">
     </label>
     <textarea class="pjStr" name="term_cont">
 
     </textarea>
-    <button onclick="goToWrite()" style>등록</button>
+    <button type="button" onclick="checkAndSubmit()" style>등록</button>
 </form>
 
 <script>
@@ -89,11 +91,25 @@ once you do not need it anymore.
         content_style:
             'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
     });
-    function goToWrite(){
-        let form = document.getElementById("push");
-        form.setAttribute("action","<c:url value="/admin/termWrite"/>");
-        form.setAttribute("method","post");
-        form.submit();
+    function checkAndSubmit() {
+        if (goToWrite()) {
+            var form = document.getElementById("push");
+            form.setAttribute("action", "<c:url value='/admin/termWrite'/>");
+            form.setAttribute("method", "post");
+            form.submit();
+        }
+    }
+
+    function goToWrite() {
+        var startDateInput = document.getElementById("date");
+        var startDateValue = startDateInput.value;
+
+        if (!startDateValue) {
+            alert("시작일을 선택하세요.");
+            return false;
+        } else {
+            return true;
+        }
     }
     function goToModify(){
         let form = document.getElementById("push");
