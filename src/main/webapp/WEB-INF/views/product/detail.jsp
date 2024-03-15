@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="/static/main/style.css">
     <link rel="stylesheet" href="/static/main/common.css">
     <link rel="stylesheet" href="/static/product/css/detail.css">
+    <link rel="stylesheet" href="/static/user/css/usercommon.css">
     <script src="https://kit.fontawesome.com/409fef83e5.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/product/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery-ui.js"></script>
     <script type="text/javascript" src="/static/product/vendor/jquery.bpopup.min.js"></script>
     <script type="text/javascript" src="/static/product/vendor/moment.min.js"></script>
@@ -19,22 +20,29 @@
     <script type="text/javascript" src="/static/product/common.js"></script>
     <script type="text/javascript" src="/static/product/detail.js"></script>
     <script type="text/javascript" src="/static/product/likeDetail.js"></script>
+    <script type="text/javascript" src="/static/user/js/header.js"></script>
+    <script type="text/javascript" src="/static/user/js/profile.js"></script>
+    <script type="text/javascript" src="/static/user/js/settingProfile.js"></script>
+    <script type="text/javascript" src="/static/user/js/settingAccount.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
-<div class="userId">${user.user_email}</div>
-<div class="pjId">${pj.pj_id}</div>
+<div class="userId">bada@naver.com</div>
+<div class="pjId">P5040</div>
+<%-- 공용 헤더 페이지에 붙임 --%>
+<%-- LoginInfo --%>
+<c:set var="loginInfo" value="${user_email=='' || user_email == null ? '로그인/회원가입' : userInfo.user_name}"/>
+<c:set var="userprofileImg" value="${user_profileImg=='' || user_profileImg == null ? '/static/img/avatar.webp' : '/user/img/'}"/>
 <div class="header">
     <div class="hd">
-        <h1 class="logo">
-            <a href="<c:url value='/'/>">
-                <img class="logo" src="/static/img/fundly-logo.svg">
-            </a>
-        </h1>
+        <a href="<c:url value='/'/>">
+            <%--            <h1 class="logo">Fundly</h1>--%>
+            <img class="logo" src="/static/img/fundly-logo.svg">
+        </a>
         <div class="lftSmn">
             <div class="pjtUp">
-                <a href="#">프로젝트 올리기</a>
+                <a href="<c:url value="/project/editor/start" />">프로젝트 올리기</a>
             </div>
             <div class="like">
                 <i class="fa-regular fa-heart"></i>
@@ -42,12 +50,30 @@
             <div class="alm">
                 <i class="fa-regular fa-bell"></i>
             </div>
-            <div class="userIf">
-                <div class="infoGr">
+
+            <div class="userIf" >
+                <div class="infoGr" id ="loginInfo">
                     <div class="ifImg">
-                        <span></span>
+                        <span id="profileImg" style="background: url('${userprofileImg}${user_profileImg}') 50% 37% / cover no-repeat"></span>
                     </div>
-                    <div class="ifTxt">이한수</div>
+                    <div class="ifTxt" id="ifTxt">${loginInfo}</div>
+                    <div class="MyPageList" id = "MyPageList">
+                        <a href="<c:url value='/mypage/profile'/>"><div class="pageItem" id = "Profile">프로필</div></a>
+                        <a href="<c:url value='/mypage/coupon'/>"><div class="pageItem" id = "Coupon">응원권</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/mypage/fundingProject'/>"><div class="pageItem" id = "fundingProject">후원한 프로젝트</div></a>
+                        <a href="<c:url value='/mypage/likes'/>"><div class="pageItem" id = "Likes">관심 프로젝트</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/mypage/alarm'/>"><div class="pageItem" id = "Alarm">알림</div></a>
+                        <a href="<c:url value='/mypage/message'/>"><div class="pageItem" id = "Message">메시지</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/mypage/makeProject'/>"><div class="pageItem" id = "MakeProject">내가 만든 프로젝트</div></a>
+                        <a href="<c:url value='/mypage/setting'/>"><div class="pageItem" id = "Setting">설정</div></a>
+                        <div class="line"></div>
+                        <a href="<c:url value='/login/logout'/>"><div class="pageItem" id = "LogOut">로그아웃</div></a>
+                    </div>
+                    <%--                        &lt;%&ndash;                    <div class="ifTxt">로그인/회원가입</div>&ndash;%&gt;--%>
+                    <%--                        &lt;%&ndash;                    <div class="ifTxt">이한수</div>&ndash;%&gt;--%>
                 </div>
             </div>
         </div>
@@ -97,16 +123,17 @@
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="${pj.pj_thumbnail_url}" alt="">
+                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/ad5baaad-977f-49a8-98ad-be8f3388c004.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=d231790d0cc0269996739076d3b0c3cb"
+                                     alt="">
                             </div>
-                            <%--                            <div class="swiper-slide">--%>
-                            <%--                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/6c283549-911d-4b8b-a9c4-1905ddb66478.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=501c8005e5339d9cb1c58072d1d5d73f"--%>
-                            <%--                                     alt="">--%>
-                            <%--                            </div>--%>
-                            <%--                            <div class="swiper-slide">--%>
-                            <%--                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/04fa14ed-e852-44df-a265-b66cfd0d0bf6.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=a46c2aa5a414407b4d0df4d454b9531d"--%>
-                            <%--                                     alt="">--%>
-                            <%--                            </div>--%>
+                            <div class="swiper-slide">
+                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/6c283549-911d-4b8b-a9c4-1905ddb66478.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=501c8005e5339d9cb1c58072d1d5d73f"
+                                     alt="">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://tumblbug-pci.imgix.net/320b5b32ee7739c5e82b17c2b101155eef47e4cf/c4a948739fc0d6975cafd3dff5e534611fa6495d/5dd60e6e433a187d908ec4b427c6187e0252290d/04fa14ed-e852-44df-a265-b66cfd0d0bf6.jpeg?ixlib=rb-1.1.0&w=1240&h=930&auto=format%2Ccompress&lossless=true&fit=crop&s=a46c2aa5a414407b4d0df4d454b9531d"
+                                     alt="">
+                            </div>
                         </div>
                     </div>
                     <div class="swiper-button-next">
@@ -183,7 +210,7 @@
                                               d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
                                     </svg>
                                 </div>
-                                <span class="likeCnt">${pj.curr_pj_like_cnt}</span>
+                                <span class="likeCnt">10</span>
                             </div>
                         </button>
                         <button class="ordBtn purp">이 프로젝트 후원하기</button>
@@ -360,10 +387,7 @@
                                     <%--                                    </div>--%>
                                 </div>
                                 <div class="strDesc" id="section5">
-<<<<<<< Updated upstream
                                     <%--                                <div class="strDesc" id="section5">--%>
-=======
->>>>>>> Stashed changes
                                     ${pj.pj_gift_intro}
                                     <%--                                    <div class="strTit">선물 설명</div>--%>
                                     <%--                                    <p>--%>
@@ -433,7 +457,7 @@
                                 <div class="crtGr">
                                     <div class="crtPrf">
                                         <a href="#" class="prfImg">
-                                            ${pj.pj_prof_image_url}
+                                            <img src="${pj.pj_prof_image_url}" alt="">
                                             <%--                                            <img src="/static/img/seili.webp" alt="">--%>
                                         </a>
                                         <div class="crtIf">
@@ -541,7 +565,7 @@
                                     <div class="prdtSlct" id="prdtPayment">
                                         <div class="prdtBox">
                                             <div class="prdboxGrp">
-                                                <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함</div>
+                                                <div class="prdboxTit">[텀블벅 혜택]블로썸 퍼퓸 1개/26% 할인가/배송비포함~</div>
                                                 <div class="xBtnWrap">
                                                     <button class="b-close btnSlct">닫기</button>
                                                 </div>
@@ -586,9 +610,7 @@
                                     <div class="twinBtnwrap">
                                         <button class="gftAddbtn">선물 추가하기</button>
                                         <button class="gftCalcbtn">
-                                            <a href="<c:url value='/order'/>">
                                             총&nbsp;<b><span id="calcTotal"></span>원</b>&nbsp;후원하기
-                                            </a>
                                         </button>
                                     </div>
                                 </div>
