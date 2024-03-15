@@ -33,6 +33,9 @@ public class                                                                    
                               @RequestParam (required = false, defaultValue = "10") Integer pageSize, HttpServletRequest req){
         //값이없어도에러나지않고 page=1 pageSize=10 default값으로 넣어준다
 
+        if (page==0){
+            page = 1;
+        }
         try {
             List<NewsDto> NewsList = newsService.selectPage(page,pageSize);
             int totalCnt = newsService.count();
@@ -70,6 +73,9 @@ public class                                                                    
     public String eventList(@RequestParam(required = false, defaultValue = "1") Integer page,
                             @RequestParam(required = false, defaultValue = "10") Integer pageSize, Model model){
         //값이없어도에러나지않고 page=1 pageSize=10 default값으로 넣어준다
+        if (page==0){
+            page = 1;
+        }
         try{
             List<EventDto> EventList = eventService.selectPage(page,pageSize);
             int totalCnt = eventService.count();

@@ -174,15 +174,15 @@
 
                 <c:forEach var="EventDto" items="${eventList}">
                     <tr>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_seq}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_title}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.reg_id}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.event_view_cnt}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>"> ${EventDto.mod_dtm!=null? EventDto.mod_dtm :EventDto.reg_dtm}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>">${EventDto.hid_yn}</a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>"><tf:formatDateTime value="${EventDto.event_str_date}"/></a></td>
-                        <td><a href="<c:url value='/admin/select?event_seq=${EventDto.event_seq}&page=${page}'/>"><tf:formatDateTime value="${EventDto.event_end_date}"/></a></td>
+                        <td><a href="">${EventDto.event_seq}</a></td>
+                        <td><a href="">${EventDto.event_title}</a></td>
+                        <td><a href="">${EventDto.reg_id}</a></td>
+                        <td><a href="">${EventDto.event_view_cnt}</a></td>
+                        <td><a href="">${EventDto.reg_dtm}</a></td>
+                        <td><a href=""> ${EventDto.mod_dtm!=null? EventDto.mod_dtm :EventDto.reg_dtm}</a></td>
+                        <td><a href="">${EventDto.hid_yn}</a></td>
+                        <td><a href=""><tf:formatDateTime value="${EventDto.event_str_date}"/></a></td>
+                        <td><a href=""><tf:formatDateTime value="${EventDto.event_end_date}"/></a></td>
                         <c:choose>
                         <c:when test="${EventDto.event_str_date.isBefore(now) && EventDto.event_end_date.isAfter(now)}">
                         <td> 진행 중</td>
@@ -200,13 +200,13 @@
     </div>
     <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">
         <c:if test="${ph.showPrev}">
-            <a href="<c:url value='/admin/list?page=${ph.beginPage-1}'/>">&lt;</a>
+            <a href="<c:url value='/admin/eventList?page=${ph.beginPage-1}'/>">&lt;</a>
         </c:if>
         <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-            <a href="<c:url value='/admin/list?page=${i}'/> ">${i}</a>
+            <a href="<c:url value='/admin/eventList?page=${i}'/> ">${i}</a>
         </c:forEach>
         <c:if test="${ph.showNext}">
-            <a href="<c:url value='/admin/list?page=${ph.endPage+1}'/>">&gt;</a>
+            <a href="<c:url value='/admin/eventList?page=${ph.endPage+1}'/>">&gt;</a>
         </c:if>
     </div>
     <input type="text" id="searchInput"  placeholder="검색어를 입력하세요">

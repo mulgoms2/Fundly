@@ -178,7 +178,7 @@
             </table>
         </div>
     </div>
-    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">
+    <div class="pg" style=" display: flex; ">
         <c:if test="${ph.showPrev}">
             <a href="<c:url value='/admin/list?page=${ph.beginPage-1}'/>">&lt;</a>
         </c:if>

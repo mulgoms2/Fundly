@@ -19,4 +19,9 @@
           , mod_dtm = now()
         WHERE admin_id = #{admin_id}
     </update>
+    <select id="login" resultType="String" parameterType="AdminDto">
+        select *
+        from admin_info
+        where admin_id=#{admin_id} and admin_pwd=#{admin_pwd}
+    </select>
 </mapper>

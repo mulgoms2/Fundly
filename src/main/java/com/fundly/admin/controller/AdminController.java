@@ -53,16 +53,23 @@ public class AdminController {
     ProjectService projectService;
     @Autowired
     SubHelpService subHelpService;
+
+
+
+
     @RequestMapping("/list")
     public String getNewsList(@RequestParam (required = false, defaultValue = "1") Integer page, Model model,
                               @RequestParam (required = false, defaultValue = "10") Integer pageSize,HttpServletRequest req){
                                 //값이없어도에러나지않고 page=1 pageSize=10 default값으로 넣어준다
-//        HttpSession session = req.getSession();
-//
-//        if (session.getAttribute("admin_id")==null){
-//            model.addAttribute("msg","로그인후 이용가능합니다");
-//            return "admin/login";
-//        }
+                HttpSession session = req.getSession();
+
+        if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+            return "admin/adminLogin";
+        }
+        if (page==0){
+            page = 1;
+        }
 
         try {
             List<NewsDto> NewsList = newsService.selectPage(page,pageSize);
@@ -90,6 +97,7 @@ public class AdminController {
 
     @RequestMapping("/select")
     public String selectNews(Integer news_seq, Model model,Integer page){
+
         try {
             NewsDto News = newsService.selectNews(news_seq);
             model.addAttribute("page",page);
@@ -116,12 +124,19 @@ public class AdminController {
         return "redirect:/admin/list";
     }
     @GetMapping("/write")
-    public String writeNews(){
+    public String writeNews(HttpServletRequest req,Model model){
+        HttpSession session = req.getSession();
+        if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+            return "admin/adminLogin";
+        }
+       String reg_id = (String)session.getAttribute("admin_id");
+        model.addAttribute("reg_id",reg_id);
         return "admin/newsWrite";
     }
 
     @PostMapping("/modify")
-    public String modifyNews(NewsDto newsDto,Model model){
+    public String modifyNews(NewsDto newsDto,Model model,HttpServletRequest req){
         try {
             if (newsService.updateNews(newsDto) != 1)
                 throw new RuntimeException("수정실패");
@@ -135,7 +150,14 @@ public class AdminController {
 
     }
     @GetMapping("/modify")
-    public String modifyNews1(Integer news_seq,Model model){
+    public String modifyNews1(Integer news_seq,Model model,HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+            return "admin/adminLogin";
+        }
+        String reg_id = (String)session.getAttribute("admin_id");
+        model.addAttribute("reg_id",reg_id);
         try {
             NewsDto newsModifyInfo = newsService.selectNews(news_seq);
             model.addAttribute("newsModifyInfo",newsModifyInfo);
@@ -173,7 +195,17 @@ public class AdminController {
 
     @GetMapping("/eventList")
     public String getEventList(@RequestParam (required = false, defaultValue = "1") Integer page, Model model,
-                               @RequestParam (required = false, defaultValue = "10") Integer pageSize ){
+                               @RequestParam (required = false, defaultValue = "10") Integer pageSize,HttpServletRequest req ){
+
+        if (page==0){
+            page = 1;
+        }
+        HttpSession session = req.getSession();
+        if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+            return "admin/adminLogin";
+        }
+
         try {
             List<EventDto> eventList = eventService.selectPage(page,pageSize);
             int totalCnt = eventService.count();
@@ -189,6 +221,7 @@ public class AdminController {
     }
     @PostMapping("/eventWrite")
     public String insertEvent(EventDto eventDto,Model model){
+
         try {
             eventService.insertEvent(eventDto);
         }catch (Exception e){
@@ -196,12 +229,27 @@ public class AdminController {
         }return "redirect:/admin/eventList";
     }
     @GetMapping("/eventWrite")
-    public String insertEvent(){
+    public String insertEvent(HttpServletRequest req,Model model){
+        HttpSession session = req.getSession();
+        if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+            return "admin/adminLogin";
+        }
+        String reg_id = (String)session.getAttribute("admin_id");
+        model.addAttribute("reg_id",reg_id);
         return "admin/eventWrite";
     }
 
     @GetMapping("/termWrite")
-    public String insertTerm(){return "admin/termWrite";}
+    public String insertTerm(HttpServletRequest req,Model model){
+        HttpSession session = req.getSession();
+        if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+            return "admin/adminLogin";
+        }
+        String reg_id = (String)session.getAttribute("admin_id");
+        model.addAttribute("reg_id",reg_id);
+        return "admin/termWrite";}
 
     @PostMapping("/termWrite")
     public String insertTerm(TermDto termDto, Model model){
@@ -213,7 +261,7 @@ public class AdminController {
             Integer prev = termpre.getPrev();
             if(prev!=0){termService.termprevUpdate(prev);}
         }catch (Exception e){}
-        return "redirect:/";
+        return "redirect:/admin/termList";
     }
     @RequestMapping("/projectList")
     public String projectList(Model model){
@@ -244,9 +292,15 @@ public class AdminController {
     }
 
     @GetMapping("/subHelpList")
-    public String getSubHelpList( Model model
-                                ){
+    public String getSubHelpList( Model model,
+                             HttpServletRequest req   ){
         try{
+            HttpSession session = req.getSession();
+
+            if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+                return "admin/adminLogin";
+            }
 //            List<SubHelpDto> subList = subHelpService.selectPage(page,pageSize);
 //            int totalCnt = subHelpService.countAll();
 //            PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
@@ -260,9 +314,14 @@ public class AdminController {
     }
 
     @GetMapping("/termList")
-    public String getTermList( Model model
-                             ){
+    public String getTermList( Model model,HttpServletRequest req){
         try{
+            HttpSession session = req.getSession();
+
+            if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+                return "admin/adminLogin";
+            }
 //            List<TermDto> termList = termService.selectPage(page,pageSize);
 //            int totalCnt = termService.count();
 //            PageHandler pageHandler = new PageHandler(totalCnt,page,pageSize);
@@ -274,6 +333,7 @@ public class AdminController {
         }catch (Exception e){}
         return "admin/termList";
     }
+
 
 
 

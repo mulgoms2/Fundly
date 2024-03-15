@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,12 +61,13 @@ public class HelpController {
 
 
     @PostMapping("/write")
-    public String writeHelp(SubHelpDto subHelpDto, Model model){
+    public String writeHelp(SubHelpDto subHelpDto, Model model, HttpServletRequest req){
         System.out.println(subHelpDto.getSub_help_sort());
+
             try {
                if(subHelpService.insertSubHelp(subHelpDto)!=1)
                    throw new Exception("입력실패");
-                return "redirect:/help/subList";
+                return "redirect:/admin/subHelpList";
             }catch (Exception e){
 //                model.addAttribute("subHelpDto",subHelpDto);
                 return "admin/helpWrite";
@@ -73,7 +76,16 @@ public class HelpController {
 
         }
         @GetMapping("/write1")
-    public String writeHelp1(){
+    public String writeHelp1(Model model,HttpServletRequest req)
+        {
+            HttpSession session = req.getSession();
+
+            if (session.getAttribute("admin_id")==null){
+//            model.addAttribute("msg","");
+                return "admin/adminLogin";
+            }
+            String reg_id = (String)session.getAttribute("admin_id");
+            model.addAttribute("reg_id",reg_id);
         return "admin/helpWrite";
         }
 
@@ -100,7 +112,7 @@ public class HelpController {
     }
 
     @PostMapping("/search")
-    public String searchNews( String sub_help_title,Model model){
+    public String searchHelp( String sub_help_title,Model model){
         try {
             List<SubHelpDto> subList = subHelpService.searchHelp(sub_help_title);
             model.addAttribute("subList",subList);
@@ -108,4 +120,6 @@ public class HelpController {
             throw new RuntimeException(e);
         }return "admin/subHelpSearch";
     }
+
+
 }

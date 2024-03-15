@@ -10,20 +10,20 @@
     <script src="https://cdn.tiny.cloud/1/uh0icij1g3eyzvh7ppnwlga6kxke0lnffev72sw6bz89u7rb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
 <body>
-<form id="push" action="" method="">
+<form id="push" action="<c:url value='/admin/eventWrite'/>" method="post" onsubmit="return goToWrite()">
 <input type="text" name="event_seq" value="" hidden="hidden">
 <input type="text" name="event_title" value="" placeholder="제목">
-<input type="text" name="reg_id" value="" placeholder="작성자">
+<input type="text" name="reg_id" value="${reg_id}" hidden="hidden" placeholder="작성자">
     <label for="date">시작일를 선택하세요:
-        <input type="datetime-local" name="event_str_date" id="date" max="2099-06-20" min="2023-06-05" value="2023-06-15">
+        <input type="datetime-local" name="event_str_date" id="date" max="2099-06-20" min="2023-06-05" value="2024-01-11">
     </label>
     <label for="date">종료일를 선택하세요:
-        <input type="datetime-local" name="event_end_date" id="dateEnd" max="2099-06-20" min="2023-06-05" value="2023-06-15">
+        <input type="datetime-local" name="event_end_date" id="dateEnd" max="2099-06-20" min="2023-06-05" value="2024-3-15">
     </label>
 <textarea class="pjStr" name="event_cont">
 
 </textarea>
-    <button onclick="goToWrite()" style>등록</button>
+    <button type="button" onclick="checkAndSubmit()">등록</button>
 </form>
 
 <script>
@@ -96,11 +96,33 @@ once you do not need it anymore.
         content_style:
             'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
     });
-    function goToWrite(){
-        let form = document.getElementById("push");
-        form.setAttribute("action","<c:url value="/admin/eventWrite"/>");
-        form.setAttribute("method","post");
-        form.submit();
+    function checkAndSubmit() {
+        if (goToWrite()) {
+            var form = document.getElementById("push");
+            form.setAttribute("action", "<c:url value='/admin/eventWrite'/>");
+            form.setAttribute("method", "post");
+            form.submit();
+        }
+    }
+
+    function goToWrite() {
+        var startDateInput = document.getElementById("date");
+        var endDateInput = document.getElementById("dateEnd");
+
+        var startDateValue = new Date(startDateInput.value);
+        var endDateValue = new Date(endDateInput.value);
+        var sts = startDateInput.value;
+        if(!sts){
+            alert("시작일을 선택하세요.");
+            return false;
+        }
+
+        if (endDateValue < startDateValue) {
+            alert("종료일은 시작일 이후여야 합니다.");
+            return false;
+        } else {
+            return true;
+        }
     }
 </script>
 </body>

@@ -19,4 +19,9 @@ public class AdminServiceImpl implements AdminService {
     public int updateUser(AdminDto dto) throws Exception {
         return adminDao.update(dto);
     }
+
+    @Override
+    public String loginUser(AdminDto dto) throws Exception {
+        return adminDao.login(dto);
+    }
 }
