@@ -150,17 +150,17 @@ pwdsave?.addEventListener("click", () => {
         'user_email': getCookie('user_email')
     };
 
-    if (!isValidPassword(nowPwdValue.value)) {
-        setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "nowNowPwdWrap", "msgCheckPwd", "red");
-        return false;
-    }
+    // if (!isValidPassword(nowPwdValue)) {
+    //     setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "nowNowPwdWrap", "msgCheckPwd", "red");
+    //     return false;
+    // }
 
-    if (!isValidPassword(changePwdValue.value)) {
+    if (!isValidPassword(changePwdValue)) {
         setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "chaPwdMainWrap", "msgChangePwd", "red");
         return false;
     }
 
-    if (!isValidPassword(userChaPwdConfirmValue.value)) {
+    if (!isValidPassword(userChaPwdConfirmValue)) {
         setMessage('비밀번호는 8자 이상, 20자 이하로 입력하세요.', "chaPwdConfirmWrap", "msgChangeConfirmPwd", "red");
         return false;
     }

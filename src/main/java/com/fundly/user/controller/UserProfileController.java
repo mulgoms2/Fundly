@@ -117,6 +117,26 @@ public class UserProfileController {
         return "user/settingAccount";
     }
 
+    /* 설정 - 주소 */
+    @GetMapping("/adress")
+    public String settingAddress(HttpSession session, Model model){
+
+        String user_email = (String)(session.getAttribute("user_email"));
+//        String lastPwdDate = "";
+        UserDto userInfo = null;
+
+        try {
+            userInfo = userInfoService.userInfo(UserDto.builder().user_email(user_email).build());
+//            lastPwdDate = userProfileService.getlastPwdDate(user_email);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+
+        model.addAttribute("userInfo",userInfo);
+//        model.addAttribute("lastPwdDate",lastPwdDate);
+        return "user/settingAdress";
+    }
+
     @PostMapping("/imgupdate")
     @ResponseBody
     public ResponseEntity<?> imgFile(@RequestParam("file") MultipartFile file, @SessionAttribute String user_email, HttpServletResponse response){
