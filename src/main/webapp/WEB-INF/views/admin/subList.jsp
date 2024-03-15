@@ -174,15 +174,13 @@
                     <td><a href="">${subDto.reg_id}</a></td>
                     <td><a href="">${subDto.sub_help_view_cnt}</a></td>
                     <td><a href="">${subDto.reg_dtm}</a></td>
-                    <td><a href="">${subDto.mod_dtm!=null? subDto.mod_dtm :subDto.reg_dtm}   </a></td>                                                                                                                                                                                                o.mod_dtm :subDto.reg_dtm}</a></td>
+                    <td><a href="">${subDto.mod_dtm!=null?subDto.mod_dtm:subDto.reg_dtm}</a></td>
                     <td><a href="">${subDto.hid_yn}</a></td>
+<%--                    <th><button id="modify" onclick="location.href=' <c:url value='/help/modify'/>'">수정</button> </th>--%>
+<%--                    <th><button id="delete" onclick="location.href=' <c:url value='/help/delete'/>'">삭제</button> </th>--%>
                     </tr>
                 </c:forEach>
             </table>
-
-            <td>
-
-            </td>
         </div>
     </div>
 <%--    <div class="pg" style=" display: flex;  margin: 20px 400px 40px;justify-content: space-around;">--%>

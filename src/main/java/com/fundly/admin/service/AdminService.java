@@ -9,4 +9,6 @@ public interface AdminService {
     //유저정보 수정
     public int insertUser(AdminDto dto) throws Exception;
     public int updateUser(AdminDto dto) throws Exception;
+
+    public String  loginUser(AdminDto dto) throws Exception;
 }

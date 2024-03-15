@@ -217,11 +217,8 @@
                             <span class="TabContainer__Tab-sc-1vfhfos-2 hauegL current">
                                 <a href="<c:url value="/noticeList"/>">공지사항</a>
                             </span>
-                        <span class="TabContainer__Tab-sc-1vfhfos-2 hauegL ">
+                            <span class="TabContainer__Tab-sc-1vfhfos-2 hauegL ">
                                 <a href="<c:url value="/eventList"/>">이벤트</a>
-                            </span>
-                        <span class="TabContainer__Tab-sc-1vfhfos-2 hauegL ">
-                                <a href="">보도자료</a>
                             </span>
                     </div>
                 </div>
