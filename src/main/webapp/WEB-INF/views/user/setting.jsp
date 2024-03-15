@@ -21,7 +21,8 @@
         <div id="tab1" class="tabContent"><jsp:include page="/user/profileBasic"/></div>
         <div id="tab2" class="tabContent"><jsp:include page="/user/account"/></div>
         <div id="tab3" class="tabContent"><jsp:include page="../pay/settingPayMeans.jsp"/></div>
-        <div id="tab4" class="tabContent">배송지페이지</div>
+        <div id="tab4" class="tabContent"><jsp:include page="/user/adress"/></div>
+<%--        <div id="tab4" class="tabContent">배송지페이지</div>--%>
         <div id="tab5" class="tabContent">알림페이지</div>
     </div>
 </div>
