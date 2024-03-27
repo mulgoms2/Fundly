@@ -59,7 +59,7 @@ public class ProjectBasicInfoController {
 
         // 카테고리를 모델에 담는다.
 
-//        model.addAttribute("category", categoryService.getList());
+        model.addAttribute("category", categoryService.getList());
 
         return "project.basicInfo";
     }
@@ -71,7 +71,7 @@ public class ProjectBasicInfoController {
 
         model.addAttribute("projectDto", pj);
 
-//        model.addAttribute("category", categoryService.getList());
+        model.addAttribute("category", categoryService.getList());
 //        중복 제출 막기위한 리다이렉트
         return "redirect:/project/editor/info";
     }
