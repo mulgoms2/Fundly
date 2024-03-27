@@ -32,26 +32,11 @@
                 <div class="formBx">
                     <div class="left">
                         <p>카테고리</p>
-                        <form:select path="category" items="${category}" itemLabel="ctg_name" itemValue="ctg_code"
-                                     cssClass="category"/>
-                        <%--                        <form:select path="ctg_name" items="${category}"/>--%>
-                        <%--                        <select id="category" class="category">--%>
-                        <%--                            <option>반려동물</option>--%>
-                        <%--                            <option>디자인, 문구</option>--%>
-                        <%--                            <option>출판</option>--%>
-                        <%--                            <option>캐릭터 굿즈</option>--%>
-                        <%--                            <option>홈리빙</option>--%>
-                        <%--                            <option>테크 가전</option>--%>
-                        <%--                            <option>주얼리</option>--%>
-                        <%--                            <option>사진</option>--%>
-                        <%--                            <option>향수/뷰티</option>--%>
-                        <%--                        </select>--%>
+                        <form:form modelAttribute="basicInfo">
+                            <form:select path="ctg" items="${ctg}" itemValue="ctg_code" itemLabel="ctg_name"
+                                         cssClass="category"/>
+                        </form:form>
                     </div>
-                    <%--                    <div class="right">--%>
-                    <%--                        <p>세부카테고리</p>--%>
-                    <%--                        <select id="subCategory" class="category">--%>
-                    <%--                        </select>--%>
-                    <%--                    </div>--%>
                 </div>
             </div>
         </div>

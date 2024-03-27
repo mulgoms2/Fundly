@@ -55,11 +55,11 @@ public class ProjectBasicInfoController {
     @GetMapping("/info")
 //    프로젝트 기본정보 탭을 불러온다.
     public String getBasicInfo(@ModelAttribute ProjectDto projectDto, Model model) {
+//       프로젝트 기본 정보를 모델에 담는다.
         model.addAttribute("basicInfo", ProjectDto.toBasicInfo(projectDto));
 
-        // 카테고리를 모델에 담는다.
-
-        model.addAttribute("category", categoryService.getList());
+//        프로젝트 카테고리를 모델에 담는다.
+        model.addAttribute("ctg", categoryService.getList());
 
         return "project.basicInfo";
     }
@@ -71,7 +71,6 @@ public class ProjectBasicInfoController {
 
         model.addAttribute("projectDto", pj);
 
-        model.addAttribute("category", categoryService.getList());
 //        중복 제출 막기위한 리다이렉트
         return "redirect:/project/editor/info";
     }
